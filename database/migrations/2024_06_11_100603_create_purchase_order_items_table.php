@@ -19,7 +19,7 @@ return new class extends Migration
             $table->bigInteger('component_item_id');
             $table->bigInteger('material_quantity_request_item_id');
             $table->bigInteger('material_canvass_id');
-            $table->bigInteger('material_item_id');
+            $table->bigInteger('material_id');
             $table->char('status',4)->default('PEND');
             $table->decimal('quantity',10,2);
             $table->decimal('price',10,2);
