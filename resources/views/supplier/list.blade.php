@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-<h5>Project List</h5>
+<h5>Supplier List</h5>
 <hr>
     <div class="row">
         <div class="col-lg-4">
@@ -79,7 +79,7 @@
             });
 
             row.onclick = ()=>{
-                document.location.href = '/project/'+item.id;
+                document.location.href = '/supplier/'+item.id;
             };
 
             $el.append(row).to(list);
@@ -92,7 +92,7 @@
 
         window.util.blockUI();
 
-        window.util.$get('/api/project/list',{
+        window.util.$get('/api/supplier/list',{
             query: query.value,
             page: page,
             order: order,
@@ -161,7 +161,7 @@
     }
 
     createBtn.onclick = ()=>{
-        document.location.href = '/project/create';
+        document.location.href = '/supplier/create';
     }
 
     showData();
