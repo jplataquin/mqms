@@ -64,6 +64,18 @@
                                 </li>
                             </ul>
                         </li>
+
+                        <li>
+                            Supplier
+                            <ul>
+                                <li>
+                                    <a href="/supplier/create">Create</a>
+                                </li>
+                                <li>
+                                    <a href="/supplier">List</a>
+                                </li>
+                            </ul>
+                        </li>
                         <li>
                             Requests
                             <ul>
