@@ -72,7 +72,7 @@
                                     <a href="/supplier/create">Create</a>
                                 </li>
                                 <li>
-                                    <a href="/supplier">List</a>
+                                    <a href="/suppliers">List</a>
                                 </li>
                             </ul>
                         </li>
