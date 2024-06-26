@@ -16,6 +16,6 @@
     "vite": "^4.0.0"
   },
   "dependencies": {
-    "adarna": "^3.0.0",
+    "adarna": "^3.0.0"
   }
 }
