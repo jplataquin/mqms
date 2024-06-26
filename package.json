@@ -17,6 +17,5 @@
   },
   "dependencies": {
     "adarna": "^3.0.0",
-    "puppeteer": "17.1.3"
   }
 }
