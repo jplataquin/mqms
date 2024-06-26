@@ -736,7 +736,7 @@ class PurchaseOrderController extends Controller
             'extras'                            => $extras,
             'materialItemArr'                   => $materialItemArr
             
-        ])>format('a4')
+        ])->format('a4')
         ->name('purchase_order.pdf');
 
     }
