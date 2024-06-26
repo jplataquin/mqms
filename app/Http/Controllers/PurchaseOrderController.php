@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
-use Spatie\LaravelPdf\Facades\Pdf
+use Spatie\LaravelPdf\Facades\Pdf;
 
 class PurchaseOrderController extends Controller
 {
