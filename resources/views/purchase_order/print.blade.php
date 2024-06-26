@@ -8,12 +8,7 @@
         <![endif]-->
         <div style="font-size:11px"> 
             @foreach(['Supplier','Site','Accounting'] as $copy)
-            <table
-                width="100%"
-                height="50%" 
-                style="margin-bottom:50px; margin-left:auto; margin-right:auto; border-collapse: collapse" 
-                border="1"
-            >
+            <table width="100%" height="50%" style="margin-bottom:50px; margin-left:auto; margin-right:auto; border-collapse: collapse" border="1">
                 <thead>
                     <tr>
                         <td colspan="4" align="center">
