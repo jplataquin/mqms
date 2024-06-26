@@ -724,7 +724,7 @@ class PurchaseOrderController extends Controller
 
         $extras = json_decode($purchaseOrder->extras);
         
-        /**
+    
         $html = view('purchase_order/print',[
             'purchase_order'            => $purchaseOrder,
             'material_quantity_request' => $materialQuantityRequest,
@@ -738,10 +738,9 @@ class PurchaseOrderController extends Controller
             'materialItemArr'                   => $materialItemArr
             
         ])->render();
-        **/
 
         $html2pdf = new Html2Pdf();
-        $html2pdf->writeHTML('<h1>asdad</h1>');
+        $html2pdf->writeHTML($html);
         $html2pdf->output();
 
 
