@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 use Spatie\LaravelPdf\Facades\Pdf;
-use Spatie\LaravelPdf\Facades\Browsershot;
+use Spatie\Browsershot\Browsershot;
 
 class PurchaseOrderController extends Controller
 {
