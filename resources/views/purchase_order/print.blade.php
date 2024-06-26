@@ -9,7 +9,7 @@
         <div style="font-size:11px"> 
             @foreach(['Supplier','Site','Accounting'] as $copy)
             <table width="100%" height="50%" style="margin-bottom:50px; margin-left:auto; margin-right:auto; border-collapse: collapse" border="1">
-                <thead>
+                
                     <tr>
                         <td colspan="4" align="center">
                            
@@ -20,8 +20,6 @@
                             Purchase Order
                         </th>
                     </tr>
-                </thead>
-                <tbody>
                     <tr>
                         <th align="left">PO#</th>
                         <td>{{$purchase_order->id}}</td>
@@ -104,10 +102,6 @@
                         <td align="right">{{number_format($grandtotal,2)}}</td>
                     </tr>
 
-                </tbody>
-                <tfoot>
-                
-                </tfoot>
             </table>
         
         @endforeach
