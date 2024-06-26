@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 
 class PurchaseOrderController extends Controller
 {
@@ -739,11 +741,17 @@ class PurchaseOrderController extends Controller
             
         ])->render();
 
-            
+        try {
         $html2pdf = new Html2Pdf();
         $html2pdf->writeHTML($html);
         $html2pdf->output();
 
+        }catch(Html2PdfException $e) {
+            $html2pdf->clean();
+        
+            $formatter = new ExceptionFormatter($e);
+            echo $formatter->getHtmlMessage();
+        }
 
     }
     
