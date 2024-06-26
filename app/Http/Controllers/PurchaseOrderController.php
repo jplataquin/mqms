@@ -21,8 +21,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
-use Spatie\LaravelPdf\Facades\Pdf;
-use Spatie\Browsershot\Browsershot;
+use Spipu\Html2Pdf\Html2Pdf;
 
 class PurchaseOrderController extends Controller
 {
@@ -725,10 +724,7 @@ class PurchaseOrderController extends Controller
 
         $extras = json_decode($purchaseOrder->extras);
         
-        return Pdf::withBrowsershot(function (Browsershot $browsershot) {
-            $browsershot->setNodeBinary('~/.nvm/versions/node/v22.3.0/bin/node');
-            $browsershot->setNpmBinary('~/.nvm/versions/node/v22.3.0/bin/npm');
-        })->view('purchase_order/print',[
+        $html = view('purchase_order/print',[
             'purchase_order'            => $purchaseOrder,
             'material_quantity_request' => $materialQuantityRequest,
             'project'                   => $project,
@@ -740,8 +736,13 @@ class PurchaseOrderController extends Controller
             'extras'                            => $extras,
             'materialItemArr'                   => $materialItemArr
             
-        ])->format('a4')
-        ->name('purchase_order.pdf');
+        ])->render();
+
+
+        $html2pdf = new Html2Pdf();
+        $html2pdf->writeHTML($html);
+        $html2pdf->output();
+
 
     }
     
