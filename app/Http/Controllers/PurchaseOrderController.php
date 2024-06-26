@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
+use Spatie\LaravelPdf\Facades\Pdf
 
 class PurchaseOrderController extends Controller
 {
@@ -723,7 +724,7 @@ class PurchaseOrderController extends Controller
 
         $extras = json_decode($purchaseOrder->extras);
 
-        return view('purchase_order/print',[
+        return Pdf::view('purchase_order/print',[
             'purchase_order'            => $purchaseOrder,
             'material_quantity_request' => $materialQuantityRequest,
             'project'                   => $project,
@@ -735,7 +736,9 @@ class PurchaseOrderController extends Controller
             'extras'                            => $extras,
             'materialItemArr'                   => $materialItemArr
             
-        ]);
+        ])>format('a4')
+        ->name('purchase_order.pdf');
+
     }
     
     public function total_ordered(Request $request){
