@@ -83,7 +83,7 @@
                 <thead>
                     <tr>
                         <td colspan="4" align="center">
-                            <img width="500px"src="{{ asset('storage/sys_images/header.png') }}">
+                            <img width="500px"src="{{ asset('storage/sys_images/header.png') }}"/>
                         <td>
                     </tr>
                     <tr>
