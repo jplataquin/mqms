@@ -723,8 +723,11 @@ class PurchaseOrderController extends Controller
         }
 
         $extras = json_decode($purchaseOrder->extras);
-
-        return Pdf::view('purchase_order/print',[
+        
+        return Pdf::withBrowsershot(function (Browsershot $browsershot) {
+            $browsershot->setNodeBinary('~/.nvm/versions/node/v22.3.0/bin/node');
+            $browsershot->setNpmBinary('~/.nvm/versions/node/v22.3.0/bin/npm');
+        })->view('purchase_order/print',[
             'purchase_order'            => $purchaseOrder,
             'material_quantity_request' => $materialQuantityRequest,
             'project'                   => $project,
