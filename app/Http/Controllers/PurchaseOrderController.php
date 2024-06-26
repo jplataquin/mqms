@@ -750,7 +750,10 @@ class PurchaseOrderController extends Controller
             $html2pdf->clean();
         
             $formatter = new ExceptionFormatter($e);
+            echo $html;
             echo $formatter->getHtmlMessage();
+
+        
         }
 
     }
