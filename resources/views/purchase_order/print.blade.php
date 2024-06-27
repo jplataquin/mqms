@@ -109,7 +109,7 @@
         </div>
         
         <link rel="stylesheet" type="text/css" href="/" media="print" />
-        <script type="module">
+        <script type="text/javascript">
             // import 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
 
             // const doc = new jspdf.jsPDF({
@@ -138,7 +138,6 @@
                 return true;
                 }
 
-                printDiv('printable','test');
         </script>
     </body>
 </html>
