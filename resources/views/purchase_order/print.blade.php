@@ -109,8 +109,9 @@
         </div>
         
         <link rel="stylesheet" type="text/css" href="/" media="print" />
-        <script type="text/javascript">
-
+        <script type="module">
+            import 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+            
             const doc = new jsPDF({
                 orientation: "portrait",
                 unit: "in",
