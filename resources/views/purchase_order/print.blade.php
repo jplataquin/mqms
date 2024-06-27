@@ -111,8 +111,8 @@
         <link rel="stylesheet" type="text/css" href="/" media="print" />
         <script type="module">
             import 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-            
-            const doc = new jsPDF({
+
+            const doc = new jspdf({
                 orientation: "portrait",
                 unit: "in",
                 format: [4, 2]
