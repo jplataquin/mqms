@@ -1,6 +1,6 @@
 <!DOCTYPE html>
     <head>
-        
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -109,6 +109,16 @@
         </div>
         
         <link rel="stylesheet" type="text/css" href="/" media="print" />
-        <script src="" async defer></script>
+        <script src="" async defer>
+
+            const doc = new jsPDF({
+                orientation: "portrait",
+                unit: "in",
+                format: [4, 2]
+            });
+
+            doc.text("Hello world!", 1, 1);
+            doc.save("two-by-four.pdf");
+        </script>
     </body>
 </html>
