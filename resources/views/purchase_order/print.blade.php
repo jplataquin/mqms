@@ -6,7 +6,7 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div style="font-size:11px"> 
+        <div id="printable" style="font-size:11px"> 
             @foreach(['Supplier','Site','Accounting'] as $copy)
             <table width="100%" height="50%" style="margin-bottom:50px; margin-left:auto; margin-right:auto; border-collapse: collapse" border="1">
                 
@@ -114,11 +114,10 @@
 
             const doc = new jspdf.jsPDF({
                 orientation: "portrait",
-                unit: "in",
-                format: [4, 2]
             });
 
-            doc.text("Hello world!", 1, 1);
+            let printable = document.getElementById('printable');
+            doc.text(printable.innerHTML);
             doc.save("two-by-four.pdf");
         </script>
     </body>
