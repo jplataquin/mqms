@@ -109,7 +109,7 @@
         </div>
         
         <link rel="stylesheet" type="text/css" href="/" media="print" />
-        <script src="" async defer>
+        <script type="text/javascript">
 
             const doc = new jsPDF({
                 orientation: "portrait",
