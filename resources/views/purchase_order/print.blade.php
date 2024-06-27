@@ -120,7 +120,7 @@
             // console.log(printable.innerHTML);
             // doc.text(printable.innerHTML,10,10);
             // doc.save("two-by-four.pdf");
-            let text = document.getElementById(divId).innerHTML;
+            let text = document.getElementById('printable').innerHTML;
             function printDiv({divId, title}) {
                 let mywindow = window.open('', 'PRINT', 'height=650,width=900,top=100,left=150');
 
