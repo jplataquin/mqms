@@ -5,6 +5,14 @@
                 text-align: left;
             }
 
+            .text-center{
+                text-align: center;
+            }
+
+            .text-right{
+                text-align: right;
+            }
+            
             .bold{
                 font-weight: bold;
             }
@@ -14,10 +22,6 @@
                 margin-left: auto;
                 margin-right: auto;
                 margin-bottom: 10px;
-            }
-
-            .text-center{
-                text-align: center;
             }
 
             td{
@@ -75,6 +79,21 @@
                     <td class="bold">Quantity</td>
                     <td class="bold">Price</td>
                     <td class="bold">Total</td>
+                </tr>
+                @php $subtotal = 0; @endphp
+                @foreach($items as $item)
+                <tr>
+                    <td>{{$materialItemArr[ $item->material_item_id]->brand}} {{$materialItemArr[ $item->material_item_id]->name}} {{$materialItemArr[ $item->material_item_id]->specification_unit_packaging}}</td>
+                    <td class="text-center">{{number_format($item->quantity,2)}}</td>
+                    <td class="text-right">{{number_format($item->price,2)}}</td>
+                    <td class="text-right">{{number_format($item->quantity*$item->price,2)}}</td>
+                </tr>
+                @php $subtotal = $subtotal + ($item->quantity*$item->price); @endphp
+                @endforeach    
+                <tr>
+                    <td colspan="2"></td>
+                    <th class="text-right">Sub Total</th>
+                    <td class="text-right">{{number_format($subtotal,2)}}</td>
                 </tr>
 
             </table>
