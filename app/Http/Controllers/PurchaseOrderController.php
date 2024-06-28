@@ -742,7 +742,7 @@ class PurchaseOrderController extends Controller
         ])->render();
         
         try {
-            $html2pdf = new Html2Pdf();
+            $html2pdf = new Html2Pdf('P', 'A4');
             $html2pdf->writeHTML($html);
             $html2pdf->output();
 

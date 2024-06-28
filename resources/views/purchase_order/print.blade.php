@@ -1,34 +1,33 @@
-<!DOCTYPE html>
-    <head>
-         <style>
-            .text-left{
-                text-align: left;
-            }
 
-            .text-center{
-                text-align: center;
-            }
+        <style>
+        .text-left{
+            text-align: left;
+        }
 
-            .text-right{
-                text-align: right;
-            }
-            
-            .bold{
-                font-weight: bold;
-            }
+        .text-center{
+            text-align: center;
+        }
 
-            .table{
-                border-collapse:collapse;
-            }
+        .text-right{
+            text-align: right;
+        }
+        
+        .bold{
+            font-weight: bold;
+        }
 
-            td{
-                padding: 3px;
-            }
+        .table{
+            border-collapse:collapse;
+        }
 
-            
-        </style>
-    </head>
-    <body>
+        td{
+            padding: 3px;
+        }
+
+        
+    </style>
+    
+    <page>
         <div>
             @foreach(['Supplier','Site','Accounting','Warehouse'] as $copy)
             <table class="table" border="1">
@@ -40,6 +39,7 @@
                 <tr>
                     <td colspan="4" class="text-center bold">
                         Purchase Order
+                        <barcode dimension="1D" type="EAN13" value="45" label="label" style="width:30mm; height:6mm; color: #770000; font-size: 4mm"></barcode>
                     </td>
                 </tr>
                 <tr>
@@ -174,8 +174,7 @@
                     </td>
                 </tr>
             </table>
-            <div sytle="page-break-before:always"></div>
+            <pagebreak></pagebreak>
             @endforeach
         </div>
-    </body>
-</html>
+    </page>
