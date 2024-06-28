@@ -126,7 +126,7 @@
            
             <table class="table" border="1" style="">
                 <tr>
-                    <td class="text-center bold" style="padding-left:40px;padding-right:40px">
+                    <td class="text-center bold" style="padding-left:30px;padding-right:30px">
                         __________________________
                         <br>
                         Prepared By
@@ -136,7 +136,7 @@
                         <br>
                         Approved By
                     </td>
-                    <td class="text-center bold" style="padding-left:40px;padding-right:40px">
+                    <td class="text-center bold" style="padding-left:30px;padding-right:30px">
                         __________________________
                         <br>
                         Received By
