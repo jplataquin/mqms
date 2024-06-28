@@ -122,18 +122,24 @@
                     <th class="text-right" style="padding-right:5px;padding-top:3px">Grand Total</th>
                     <td class="text-right">P {{number_format($grandtotal,2)}}</td>
                 </tr>
+            </table>
+            <table class="table" border="1">
                 <tr>
-                    <td colspan="4" style="padding:0px">
-                        <table border="1">
-                            <tr>
-                                <td class="">
+                    <td class="text-center bold">
 
-                                    ______________________________
-                                    <br>
-                                    Prepared By
-                                </td>
-                            </tr>
-                        </table>
+                        ______________________________
+                        <br>
+                        Prepared By
+                    </td>
+                    <td class="text-center bold">
+                        ______________________________
+                        <br>
+                        Approved By
+                    </td>
+                    <td class="text-center bold">
+                        ______________________________
+                        <br>
+                        Received By
                     </td>
                 </tr>
             </table>
