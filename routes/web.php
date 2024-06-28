@@ -92,7 +92,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/material_canvass', [App\Http\Controllers\MaterialCanvassController::class, 'list']);
     Route::get('/material_canvass/{id}', [App\Http\Controllers\MaterialCanvassController::class, 'display']);
    
-    oute::get('/review/components', [App\Http\Controllers\Review\ComponentReviewController::class, 'list']);
+    Route::get('/review/components', [App\Http\Controllers\Review\ComponentReviewController::class, 'list']);
     Route::get('/review/component/{id}', [App\Http\Controllers\Review\ComponentReviewController::class, 'display']);
     
 
