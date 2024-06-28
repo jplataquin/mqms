@@ -8,12 +8,18 @@
             .bold{
                 font-weight: bold;
             }
+
+            .table{
+                border-collapse:collapse;
+                width: 100%;
+            }
+
         </style>
     </head>
     <body>
         <div>
             @foreach(['Supplier','Site','Accounting','Warehouse'] as $copy)
-            <table style="border-collapse:collapse" border="1">
+            <table class="table" border="1">
                 <tr>
                     <td colspan="4">
                         <strong>Purchase Order</strong>
