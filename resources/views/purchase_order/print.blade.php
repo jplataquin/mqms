@@ -123,26 +123,27 @@
                     <td class="text-right">P {{number_format($grandtotal,2)}}</td>
                 </tr>
             </table>
-            <table class="table" border="1">
+            <div>
+            <table class="table" border="1" style="margin-left:auto;margin-right:auto">
                 <tr>
-                    <td class="text-center bold" style="width:33%">
-
-                        ______________________________
+                    <td class="text-center bold" style="width:30%">
+                        __________________________
                         <br>
                         Prepared By
                     </td>
-                    <td class="text-center bold" style="width:33%">
-                        ______________________________
+                    <td class="text-center bold" style="width:30%">
+                        __________________________
                         <br>
                         Approved By
                     </td>
-                    <td class="text-center bold" style="width:33%">
-                        ______________________________
+                    <td class="text-center bold" style="width:30%">
+                        __________________________
                         <br>
                         Received By
                     </td>
                 </tr>
             </table>
+            </div>
             @endforeach
         </div>
     </body>
