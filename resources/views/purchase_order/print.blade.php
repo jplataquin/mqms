@@ -124,19 +124,19 @@
                 </tr>
             </table>
             <table class="table" border="1">
-                <tr style="width:100%">
-                    <td class="text-center bold">
+                <tr>
+                    <td class="text-center bold" style="width:33.33%">
 
                         ______________________________
                         <br>
                         Prepared By
                     </td>
-                    <td class="text-center bold">
+                    <td class="text-center bold" style="width:33.33%">
                         ______________________________
                         <br>
                         Approved By
                     </td>
-                    <td class="text-center bold">
+                    <td class="text-center bold" style="width:33.33%">
                         ______________________________
                         <br>
                         Received By
