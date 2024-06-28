@@ -17,6 +17,10 @@
                 text-align: center;
             }
 
+            td{
+                padding: 2px;
+            }
+
         </style>
     </head>
     <body>
