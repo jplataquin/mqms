@@ -126,7 +126,7 @@
            
             <table class="table" border="1" style="">
                 <tr>
-                    <td class="text-center bold">
+                    <td class="text-center bold" style="padding-left:10px;padding-right:5px">
                         __________________________
                         <br>
                         Prepared By
