@@ -123,7 +123,7 @@
                     <td class="text-right">P {{number_format($grandtotal,2)}}</td>
                 </tr>
             </table>
-            <div>
+           
             <table class="table" border="1" style="">
                 <tr>
                     <td class="text-center bold" style="width:30%">
@@ -143,7 +143,7 @@
                     </td>
                 </tr>
             </table>
-            </div>
+            
             @endforeach
         </div>
     </body>
