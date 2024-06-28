@@ -124,7 +124,7 @@
                 </tr>
             </table>
            
-            <table class="table" border="1" style="">
+            <table class="table" border="1" style="margin-left:5%">
                 <tr>
                     <td class="text-center bold" style="padding-right:30px">
                         __________________________
