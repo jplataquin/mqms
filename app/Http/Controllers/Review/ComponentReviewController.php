@@ -59,4 +59,32 @@ class ComponentReviewController extends Controller
         ]);
     }
 
+    public function display($id){
+
+        $component = Component::findOrFail($id);
+
+        $section         = $component->section;
+        $project         = $section->project;
+        $componentItems  = $component->componentItems()->orderBy('id','ASC')->withCount('materialQuantities')->get();
+
+        
+        $materialItems   = [];
+        
+        foreach(MaterialItem::get() as $mi){
+        
+            $materialItems[ $mi->id ] = $mi;
+        }
+        
+        $hash = generateComponentHash($project,$section,$component,$componentItems,$materialItems);
+
+        return view('component/display',[
+            'project'           => $project,
+            'section'           => $section,
+            'component'         => $component,
+            'componentItems'    => $componentItems,
+            'materialItems'     => $materialItems,
+            'hash'              => $hash
+        ]);
+    }
+
 }
