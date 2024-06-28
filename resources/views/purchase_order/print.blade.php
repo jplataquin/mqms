@@ -24,9 +24,9 @@
         </style>
     </head>
     <body>
-        <div>
+        <div style="padding-left:auto; padding-right:auto">
             @foreach(['Supplier','Site','Accounting','Warehouse'] as $copy)
-            <table class="table" style="width:500px" border="1">
+            <table class="table" style="width:700px" border="1">
                 <tr>
                     <td colspan="4" class="text-center bold">
                         Purchase Order
