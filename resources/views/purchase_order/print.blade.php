@@ -40,7 +40,6 @@
                 <tr>
                     <td colspan="4" class="text-center bold">
                         Purchase Order
-                        <barcode dimension="1D" type="EAN13" value="45" label="label" style="width:30mm; height:6mm; color: #770000; font-size: 4mm"></barcode>
                     </td>
                 </tr>
                 <tr>
@@ -92,24 +91,13 @@
                 </tr>
                 @php $subtotal = 0; @endphp
                 @foreach($items as $item)
-                <tr>
-                    <td>{{$materialItemArr[ $item->material_item_id]->brand}} {{$materialItemArr[ $item->material_item_id]->name}} {{$materialItemArr[ $item->material_item_id]->specification_unit_packaging}}</td>
-                    <td class="text-center">{{number_format($item->quantity,2)}}</td>
-                    <td class="text-right">P {{number_format($item->price,2)}}</td>
-                    <td class="text-right">P {{number_format($item->quantity*$item->price,2)}}</td>
-                </tr>
-                <tr>
-                    <td>{{$materialItemArr[ $item->material_item_id]->brand}} {{$materialItemArr[ $item->material_item_id]->name}} {{$materialItemArr[ $item->material_item_id]->specification_unit_packaging}}</td>
-                    <td class="text-center">{{number_format($item->quantity,2)}}</td>
-                    <td class="text-right">P {{number_format($item->price,2)}}</td>
-                    <td class="text-right">P {{number_format($item->quantity*$item->price,2)}}</td>
-                </tr>
-                <tr>
-                    <td>{{$materialItemArr[ $item->material_item_id]->brand}} {{$materialItemArr[ $item->material_item_id]->name}} {{$materialItemArr[ $item->material_item_id]->specification_unit_packaging}}</td>
-                    <td class="text-center">{{number_format($item->quantity,2)}}</td>
-                    <td class="text-right">P {{number_format($item->price,2)}}</td>
-                    <td class="text-right">P {{number_format($item->quantity*$item->price,2)}}</td>
-                </tr>
+                    <tr>
+                        <td>{{$materialItemArr[ $item->material_item_id]->brand}} {{$materialItemArr[ $item->material_item_id]->name}} {{$materialItemArr[ $item->material_item_id]->specification_unit_packaging}}</td>
+                        <td class="text-center">{{number_format($item->quantity,2)}}</td>
+                        <td class="text-right">P {{number_format($item->price,2)}}</td>
+                        <td class="text-right">P {{number_format($item->quantity*$item->price,2)}}</td>
+                    </tr>
+                
                 @php $subtotal = $subtotal + ($item->quantity*$item->price); @endphp
                 @endforeach    
                 <tr>
@@ -129,26 +117,6 @@
                             
                     @php $grandtotal = $grandtotal + $extra->value; @endphp
                 @endforeach
-                <tr>
-                    <td colspan="2"></td>
-                    <th class="text-right" style="padding-right:5px;padding-top:3px">Grand Total</th>
-                    <td class="text-right">P {{number_format($grandtotal,2)}}</td>
-                </tr>
-                <tr>
-                    <td colspan="2"></td>
-                    <th class="text-right" style="padding-right:5px;padding-top:3px">Grand Total</th>
-                    <td class="text-right">P {{number_format($grandtotal,2)}}</td>
-                </tr>
-                <tr>
-                    <td colspan="2"></td>
-                    <th class="text-right" style="padding-right:5px;padding-top:3px">Grand Total</th>
-                    <td class="text-right">P {{number_format($grandtotal,2)}}</td>
-                </tr>
-                <tr>
-                    <td colspan="2"></td>
-                    <th class="text-right" style="padding-right:5px;padding-top:3px">Grand Total</th>
-                    <td class="text-right">P {{number_format($grandtotal,2)}}</td>
-                </tr>
                 <tr>
                     <td colspan="2"></td>
                     <th class="text-right" style="padding-right:5px;padding-top:3px">Grand Total</th>
