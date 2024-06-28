@@ -727,7 +727,7 @@ class PurchaseOrderController extends Controller
         $extras = json_decode($purchaseOrder->extras);
         
     
-        return view('purchase_order/print',[
+        $html = view('purchase_order/print',[
             'purchase_order'            => $purchaseOrder,
             'material_quantity_request' => $materialQuantityRequest,
             'project'                   => $project,
@@ -739,13 +739,12 @@ class PurchaseOrderController extends Controller
             'extras'                            => $extras,
             'materialItemArr'                   => $materialItemArr
             
-        ]);
-
-        /** 
+        ])->render();
+        
         try {
-        $html2pdf = new Html2Pdf();
-        $html2pdf->writeHTML($html);
-        $html2pdf->output();
+            $html2pdf = new Html2Pdf();
+            $html2pdf->writeHTML($html);
+            $html2pdf->output();
 
         }catch(Html2PdfException $e) {
             $html2pdf->clean();
@@ -755,7 +754,8 @@ class PurchaseOrderController extends Controller
             echo $formatter->getHtmlMessage();
 
         
-        } **/
+        } 
+        
 
     }
     
