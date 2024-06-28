@@ -103,6 +103,12 @@
                     <td class="text-right">P {{number_format($item->price,2)}}</td>
                     <td class="text-right">P {{number_format($item->quantity*$item->price,2)}}</td>
                 </tr>
+                <tr>
+                    <td>{{$materialItemArr[ $item->material_item_id]->brand}} {{$materialItemArr[ $item->material_item_id]->name}} {{$materialItemArr[ $item->material_item_id]->specification_unit_packaging}}</td>
+                    <td class="text-center">{{number_format($item->quantity,2)}}</td>
+                    <td class="text-right">P {{number_format($item->price,2)}}</td>
+                    <td class="text-right">P {{number_format($item->quantity*$item->price,2)}}</td>
+                </tr>
                 @php $subtotal = $subtotal + ($item->quantity*$item->price); @endphp
                 @endforeach    
                 <tr>
