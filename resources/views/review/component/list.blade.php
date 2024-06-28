@@ -79,7 +79,7 @@
             });
 
             row.onclick = ()=>{
-                document.location.href = '/project/'+item.id;
+                document.location.href = '/review/component/'+item.id;
             };
 
             $el.append(row).to(list);

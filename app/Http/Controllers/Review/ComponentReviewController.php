@@ -22,7 +22,6 @@ class ComponentReviewController extends Controller
 
         //todo check role
 
-        $section_id = (int) $request->input('section_id') ?? 0;
         $page       = (int) $request->input('page')     ?? 1;
         $limit      = (int) $request->input('limit')    ?? 0;
         $orderBy    = $request->input('order_by')       ?? 'id';
@@ -32,8 +31,8 @@ class ComponentReviewController extends Controller
 
         $component = new Component();
 
-        $component = $component->where('section_id',$section_id);
-
+        $component = $component->where('status','=','PEND');
+        
         if($query != ''){
             $component = $component->where('name','LIKE','%'.$query.'%');
         }
