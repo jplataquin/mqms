@@ -31,7 +31,7 @@
             @foreach(['Supplier','Site','Accounting','Warehouse'] as $copy)
             <table class="table" border="1">
                 <tr>
-                    <td colspan="4" class="text-center bold" style="width:800px">
+                    <td colspan="4" class="text-center bold" style="width:100%">
                         Purchase Order
                     </td>
                 </tr>
