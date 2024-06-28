@@ -92,9 +92,28 @@
                 @endforeach    
                 <tr>
                     <td colspan="2"></td>
-                    <th class="text-right">Sub Total</th>
+                    <th class="text-right" style="padding-right:5px">Sub Total</th>
                     <td class="text-right">{{number_format($subtotal,2)}}</td>
                 </tr>
+                @php $grandtotal = $subtotal; @endphp
+                @foreach($extras as $extra)
+
+                    <tr>
+                        <td colspan="2"></td>
+                        <th class="text-right">{{$extra->text}}</th>
+                        <td class="text-right">{{ number_format($extra->value,2) }}</td>
+                    </tr>
+                        
+                        
+                    @php $grandtotal = $grandtotal + $extra->value; @endphp
+                @endforeach
+
+                <tr>
+                    <td colspan="2"></td>
+                    <th class="text-right">Grand Total</th>
+                    <td class="text-right">{{number_format($grandtotal,2)}}</td>
+                </tr>
+
 
             </table>
             @endforeach
