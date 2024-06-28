@@ -76,10 +76,10 @@
                     </th>
                 </tr>
                 <tr>
-                    <td class="bold">Material</td>
-                    <td class="bold">Quantity</td>
-                    <td class="bold">Price</td>
-                    <td class="bold">Total</td>
+                    <td class="text-center bold">Material</td>
+                    <td class="text-center bold">Quantity</td>
+                    <td class="text-center bold">Price</td>
+                    <td class="text-center bold">Total</td>
                 </tr>
                 @php $subtotal = 0; @endphp
                 @foreach($items as $item)
