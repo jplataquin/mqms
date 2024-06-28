@@ -35,7 +35,7 @@ class ComponentReviewController extends Controller
 
         $component = $component->join('projects', 'project.id', '=', 'component.project_id')
         ->join('sections', 'section.id', '=', 'component.section_id')
-        ->select('component.*', 'project.name AS project_name', 'section.name AS section_name')
+        ->select('component.*', 'project.name AS project_name', 'section.name AS section_name');
         
         if($query != ''){
             $component = $component->where('name','LIKE','%'.$query.'%');
