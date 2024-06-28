@@ -33,9 +33,9 @@ class ComponentReviewController extends Controller
 
         $component = $component->where('status','=','PEND');
 
-        $component = $component->join('projects', 'project.id', '=', 'component.project_id')
-        ->join('sections', 'section.id', '=', 'component.section_id')
-        ->select('component.*', 'project.name AS project_name', 'section.name AS section_name');
+        $component = $component->join('projects', 'projects.id', '=', 'components.project_id')
+        ->join('sections', 'sections.id', '=', 'components.section_id')
+        ->select('components.*', 'projects.name AS project_name', 'sections.name AS section_name');
         
         if($query != ''){
             $component = $component->where('name','LIKE','%'.$query.'%');
