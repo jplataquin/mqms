@@ -65,6 +65,18 @@
                     <td class="text-left bold">Section / Component </td>
                     <td>{{$section->name}} - {{$component->name}}</td>
                 </tr>
+                <tr>
+                    <th class="text-center bold" colspan="4">
+                        Items
+                    </th>
+                </tr>
+                <tr>
+                    <td class="bold">Material</td>
+                    <td class="bold">Quantity</td>
+                    <td class="bold">Price</td>
+                    <td class="bold">Total</td>
+                </tr>
+
             </table>
             @endforeach
         </div>
