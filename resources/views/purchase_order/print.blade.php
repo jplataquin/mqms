@@ -125,18 +125,18 @@
             </table>
             <table class="table" border="1">
                 <tr>
-                    <td class="text-center bold" style="width:33.33%">
+                    <td class="text-center bold" style="width:33%">
 
                         ______________________________
                         <br>
                         Prepared By
                     </td>
-                    <td class="text-center bold" style="width:33.33%">
+                    <td class="text-center bold" style="width:33%">
                         ______________________________
                         <br>
                         Approved By
                     </td>
-                    <td class="text-center bold" style="width:33.33%">
+                    <td class="text-center bold" style="width:20%">
                         ______________________________
                         <br>
                         Received By
