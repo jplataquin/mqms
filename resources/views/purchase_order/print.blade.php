@@ -44,17 +44,17 @@
                 </tr>
                 <tr>
                     <td colspan="4" style="padding:0px">
-                        <table class="table" border="1">
+                        <table class="table" style="margin-top:2px; margin-bottom:2px" border="1">
                             <tr>
-                                <td class="text-left bold" style="width:100px">PO#</td>
-                                <td>{{$purchase_order->id}}</td>
+                                <td class="text-left bold" style="width:10%">PO#</td>
+                                <td style="width:40%">{{$purchase_order->id}}</td>
                                 <td class="text-left bold">Supplier</td>
                                 <td>{{$supplier->name}}</td>
                             </tr>
                             <tr>
-                                <td class="text-left bold" style="width:100px">Mat. Qty Req #</td>
-                                <td>{{$material_quantity_request->id}}</td>
-                                <td class="text-left bold">Payment Terms</td>
+                                <td class="text-left bold" style="width:10%">Mat. Qty Req #</td>
+                                <td style="width:40%">{{$material_quantity_request->id}}</td>
+                                <td class="text-left bold" >Payment Terms</td>
                                 <td>{{$payment_term->text}}</td>
                             </tr>
                             <tr>
