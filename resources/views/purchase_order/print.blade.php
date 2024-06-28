@@ -34,7 +34,7 @@
             <table class="table" border="1">
                 <tr>
                     <td colspan="4" class="text-center bold" style="">
-                        <img src="storage/sys_images/header.png" style=width:400px"/>
+                        <img src="storage/sys_images/header.png" style=width:500px"/>
                     </td>
                 </tr>
                 <tr>
@@ -49,7 +49,7 @@
                                 <td class="text-left bold" style="width:20%">PO#</td>
                                 <td style="width:30%">{{$purchase_order->id}}</td>
                                 <td class="text-left bold"  style="width:20%">Supplier</td>
-                                <td style="width:25%">{{$supplier->name}}</td>
+                                <td style="width:30%">{{$supplier->name}}</td>
                             </tr>
                             <tr>
                                 <td class="text-left bold">Mat. Qty Req #</td>
@@ -124,7 +124,7 @@
                 </tr>
             </table>
            
-            <table class="table" style="">
+            <table class="table" style="margin-left:8%; margin-top:40px; margin-bottom:20px">
                 <tr>
                     <td class="text-center bold" style="padding-right:30px">
                         __________________________
