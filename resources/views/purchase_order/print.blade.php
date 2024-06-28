@@ -136,7 +136,7 @@
                         <br>
                         Approved By
                     </td>
-                    <td class="text-center bold" style="width:20%">
+                    <td class="text-center bold" style="width:33%">
                         ______________________________
                         <br>
                         Received By
