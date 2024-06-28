@@ -1,13 +1,21 @@
 <!DOCTYPE html>
     <head>
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+         <style>
+            .text-left{
+                text-align:left;
+            }
+
+            .bold{
+                font-weight: bold;
+            }
+        </style>
     </head>
     <body>
         <div>
             @foreach(['Supplier','Site','Accounting','Warehouse'] as $copy)
             <table style="border:collapse" border="1">
                 <tr>
-                    <td>
+                    <td colspan="4">
                         <strong>Purchase Order</strong>
                     </td>
                 </tr>
