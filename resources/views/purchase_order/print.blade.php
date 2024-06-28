@@ -94,15 +94,15 @@
                 <tr>
                     <td>{{$materialItemArr[ $item->material_item_id]->brand}} {{$materialItemArr[ $item->material_item_id]->name}} {{$materialItemArr[ $item->material_item_id]->specification_unit_packaging}}</td>
                     <td class="text-center">{{number_format($item->quantity,2)}}</td>
-                    <td class="text-right">{{number_format($item->price,2)}}</td>
-                    <td class="text-right">{{number_format($item->quantity*$item->price,2)}}</td>
+                    <td class="text-right">P {{number_format($item->price,2)}}</td>
+                    <td class="text-right">P {{number_format($item->quantity*$item->price,2)}}</td>
                 </tr>
                 @php $subtotal = $subtotal + ($item->quantity*$item->price); @endphp
                 @endforeach    
                 <tr>
                     <td colspan="2"></td>
                     <th class="text-right" style="padding-right:5px;padding-top:3px">Sub Total</th>
-                    <td class="text-right">{{number_format($subtotal,2)}}</td>
+                    <td class="text-right">P {{number_format($subtotal,2)}}</td>
                 </tr>
                 @php $grandtotal = $subtotal; @endphp
                 @foreach($extras as $extra)
@@ -110,7 +110,7 @@
                     <tr>
                         <td colspan="2"></td>
                         <th class="text-right" style="padding-right:5px;padding-top:3px">{{$extra->text}}</th>
-                        <td class="text-right">{{ number_format($extra->value,2) }}</td>
+                        <td class="text-right">P {{ number_format($extra->value,2) }}</td>
                     </tr>
                         
                         
@@ -120,10 +120,32 @@
                 <tr>
                     <td colspan="2"></td>
                     <th class="text-right" style="padding-right:5px;padding-top:3px">Grand Total</th>
-                    <td class="text-right">{{number_format($grandtotal,2)}}</td>
+                    <td class="text-right">P {{number_format($grandtotal,2)}}</td>
                 </tr>
+                <tr>
+                    <td colspan="4">
+                        <table class="table" border="1">
+                            <tr>
+                                <td class="text-center bold">
 
-
+                                    ______________________________
+                                    <br>
+                                    Prepared By
+                                </td>
+                                <td class="text-center bold">
+                                    ______________________________
+                                    <br>
+                                    Approved By
+                                </td>
+                                <td class="text-center bold">
+                                    ______________________________
+                                    <br>
+                                    Received By
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
             </table>
             @endforeach
         </div>
