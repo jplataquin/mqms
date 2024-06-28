@@ -11,6 +11,9 @@
 
             .table{
                 border-collapse:collapse;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 5px;
             }
 
             .text-center{
@@ -24,7 +27,7 @@
         </style>
     </head>
     <body>
-        <div style="padding-left:auto; padding-right:auto">
+        <div>
             @foreach(['Supplier','Site','Accounting','Warehouse'] as $copy)
             <table class="table" style="width:700px" border="1">
                 <tr>
