@@ -174,7 +174,7 @@
                     </td>
                 </tr>
             </table>
-            <pagebreak></pagebreak>
+            <break></break>
             @endforeach
         </div>
     </page>
