@@ -82,7 +82,7 @@ class ComponentReviewController extends Controller
         
         $hash = generateComponentHash($project,$section,$component,$componentItems,$materialItems);
 
-        return view('component/display',[
+        return view('review/component/display',[
             'project'           => $project,
             'section'           => $section,
             'component'         => $component,
