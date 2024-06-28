@@ -31,24 +31,24 @@ class ComponentReviewController extends Controller
 
         $component = new Component();
 
-        $component = $component->where('status','=','PEND');
+        $component = $component->where('components.status','=','PEND');
 
         $component = $component->join('projects', 'projects.id', '=', 'components.project_id')
         ->join('sections', 'sections.id', '=', 'components.section_id')
         ->select('components.*', 'projects.name AS project_name', 'sections.name AS section_name');
         
         if($query != ''){
-            $component = $component->where('name','LIKE','%'.$query.'%');
+            $component = $component->where('components.name','LIKE','%'.$query.'%');
         }
 
         if($limit > 0){
             $page   = ($page-1) * $limit;
             
-            $result = $component->orderBy($orderBy,$order)->skip($page)->take($limit)->get();
+            $result = $component->orderBy('components.'.$orderBy,$order)->skip($page)->take($limit)->get();
             
         }else{
 
-            $result = $component->orderBy($orderBy,$order)->get();
+            $result = $component->orderBy('components.'.$orderBy,$order)->get();
         }
 
         return response()->json([
