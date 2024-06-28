@@ -47,7 +47,7 @@
                 </tr>
                 <tr>
                     <td colspan="4">
-                        <table border="1">
+                        <table class="table" border="1">
                             <tr>
                                 <td class="text-left bold" style="width:100px">PO#</td>
                                 <td>{{$purchase_order->id}}</td>
