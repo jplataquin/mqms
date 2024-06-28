@@ -29,7 +29,10 @@
             }
 
             .pad-5{
-                padding: 5px !important;
+                padding-top: 3px !important;
+                padding-bottom: 3px !important;
+                padding-left: 5px !important;
+                padding-right: 5px !important;
             }
         </style>
     </head>
