@@ -33,7 +33,7 @@
     <hr>
 
     <div class="container">
-        <table>
+        <table class="table w-100">
             <thead>
                 <tr>
                     <th>
