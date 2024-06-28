@@ -13,7 +13,7 @@
     <body>
         <div>
             @foreach(['Supplier','Site','Accounting','Warehouse'] as $copy)
-            <table style="border:collapse" border="1">
+            <table style="border-collapse:collapse" border="1">
                 <tr>
                     <td colspan="4">
                         <strong>Purchase Order</strong>
