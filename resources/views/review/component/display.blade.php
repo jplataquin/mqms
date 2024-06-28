@@ -26,13 +26,23 @@
                 </tbody>
             </table>
         </div>
+        
+        <div class="row">
+            <div class="col-6">
+            <button class="btn btn-danger" id="disapproveBtn">Disapprove</button>
+            </div>
+            <div class="col-6 text-end">
+                <button class="btn btn-primary" id="approveBtn">Approve</button>
+                <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+            </div>
+        </div>
 
         @foreach($componentItems as $item)
         <table class="border table">
             <thead>
                 <tr>
-                    <th class="text-center" style="background-color:#add8e6">{{$item->name}}</th>
-                    <th class="text-center" style="background-color:#add8e6"> {{$item->quantity}} {{$item->unit}} </th>
+                    <th class="text-center bg-primary">{{$item->name}}</th>
+                    <th class="text-center bg-primary"> {{$item->quantity}} {{$item->unit}} </th>
                 </tr>
             </thead>
         </table>
@@ -73,4 +83,46 @@
 
 </div>
 
+<script type="module">
+    import {$q} from '/adarna.js';
+
+    let approveBtn      = $q('#approveBtn').first();
+    let disapproveBtn   = $q('#disapproveBtn').first();
+    let cancelBtn       = $q('#cancelBtn').first();
+
+    approveBtn.onclick = (e)=>{
+        e.preventDefault();
+
+        if(!confirm('Are you sure you want to Approve this?')){
+                return false;
+            }
+
+            window.util.blockUI();
+
+            window.util.$post('/api/review/component/approve',{
+                id: '{{$component->id}}'
+            }).then(reply=>{
+
+                if(reply.status <= 0 ){
+                    window.util.unblockUI();
+                    alert(reply.message);
+                    return false;
+                };
+
+                window.util.unblockUI();
+
+                document.location.href = '/review/components/';
+
+            });
+    }
+    
+    disapproveBtn.onclick = (e)=>{
+        e.preventDefault();
+        
+    }
+    cancelBtn.onclick = (e)=>{
+        e.preventDefault();
+        
+    }
+</script>
 @endsection
