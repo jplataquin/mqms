@@ -32,8 +32,24 @@
     </div>
     <hr>
 
-    <div class="container" id="list">
-
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        Project
+                    </th>
+                    <th>
+                        Section
+                    </th>
+                    <th>
+                        Component
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="list">
+            </tbody>
+        </table>
     </div>
 
     <div class="row mt-3">
@@ -67,8 +83,10 @@
         
         data.map(item=>{
 
-            let row = t.div({class:'row mt-1 mb-1 border selectable-div fade-in'},()=>{
-                t.div({class:'col-lg-12'},item.name );
+            let row = t.tr({class:'selectable-div'},()=>{
+                t.td(item.project_name);
+                t.td(item.section_name);
+                t.td(item.name);
             });
 
             row.onclick = ()=>{
