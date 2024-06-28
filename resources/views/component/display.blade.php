@@ -24,7 +24,7 @@
                 <tr>
                     <th>Status</th>
                     <td>
-                        $component->status
+                        {{$component->status}}
                     </td>
                 </tr>
                 <tr>
