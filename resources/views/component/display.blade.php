@@ -24,10 +24,7 @@
                 <tr>
                     <th>Status</th>
                     <td>
-                        <select id="status" disabled="true" class="form-control editable_field">
-                            <option value="ACTV" @if($component->status == "ACTV") selected @endif>Active</option>
-                            <option value="PEND" @if($component->status == "PEND") selected @endif>Pending</option>
-                        </select>
+                        $component->status
                     </td>
                 </tr>
                 <tr>
@@ -120,7 +117,6 @@
 
     let materialItemOptions = @json($materialItems);
     let component           = $q('#component').first();
-    let status              = $q('#status').first();
     let component_item_list = $q('#component_item_list').first();
     let editBtn             = $q('#editBtn').first();
     let cancelBtn           = $q('#cancelBtn').first();
@@ -163,8 +159,7 @@
         window.util.$post('/api/component/update',{
             id:'{{$component->id}}',
             section_id:'{{$section->id}}',
-            name:component.value,
-            status: status.value
+            name:component.value
         }).then((reply)=>{
 
             window.util.unblockUI();

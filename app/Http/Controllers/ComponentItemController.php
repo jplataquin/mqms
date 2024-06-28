@@ -235,7 +235,7 @@ class ComponentItemController extends Controller
  
          if($component->status != 'PEND'){
              $component->status      = 'PEND';
-             $component->updated_by = $user_id;
+             $component->updated_by  = $user_id;
              $component->save();
          }
  

@@ -183,10 +183,6 @@ class ComponentController extends Controller
                     ->where('name', $name)
                     ->where('id','!=',$id);
                 }),
-            ],
-            'status' =>[
-                'required',
-                'max:4'
             ]
         ]);
 
@@ -213,7 +209,7 @@ class ComponentController extends Controller
         }
 
         $component->name                         = $name;
-        $component->status                       = $status;
+        $component->status                       = 'PEND';
         $component->updated_by                   = $user_id;
         $component->save();
 
