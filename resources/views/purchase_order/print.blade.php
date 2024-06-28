@@ -37,6 +37,11 @@
             <table class="table" border="1">
                 <tr>
                     <td colspan="4" class="text-center bold" style="width:100%">
+                        <img src="storage/sys_images/header.png" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="text-center bold">
                         Purchase Order
                     </td>
                 </tr>
