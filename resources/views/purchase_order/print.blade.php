@@ -142,6 +142,11 @@
                     <th class="text-right" style="padding-right:5px;padding-top:3px">Grand Total</th>
                     <td class="text-right">P {{number_format($grandtotal,2)}}</td>
                 </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <th class="text-right" style="padding-right:5px;padding-top:3px">Grand Total</th>
+                    <td class="text-right">P {{number_format($grandtotal,2)}}</td>
+                </tr>
             </table>
            
             <table class="table" style="margin-left:8%; margin-top:40px; margin-bottom:20px">
