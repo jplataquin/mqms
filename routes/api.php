@@ -116,6 +116,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/review/material_canvass/approve', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, '_approve']);
     Route::post('/review/material_canvass/disapprove', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, '_disapprove']);
     
+    Route::get('/review/component/list', [App\Http\Controllers\Review\ComponentReviewController::class, '_list']);
+    
     Route::get('/material_canvass/list', [App\Http\Controllers\MaterialCanvassController::class, '_list']);
     Route::post('/material_canvass/create', [App\Http\Controllers\MaterialCanvassController::class, '_create']);
     Route::post('/material_canvass/delete', [App\Http\Controllers\MaterialCanvassController::class, '_delete']);

@@ -165,6 +165,13 @@ class MaterialQuantityController extends Controller
             ]);
         }
          
+        $component = $materialQuantity->componentItem->component;
+        
+        if($component->status != 'PEND'){
+            $component->status = 'PEND';
+            $component->save();
+        }
+
         return response()->json([
             'status'    => 1,
             'message'   => '',

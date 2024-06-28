@@ -92,6 +92,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/material_canvass', [App\Http\Controllers\MaterialCanvassController::class, 'list']);
     Route::get('/material_canvass/{id}', [App\Http\Controllers\MaterialCanvassController::class, 'display']);
    
+    oute::get('/review/components', [App\Http\Controllers\Review\ComponentReviewController::class, 'list']);
+    Route::get('/review/component/{id}', [App\Http\Controllers\Review\ComponentReviewController::class, 'display']);
+    
+
     Route::get('/purchase_orders', [App\Http\Controllers\PurchaseOrderController::class, 'list']);
     Route::get('/purchase_order/create/select', [App\Http\Controllers\PurchaseOrderController::class, 'select']);
     Route::get('/purchase_order/create/{id}', [App\Http\Controllers\PurchaseOrderController::class, 'create']);

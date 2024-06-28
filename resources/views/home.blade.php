@@ -14,6 +14,9 @@
                             Review
                             <ul>
                                 <li>
+                                    <a href="/review/components">Components</a>  ()
+                                </li>
+                                <li>
                                     <a href="/review/material_quantity_requests">Material Quantity Request</a>  ({{ $materialQuantityRequestPendCount }})
                                 </li>
                                 <li>
