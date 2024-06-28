@@ -124,7 +124,7 @@
                 </tr>
             </table>
             <table class="table" border="1">
-                <tr>
+                <tr style="width:100%">
                     <td class="text-center bold">
 
                         ______________________________
