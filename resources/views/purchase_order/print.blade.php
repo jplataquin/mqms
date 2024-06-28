@@ -137,11 +137,6 @@
                                     <br>
                                     Approved By
                                 </td>
-                                <td class="text-center bold">
-                                    ______________________________
-                                    <br>
-                                    Received By
-                                </td>
                             </tr>
                         </table>
                     </td>
