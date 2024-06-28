@@ -5,11 +5,17 @@
     <body>
         <div>
             @foreach(['Supplier','Site','Accounting','Warehouse'] as $copy)
-            <table border="1">
+            <table style="border:collapse" border="1">
                 <tr>
                     <td>
                         <strong>Purchase Order</strong>
                     </td>
+                </tr>
+                <tr>
+                    <td class="text-left bold">PO#</td>
+                    <td>{{$purchase_order->id}}</td>
+                    <td class="text-left bold">Supplier</td>
+                    <td>{{$supplier->name}}</td>
                 </tr>
             </table>
             @endforeach
