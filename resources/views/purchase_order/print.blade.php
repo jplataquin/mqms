@@ -4,10 +4,15 @@
     </head>
     <body>
         <div>
-            <table>
+            @foreach(['Supplier','Site','Accounting','Warehouse'] as $copy)
+            <table border="1">
                 <tr>
-</tr>
+                    <td>
+                        <strong>Purchase Order</strong>
+                    </td>
+                </tr>
             </table>
+            @endforeach
         </div>
     </body>
 </html>
