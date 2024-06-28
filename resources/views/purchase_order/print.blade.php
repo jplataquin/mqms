@@ -13,7 +13,7 @@
                 border-collapse:collapse;
                 margin-left: auto;
                 margin-right: auto;
-                margin-bottom: 5px;
+                margin-bottom: 10px;
             }
 
             .text-center{
@@ -29,9 +29,9 @@
     <body>
         <div>
             @foreach(['Supplier','Site','Accounting','Warehouse'] as $copy)
-            <table class="table" style="width:700px" border="1">
+            <table class="table" border="1">
                 <tr>
-                    <td colspan="4" class="text-center bold">
+                    <td colspan="4" class="text-center bold" style="width:800px">
                         Purchase Order
                     </td>
                 </tr>
