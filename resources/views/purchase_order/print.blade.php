@@ -28,12 +28,7 @@
                 padding: 3px;
             }
 
-            .pad-5{
-                padding-top: 3px !important;
-                padding-bottom: 3px !important;
-                padding-left: 5px !important;
-                padding-right: 5px !important;
-            }
+            
         </style>
     </head>
     <body>
@@ -116,7 +111,7 @@
 
                 <tr>
                     <td colspan="2"></td>
-                    <th class="text-right pad-5">Grand Total</th>
+                    <th class="text-right" style="padding-right:5px;padding-top:5px">Grand Total</th>
                     <td class="text-right">{{number_format($grandtotal,2)}}</td>
                 </tr>
 
