@@ -2,7 +2,7 @@
     <head>
          <style>
             .text-left{
-                text-align:left;
+                text-align: left;
             }
 
             .bold{
@@ -13,6 +13,10 @@
                 border-collapse:collapse;
             }
 
+            .text-center{
+                text-align: center;
+            }
+
         </style>
     </head>
     <body>
@@ -20,8 +24,8 @@
             @foreach(['Supplier','Site','Accounting','Warehouse'] as $copy)
             <table class="table" width="500px" border="1">
                 <tr>
-                    <td colspan="4">
-                        <strong>Purchase Order</strong>
+                    <td colspan="4" class="text-center bold">
+                        Purchase Order
                     </td>
                 </tr>
                 <tr>
