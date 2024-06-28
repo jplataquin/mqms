@@ -126,17 +126,17 @@
            
             <table class="table" border="1" style="">
                 <tr>
-                    <td class="text-center bold" style="width:30%">
+                    <td class="text-center bold">
                         __________________________
                         <br>
                         Prepared By
                     </td>
-                    <td class="text-center bold" style="width:30%">
+                    <td class="text-center bold">
                         __________________________
                         <br>
                         Approved By
                     </td>
-                    <td class="text-center bold" style="width:30%">
+                    <td class="text-center bold">
                         __________________________
                         <br>
                         Received By
