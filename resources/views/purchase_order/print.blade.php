@@ -124,7 +124,26 @@
                 </tr>
                 <tr>
                     <td colspan="4" style="padding:0px">
-                       
+                        <table border="1">
+                            <tr>
+                                <td class="text-center bold">
+
+                                    ______________________________
+                                    <br>
+                                    Prepared By
+                                </td>
+                                <td class="text-center bold">
+                                    ______________________________
+                                    <br>
+                                    Approved By
+                                </td>
+                                <td class="text-center bold">
+                                    ______________________________
+                                    <br>
+                                    Received By
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
             </table>
