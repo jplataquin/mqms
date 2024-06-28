@@ -93,7 +93,7 @@
                 @endforeach    
                 <tr>
                     <td colspan="2"></td>
-                    <th class="text-right pad-5" >Sub Total</th>
+                    <th class="text-right" style="padding-right:5px;padding-top:3px">Sub Total</th>
                     <td class="text-right">{{number_format($subtotal,2)}}</td>
                 </tr>
                 @php $grandtotal = $subtotal; @endphp
@@ -101,7 +101,7 @@
 
                     <tr>
                         <td colspan="2"></td>
-                        <th class="text-right pad-5">{{$extra->text}}</th>
+                        <th class="text-right" style="padding-right:5px;padding-top:3px">{{$extra->text}}</th>
                         <td class="text-right">{{ number_format($extra->value,2) }}</td>
                     </tr>
                         
@@ -111,7 +111,7 @@
 
                 <tr>
                     <td colspan="2"></td>
-                    <th class="text-right" style="padding-right:5px;padding-top:5px">Grand Total</th>
+                    <th class="text-right" style="padding-right:5px;padding-top:3px">Grand Total</th>
                     <td class="text-right">{{number_format($grandtotal,2)}}</td>
                 </tr>
 
