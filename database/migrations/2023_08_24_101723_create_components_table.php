@@ -20,6 +20,11 @@ return new class extends Migration
             $table->bigInteger('created_by');
             $table->bigInteger('updated_by')->nullable();
             $table->bigInteger('deleted_by')->nullable();
+            $table->bigInteger('approved_by')->nullalbe();
+            $table->bigInteger('rejected_by')->nullable();
+            
+            $table->dateTime('approved_at')->nullable();
+            $table->dateTime('rejected_at')->nullable()
             $table->softDeletes();
             $table->timestamps();
 

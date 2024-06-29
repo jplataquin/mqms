@@ -18,7 +18,8 @@ return new class extends Migration
             $table->bigInteger('component_id');
             $table->string('name');
             $table->string('unit');
-            $table->decimal('quantity');
+            $table->double('quantity');
+            $table->decimal('budget_price',10,2);
             $table->bigInteger('created_by');
             $table->bigInteger('updated_by')->nullable();
             $table->bigInteger('deleted_by')->nullable();

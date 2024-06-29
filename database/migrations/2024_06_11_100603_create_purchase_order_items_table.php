@@ -21,7 +21,7 @@ return new class extends Migration
             $table->bigInteger('material_canvass_id');
             $table->bigInteger('material_id');
             $table->char('status',4)->default('PEND');
-            $table->decimal('quantity',10,2);
+            $table->double('quantity');
             $table->decimal('price',10,2);
         });
     }

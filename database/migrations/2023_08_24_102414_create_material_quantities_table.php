@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('component_item_id');
             $table->bigInteger('material_item_id');
-            $table->decimal('quantity');
-            $table->decimal('equivalent');
+            $table->double('quantity');
+            $table->double('equivalent');
             $table->bigInteger('created_by');
             $table->bigInteger('updated_by')->nullable();
             $table->bigInteger('deleted_by')->nullable();

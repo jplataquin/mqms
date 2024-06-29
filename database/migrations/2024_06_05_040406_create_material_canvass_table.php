@@ -23,7 +23,7 @@ return new class extends Migration
             $table->bigInteger('payment_term_id')->default(0);
 
             $table->bigInteger('approved_by')->nullable();
-            $table->bigInteger('disapproved_by')->nullable();
+            $table->bigInteger('rejected_by')->nullable();
             $table->bigInteger('void_by')->nullable();
             
             
@@ -32,7 +32,7 @@ return new class extends Migration
             $table->bigInteger('deleted_by')->nullable();
            
             $table->dateTime('approved_at')->nullable();  
-            $table->dateTime('disapproved_at')->nullable();
+            $table->dateTime('rejected_at')->nullable();
             $table->dateTime('void_at')->nullable();
             
             $table->softDeletes();
