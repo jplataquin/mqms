@@ -216,6 +216,14 @@ class ComponentItem extends Component{
 
         }
 
+        this.el.budget_price.onkeypress = (e)=>{
+            return window.util.inputNumber(this.el.budget_price,e,2,false);
+        }
+
+        this.el.quantity.onkeypress = (e)=>{
+            return window.util.inputNumber(this.el.quantity,e,2,false);
+        }
+        
         this.el.materialQuantity.onkeyup = ()=>{
             this.el.total.value = calculateTotalEquivalent( this.el.materialQuantity.value, this.el.equivalent.value);
         }
@@ -283,6 +291,7 @@ class ComponentItem extends Component{
                 id          : this._model.id,
                 component_id: this._model.component_id,
                 name        : this.el.name.value,
+                budget_price: this.el.budget_price.value,
                 quantity    : this.el.quantity.value,
                 unit        : this.el.unit.value
             }).then(reply=>{
@@ -321,6 +330,7 @@ class ComponentItem extends Component{
         this.el.name.disabled           = !newVal;
         this.el.quantity.disabled       = !newVal;
         this.el.unit.disabled           = !newVal;
+        this.el.budget_price.disabled   = !newVal;
         
 
         if(newVal){
