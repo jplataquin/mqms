@@ -39,10 +39,10 @@ class Component extends Model
     public function UpdatedByUser(){   
         $user = User::find($this->updated_by);
 
-        if(!$user){
+        //if(!$user){
             print_r((new User())->getAttributes());
             return (object) (new User())->getAttributes();
-        }
+        //}
 
         return $user;
     }
