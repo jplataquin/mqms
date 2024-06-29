@@ -33,7 +33,7 @@ class Component extends Model
 
     public function CreatedByUser(){
         
-        return DB::table('users')->where('id',$this->created_by)->row();
+        return DB::table('users')->where('id',$this->created_by)->first();
     }
 
     public function delete(){
