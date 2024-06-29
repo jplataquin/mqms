@@ -220,7 +220,7 @@ class MaterialQuantityRequestReviewController extends Controller
     }
 
 
-    public function _disapprove(Request $request){
+    public function _reject(Request $request){
         $id = (int) $request->input('id');
 
 
@@ -265,14 +265,14 @@ class MaterialQuantityRequestReviewController extends Controller
 
             $mytime = Carbon::now();
 
-            $materialQuantityRequest->status           = 'DPRV';
+            $materialQuantityRequest->status           = 'REJC';
             $materialQuantityRequest->disapproved_by   = $user_id;
             $materialQuantityRequest->disapproved_at   = $mytime->toDateTimeString();
             $materialQuantityRequest->save();
 
             $affected = DB::table('material_quantity_request_items')
                 ->where('material_quantity_request_id', $id)
-                ->update(['status' => 'DPRV']);
+                ->update(['status' => 'REJC']);
 
             DB::commit();
 

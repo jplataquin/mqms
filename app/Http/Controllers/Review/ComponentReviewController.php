@@ -92,4 +92,117 @@ class ComponentReviewController extends Controller
         ]);
     }
 
+
+    public function _approve(Request $request){
+
+        //todo check role
+
+        $id = (int) $request->input('id') ?? 0;
+
+        $validator = Validator::make($request->all(),[
+            'id' => [
+                'required',
+                'integer'
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Failed Validation',
+                'data'      => $validator->messages()
+            ]);
+        }
+
+        $component = Component::find($id);
+
+        if(!$component){
+            return response()->json([
+                'status' => 0,
+                'message'=>'Error: Record not found',
+                'data'=> []
+            ]);
+        }
+
+        if($component->status != 'PEND'){
+            return response()->json([
+                'status' => 0,
+                'message'=>'Error: Status for this record is no longer pending',
+                'data'=> []
+            ]);
+        }
+
+        
+        $user_id = Auth::user()->id;
+
+        $component->status      = 'APRV';
+        $component->approved_by = $user_id;
+        $component->approved_at = Carbon::now();
+        
+        $component->save();
+
+        return response()->json([
+            'status' => 1,
+            'message'=>'',
+            'data'=> []
+        ]);
+        
+    }
+
+    public function _reject(Request $request){
+
+        //todo check role
+
+        $id = (int) $request->input('id') ?? 0;
+
+        $validator = Validator::make($request->all(),[
+            'id' => [
+                'required',
+                'integer'
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Failed Validation',
+                'data'      => $validator->messages()
+            ]);
+        }
+
+        
+        $component = Component::find($id);
+
+        if(!$component){
+            return response()->json([
+                'status' => 0,
+                'message'=>'Error: Record not found',
+                'data'=> []
+            ]);
+        }
+
+        if($component->status != 'PEND'){
+            return response()->json([
+                'status' => 0,
+                'message'=>'Error: Status for this record is no longer pending',
+                'data'=> []
+            ]);
+        }
+
+        
+        $user_id = Auth::user()->id;
+
+        $component->status      = 'REJC';
+        $component->approved_by = $user_id;
+        $component->approved_at = Carbon::now();
+        
+        $component->save();
+
+        return response()->json([
+            'status' => 1,
+            'message'=>'',
+            'data'=> []
+        ]);
+    }
+
 }

@@ -145,7 +145,7 @@
             <div class="col-6 text-start">
                 
                 @if($purchase_order->status == 'PEND')
-                    <button id="disapproveBtn" class="btn btn-danger">Disapprove</button>
+                    <button id="rejectBtn" class="btn btn-danger">Reject</button>
                 @endif
             </div>
             <div class="col-6 text-end">
@@ -170,20 +170,20 @@
 
     @if($purchase_order->status == 'PEND')
         
-       let diapproveBtn = $q('#disapproveBtn').first();
+       let rejectBtn = $q('#rejectBtn').first();
        let approveBtn   = $q('#approveBtn').first();
 
        diapproveBtn.onclick = (e)=>{
             e.preventDefault();
 
-            if(!confirm('Are you sure you want to DISAPPROVE this PO?')){
+            if(!confirm('Are you sure you want to REJECT this PO?')){
 
                 return false;
             }
 
             window.util.blockUI();
 
-            window.util.$post('/api/review/purchase_order/disapprove',{
+            window.util.$post('/api/review/purchase_order/reject',{
                 id: '{{$purchase_order->id}}'
             }).then(reply=>{
 

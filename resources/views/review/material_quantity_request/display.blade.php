@@ -43,7 +43,7 @@
     <div class="row mt-5">
         <div class="col-6">
             @if($material_quantity_request->status == 'PEND')
-                <button class="btn btn-danger" id="disapproveBtn">Disapprove</button>
+                <button class="btn btn-danger" id="rejectBtn">Reject</button>
             @endif
         </div>
         <div class="col-6 text-end">
@@ -132,7 +132,7 @@
     @if($material_quantity_request->status == 'PEND')
 
         let approveBtn  = $q('#approveBtn').first();
-        let disapproveBtn = $q('#disapproveBtn').first();
+        let rejectBtn = $q('#rejectBtn').first();
 
         approveBtn.onclick = (e)=>{
             e.preventDefault();
@@ -160,16 +160,16 @@
             });
         }
 
-        disapproveBtn.onclick = (e)=>{
+        rejectBtn.onclick = (e)=>{
             e.preventDefault();
 
-            if(!confirm('Are you sure you want to DISAPPROVE this?')){
+            if(!confirm('Are you sure you want to REJECT this?')){
                 return false;
             }
 
             window.util.blockUI();
 
-            window.util.$post('/api/review/material_quantity_request/disapprove',{
+            window.util.$post('/api/review/material_quantity_request/reject',{
                 id: '{{$material_quantity_request->id}}'
             }).then(reply=>{
 

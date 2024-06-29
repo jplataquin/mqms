@@ -106,18 +106,21 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/review/material_quantity_request/list', [App\Http\Controllers\Review\MaterialQuantityRequestReviewController::class, '_list']);
     Route::post('/review/material_quantity_request/approve', [App\Http\Controllers\Review\MaterialQuantityRequestReviewController::class, '_approve']);
-    Route::post('/review/material_quantity_request/disapprove', [App\Http\Controllers\Review\MaterialQuantityRequestReviewController::class, '_disapprove']);
+    Route::post('/review/material_quantity_request/reject', [App\Http\Controllers\Review\MaterialQuantityRequestReviewController::class, '_reject']);
     
     Route::get('/review/purchase_order/list', [App\Http\Controllers\Review\PurchaseOrderReviewController::class, '_list']);
     Route::post('/review/purchase_order/approve', [App\Http\Controllers\Review\PurchaseOrderReviewController::class, '_approve']);
-    Route::post('/review/purchase_order/disapprove', [App\Http\Controllers\Review\PurchaseOrderReviewController::class, '_disapprove']);
+    Route::post('/review/purchase_order/reject', [App\Http\Controllers\Review\PurchaseOrderReviewController::class, '_reject']);
     
     Route::get('/review/material_canvass/list', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, '_list']);
     Route::post('/review/material_canvass/approve', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, '_approve']);
-    Route::post('/review/material_canvass/disapprove', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, '_disapprove']);
+    Route::post('/review/material_canvass/reject', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, '_reject']);
     
     Route::get('/review/component/list', [App\Http\Controllers\Review\ComponentReviewController::class, '_list']);
+    Route::post('/review/component/approve', [App\Http\Controllers\Review\ComponentReviewController::class, '_approve']);
+    Route::get('/review/component/reject', [App\Http\Controllers\Review\ComponentReviewController::class, '_reject']);
     
+
     Route::get('/material_canvass/list', [App\Http\Controllers\MaterialCanvassController::class, '_list']);
     Route::post('/material_canvass/create', [App\Http\Controllers\MaterialCanvassController::class, '_create']);
     Route::post('/material_canvass/delete', [App\Http\Controllers\MaterialCanvassController::class, '_delete']);

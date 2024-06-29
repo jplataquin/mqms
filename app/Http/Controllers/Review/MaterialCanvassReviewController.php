@@ -194,7 +194,7 @@ class MaterialCanvassReviewController extends Controller
         ]);
     }
 
-    public function _disapprove(Request $request){
+    public function _reject(Request $request){
 
         $id = (int) $request->input('id');
 
@@ -220,7 +220,7 @@ class MaterialCanvassReviewController extends Controller
         $user_id = Auth::user()->id;
 
         $materialCanvass->disapproved_by = $user_id;
-        $materialCanvass->status      = 'DPRV';
+        $materialCanvass->status      = 'REJC';
         $materialCanvass->disapproved_at = Carbon::now();
         
         $materialCanvass->save();

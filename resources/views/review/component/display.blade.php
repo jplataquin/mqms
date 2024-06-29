@@ -27,12 +27,16 @@
             </table>
         </div>
         
-        <div class="row">
+        <div class="row mb-5">
             <div class="col-6">
-            <button class="btn btn-danger" id="disapproveBtn">Disapprove</button>
+            @if($component->status == 'PEND')
+                <button class="btn btn-danger" id="rejectBtn">Reject</button>
+            @endif
             </div>
             <div class="col-6 text-end">
+                @if($component->status == 'PEND')
                 <button class="btn btn-primary" id="approveBtn">Approve</button>
+                @endif
                 <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
             </div>
         </div>
@@ -87,42 +91,64 @@
     import {$q} from '/adarna.js';
 
     let approveBtn      = $q('#approveBtn').first();
-    let disapproveBtn   = $q('#disapproveBtn').first();
+    let rejectBtn       = $q('#rejectBtn').first();
     let cancelBtn       = $q('#cancelBtn').first();
 
     approveBtn.onclick = (e)=>{
         e.preventDefault();
 
         if(!confirm('Are you sure you want to Approve this?')){
+            return false;
+        }
+
+        window.util.blockUI();
+
+        window.util.$post('/api/review/component/approve',{
+            id: '{{$component->id}}'
+        }).then(reply=>{
+
+            window.util.unblockUI();
+
+            if(reply.status <= 0 ){
+                window.util.showMsg(reply.message);
                 return false;
-            }
+            };
 
-            window.util.blockUI();
 
-            window.util.$post('/api/review/component/approve',{
-                id: '{{$component->id}}'
-            }).then(reply=>{
+            document.location.href = '/review/components/';
 
-                if(reply.status <= 0 ){
-                    window.util.unblockUI();
-                    alert(reply.message);
-                    return false;
-                };
-
-                window.util.unblockUI();
-
-                document.location.href = '/review/components/';
-
-            });
+        });
     }
     
-    disapproveBtn.onclick = (e)=>{
+    rejectBtn.onclick = (e)=>{
         e.preventDefault();
         
+        if(!confirm('Are you sure you want to Reject this?')){
+            return false;
+        }
+
+        window.util.blockUI();
+
+        window.util.$post('/api/review/component/reject',{
+            id: '{{$component->id}}'
+        }).then(reply=>{
+
+            
+            window.util.unblockUI();
+
+            if(reply.status <= 0 ){
+                window.util.showMsg(reply.message);
+                return false;
+            };
+
+
+            document.location.href = '/review/components/';
+
+        });
     }
     cancelBtn.onclick = (e)=>{
         e.preventDefault();
-        
+        document.location.href = '/review/components/';
     }
 </script>
 @endsection

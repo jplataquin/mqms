@@ -226,7 +226,7 @@ class PurchaseOrderReviewController extends Controller
         
     }
 
-    public function _disapprove(Request $request){
+    public function _reject(Request $request){
 
         $id = (int) $request->input('id');
 
@@ -256,7 +256,7 @@ class PurchaseOrderReviewController extends Controller
         try {  
 
             $purchaseOrder->approved_by = $user_id;
-            $purchaseOrder->status      = 'DPRV';
+            $purchaseOrder->status      = 'REJC';
             $purchaseOrder->approved_at = Carbon::now();
             
             $purchaseOrder->save();
@@ -264,7 +264,7 @@ class PurchaseOrderReviewController extends Controller
 
             DB::table('purchase_order_items')->where('purchase_order_id',$purchaseOrder->id)
             ->update([
-                'status' => 'DPRV'
+                'status' => 'REJC'
             ]);
 
             DB::commit();
