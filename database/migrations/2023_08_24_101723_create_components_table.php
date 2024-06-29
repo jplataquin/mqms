@@ -20,7 +20,7 @@ return new class extends Migration
             $table->bigInteger('created_by');
             $table->bigInteger('updated_by')->nullable();
             $table->bigInteger('deleted_by')->nullable();
-            $table->bigInteger('approved_by')->nullalbe();
+            $table->bigInteger('approved_by')->nullable();
             $table->bigInteger('rejected_by')->nullable();
             
             $table->dateTime('approved_at')->nullable();
