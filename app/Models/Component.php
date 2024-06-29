@@ -37,7 +37,13 @@ class Component extends Model
     }
 
     public function UpdatedByUser(){   
-        return User::find($this->updated_by);
+        $user = User::find($this->updated_by);
+
+        if(!$user){
+            return (object) User::getAttributes();
+        }
+
+        return $user;
     }
 
     public function delete(){
