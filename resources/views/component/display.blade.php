@@ -39,7 +39,18 @@
                     {{$component->UpdatedByUser()->name}} at  {{$component->updated_at}}
                     </td>
                 </tr>
-
+                <tr>
+                    <th>Approved By</th>
+                    <td>
+                    {{$component->ApprovedByUser()->name}} at  {{$component->approved_at}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Rejected By</th>
+                    <td>
+                    {{$component->rejectedByUser()->name}} at  {{$component->approved_at}}
+                    </td>
+                </tr>
                 <tr>
                     <th>Hash</th>
                     <td>
