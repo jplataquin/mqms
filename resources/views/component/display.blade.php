@@ -78,12 +78,12 @@
     <hr>
 
     <div class="">
-        <h3>Component Items</h3>
+        <h3>Items</h3>
     </div>
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group">
-                <label>Component Item</label>
+                <label>Item</label>
                 <input id="component_item_name" type="text" class="form-control"/>
             </div>
         </div>
@@ -190,7 +190,7 @@
     }
 
     component_item_quantity.onkeypress = (e)=>{
-        return window.util.inputNumber(component_item_budget_price,e,2,false);
+        return window.util.inputNumber(component_item_quantity,e,2,false);
     }
 
     createBtn.onclick = ()=>{
