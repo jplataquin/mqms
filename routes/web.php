@@ -50,9 +50,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/project/{id}', [App\Http\Controllers\ProjectController::class, 'display']);
     Route::get('/projects', [App\Http\Controllers\ProjectController::class, 'list']);
     
-    Route::get('/supplier/create', [App\Http\Controllers\SupplierController::class, 'create']);
-    Route::get('/supplier/{id}', [App\Http\Controllers\SupplierController::class, 'display']);
-    Route::get('/suppliers', [App\Http\Controllers\SupplierController::class, 'list']);
+    Route::get('/master_data/supplier/create', [App\Http\Controllers\SupplierController::class, 'create']);
+    Route::get('/master_data/supplier/{id}', [App\Http\Controllers\SupplierController::class, 'display']);
+    Route::get('/master_data/suppliers', [App\Http\Controllers\SupplierController::class, 'list']);
     
 
     Route::get('/project/{project_id}/section/create', [App\Http\Controllers\SectionController::class, 'create']);

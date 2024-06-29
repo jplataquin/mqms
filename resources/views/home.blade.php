@@ -55,7 +55,7 @@
                                     <a href="/master_data/payment_terms">Payment Terms</a>
                                 </li>
                                 <li>
-                                    <a href="/suppliers">Supplier</a>
+                                    <a href="master_data/suppliers">Supplier</a>
                                 </li>
                             </ul>
                         </li>
