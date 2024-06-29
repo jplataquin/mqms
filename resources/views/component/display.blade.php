@@ -36,7 +36,7 @@
                 <tr>
                     <th>Created By</th>
                     <td>
-                        {{$component->created_by}}
+                        {{$component->CreatedByUser()->name}}
                     </td>
                 </tr>
                 <tr>

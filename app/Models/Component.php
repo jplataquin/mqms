@@ -31,6 +31,11 @@ class Component extends Model
         return $this->hasMany(ComponentItem::class);
     }
 
+    public function CreatedByUser(){
+        
+        return DB::table('users')->where('id',$this->created_by)->row();
+    }
+
     public function delete(){
 
         DB::beginTransaction();
