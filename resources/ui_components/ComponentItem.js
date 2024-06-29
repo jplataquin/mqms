@@ -105,7 +105,17 @@ class ComponentItem extends Component{
             this.el.item = t.table({class:'selectable-div fade-in table border'},()=>{
                 
                 t.thead(()=>{
-                    t.th({class:'bg-primary p-1',colspan:4});
+                    t.tr(()=>{
+                        t.th({class:'bg-primary p-1',colspan:5});
+                    });
+                    t.tr(()=>{
+                        t.th('Name');
+                        t.th('Budget Price');
+                        t.th('Quantity');
+                        t.th('Unit');
+                        t.th('Options');
+                    })
+                    
                 })
 
                t.tbody({class:'mb-3 p-3'},()=>{
