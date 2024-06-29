@@ -130,6 +130,7 @@
     let createBtn           = $q('#createBtn').first();
     let deleteBtn           = $q('#deleteBtn').first();
     let previewBtn          = $q('#previewBtn').first();
+    let status              = $q('#status').first();
 
     let component_item_name         = $q('#component_item_name').first();
     let component_item_budget_price = $q('#component_item_budget_price').first();
@@ -143,7 +144,7 @@
     const signalB = new Signal();
 
     signalR.receiver('set-component-status',(value)=>{
-        status.value = value;
+        status.innerHTML = value;
     });
 
     editBtn.onclick = ()=>{
