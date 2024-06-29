@@ -30,7 +30,7 @@
                 <tr>
                     <th>Created By</th>
                     <td>
-                        {{$component->CreatedByUser()->name}} at {{$component->created_at}}
+                        {{$component->CreatedByUser()->name}} {{$component->created_at}}
                     </td>
                 </tr>
                 <tr>
