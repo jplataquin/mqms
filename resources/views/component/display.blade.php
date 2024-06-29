@@ -189,6 +189,10 @@
         return window.util.inputNumber(component_item_budget_price,e,2,false);
     }
 
+    component_item_quantity.onkeypress = (e)=>{
+        return window.util.inputNumber(component_item_budget_price,e,2,false);
+    }
+
     createBtn.onclick = ()=>{
         
         window.util.blockUI();
