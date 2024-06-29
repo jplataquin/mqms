@@ -49,7 +49,7 @@ class User extends Authenticatable
         return $this->hasMany(UserRole::class);
     }
 
-    public static function defaultAttributes(){
+    public static function defaultAttirbutes(){
         return (object) [
             'id' => '',
             'name' => '',
