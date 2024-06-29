@@ -24,7 +24,7 @@ return new class extends Migration
             $table->bigInteger('rejected_by')->nullable();
             
             $table->dateTime('approved_at')->nullable();
-            $table->dateTime('rejected_at')->nullable()
+            $table->dateTime('rejected_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
