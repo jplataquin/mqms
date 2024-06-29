@@ -121,8 +121,6 @@ class ComponentController extends Controller
 
         $hash = generateComponentHash($project,$section,$component,$componentItems,$materialArr);
 
-        $component->UpdatedByUser()->name;
-        exit;
         return view('component/display',[
             'project'           => $project,
             'section'           => $section,
