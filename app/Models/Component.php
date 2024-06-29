@@ -40,6 +40,7 @@ class Component extends Model
         $user = User::find($this->updated_by);
 
         if(!$user){
+            print_r((new User())->getAttributes());
             return (object) (new User())->getAttributes();
         }
 
