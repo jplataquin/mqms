@@ -54,6 +54,9 @@
                                 <li>
                                     <a href="/master_data/payment_terms">Payment Terms</a>
                                 </li>
+                                <li>
+                                    <a href="/suppliers">Supplier</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -68,17 +71,6 @@
                             </ul>
                         </li>
 
-                        <li>
-                            Supplier
-                            <ul>
-                                <li>
-                                    <a href="/supplier/create">Create</a>
-                                </li>
-                                <li>
-                                    <a href="/suppliers">List</a>
-                                </li>
-                            </ul>
-                        </li>
                         <li>
                             Requests
                             <ul>

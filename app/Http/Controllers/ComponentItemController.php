@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class ComponentItemController extends Controller
 {   
@@ -100,6 +101,7 @@ class ComponentItemController extends Controller
         if($component->status != 'PEND'){
             $component->status      = 'PEND';
             $component->updated_by  = $user_id;
+            $component->updated_at  = Carbon::now();
             $component->save();
         }
 
@@ -235,6 +237,7 @@ class ComponentItemController extends Controller
          if($component->status != 'PEND'){
              $component->status      = 'PEND';
              $component->updated_by  = $user_id;
+             $component->updated_at  = Carbon::now();
              $component->save();
          }
  
@@ -296,6 +299,7 @@ class ComponentItemController extends Controller
         if($component->status != 'PEND'){
             $component->status      = 'PEND';
             $component->updated_by  = $user_id;
+            $component->updated_at  = Carbon::now();
             $component->save();
         }
 
