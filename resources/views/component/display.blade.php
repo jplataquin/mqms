@@ -83,7 +83,7 @@
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group">
-                <label>Item</label>
+                <label>Item Name</label>
                 <input id="component_item_name" type="text" class="form-control"/>
             </div>
         </div>
