@@ -36,7 +36,7 @@
                 <tr>
                     <th>Updated By</th>
                     <td>
-                        {{$component->UpdatedByUser()->name}} at  {{$component->updated_at}}
+                       at  {{$component->updated_at}}
                     </td>
                 </tr>
 
