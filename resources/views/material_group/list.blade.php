@@ -36,9 +36,7 @@
             </div>
         </div>
     </div>
-    <div class="container" id="list">
-
-    </div>
+    <div class="container mb-5" id="list"></div>
 
     <div class="row">
         <div class="col-lg-12">

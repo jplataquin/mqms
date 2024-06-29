@@ -64,7 +64,7 @@
     }
 
     cancelBtn.onclick = (e) => {
-
+        document.location.href = '/master_data/material/groups';
     }
 
 </script>

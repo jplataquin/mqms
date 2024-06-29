@@ -69,14 +69,14 @@ class ComponentItem extends Component{
                             t.th(()=>{
                                 t.div({class:'form-group'},()=>{
                                     t.label('Equivalent / Unit');
-                                    this.el.equivalent = t.input({class:'form-control', type:'number'});
+                                    this.el.equivalent = t.input({class:'form-control', type:'text'});
                                 });
                             });
 
                             t.th(()=>{
                                 t.div({class:'form-group'},()=>{
                                     t.label('Quantity');
-                                    this.el.materialQuantity = t.input({class:'form-control', type:'number'});
+                                    this.el.materialQuantity = t.input({class:'form-control', type:'text'});
                                 });
                             });
                             t.th(()=>{
@@ -214,6 +214,14 @@ class ComponentItem extends Component{
                 this.setState('showList',true);
             }
 
+        }
+
+        this.el.equivalent.onkeypress = (e)=>{
+            return window.util.inputNumber(this.el.budget_price,e,2,false);
+        }
+
+        this.el.materialQuantity.onkeypress = (e)=>{
+            return window.util.inputNumber(this.el.materialQuantity,e,2,false);
         }
 
         this.el.budget_price.onkeypress = (e)=>{
