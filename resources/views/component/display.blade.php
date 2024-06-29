@@ -23,7 +23,7 @@
                 </tr>
                 <tr>
                     <th>Status</th>
-                    <td>
+                    <td id="status">
                         {{$component->status}}
                     </td>
                 </tr>
