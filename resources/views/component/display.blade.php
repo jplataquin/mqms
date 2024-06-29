@@ -28,27 +28,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Date Created</th>
-                    <td>
-                        {{$component->created_at}}
-                    </td>
-                </tr>
-                <tr>
                     <th>Created By</th>
                     <td>
-                        {{$component->CreatedByUser()->name}}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Date Updated</th>
-                    <td>
-                        {{$component->updated_at}}
+                        {{$component->CreatedByUser()->name}} at {{$component->created_at}}
                     </td>
                 </tr>
                 <tr>
                     <th>Updated By</th>
                     <td>
-                        {{$component->created_by}}
+                        {{$component->UpdatedByUser()->name}} at  {{$component->updated_at}}
                     </td>
                 </tr>
 
