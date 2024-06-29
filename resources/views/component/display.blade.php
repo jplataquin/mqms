@@ -199,7 +199,7 @@
 
         window.util.$post('/api/component_item/create',{
             component_id: '{{$component->id}}',
-            name: component_item.value,
+            name: component_item_name.value,
             budget_price: component_item_budget_price.value,
             quantity: component_item_quantity.value,
             unit: component_item_unit.value
