@@ -81,13 +81,19 @@
         <h3>Component Items</h3>
     </div>
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-4">
             <div class="form-group">
                 <label>Component Item</label>
-                <input id="component_item" type="text" class="form-control"/>
+                <input id="component_item_name" type="text" class="form-control"/>
             </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-2">
+            <div class="form-group">
+                <label>Budget Price</label>
+                <input id="component_item_budget_price" type="text" class="form-control"/>
+            </div>
+        </div>
+        <div class="col-lg-2">
             <div class="form-group">
                 <label>Quantity</label>
                 <input id="component_item_quantity" type="text" class="form-control"/>
@@ -125,6 +131,12 @@
     let deleteBtn           = $q('#deleteBtn').first();
     let previewBtn          = $q('#previewBtn').first();
 
+    let component_item_name         = $q('#component_item_name').first();
+    let component_item_budget_price = $q('#component_item_budget_price').first();
+    let component_item_unit         = $q('#component_item_unit').first();
+    let component_item_quantity     = $q('#component_item_quantity').first();
+    
+    
     const t = new Template();
 
     const signalR = new Signal();
@@ -173,6 +185,9 @@
         });
     }
     
+    component_item_budget_price.onkeypress = (e)=>{
+        window.util.inputNumber(component_item_budget_price,e,2,false);
+    }
     
     createBtn.onclick = ()=>{
         
@@ -181,6 +196,7 @@
         window.util.$post('/api/component_item/create',{
             component_id: '{{$component->id}}',
             name: component_item.value,
+            budget_price: component_item_budget_price.value,
             quantity: component_item_quantity.value,
             unit: component_item_unit.value
         }).then(reply=>{
@@ -192,7 +208,8 @@
                 return false;
             }
 
-            component_item.value                = '';
+            component_item_budget_price.value   = '';
+            component_item_name.value           = '';
             component_item_quantity.value       = '';
             component_item_unit.value           = '';
 

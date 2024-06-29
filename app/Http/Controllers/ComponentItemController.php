@@ -35,6 +35,7 @@ class ComponentItemController extends Controller
         $name              = $request->input('name') ?? '';
         $unit              = $request->input('unit') ?? '';
         $quantity          = $request->input('quantity') ?? '';
+        $budget_price      = $request->input('budget_price') ?? '';
         $component_id      = (int) $request->input('component_id');
 
         $validator = Validator::make($request->all(),[
@@ -53,6 +54,10 @@ class ComponentItemController extends Controller
                 'max:255'
             ],
             'quantity' => [
+                'required',
+                'numeric'
+            ],
+            'budget_price' => [
                 'required',
                 'numeric'
             ],
@@ -84,6 +89,7 @@ class ComponentItemController extends Controller
 
         $componentItem->component_id = $component_id;
         $componentItem->name         = $name;
+        $componentItem->budget_price = $budget_price;
         $componentItem->quantity     = $quantity;
         $componentItem->unit         = $unit;
         $componentItem->created_by   = $user_id;
@@ -151,6 +157,7 @@ class ComponentItemController extends Controller
 
          $name              = $request->input('name') ?? '';
          $unit              = $request->input('unit') ?? '';
+         $budget_price      = $request->input('budget_price') ?? '';
          $quantity          = $request->input('quantity') ?? '';
          $id                = (int) $request->input('id');
          $component_id      = (int) $request->input('component_id');
@@ -172,6 +179,10 @@ class ComponentItemController extends Controller
                  'max:255'
              ],
              'quantity' => [
+                 'required',
+                 'numeric'
+             ],
+             'budget_price' => [
                  'required',
                  'numeric'
              ],
@@ -210,24 +221,12 @@ class ComponentItemController extends Controller
             ]);
         }
 
-        // $totalEquivalent = 0;
-
-        // foreach($componentItem->materialQuantities as $materialQuantity){
-        //     $totalEquivalent = $totalEquivalent + ((float) $materialQuantity->equivalent * $materialQuantity->quantity);    
-        // }
-
-        // if($totalEquivalent > $quantity){
-        //     return response()->json([
-        //         'status'    => 0,
-        //         'message'   => 'Quantity cannot be less than total equivalent',
-        //         'data'      => []
-        //     ]);
-        // }
  
          $componentItem->name          = $name;
          $componentItem->quantity      = $quantity;
+         $componentItem->budget_price  = $budget_price;
          $componentItem->unit          = $unit;
-         $componentItem->updated_by   = $user_id;
+         $componentItem->updated_by    = $user_id;
  
          $componentItem->save();
  

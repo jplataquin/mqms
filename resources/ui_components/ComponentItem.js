@@ -118,7 +118,14 @@ class ComponentItem extends Component{
 
                     t.td({class:''},(el)=>{
                         
-                        this.el.quantity = t.input({class:'form-control', type:'number', placeholder:'Quantity',disabled:true,value:'Loading...'});
+                        this.el.budget_price = t.input({class:'form-control', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
+                        
+
+                    });
+
+                    t.td({class:''},(el)=>{
+                        
+                        this.el.quantity = t.input({class:'form-control', type:'text', placeholder:'Quantity',disabled:true,value:'Loading...'});
                         
 
                     });
@@ -361,15 +368,17 @@ class ComponentItem extends Component{
                 alert(reply.message);
                 return false;
             }
-            
+           
+            this.setState('budget_price',parseFloat(reply.data.budget_price));
             this.setState('quantity',parseFloat(reply.data.quantity));
             this.setState('unit',reply.data.unit);
             this.setState('name',reply.data.name);
 
-            this.el.name.value         = reply.data.name;
-            this.el.quantity.value     = reply.data.quantity;
-            this.el.unit.value         = reply.data.unit;
-            //this.el.count.nodeValue        = reply.data.material_quantities_count;
+            
+            this.el.name.value          = reply.data.name;
+            this.el.budget_price.value  = reply.data.budget_price;
+            this.el.quantity.value      = reply.data.quantity;
+            this.el.unit.value          = reply.data.unit;
 
         });
 
