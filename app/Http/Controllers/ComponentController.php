@@ -162,7 +162,7 @@ class ComponentController extends Controller
         ])->render();
 
 
-        $html2pdf = new Html2Pdf('P','A4','en', false, 'UTF-8', [5, 0, 5, 0]);
+        $html2pdf = new Html2Pdf('P','A4','en', false, 'UTF-8', [5, 0, 10, 0]);
            
 
         try {
