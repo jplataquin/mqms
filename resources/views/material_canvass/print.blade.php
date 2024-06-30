@@ -104,19 +104,20 @@
                         </tr>
                         @foreach($item->MaterialCanvass as $mcItem)
                         <tr>
-                            <td>
+                            <td style="width:10%">
                                 {{$mcItem->status}}
                             </td>
-                            <td>
+                            <td style="width:30%">
                                 {{$mcItem->supplier_id}}
                             </td>
-                            <td>
+                            <td style="width:30%">
                                 {{$mcItem->payment_term_id}}
                             </td>
-                            <td>
-                                {{$mcItem->price}}
+                            <td style="width:10%">
+                               P {{ number_format($mcItem->price,2) }}
                             </td>
-                            <td>
+                            <td style="width:20%">
+                               P {{ number_format($item->requested_quantity * $mcItem->price,2) }}
                             </td>
                         </tr>
                         @endforeach
