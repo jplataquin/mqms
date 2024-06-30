@@ -16,8 +16,8 @@
     <table border="1" class="table">
         <tbody>
             <tr>
-                <th style="width:10%">Material Quantity Request ID</th>
-                <td style="width:90%">{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
+                <th style="width:20%">Material Quantity Request ID</th>
+                <td style="width:80%">{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
             </tr>
             <tr>
                 <th>Project</th>
@@ -63,7 +63,7 @@
                 $material_item = $material_item_arr[$item->material_item_id]; 
                 $component_item = $component_item_arr[ $item->component_item_id ];
             @endphp
-        <table>
+        <table class="table" border="1">
             <tr>
                 <td style="width:100%" colspan="3">
                     {{ $component_item_arr[ $item->component_item_id ]->name }}
