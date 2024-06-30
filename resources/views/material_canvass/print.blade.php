@@ -49,7 +49,7 @@
             <tr>
                 <th>Description</th>
                 <td>
-                    <textarea disabled="true" class="w-100" id="description">{{$material_quantity_request->description}}</textarea>
+                    {{$material_quantity_request->description}}
                 </td>
             </tr>
         </tbody>
@@ -82,27 +82,11 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-12 canvass-container" id="canvass_{{$item->id}}"></div>
-                <div class="text-center mt-3">
-                    <button data-id="{{$item->id}}" class="add-canvass-btn btn btn-warning">Add Canvass</button>
-                </div>
-            </div>
+            
         </div>   
         @endforeach
 
-        <datalist id="supplier_list">
-            @foreach($suppliers as $supplier)
-                <option data-value="{{$supplier->id}}" value="{{$supplier->name}}"/>
-            @endforeach
-        </datalist>
-
-        <datalist id="payment_terms_list">
-            @foreach($payment_terms as $payment_term)
-            <option data-value="{{$payment_term['id']}}" value="{{$payment_term['text']}}"/>
-            @endforeach
-        </datalist>
-
+        
 
     </div>
 
