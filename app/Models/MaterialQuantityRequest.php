@@ -46,4 +46,50 @@ class MaterialQuantityRequest extends Model
     {
         return $this->belongsTo(User::class,'created_by');
     }
+
+
+    public function CreatedByUser(){   
+
+        $user = User::find($this->created_by);
+
+        if(!$user){
+            return User::defaultAttirbutes();
+        }
+
+        return $user;
+    }
+
+    public function UpdatedByUser(){   
+       
+        $user = User::find($this->updated_by);
+
+        if(!$user){
+            return User::defaultAttirbutes();
+        }
+
+        return $user;
+    }
+
+    public function ApprovedByUser(){   
+       
+        $user = User::find($this->approved_by);
+
+        if(!$user){
+            return User::defaultAttirbutes();
+        }
+
+        return $user;
+    }
+
+    public function RejectedByUser(){   
+       
+        $user = User::find($this->rejected_by);
+
+        if(!$user){
+            return User::defaultAttirbutes();
+        }
+
+        return $user;
+    }
+
 }
