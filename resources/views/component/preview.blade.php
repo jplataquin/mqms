@@ -1,6 +1,6 @@
 
 <page>
-<div>
+    <div>
 
         <div>
             <h3>
@@ -33,7 +33,7 @@
         </div>
 
         @foreach($componentItems as $item)
-        <table >
+        <table>
             <tr>
                 <th style="width:50%; background-color:#add8e6">{{$item->name}}</th>
                 <th style="width:50%; background-color:#add8e6"> {{$item->quantity}} {{$item->unit}} </th>
@@ -67,10 +67,10 @@
                 </tr>
                 @endforeach
 
-            </table>
-        </li>
+        </table>
+        
         @endforeach
     
 
-</div>
+    </div>
 </page>
