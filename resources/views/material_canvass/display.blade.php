@@ -4,7 +4,7 @@
 <div class="container">
 <h5>Material Canvass » Display</h5>
 <hr>
-    <table class="table">
+    <table class="table mb-3">
         <tbody>
             <tr>
                 <th>Material Quantity Request ID</th>
@@ -45,14 +45,15 @@
                 </td>
             </tr>
         </tbody>
-        <div class="row">
-            <div class="col-12 text-end">
-                <button class="btn btn-secondary" id="printBtn">Print</button>
-            </div>
-        </div>
+        
     </table>
-
-    <div>
+    <div class="row">
+        <div class="col-12 text-end">
+            <button class="btn btn-secondary" id="printBtn">Print</button>
+        </div>
+    </div>
+    <hr>
+    <div class="mt-5">
         @foreach($items as $item)
         <div class="border border-primary p-3 mb-3">
             <div class="row mb-5">
