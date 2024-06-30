@@ -6,6 +6,10 @@
     .table td{
         padding: 3px;
     }
+
+    .table th{
+        padding: 3px;
+    }
 </style>
 <page>
     <div>
@@ -41,7 +45,7 @@
         </div>
 
         @foreach($componentItems as $item)
-        <table>
+        <table boder="1" class="table">
             <tr>
                 <th style="width:50%; background-color:#add8e6">{{$item->name}}</th>
                 <th style="width:50%; background-color:#add8e6"> {{$item->quantity}} {{$item->unit}} </th>
