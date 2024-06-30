@@ -53,13 +53,12 @@
         <nobreak>
             <div style="margin-bottom:10px">
                 <table border="1" class="table" style="margin-bottom:5px">
-                    <tr>
-                        <th style="width:50%; background-color:#add8e6">{{$item->name}}</th>
-                        <th style="width:50%; background-color:#add8e6" class="text-center"> {{$item->quantity}} {{$item->unit}} / P{{number_format($item->budget_price,2) }}</th>
-                    </tr>
-                </table>
-                <table border="1" class="table" style="margin-bottom:5px">
-                
+                        <tr>
+                            <th style="background-color:#add8e6" colspan="2">{{$item->name}}</th>
+                            <th style="background-color:#add8e6" class="text-center">{{$item->quantity}} {{$item->unit}}</th>
+                            <th style="background-color:#add8e6" class="text-center">P {{number_format($item->budget_price,2) }}</th>
+                        </tr>
+
                         <tr>
                             <th style="width:40%" class="text-center">Material</th>
                             <th style="width:20%" class="text-center">Equivalent</th>
