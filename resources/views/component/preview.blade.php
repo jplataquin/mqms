@@ -14,7 +14,7 @@
 <page>
     <div>
 
-        <div>
+        <div style="margin-bottm: 5px">
             <h3>
                 {{$project->name}} - ( {{$section->name}} )
             </h3>
@@ -45,19 +45,19 @@
         </div>
 
         @foreach($componentItems as $item)
-        <table boder="1" class="table">
+        <table border="1" class="table" style="margin-bottom:5px">
             <tr>
                 <th style="width:50%; background-color:#add8e6">{{$item->name}}</th>
                 <th style="width:50%; background-color:#add8e6"> {{$item->quantity}} {{$item->unit}} </th>
             </tr>
         </table>
-        <table style="border: solid 1px #000000; border-collapse: collapse">
+        <table border="1" class="table">
            
                 <tr>
-                    <th width="50%">&nbsp;</th>
-                    <th>Equivalent</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
+                    <th width="25%">&nbsp;</th>
+                    <th width="25%">Equivalent</th>
+                    <th width="25%">Quantity</th>
+                    <th width="25%">Total</th>
                 </tr>
                 
                 @foreach($item->materialQuantities as $mq)
