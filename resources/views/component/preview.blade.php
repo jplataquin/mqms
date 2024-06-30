@@ -50,7 +50,6 @@
         @foreach($componentItems as $item)
         
 
-        <nobreak>
             <div style="margin-bottom:10px">
                 <table border="1" class="table">
                     <tr>
@@ -91,9 +90,7 @@
 
                 </table>
             </div>
-        </nobreak>
 
-        <nobreak>
             <div style="margin-bottom:10px">
                 <table border="1" class="table">
                     <tr>
@@ -134,7 +131,6 @@
 
                 </table>
             </div>
-        </nobreak>
 
             <div style="margin-bottom:10px">
                 <table border="1" class="table">
