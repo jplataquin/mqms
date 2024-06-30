@@ -91,6 +91,39 @@
                     P {{ number_format($component_item->budget_price,2) }}
                 </td>
             </tr>
+
+            <tr>
+                <td colspan="3">
+                    <table class="table" border="1">
+                        <tr>
+                            <th>Status</th>
+                            <th>Supplier</th>
+                            <th>Payment Terms</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                        </tr>
+                        @foreach($item->MaterialCanvass as $mcItem)
+                        <tr>
+                            <td>
+                                {{$mcItem->status}}
+                            </td>
+                            <td>
+                                {{$mcItem->supplier_id}}
+                            </td>
+                            <td>
+                                {{$mcItem->payment_term_id}}
+                            </td>
+                            <td>
+                                {{$mcItem->price}}
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        @endforeach
+        
+                    </table>
+                </td>        
+            </tr>
         </table>
         
         @endforeach
