@@ -84,7 +84,6 @@ Route::middleware(['auth'])->group(function () {
    
     Route::get('/review/material_canvass', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, 'list']);
     Route::get('/review/material_canvass/{id}', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, 'display']);
-    Route::get('/review/material_canvass/print/{id}', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, 'print']);
     
  
     Route::get('/review/purchase_order/{id}', [App\Http\Controllers\Review\PurchaseOrderReviewController::class, 'display']);
@@ -92,6 +91,7 @@ Route::middleware(['auth'])->group(function () {
    
     Route::get('/material_canvass', [App\Http\Controllers\MaterialCanvassController::class, 'list']);
     Route::get('/material_canvass/{id}', [App\Http\Controllers\MaterialCanvassController::class, 'display']);
+    Route::get('/material_canvass/print/{id}', [App\Http\Controllers\MaterialCanvassController::class, 'print']);
    
     Route::get('/review/components', [App\Http\Controllers\Review\ComponentReviewController::class, 'list']);
     Route::get('/review/component/{id}', [App\Http\Controllers\Review\ComponentReviewController::class, 'display']);
