@@ -12,6 +12,7 @@
     }
 </style>
 <page>
+    <h3>Material Canvass</h3>
     <table border="1" class="table">
         <tbody>
             <tr>
@@ -56,34 +57,39 @@
         
     </table>
     <hr>
-    <div class="mt-5">
+    <div>
         @foreach($items as $item)
-        <div class="border border-primary p-3 mb-3">
-            <div class="row mb-5">
-               <h5>  {{ $component_item_arr[ $item->component_item_id ]->name }}</h5>
-                @php 
-                    $component_item = $component_item_arr[ $item->component_item_id ];
-                    $material_item = $material_item_arr[$item->material_item_id];
-                @endphp
-                <div class="col-6">
-                    <div class="form-group">
-                        <label>Material</label>
-                        <input type="text" class="form-control" disabled="true" value="{{$material_item->brand}} {{$material_item->name}} {{$material_item->specification_unit_packaging}}"/>
-                    </div>
-                </div>
 
-                <div class="col-3">
-                    <label>Quantity</label>
-                    <input type="text" class="form-control" disabled="true" value="{{ $item->requested_quantity }}"/>
-                </div>
-                <div class="col-3">
-                    <label>Budget Price</label>
-                    <input type="text" class="form-control" disabled="true" value="P {{ number_format($component_item->budget_price,2) }}"/>
-                </div>
-            </div>
-
-            
-        </div>   
+        <table>
+            <tr>
+                <td style="width:100%" colspan="3">
+                    {{ $component_item_arr[ $item->component_item_id ]->name }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Material
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    Budget Price
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    {{$material_item->brand}} {{$material_item->name}} {{$material_item->specification_unit_packaging}}
+                </td>
+                <td>
+                    {{ $item->requested_quantity }}
+                </td>
+                <td>
+                    P {{ number_format($component_item->budget_price,2) }}
+                </td>
+            </tr>
+        </table>
+        
         @endforeach
 
         
