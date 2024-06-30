@@ -7,6 +7,7 @@ use App\Helpers\CustomHelpers;
 use App\Models\MaterialQuantityRequest;
 use App\Models\MaterialCanvass;
 use App\Models\PurchaseOrder;
+use App\Models\Component;
 
 class HomeController extends Controller
 {
@@ -27,16 +28,19 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {   
-        $materialQuantityRequestPendCount = MaterialQuantityRequest::where('status','=','PEND')->count();
+        $materialQuantityRequestPendCount   = MaterialQuantityRequest::where('status','=','PEND')->count();
         
-        $materialCanvassPendCount = MaterialCanvass::where('status','=','PEND')->groupBy('material_quantity_request_id')->selectRaw('count(*) as total')->count();
+        $materialCanvassPendCount           = MaterialCanvass::where('status','=','PEND')->groupBy('material_quantity_request_id')->selectRaw('count(*) as total')->count();
 
-        $purchaseOrderPendCount = PurchaseOrder::where('status','=','PEND')->count();
+        $purchaseOrderPendCount             = PurchaseOrder::where('status','=','PEND')->count();
+
+        $componentPendCount                 = Component::where('status','=','PEND')->count();
 
         return view('home',[
             'materialQuantityRequestPendCount'  => $materialQuantityRequestPendCount,
             'materialCanvassPendCount'          => $materialCanvassPendCount,
-            'purchaseOrderPendCount'            => $purchaseOrderPendCount
+            'purchaseOrderPendCount'            => $purchaseOrderPendCount,
+            'componentPendCount'                => $componentPendCount
         ]);
     }
 }
