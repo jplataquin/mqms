@@ -7,7 +7,7 @@
                 {{$project->name}} - ( {{$section->name}} )
             </h3>
             <hr>
-            <table>
+            <table border="1" style="border-collapse: collapse">
                    
                     <tr>
                         <th style="width:10%">Component</th>
