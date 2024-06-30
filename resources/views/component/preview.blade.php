@@ -52,13 +52,14 @@
 
         <nobreak>
             <div style="margin-bottom:10px">
-                <table border="1" class="table" style="margin-botom:5px">
+                <table border="1" class="table">
                     <tr>
                         <th style="width:50%;background-color:#add8e6" colspan="2">{{$item->name}}</th>
                         <th style="width:25%;background-color:#add8e6" class="text-center">{{$item->quantity}} {{$item->unit}}</th>
                         <th style="width:25%;background-color:#add8e6" class="text-center">P {{number_format($item->budget_price,2) }}</th>
                     </tr>
                 </table>
+                <br>
                 <table border="1" class="table">
                         
 
@@ -94,13 +95,14 @@
 
         <nobreak>
             <div style="margin-bottom:10px">
-                <table border="1" class="table" style="margin-botom:5px">
+                <table border="1" class="table">
                     <tr>
                         <th style="width:50%;background-color:#add8e6" colspan="2">{{$item->name}}</th>
                         <th style="width:25%;background-color:#add8e6" class="text-center">{{$item->quantity}} {{$item->unit}}</th>
                         <th style="width:25%;background-color:#add8e6" class="text-center">P {{number_format($item->budget_price,2) }}</th>
                     </tr>
                 </table>
+                <br>
                 <table border="1" class="table">
                         
 
@@ -134,15 +136,15 @@
             </div>
         </nobreak>
 
-        <nobreak>
             <div style="margin-bottom:10px">
-                <table border="1" class="table" style="margin-botom:5px">
+                <table border="1" class="table">
                     <tr>
                         <th style="width:50%;background-color:#add8e6" colspan="2">{{$item->name}}</th>
                         <th style="width:25%;background-color:#add8e6" class="text-center">{{$item->quantity}} {{$item->unit}}</th>
                         <th style="width:25%;background-color:#add8e6" class="text-center">P {{number_format($item->budget_price,2) }}</th>
                     </tr>
                 </table>
+                <br>
                 <table border="1" class="table">
                         
 
@@ -174,7 +176,6 @@
 
                 </table>
             </div>
-        </nobreak>
 
         @endforeach
     
