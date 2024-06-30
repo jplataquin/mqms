@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
+use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 
 class MaterialCanvassController extends Controller
 {
@@ -190,7 +193,7 @@ class MaterialCanvassController extends Controller
 
         $payment_terms = PaymentTerm::toOptions();
 
-        return view('material_canvass/print',[
+        $html = view('material_canvass/print',[
             'material_quantity_request' => $materialQuantityRequest,
             'project'                   => $project,
             'section'                   => $section,
@@ -200,7 +203,24 @@ class MaterialCanvassController extends Controller
             'material_item_arr'         => $material_item_arr,
             'suppliers'                 => $suppliers,
             'payment_terms'             => $payment_terms
-        ]);
+        ])->render();
+
+        $html2pdf = new Html2Pdf('P','A4','en', false, 'UTF-8', [5, 5, 10, 0]);
+           
+
+        try {
+            $html2pdf->writeHTML($html);
+            $html2pdf->output('Material Canvass - '.str_pad($materialQuantityRequest->id,0,6,STR_PAD_LEFT ).'.pdf');
+            $html2pdf->clean();
+        
+        }catch(Html2PdfException $e) {
+            $html2pdf->clean();
+        
+            $formatter = new ExceptionFormatter($e);
+            echo $html;
+            echo $formatter->getHtmlMessage();        
+        } 
+       
     }
 
     public function _create(Request $request){
