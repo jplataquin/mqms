@@ -167,7 +167,7 @@ class ComponentController extends Controller
 
         try {
             $html2pdf->writeHTML($html);
-            $html2pdf->output('Purchase Order - '.str_pad($purchaseOrder->id,0,6,STR_PAD_LEFT ).'.pdf');
+            $html2pdf->output('Component - '.str_pad($component->id,0,6,STR_PAD_LEFT ).'.pdf');
             $html2pdf->clean();
         
         }catch(Html2PdfException $e) {
