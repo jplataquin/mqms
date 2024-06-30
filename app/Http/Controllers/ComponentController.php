@@ -152,7 +152,7 @@ class ComponentController extends Controller
         
         $hash = generateComponentHash($project,$section,$component,$componentItems,$materialItems);
 
-        $html = view('component/preview',[
+        $html = view('component/print',[
             'project'           => $project,
             'section'           => $section,
             'component'         => $component,

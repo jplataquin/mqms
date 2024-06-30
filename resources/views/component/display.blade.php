@@ -67,7 +67,7 @@
             <button class="btn btn-danger" id="deleteBtn">Delete</button>
         </div>
         <div class="col-lg-6 text-end">
-            <button class="btn btn-secondary" id="previewBtn">Preview</button>
+            <button class="btn btn-secondary" id="printBtn">Print</button>
             <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
             <button class="btn btn-warning d-none" id="updateBtn">Update</button>
             <button class="btn btn-primary" id="editBtn">Edit</button>
@@ -128,7 +128,7 @@
     let updateBtn           = $q('#updateBtn').first();
     let createBtn           = $q('#createBtn').first();
     let deleteBtn           = $q('#deleteBtn').first();
-    let previewBtn          = $q('#previewBtn').first();
+    let printBtn            = $q('#printBtn').first();
     let status              = $q('#status').first();
 
     let component_item_name         = $q('#component_item_name').first();
@@ -233,8 +233,8 @@
         });
     }
 
-    previewBtn.onclick = ()=>{
-        window.open( '/component/preview/{{$component->id}}','_blank').focus();
+    printBtn.onclick = ()=>{
+        window.open( '/component/print/{{$component->id}}','_blank').focus();
     }
 
 

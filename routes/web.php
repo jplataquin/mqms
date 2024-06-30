@@ -59,7 +59,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/project/section/{id}', [App\Http\Controllers\SectionController::class, 'display']);
     
     Route::get('/component/{id}', [App\Http\Controllers\ComponentController::class, 'display']);
-    Route::get('/component/preview/{id}', [App\Http\Controllers\ComponentController::class, 'preview']);
+    Route::get('/component/print/{id}', [App\Http\Controllers\ComponentController::class, 'preview']);
     
     Route::get('/master_data/material/group/create', [App\Http\Controllers\MaterialGroupController::class, 'create']);
     Route::get('/master_data/material/group/{id}', [App\Http\Controllers\MaterialGroupController::class, 'display']);
