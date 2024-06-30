@@ -59,7 +59,10 @@
     <hr>
     <div>
         @foreach($items as $item)
-            @php  $material_item = $material_item_arr[$item->material_item_id]; @endphp
+            @php  
+                $material_item = $material_item_arr[$item->material_item_id]; 
+                $component_item = $component_item_arr[ $item->component_item_id ];
+            @endphp
         <table>
             <tr>
                 <td style="width:100%" colspan="3">
