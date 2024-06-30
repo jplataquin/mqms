@@ -51,9 +51,13 @@
                     </div>
                 </div>
 
-                <div class="col-6">
+                <div class="col-3">
                     <label>Quantity</label>
                     <input type="text" class="form-control" disabled="true" value="{{ $item->requested_quantity }}"/>
+                </div>
+                <div class="col-3">
+                    <label>Budget Price</label>
+                    <input type="text" class="form-control" disabled="true" value="P {{ number_format($item->budget_price,2) }}"/>
                 </div>
             </div>
 
