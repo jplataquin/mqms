@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-
+use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
 
 class ComponentController extends Controller
 {
@@ -149,14 +150,34 @@ class ComponentController extends Controller
         
         $hash = generateComponentHash($project,$section,$component,$componentItems,$materialItems);
 
-        return view('component/preview',[
+        $html = view('component/preview',[
             'project'           => $project,
             'section'           => $section,
             'component'         => $component,
             'componentItems'    => $componentItems,
             'materialItems'     => $materialItems,
             'hash'              => $hash
-        ]);
+        ])->render();
+
+
+        $html2pdf = new Html2Pdf('P','A4','en', false, 'UTF-8', [0, 0, 0, 0]);
+           
+
+        try {
+            $html2pdf->writeHTML($html);
+            $html2pdf->output('Purchase Order - '.str_pad($purchaseOrder->id,0,6,STR_PAD_LEFT ).'.pdf');
+            $html2pdf->clean();
+        
+        }catch(Html2PdfException $e) {
+            $html2pdf->clean();
+        
+            $formatter = new ExceptionFormatter($e);
+            echo $html;
+            echo $formatter->getHtmlMessage();
+
+        
+        } 
+
     }
 
     public function _update(Request $request){

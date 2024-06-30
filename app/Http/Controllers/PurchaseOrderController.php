@@ -754,9 +754,7 @@ class PurchaseOrderController extends Controller
         
             $formatter = new ExceptionFormatter($e);
             echo $html;
-            echo $formatter->getHtmlMessage();
-
-        
+            echo $formatter->getHtmlMessage();        
         } 
         
 
