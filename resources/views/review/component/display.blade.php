@@ -41,19 +41,22 @@
             </div>
         </div>
 
+        @php $i = 1 @endphp
         @foreach($componentItems as $item)
         <table class="border table">
             <thead>
                 <tr>
-                    <th class="text-center bg-primary">{{$item->name}}</th>
-                    <th class="text-center bg-primary"> {{$item->quantity}} {{$item->unit}} </th>
+                    <th class="text-center" style="width:50%;background-color:#add8e6">#{{$i}} {{$item->name}}</th>
+                    <th class="text-center" style="background-color:#add8e6"> {{$item->quantity}} {{$item->unit}} </th>
+                    <th class="text-center" style="background-color:#add8e6"> P {{number_format($item->budget_price,2)}} </th>
+                
                 </tr>
             </thead>
         </table>
         <table class="ms-3 border table">
             <thead>
                 <tr>
-                    <th width="50%">&nbsp;</th>
+                    <th width="50%">Material</th>
                     <th>Equivalent</th>
                     <th>Quantity</th>
                     <th>Total</th>
@@ -80,8 +83,9 @@
                 </tr>
                 @endforeach
                 </tbody>
-            </table>
-        </li>
+        </table>
+        
+        @php $i++ @endphp
         @endforeach
     
 
