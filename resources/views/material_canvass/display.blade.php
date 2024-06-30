@@ -7,8 +7,8 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>ID</th>
-                <td>{{$material_quantity_request->id}}</td>
+                <th>Material Quantity Request ID</th>
+                <td>{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
             </tr>
             <tr>
                 <th>Project</th>
@@ -45,6 +45,11 @@
                 </td>
             </tr>
         </tbody>
+        <div class="row">
+            <div class="col-12 text-end">
+                <button class="btn btn-secondary" id="printBtn">Print</button>
+            </div>
+        </div>
     </table>
 
     <div>
@@ -111,6 +116,7 @@
     let addCanvassBtn = $q('.add-canvass-btn');
     let submitBtn     = $q('#submitBtn').first();
     let cancelBtn     = $q('#cancelBtn').first();
+    let printBtn      = $q('#printBtn').first();
 
     @foreach($items as $item)
 
@@ -213,6 +219,10 @@
 
     cancelBtn.onclick = (e)=>{
         document.location.href = '/home';
+    }
+
+    printBtn.onclick = (e)=>{
+        document.location.href = '/canvass/print/{{$material_quantity_request->id}}';
     }
 </script>
 @endsection

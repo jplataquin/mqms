@@ -66,4 +66,47 @@ class PurchaseOrder extends Model
         return $this->hasOne(Supplier::class,'id','supplier_id');
     }
     
+    public function CreatedByUser(){   
+
+        $user = User::find($this->created_by);
+
+        if(!$user){
+            return User::defaultAttirbutes();
+        }
+
+        return $user;
+    }
+
+    public function UpdatedByUser(){   
+       
+        $user = User::find($this->updated_by);
+
+        if(!$user){
+            return User::defaultAttirbutes();
+        }
+
+        return $user;
+    }
+
+    public function ApprovedByUser(){   
+       
+        $user = User::find($this->approved_by);
+
+        if(!$user){
+            return User::defaultAttirbutes();
+        }
+
+        return $user;
+    }
+
+    public function RejectedByUser(){   
+       
+        $user = User::find($this->rejected_by);
+
+        if(!$user){
+            return User::defaultAttirbutes();
+        }
+
+        return $user;
+    }
 }

@@ -146,6 +146,63 @@ class MaterialCanvassController extends Controller
         ]);
     }
 
+    public function print($id){
+        
+        $materialQuantityRequest = MaterialQuantityRequest::findOrFail($id);
+
+        if($materialQuantityRequest->status != 'APRV'){
+            return show404();
+        }
+
+        $project                = $materialQuantityRequest->Project;
+        $section                = $materialQuantityRequest->Section;
+        $component              = $materialQuantityRequest->Component;
+        $items                  = $materialQuantityRequest->Items()->with('MaterialCanvass')->get();
+       
+        $component_item_id  = [];
+
+        foreach($items as $item){
+            $component_item_id[]    = $item->component_item_id; 
+            $material_quantity_id[] = $item->material_quantity_id;
+            $material_item_id[]     = $item->material_item_id;
+        }
+
+        $suppliers              = Supplier::orderBy('name','ASC')->get();
+        $component_items        = ComponentItem::whereIn('id',$component_item_id)->get();
+        $material_quantities    = MaterialQuantity::whereIn('id',$material_quantity_id)->get();
+
+        $material_items = DB::table('material_items')->whereIn('id',$material_item_id)->get();
+
+        $component_item_arr = [];
+
+        //Arrange component item by id
+        foreach($component_items as $ci){
+            $component_item_arr[$ci->id] = $ci;
+        }
+
+        
+        $material_item_arr = [];
+
+        //Arrange material item by id
+        foreach($material_items as $mi){
+            $material_item_arr[$mi->id] = $mi;
+        }
+
+        $payment_terms = PaymentTerm::toOptions();
+
+        return view('material_canvass/print',[
+            'material_quantity_request' => $materialQuantityRequest,
+            'project'                   => $project,
+            'section'                   => $section,
+            'component'                 => $component,
+            'items'                     => $items,
+            'component_item_arr'        => $component_item_arr,
+            'material_item_arr'         => $material_item_arr,
+            'suppliers'                 => $suppliers,
+            'payment_terms'             => $payment_terms
+        ]);
+    }
+
     public function _create(Request $request){
         
         $material_quantity_request_id = (int) $request->input('material_quantity_request_id');
@@ -205,7 +262,7 @@ class MaterialCanvassController extends Controller
             ->where('payment_term_id','=',$d['payment_term_id'])
             ->where('material_quantity_request_item_id','=',$d['material_quantity_request_item_id'])
             ->where(function($q){
-                return $q->where('status','!=','VOID')->Where('status','!=','DPRV');
+                return $q->where('status','!=','VOID')->Where('status','!=','REJC');
             })->exists();
 
             if($testA){

@@ -84,6 +84,7 @@ Route::middleware(['auth'])->group(function () {
    
     Route::get('/review/material_canvass', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, 'list']);
     Route::get('/review/material_canvass/{id}', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, 'display']);
+    Route::get('/review/material_canvass/print/{id}', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, 'print']);
     
  
     Route::get('/review/purchase_order/{id}', [App\Http\Controllers\Review\PurchaseOrderReviewController::class, 'display']);
