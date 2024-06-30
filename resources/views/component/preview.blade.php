@@ -51,13 +51,13 @@
                 <th style="width:50%; background-color:#add8e6"> {{$item->quantity}} {{$item->unit}} </th>
             </tr>
         </table>
-        <table border="1" class="table">
+        <table border="1" class="table" style="margin-bottom:5px">
            
                 <tr>
-                    <th width="25%">&nbsp;</th>
-                    <th width="25%">Equivalent</th>
-                    <th width="25%">Quantity</th>
-                    <th width="25%">Total</th>
+                    <th style="width:25%">Material</th>
+                    <th style="width:25%">Equivalent</th>
+                    <th style="width:25%">Quantity</th>
+                    <th style="width:25%">Total</th>
                 </tr>
                 
                 @foreach($item->materialQuantities as $mq)
