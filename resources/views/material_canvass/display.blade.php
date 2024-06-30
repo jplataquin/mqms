@@ -223,7 +223,7 @@
     }
 
     printBtn.onclick = (e)=>{
-        document.location.href = '/canvass/print/{{$material_quantity_request->id}}';
+        document.location.href = '/material_canvass/print/{{$material_quantity_request->id}}';
     }
 </script>
 @endsection
