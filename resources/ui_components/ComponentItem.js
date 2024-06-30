@@ -76,7 +76,7 @@ class ComponentItem extends Component{
                             t.th(()=>{
                                 t.div({class:'form-group'},()=>{
                                     t.label('Quantity');
-                                    this.el.materialQuantity = t.input({class:'form-control', type:'text'});
+                                    this.el.material_quantity = t.input({class:'form-control', type:'text'});
                                 });
                             });
                             t.th(()=>{
@@ -217,11 +217,11 @@ class ComponentItem extends Component{
         }
 
         this.el.equivalent.onkeypress = (e)=>{
-            return window.util.inputNumber(this.el.budget_price,e,2,false);
+            return window.util.inputNumber(this.el.equivalent,e,2,false);
         }
 
-        this.el.materialQuantity.onkeypress = (e)=>{
-            return window.util.inputNumber(this.el.materialQuantity,e,2,false);
+        this.el.material_quantity.onkeypress = (e)=>{
+            return window.util.inputNumber(this.el.material_quantity,e,2,false);
         }
 
         this.el.budget_price.onkeypress = (e)=>{
@@ -232,12 +232,12 @@ class ComponentItem extends Component{
             return window.util.inputNumber(this.el.quantity,e,2,false);
         }
         
-        this.el.materialQuantity.onkeyup = ()=>{
-            this.el.total.value = calculateTotalEquivalent( this.el.materialQuantity.value, this.el.equivalent.value);
+        this.el.material_quantity.onkeyup = ()=>{
+            this.el.total.value = calculateTotalEquivalent( this.el.material_quantity.value, this.el.equivalent.value);
         }
         
         this.el.equivalent.onkeyup = ()=>{
-            this.el.total.value = calculateTotalEquivalent( this.el.materialQuantity.value, this.el.equivalent.value);
+            this.el.total.value = calculateTotalEquivalent( this.el.material_quantity.value, this.el.equivalent.value);
         }
 
         this.el.addBtn.onclick = ()=>{
@@ -419,7 +419,7 @@ class ComponentItem extends Component{
         let data = {
             component_item_id: this._model.id,
             material_item_id: this.el.materialItemSelect.value,
-            quantity: this.el.materialQuantity.value,
+            quantity: this.el.material_quantity.value,
             equivalent: this.el.equivalent.value
         };
 
@@ -432,7 +432,7 @@ class ComponentItem extends Component{
                 return false;
             }
 
-            this.el.materialQuantity.value = '';
+            this.el.material_quantity.value = '';
             this.el.equivalent.value = '';
 
             this.appendMaterial({
