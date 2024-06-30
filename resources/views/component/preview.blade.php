@@ -1,4 +1,12 @@
+<style>
+    .table{
+        border-collapse: collapse;
+    }
 
+    .table td{
+        padding: 3px;
+    }
+</style>
 <page>
     <div>
 
@@ -7,7 +15,7 @@
                 {{$project->name}} - ( {{$section->name}} )
             </h3>
             <hr>
-            <table border="1" style="border-collapse: collapse">
+            <table border="1" class="table">
                    
                     <tr>
                         <th style="width:10%">Component</th>
