@@ -133,14 +133,14 @@
 
             window.util.unblockUI();
       
-            document.location.href = '/supplier/'+reply.data.id;
+            document.location.href = '/master_data/supplier/'+reply.data.id;
 
         
         });
     }
 
     cancelBtn.onclick = (e) => {
-        document.location.href = '/suppliers';
+        document.location.href = '/mater_data/suppliers';
 
     }
 
