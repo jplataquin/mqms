@@ -173,7 +173,7 @@
        let rejectBtn = $q('#rejectBtn').first();
        let approveBtn   = $q('#approveBtn').first();
 
-       diapproveBtn.onclick = (e)=>{
+       rejectBtn.onclick = (e)=>{
             e.preventDefault();
 
             if(!confirm('Are you sure you want to REJECT this PO?')){
