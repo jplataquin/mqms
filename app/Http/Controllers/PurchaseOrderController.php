@@ -349,7 +349,7 @@ class PurchaseOrderController extends Controller
         try{
             
             $po_items   = json_decode($request->input('items'),true);
-            $extras                         = json_decode($request->input('extras'),true);
+            $extras     = json_decode($request->input('extras'),true);
 
             if(is_null($po_items) || is_null($extras)){
                 throw('Error');
@@ -776,7 +776,7 @@ class PurchaseOrderController extends Controller
             'status'    => 1,
             'message'   => '',
             'data'      => [
-                'total_ordered' => $total
+                'total_ordered'  => $total
             ]
         ]);
 

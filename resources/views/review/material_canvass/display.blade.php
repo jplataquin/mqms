@@ -7,8 +7,8 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>ID</th>
-                <td>{{$material_quantity_request->id}}</td>
+                <th>Material Quantity Request ID</th>
+                <td>{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
             </tr>
             <tr>
                 <th>Project</th>
@@ -25,6 +25,18 @@
             <tr>
                 <th>Status</th>
                 <td>{{$material_quantity_request->status}}</td>
+            </tr>
+            <tr>
+                <th>Created By</th>
+                <td>{{$material_quantity_request->CreatedByUser()->name}} {{$material_quantity_request->created_at}}</td>
+            </tr>
+            <tr>
+                <th>Updated By</th>
+                <td>{{$material_quantity_request->UpdatedByUser()->name}} {{$material_quantity_request->updated_at}}</td>
+            </tr>
+            <tr>
+                <th>Approved By</th>
+                <td>{{$material_quantity_request->ApprovedByUser()->name}} {{$material_quantity_request->approved_at}}</td>
             </tr>
             
             <tr>
@@ -51,9 +63,15 @@
                     </div>
                 </div>
 
-                <div class="col-6">
+                <div class="col-3">
                     <label>Quantity</label>
                     <input type="text" class="form-control" disabled="true" value="{{ $item->requested_quantity }}"/>
+                </div>
+
+                
+                <div class="col-3">
+                    <label>Budget Price</label>
+                    <input type="text" class="form-control" disabled="true" value="P {{ number_format($component_item->budget_price,2) }}"/>
                 </div>
             </div>
 

@@ -8,11 +8,11 @@
         <tbody>
             <tr>
                 <th>PO Number</th>
-                <td>{{$purchase_order->id}}</td>
+                <td>{{str_pad($purchase_order->id,6,0,STR_PAD_LEFT)}}</td>
             </tr>
             <tr>
                 <th>Material Quantity Request ID</th>
-                <td>{{$material_quantity_request->id}}</td>
+                <td>{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
             </tr>
             <tr>
                 <th>Project</th>
@@ -27,10 +27,26 @@
                 <td>{{$component->name}}</td>
             </tr>
             <tr>
-                <th>PO Status</th>
+                <th>Status</th>
                 <td>{{$purchase_order->status}}</td>
             </tr>
-            
+            <tr>
+                <th>Created By</th>
+                <td>{{$purchase_order->CreatedByUser()->name}} {{$purchase_order->created_at}}</td>
+            </tr>
+            <tr>
+                <th>Updated By</th>
+                <td>{{$purchase_order->UpdatedByUser()->name}} {{$purchase_order->updated_at}}</td>
+            </tr>
+            <tr>
+                <th>Approved By</th>
+                <td>{{$purchase_order->ApprovedByUser()->name}} {{$purchase_order->approve_at}}</td>
+            </tr>
+
+            <tr>
+                <th>Rejected By</th>
+                <td>{{$purchase_order->RejectedByUser()->name}} {{$purchase_order->rejected_at}}</td>
+            </tr>
             <tr>
                 <th>Description</th>
                 <td>

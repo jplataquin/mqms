@@ -7,7 +7,7 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>ID</th>
+                <th>Material Quantity Request ID</th>
                 <td>{{$material_quantity_request->id}}</td>
             </tr>
             <tr>
@@ -21,10 +21,6 @@
             <tr>
                 <th>Component</th>
                 <td>{{$component->name}}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{$material_quantity_request->status}}</td>
             </tr>
             
             <tr>
@@ -75,7 +71,7 @@
                         <input type="text" class="extra_text form-control"/>
                     </td>
                     <td>
-                        <input type="number" class="extra_val form-control" onkeypress="return window.util.inputNumber(this,event,2,true)"/>
+                        <input type="text" class="extra_val form-control" onkeypress="return window.util.inputNumber(this,event,2,true)"/>
                     </td>
                 </tr>
                 <tr class="extra">
@@ -83,7 +79,7 @@
                         <input type="text" class="extra_text form-control" />
                     </td>
                     <td>
-                        <input type="number" class="extra_val form-control" onkeypress="return window.util.inputNumber(this,event,2,true)"/>
+                        <input type="text" class="extra_val form-control" onkeypress="return window.util.inputNumber(this,event,2,true)"/>
                     </td>
                 </tr>
                 <tr class="extra">
@@ -91,7 +87,7 @@
                         <input type="text" class="extra_text form-control"/>
                     </td>
                     <td>
-                        <input type="number" class="extra_val form-control" onkeypress="return window.util.inputNumber(this,event,2,true)"/>
+                        <input type="text" class="extra_val form-control" onkeypress="return window.util.inputNumber(this,event,2,true)"/>
                     </td>
                 </tr>
                 <tr class="extra">
@@ -99,7 +95,7 @@
                         <input type="text" class="extra_text form-control"/>
                     </td>
                     <td>
-                        <input type="number" class="extra_val form-control" onkeypress="return window.util.inputNumber(this,event,2,true)"/>
+                        <input type="text" class="extra_val form-control" onkeypress="return window.util.inputNumber(this,event,2,true)"/>
                     </td>
                 </tr>
                 <tr>
@@ -286,6 +282,7 @@
                     calculateSubTotal();
                 }
 
+                let remainingBalnce = t.input({class:'form-control',value:'',disabled:true});
 
                 let total_ordered_el =  t.div({class:'col-2'},()=>{
                     t.div({class:'form-group'},()=>{
@@ -294,8 +291,10 @@
 
                         updateTotalOrdered(
                             total_ordered_input,
+                            remainingBalnce,
                             item.material_item.id,
-                            item.material_quantity_request_item_id
+                            item.material_quantity_request_item_id,
+                            item.requested_quantity
                         );
                     });
                 });
@@ -323,15 +322,16 @@
                             });
                         });
     
-                        t.div({class:'col-2'},()=>{
-                            t.div({class:'form-group'},()=>{
-                                t.label('Requested Quantity')
-                                t.input({class:'form-control',value:item.requested_quantity,disabled:true})
-                            });
-                        });
+                        
                         
                         el.appendChild(total_ordered_el);
                         
+                        t.div({class:'col-2'},(el)=>{
+                            t.div({class:'form-group'},()=>{
+                                t.label('Remaining Balance')
+                                el.appendChild(remainingBalnce);
+                            });
+                        });
                         
                         t.div({class:'col-2'},(el)=>{
                             t.div({class:'form-group'},()=>{
@@ -438,9 +438,16 @@
     }
 
 
-    function updateTotalOrdered(inputEl,material_item_id,material_quantity_request_item_id){
+    function updateTotalOrdered(
+        inputEl,
+        remainingBalanceEl,
+        material_item_id,
+        material_quantity_request_item_id,
+        requested_quantity
+    ){
         inputEl.value = 'Fetching data...';
-
+        remainingBalanceEl.value = 'Fetching data...';
+        
         window.util.$get('/api/purchase_order/total_ordered',{
             material_item_id: material_item_id,
             material_quantity_request_item_id: material_quantity_request_item_id 
@@ -451,7 +458,9 @@
                 return false;
             }
 
-            inputEl.value = reply.data.total_ordered;
+            inputEl.value = reply.data.total_ordered + ' / ' +requested_quantity;
+
+            remainingBalanceEl.value = requested_quantity - reply.data.total_ordered;
         });
     }
 </script>

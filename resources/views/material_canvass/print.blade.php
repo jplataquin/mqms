@@ -59,16 +59,14 @@
     <hr>
     <div>
         @foreach($items as $item)
-            @php  
+            @php 
                 $material_item = $material_item_arr[$item->material_item_id]; 
                 $component_item = $component_item_arr[ $item->component_item_id ];
             @endphp
-        <table class="table" border="1">
-            <tr>
-                <td style="width:100%" colspan="3">
-                    {{ $component_item_arr[ $item->component_item_id ]->name }}
-                </td>
-            </tr>
+        
+        <nobreak>
+        <table class="table" border="1" style="margin-bottom:5px">
+            
             <tr>
                 <th>
                     Material
@@ -126,7 +124,7 @@
                 </td>        
             </tr>
         </table>
-        
+        </nobreak>
         @endforeach
 
         
