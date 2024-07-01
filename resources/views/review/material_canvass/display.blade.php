@@ -55,6 +55,8 @@
                <h5>  {{ $component_item_arr[ $item->component_item_id ]->name }}</h5>
                 @php 
                     $material_item = $material_item_arr[$item->material_item_id];
+                    $component_item = $component_item_arr[ $item->component_item_id ];
+
                 @endphp
                 <div class="col-6">
                     <div class="form-group">
