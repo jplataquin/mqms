@@ -111,6 +111,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/review/purchase_order/list', [App\Http\Controllers\Review\PurchaseOrderReviewController::class, '_list']);
     Route::post('/review/purchase_order/approve', [App\Http\Controllers\Review\PurchaseOrderReviewController::class, '_approve']);
     Route::post('/review/purchase_order/reject', [App\Http\Controllers\Review\PurchaseOrderReviewController::class, '_reject']);
+    Route::post('/review/purchase_order/reject_void', [App\Http\Controllers\PurchaseOrderReviewController::class, '_reject_void']);
+    Route::post('/review/purchase_order/void', [App\Http\Controllers\PurchaseOrderReviewController::class, '_void']);
     
     Route::get('/review/material_canvass/list', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, '_list']);
     Route::post('/review/material_canvass/approve', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, '_approve']);
@@ -131,6 +133,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/purchase_order/list', [App\Http\Controllers\PurchaseOrderController::class, '_list']);
     Route::get('/purchase_order/total_ordered', [App\Http\Controllers\PurchaseOrderController::class, 'total_ordered']);
     Route::post('/purchase_order/create', [App\Http\Controllers\PurchaseOrderController::class, '_create']);
-    Route::post('/purchase_order/void', [App\Http\Controllers\PurchaseOrderController::class, '_void']);
+    Route::post('/purchase_order/request_void', [App\Http\Controllers\PurchaseOrderController::class, '_request_void']);
     
 });

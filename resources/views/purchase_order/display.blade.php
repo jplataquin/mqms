@@ -162,7 +162,7 @@
                 @endif
 
                 @if($purchase_order->status == 'APRV')
-                    <button id="voidBtn" class="btn btn-danger">Void</button>
+                    <button id="voidBtn" class="btn btn-danger">Request Void</button>
                 @endif
             </div>
             <div class="col-6 text-end">
@@ -222,14 +222,14 @@
         voidBtn.onclick = (e)=>{
             e.preventDefault();
 
-            if(!confirm('Are you sure you want to VOID this PO?')){
+            if(!confirm('Are you sure you want to request VOID this PO?')){
 
                 return false;
             }
 
             window.util.blockUI();
 
-            window.util.$post('/api/purchase_order/void',{
+            window.util.$post('/api/purchase_order/request_void',{
                 id: '{{$purchase_order->id}}'
             }).then(reply=>{
 

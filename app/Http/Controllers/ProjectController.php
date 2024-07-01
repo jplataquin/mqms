@@ -227,4 +227,45 @@ class ProjectController extends Controller
            'data'      => []
        ]);
     }
+
+    public function _request_void(Request $request){
+       
+        $id = (int) $request->input('id');
+
+        $validator = Validator::make($request->all(),[
+            'id' => [
+                'required',
+                'integer',
+            ]
+        ]);
+
+        if($validator->fails()){
+            
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Failed Validation',
+                'data'      => $validator->messages()
+            ]);
+        }
+
+        $project = Project::find($id);
+
+        if(!$project){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Record not found',
+                'data'      => []
+            ]);
+        }
+        
+       
+        $project->status = 'REVO';
+        $project->save();
+
+        return response()->json([
+           'status'    => 1,
+           'message'   => '',
+           'data'      => []
+       ]);
+    }
 }

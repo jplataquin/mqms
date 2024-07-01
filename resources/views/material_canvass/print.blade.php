@@ -106,10 +106,10 @@
                                 {{$mcItem->status}}
                             </td>
                             <td style="width:30%">
-                                {{$mcItem->supplier_id}}
+                                {{ $supplier_arr[ $mcItem->supplier_id ]->name }}
                             </td>
                             <td style="width:30%">
-                                {{$mcItem->payment_term_id}}
+                                {{ $payment_term_arr[ $mcItem->payment_term_id ]->text }}
                             </td>
                             <td style="width:10%">
                                P {{ number_format($mcItem->price,2) }}

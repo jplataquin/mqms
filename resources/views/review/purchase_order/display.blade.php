@@ -147,11 +147,19 @@
                 @if($purchase_order->status == 'PEND')
                     <button id="rejectBtn" class="btn btn-danger">Reject</button>
                 @endif
+
+                @if($purchase_order->status == 'REVO')
+                    <button id="approveVoidBtn" class="btn btn-danger">Approve Void</button>
+                @endif
             </div>
             <div class="col-6 text-end">
 
                 @if($purchase_order->status == 'PEND')
                     <button id="approveBtn" class="btn btn-primary">Approve</button>
+                @endif
+
+                @if($purchase_order->status == 'REVO')
+                <button id="rejectVoidBtn" class="btn btn-primary">Reject Void</button>
                 @endif
                 <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
             </div>
@@ -167,6 +175,55 @@
     cancelBtn.onclick = ()=>{
         window.location.href = '/review/purchase_order';
     }
+
+    @if($purchase_order->status == 'REVO')
+        let approveVoidBtn = $q('#approveVoidBtn').first();
+
+        approveVoidBtn.onclick = ()=>{
+
+            if(!confirm('Are you sure you want to VOID this PO?')){
+                return false;
+            }
+
+
+            window.util.blockUI();
+
+            window.util.$post('/api/review/purchase_order/void',{
+                id: '{{$purchase_order->id}}'
+            }).then(reply=>{
+
+                window.util.unblockUI();
+
+                if(reply.status <= 0){
+
+                    window.util.showMsg(reply.message);
+                    return false;
+                }
+
+                window.location.href = "/review/purchase_orders";
+            });
+        }
+
+        rejectVoidBtn.onclick = ()=>{
+
+            window.util.blockUI();
+
+            window.util.$post('/api/review/purchase_order/reject_void',{
+                id: '{{$purchase_order->id}}'
+            }).then(reply=>{
+
+                window.util.unblockUI();
+
+                if(reply.status <= 0){
+
+                    window.util.showMsg(reply.message);
+                    return false;
+                }
+
+                window.location.href = "/review/purchase_orders";
+            });
+        }
+    @endif
 
     @if($purchase_order->status == 'PEND')
         

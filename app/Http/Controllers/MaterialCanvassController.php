@@ -191,7 +191,19 @@ class MaterialCanvassController extends Controller
             $material_item_arr[$mi->id] = $mi;
         }
 
-        $payment_terms = PaymentTerm::toOptions();
+        $payment_terms = (object) PaymentTerm::toOptions();
+
+        $payment_term_arr = [];
+
+        foreach($payment_terms as $payment_term){
+            $payment_term_arr[ $payment_term->id] = $payment_term;
+        }
+
+        $supplier_arr = [];
+
+        foreach($suppliers as $supplier){
+            $supplier_arr[$supplier->id] = $supplier;
+        }
 
         $html = view('material_canvass/print',[
             'material_quantity_request' => $materialQuantityRequest,
@@ -201,8 +213,8 @@ class MaterialCanvassController extends Controller
             'items'                     => $items,
             'component_item_arr'        => $component_item_arr,
             'material_item_arr'         => $material_item_arr,
-            'suppliers'                 => $suppliers,
-            'payment_terms'             => $payment_terms
+            'supplier_arr'              => $supplier_arr,
+            'payment_term_arr'          => $payment_term_arr
         ])->render();
 
         $html2pdf = new Html2Pdf('P','A4','en', false, 'UTF-8', [5, 5, 10, 0]);
