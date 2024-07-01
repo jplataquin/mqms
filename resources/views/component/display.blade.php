@@ -88,7 +88,7 @@
         </div>
         <div class="col-lg-2">
             <div class="form-group">
-                <label>Budget Price</label>
+                <label>Budget Price / Unit</label>
                 <input id="component_item_budget_price" type="text" class="form-control"/>
             </div>
         </div>
