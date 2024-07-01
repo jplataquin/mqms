@@ -61,6 +61,8 @@
                 @php 
                     $component_item = $component_item_arr[ $item->component_item_id ];
                     $material_item = $material_item_arr[$item->material_item_id];
+
+                    print_r($component_item);
                 @endphp
                 <div class="col-6">
                     <div class="form-group">
