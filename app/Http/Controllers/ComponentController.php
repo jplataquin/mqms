@@ -38,7 +38,7 @@ class ComponentController extends Controller
             ],
             'section_id' => ['required','integer']
         ]);
-        mqms_Icimdtysrftw01#
+        
         if ($validator->fails()) {
             return response()->json([
                 'status'    => 0,
