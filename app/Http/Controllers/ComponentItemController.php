@@ -47,7 +47,8 @@ class ComponentItemController extends Controller
                     function ($query) use ($name,$component_id) {
                         return $query
                         ->where('component_id', $component_id)
-                        ->where('name', $name);
+                        ->where('name', $name)
+                        ->where('deleted_at',null);
                 }),
             ],
             'unit' => [
@@ -173,7 +174,8 @@ class ComponentItemController extends Controller
                          return $query
                          ->where('component_id', $component_id)
                          ->where('id','!=',$id)
-                         ->where('name', $name);
+                         ->where('name', $name)
+                         ->where('deleted_at',null);
                  }),
              ],
              'unit' => [
