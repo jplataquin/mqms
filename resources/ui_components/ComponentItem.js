@@ -140,7 +140,7 @@ class ComponentItem extends Component{
 
                     });
 
-                    t.td({class:''},(el)=>{
+                    t.td({class:'',style:{width:'10em'}},(el)=>{
                         this.el.unit = t.input({class:'form-control', type:'text', placeholder:'Unit', disabled:true, value:'loading...'});    
                     });
 
@@ -178,7 +178,9 @@ class ComponentItem extends Component{
 
                     t.tr(()=>{
                         t.td({colspan:4, class:'text-center'},()=>{
-                            this.el.showList = t.span('Show Items');
+                        
+                            this.el.showList = t.a({href:'#'},'Show Items');
+                            this.el.showList.onclick = (e)=>{ e.preventDefault(); return false; }
                         });
                     })
 
