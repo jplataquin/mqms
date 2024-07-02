@@ -455,7 +455,7 @@ class ComponentItem extends Component{
 
     appendMaterial(data){
         const t = new Template();
-
+        console.log(data);
         let materilItem = t.tr((row)=>{
                     t.td(this.materialRegistry[data.material_item_id]);
                     t.td(data.equivalent);
