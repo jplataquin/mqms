@@ -33,12 +33,12 @@ class ComponentController extends Controller
                         return $query
                         ->where('section_id', $section_id)
                         ->where('name', $name)
-                        ->where('deleted_at','');
+                        ->where('deleted_at','=',null);
                 }),
             ],
             'section_id' => ['required','integer']
         ]);
-
+        mqms_Icimdtysrftw01#
         if ($validator->fails()) {
             return response()->json([
                 'status'    => 0,
