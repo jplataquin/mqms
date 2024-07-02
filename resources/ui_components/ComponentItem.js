@@ -455,11 +455,11 @@ class ComponentItem extends Component{
 
     appendMaterial(data){
         const t = new Template();
-        console.log(data.equivalent);
+        
         let materilItem = t.tr((row)=>{
                     t.td(this.materialRegistry[data.material_item_id]);
-                    t.td(data.equivalent);
-                    t.td(data.quantity);
+                    t.td(''+data.equivalent);
+                    t.td(''+data.quantity);
                     t.td(''+calculateTotalEquivalent(data.quantity,data.equivalent));
                     t.td({class:'text-center'},()=>{
                         t.a({href:'#'},'[X]').onclick = (e)=>{
