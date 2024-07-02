@@ -177,7 +177,7 @@ class ComponentItem extends Component{
                     });
 
                     t.tr(()=>{
-                        t.td({colspan:4, class:'text-center'},()=>{
+                        t.td({colspan:5, class:'text-center'},()=>{
                         
                             this.el.showList = t.a({href:'#'},'Show Items');
                             
@@ -207,7 +207,7 @@ class ComponentItem extends Component{
         this.getComponentItemData();
 
         this.el.showList.onclick = (e)=>{
-            
+
             e.preventDefault();
             
             if(this._state.showList){
