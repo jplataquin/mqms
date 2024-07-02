@@ -180,7 +180,7 @@ class ComponentItem extends Component{
                         t.td({colspan:4, class:'text-center'},()=>{
                         
                             this.el.showList = t.a({href:'#'},'Show Items');
-                            this.el.showList.onclick = (e)=>{ e.preventDefault(); return false; }
+                            
                         });
                     })
 
@@ -206,8 +206,10 @@ class ComponentItem extends Component{
         
         this.getComponentItemData();
 
-        this.el.showList.onclick = ()=>{
-         
+        this.el.showList.onclick = (e)=>{
+            
+            e.preventDefault();
+            
             if(this._state.showList){
                 this.el.showList.innerHTML = 'Show Items';
                 this.setState('showList',false);
@@ -216,6 +218,7 @@ class ComponentItem extends Component{
                 this.setState('showList',true);
             }
 
+            return false;
         }
 
         this.el.equivalent.onkeypress = (e)=>{
