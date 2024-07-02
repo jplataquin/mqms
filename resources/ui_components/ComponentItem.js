@@ -177,7 +177,7 @@ class ComponentItem extends Component{
                     });
 
                     t.tr(()=>{
-                        t.td({colspan:5, class:'text-center'},()=>{
+                        t.td({colspan:5,class:'text-center'},()=>{
                         
                             this.el.showList = t.a({href:'#'},'Show Items');
                             
@@ -188,7 +188,7 @@ class ComponentItem extends Component{
 
                 t.tfoot({},()=>{
                     t.tr({},()=>{
-                        t.td({colspan:4},()=>{
+                        t.td({colspan:5},()=>{
                             this.el.materialMenuHolder = t.div({class:'ms-3 row'});
                         });
                     })
