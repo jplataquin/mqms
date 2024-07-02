@@ -73,7 +73,7 @@
         data.map(item=>{
 
             let row = t.div({class:'row mt-1 mb-1 border selectable-div fade-in'},()=>{
-                t.div({class:'col-lg-12'},item.name +' - '+item.specification_unit_packaging+' - '+item.brand);
+                t.div({class:'col-lg-12'},item.name +' '+item.specification_unit_packaging+' '+item.brand+''.trim());
             });
 
             row.onclick = ()=>{
