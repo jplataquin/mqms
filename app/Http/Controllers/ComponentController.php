@@ -33,7 +33,7 @@ class ComponentController extends Controller
                         return $query
                         ->where('section_id', $section_id)
                         ->where('name', $name)
-                        ->where('deleted_at',null);
+                        ->where('deleted_at','');
                 }),
             ],
             'section_id' => ['required','integer']
