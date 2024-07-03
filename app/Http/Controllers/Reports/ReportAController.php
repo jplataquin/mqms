@@ -82,6 +82,8 @@ class ReportAController extends Controller
                 
         }
 
+        print_r($total_requested);exit;
+
         return view('reports/report_a/generate',[
             'project'           => $project,
             'section'           => $section,
