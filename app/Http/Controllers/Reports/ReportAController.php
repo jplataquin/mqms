@@ -41,7 +41,7 @@ class ReportAController extends Controller
             return abort(404);
         }
         
-        $component_items = $component->Items;
+        $component_items = $component->ComponentItems;
 
         return view('reports/report_a/generate',[
             'project'   => $project,
