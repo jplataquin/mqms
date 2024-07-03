@@ -33,7 +33,11 @@
             </div>
         </div>
     </div>
-
+    <div class="row mt-3">
+        <div class="col-lg-12 text-end">
+            <button id="generateBtn" class="btn btn-primary">Generate</button>
+        </div>
+    </div>
 
 </div>
 
@@ -43,9 +47,10 @@
     let projectSelect   = $q('#projectSelect').first();
     let sectionSelect   = $q('#sectionSelect').first();
     let componentSelect = $q('#componentSelect').first();
+    let generateBtn     = $q('#generateBtn').first();
     
     const t= new Template();
-    
+
     projectSelect.onchange = (e)=>{
 
         e.preventDefault();
@@ -119,6 +124,13 @@
 
             window.util.unblockUI();
         });
-        }
+    }
+
+
+    generateBtn.onclick = (e)=>{
+        e.preventDefault();
+
+        window.open('/report/a/generate/'+projectSelect.value+'/'+sectionSelect.value+'/'+componentSelect.value,'_blank');
+    }
 </script>
 @endsection
