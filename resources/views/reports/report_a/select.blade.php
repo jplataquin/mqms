@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-<h5>Reports » Report A</h5>
+<h5>Reports » A</h5>
 <hr>
 
     <div class="row">

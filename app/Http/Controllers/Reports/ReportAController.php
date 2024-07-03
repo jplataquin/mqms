@@ -40,10 +40,14 @@ class ReportAController extends Controller
         if(!$component){
             return abort(404);
         }
+        
+        $component_items = $component->Items;
+
         return view('reports/report_a/generate',[
             'project'   => $project,
             'section'   => $section,
-            'component' => $component
+            'component' => $component,
+            'component_items' => $component_items
         ]);
     }
 }
