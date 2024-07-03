@@ -16,7 +16,7 @@ class ReportAController extends Controller
 
         $projects = Project::orderBy('name','ASC')->get();
 
-        return view('reports/select',[
+        return view('reports/report_a/select',[
             'projects' => $projects
         ]);
     }
