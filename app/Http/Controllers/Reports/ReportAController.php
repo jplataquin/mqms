@@ -70,12 +70,15 @@ class ReportAController extends Controller
 
             foreach($material_quantity as $k => $mq){
 
+                echo $mqri->material_item_id;
+                echo $mq->material_item_id;
+                /*
                 if($mq->material_item_id == $mqri->material_item_id){
                     $total_requested[$i] = [
                         'total' => $mqri->total * $mq->equivalent,
                         'unit'  => $component_item_arr[$i]->unit
                     ];
-                }
+                }*/
             }
             
         }
