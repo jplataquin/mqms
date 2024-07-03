@@ -102,6 +102,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/purchase_order/create/{id}', [App\Http\Controllers\PurchaseOrderController::class, 'create']);
     Route::get('/purchase_order/{id}', [App\Http\Controllers\PurchaseOrderController::class, 'display']);
     Route::get('/purchase_order/print/{id}', [App\Http\Controllers\PurchaseOrderController::class, 'print']);
+
+    Route::get('/report/a/select', [App\Http\Controllers\Reports\ReportAController::class, 'select']);
+   
 });
 
 
