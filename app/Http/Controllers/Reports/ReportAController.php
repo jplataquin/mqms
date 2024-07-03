@@ -70,7 +70,7 @@ class ReportAController extends Controller
 
             foreach($material_quantity as $k => $mq){
 
-                echo $mqri->material_item_id;
+                print_r($mqri);
                 echo $mq->material_item_id;
                 /*
                 if($mq->material_item_id == $mqri->material_item_id){
