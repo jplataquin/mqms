@@ -48,7 +48,6 @@ class ReportAController extends Controller
 
         $material_quantity_requet_item  = [];
         $material_quantity              = [];
-        $component_item_arr             = [];
 
         foreach($component_items as $component_item){
             $material_quantity_request_item[$component_item->id] = MaterialQuantityRequestItem::where('component_item_id',$component_item->id)
@@ -60,26 +59,20 @@ class ReportAController extends Controller
 
             $material_quantity[$component_item->id] = MaterialQuantity::where('component_item_id',$component_item->id)->get();
             
-            $component_item_arr[$component_item->id] = $component_item;
         }
 
         $total_requested = [];
 
-        foreach($material_quantity_request_item as $i => $mqri){
+        foreach($component_items as $component_item){
 
 
-            foreach($material_quantity as $k => $mq){
-
-                print_r($mqri);
-                print_r($mq);
-                /*
-                if($mq->material_item_id == $mqri->material_item_id){
-                    $total_requested[$i] = [
-                        'total' => $mqri->total * $mq->equivalent,
-                        'unit'  => $component_item_arr[$i]->unit
+            
+                $total_requested[$i] = [
+                        'total' => $material_quantity_request_item[$component_item->id]->total * $material_quantity[$component_item->id]->equivalent,
+                        'unit'  => $component_item->unit
                     ];
-                }*/
-            }
+                
+            
             
         }
 
