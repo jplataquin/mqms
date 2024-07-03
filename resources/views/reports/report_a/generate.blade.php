@@ -32,7 +32,7 @@
     <table class="table bordered w-100">
         <tbody>
             <tr>
-                <td colspan="3">{{$component_item}}</td>
+                <td colspan="3">{{$component_item->name}}</td>
             </tr>
             <tr>
                 <th>Budget</th>
