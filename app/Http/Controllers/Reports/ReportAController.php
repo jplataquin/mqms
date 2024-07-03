@@ -71,7 +71,7 @@ class ReportAController extends Controller
 
                     if($mqri->material_item_id == $mq->material_item_id){
 
-                        $total_requested[$i] = [
+                        $total_requested[$component_item->id] = [
                             'total' => $mqri->total * $mq->equivalent,
                             'unit'  => $component_item->unit
                         ];
