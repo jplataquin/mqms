@@ -66,7 +66,7 @@ class ReportAController extends Controller
         foreach($component_items as $component_item){
 
 
-            
+                print_r($material_quantity_request_item[$component_item->id]);
                 $total_requested[$i] = [
                         'total' => $material_quantity_request_item[$component_item->id]->total * $material_quantity[$component_item->id]->equivalent,
                         'unit'  => $component_item->unit
