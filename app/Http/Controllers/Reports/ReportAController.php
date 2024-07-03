@@ -23,7 +23,9 @@ class ReportAController extends Controller
 
     public function generate($project_id, $section_id, $component_id){
 
-        $project_id = (int) $project_id;
+        $project_id     = (int) $project_id;
+        $section_id     = (int) $section_id;
+        $component_id   = (int) $component_id;
 
         $project = Project::findOrFail($project_id);
                    
