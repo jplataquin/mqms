@@ -65,15 +65,21 @@ class ReportAController extends Controller
 
         foreach($component_items as $component_item){
 
+            foreach($material_quantity_request_item[$component_item->id] as $mqri){
 
-                print_r($material_quantity_request_item[$component_item->id]);
-                $total_requested[$i] = [
-                        'total' => $material_quantity_request_item[$component_item->id]->total * $material_quantity[$component_item->id]->equivalent,
-                        'unit'  => $component_item->unit
-                    ];
+                foreach($material_quantity[$component_item->id] as $mq){
+
+                    if($mqri->material_item_id == $mq->material_item_id){
+
+                        $total_requested[$i] = [
+                            'total' => $mqri->total * $mq->equivalent,
+                            'unit'  => $component_item->unit
+                        ];
+                    }
+                }
+            
+            }
                 
-            
-            
         }
 
         return view('reports/report_a/generate',[
