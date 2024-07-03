@@ -12,7 +12,7 @@ use App\Models\Supplier;
 
 class ReportAController extends Controller
 {
-    public function index(){
+    public function select(){
 
         $projects = Project::orderBy('name','ASC')->get();
 
