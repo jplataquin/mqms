@@ -11,6 +11,7 @@ use App\Models\MaterialQuantityRequestItem;
 use App\Models\Project;
 use App\Models\Section;
 use App\Models\Component;
+use App\Models\ComponentItem;
 use App\Models\User;
 
 class MaterialQuantityRequest extends Model

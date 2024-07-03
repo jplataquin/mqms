@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-<h5>KMaterial Canvass » List</h5>
+<h5>Material Canvass » List</h5>
 <hr>
 
 <div class="row">

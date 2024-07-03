@@ -35,17 +35,18 @@
                 <td colspan="3">{{$component_item->name}}</td>
             </tr>
             <tr>
-                <th>Budget</th>
-                <th>Requested</th>
-                <th>PO</th>
+                <th class="text-center">Budget</th>
+                <th class="text-center">Requested</th>
+                <th class="text-center">PO</th>
             </tr>
             <tr>
                 <td class="text-center">
                     {{$component_item->quantity}} {{$component_item->unit}} 
                 </td>
-                <td>
+                <td class="text-center">
+                    {{$total_requested[$component_item->id]->total}} {{$total_requested[$component_item->id]->unit}}
                 </td>
-                <td>
+                <td class="text-center">
                 </td>
             </tr>
         </tbody>
