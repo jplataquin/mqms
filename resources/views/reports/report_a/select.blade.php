@@ -44,7 +44,8 @@
     let sectionSelect   = $q('#sectionSelect').first();
     let componentSelect = $q('#componentSelect').first();
     
-
+    const t= new Template();
+    
     projectSelect.onchange = (e)=>{
 
         e.preventDefault();
