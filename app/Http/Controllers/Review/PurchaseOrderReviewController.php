@@ -310,15 +310,15 @@ class PurchaseOrderReviewController extends Controller
 
             return response()->json([
                 'status'    => 0,
-                'message'   => 'Record not found',
+                'message'   => 'Error: Record not found',
                 'data'      => []
             ]);
         }
 
-        if($purchaseOrder->status != 'APRV'){
+        if($purchaseOrder->status != 'REVO'){
             return response()->json([
                 'status'    => 0,
-                'message'   => 'Record cannot be void, status is not approved',
+                'message'   => 'Error: Record cannot be void, record status is wrong',
                 'data'      => []
             ]);
         }
