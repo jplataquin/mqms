@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-<h5>Master Data » Project » Display</h5>
+<h5>Project » Display</h5>
 <hr>
 
     <div class="row">
