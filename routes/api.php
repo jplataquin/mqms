@@ -76,6 +76,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/payment_term/create', [App\Http\Controllers\PaymentTermController::class, '_create']);
     Route::post('/payment_term/update', [App\Http\Controllers\PaymentTermController::class, '_update']);
     Route::post('/payment_term/delete', [App\Http\Controllers\PaymentTermController::class, '_delete']);
+    
+    Route::get('/component_unit/list', [App\Http\Controllers\ComponentUnitController::class, '_list']);
+    Route::post('/component_unit/create', [App\Http\Controllers\ComponentUnitController::class, '_create']);
+    Route::post('/component_unit/update', [App\Http\Controllers\ComponentUnitController::class, '_update']);
+    Route::post('/component_unit/delete', [App\Http\Controllers\ComponentUnitController::class, '_delete']);
   
     // Route::get('/material_budget/list', [App\Http\Controllers\MaterialBudgetController::class, '_list']);
     // Route::post('/material_budget/create', [App\Http\Controllers\MaterialBudgetController::class, '_create']);

@@ -3,34 +3,34 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\PaymentTerm;
+use App\Models\ComponentUnit;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 
-class PaymentTermController extends Controller
+class ComponentUnitController extends Controller
 {
     public function create(){
 
-        return view('payment_term/create');
+        return view('component_unit/create');
     }
 
     public function display($id){
 
         $id = (int) $id;
 
-        $paymentTerm = PaymentTerm::findOrFail($id);
+        $componentUnit = componentUnit::findOrFail($id);
 
-        return view('payment_term/display',[
-            'paymentTerm' => $paymentTerm
+        return view('component_unit/display',[
+            'componentUnit' => $componentUnit
         ]);
     }
 
 
     public function list(){
 
-        return view('payment_term/list');
+        return view('component_unit/list');
     }
 
 
@@ -44,7 +44,7 @@ class PaymentTermController extends Controller
             'text' => [
                 'required',
                 'max:255',
-                'unique:payment_terms'
+                'unique:component_unit'
             ]
         ]);
 
@@ -58,19 +58,19 @@ class PaymentTermController extends Controller
 
         $user_id = Auth::user()->id;
 
-        $paymentTerm = new PaymentTerm();
+        $componentUnit = new ComponentUnit();
 
-        $paymentTerm->text          = $text;
-        $paymentTerm->created_by    = $user_id;
+        $componentUnit->text          = $text;
+        $componentUnit->created_by    = $user_id;
     
 
-        $paymentTerm->save();
+        $componentUnit->save();
 
         return response()->json([
             'status'    => 1,
             'message'   => '',
             'data'      => [
-                'id'=> $paymentTerm->id
+                'id'=> $componentUnit->id
             ]
         ]);
 
@@ -91,7 +91,7 @@ class PaymentTermController extends Controller
             'text' => [
                 'required',
                 'max:255',
-                Rule::unique('payment_terms')->ignore($id),
+                Rule::unique('component_unit')->ignore($id),
             ]
         ]);
 
@@ -105,9 +105,9 @@ class PaymentTermController extends Controller
         }
 
         $user_id = Auth::user()->id;
-        $paymentTerm = PaymentTerm::find($id);
+        $componentUnit = ComponentUnit::find($id);
 
-        if(!$paymentTerm){
+        if(!$componentUnit){
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Record not found',
@@ -117,10 +117,10 @@ class PaymentTermController extends Controller
             ]);
         }
 
-        $paymentTerm->text                         = $text;
-        $paymentTerm->updated_by                   = $user_id;
+        $componentUnit->text                         = $text;
+        $componentUnit->updated_by                   = $user_id;
 
-        $paymentTerm->save();
+        $componentUnit->save();
 
 
         return response()->json([
@@ -145,20 +145,20 @@ class PaymentTermController extends Controller
         $query      = $request->input('query')          ?? '';
         $result = [];
 
-        $paymentTerm = new PaymentTerm();
+        $componentUnit = new ComponentUnit();
 
         if($query != ''){
-            $paymentTerm = $paymentTerm->where('text','LIKE','%'.$query.'%');
+            $componentUnit = $componentUnit->where('text','LIKE','%'.$query.'%');
         }
 
         if($limit > 0){
             $page   = ($page-1) * $limit;
             
-            $result = $paymentTerm->orderBy($orderBy,$order)->skip($page)->take($limit)->get();
+            $result = $componentUnit->orderBy($orderBy,$order)->skip($page)->take($limit)->get();
             
         }else{
 
-            $result = $paymentTerm->orderBy($orderBy,$order)->take($limit)->get();
+            $result = $componentUnit->orderBy($orderBy,$order)->take($limit)->get();
         }
 
         return response()->json([
@@ -189,9 +189,9 @@ class PaymentTermController extends Controller
             ]);
         }
 
-        $paymentTerm = PaymentTerm::find($id);
+        $componentUnit = ComponentUnit::find($id);
 
-        if(!$paymentTerm){
+        if(!$componentUnit){
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Record not found',
@@ -201,11 +201,12 @@ class PaymentTermController extends Controller
         
         $user_id = Auth::user()->id;
         
-        $paymentTerm->deleted_by = $user_id;
-        $paymentTerm->save();
+        $componentUnit->deleted_by = $user_id;
+        
+        $componentUnit->save();
 
         //Soft delete
-        if(!$paymentTerm->delete()){
+        if(!$componentUnit->delete()){
            
            return response()->json([
                'status'    => 0,
