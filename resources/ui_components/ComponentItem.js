@@ -68,7 +68,7 @@ class ComponentItem extends Component{
                             
                             t.th(()=>{
                                 t.div({class:'form-group'},()=>{
-                                    t.label('Equivalent / Unit');
+                                    t.label('Equivalent');
                                     this.el.equivalent = t.input({class:'form-control', type:'text'});
                                 });
                             });
