@@ -221,9 +221,6 @@ class ComponentItem extends Component{
             return false;
         }
 
-        this.el.equivalent.onkeypress = (e)=>{
-            return window.util.inputNumber(this.el.equivalent,e,2,false);
-        }
 
         this.el.material_quantity.onkeypress = (e)=>{
             return window.util.inputNumber(this.el.material_quantity,e,2,false);
