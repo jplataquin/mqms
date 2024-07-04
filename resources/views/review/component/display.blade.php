@@ -54,7 +54,7 @@
         <table class="border table">
             <thead>
                 <tr>
-                    <th class="text-center" style="width:50%;background-color:#add8e6">#{{$i}} {{$item->name}}</th>
+                    <th style="width:50%;background-color:#add8e6">#{{$i}} {{$item->name}}</th>
                     <th class="text-center" style="background-color:#add8e6"> {{$item->quantity}} {{$item->unit}} </th>
                     <th class="text-center" style="background-color:#add8e6"> P {{number_format($item->budget_price,2)}} </th>
                 
