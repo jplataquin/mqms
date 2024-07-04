@@ -112,6 +112,10 @@
     let component_list              = $q('#component_list').first();
     let createBtn                   = $q('#createBtn').first();
 
+    quantity.onkeypress = (e)=>{
+        return window.util.numberInput(quantity,e,2,false);
+    }
+    
     editBtn.onclick = (e)=>{
         e.preventDefault();
 
