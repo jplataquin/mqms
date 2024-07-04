@@ -59,13 +59,20 @@ class ComponentItem extends Component{
                 t.div({class:'col-lg-12'},()=>{
                     t.table({class:'table border'},()=>{
                         t.thead(()=>{
-                            t.th(()=>{
+                            t.th({style:{width:'40%'}},()=>{
                                 t.div({class:'form-group'},()=>{
                                     t.label('Material');
                                     t.el(this.el.materialItemSelect);
                                 });
                             });
                             
+                            t.th(()=>{
+                                t.div({class:'form-group'},()=>{
+                                    t.label('Factor');
+                                    this.el.factor = t.input({class:'form-control', type:'text'});
+                                });
+                            });
+
                             t.th(()=>{
                                 t.div({class:'form-group'},()=>{
                                     t.label('Equivalent');
