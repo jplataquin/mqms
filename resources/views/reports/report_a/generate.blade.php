@@ -30,41 +30,73 @@
 
     @foreach($component_items as $component_item)
     <div class="mb-5 border border-primary">
-    <table class="table bordered w-100">
-        <tbody>
-            <tr>
-                <td colspan="3">
-                    <h5>{{$component_item->name}}</h5>
-                </td>
-            </tr>
-            <tr>
-                <th>Budget</th>
-                <th>Requested</th>
-                <th>PO</th>
-            </tr>
-            <tr>
-                <td>
-                    {{$component_item->quantity}} {{$component_item->unit}} 
-                </td>
-                <td>
-                    @if( isset($total_requested[$component_item->id]) )
-                        {{$total_requested[$component_item->id]->total}} {{$total_requested[$component_item->id]->unit}}
-                    @else
-                        0 {{$component_item->unit}}
-                    @endif
-                </td>
-                <td>
-                    @if( isset($total_po[$component_item->id]) )
-                        {{$total_po[$component_item->id]->total}} {{$total_po[$component_item->id]->unit}}
-                    @else
-                        0 {{$component_item->unit}}
-                    @endif
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    
+        <table class="table bordered w-100">
+            <tbody>
+                <tr>
+                    <td>
+                        <h5>{{$component_item->name}}</h5>
+                    </td>
+                </tr>
+            <tbody>
+        </table>
 
+        <div class="row mt-3 mb-3">
+            <div class="col-4 text-center">
+                
+                <h5>
+                    {{$component_item->quantity}} {{$component_item->unit}} 
+                    <br>
+                    Budget
+                </h5>
+            </div>
+
+            <div class="col-4 text-center">
+                
+                <h5>
+                    
+                    @if( isset($total_requested[$component_item->id]) )
+                        
+                        @php 
+                            $percentRequested = ($total_requested[$component_item->id]->total / $component_item->quantity) * 100;
+                        @endphp
+                        
+                        {{$total_requested[$component_item->id]->total}} {{$total_requested[$component_item->id]->unit}} ({{number_format($percentRequested,2)}}%) 
+
+                        
+                    @else
+                        0 {{$component_item->unit}}
+                    @endif
+                    <br>
+                    Requested
+                </h5>
+            </div>
+                    
+            <div class="col-4 text-center">
+                
+                <h5>
+                    @if( isset($total_po[$component_item->id]) )
+
+                        @php 
+                            $percentPO = ($total_po[$component_item->id]->total / $component_item->quantity) * 100;
+                        @endphp
+                    
+                        {{$total_po[$component_item->id]->total}} {{$total_po[$component_item->id]->unit}} ({{number_format($percentPO,2)}}%) 
+                    @else
+                        0 {{$component_item->unit}}
+                    @endif
+                    <br>
+                    P.O.
+                </h5>
+            </div>
+             
+        </div>
     <table class="table bordered w-100">
+        <thead>
+            <tr>
+                <th colspan="3" class="text-center">PO items</th>
+            </tr>
+        </thead>
         <thead>
             <tr>
                 <th>Material Item</th>
