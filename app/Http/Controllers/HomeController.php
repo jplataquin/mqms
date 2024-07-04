@@ -34,7 +34,7 @@ class HomeController extends Controller
 
         $purchaseOrderPendCount             = PurchaseOrder::where('status','=','PEND')->count();
 
-        $componentPendCount                 = Component::where('status','=','PEND')->count();
+        $componentPendCount                 = Component::whereIn('status',['PEND','REVO'])->count();
 
         return view('home',[
             'materialQuantityRequestPendCount'  => $materialQuantityRequestPendCount,
