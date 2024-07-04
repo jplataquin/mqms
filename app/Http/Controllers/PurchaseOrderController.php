@@ -712,4 +712,74 @@ class PurchaseOrderController extends Controller
         ]);
 
     }
+
+
+    public function _request_void(Request $request){
+
+        //todo check role
+
+        $id = (int) $request->input('id');
+
+        $purchaseOrder = PurchaseOrder::find($id);
+
+        if(!$purchaseOrder){
+
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Error: Record not found',
+                'data'      => []
+            ]);
+        }
+
+        if($purchaseOrder->status != 'APRV'){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Error: Cannot request void, record has wrong status',
+                'data'      => []
+            ]);
+        }
+
+        $user_id = Auth::user()->id;
+
+        DB::beginTransaction();
+
+        try {  
+
+            $purchaseOrder->approved_by = $user_id;
+            $purchaseOrder->status      = 'REVO';
+            $purchaseOrder->approved_at = Carbon::now();
+            
+            $purchaseOrder->save();
+            
+
+            DB::table('purchase_order_items')->where('purchase_order_id',$purchaseOrder->id)
+            ->update([
+                'status' => 'REVO'
+            ]);
+
+            DB::commit();
+            
+            return response()->json([
+                'status' => 1,
+                'message' => '',
+                'data' => [
+                    'id' => $purchaseOrder->id
+                ]
+            ]);
+
+        }catch(\Exception $e){
+
+            return response()->json([
+                'status'    => 0,
+                'message'   => $e->getMessage(),
+                'data'      => []
+            ]);
+
+            DB::rollback();
+
+            return false;
+        
+        }
+
+    }
 }
