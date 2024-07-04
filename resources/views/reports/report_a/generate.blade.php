@@ -29,6 +29,7 @@
 <hr>
 
     @foreach($component_items as $component_item)
+    <div class="mb-5">
     <table class="table bordered w-100">
         <tbody>
             <tr>
@@ -37,15 +38,15 @@
                 </td>
             </tr>
             <tr>
-                <th class="text-center">Budget</th>
-                <th class="text-center">Requested</th>
-                <th class="text-center">PO</th>
+                <th>Budget</th>
+                <th>Requested</th>
+                <th>PO</th>
             </tr>
             <tr>
-                <td class="text-center">
+                <td>
                     {{$component_item->quantity}} {{$component_item->unit}} 
                 </td>
-                <td class="text-center">
+                <td>
                     @if( isset($total_requested[$component_item->id]) )
                         {{$total_requested[$component_item->id]->total}} {{$total_requested[$component_item->id]->unit}}
                     @else
@@ -87,6 +88,7 @@
             @endforeach
         </tbody>
     </table>
+    </div>
     @endforeach
 
 </div>
