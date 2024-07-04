@@ -54,7 +54,7 @@
                     <input type="text" class="form-control" id="component" />
                 </div>
             </div>
-            <div class="col-lg-2 col-sm-12">
+            <div class="col-lg-1 col-sm-12">
                 <div class="form-group">
                     <label>Quantity</label>
                     <input type="text" class="form-control" id="quantity" />
@@ -76,7 +76,7 @@
                     <input type="text" class="form-control" value="1" id="use_count" />
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-12">
+            <div class="col-lg-4 col-sm-12">
             <div class="form-group">
                     <label>Description</label>
                     <input type="text" class="form-control" id="description" />
