@@ -72,7 +72,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($purchase_order_item as $poi){
+            @foreach($purchase_order_item[$component_item->id] as $poi){
                 <tr>
                     <td>
                         {{$material_items[$poi->material_item_id]->brand}} {{$material_items[$poi->material_item_id]->name}} {{$material_items[$poi->material_item_id]->unit_packaging_specification}}
