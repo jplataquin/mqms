@@ -122,7 +122,7 @@ class ReportAController extends Controller
             'component_items'       => $component_items,
             'total_requested'       => $total_requested,
             'total_po'              => $total_po,
-            'purchase_order_item'   => $purchase_order_item,,
+            'purchase_order_item'   => $purchase_order_item,
             'material_items'        => $material_items
         ]);
     }
