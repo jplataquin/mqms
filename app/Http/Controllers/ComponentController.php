@@ -22,6 +22,8 @@ class ComponentController extends Controller
         //todo check role
 
         $name               = $request->input('name') ?? '';
+        $quantity           = $request->input('quantity') ?? 0;
+        $component_unit_id  = $request->input('component_unit_id') ?? 0;
         $section_id         = $request->input('section_id');
 
         $validator = Validator::make($request->all(),[
@@ -36,7 +38,17 @@ class ComponentController extends Controller
                         ->where('deleted_at',null);
                 }),
             ],
-            'section_id' => ['required','integer']
+            'component_unit_id' =>[
+                'required',
+                'integer',
+                'gte:1'
+            ],
+            'quantity' =>[
+                'required',
+                'numeric',
+                'not_in:0'
+            ],
+            'section_id' => ['required','integer','gte:1']
         ]);
          
         if ($validator->fails()) {
@@ -52,6 +64,8 @@ class ComponentController extends Controller
         $component = new Component();
 
         $component->name                   = $name;
+        $component->quantity               = $quantity;
+        $component->component_unit_id      = $component_unit_id;
         $component->status                 = 'PEND';
         $component->section_id             = $section_id;
         $component->created_by             = $user_id;
