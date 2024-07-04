@@ -70,6 +70,8 @@ class ReportAController extends Controller
         $total_requested = [];
         $total_po        = [];
 
+        print_r($purchase_order_item);exit;
+        
         foreach($component_items as $component_item){
 
             foreach($material_quantity_request_item[$component_item->id] as $mqri){
