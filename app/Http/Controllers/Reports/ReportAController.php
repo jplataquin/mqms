@@ -63,7 +63,7 @@ class ReportAController extends Controller
             $purchase_order_item[$component_item->id] = PurchaseOrderItem::where('status','APRV')
                 ->where('component_item_id',$component_item->id)
                 ->groupBy('material_item_id')
-                ->select(DB::raw('SUM(quantity) AS total_quantity, SUM(price) AS total_price, material_item_id')
+                ->select(DB::raw('SUM(quantity) AS total_quantity, SUM(price) AS total_price, material_item_id'))
                 ->get();
         }
 
