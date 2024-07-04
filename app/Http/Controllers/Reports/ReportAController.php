@@ -78,7 +78,7 @@ class ReportAController extends Controller
                 foreach($material_quantity[$component_item->id] as $mq){
 
                     if($mqri->material_item_id == $mq->material_item_id){
-
+                        
                         $total_requested[$component_item->id] = (object) [
                             'total' => $mqri->total * $mq->equivalent,
                             'unit'  => $component_item->unit
@@ -95,7 +95,7 @@ class ReportAController extends Controller
                     if($poi->material_item_id == $mq->material_item_id){
                       
                         $total_po[$component_item->id] = (object) [
-                            'total' => $mqri->total_quantity * $mq->equivalent,
+                            'total' => $poi->total_quantity * $mq->equivalent,
                             'unit'  => $component_item->unit
                         ];
                     }
@@ -104,7 +104,6 @@ class ReportAController extends Controller
                 
         }
 
-        print_r($total_po);exit;
 
         return view('reports/report_a/generate',[
             'project'           => $project,
