@@ -29,7 +29,7 @@
 <hr>
 
     @foreach($component_items as $component_item)
-    <div class="mb-5">
+    <div class="mb-5 border border-primary">
     <table class="table bordered w-100">
         <tbody>
             <tr>
@@ -53,7 +53,7 @@
                         0 {{$component_item->unit}}
                     @endif
                 </td>
-                <td class="text-center">
+                <td>
                     @if( isset($total_po[$component_item->id]) )
                         {{$total_po[$component_item->id]->total}} {{$total_po[$component_item->id]->unit}}
                     @else
