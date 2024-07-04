@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-<!-- <h6>Project » Section ( {{$section->id}} )</h6> -->
+<h5>Project » Section » Display</h5>
 <hr>
 
     <div class="row">
