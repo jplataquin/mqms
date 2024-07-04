@@ -233,6 +233,10 @@ class ComponentItem extends Component{
             return window.util.inputNumber(this.el.material_quantity,e,2,false);
         }
 
+        this.el.factor.onkeypress = (e)=>{
+            return window.util.inputNumber(this.el.factor,e,2,false);
+        }
+
         this.el.budget_price.onkeypress = (e)=>{
             return window.util.inputNumber(this.el.budget_price,e,2,false);
         }
@@ -247,6 +251,10 @@ class ComponentItem extends Component{
         
         this.el.equivalent.onkeyup = ()=>{
             this.el.total.value = calculateTotalEquivalent( this.el.material_quantity.value, this.el.equivalent.value);
+        }
+
+        this.el.factor.onkeyup = () =>{
+            this.el.material_quantity.value = (this.el.factor.value * this.el.quantity.value);
         }
 
         this.el.addBtn.onclick = ()=>{
@@ -462,6 +470,7 @@ class ComponentItem extends Component{
         
         let materilItem = t.tr((row)=>{
                     t.td(this.materialRegistry[data.material_item_id]);
+                    t.td(''+data.factor);
                     t.td(''+data.equivalent);
                     t.td(''+data.quantity);
                     t.td(''+calculateTotalEquivalent(data.quantity,data.equivalent));
