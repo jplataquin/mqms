@@ -174,7 +174,7 @@ class MaterialQuantityRequestController extends Controller
             ]);
         }
 
-        $component Component::find($component_id);
+        $component = Component::find($component_id);
 
         //If the component does not exist or is not approved then do not allow
         if($component->status != 'APRV'){
