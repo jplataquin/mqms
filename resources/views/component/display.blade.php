@@ -22,6 +22,22 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>Quantity</th>
+                    <td>
+                        <input class="form-control editable_field" type="text" id="component_quantity" value="{{$component->quantity}}" disabled="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Unit</th>
+                    <td>
+                        <select id="component_unit_id" class="form-control editable_field" disabled="true">
+                            @foreach($unit_options as $val => $text)
+                                <option value="{{$val}}" @if($component->component_unit_id == $val) selected @endif>{{$text}}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                </tr>
+                <tr>
                     <th>Status</th>
                     <td id="status">
                         {{$component->status}}
@@ -57,22 +73,7 @@
                         {{$hash}}
                     </td>
                 </tr>
-                <tr>
-                    <th>Quantity</th>
-                    <td>
-                        <input class="form-control editable_field" type="text" id="component_quantity" value="{{$component->quantity}}" disabled="true"/>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Unit</th>
-                    <td>
-                        <select id="component_unit_id" class="form-control editable_field" disabled="true">
-                            @foreach($unit_options as $val => $text)
-                                <option value="{{$val}}" @if($component->component_unit_id == $val) selected @endif>{{$text}}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                </tr>
+                
             </table>    
         </div>
     </div>
@@ -146,6 +147,8 @@
     let deleteBtn           = $q('#deleteBtn').first();
     let printBtn            = $q('#printBtn').first();
     let status              = $q('#status').first();
+    let component_quantity  = $q('#component_quantity').first();
+    let component_unit_id   = $q('#component_unit_id').first();
 
     let component_item_name         = $q('#component_item_name').first();
     let component_item_budget_price = $q('#component_item_budget_price').first();
@@ -162,6 +165,10 @@
         status.innerHTML = value;
     });
 
+    component_quantity.onkeypress = (e)=>{
+        return wintow.util.inputNumber(component_quantity,e,2,false);
+    }
+    
     editBtn.onclick = ()=>{
 
         $q('.editable_field').apply((el)=>{
@@ -187,7 +194,9 @@
         window.util.$post('/api/component/update',{
             id:'{{$component->id}}',
             section_id:'{{$section->id}}',
-            name:component.value
+            name:component.value,
+            component_unit_id: component_unit_id.value,
+            quantity: component_quantity.value
         }).then((reply)=>{
 
             window.util.unblockUI();
