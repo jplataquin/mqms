@@ -12,6 +12,7 @@ use App\Models\Supplier;
 use App\Models\MaterialQuantityRequestItem;
 use App\Models\MaterialQuantity;
 use App\Models\PurchaseOrderItem;
+use App\Models\MaterialItem;
 use Illuminate\Support\Facades\DB;
 
 class ReportAController extends Controller
@@ -25,7 +26,7 @@ class ReportAController extends Controller
         ]);
     }
 
-    public function generate($project_id, $section_id, $component_id){
+    public function generate(Request $request,$project_id, $section_id, $component_id){
 
         $project_id     = (int) $project_id;
         $section_id     = (int) $section_id;
@@ -67,8 +68,9 @@ class ReportAController extends Controller
                 ->get();
         }
 
-        $total_requested = [];
-        $total_po        = [];
+        $total_requested    = [];
+        $total_po           = [];
+        $material_item_ids  = [];
 
         
         foreach($component_items as $component_item){
@@ -90,6 +92,8 @@ class ReportAController extends Controller
 
             foreach($purchase_order_item[$component_item->id] as $poi){
                 
+                $material_item_ids[] = $poi->material_item_id;
+
                 foreach($material_quantity[$component_item->id] as $mq){
 
                     if($poi->material_item_id == $mq->material_item_id){
@@ -104,14 +108,22 @@ class ReportAController extends Controller
                 
         }
 
+        $material_item_results = MaterialItem::whereIn('id',$material_item_ids)->get();
+        $material_items = [];
+
+        foreach($material_item_results as $mir){
+            $material_items[$mir->id] = $mir;    
+        }
 
         return view('reports/report_a/generate',[
-            'project'           => $project,
-            'section'           => $section,
-            'component'         => $component,
-            'component_items'   => $component_items,
-            'total_requested'   => $total_requested,
-            'total_po'          => $total_po
+            'project'               => $project,
+            'section'               => $section,
+            'component'             => $component,
+            'component_items'       => $component_items,
+            'total_requested'       => $total_requested,
+            'total_po'              => $total_po,
+            'purchase_order_item'   => $purchase_order_item,,
+            'material_items'        => $material_items
         ]);
     }
 }

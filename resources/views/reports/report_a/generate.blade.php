@@ -32,7 +32,9 @@
     <table class="table bordered w-100">
         <tbody>
             <tr>
-                <td colspan="3">{{$component_item->name}}</td>
+                <td colspan="3">
+                    <h5>{{$component_item->name}}</h5>
+                </td>
             </tr>
             <tr>
                 <th class="text-center">Budget</th>
@@ -61,6 +63,30 @@
         </tbody>
     </table>
 
+    <table>
+        <thead>
+            <tr>
+                <th>Material Item</th>
+                <th>Total Quantity</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($purchase_order_item as $poi){
+                <tr>
+                    <td>
+                        {{$material_items[$poi->material_item_id]->brand}} {{$material_items[$poi->material_item_id]->name}} {{$material_items[$poi->material_item_id]->unit_packaging_specification}}
+                    </td>
+                    <td>
+                        {{ number_format($poi->total_quantity,2) }}
+                    </td>
+                    <td>
+                        Php {{ number_format($poi->total_price,2) }}
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
     @endforeach
 
 </div>

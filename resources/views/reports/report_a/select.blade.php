@@ -34,7 +34,19 @@
         </div>
     </div>
     <div class="row mt-3">
-        <div class="col-lg-12 text-end">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>From</label>
+                <input type="date" id="from" class="form-control"/>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>To</label>
+                <input type="date" id="to" class="form-control"/>
+            </div>
+        </div>
+        <div class="col-lg-6 text-end">
             <button id="generateBtn" class="btn btn-primary">Generate</button>
         </div>
     </div>
