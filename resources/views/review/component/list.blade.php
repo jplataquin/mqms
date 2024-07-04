@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-<h5>Project List</h5>
+<h5>Review » Components » List</h5>
 <hr>
     <div class="row">
         <div class="col-lg-4">
