@@ -1,16 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
+<h5>Review » Components » Display</h5>
+<hr>
 <div class="container">
 
         <div>
-            <h3>
-                {{$project->name}} - ( {{$section->name}} )
-            </h3>
-            <hr>
             <table class="table border">
                 <tbody>
-                    
+                    <tr>
+                        <th>Project<th>
+                        <td>
+                            {{$project->name}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Section</th>
+                        <td>
+                            {{$section->name}}
+                        </td>
+                    </tr>
                     <tr>
                         <th width="10%">Component</th>
                         <td>{{$component->name}}</td>
@@ -67,9 +76,10 @@
                 @foreach($item->materialQuantities as $mq)
                 <tr>
                     <td>
+                        {{$materialItems[$mq->material_item_id]->brand }}
                         {{$materialItems[$mq->material_item_id]->name }} 
                         {{$materialItems[$mq->material_item_id]->specification_unit_packaging }} 
-                        {{$materialItems[$mq->material_item_id]->brand }} 
+                        
                     </td>
                     <td>
                         {{$mq->equivalent}} {{$item->unit}}
