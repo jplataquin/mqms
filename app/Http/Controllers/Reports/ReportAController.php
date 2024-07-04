@@ -70,7 +70,6 @@ class ReportAController extends Controller
         $total_requested = [];
         $total_po        = [];
 
-        print_r($purchase_order_item);exit;
         
         foreach($component_items as $component_item){
 
@@ -94,7 +93,7 @@ class ReportAController extends Controller
                 foreach($material_quantity[$component_item->id] as $mq){
 
                     if($poi->material_item_id == $mq->material_item_id){
-
+                        echo $poi->material_item_id;exit;
                         $total_po[$component_item->id] = (object) [
                             'total' => $mqri->total_quantity * $mq->equivalent,
                             'unit'  => $component_item->unit
