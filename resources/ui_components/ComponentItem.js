@@ -251,7 +251,7 @@ class ComponentItem extends Component{
         
         this.el.equivalent.onkeyup = ()=>{
             this.el.material_quantity.value = (this.el.quantity.value / this.el.equivalent.value);
-            
+            this.el.factor.value = ( this.el.material_quantity.value / this.el.quantity.value );
             this.el.total.value = calculateTotalEquivalent( this.el.material_quantity.value, this.el.equivalent.value);
         }
 
