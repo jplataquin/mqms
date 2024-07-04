@@ -77,16 +77,22 @@
                 <h5>
                     @if( isset($total_po[$component_item->id]) )
 
-                        @php 
-                            $percentPO = ($total_po[$component_item->id]->total / $component_item->quantity) * 100;
-                        @endphp
+                        
                     
-                        {{$total_po[$component_item->id]->total}} {{$total_po[$component_item->id]->unit}} ({{ $percentPO }}%) 
+                        {{$total_po[$component_item->id]->total}} {{$total_po[$component_item->id]->unit}}
                     @else
                         0 {{$component_item->unit}}
                     @endif
                     <br>
-                    P.O.
+                    PO
+                    @if( isset($total_po[$component_item->id]) )
+                        @php 
+                            $percentPO = ($total_po[$component_item->id]->total / $component_item->quantity) * 100;
+                        @endphp
+                        ({{ $percentPO }}%) 
+                    @else
+                        (0%)
+                    @endif
                 </h5>
             </div>
              
