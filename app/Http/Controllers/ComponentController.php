@@ -112,7 +112,7 @@ class ComponentController extends Controller
 
         $section         = $component->Section;
         $project         = $section->Project;
-        $materialItems   = MaterialItem::get();
+        $materialItems   = MaterialItem::orderBy('name','ASC')->get();
         $componentItems = $component->componentItems()->orderBy('id','ASC')->withCount('materialQuantities')->get();
 
 
