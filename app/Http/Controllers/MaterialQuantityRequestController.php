@@ -36,7 +36,7 @@ class MaterialQuantityRequestController extends Controller
 
         //If the project is not active then do not allow
         if($project->status != 'ACTV'){
-            return view('material_quantity_request/unavaialable',[
+            return view('material_quantity_request/unavailable',[
                 'project'   => $project,
                 'section'   => $section,
                 'component' => $component
@@ -51,7 +51,7 @@ class MaterialQuantityRequestController extends Controller
 
         //If the component is not approved then do not allow
         if($component->status != 'APRV'){
-            return view('material_quantity_request/unavaialable',[
+            return view('material_quantity_request/unavailable',[
                 'project'   => $project,
                 'section'   => $section,
                 'component' => $component
