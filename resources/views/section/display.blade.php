@@ -70,11 +70,22 @@
                     </select>
                 </div>
             </div>
-            <div class="col-lg-4 col-sm-12">
+            <div class="col-lg-1 col-sm-12">
                 <div class="form-group">
-                    <label>&nbsp;</label>
-                    <button id="createBtn" class="btn w-100 btn-warning">Create</button>
-                </div> 
+                    <label>Use Count</label>
+                    <input type="text" class="form-control" value="1" id="use_count" />
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-12">
+            <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" class="form-control" id="description" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 text-end">
+                   <button id="createBtn" class="btn btn-warning">Create</button>
             </div>
         </div>
 
@@ -111,10 +122,17 @@
     let quantity                    = $q('#quantity').first();
     let component_list              = $q('#component_list').first();
     let createBtn                   = $q('#createBtn').first();
+    let use_count                   = $q('#use_count').first();
+    let description                 = $q('#description').first();
 
     quantity.onkeypress = (e)=>{
         return window.util.inputNumber(quantity,e,2,false);
     }
+
+    use_count.onkeypress = (e)=>{
+        return window.util.inputNumber(use_count,e,0,false);
+    }
+
 
     editBtn.onclick = (e)=>{
         e.preventDefault();
@@ -229,7 +247,8 @@
             section_id: '{{$section->id}}',
             name: component.value,
             quantity: quantity.value,
-            component_unit_id: component_unit_id.value
+            component_unit_id: component_unit_id.value,
+            use_count: use_count.value
         }).then(reply=>{
 
             window.util.unblockUI();
