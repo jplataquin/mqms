@@ -6,6 +6,7 @@ use App\Helpers\CustomHelpers;
 use Illuminate\Http\Request;
 use App\Models\Component;
 use App\Models\MaterialItem;
+use App\Models\ComponentUnit;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
@@ -137,7 +138,15 @@ class ComponentController extends Controller
             $materialArr[ $mi->id ] = $mi;
         }
 
+        $unit_options = [];
+
+        foreach(ComponentUnit::toOptions() as $option){
+            $unit_options[ $option['id'] ] = $option['text'];
+        }
+
+
         $hash = generateComponentHash($project,$section,$component,$componentItems,$materialArr);
+
 
         return view('component/display',[
             'project'           => $project,
@@ -145,7 +154,8 @@ class ComponentController extends Controller
             'component'         => $component,
             'componentItems'    => $componentItems,
             'materialItems'     => $materialItems,
-            'hash'              => $hash
+            'hash'              => $hash,
+            'unit_options'      => $unit_options
         ]);
     }
 

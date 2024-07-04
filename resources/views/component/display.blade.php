@@ -60,7 +60,7 @@
                 <tr>
                     <th>Quantity / Unit</th>
                     <td>
-                        {{$hash}}
+                        {{$component->quantity}} {{$unit_options[$component->component_unit_id]}}
                     </td>
                 </tr>
             </table>    
