@@ -256,6 +256,7 @@ class ComponentItem extends Component{
         this.el.factor.onkeyup = () =>{
             this.el.material_quantity.value = (this.el.factor.value * this.el.quantity.value);
             this.el.equivalent.value = ( this.el.quantity.value / this.el.material_quantity.value );
+            this.el.total.value = calculateTotalEquivalent( this.el.material_quantity.value, this.el.equivalent.value);
         }
 
         this.el.addBtn.onclick = ()=>{
