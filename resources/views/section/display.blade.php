@@ -48,10 +48,26 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-8 col-sm-12">
+            <div class="col-lg-4 col-sm-12">
                 <div class="form-group">
-                    <label>&nbsp;</label>
+                    <label>Name</label>
                     <input type="text" class="form-control" id="component" />
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-12">
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="text" class="form-control" id="quantity" />
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-12">
+                <div class="form-group">
+                    <label>Unit</label>
+                    <select id="unit" class="form-control">
+                        @foreach($unit_options as $val => $text)
+                            <option value="{{$val}}">{{$text}}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="col-lg-4 col-sm-12">
@@ -68,6 +84,11 @@
                 <div class="item row selectable-div fade-in border mb-3" data-id="{{$component->id}}">
                     <div class="col-lg-12">
                         <h3>{{$component->name}}</h3>
+                        <h6> 
+                            @if(isset($unit_options[ $component->component_unit_id ]))
+                                {{$component->quantity}} {{ $unit_options[ $component->component_unit_id ]['text'] }}
+                            @endif
+                        </h6>
                     </div>
                 </div>
 
@@ -86,6 +107,8 @@
     let cancelBtn                   = $q('#cancelBtn').first();
     let deleteBtn                   = $q('#deleteBtn').first();
     let component                   = $q('#component').first();
+    let component_unit_id           = $q('#component_unit_id').first();
+    let quantity                    = $q('#quantity').first();
     let component_list              = $q('#component_list').first();
     let createBtn                   = $q('#createBtn').first();
 
@@ -159,12 +182,12 @@
         const t = new Template();
 
         let name = t.h3('Loading...');
-        let count = t.h6('Loading...');
+        let quantity_unit = t.h6('Loading...');
 
         let el = t.div({class:'row selectable-div fade-in border mb-3',dataId:id},()=>{
             t.div({class:'col-lg-12'},(el)=>{
                 el.append(name);
-                el.append(count);
+                el.append(quantity_unit);
             });
         });
 
@@ -180,7 +203,7 @@
             }
 
             name.innerText = reply.data.name;
-            count.innerText = 'Items: '+reply.data.component_items_count;
+            quantity_unit.innerText = reply.data.quantity+' '+reply.data.unit_text;
 
             el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
         });
@@ -201,6 +224,8 @@
         window.util.$post('/api/component/create',{
             section_id: '{{$section->id}}',
             name: component.value
+            quantity: quantity.value,
+            component_unit_id: component_unit_id.value
         }).then(reply=>{
 
             window.util.unblockUI();

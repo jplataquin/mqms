@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('components', function (Blueprint $table) {
-            $table->bigInteger('unit')->after('status');
+            $table->bigInteger('component_unit_id')->after('status');
             $table->double('quantity')->after('status');
         });
     }
@@ -28,7 +28,7 @@ return new class extends Migration
     {
         Schema::table('components', function (Blueprint $table) {
             $table->dropColumn('quantity');
-            $table->dropColumn('unit');
+            $table->dropColumn('component_unit_id');
         });
     }
 };
