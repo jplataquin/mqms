@@ -213,13 +213,26 @@ class ComponentController extends Controller
 
         $id                  = (int) $request->input('id') ?? 0;
         $name                = $request->input('name') ?? '';
+        $quantity            = $request->input('quantity') ?? 0;
+        $component_unit_id   = $request->input('component_unit_id') ?? 0;
         $section_id          = (int) $request->input('section_id');
         $status              = $request->input('status');
 
         $validator = Validator::make($request->all(),[
             'id'   => [
                 'required',
-                'integer',               
+                'integer',
+                'gte:1'               
+            ],
+            'quantity' =>[
+                'required',
+                'numeric',
+                'gte:1'
+            ],
+            'component_unit_id'   => [
+                'required',
+                'integer',
+                'gte:1'               
             ],
             'name' => [
                 'required',
@@ -257,6 +270,8 @@ class ComponentController extends Controller
         }
 
         $component->name                         = $name;
+        $component->quantity                     = $quantity;
+        $component->component_unit_id            = $component_unit_id;
         $component->status                       = 'PEND';
         $component->updated_by                   = $user_id;
         $component->save();
