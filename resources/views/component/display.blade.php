@@ -166,9 +166,9 @@
     });
 
     component_quantity.onkeypress = (e)=>{
-        return wintow.util.inputNumber(component_quantity,e,2,false);
+        return window.util.inputNumber(component_quantity,e,2,false);
     }
-    
+
     editBtn.onclick = ()=>{
 
         $q('.editable_field').apply((el)=>{
