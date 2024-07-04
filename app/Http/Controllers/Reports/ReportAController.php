@@ -11,6 +11,7 @@ use App\Models\Component;
 use App\Models\Supplier;
 use App\Models\MaterialQuantityRequestItem;
 use App\Models\MaterialQuantity;
+use App\Models\PurchaseOrderItem;
 use Illuminate\Support\Facades\DB;
 
 class ReportAController extends Controller
@@ -48,6 +49,7 @@ class ReportAController extends Controller
 
         $material_quantity_requet_item  = [];
         $material_quantity              = [];
+        $purchase_order_item            = [];
 
         foreach($component_items as $component_item){
             $material_quantity_request_item[$component_item->id] = MaterialQuantityRequestItem::where('component_item_id',$component_item->id)
@@ -56,12 +58,17 @@ class ReportAController extends Controller
                                     ->groupBy('material_item_id')
                                     ->get();
 
-
             $material_quantity[$component_item->id] = MaterialQuantity::where('component_item_id',$component_item->id)->get();
             
+            $purchase_order_item[$component_item->id] = PurchaseOrderItem::where('status','APRV')
+                ->where('component_item_id',$component_item->id)
+                ->groupBy('material_item_id')
+                ->select(DB::raw('SUM(quantity) AS total_quantity, SUM(price) AS total_price, material_item_id')
+                ->get();
         }
 
         $total_requested = [];
+        $total_po        = [];
 
         foreach($component_items as $component_item){
 
@@ -79,6 +86,20 @@ class ReportAController extends Controller
                 }
             
             }
+
+            foreach($purchase_order_item[$component_item->id] as $poi){
+                
+                foreach($material_quantity[$component_item->id] as $mq){
+
+                    if($poi->material_item_id == $mq->material_item_id){
+
+                        $total_po[$component_item->id] = (object) [
+                            'total' => $mqri->total_quantity * $mq->equivalent,
+                            'unit'  => $component_item->unit
+                        ];
+                    }
+                }
+            }
                 
         }
 
@@ -88,7 +109,8 @@ class ReportAController extends Controller
             'section'           => $section,
             'component'         => $component,
             'component_items'   => $component_items,
-            'total_requested'   => $total_requested
+            'total_requested'   => $total_requested,
+            'total_po'          => $total_po
         ]);
     }
 }

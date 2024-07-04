@@ -47,6 +47,7 @@
                     {{$total_requested[$component_item->id]->total}} {{$total_requested[$component_item->id]->unit}}
                 </td>
                 <td class="text-center">
+                {{$total_po[$component_item->id]->total}} {{$total_po[$component_item->id]->unit}}
                 </td>
             </tr>
         </tbody>
