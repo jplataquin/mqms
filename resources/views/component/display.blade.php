@@ -22,6 +22,12 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>Description</th>
+                    <td>
+                        <input class="form-control editable_field" type="text" id="description" value="{{$component->description}}" disabled="true"/>
+                    </td>
+                </tr>
+                <tr>
                     <th>Quantity</th>
                     <td>
                         <input class="form-control editable_field" type="text" id="component_quantity" value="{{$component->quantity}}" disabled="true"/>
@@ -35,6 +41,12 @@
                                 <option value="{{$val}}" @if($component->component_unit_id == $val) selected @endif>{{$text}}</option>
                             @endforeach
                         </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Use Count</th>
+                    <td>
+                        <input class="form-control editable_field" type="text" id="use_count" value="{{$component->use_count}}" disabled="true"/>
                     </td>
                 </tr>
                 <tr>
@@ -149,6 +161,8 @@
     let status              = $q('#status').first();
     let component_quantity  = $q('#component_quantity').first();
     let component_unit_id   = $q('#component_unit_id').first();
+    let use_count           = $q('#use_count').first();
+    let description         = $q('#description').first();
 
     let component_item_name         = $q('#component_item_name').first();
     let component_item_budget_price = $q('#component_item_budget_price').first();
@@ -196,7 +210,9 @@
             section_id:'{{$section->id}}',
             name:component.value,
             component_unit_id: component_unit_id.value,
-            quantity: component_quantity.value
+            quantity: component_quantity.value,
+            use_count: use_count.value,
+            description: description.value
         }).then((reply)=>{
 
             window.util.unblockUI();

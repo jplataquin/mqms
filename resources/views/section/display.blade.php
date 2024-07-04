@@ -248,7 +248,8 @@
             name: component.value,
             quantity: quantity.value,
             component_unit_id: component_unit_id.value,
-            use_count: use_count.value
+            use_count: use_count.value,
+            description: description.value
         }).then(reply=>{
 
             window.util.unblockUI();

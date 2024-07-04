@@ -24,8 +24,10 @@ class ComponentController extends Controller
 
         $name               = $request->input('name') ?? '';
         $quantity           = $request->input('quantity') ?? 0;
-        $component_unit_id  = $request->input('component_unit_id') ?? 0;
-        $section_id         = $request->input('section_id');
+        $component_unit_id  = (int) $request->input('component_unit_id');
+        $section_id         = (int) $request->input('section_id');
+        $use_count          = (int) $request->input('use_count') ?? 1;
+        $description        = $request->input('description') ?? '';
 
         $validator = Validator::make($request->all(),[
             'name' => [
@@ -49,6 +51,14 @@ class ComponentController extends Controller
                 'numeric',
                 'not_in:0'
             ],
+            'use_count' =>[
+                'required',
+                'integer',
+                'gte:1'
+            ],
+            'description' =>[
+                'max:500'
+            ],
             'section_id' => ['required','integer','gte:1']
         ]);
          
@@ -67,6 +77,8 @@ class ComponentController extends Controller
         $component->name                   = $name;
         $component->quantity               = $quantity;
         $component->component_unit_id      = $component_unit_id;
+        $component->use_count              = $use_count;
+        $component->description            = $description;
         $component->status                 = 'PEND';
         $component->section_id             = $section_id;
         $component->created_by             = $user_id;
@@ -211,12 +223,14 @@ class ComponentController extends Controller
 
         //todo check role
 
-        $id                  = (int) $request->input('id') ?? 0;
+        $id                  = (int) $request->input('id');
         $name                = $request->input('name') ?? '';
-        $quantity            = $request->input('quantity') ?? 0;
-        $component_unit_id   = $request->input('component_unit_id') ?? 0;
-        $section_id          = (int) $request->input('section_id');
+        $quantity            = $request->input('quantity');
         $status              = $request->input('status');
+        $description         = $request->input('description') ?? '';
+        $component_unit_id   = (int) $request->input('component_unit_id');
+        $section_id          = (int) $request->input('section_id');
+        $use_count           = (int) $request->input('use_count') ?? 1;
 
         $validator = Validator::make($request->all(),[
             'id'   => [
@@ -244,6 +258,14 @@ class ComponentController extends Controller
                     ->where('name', $name)
                     ->where('id','!=',$id);
                 }),
+            ],
+            'use_count' =>[
+                'required',
+                'integer',
+                'gte:1'
+            ],
+            'description' =>[
+                'max:500'
             ]
         ]);
 
@@ -272,6 +294,8 @@ class ComponentController extends Controller
         $component->name                         = $name;
         $component->quantity                     = $quantity;
         $component->component_unit_id            = $component_unit_id;
+        $component->use_count                    = $use_count;
+        $component->description                  = $description;
         $component->status                       = 'PEND';
         $component->updated_by                   = $user_id;
         $component->save();
