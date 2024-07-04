@@ -751,11 +751,11 @@ class PurchaseOrderController extends Controller
             
             $purchaseOrder->save();
             
-
-            DB::table('purchase_order_items')->where('purchase_order_id',$purchaseOrder->id)
-            ->update([
-                'status' => 'REVO'
-            ]);
+            // Don't change item status because it is only a request
+            // DB::table('purchase_order_items')->where('purchase_order_id',$purchaseOrder->id)
+            // ->update([
+            //     'status' => 'REVO'
+            // ]);
 
             DB::commit();
             
