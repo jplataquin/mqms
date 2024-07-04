@@ -1,10 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container">
 <h5>Review » Components » Display</h5>
 <hr>
-<div class="container">
-
         <div>
             <table class="table border">
                 <tbody>
