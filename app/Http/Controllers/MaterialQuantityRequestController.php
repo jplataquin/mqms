@@ -34,12 +34,29 @@ class MaterialQuantityRequestController extends Controller
         $project_id = (int) $project_id;
         $project = Project::findOrFail($project_id);
 
+        //If the project is not active then do not allow
+        if($project->status != 'ACTV'){
+            return view('material_quantity_request/unavaialable',[
+                'project'   => $project,
+                'section'   => $section,
+                'component' => $component
+            ]);
+        }
 
         $section_id = (int) $section_id;
         $section = Section::findOrFail($section_id);
 
         $component_id = (int) $component_id;
         $component = Component::findOrFail($component_id);
+
+        //If the component is not approved then do not allow
+        if($component->status != 'APRV'){
+            return view('material_quantity_request/unavaialable',[
+                'project'   => $project,
+                'section'   => $section,
+                'component' => $component
+            ]);
+        }
 
         $component_item_ids     = [];
         $componentItem_options  = [];
@@ -99,19 +116,33 @@ class MaterialQuantityRequestController extends Controller
         $description    = $request->input('description');
         $items          = $request->input('items');
         
-
+       
         $validator = Validator::make($request->all(),[
             'project_id' => [
                 'required',
-                'integer'
+                'integer',
+                Rule::exists('projects')->where(function (Builder $query) use ($proejct_id) {
+                    return $query->where('id', $project_id)->where('deleted_at',null);
+                })
             ],
             'section_id' => [
                 'required',
-                'integer'
+                'integer',
+                Rule::exists('sections')->where(function (Builder $query) use ($project_id,$section_id) {
+                    return $query->where('id', $section_id)
+                    ->where('project_id',$project_id)
+                    ->where('deleted_at',null);
+                })
             ],
             'component_id' => [
                 'required',
-                'integer'
+                'integer',
+                Rule::exists('components')->where(function (Builder $query) use ($project_id,$section_id,$component_id) {
+                    return $query->where('id', $component_id)
+                    ->where('project_id',$project_id)
+                    ->where('section_id',$section_id)
+                    ->where('deleted_at',null);
+                })
             ],
             'description' => [
                 'required'
@@ -127,6 +158,31 @@ class MaterialQuantityRequestController extends Controller
                 'status'    => 0,
                 'message'   => 'Failed Validation',
                 'data'      => $validator->messages()
+            ]);
+        }
+
+
+        $project = Project::find($project_id);
+
+        //If the project does not exist or is not active then do not allow
+        if($project->status != 'ACTV'){
+            
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Error: Project status is not active',
+                'data'      => []
+            ]);
+        }
+
+        $component Component::find($component_id);
+
+        //If the component does not exist or is not approved then do not allow
+        if($component->status != 'APRV'){
+            
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Error: Component status is not approved',
+                'data'      => []
             ]);
         }
 
