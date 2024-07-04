@@ -64,8 +64,8 @@
                 <div class="form-group">
                     <label>Unit</label>
                     <select id="component_unit_id" class="form-control">
-                        @foreach($unit_options as $option)
-                            <option value="{{$option['id']}}">{{$option['text']}}</option>
+                        @foreach($unit_options as $val => $text)
+                            <option value="{{$val}}">{{$text}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -86,7 +86,7 @@
                         <h3>{{$component->name}}</h3>
                         <h6> 
                             @if(isset($unit_options[ $component->component_unit_id ]))
-                                {{$component->quantity}} {{ $unit_options[ $component->component_unit_id ]['text'] }}
+                                {{$component->quantity}} {{ $unit_options[ $component->component_unit_id ] }}
                             @endif
                         </h6>
                     </div>

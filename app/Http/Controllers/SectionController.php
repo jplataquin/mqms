@@ -34,12 +34,20 @@ class SectionController extends Controller
         $project = $section->project;
 
         $components = $section->components()->orderBy('id','ASC')->get();
+        
+        $options = ComponentUnit::toOptions();
+        
+        $unit_options = [];
 
+        foreach($options as $option){
+            $unit_options[ $option['id'] ] = $option['text'];
+        }
+        
         return view('section/display',[
             'section'          => $section,
             'project'          => $project,
             'components'       => $components,
-            'unit_options'     => ComponentUnit::toOptions()
+            'unit_options'     => $unit_options
         ]);
     }
 

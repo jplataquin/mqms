@@ -57,6 +57,12 @@
                         {{$hash}}
                     </td>
                 </tr>
+                <tr>
+                    <th>Quantity / Unit</th>
+                    <td>
+                        {{$hash}}
+                    </td>
+                </tr>
             </table>    
         </div>
     </div>
