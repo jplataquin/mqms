@@ -57,18 +57,22 @@
                     
                     @if( isset($total_requested[$component_item->id]) )
                         
-                        @php 
-                            $percentRequested = ($total_requested[$component_item->id]->total / $component_item->quantity) * 100;
-                        @endphp
-                        
-                        {{$total_requested[$component_item->id]->total}} {{$total_requested[$component_item->id]->unit}} ({{ $percentRequested }}%) 
+                        {{$total_requested[$component_item->id]->total}} {{$total_requested[$component_item->id]->unit}} 
 
                         
                     @else
                         0 {{$component_item->unit}}
                     @endif
                     <br>
-                    Requested
+                    Requested 
+                    @if( isset($total_po[$component_item->id]) )
+                        @php 
+                            $percentRequested = ($total_requested[$component_item->id]->total / $component_item->quantity) * 100;
+                        @endphp
+                        ({{ $percentRequested }}%)
+                    @else
+                        (0%)
+                    @endif
                 </h5>
             </div>
                     
@@ -77,8 +81,6 @@
                 <h5>
                     @if( isset($total_po[$component_item->id]) )
 
-                        
-                    
                         {{$total_po[$component_item->id]->total}} {{$total_po[$component_item->id]->unit}}
                     @else
                         0 {{$component_item->unit}}
