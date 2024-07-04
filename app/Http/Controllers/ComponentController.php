@@ -38,7 +38,7 @@ class ComponentController extends Controller
             ],
             'section_id' => ['required','integer']
         ]);
-        
+         
         if ($validator->fails()) {
             return response()->json([
                 'status'    => 0,
@@ -311,6 +311,7 @@ class ComponentController extends Controller
         $orderBy    = $request->input('order_by')       ?? 'id';
         $order      = $request->input('order')          ?? 'DESC';
         $query      = $request->input('query')          ?? '';
+        $status     = $request->input('status')         ?? '';
         $result     = [];
 
         $component = new Component();
@@ -319,6 +320,10 @@ class ComponentController extends Controller
 
         if($query != ''){
             $component = $component->where('name','LIKE','%'.$query.'%');
+        }
+        
+        if($status != ''){
+            $component = $component->where('status','=',$status);
         }
 
         if($limit > 0){

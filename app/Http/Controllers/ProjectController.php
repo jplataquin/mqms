@@ -155,12 +155,17 @@ class ProjectController extends Controller
         $orderBy    = $request->input('order_by')       ?? 'id';
         $order      = $request->input('order')          ?? 'DESC';
         $query      = $request->input('query')          ?? '';
+        $status     = $request->input('status')         ?? '';
         $result = [];
 
         $project = new Project();
 
         if($query != ''){
             $project = $project->where('name','LIKE','%'.$query.'%');
+        }
+
+        if($status != ''){
+            $project = $project->where('status','=',$status);
         }
 
         if($limit > 0){

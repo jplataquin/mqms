@@ -435,7 +435,23 @@ class MaterialQuantityRequestController extends Controller
         if($materialQuantityRequest->status != 'PEND'){
             return response()->json([
                 'status'    => 0,
-                'message'   => 'This record can no longer be updated (Status: '.$materialQuantityRequest->status.')',
+                'message'   => 'Error: This record can no longer be updated (Status: '.$materialQuantityRequest->status.')',
+                'data'      => []
+            ]);
+        }
+
+        if($materialQuantityRequest->project()->status != 'ACTV'){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Error: This record can no longer be updated, because the project status is not active',
+                'data'      => []
+            ]);
+        }
+
+        if($materialQuantityRequest->component()->status != 'APRV'){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Error: This record can no longer be updated, because the component status is not approved',
                 'data'      => []
             ]);
         }

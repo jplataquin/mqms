@@ -64,6 +64,7 @@
         window.util.$get('/api/section/list',{
             project_id: projectSelect.value,
             orderBy:'name',
+            status:'ACTV',
             order:'ASC'
         }).then(reply=>{
 
@@ -101,6 +102,7 @@
         window.util.$get('/api/component/list',{
             section_id: sectionSelect.value,
             orderBy:'name',
+            status:'APRV',
             order:'ASC'
         }).then(reply=>{
 
