@@ -61,7 +61,7 @@
                             $percentRequested = ($total_requested[$component_item->id]->total / $component_item->quantity) * 100;
                         @endphp
                         
-                        {{$total_requested[$component_item->id]->total}} {{$total_requested[$component_item->id]->unit}} ({{number_format($percentRequested,2)}}%) 
+                        {{$total_requested[$component_item->id]->total}} {{$total_requested[$component_item->id]->unit}} ({{ $percentRequested }}%) 
 
                         
                     @else
@@ -81,7 +81,7 @@
                             $percentPO = ($total_po[$component_item->id]->total / $component_item->quantity) * 100;
                         @endphp
                     
-                        {{$total_po[$component_item->id]->total}} {{$total_po[$component_item->id]->unit}} ({{number_format($percentPO,2)}}%) 
+                        {{$total_po[$component_item->id]->total}} {{$total_po[$component_item->id]->unit}} ({{ $percentPO }}%) 
                     @else
                         0 {{$component_item->unit}}
                     @endif
