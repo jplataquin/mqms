@@ -63,7 +63,7 @@
             <div class="col-lg-2 col-sm-12">
                 <div class="form-group">
                     <label>Unit</label>
-                    <select id="unit" class="form-control">
+                    <select id="component_unit_id" class="form-control">
                         @foreach($unit_options as $option)
                             <option value="{{$option['id']}}">{{$option['text']}}</option>
                         @endforeach
