@@ -44,10 +44,18 @@
                     {{$component_item->quantity}} {{$component_item->unit}} 
                 </td>
                 <td class="text-center">
-                    {{$total_requested[$component_item->id]->total}} {{$total_requested[$component_item->id]->unit}}
+                    @if( isset($total_requested[$component_item->id]) )
+                        {{$total_requested[$component_item->id]->total}} {{$total_requested[$component_item->id]->unit}}
+                    @else
+                        0 {{$component_item->unit}}
+                    @endif
                 </td>
                 <td class="text-center">
-                {{$total_po[$component_item->id]->total}} {{$total_po[$component_item->id]->unit}}
+                    @if( isset($total_po[$component_item->id]) )
+                        {{$total_po[$component_item->id]->total}} {{$total_po[$component_item->id]->unit}}
+                    @else
+                        0 {{$component_item->unit}}
+                    @endif
                 </td>
             </tr>
         </tbody>
