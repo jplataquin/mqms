@@ -223,7 +223,7 @@
 
         window.util.$post('/api/component/create',{
             section_id: '{{$section->id}}',
-            name: component.value
+            name: component.value,
             quantity: quantity.value,
             component_unit_id: component_unit_id.value
         }).then(reply=>{

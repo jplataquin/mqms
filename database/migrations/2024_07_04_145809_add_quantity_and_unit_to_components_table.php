@@ -28,7 +28,7 @@ return new class extends Migration
     {
         Schema::table('components', function (Blueprint $table) {
             $table->dropColumn('quantity');
-            $table->dropColumn('unit');
+            $table->dropColumn('component_unit_id');
         });
     }
 };
