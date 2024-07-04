@@ -29,7 +29,9 @@
     </table>
 
     <div class="text-center">
-        *** Material request is not available for these parameters, because the Project and/or Component status is not yet "approved" or "active" ***
+        <h5>*** Material request is not available for these parameters, because the Project and/or Component status is not yet "approved" or "active" ***</h5>
+        <br>
+        <a href="/material_quantity_request/select/create">Click here to return to previous page</a>
     </div>
 
 </div>
