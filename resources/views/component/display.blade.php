@@ -58,9 +58,19 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Quantity / Unit</th>
+                    <th>Quantity</th>
                     <td>
-                        {{$component->quantity}} {{$unit_options[$component->component_unit_id]}}
+                        <input class="form-control editable_field" type="text" id="component_quantity" value="{{$component->quantity}}" disabled="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Unit</th>
+                    <td>
+                        <select id="component_unit_id" class="form-control">
+                            @foreach($unit_options as $val => $text)
+                                <option value="{{$val}}" @if($component->component_unit_id == $val) selected @endif>{{$text}}</option>
+                            @endforeach
+                        </select>
                     </td>
                 </tr>
             </table>    
