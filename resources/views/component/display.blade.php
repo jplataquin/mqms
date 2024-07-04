@@ -66,7 +66,7 @@
                 <tr>
                     <th>Unit</th>
                     <td>
-                        <select id="component_unit_id" class="form-control">
+                        <select id="component_unit_id" class="form-control editable_field" disabled="true">
                             @foreach($unit_options as $val => $text)
                                 <option value="{{$val}}" @if($component->component_unit_id == $val) selected @endif>{{$text}}</option>
                             @endforeach
