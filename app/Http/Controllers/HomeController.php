@@ -32,9 +32,9 @@ class HomeController extends Controller
         
         $materialCanvassPendCount           = MaterialCanvass::where('status','=','PEND')->groupBy('material_quantity_request_id')->selectRaw('count(*) as total')->count();
 
-        $purchaseOrderPendCount             = PurchaseOrder::where('status','=','PEND')->count();
+        $purchaseOrderPendCount             = PurchaseOrder::whereIn('status',['PEND','REVO'])->count();
 
-        $componentPendCount                 = Component::whereIn('status',['PEND','REVO'])->count();
+        $componentPendCount                 = Component::where('status','=','PEND')->count();
 
         return view('home',[
             'materialQuantityRequestPendCount'  => $materialQuantityRequestPendCount,
