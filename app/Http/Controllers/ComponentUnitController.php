@@ -44,7 +44,7 @@ class ComponentUnitController extends Controller
             'text' => [
                 'required',
                 'max:255',
-                'unique:component_unit'
+                'unique:component_units'
             ]
         ]);
 
@@ -91,7 +91,7 @@ class ComponentUnitController extends Controller
             'text' => [
                 'required',
                 'max:255',
-                Rule::unique('component_unit')->ignore($id),
+                Rule::unique('component_units')->ignore($id),
             ]
         ]);
 
