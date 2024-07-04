@@ -8,7 +8,7 @@
             <table class="table border">
                 <tbody>
                     <tr>
-                        <th>Project<th>
+                        <th width="10%">Project</th>
                         <td>
                             {{$project->name}}
                         </td>
@@ -20,7 +20,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th width="10%">Component</th>
+                        <th>Component</th>
                         <td>{{$component->name}}</td>
                     </tr>
                     <tr>
