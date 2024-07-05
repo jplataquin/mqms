@@ -392,7 +392,7 @@ class ComponentItem extends Component{
         }
     
         this.el.function_type.onchange = (e) =>{
-            this.el.variable.keyup();    
+            this.el.variable.onkeyup();    
         }
     
         this.el.variable.onkeyup = (e)=>{
