@@ -144,13 +144,17 @@
         <div class="col-lg-2">
             <div class="form-group">
                 <label>Quantity</label>
-                <input id="component_item_quantity" type="text" class="form-control"/>
+                <input id="component_item_quantity" type="text" class="form-control" disabled="true"/>
             </div>
         </div>
         <div class="col-lg-2">
             <div class="form-group">
                 <label>Unit</label>
-                <input id="component_item_unit" type="text" class="form-control"/>
+                <select id="component_item_unit" class="form-control">
+                    @foreach($unit_options as $val => $text)
+                        <option value="{{$val}}">{{$text}}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
         <div class="col-lg-2">
@@ -207,7 +211,7 @@
     }
 
     component_item_function_type.onchange = (e) =>{
-        component_item_variable.keyup();    
+       // component_item_variable.keyup();    
     }
 
     component_item_variable.onkeyup = (e)=>{
