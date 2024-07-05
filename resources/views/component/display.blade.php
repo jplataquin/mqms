@@ -207,11 +207,11 @@
 
 
     component_item_variable.onkeypress = (e)=>{
-        return window.util.inputNumber(component_item_variable,e,2,false);
+        return window.util.inputNumber(component_item_variable,e,3,false);
     }
 
     component_item_function_type.onchange = (e) =>{
-       // component_item_variable.keyup();    
+       component_item_variable.keyup();    
     }
 
     component_item_variable.onkeyup = (e)=>{
@@ -302,11 +302,13 @@
         window.util.blockUI();
 
         window.util.$post('/api/component_item/create',{
-            component_id: '{{$component->id}}',
-            name: component_item_name.value,
-            budget_price: component_item_budget_price.value,
-            quantity: component_item_quantity.value,
-            unit: component_item_unit.value
+            component_id        : '{{$component->id}}',
+            name                : component_item_name.value,
+            budget_price        : component_item_budget_price.value,
+            quantity            : component_item_quantity.value,
+            component_unit_id   : component_item_unit.value,
+            function_type_id    : component_item_function_type.value,
+            function_variable   : component_item_variable.value
         }).then(reply=>{
 
             window.util.unblockUI();
@@ -316,10 +318,13 @@
                 return false;
             }
 
+            //Clear input
             component_item_budget_price.value   = '';
             component_item_name.value           = '';
             component_item_quantity.value       = '';
             component_item_unit.value           = '';
+            component_item_function_type.value  = '';
+            component_item_variable.value       = '';
 
             let item = ComponentItemEl({
                 id: reply.data.id,

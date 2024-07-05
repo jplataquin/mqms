@@ -34,11 +34,13 @@ class ComponentItemController extends Controller
         //todo check role
 
         $name              = $request->input('name') ?? '';
-        $unit              = $request->input('unit') ?? '';
+        $component_unit_id = $request->input('component_unit_id') ?? 0;
         $quantity          = $request->input('quantity') ?? '';
         $budget_price      = $request->input('budget_price') ?? '';
         $component_id      = (int) $request->input('component_id');
-
+        $function_type_id  = (int) $request->input('function_type_id');
+        $function_variable = $requst->input('function_variable');
+        
         $validator = Validator::make($request->all(),[
             'name' => [
                 'required',
@@ -51,17 +53,25 @@ class ComponentItemController extends Controller
                         ->where('deleted_at',null);
                 }),
             ],
-            'unit' => [
+            'component_unit_id' => [
                 'required',
-                'max:255'
+                'gte:1',
+                'integer'
             ],
             'quantity' => [
                 'required',
-                'numeric'
+                'numeric',
+                'gt:0'
             ],
             'budget_price' => [
                 'required',
-                'numeric'
+                'numeric',
+                'gt:0'
+            ],
+            'function_type_id' =>[
+                'required',
+                'gte:1',
+                'integer'
             ],
             'component_id' => ['required','integer']
         ]);
@@ -89,12 +99,14 @@ class ComponentItemController extends Controller
 
         $componentItem = new ComponentItem();
 
-        $componentItem->component_id = $component_id;
-        $componentItem->name         = $name;
-        $componentItem->budget_price = $budget_price;
-        $componentItem->quantity     = $quantity;
-        $componentItem->unit         = $unit;
-        $componentItem->created_by   = $user_id;
+        $componentItem->component_id              = $component_id;
+        $componentItem->name                      = $name;
+        $componentItem->budget_price              = $budget_price;
+        $componentItem->quantity                  = $quantity;
+        $componentItem->component_unit_id         = $component_unit_id;
+        $componentItem->function_type_id          = $function_type_id;
+        $componentItem->function_variable         = $function_variable;
+        $componentItem->created_by                = $user_id;
 
         $componentItem->save();
 
@@ -147,6 +159,7 @@ class ComponentItemController extends Controller
 
         $componentItem->loadCount('materialQuantities');
 
+        
         return response()->json([
             'status'    => 1,
             'message'   => '',
