@@ -394,7 +394,6 @@ class ComponentItem extends Component{
     onStateChange_editable(newVal){
        
         this.el.name.disabled               = !newVal;
-        this.el.quantity.disabled           = !newVal;
         this.el.unit.disabled               = !newVal;
         this.el.budget_price.disabled       = !newVal;
         this.el.function_type.disabled      = !newVal;
