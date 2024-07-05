@@ -109,36 +109,38 @@
         <h3>Items</h3>
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-12">
             <div class="form-group">
                 <label>Name</label>
                 <input id="component_item_name" type="text" class="form-control"/>
             </div>
         </div>
     </div>
+    
     <div class="row mt-3">
-        <div class="col-lg-2">
-            <div class="form-group">
-                <label>Function Type</label>
-                <select id="component_item_function_type" class="form-control">
-                    <option value="1">Factor</option>
-                    <option value="2">Divisor</option>
-                    <option value="3">Direct</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-lg-2">
-            <div class="form-group">
-                <label>Function Output</label>
-                <input id="component_item_function_output" type="text" class="form-control"/>
-            </div>
-        </div>
         <div class="col-lg-2">
             <div class="form-group">
                 <label>Budget Price / Unit</label>
                 <input id="component_item_budget_price" type="text" class="form-control"/>
             </div>
         </div>
+        <div class="col-lg-2">
+            <div class="form-group">
+                <label>Function Type</label>
+                <select id="component_item_function_type" class="form-control">
+                    <option value="1">As Factor</option>
+                    <option value="2">As Divisor</option>
+                    <option value="3">As Direct</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <div class="form-group">
+                <label>Variable</label>
+                <input id="component_item_variable" type="text" class="form-control"/>
+            </div>
+        </div>
+        
         <div class="col-lg-2">
             <div class="form-group">
                 <label>Quantity</label>
@@ -185,9 +187,9 @@
     let component_item_name         = $q('#component_item_name').first();
     let component_item_budget_price = $q('#component_item_budget_price').first();
     let component_item_unit         = $q('#component_item_unit').first();
-    let component_item_quantity     = $q('#component_item_quantity').first();
-    let component_item_function_type        = $q('#component_item_function_type').first();
-    let component_item_function_output      = $q('#component_item_function_output').first();
+    let component_item_quantity      = $q('#component_item_quantity').first();
+    let component_item_function_type = $q('#component_item_function_type').first();
+    let component_item_variable      = $q('#component_item_variable').first();
     
     
     const t = new Template();
@@ -200,18 +202,21 @@
     });
 
 
-     component_item_function_output.onkeypress = (e)=>{
-         return window.util.inputNumber(component_item_function_output,e,2,false);
-     }
+    component_item_function_output.onkeypress = (e)=>{
+        return window.util.inputNumber(component_item_function_output,e,2,false);
+    }
 
-    component_item_function_output.onkeyup = (e)=>{
+    component_item_function_type.onchange = (e) =>{
+        component_item_variable.keyup();    
+    }
+
+    component_item_variable.onkeyup = (e)=>{
         
-        console.log('rehe')
         switch(component_item_function_type.value){
             case '1':
 
                     component_item_quantity.value = Math.ceil( 
-                        (parseFloat('{{$component->quantity}}') * component_item_function_output.value)  / parseInt('{{$component->use_count}}')
+                        (parseFloat('{{$component->quantity}}') * component_item_variable.value)  / parseInt('{{$component->use_count}}')
                     );
 
                 break;
@@ -219,14 +224,14 @@
             case '2':
 
                     component_item_quantity.value = Math.ceil( 
-                        (parseFloat('{{$component->quantity}}') / component_item_function_output.value)  / parseInt('{{$component->use_count}}')
+                        (parseFloat('{{$component->quantity}}') / component_item_variable.value)  / parseInt('{{$component->use_count}}')
                     );
 
                 break;
 
             case '3':
 
-                    component_item_quantity.value = component_item_function_output.value;
+                    component_item_quantity.value = component_item_variable.value;
                     
                 break;
         }
