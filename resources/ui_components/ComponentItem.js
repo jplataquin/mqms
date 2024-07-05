@@ -20,7 +20,9 @@ class ComponentItem extends Component{
             quantity: 0,
             unit:'',
             name:'',
-            editable: false
+            editable: false,
+            function_type_id:'',
+            variable:''
         }
     }
 
@@ -271,10 +273,6 @@ class ComponentItem extends Component{
             return window.util.inputNumber(this.el.material_quantity,e,2,false);
         }
 
-        this.el.factor.onkeypress = (e)=>{
-            return window.util.inputNumber(this.el.factor,e,2,false);
-        }
-
         this.el.budget_price.onkeypress = (e)=>{
             return window.util.inputNumber(this.el.budget_price,e,2,false);
         }
@@ -289,15 +287,9 @@ class ComponentItem extends Component{
         
         this.el.equivalent.onkeyup = ()=>{
             this.el.material_quantity.value = (this.el.quantity.value / this.el.equivalent.value);
-            this.el.factor.value = ( this.el.material_quantity.value / this.el.quantity.value );
             this.el.total.value = calculateTotalEquivalent( this.el.material_quantity.value, this.el.equivalent.value);
         }
 
-        this.el.factor.onkeyup = () =>{
-            this.el.material_quantity.value = (this.el.factor.value * this.el.quantity.value);
-            this.el.equivalent.value = ( this.el.quantity.value / this.el.material_quantity.value );
-            this.el.total.value = calculateTotalEquivalent( this.el.material_quantity.value, this.el.equivalent.value);
-        }
 
         this.el.addBtn.onclick = ()=>{
 
@@ -499,7 +491,8 @@ class ComponentItem extends Component{
             this.setState('quantity',parseFloat(reply.data.quantity));
             this.setState('unit',reply.data.unit);
             this.setState('name',reply.data.name);
-
+            this.setState('function_type_id',reply.data.function_type_id);
+            this.setState('variable',reply.data.function_variable);
             
             this.el.name.value          = reply.data.name;
             this.el.budget_price.value  = reply.data.budget_price;
@@ -552,7 +545,6 @@ class ComponentItem extends Component{
         
         let materilItem = t.tr((row)=>{
                     t.td(this.materialRegistry[data.material_item_id]);
-                    t.td(''+data.factor);
                     t.td(''+data.equivalent);
                     t.td(''+data.quantity);
                     t.td(''+calculateTotalEquivalent(data.quantity,data.equivalent));
