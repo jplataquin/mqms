@@ -39,7 +39,7 @@ class ComponentItemController extends Controller
         $budget_price      = $request->input('budget_price') ?? '';
         $component_id      = (int) $request->input('component_id');
         $function_type_id  = (int) $request->input('function_type_id');
-        $function_variable = $requst->input('function_variable');
+        $function_variable = $request->input('function_variable');
         
         $validator = Validator::make($request->all(),[
             'name' => [
