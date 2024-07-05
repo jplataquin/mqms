@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('component_items', function (Blueprint $table) {
-            $table->double('function_output')->after('function_type_id');
+            $table->double('function_variable')->after('function_type_id');
         
         });
     }
@@ -27,7 +27,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('component_items', function (Blueprint $table) {
-            $table->dropColoumn('function_output');
+            $table->dropColoumn('function_variable');
         });
     }
 };
