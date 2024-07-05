@@ -206,8 +206,9 @@
 
     component_item_function_output.keyup = (e)=>{
         
+        console.log('rehe')
         switch(component_item_function_type.value){
-            case 1:
+            case '1':
 
                     component_item_quantity.value = Math.round( 
                         (parseFloat('{{$component->quantity}}') * component_item_function_output.value)  / parseInt('{{$component->use_count}}')
@@ -215,7 +216,7 @@
 
                 break;
 
-            case 2:
+            case '2':
 
                     component_item_quantity.value = Math.round( 
                         (parseFloat('{{$component->quantity}}') / component_item_function_output.value)  / parseInt('{{$component->use_count}}')
@@ -223,7 +224,7 @@
 
                 break;
 
-            case 3:
+            case '3':
 
                     component_item_quantity.value = component_item_function_output.value;
                     
