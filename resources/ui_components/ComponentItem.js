@@ -147,14 +147,28 @@ class ComponentItem extends Component{
 
                     t.td({class:''},(el)=>{
                         
+                        this.el.function_type = t.input({class:'form-control', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
+                        
+
+                    });
+
+                    t.td({class:''},(el)=>{
+                        
+                        this.el.variable = t.input({class:'form-control', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
+                        
+
+                    });
+                    
+                    t.td({class:''},(el)=>{
+                        
                         this.el.quantity = t.input({class:'form-control', type:'text', placeholder:'Quantity',disabled:true,value:'Loading...'});
                         
 
                     });
 
-                    t.td({class:'',style:{width:'10em'}},(el)=>{
+                    t.td({class:''},(el)=>{
 
-                        t.select({class:'form-control'},()=>{
+                        t.select({class:'form-control',disabled:true},()=>{
                             for(let i in this._model.unitOptions){
 
                                 let val = this._model.unitOptions[i];
