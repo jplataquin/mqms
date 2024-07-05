@@ -118,8 +118,22 @@ class ComponentItem extends Component{
                     t.tr(()=>{
                         t.th({class:'bg-primary p-1',colspan:5});
                     });
+                 
+                    
+                })
+
+               t.tbody({class:'mb-3 p-3'},()=>{
                     t.tr(()=>{
-                        t.th('Name');
+                        t.th({colspan:6},'Name');
+                    });
+
+                    t.tr(()=>{
+                        t.td({colspan:6},()=>{
+                            this.el.name = t.input({class:'form-control',type:'text', placeholder:'Item',disabled:true,value:'Loading...'}); 
+                        });
+                    })
+
+                    t.tr(()=>{
                         t.th('Budget Price');
                         t.th('Function Type');
                         t.th('Variable');
@@ -128,87 +142,82 @@ class ComponentItem extends Component{
                         t.th('Options');
                     })
                     
-                })
-
-               t.tbody({class:'mb-3 p-3'},()=>{
-
-                    t.td({class:''},(el)=>{
-                        
-                        this.el.name = t.input({class:'form-control',type:'text', placeholder:'Item',disabled:true,value:'Loading...'});
-
-                    });
-
-                    t.td({class:''},(el)=>{
-                        
-                        this.el.budget_price = t.input({class:'form-control', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
+                    t.tr(()=>{
                         
 
-                    });
+                        t.td({class:''},(el)=>{
+                            
+                            this.el.budget_price = t.input({class:'form-control', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
+                            
 
-                    t.td({class:''},(el)=>{
-                        
-                        this.el.function_type = t.input({class:'form-control', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
-                        
-
-                    });
-
-                    t.td({class:''},(el)=>{
-                        
-                        this.el.variable = t.input({class:'form-control', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
-                        
-
-                    });
-                    
-                    t.td({class:''},(el)=>{
-                        
-                        this.el.quantity = t.input({class:'form-control', type:'text', placeholder:'Quantity',disabled:true,value:'Loading...'});
-                        
-
-                    });
-
-                    t.td({class:''},(el)=>{
-
-                        t.select({class:'form-control',disabled:true},()=>{
-                            for(let i in this._model.unitOptions){
-
-                                let val = this._model.unitOptions[i];
-
-                                t.option({value:i},val);
-                            }
                         });
-    
-                    });
 
-                    t.td({class:'text-center'},(el)=>{
-                        
-                        this.el.deleteComponentButton = t.button({class:'btn btn-danger me-3',style:{
-                            display: (()=>{
-                                if(this._state.editable == true) return 'none';
-                                if(this._state.editable == false) return 'inline';
-                            })()
-                        }},'Delete');
+                        t.td({class:''},(el)=>{
+                            
+                            this.el.function_type = t.input({class:'form-control', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
+                            
 
-                        this.el.editComponentButton = t.button({class:'btn btn-primary',style:{
-                            display: (()=>{
-                                if(this._state.editable == true) return 'none';
-                                if(this._state.editable == false) return 'inline';
-                            })()
-                        }},'Edit');
+                        });
 
-                        this.el.cancelEditComponentButton = t.button({class:'btn btn-primary me-3',style:{
-                            display: (()=>{
-                                if(this._state.editable == true) return 'inline';
-                                if(this._state.editable == false) return 'none';
-                            })()
-                        }},'Cancel');
+                        t.td({class:''},(el)=>{
+                            
+                            this.el.variable = t.input({class:'form-control', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
+                            
 
-                        this.el.updateComponentButton = t.button({class:'btn btn-warning',style:{
-                            display: (()=>{
-                                if(this._state.editable == true) return 'inline';
-                                if(this._state.editable == false) return 'none';
-                            })()
-                        }},'Update');
-                        
+                        });
+                    
+                        t.td({class:''},(el)=>{
+                            
+                            this.el.quantity = t.input({class:'form-control', type:'text', placeholder:'Quantity',disabled:true,value:'Loading...'});
+                            
+
+                        });
+
+                        t.td({class:''},(el)=>{
+
+                            t.select({class:'form-control',disabled:true},()=>{
+                                for(let i in this._model.unitOptions){
+
+                                    let val = this._model.unitOptions[i];
+
+                                    t.option({value:i},val);
+                                }
+                            });
+        
+                        });
+
+                        t.td({class:'text-center'},(el)=>{
+                            
+                            this.el.deleteComponentButton = t.button({class:'btn btn-danger me-3',style:{
+                                display: (()=>{
+                                    if(this._state.editable == true) return 'none';
+                                    if(this._state.editable == false) return 'inline';
+                                })()
+                            }},'Delete');
+
+                            this.el.editComponentButton = t.button({class:'btn btn-primary',style:{
+                                display: (()=>{
+                                    if(this._state.editable == true) return 'none';
+                                    if(this._state.editable == false) return 'inline';
+                                })()
+                            }},'Edit');
+
+                            this.el.cancelEditComponentButton = t.button({class:'btn btn-primary me-3',style:{
+                                display: (()=>{
+                                    if(this._state.editable == true) return 'inline';
+                                    if(this._state.editable == false) return 'none';
+                                })()
+                            }},'Cancel');
+
+                            this.el.updateComponentButton = t.button({class:'btn btn-warning',style:{
+                                display: (()=>{
+                                    if(this._state.editable == true) return 'inline';
+                                    if(this._state.editable == false) return 'none';
+                                })()
+                            }},'Update');
+                            
+                        });
+
                     });
 
                     t.tr(()=>{
