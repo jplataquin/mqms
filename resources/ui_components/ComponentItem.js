@@ -465,8 +465,9 @@ class ComponentItem extends Component{
             this.el.name.value          = reply.data.name;
             this.el.budget_price.value  = reply.data.budget_price;
             this.el.quantity.value      = reply.data.quantity;
-            this.el.unit.value          = reply.data.unit;
-
+            this.el.unit.value          = reply.data.component_unit_id;
+            this.el.function_type.value = reply.data.function_type_id;
+            this.el.variable.value      = reply.data.function_variable;
         });
 
     }
