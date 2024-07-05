@@ -202,8 +202,8 @@
     });
 
 
-    component_item_function_output.onkeypress = (e)=>{
-        return window.util.inputNumber(component_item_function_output,e,2,false);
+    component_item_variable.onkeypress = (e)=>{
+        return window.util.inputNumber(component_item_variable,e,2,false);
     }
 
     component_item_function_type.onchange = (e) =>{
