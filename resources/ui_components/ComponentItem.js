@@ -153,7 +153,11 @@ class ComponentItem extends Component{
 
                         t.td({class:''},(el)=>{
                             
-                            this.el.function_type = t.input({class:'form-control', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
+                            this.el.function_type = t.select({class:'form-control',disabled:true},()=>{
+                                t.option({value:1},'As Factor');
+                                t.option({value:2},'As Divisor');
+                                t.option({value:3},'As Direct');
+                            });
 
                         });
 
@@ -171,7 +175,7 @@ class ComponentItem extends Component{
 
                         t.td({class:''},(el)=>{
 
-                            t.select({class:'form-control',disabled:true},()=>{
+                            this.el.unit = t.select({class:'form-control',disabled:true},()=>{
                                 for(let i in this._model.unitOptions){
 
                                     let val = this._model.unitOptions[i];
@@ -389,11 +393,12 @@ class ComponentItem extends Component{
 
     onStateChange_editable(newVal){
        
-        this.el.name.disabled           = !newVal;
-        this.el.quantity.disabled       = !newVal;
-        this.el.unit.disabled           = !newVal;
-        this.el.budget_price.disabled   = !newVal;
-        
+        this.el.name.disabled               = !newVal;
+        this.el.quantity.disabled           = !newVal;
+        this.el.unit.disabled               = !newVal;
+        this.el.budget_price.disabled       = !newVal;
+        this.el.function_type.disabled      = !newVal;
+        this.el.variable.disabled           = !newVal;
 
         if(newVal){
             this.el.editComponentButton.style.display   = 'none';
