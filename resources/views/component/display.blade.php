@@ -134,7 +134,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-lg-1">
+        <div class="col-lg-2">
             <div class="form-group">
                 <label>Variable</label>
                 <input id="component_item_variable" type="text" class="form-control"/>
