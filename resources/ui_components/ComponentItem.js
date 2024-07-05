@@ -116,7 +116,7 @@ class ComponentItem extends Component{
                 
                 t.thead(()=>{
                     t.tr(()=>{
-                        t.th({class:'bg-primary p-1',colspan:5});
+                        t.th({class:'bg-primary p-1',colspan:6});
                     });
                  
                     
@@ -149,27 +149,23 @@ class ComponentItem extends Component{
                             
                             this.el.budget_price = t.input({class:'form-control', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
                             
-
                         });
 
                         t.td({class:''},(el)=>{
                             
                             this.el.function_type = t.input({class:'form-control', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
-                            
 
                         });
 
                         t.td({class:''},(el)=>{
                             
                             this.el.variable = t.input({class:'form-control', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
-                            
 
                         });
                     
                         t.td({class:''},(el)=>{
                             
                             this.el.quantity = t.input({class:'form-control', type:'text', placeholder:'Quantity',disabled:true,value:'Loading...'});
-                            
 
                         });
 
@@ -221,7 +217,7 @@ class ComponentItem extends Component{
                     });
 
                     t.tr(()=>{
-                        t.td({colspan:5,class:'text-center'},()=>{
+                        t.td({colspan:6,class:'text-center'},()=>{
                         
                             this.el.showList = t.a({href:'#'},'Show Items');
                             
