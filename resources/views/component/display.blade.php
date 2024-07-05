@@ -211,7 +211,7 @@
     }
 
     component_item_function_type.onchange = (e) =>{
-       component_item_variable.keyup();    
+       component_item_variable.onkeyup();    
     }
 
     component_item_variable.onkeyup = (e)=>{

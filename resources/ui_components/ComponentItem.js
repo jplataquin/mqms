@@ -64,44 +64,41 @@ class ComponentItem extends Component{
                 t.div({class:'col-lg-12'},()=>{
                     t.table({class:'table border'},()=>{
                         t.thead(()=>{
-                            t.th({style:{width:'40%'}},()=>{
-                                t.div({class:'form-group'},()=>{
-                                    t.label('Material');
-                                    t.el(this.el.materialItemSelect);
-                                });
-                            });
+
+                            t.tr(()=>{
                             
-                            t.th(()=>{
-                                t.div({class:'form-group'},()=>{
-                                    t.label('Factor');
-                                    this.el.factor = t.input({class:'form-control', type:'text'});
+                                t.th({style:{width:'40%'}},()=>{
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Material');
+                                        t.el(this.el.materialItemSelect);
+                                    });
                                 });
-                            });
+                                
+                                t.th(()=>{
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Equivalent');
+                                        this.el.equivalent = t.input({class:'form-control', type:'text'});
+                                    });
+                                });
 
-                            t.th(()=>{
-                                t.div({class:'form-group'},()=>{
-                                    t.label('Equivalent');
-                                    this.el.equivalent = t.input({class:'form-control', type:'text'});
+                                t.th(()=>{
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Quantity');
+                                        this.el.material_quantity = t.input({class:'form-control', type:'text'});
+                                    });
                                 });
-                            });
-
-                            t.th(()=>{
-                                t.div({class:'form-group'},()=>{
-                                    t.label('Quantity');
-                                    this.el.material_quantity = t.input({class:'form-control', type:'text'});
+                                t.th(()=>{
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Total');
+                                        this.el.total = t.input({class:'form-control', type:'number',disabled:true});
+                                    });
                                 });
-                            });
-                            t.th(()=>{
-                                t.div({class:'form-group'},()=>{
-                                    t.label('Total');
-                                    this.el.total = t.input({class:'form-control', type:'number',disabled:true});
+                                t.th(()=>{
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('&nbsp');
+                                        this.el.addBtn = t.button({class:'btn btn-warning w-100'},'Add');
+                                    })
                                 });
-                            });
-                            t.th(()=>{
-                                t.div({class:'form-group'},()=>{
-                                    t.label('&nbsp');
-                                    this.el.addBtn = t.button({class:'btn btn-warning w-100'},'Add');
-                                })
                             });
                         });
     
@@ -234,7 +231,7 @@ class ComponentItem extends Component{
 
                 t.tfoot({},()=>{
                     t.tr({},()=>{
-                        t.td({colspan:5},()=>{
+                        t.td({colspan:6},()=>{
                             this.el.materialMenuHolder = t.div({class:'ms-3 row'});
                         });
                     })
