@@ -250,6 +250,8 @@ class ComponentItem extends Component{
         
         this.getComponentItemData();
 
+        this.functionVariableQuantity();
+
         this.el.showList.onclick = (e)=>{
 
             e.preventDefault();
@@ -378,6 +380,45 @@ class ComponentItem extends Component{
                 
                 signal.broadcast('set-component-status','PEND');
             });
+        }
+    }
+
+    functionVariableQuantity(){
+
+        this.el.variable.onkeypress = (e)=>{
+            return window.util.inputNumber(this.el.variable,e,3,false);
+        }
+    
+        this.el.function_type.onchange = (e) =>{
+            this.el.variable.keyup();    
+        }
+    
+        this.el.variable.onkeyup = (e)=>{
+            
+            switch(this.el.function_type.value){
+                case '1':
+    
+                        this.el.quantity.value = Math.ceil( 
+                            (this._model.component_quantity * this.el.variable.value)  / this._model.component_use_count
+                        );
+    
+                    break;
+    
+                case '2':
+    
+                        this.el.quantity.value = Math.ceil( 
+                            (this._model.component_quantity  / this.el.variable.value)  / this._model.component_use_count
+                        );
+    
+                    break;
+    
+                case '3':
+    
+                        this.el.quantity.value = this.el.variable.value;
+                        
+                    break;
+            }
+            
         }
     }
 
