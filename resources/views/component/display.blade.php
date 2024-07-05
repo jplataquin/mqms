@@ -329,7 +329,8 @@
             let item = ComponentItemEl({
                 id: reply.data.id,
                 component_id:'{{$component->id}}',
-                materialItemOptions: materialItemOptions
+                materialItemOptions: materialItemOptions,
+                unitOptions: @json($unit_options)
             });
 
             $el.append(item).to(component_item_list);
@@ -377,7 +378,8 @@
             ComponentItemEl({
                 id:'{{$item->id}}',
                 component_id:'{{$component->id}}',
-                materialItemOptions: materialItemOptions
+                materialItemOptions: materialItemOptions,
+                unitOptions: @json($unit_options)
             })
         );
 

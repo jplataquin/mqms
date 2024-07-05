@@ -28,7 +28,8 @@ class ComponentItem extends Component{
         return {
             id:null,
             component_id:null,
-            materialItemOptions:[]
+            materialItemOptions:[],
+            unitOptions:[]
         }
     }
 
@@ -46,10 +47,12 @@ class ComponentItem extends Component{
         this.el.materialItemSelect = t.select({class:'form-control'});
 
         this._model.materialItemOptions.map(item=>{
-            let option = t.option({value:item.id},item.name + ' '+item.specification_unit_packaging+' '+item.brand+''.trim());
+            
+            let option = t.option({value:item.id},item.brand+' '+item.name + ' '+item.specification_unit_packaging+''.trim());
+            
             this.el.materialItemSelect.t.append(option);
 
-            this.materialRegistry[item.id] = item.name + ' '+item.specification_unit_packaging+' '+item.brand+''.trim();
+            this.materialRegistry[item.id] = item.brand+' '+item.name +' '+item.specification_unit_packaging+''.trim();
         });
 
         this.el.materialMenu = t.div(()=>{
@@ -118,6 +121,8 @@ class ComponentItem extends Component{
                     t.tr(()=>{
                         t.th('Name');
                         t.th('Budget Price');
+                        t.th('Function Type');
+                        t.th('Variable');
                         t.th('Quantity');
                         t.th('Unit');
                         t.th('Options');
@@ -148,7 +153,16 @@ class ComponentItem extends Component{
                     });
 
                     t.td({class:'',style:{width:'10em'}},(el)=>{
-                        this.el.unit = t.input({class:'form-control', type:'text', placeholder:'Unit', disabled:true, value:'loading...'});    
+
+                        t.select({class:'form-control'},()=>{
+                            for(let i in this._model.unitOptions){
+
+                                let val = this._model.unitOptions[i];
+
+                                t.option({value:i},val);
+                            }
+                        });
+    
                     });
 
                     t.td({class:'text-center'},(el)=>{
