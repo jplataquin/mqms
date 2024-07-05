@@ -115,6 +115,24 @@
                 <input id="component_item_name" type="text" class="form-control"/>
             </div>
         </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-lg-2">
+            <div class="form-group">
+                <label>Function Type</label>
+                <select id="component_item_function_type" class="form-control">
+                    <option value="1">Factor</option>
+                    <option value="2">Divisor</option>
+                    <option value="3">Direct</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="form-group">
+                <label>Function Output</label>
+                <input id="component_item_function_output" type="text" class="form-control"/>
+            </div>
+        </div>
         <div class="col-lg-2">
             <div class="form-group">
                 <label>Budget Price / Unit</label>
@@ -168,6 +186,8 @@
     let component_item_budget_price = $q('#component_item_budget_price').first();
     let component_item_unit         = $q('#component_item_unit').first();
     let component_item_quantity     = $q('#component_item_quantity').first();
+    let component_item_function_type        = $q('#component_item_function_type').first();
+    let component_item_function_output      = $q('#component_item_function_output').first();
     
     
     const t = new Template();
@@ -178,6 +198,39 @@
     signalR.receiver('set-component-status',(value)=>{
         status.innerHTML = value;
     });
+
+
+    component_item_function_output.onkeypress = (e)=>{
+        return window.util.inputNumber(component_item_function_output,e,2,false);
+    }
+
+    component_item_function_output.keyup = (e)=>{
+        
+        switch(component_item_function_type.value){
+            case 1:
+
+                    component_item_quantity.value = Math.round( 
+                        (parseFloat('{{$component->quantity}}') * component_item_function_output.value)  / parseInt('{{$component->use_count}}')
+                    );
+
+                break;
+
+            case 2:
+
+                    component_item_quantity.value = Math.round( 
+                        (parseFloat('{{$component->quantity}}') / component_item_function_output.value)  / parseInt('{{$component->use_count}}')
+                    );
+
+                break;
+
+            case 3:
+
+                    component_item_quantity.value = component_item_function_output.value;
+                    
+                break;
+        }
+        
+    }
 
     component_quantity.onkeypress = (e)=>{
         return window.util.inputNumber(component_quantity,e,2,false);
