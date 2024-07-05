@@ -330,7 +330,9 @@
                 id: reply.data.id,
                 component_id:'{{$component->id}}',
                 materialItemOptions: materialItemOptions,
-                unitOptions: @json($unit_options)
+                unitOptions: @json($unit_options),
+                component_quantity: parseFloat('{{$component->quantity}}'),
+                component_use_count: parseFloat('{{$component->use_count}}')
             });
 
             $el.append(item).to(component_item_list);
@@ -379,7 +381,9 @@
                 id:'{{$item->id}}',
                 component_id:'{{$component->id}}',
                 materialItemOptions: materialItemOptions,
-                unitOptions: @json($unit_options)
+                unitOptions: @json($unit_options),
+                component_quantity: parseFloat('{{$component->quantity}}'),
+                component_use_count: parseFloat('{{$component->use_count}}')
             })
         );
 

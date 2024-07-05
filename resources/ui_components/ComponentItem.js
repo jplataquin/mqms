@@ -29,7 +29,9 @@ class ComponentItem extends Component{
             id:null,
             component_id:null,
             materialItemOptions:[],
-            unitOptions:[]
+            unitOptions:[],
+            component_quantity:0,
+            component_use_count:1
         }
     }
 
