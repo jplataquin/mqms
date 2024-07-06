@@ -65,6 +65,7 @@
 
         @php $i = 1 @endphp
         @foreach($componentItems as $item)
+        <!--
         <table class="border table">
             <thead>
                 <tr>
@@ -106,7 +107,81 @@
                 </tr>
                 @endforeach
                 </tbody>
-        </table>
+        </table>-->
+
+
+        <div class="mb-5">
+                <table border="1" class="table">
+                    <tr>
+                        <th class="teal-bg" colspan="4" style="width:100%">
+                            {{$i}}.) {{$item->name}}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Budget Price</th>
+                        <th class="text-center">Factor</th>
+                        <th class="text-center">ceil( Quantity )</th>
+                        <th class="text-center">Total Amount</th>
+                    </tr>
+                    <tr>
+                        <td class="text-center">
+                            Php {{ number_format($item->budget_price,2) }}
+                        </td>
+                        <td class="text-center">
+
+                            @if($item->function_type_id == 1)
+                             {{$item->function_variable}} {{ $unit_options[ $item->component_unit_id ]->text }} / {{$unit_options[$component->component_unit_id]->text}}
+                            @elseif($item->function_type_id == 2)
+                             1 {{$unit_options[$component->component_unit_id]->text}} / {{$item->function_variable}} {{ $unit_options[ $item->component_unit_id ]->text }}
+                            @else
+                                N/A
+                            @endif
+                            
+                            <br>
+                            _________
+                            <br>
+                            {{$component->use_count}} Use(s)
+                        </td>
+                        <td class="text-center">
+                            {{$item->quantity}} {{$unit_options[$item->component_unit_id]->text}}
+                        </td>
+                        <td class="text-center">
+                            Php {{ number_format($item->budget_price * $item->quantity,2) }}
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <table border="1" class="table">
+                        
+
+                        <tr>
+                            <th style="width:40%" class="text-center">Material</th>
+                            <th style="width:20%" class="text-center">Equivalent</th>
+                            <th style="width:20%" class="text-center">Quantity</th>
+                            <th style="width:20%" class="text-center">Total</th>
+                        </tr>
+                        
+                        @foreach($item->materialQuantities as $mq)
+                        <tr>
+                            <td>
+                                {{$materialItems[$mq->material_item_id]->name }} 
+                                {{$materialItems[$mq->material_item_id]->specification_unit_packaging }} 
+                                {{$materialItems[$mq->material_item_id]->brand }} 
+                            </td>
+                            <td class="text-center">
+                                {{$mq->equivalent}} {{$item->unit}}
+                            </td>
+                            <td class="text-center">
+                                {{$mq->quantity}}
+                            </td>
+                            <td class="text-center">
+                                {{$mq->equivalent * $mq->quantity}} {{$item->unit}}
+                            </td>
+                        </tr>
+                        @endforeach
+
+                </table>
+            </div>
         
         @php $i++ @endphp
         @endforeach
