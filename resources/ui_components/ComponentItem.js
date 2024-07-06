@@ -579,8 +579,8 @@ class ComponentItem extends Component{
                                 });
                             }
                         };
-                    });
-                });
+                    });//td
+                });//tr
             
         
 

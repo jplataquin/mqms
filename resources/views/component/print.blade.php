@@ -19,18 +19,32 @@
     <div>
         <div style="margin-bottom: 10px">
             <h3>
-                {{$project->name}} - ( {{$section->name}} )
+                {{$component->name}}
             </h3>
             <hr>
             <table border="1" class="table">
                    
                     <tr>
-                        <th style="width:10%">Component</th>
-                        <td style="width:90%">{{$component->name}}</td>
+                        <th style="width:10%">Project / Section</th>
+                        <td style="width:90%">
+                            {{$project->name}} - ( {{$section->name}} )
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Component ID</th>
+                        <td>{{str_pad($component->id,6,0,STR_PAD_LEFT)}}</td>
                     </tr>
                     <tr>
                         <th>Status</th>
                         <td>{{$component->status}}</td>
+                    </tr>
+                    <tr>
+                        <th>Quantity / Unit</th>
+                        <td>{{$component->quantity}} / $unit_options[$component->component_unit_id]->text</td>
+                    </tr>
+                    <tr>
+                        <th>Use Count</th>
+                        <td>{{$component->use_count}}</td>
                     </tr>
                     <tr>
                         <th>Created By</th>
