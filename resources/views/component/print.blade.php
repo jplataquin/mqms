@@ -14,6 +14,10 @@
     .text-center{
         text-align:center;
     }
+
+    .teal-bg{
+        background-color: #add8e6;
+    }
 </style>
 <page>
     <div>
@@ -68,9 +72,23 @@
             <div style="margin-bottom:10px">
                 <table border="1" class="table">
                     <tr>
-                        <th style="width:50%;background-color:#add8e6" colspan="2">#{{$i}} {{$item->name}}</th>
-                        <th style="width:25%;background-color:#add8e6" class="text-center">{{$item->quantity}} {{$item->unit}}</th>
-                        <th style="width:25%;background-color:#add8e6" class="text-center">P {{number_format($item->budget_price,2) }}</th>
+                        <td class="teal-bg" colspan="3">
+                            {{$i}}.) {{$item->name}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Budget Price</th>
+                        <th class="text-center">Function</th>
+                        <th class="text-center">Quantity</th>
+                    </tr>
+                    <tr>
+                        <th class="teal-bg text-center">
+                            Php {{ number_format($item->budget_price,2) }}
+                        </th>
+                        <th class="teal-bg text-center">
+                            {{$item->function_variable}} {{ $unit_options[ $item->component_unit_id ]->text }} / {{$unit_options[$component->component_unit_id]->text}}
+                        </th>
+                        <th class="teal-bg text-center">{{$item->quantity}} {{$unit_options[$item->component_unit_id]->text}}</th>
                     </tr>
                 </table>
                 <br>
