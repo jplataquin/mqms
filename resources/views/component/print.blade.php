@@ -93,7 +93,7 @@
                                 {{$item->function_variable}} {{ $unit_options[ $item->component_unit_id ]->text }} / {{$unit_options[$component->component_unit_id]->text}}
                             @endif
 
-                            @if($item->function_type_id == 1)
+                            @if($item->function_type_id == 2)
                                 1 {{$unit_options[$component->component_unit_id]->text}} / {{$item->function_variable}} {{ $unit_options[ $item->component_unit_id ]->text }}
                             @endif
                             
