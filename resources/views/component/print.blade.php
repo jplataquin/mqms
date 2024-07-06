@@ -88,7 +88,15 @@
                             Php {{ number_format($item->budget_price,2) }}
                         </td>
                         <td class="text-center">
-                            {{$item->function_variable}} {{ $unit_options[ $item->component_unit_id ]->text }} / {{$unit_options[$component->component_unit_id]->text}}
+
+                            @if($item->function_type_id == 1)
+                                {{$item->function_variable}} {{ $unit_options[ $item->component_unit_id ]->text }} / {{$unit_options[$component->component_unit_id]->text}}
+                            @endif
+
+                            @if($item->function_type_id == 1)
+                                1 {{$unit_options[$component->component_unit_id]->text}} / {{$item->function_variable}} {{ $unit_options[ $item->component_unit_id ]->text }}
+                            @endif
+                            
                         </td>
                         <td class="text-center">
                             {{$item->quantity}} {{$unit_options[$item->component_unit_id]->text}}
