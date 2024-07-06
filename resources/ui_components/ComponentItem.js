@@ -362,10 +362,12 @@ class ComponentItem extends Component{
 
                     return false;
                 }
-
+                
                 this.setState('quantity',parseFloat(this.el.quantity.value));
-                this.setState('unit',reply.data.unit);
+                this.setState('unit',this.el.unit.value);
                 this.setState('name',this.el.name.value);
+                this.setState('function_type_id',this.el.function_type.value);
+                this.setState('variable',this.el.variable.value);
                 this.setState('editable',false);
 
                 
