@@ -140,6 +140,7 @@ class ComponentItem extends Component{
                         t.th('Variable');
                         t.th('Quantity');
                         t.th('Unit');
+                        t.th('Total Amount');
                         t.th('Options');
                     })
                     
@@ -187,7 +188,9 @@ class ComponentItem extends Component{
         
                         });
 
-                        this.el.total_amount = t.td({},()=>{});
+                        t.td({},()=>{
+                            this.el.total_amount = t.input({class:'form-control',disabled:true});
+                        });
 
                         t.td({class:'text-center'},(el)=>{
                             
