@@ -111,7 +111,7 @@
                         <td class="text-center">
                             @php
                                 $grand_total = $grand_total + ($item->budget_price * $item->quantity);
-                            @endphh
+                            @endphp
                             Php {{ number_format($item->budget_price * $item->quantity,2) }}
                         </td>
                     </tr>
