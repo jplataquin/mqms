@@ -151,7 +151,8 @@
         @endforeach
     
         <br>
-        <table>
+
+        <table class="table">
             <tr>
                 <td class="text-center bg-teal" style="width:50%">
                     <h3>Grand Total</h3>
