@@ -193,7 +193,7 @@ class ComponentController extends Controller
         $unit_options    = [];
 
         foreach($component_units as $cu){
-            $unit_options[ $cu['id'] ] = $cu;
+            $unit_options[ $cu['id'] ] = (object) $cu;
         }
 
         $html = view('component/print',[
@@ -203,7 +203,7 @@ class ComponentController extends Controller
             'componentItems'    => $componentItems,
             'materialItems'     => $materialItems,
             'hash'              => $hash,
-            'unit_options'      => (object) $unit_options
+            'unit_options'      => $unit_options
         ])->render();
 
 
