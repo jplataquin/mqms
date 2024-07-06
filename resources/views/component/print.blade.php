@@ -164,4 +164,11 @@
             </tr>
         </table>
     </div>
+
+    <page_footer>
+        <div style="text-right">
+        [[page_cu]]/[[page_nb]]
+        </div>
+    </page_footer>
+
 </page>
