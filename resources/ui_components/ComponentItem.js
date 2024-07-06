@@ -258,6 +258,10 @@ class ComponentItem extends Component{
 
         this.functionVariableQuantity();
 
+        this.el.budget_price.onkeyup = ()=>{    
+            this.calculateTotalAmount();
+        }
+
         this.el.showList.onclick = (e)=>{
 
             e.preventDefault();
@@ -400,7 +404,7 @@ class ComponentItem extends Component{
         }
     
         this.el.function_type.onchange = (e) =>{
-            this.el.variable.onkeyup();    
+            this.el.variable.onkeyup();   
         }
     
         this.el.variable.onkeyup = (e)=>{
