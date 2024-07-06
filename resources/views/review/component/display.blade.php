@@ -68,7 +68,7 @@
         </div>
 
         @php 
-            $i = 1 
+            $i = 1;
             $grand_total = 0;
         @endphp
         @foreach($componentItems as $item)
@@ -109,6 +109,9 @@
                             {{$item->quantity}} {{$unit_options[$item->component_unit_id]->text}}
                         </td>
                         <td class="text-center">
+                            @php
+                                $grand_total = $grand_total + ($item->budget_price * $item->quantity);
+                            @endphp
                             Php {{ number_format($item->budget_price * $item->quantity,2) }}
                         </td>
                     </tr>
