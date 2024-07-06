@@ -117,7 +117,7 @@ class ComponentItem extends Component{
                 
                 t.thead(()=>{
                     t.tr(()=>{
-                        t.th({class:'bg-primary p-1',colspan:6});
+                        t.th({class:'bg-primary p-1',colspan:7});
                     });
                  
                     
@@ -125,11 +125,11 @@ class ComponentItem extends Component{
 
                t.tbody({class:'mb-3 p-3'},()=>{
                     t.tr(()=>{
-                        t.th({colspan:6},'Name');
+                        t.th({colspan:7},'Name');
                     });
 
                     t.tr(()=>{
-                        t.td({colspan:6},()=>{
+                        t.td({colspan:7},()=>{
                             this.el.name = t.input({class:'form-control',type:'text', placeholder:'Item',disabled:true,value:'Loading...'}); 
                         });
                     })
@@ -187,6 +187,8 @@ class ComponentItem extends Component{
         
                         });
 
+                        this.el.total_amount = t.td({},()=>{});
+
                         t.td({class:'text-center'},(el)=>{
                             
                             this.el.deleteComponentButton = t.button({class:'btn btn-danger me-3',style:{
@@ -222,7 +224,7 @@ class ComponentItem extends Component{
                     });
 
                     t.tr(()=>{
-                        t.td({colspan:6,class:'text-center'},()=>{
+                        t.td({colspan:7,class:'text-center'},()=>{
                         
                             this.el.showList = t.a({href:'#'},'Show Items');
                             
@@ -233,7 +235,7 @@ class ComponentItem extends Component{
 
                 t.tfoot({},()=>{
                     t.tr({},()=>{
-                        t.td({colspan:6},()=>{
+                        t.td({colspan:7},()=>{
                             this.el.materialMenuHolder = t.div({class:'ms-3 row'});
                         });
                     })
@@ -359,7 +361,8 @@ class ComponentItem extends Component{
             quantity                : this.el.quantity.value,
             component_unit_id       : this.el.unit.value,
             function_type_id        : this.el.function_type.value,
-            function_variable       : this.el.variable.value
+            function_variable       : this.el.variable.value,
+
         }).then(reply=>{
 
             window.util.unblockUI();
