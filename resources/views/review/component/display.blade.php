@@ -157,7 +157,7 @@
                     <h5>Grand Total</h5>
                 </th>
                 <th class="text-center">
-                    <h5>{{number_format($grand_total,2)}}</h5>
+                    <h5>Php {{number_format($grand_total,2)}}</h5>
                 </th>
             </tr>
         </table>
