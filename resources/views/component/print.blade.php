@@ -152,9 +152,9 @@
     
         <br>
 
-        <table class="table">
+        <table class="table" border="1">
             <tr>
-                <td class="text-center bg-teal" style="width:50%">
+                <td class="text-center teal-bg" style="width:50%">
                     <h3>Grand Total</h3>
                 </td>
                 <td class="text-center" style="width:50%">
