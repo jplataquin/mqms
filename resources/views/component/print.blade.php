@@ -97,6 +97,10 @@
                                 1 {{$unit_options[$component->component_unit_id]->text}} / {{$item->function_variable}} {{ $unit_options[ $item->component_unit_id ]->text }}
                             @endif
                             
+                            <br>
+                            _______________________________
+                            <br>
+                            {{$component->use_count}}
                         </td>
                         <td class="text-center">
                             {{$item->quantity}} {{$unit_options[$item->component_unit_id]->text}}
