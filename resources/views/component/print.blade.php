@@ -100,7 +100,7 @@
                             <br>
                             _________
                             <br>
-                            {{$component->use_count}}
+                            {{$component->use_count}} Use(s)
                         </td>
                         <td class="text-center">
                             {{$item->quantity}} {{$unit_options[$item->component_unit_id]->text}}
