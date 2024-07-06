@@ -73,14 +73,14 @@
             <div style="margin-bottom:10px">
                 <table border="1" class="table">
                     <tr>
-                        <td class="teal-bg" colspan="3">
+                        <td class="teal-bg" colspan="3" style="width:100%">
                             {{$i}}.) {{$item->name}}
                         </td>
                     </tr>
                     <tr>
-                        <th class="text-center">Budget Price</th>
-                        <th class="text-center">Function</th>
-                        <th class="text-center">Quantity</th>
+                        <th class="teal-bg text-center">Budget Price</th>
+                        <th class="teal-bg text-center">Function</th>
+                        <th class="teal-bg text-center">Quantity</th>
                     </tr>
                     <tr>
                         <th class="teal-bg text-center">
