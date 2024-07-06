@@ -155,10 +155,10 @@
         <table class="table" border="1">
             <tr>
                 <td class="text-center teal-bg" style="width:50%">
-                    <h3>Grand Total</h3>
+                    <h4>Grand Total</h4>
                 </td>
                 <td class="text-center" style="width:50%">
-                    <h3>{{number_format($grand_total,2)}}</h3>
+                    <h4>Php {{number_format($grand_total,2)}}</h4>
                 </td>
             </tr>
         </table>
