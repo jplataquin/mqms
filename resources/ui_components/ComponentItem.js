@@ -290,7 +290,7 @@ class ComponentItem extends Component{
         this.el.equivalent.onkeyup = ()=>{
             this.el.material_quantity.value = (this.el.quantity.value / this.el.equivalent.value);
             this.el.total.value = calculateTotalEquivalent( this.el.material_quantity.value, this.el.equivalent.value);
-            this.calculateTotalAmount();
+           
         }
 
 
@@ -352,6 +352,7 @@ class ComponentItem extends Component{
     }
 
     calculateTotalAmount(){
+        console.log('here');
         this.el.total_amount.value = (new Intl.NumberFormat().format(
             parseFloat(this.el.budget_price.value) * parseFloat(this.el.quantity.value)
         ));
@@ -428,6 +429,7 @@ class ComponentItem extends Component{
                     break;
             }
             
+            this.calculateTotalAmount();
         }
     }
 
