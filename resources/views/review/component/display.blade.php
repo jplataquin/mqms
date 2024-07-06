@@ -65,50 +65,7 @@
 
         @php $i = 1 @endphp
         @foreach($componentItems as $item)
-        <!--
-        <table class="border table">
-            <thead>
-                <tr>
-                    <th style="width:50%;background-color:#add8e6">#{{$i}} {{$item->name}}</th>
-                    <th class="text-center" style="background-color:#add8e6"> {{$item->quantity}} {{$item->unit}} </th>
-                    <th class="text-center" style="background-color:#add8e6"> P {{number_format($item->budget_price,2)}} </th>
-                
-                </tr>
-            </thead>
-        </table>
-        <table class="ms-3 border table">
-            <thead>
-                <tr>
-                    <th width="50%">Material</th>
-                    <th>Equivalent</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                
-                @foreach($item->materialQuantities as $mq)
-                <tr>
-                    <td>
-                        {{$materialItems[$mq->material_item_id]->brand }}
-                        {{$materialItems[$mq->material_item_id]->name }} 
-                        {{$materialItems[$mq->material_item_id]->specification_unit_packaging }} 
-                        
-                    </td>
-                    <td>
-                        {{$mq->equivalent}} {{$item->unit}}
-                    </td>
-                    <td>
-                        {{$mq->quantity}}
-                    </td>
-                    <td>
-                        {{$mq->equivalent * $mq->quantity}} {{$item->unit}}
-                    </td>
-                </tr>
-                @endforeach
-                </tbody>
-        </table>-->
-
+        
 
         <div class="mb-5">
                 <table border="1" class="table">
