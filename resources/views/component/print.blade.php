@@ -80,7 +80,7 @@
                     <tr>
                         <th class="text-center">Budget Price</th>
                         <th class="text-center">Factor</th>
-                        <th class="text-center">Quantity</th>
+                        <th class="text-center">ceil( Quantity )</th>
                         <th class="text-center">Total Amount</th>
                     </tr>
                     <tr>
@@ -90,9 +90,9 @@
                         <td class="text-center">
 
                             @if($item->function_type_id == 1)
-                            ⌈ {{$item->function_variable}} {{ $unit_options[ $item->component_unit_id ]->text }} / {{$unit_options[$component->component_unit_id]->text}} ⌉
+                             {{$item->function_variable}} {{ $unit_options[ $item->component_unit_id ]->text }} / {{$unit_options[$component->component_unit_id]->text}}
                             @elseif($item->function_type_id == 2)
-                            ⌈ 1 {{$unit_options[$component->component_unit_id]->text}} / {{$item->function_variable}} {{ $unit_options[ $item->component_unit_id ]->text }} ⌉
+                             1 {{$unit_options[$component->component_unit_id]->text}} / {{$item->function_variable}} {{ $unit_options[ $item->component_unit_id ]->text }}
                             @else
                                 N/A
                             @endif
