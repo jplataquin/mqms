@@ -22,6 +22,10 @@
                         <td>{{$component->name}}</td>
                     </tr>
                     <tr>
+                        <th>Description</th>
+                        <td>{{$component->description}}</td>
+                    </tr>
+                    <tr>
                         <th>Status</th>
                         <td>{{$component->status}}</td>
                     </tr>
@@ -63,9 +67,11 @@
             </div>
         </div>
 
-        @php $i = 1 @endphp
+        @php 
+            $i = 1 
+            $grand_total = 0;
+        @endphp
         @foreach($componentItems as $item)
-        
 
         <div class="mb-5">
                 <table border="1" class="table">
@@ -142,7 +148,16 @@
         @php $i++ @endphp
         @endforeach
     
-
+        <table class="table bordered">
+            <tr>
+                <th class="text-center" style="background-color:#add8e6">
+                    <h5>Grand Total</h5>
+                </th>
+                <th class="text-center">
+                    <h5>{{number_format($grand_total,2)}}</h5>
+                </th>
+            </tr>
+        </table>
 </div>
 
 <script type="module">
