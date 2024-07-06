@@ -286,7 +286,7 @@ class ComponentItemController extends Controller
          $componentItem->name                   = $name;
          $componentItem->quantity               = $quantity;
          $componentItem->budget_price           = $budget_price;
-         $componentItem->vomponent_unit_id      = $component_unit_id;
+         $componentItem->omponent_unit_id      = $component_unit_id;
          $componentItem->function_type_id       = $function_type_id;
          $componentItem->function_variable      = $function_variable;
          $componentItem->updated_by             = $user_id;
