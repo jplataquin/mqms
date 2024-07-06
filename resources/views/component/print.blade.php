@@ -25,8 +25,8 @@
             <table border="1" class="table">
                    
                     <tr>
-                        <th style="width:10%">Project / Section</th>
-                        <td style="width:90%">
+                        <th style="width:20%">Project / Section</th>
+                        <td style="width:80%">
                             {{$project->name}} - ( {{$section->name}} )
                         </td>
                     </tr>
