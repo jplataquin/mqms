@@ -73,23 +73,23 @@
             <div style="margin-bottom:10px">
                 <table border="1" class="table">
                     <tr>
-                        <td class="teal-bg" colspan="3" style="width:100%">
+                        <th class="teal-bg" colspan="3" style="width:100%">
                             {{$i}}.) {{$item->name}}
-                        </td>
+                        </th>
                     </tr>
                     <tr>
-                        <th class="teal-bg text-center">Budget Price</th>
-                        <th class="teal-bg text-center">Function</th>
-                        <th class="teal-bg text-center">Quantity</th>
+                        <th class="text-center">Budget Price</th>
+                        <th class="text-center">Equivalent</th>
+                        <th class="text-center">Quantity</th>
                     </tr>
                     <tr>
-                        <th class="teal-bg text-center">
+                        <th class="text-center">
                             Php {{ number_format($item->budget_price,2) }}
                         </th>
-                        <th class="teal-bg text-center">
+                        <th class="text-center">
                             {{$item->function_variable}} {{ $unit_options[ $item->component_unit_id ]->text }} / {{$unit_options[$component->component_unit_id]->text}}
                         </th>
-                        <th class="teal-bg text-center">{{$item->quantity}} {{$unit_options[$item->component_unit_id]->text}}</th>
+                        <th class="text-center">{{$item->quantity}} {{$unit_options[$item->component_unit_id]->text}}</th>
                     </tr>
                 </table>
                 <br>
