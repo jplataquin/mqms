@@ -73,7 +73,7 @@
             <div style="margin-bottom:10px">
                 <table border="1" class="table">
                     <tr>
-                        <th class="teal-bg" colspan="3" style="width:100%">
+                        <th class="teal-bg" colspan="4" style="width:100%">
                             {{$i}}.) {{$item->name}}
                         </th>
                     </tr>
@@ -81,15 +81,21 @@
                         <th class="text-center">Budget Price</th>
                         <th class="text-center">Equivalent</th>
                         <th class="text-center">Quantity</th>
+                        <th class="text-center">Total Amount</th>
                     </tr>
                     <tr>
-                        <th class="text-center">
+                        <td class="text-center">
                             Php {{ number_format($item->budget_price,2) }}
-                        </th>
-                        <th class="text-center">
+                        </td>
+                        <td class="text-center">
                             {{$item->function_variable}} {{ $unit_options[ $item->component_unit_id ]->text }} / {{$unit_options[$component->component_unit_id]->text}}
-                        </th>
-                        <th class="text-center">{{$item->quantity}} {{$unit_options[$item->component_unit_id]->text}}</th>
+                        </td>
+                        <td class="text-center">
+                            {{$item->quantity}} {{$unit_options[$item->component_unit_id]->text}}
+                        </td>
+                        <td class="text-center">
+                            Php {{ number_format($item->budget_price * $item->quantity,2) }}
+                        </td>
                     </tr>
                 </table>
                 <br>
