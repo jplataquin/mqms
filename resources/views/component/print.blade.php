@@ -79,7 +79,7 @@
                     </tr>
                     <tr>
                         <th class="text-center">Budget Price</th>
-                        <th class="text-center">Equivalent</th>
+                        <th class="text-center">Func. Equivalent</th>
                         <th class="text-center">Quantity</th>
                         <th class="text-center">Total Amount</th>
                     </tr>
