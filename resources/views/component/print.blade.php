@@ -117,8 +117,8 @@
                         </td>
                     </tr>
                 </table>
-                <br>
-                <table border="1" class="table">
+                
+                <table border="1" class="table" style="margin-top:10px">
                         <tr>
                             <th style="width:40%" class="text-center">Material</th>
                             <th style="width:20%" class="text-center">Equivalent</th>
