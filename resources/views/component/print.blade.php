@@ -166,7 +166,7 @@
     </div>
 
     <page_footer>
-        <div style="text-right">
+        <div style="text-align:right;padding-bottom:5px">
         [[page_cu]]/[[page_nb]]
         </div>
     </page_footer>
