@@ -344,38 +344,44 @@ class ComponentItem extends Component{
         }
 
         this.el.updateComponentButton.onclick = (e)=>{
-
-            window.util.blockUI();
-            window.util.$post('/api/component_item/update/',{
-                id          : this._model.id,
-                component_id: this._model.component_id,
-                name        : this.el.name.value,
-                budget_price: this.el.budget_price.value,
-                quantity    : this.el.quantity.value,
-                unit        : this.el.unit.value
-            }).then(reply=>{
-
-                window.util.unblockUI();
-
-                if(reply.status <= 0){
-                    util.showMsg(reply.message);
-
-                    return false;
-                }
-                
-                this.setState('quantity',parseFloat(this.el.quantity.value));
-                this.setState('unit',this.el.unit.value);
-                this.setState('name',this.el.name.value);
-                this.setState('function_type_id',this.el.function_type.value);
-                this.setState('variable',this.el.variable.value);
-                this.setState('editable',false);
-
-                
-                signal.broadcast('set-component-status','PEND');
-            });
+           this.httpUpdate();
         }
     }
 
+    httpUpdate(){
+
+        window.util.blockUI();
+        window.util.$post('/api/component_item/update/',{
+            id                      : this._model.id,
+            component_id            : this._model.component_id,
+            name                    : this.el.name.value,
+            budget_price            : this.el.budget_price.value,
+            quantity                : this.el.quantity.value,
+            component_unit_id       : this.el.component_unit_id.value,
+            function_type_id        : this.el.function_type.value,
+            function_variable       : this.el.variable.value
+        }).then(reply=>{
+
+            window.util.unblockUI();
+
+            if(reply.status <= 0){
+                util.showMsg(reply.message);
+
+                return false;
+            }
+              
+            this.setState('quantity',parseFloat(this.el.quantity.value));
+            this.setState('unit',this.el.unit.value);
+            this.setState('name',this.el.name.value);
+            this.setState('function_type_id',this.el.function_type.value);
+            this.setState('variable',this.el.variable.value);
+            this.setState('editable',false);
+
+            
+            signal.broadcast('set-component-status','PEND');
+        });
+    }
+    
     functionVariableQuantity(){
 
         this.el.variable.onkeypress = (e)=>{

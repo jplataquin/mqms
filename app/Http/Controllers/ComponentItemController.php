@@ -34,9 +34,9 @@ class ComponentItemController extends Controller
         //todo check role
 
         $name              = $request->input('name') ?? '';
-        $component_unit_id = $request->input('component_unit_id') ?? 0;
         $quantity          = $request->input('quantity') ?? '';
         $budget_price      = $request->input('budget_price') ?? '';
+        $component_unit_id = (int) $request->input('component_unit_id') ?? 0;
         $component_id      = (int) $request->input('component_id');
         $function_type_id  = (int) $request->input('function_type_id');
         $function_variable = $request->input('function_variable');
@@ -73,7 +73,15 @@ class ComponentItemController extends Controller
                 'gte:1',
                 'integer'
             ],
-            'component_id' => ['required','integer']
+            'function_variable'=>[
+                'required',
+                'numeric'
+            ],
+            'component_id' => [
+                'required',
+                'integer',
+                'gte:1'
+            ]
         ]);
 
         if ($validator->fails()) {
@@ -172,12 +180,14 @@ class ComponentItemController extends Controller
          //todo check role
 
          $name              = $request->input('name') ?? '';
-         $unit              = $request->input('unit') ?? '';
          $budget_price      = $request->input('budget_price') ?? '';
          $quantity          = $request->input('quantity') ?? '';
          $id                = (int) $request->input('id');
          $component_id      = (int) $request->input('component_id');
- 
+         $function_type_id  = (int) $request->input('function_type_id');
+         $component_unit_id = (int) $request->input('component_unit_id') ?? 0;
+         $function_variable = $request->input('function_variable');
+
          $validator = Validator::make($request->all(),[
              'name' => [
                  'required',
@@ -191,9 +201,10 @@ class ComponentItemController extends Controller
                          ->where('deleted_at',null);
                  }),
              ],
-             'unit' => [
+             'component_unit_id' => [
                  'required',
-                 'max:255'
+                 'integer',
+                 'gte:1'
              ],
              'quantity' => [
                  'required',
@@ -203,8 +214,25 @@ class ComponentItemController extends Controller
                  'required',
                  'numeric'
              ],
-             'component_id' => ['required','integer'],
-             'id'            => ['required','integer']
+             'component_id' => [
+                'required',
+                'integer',
+                'gte:1'
+            ],
+             'id'            => [
+                'required',
+                'integer',
+                'gte:1'
+            ],
+            'function_type_id' =>[
+                'required',
+                'integer',
+                'gte:1'
+            ],
+            'function_variable' =>[
+                'required',
+                'numeric'
+            ]
          ]);
  
          if ($validator->fails()) {
@@ -255,11 +283,13 @@ class ComponentItemController extends Controller
             }
         }
  
-         $componentItem->name          = $name;
-         $componentItem->quantity      = $quantity;
-         $componentItem->budget_price  = $budget_price;
-         $componentItem->unit          = $unit;
-         $componentItem->updated_by    = $user_id;
+         $componentItem->name                   = $name;
+         $componentItem->quantity               = $quantity;
+         $componentItem->budget_price           = $budget_price;
+         $componentItem->vomponent_unit_id      = $component_unit_id;
+         $componentItem->function_type_id       = $function_type_id;
+         $componentItem->function_variable      = $function_variable;
+         $componentItem->updated_by             = $user_id;
  
          $componentItem->save();
  
