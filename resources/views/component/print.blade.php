@@ -65,7 +65,10 @@
                     </tr>
             </table>
         </div>
-        @php $i = 1; @endphp
+        @php 
+            $i              = 1;
+            $grand_total    = 0;
+        @endphp
 
         @foreach($componentItems as $item)
         
@@ -106,14 +109,15 @@
                             {{$item->quantity}} {{$unit_options[$item->component_unit_id]->text}}
                         </td>
                         <td class="text-center">
+                            @php
+                                $grand_total = $grand_total + ($item->budget_price * $item->quantity);
+                            @endphh
                             Php {{ number_format($item->budget_price * $item->quantity,2) }}
                         </td>
                     </tr>
                 </table>
                 <br>
                 <table border="1" class="table">
-                        
-
                         <tr>
                             <th style="width:40%" class="text-center">Material</th>
                             <th style="width:20%" class="text-center">Equivalent</th>
@@ -146,6 +150,16 @@
            @php $i++ @endphp
         @endforeach
     
-
+        <br>
+        <table>
+            <tr>
+                <td class="text-center bg-teal" style="width:50%">
+                    <h3>Grand Total</h3>
+                </td>
+                <td class="text-center" style="width:50%">
+                    <h3>{{number_format($grand_total,2)}}</h3>
+                </td>
+            </tr>
+        </table>
     </div>
 </page>
