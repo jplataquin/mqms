@@ -524,6 +524,8 @@ class ComponentItem extends Component{
             this.el.unit.value          = reply.data.component_unit_id;
             this.el.function_type.value = reply.data.function_type_id;
             this.el.variable.value      = reply.data.function_variable;
+
+            this.calculateTotalAmount();
         });
 
     }
