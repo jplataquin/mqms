@@ -282,9 +282,6 @@ class ComponentItem extends Component{
             return window.util.inputNumber(this.el.budget_price,e,2,false);
         }
 
-        this.el.quantity.onkeypress = (e)=>{
-            return window.util.inputNumber(this.el.quantity,e,2,false);
-        }
         
         this.el.material_quantity.onkeyup = ()=>{
             this.el.total.value = calculateTotalEquivalent( this.el.material_quantity.value, this.el.equivalent.value);
@@ -293,6 +290,7 @@ class ComponentItem extends Component{
         this.el.equivalent.onkeyup = ()=>{
             this.el.material_quantity.value = (this.el.quantity.value / this.el.equivalent.value);
             this.el.total.value = calculateTotalEquivalent( this.el.material_quantity.value, this.el.equivalent.value);
+            this.calculateTotalAmount();
         }
 
 
@@ -351,6 +349,12 @@ class ComponentItem extends Component{
         this.el.updateComponentButton.onclick = (e)=>{
            this.httpUpdate();
         }
+    }
+
+    calculateTotalAmount(){
+        this.el.total_amount.value = (new Intl.NumberFormat().format(
+            parseFloat(this.el.budget_price.value) * parseFloat(this.el.quantity.value)
+        ));
     }
 
     httpUpdate(){
