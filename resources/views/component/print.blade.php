@@ -45,7 +45,7 @@
                     </tr>
                     <tr>
                         <th>Quantity / Unit</th>
-                        <td>{{$component->quantity}} / {{$unit_options[$component->component_unit_id]->text}}</td>
+                        <td>{{$component->quantity}} {{$unit_options[$component->component_unit_id]->text}}</td>
                     </tr>
                     <tr>
                         <th>Use Count</th>
@@ -100,7 +100,7 @@
                             <br>
                             _________
                             <br>
-                            {{$component->use_count}}
+                            {{$item->function_variable}}
                         </td>
                         <td class="text-center">
                             {{$item->quantity}} {{$unit_options[$item->component_unit_id]->text}}
