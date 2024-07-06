@@ -357,7 +357,7 @@ class ComponentItem extends Component{
             name                    : this.el.name.value,
             budget_price            : this.el.budget_price.value,
             quantity                : this.el.quantity.value,
-            component_unit_id       : this.el.component_unit_id.value,
+            component_unit_id       : this.el.unit.value,
             function_type_id        : this.el.function_type.value,
             function_variable       : this.el.variable.value
         }).then(reply=>{
@@ -381,7 +381,7 @@ class ComponentItem extends Component{
             signal.broadcast('set-component-status','PEND');
         });
     }
-    
+
     functionVariableQuantity(){
 
         this.el.variable.onkeypress = (e)=>{
