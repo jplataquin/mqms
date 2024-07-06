@@ -26,7 +26,7 @@
             <h3>
                 {{$component->name}}
             </h3>
-            <h5>{{$component->description}}</h5>
+            <strong>{{$component->description}}</strong>
             <hr>
             <table border="1" class="table">
                    
