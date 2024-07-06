@@ -113,7 +113,7 @@
         <div class="mb-5">
                 <table border="1" class="table">
                     <tr>
-                        <th class="teal-bg" colspan="4" style="width:100%">
+                        <th class="" colspan="4" style="background-color:#add8e6">
                             {{$i}}.) {{$item->name}}
                         </th>
                     </tr>
@@ -150,7 +150,6 @@
                         </td>
                     </tr>
                 </table>
-                <br>
                 <table border="1" class="table">
                         
 
