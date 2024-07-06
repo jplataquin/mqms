@@ -8,16 +8,14 @@
             <table class="table border">
                 <tbody>
                     <tr>
-                        <th width="10%">Project</th>
+                        <th>Project / Section</th>
                         <td>
-                            {{$project->name}}
+                            {{$project->name}} - ( {{$section->name}} )
                         </td>
                     </tr>
                     <tr>
-                        <th>Section</th>
-                        <td>
-                            {{$section->name}}
-                        </td>
+                        <th>Component ID</th>
+                        <td>{{str_pad($component->id,6,0,STR_PAD_LEFT)}}</td>
                     </tr>
                     <tr>
                         <th>Component</th>
@@ -26,6 +24,22 @@
                     <tr>
                         <th>Status</th>
                         <td>{{$component->status}}</td>
+                    </tr>
+                    <tr>
+                        <th>Quantity / Unit</th>
+                        <td>{{$component->quantity}} {{$unit_options[$component->component_unit_id]->text}}</td>
+                    </tr>
+                    <tr>
+                        <th>Use Count</th>
+                        <td>{{$component->use_count}}</td>
+                    </tr>
+                    <tr>
+                        <th>Created By</th>
+                        <td>{{$component->createdByUser()->name}} {{$component->created_at}}</td>
+                    </tr>
+                    <tr>
+                        <th>Updated By</th>
+                        <td>{{$component->updatedByUser()->name}} {{$component->updated_at}}</td>
                     </tr>
                     <tr>
                         <th>Hash</th>
