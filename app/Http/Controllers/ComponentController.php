@@ -193,7 +193,7 @@ class ComponentController extends Controller
         $unit_options    = [];
 
         foreach($component_units as $cu){
-            $unit_options[$ci->id] = $cu;
+            $unit_options[$cu->id] = $cu;
         }
 
         $html = view('component/print',[
