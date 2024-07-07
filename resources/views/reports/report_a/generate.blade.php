@@ -66,8 +66,9 @@
                     @else
                         0 {{$component_item->unit}}
                     @endif
-                    <br>
                    
+                </h5>
+                
                     @if( isset($total_po[$component_item->id]) )
                         @php 
                             $percentRequested = ($total_requested[$component_item->id]->total / $component_item->quantity) * 100;
@@ -76,7 +77,6 @@
                     @else
                         (0%)
                     @endif
-                </h5>
             </div>
                     
             <div class="col-4 text-center">
