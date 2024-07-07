@@ -360,6 +360,7 @@ class RequestMaterialItem extends Component{
 
         let componentItem = this._model.componentItemList[ componentItemId ];
 
+        console.log(componentItem);
         console.log(componentItem.component_unit_id,this._model.unitOptions);
         this.setState('unit', this._model.unitOptions[componentItem.component_unit_id].text );
 
