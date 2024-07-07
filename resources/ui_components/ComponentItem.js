@@ -356,7 +356,7 @@ class ComponentItem extends Component{
     }
 
     calculateTotalAmount(){
-        console.log('here');
+  
         this.el.total_amount.value = (new Intl.NumberFormat().format(
             parseFloat(this.el.budget_price.value) * parseFloat(this.el.quantity.value)
         ));
@@ -513,15 +513,16 @@ class ComponentItem extends Component{
            
             this.setState('budget_price',parseFloat(reply.data.budget_price));
             this.setState('quantity',parseFloat(reply.data.quantity));
-            this.setState('unit',this._model.unitOptions[reply.data.component_unit_id].text);
+            this.setState('unit',reply.data.component_unit_id);
             this.setState('name',reply.data.name);
             this.setState('function_type_id',reply.data.function_type_id);
             this.setState('variable',reply.data.function_variable);
             
+            console.log('cui',reply.data.component_unit_id);
             this.el.name.value          = reply.data.name;
             this.el.budget_price.value  = reply.data.budget_price;
             this.el.quantity.value      = reply.data.quantity;
-            this.el.unit.value          = this._model.unitOptions[reply.data.component_unit_id].text;
+            this.el.unit.value          = reply.data.component_unit_id;
             this.el.function_type.value = reply.data.function_type_id;
             this.el.variable.value      = reply.data.function_variable;
 

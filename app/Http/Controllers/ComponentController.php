@@ -152,8 +152,6 @@ class ComponentController extends Controller
 
         $unit_options = ComponentUnit::toOptions();
 
-
-
         $hash = generateComponentHash($project,$section,$component,$componentItems,$materialArr);
 
 
