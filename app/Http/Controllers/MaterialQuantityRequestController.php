@@ -132,19 +132,20 @@ class MaterialQuantityRequestController extends Controller
             'section_id' => [
                 'required',
                 'integer',
-                Rule::exists('sections')->where(function (Builder $query) use ($project_id,$section_id) {
-                    return $query->where('id', $section_id)
-                    ->where('deleted_at',null);
-                })
+                // Rule::exists('sections')->where(function (Builder $query) use ($project_id,$section_id) {
+                //     return $query->where('id', $section_id)
+                //     ->where('project_id',$project_id)
+                //     ->where('deleted_at',null);
+                // })
             ],
             'component_id' => [
                 'required',
                 'integer',
-                Rule::exists('components')->where(function (Builder $query) use ($section_id,$component_id) {
-                    return $query->where('id', $component_id)
-                    ->where('section_id',$section_id)
-                    ->where('deleted_at',null);
-                })
+                // Rule::exists('components')->where(function (Builder $query) use ($section_id,$component_id) {
+                //     return $query->where('id', $component_id)
+                //     ->where('section_id',$section_id)
+                //     ->where('deleted_at',null);
+                // })
             ],
             'description' => [
                 'required'
