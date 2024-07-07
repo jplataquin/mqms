@@ -68,7 +68,7 @@
     const unit_options              = @json($unit_options);
     const component_item_options    = @json($componentItem_options);
     const material_options          = @json($material_options);
-    '
+    
     request_items.map(request_item => {
 
         count++;
