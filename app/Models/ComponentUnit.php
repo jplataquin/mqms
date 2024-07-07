@@ -28,7 +28,7 @@ class ComponentUnit extends Model
         $result = [];
         
         foreach($rows as $row){
-            $result[] = [
+            $result[$row->id] = (object) [
                 'id'    => $row->id,
                 'text'  => $row->text
             ];

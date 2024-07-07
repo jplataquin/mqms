@@ -24,6 +24,7 @@ class RequestMaterialItem extends Component{
             requestedQuantity:'',
             componentItemList:{},
             materialList:{},
+            unitOptions:{}
         }
     }
 

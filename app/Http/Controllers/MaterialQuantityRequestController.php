@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
-
+use App\Models\ComponentUnit;
 
 class MaterialQuantityRequestController extends Controller
 {
@@ -375,6 +375,8 @@ class MaterialQuantityRequestController extends Controller
             ];
         }
 
+        $unit_options = ComponentUnit::toOptions();
+
         return view('material_quantity_request/display',[
             'project'                   => $project,
             'section'                   => $section,
@@ -382,7 +384,8 @@ class MaterialQuantityRequestController extends Controller
             'material_quantity_request' => $materialQuantityRequest,
             'request_items'             => $request_items,
             'material_options'          => $material_options,
-            'componentItem_options'     => $componentItem_options
+            'componentItem_options'     => $componentItem_options,
+            'unit_options'              => $unit_options
         ]);
     }
 

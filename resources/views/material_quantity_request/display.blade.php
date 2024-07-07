@@ -7,7 +7,7 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>ID</th>
+                <th>MQR ID</th>
                 <td>{{$material_quantity_request->id}}</td>
             </tr>
             <tr>
@@ -78,7 +78,8 @@
             materialItemId         : request_item.material_item_id,
             prevApprovedQuantity   : '',
             requestedQuantity      : request_item.requested_quantity,
-            editable               : false
+            editable               : false,
+            unitOptions            : @json($unit_options)
         });
 
         itemForm.handler.deleteCallback((dom)=>{
