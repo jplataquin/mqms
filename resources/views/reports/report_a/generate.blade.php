@@ -31,10 +31,10 @@
     @foreach($component_items as $component_item)
     <div class="mb-5 border border-primary">
     
-        <table class="table bordered w-100 bg-secondary">
+        <table class="table bordered w-100">
             <tbody>
                 <tr>
-                    <td>
+                    <td class="bg-secondary">
                         <h5>{{$component_item->name}}</h5>
                     </td>
                 </tr>
