@@ -92,7 +92,7 @@ class MaterialQuantityRequestController extends Controller
 
             $material_options[$row->component_item_id][$row->id] = [
                 'value'         => $row->material_item_id,
-                'text'          => trim($row->name.' '.$row->specification_unit_packaging.' '.$row->brand),
+                'text'          => trim($row->brand.' '.$row->name.' '.$row->specification_unit_packaging),
                 'equivalent'    => $row->equivalent,
                 'quantity'      => $row->quantity
             ];
