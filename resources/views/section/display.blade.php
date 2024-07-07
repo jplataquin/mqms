@@ -125,6 +125,8 @@
     let use_count                   = $q('#use_count').first();
     let description                 = $q('#description').first();
 
+    const unit_options = @json($unit_options);
+
     quantity.onkeypress = (e)=>{
         return window.util.inputNumber(quantity,e,2,false);
     }
@@ -225,7 +227,7 @@
             }
 
             name.innerText = reply.data.name;
-            quantity_unit.innerText = reply.data.quantity+' '+reply.data.unit_text;
+            quantity_unit.innerText = reply.data.quantity+' '+unit_options[reply.data.unit_id]->text;
 
             el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
         });
