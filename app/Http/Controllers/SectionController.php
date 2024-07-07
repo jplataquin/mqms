@@ -36,11 +36,8 @@ class SectionController extends Controller
         $components = $section->components()->orderBy('id','ASC')->get();
         
         
-        $unit_options = [];
+        $unit_options = ComponentUnit::toOptions();
 
-        foreach(ComponentUnit::toOptions() as $option){
-            $unit_options[ $option['id'] ] = $option['text'];
-        }
 
         return view('section/display',[
             'section'          => $section,
