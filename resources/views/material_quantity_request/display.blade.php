@@ -83,7 +83,7 @@
             prevApprovedQuantity   : '',
             requestedQuantity      : request_item.requested_quantity,
             editable               : false,
-            unitOptions            : $unit_options
+            unitOptions            : unit_options
         });
 
         itemForm.handler.deleteCallback((dom)=>{
