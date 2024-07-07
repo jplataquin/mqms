@@ -31,7 +31,7 @@
     @foreach($component_items as $component_item)
     <div class="mb-5 border border-primary">
     
-        <table class="table bordered w-100">
+        <table class="table bordered w-100 bg-secondary">
             <tbody>
                 <tr>
                     <td>
@@ -42,7 +42,7 @@
         </table>
 
         <div class="row mt-3 mb-3">
-            <div class="col-4 text-center bg-secondary">
+            <div class="col-4 text-center">
                 
                 <h5>
                     Budget
