@@ -104,7 +104,8 @@
             </div>
              
         </div>
-    <table class="table bordered w-100">
+        <div class="bg-primary w-100">&nbsp;</div>
+        <table class="table bordered w-100">
         <thead>
             <tr>
                 <th>Material Item</th>
