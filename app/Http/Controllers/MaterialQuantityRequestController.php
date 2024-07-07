@@ -124,7 +124,7 @@ class MaterialQuantityRequestController extends Controller
             'project_id' => [
                 'required',
                 'integer',
-                Rule::exists('projects')->where(function (Builder $query) use ($proejct_id) {
+                Rule::exists('projects')->where(function (Builder $query) use ($project_id) {
                     return $query->where('id', $project_id)->where('deleted_at',null);
                 })
             ],
