@@ -34,7 +34,7 @@
         <table class="table bordered w-100">
             <tbody>
                 <tr>
-                    <td class="bg-secondary">
+                    <td class="bg-primary">
                         <h5>{{$component_item->name}}</h5>
                     </td>
                 </tr>
