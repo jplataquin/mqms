@@ -107,11 +107,6 @@
     <table class="table bordered w-100">
         <thead>
             <tr>
-                <th colspan="3" class="text-center">PO items</th>
-            </tr>
-        </thead>
-        <thead>
-            <tr>
                 <th>Material Item</th>
                 <th>Total Quantity</th>
                 <th>Total Price</th>
