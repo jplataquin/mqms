@@ -151,8 +151,8 @@
             <div class="form-group">
                 <label>Unit</label>
                 <select id="component_item_unit" class="form-control">
-                    @foreach($unit_options as $val => $text)
-                        <option value="{{$val}}">{{$text}}</option>
+                    @foreach($unit_options as $opt)
+                        <option value="{{$opt->id}}">{{$opt->text}}</option>
                     @endforeach
                 </select>
             </div>
