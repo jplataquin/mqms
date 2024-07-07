@@ -134,7 +134,6 @@ class MaterialQuantityRequestController extends Controller
                 'integer',
                 Rule::exists('sections')->where(function (Builder $query) use ($project_id,$section_id) {
                     return $query->where('id', $section_id)
-                    ->where('project_id',$project_id)
                     ->where('deleted_at',null);
                 })
             ],
