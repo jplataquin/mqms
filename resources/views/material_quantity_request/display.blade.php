@@ -61,10 +61,14 @@
     let addBtn        = $q('#addBtn').first();
     let cancelBtn     = $q('#cancelBtn').first();
     let description   = $q('#description').first();
-    let request_items = @json($request_items);
     let count         = 0;
     let deleteItems   = [];
     
+    const request_items             = @json($request_items);
+    const unit_options              = @json($unit_options);
+    const component_item_options    = @json($componentItem_options);
+    const material_options          = @json(material_options)'
+    '
     request_items.map(request_item => {
 
         count++;
@@ -72,14 +76,14 @@
         let itemForm = RequestMaterialItem({
             id                     : request_item.id,               
             componentId            : '{{$component->id}}',
-            componentItemList      : @json($componentItem_options),
-            materialList           : @json($material_options),
+            componentItemList      : component_item_options,
+            materialList           : material_options,
             componentItemId        : request_item.component_item_id,
             materialItemId         : request_item.material_item_id,
             prevApprovedQuantity   : '',
             requestedQuantity      : request_item.requested_quantity,
             editable               : false,
-            unitOptions            : @json($unit_options)
+            unitOptions            : $unit_options
         });
 
         itemForm.handler.deleteCallback((dom)=>{
