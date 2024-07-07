@@ -120,7 +120,7 @@
             @foreach($purchase_order_item[$component_item->id] as $poi)
                 <tr>
                     <td>
-                        {{$material_items[$poi->material_item_id]->brand}} {{$material_items[$poi->material_item_id]->name}} {{$material_items[$poi->material_item_id]->unit_packaging_specification}}
+                        {{$material_items[$poi->material_item_id]->brand}} {{$material_items[$poi->material_item_id]->name}} {{$material_items[$poi->material_item_id]->specification_unit_packaging}}
                     </td>
                     <td>
                         {{ number_format($poi->total_quantity,2) }}
