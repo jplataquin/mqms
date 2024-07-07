@@ -185,13 +185,10 @@ class ComponentController extends Controller
         }
         
         $hash = generateComponentHash($project,$section,$component,$componentItems,$materialItems);
+ 
+        $unit_options    = ComponentUnit::toOptions();
 
-        $component_units = ComponentUnit::toOptions();
-        $unit_options    = [];
-
-        foreach($component_units as $cu){
-            $unit_options[ $cu['id'] ] = (object) $cu;
-        }
+ 
 
         $html = view('component/print',[
             'project'           => $project,
