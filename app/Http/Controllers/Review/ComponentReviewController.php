@@ -83,11 +83,8 @@ class ComponentReviewController extends Controller
         
         $hash = generateComponentHash($project,$section,$component,$componentItems,$materialItems);
 
-        $unit_options    = ComponentUnit::toOptions();
+        $unit_options  = ComponentUnit::toOptions();
 
-        foreach($component_units as $cu){
-            $unit_options[ $cu['id'] ] = (object) $cu;
-        }
 
         return view('review/component/display',[
             'project'           => $project,
