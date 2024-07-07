@@ -97,7 +97,7 @@
                         <h3>{{$component->name}}</h3>
                         <h6> 
                             @if(isset($unit_options[ $component->component_unit_id ]))
-                                {{$component->quantity}} {{ $unit_options[ $component->component_unit_id ] }}
+                                {{$component->quantity}} {{ $unit_options[ $component->component_unit_id ]->text }}
                             @endif
                         </h6>
                     </div>
