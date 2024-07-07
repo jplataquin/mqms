@@ -513,7 +513,7 @@ class ComponentItem extends Component{
            
             this.setState('budget_price',parseFloat(reply.data.budget_price));
             this.setState('quantity',parseFloat(reply.data.quantity));
-            this.setState('unit',reply.data.unit);
+            this.setState('unit',this._model.unitOptions[reply.data.component_unit_id].text);
             this.setState('name',reply.data.name);
             this.setState('function_type_id',reply.data.function_type_id);
             this.setState('variable',reply.data.function_variable);
@@ -521,7 +521,7 @@ class ComponentItem extends Component{
             this.el.name.value          = reply.data.name;
             this.el.budget_price.value  = reply.data.budget_price;
             this.el.quantity.value      = reply.data.quantity;
-            this.el.unit.value          = reply.data.component_unit_id;
+            this.el.unit.value          = this._model.unitOptions[reply.data.component_unit_id].text;
             this.el.function_type.value = reply.data.function_type_id;
             this.el.variable.value      = reply.data.function_variable;
 
