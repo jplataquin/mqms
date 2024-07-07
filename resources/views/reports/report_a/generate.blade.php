@@ -46,6 +46,7 @@
                 
                 <h5>
                     Budget
+                    <br>
                     {{$component_item->quantity}} {{$component_item->unit}} 
                     <br>
                    
@@ -55,7 +56,8 @@
             <div class="col-4 text-center">
                 
                 <h5>
-                    Requested 
+                    Requested
+                    <br>
                     @if( isset($total_requested[$component_item->id]) )
                         
                         {{$total_requested[$component_item->id]->total}} {{$total_requested[$component_item->id]->unit}} 
@@ -70,7 +72,7 @@
                         @php 
                             $percentRequested = ($total_requested[$component_item->id]->total / $component_item->quantity) * 100;
                         @endphp
-                        ({{ $percentRequested }}%)
+                        ({{ round($percentRequested,2) }}%)
                     @else
                         (0%)
                     @endif
@@ -81,6 +83,7 @@
                 
                 <h5>
                     PO
+                    <br>
                     @if( isset($total_po[$component_item->id]) )
 
                         {{$total_po[$component_item->id]->total}} {{$total_po[$component_item->id]->unit}}
@@ -91,9 +94,9 @@
                   
                     @if( isset($total_po[$component_item->id]) )
                         @php 
-                            $percentPO = round(($total_po[$component_item->id]->total / $component_item->quantity) * 100,2);
+                            $percentPO = ($total_po[$component_item->id]->total / $component_item->quantity) * 100;
                         @endphp
-                        ({{ $percentPO }}%) 
+                        ({{ round($percentPO,2) }}%) 
                     @else
                         (0%)
                     @endif
