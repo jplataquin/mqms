@@ -113,6 +113,9 @@
             </tr>
         </thead>
         <tbody>
+            @php
+                $grand_total_price = 0;
+            @endphp
             @foreach($purchase_order_item[$component_item->id] as $poi)
                 <tr>
                     <td>
@@ -123,9 +126,18 @@
                     </td>
                     <td>
                         Php {{ number_format($poi->total_price,2) }}
+
+                        @php 
+                            $grand_total_price = $grand_total_price + $poi->total_price;
+                        @endphp
                     </td>
                 </tr>
             @endforeach
+            <tr>
+                <td></td>
+                <td></td>
+                <td>Php {{number_format($grand_total_price,2)}}</td>
+            </tr>
         </tbody>
     </table>
     </div>
