@@ -180,9 +180,8 @@ class ComponentItem extends Component{
                             this.el.unit = t.select({class:'form-control',disabled:true},()=>{
                                 for(let i in this._model.unitOptions){
 
-                                    let val = this._model.unitOptions[i];
 
-                                    t.option({value:i},val);
+                                    t.option({value:i}, this._model.unitOptions[i].text );
                                 }
                             });
         
