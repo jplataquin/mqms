@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Section;
 use App\Models\Component;
+use App\Models\ComponentUnit;
 use App\Models\MaterialQuantityRequest;
 use App\Models\MaterialQuantityRequestItem;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +43,7 @@ class MaterialQuantityRequestReviewController extends Controller
             $componentItem_options[$componentItem->id] = [
                 'value'     => $componentItem->id,
                 'text'      => $componentItem->name,
-                'unit'      => $componentItem->unit,
+                'component_unit_id'      => $componentItem->component_unit_id,
                 'quantity'  => $componentItem->quantity
             ];
         }
@@ -67,6 +68,8 @@ class MaterialQuantityRequestReviewController extends Controller
             ];
         }
 
+        $unit_options = ComponentUnit::toOptions();
+        
         return view('review/material_quantity_request/display',[
             'project'                   => $project,
             'section'                   => $section,
@@ -74,7 +77,8 @@ class MaterialQuantityRequestReviewController extends Controller
             'material_quantity_request' => $materialQuantityRequest,
             'request_items'             => $request_items,
             'material_options'          => $material_options,
-            'componentItem_options'     => $componentItem_options
+            'componentItem_options'     => $componentItem_options,
+            'unit_options'              => $unit_options
         ]);
     }
 
