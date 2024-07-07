@@ -136,7 +136,9 @@
             <tr>
                 <td></td>
                 <td></td>
-                <td>Php {{number_format($grand_total_price,2)}}</td>
+                <td>
+                    <strong>Php {{number_format($grand_total_price,2)}}</strong>
+                </td>
             </tr>
         </tbody>
     </table>
