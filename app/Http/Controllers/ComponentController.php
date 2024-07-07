@@ -150,11 +150,8 @@ class ComponentController extends Controller
             $materialArr[ $mi->id ] = $mi;
         }
 
-        $unit_options = [];
+        $unit_options = ComponentUnit::toOptions();
 
-        foreach(ComponentUnit::toOptions() as $option){
-            $unit_options[ $option['id'] ] = $option['text'];
-        }
 
 
         $hash = generateComponentHash($project,$section,$component,$componentItems,$materialArr);
