@@ -92,7 +92,7 @@
                     @endif
                     
                 </h5>
-                    <br>
+
                     @if( isset($total_po[$component_item->id]) )
                         @php 
                             $percentPO = ($total_po[$component_item->id]->total / $component_item->quantity) * 100;
