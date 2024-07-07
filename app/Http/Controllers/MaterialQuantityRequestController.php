@@ -98,12 +98,15 @@ class MaterialQuantityRequestController extends Controller
             ];
         }
 
+        $unit_options = ComponentUnit::toOptions();
+
         return view('material_quantity_request/create',[
             'project'               => $project,
             'section'               => $section,
             'component'             => $component,
             'material_options'      => $material_options,
-            'componentItem_options' => $componentItem_options
+            'componentItem_options' => $componentItem_options,
+            'unit_options'          => $unit_options
         ]);
     }
 

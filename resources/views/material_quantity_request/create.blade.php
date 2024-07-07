@@ -55,7 +55,8 @@
     let itemForm = RequestMaterialItem({
         componentId:        '{{$component->id}}',
         componentItemList:  @json($componentItem_options),
-        materialList:       @json($material_options)
+        materialList:       @json($material_options),
+        unitOptions:        @json($unit_options)
     });
 
     itemForm.handler.deleteCallback((dom)=>{
