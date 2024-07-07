@@ -360,7 +360,7 @@ class RequestMaterialItem extends Component{
 
         let componentItem = this._model.componentItemList[ componentItemId ];
 
-        this.setState('unit',componentItem.unit);
+        this.setState('unit', this._model.unit_options[componentItem.component_unit_id]->text );
 
         this.el.componentItemBudget.value = componentItem.quantity +' '+componentItem.unit;
         this.setState('componentItemBudget',componentItem.quantity);
