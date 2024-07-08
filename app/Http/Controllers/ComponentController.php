@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Component;
 use App\Models\MaterialItem;
 use App\Models\ComponentUnit;
+use App\Models\ComponentItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
@@ -14,6 +15,7 @@ use Illuminate\Validation\Rule;
 use Spipu\Html2Pdf\Html2Pdf;
 use Spipu\Html2Pdf\Exception\Html2PdfException;
 use Spipu\Html2Pdf\Exception\ExceptionFormatter;
+
 
 
 class ComponentController extends Controller
@@ -315,7 +317,7 @@ class ComponentController extends Controller
 
     private function updateComponentItems($component,$user_id){
 
-        $component_items = ComponentItems::where('component_id',$component->id)->get();
+        $component_items = ComponentItem::where('component_id',$component->id)->get();
 
         foreach($component_items as $item){
 
