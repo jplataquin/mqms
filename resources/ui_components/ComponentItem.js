@@ -578,7 +578,7 @@ class ComponentItem extends Component{
             materialItem.classList.add('border-danger');
         }
 
-        this.el.materialList.append(materilItem);
+        this.el.materialList.append(materialItem);
 
         console.log(this.el.materialList);
     }
