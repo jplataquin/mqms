@@ -546,7 +546,7 @@ class ComponentItem extends Component{
     appendMaterial(data){
         const t = new Template();
         
-        let materilItem = t.tr((row)=>{
+        let materialItem = t.tr((row)=>{
                     t.td(this.materialRegistry[data.material_item_id]);
                     t.td(''+data.equivalent);
                     t.td(''+data.quantity);
@@ -579,8 +579,8 @@ class ComponentItem extends Component{
             
         
         if(data.quantity > this._state.quantity){
-            materilItem.classList.add('border');
-            materilItem.classList.add('border-danger');
+            materialItem.classList.add('border');
+            materialItem.classList.add('border-danger');
         }
 
         this.el.materialList.append(materilItem);
