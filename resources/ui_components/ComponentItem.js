@@ -352,6 +352,9 @@ class ComponentItem extends Component{
         this.el.updateComponentButton.onclick = (e)=>{
            this.httpUpdate();
         }
+
+
+        this.el.showList.onclick();
     }
 
     calculateTotalAmount(){
@@ -517,7 +520,6 @@ class ComponentItem extends Component{
             this.setState('function_type_id',reply.data.function_type_id);
             this.setState('variable',reply.data.function_variable);
             
-            console.log('cui',reply.data.component_unit_id);
             this.el.name.value          = reply.data.name;
             this.el.budget_price.value  = reply.data.budget_price;
             this.el.quantity.value      = reply.data.quantity;
@@ -601,7 +603,10 @@ class ComponentItem extends Component{
                 });//tr
             
         
-
+        if(data.quantity > this._state.quantity){
+            materilItem.classList.add('border border-danger');
+        }
+        
         this.el.materialList.t.append(materilItem);
     }
 }
