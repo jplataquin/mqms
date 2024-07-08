@@ -237,7 +237,9 @@ class ComponentItem extends Component{
                 t.tfoot({},()=>{
                     t.tr({},()=>{
                         t.td({colspan:7},()=>{
-                            this.el.materialMenuHolder = t.div({class:'ms-3 row'});
+                            t.div({class:'ms-3 row'},(el)=>{
+                                el.append(this.el.materialMenu);
+                            });
                         });
                     })
                 });
