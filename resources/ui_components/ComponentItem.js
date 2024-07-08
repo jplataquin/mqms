@@ -453,7 +453,6 @@ class ComponentItem extends Component{
 
     updateMaterialList(){
 
-        this.el.materialList.t.clear();
 
         window.util.$get('/api/material_quantity/list',{
             component_item_id:this._model.id,
@@ -584,7 +583,7 @@ class ComponentItem extends Component{
             materilItem.classList.add('border-danger');
         }
 
-        this.el.materialList.t.append(materilItem);
+        this.el.materialList.append(materilItem);
     }
 }
 
