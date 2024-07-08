@@ -224,13 +224,6 @@ class ComponentItem extends Component{
 
                     });
 
-                    t.tr(()=>{
-                        t.td({colspan:7,class:'text-center'},()=>{
-                        
-                            this.el.showList = t.a({href:'#'},'Show Items');
-                            
-                        });
-                    })
 
                 });//tbody
 
@@ -586,6 +579,8 @@ class ComponentItem extends Component{
         }
 
         this.el.materialList.append(materilItem);
+
+        console.log(this.el.materialList);
     }
 }
 
