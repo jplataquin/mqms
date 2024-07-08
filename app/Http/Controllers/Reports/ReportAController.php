@@ -13,6 +13,7 @@ use App\Models\MaterialQuantityRequestItem;
 use App\Models\MaterialQuantity;
 use App\Models\PurchaseOrderItem;
 use App\Models\MaterialItem;
+use App\Models\ComponentUnit;
 use Illuminate\Support\Facades\DB;
 
 class ReportAController extends Controller
@@ -72,7 +73,8 @@ class ReportAController extends Controller
         $total_po           = [];
         $material_item_ids  = [];
 
-        
+        $unit_option = ComponentUnit::toOptions();
+
         foreach($component_items as $component_item){
 
             foreach($material_quantity_request_item[$component_item->id] as $mqri){
@@ -83,7 +85,7 @@ class ReportAController extends Controller
                         
                         $total_requested[$component_item->id] = (object) [
                             'total' => $mqri->total * $mq->equivalent,
-                            'unit'  => $component_item->unit
+                            'unit'  => $unit_option[$component_item->component_unit_id]->text
                         ];
                     }
                 }
@@ -100,7 +102,7 @@ class ReportAController extends Controller
                       
                         $total_po[$component_item->id] = (object) [
                             'total' => $poi->total_quantity * $mq->equivalent,
-                            'unit'  => $component_item->unit
+                            'unit'  => $unit_option[$component_item->component_unit_id]->text
                         ];
                     }
                 }
