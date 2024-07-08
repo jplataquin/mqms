@@ -47,7 +47,7 @@
                 <h5>
                     Budget
                     <br>
-                    {{$component_item->quantity}} {{$component_item->unit}} 
+                    {{$component_item->quantity}} {{$unit_options[$component_item->component_unit_id]->text}} 
                     <br>
                    
                 </h5>
