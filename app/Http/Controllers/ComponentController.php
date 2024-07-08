@@ -321,11 +321,11 @@ class ComponentController extends Controller
 
         foreach($component_items as $item){
 
-            if($item->function_type == 1){
+            if($item->function_type_id == 1){
 
                 $this->updateItemAsFactor($item,$component,$user_id);
 
-            }else if($item->function_type == 2){
+            }else if($item->function_type_id == 2){
                
                 $this->updateItemAsDivsior($item,$component,$user_id);
                 
