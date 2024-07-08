@@ -354,7 +354,7 @@ class ComponentItem extends Component{
         }
 
 
-        this.el.showList.onclick();
+        this.setState('showList',true);
     }
 
     calculateTotalAmount(){
@@ -606,7 +606,7 @@ class ComponentItem extends Component{
         if(data.quantity > this._state.quantity){
             materilItem.classList.add('border border-danger');
         }
-        
+
         this.el.materialList.t.append(materilItem);
     }
 }
