@@ -300,6 +300,8 @@ class ComponentController extends Controller
         $component->updated_by                   = $user_id;
         $component->save();
 
+        $this->updateComponentItems($component, $user_id);
+
         return response()->json([
             'status'    => 1,
             'message'   => '',
@@ -309,6 +311,54 @@ class ComponentController extends Controller
             ]
         ]);
 
+    }
+
+    private function updateComponentItems($component,$user_id){
+
+        $component_items = ComponentItems::where('component_id',$component->id)->get();
+
+        foreach($component_items as $item){
+
+            if($item->function_type == 1){
+
+                $this->updateItemAsFactor($item,$component,$user_id);
+
+            }else if($item->function_type == 2){
+               
+                $this->updateItemAsDivsior($item,$component,$user_id);
+                
+            }else{
+                $this->updateItemAsDirect($item,$user_id);
+            }
+        }
+    }
+
+    private function updateItemAsDivisor($item,$component,$user_id){
+
+        $item_quantity = ($component->quantity / $item->function_variable ) / $component->use_count;
+
+        $item->quantity = ceil($item_quantity);
+
+        $item->quantity     = $item_quantity;
+        $item->updated_by   = $user_id;
+        $item->save();
+    }
+
+    private function updateItemAsFactor($item,$component,$user_id){
+
+        $item_quantity = ($component->quantity * $item->function_variable ) / $component->use_count;
+
+        $item->quantity = ceil($item_quantity);
+
+        $item->quantity     = $item_quantity;
+        $item->updated_by   = $user_id;
+        $item->save();
+    }
+
+    private function updateItemAsDirect($item,$user_id){
+      
+        $item->updated_by   = $user_id;
+        $item->save();
     }
 
     public function _delete(Request $request){
