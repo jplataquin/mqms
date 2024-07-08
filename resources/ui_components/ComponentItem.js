@@ -605,7 +605,7 @@ class ComponentItem extends Component{
         
         if(data.quantity > this._state.quantity){
             materilItem.classList.add('border');
-            materialItem.classList.add('border-danger');
+            materilItem.classList.add('border-danger');
         }
 
         this.el.materialList.t.append(materilItem);
