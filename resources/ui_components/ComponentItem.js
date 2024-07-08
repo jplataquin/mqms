@@ -16,7 +16,6 @@ class ComponentItem extends Component{
 
     state(){
         return {
-            showList: false,
             quantity: 0,
             unit:'',
             name:'',
@@ -261,21 +260,7 @@ class ComponentItem extends Component{
             this.calculateTotalAmount();
         }
 
-        this.el.showList.onclick = (e)=>{
-
-            e.preventDefault();
-            
-            if(this._state.showList){
-                this.el.showList.innerHTML = 'Show Items';
-                this.setState('showList',false);
-            }else{
-                this.el.showList.innerHTML = 'Hide Items';
-                this.setState('showList',true);
-            }
-
-            return false;
-        }
-
+        
 
         this.el.material_quantity.onkeypress = (e)=>{
             return window.util.inputNumber(this.el.material_quantity,e,2,false);
@@ -354,7 +339,7 @@ class ComponentItem extends Component{
         }
 
 
-        this.setState('showList',true);
+        this.updateMaterialList();
     }
 
     calculateTotalAmount(){
@@ -439,15 +424,6 @@ class ComponentItem extends Component{
         }
     }
 
-    onStateChange_showList(newVal){
-        
-        if(newVal){
-            this.updateMaterialList();
-            this.el.materialMenuHolder.t.append(this.el.materialMenu);
-        }else{
-            this.el.materialMenu.t.remove();
-        }
-    }
 
     onStateChange_editable(newVal){
        
