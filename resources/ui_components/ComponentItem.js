@@ -47,9 +47,12 @@ class ComponentItem extends Component{
     view(){
         const t = new Template();
 
-        this.el.materialItemSelect = t.select({class:'form-control'});
+        this.el.materialItemSelect = t.select({class:'form-control'},()=>{
+            t.option({value:''},' - ');
+        });
 
         this._model.materialItemOptions.map(item=>{
+            
             
             let option = t.option({value:item.id},item.brand+' '+item.name + ' '+item.specification_unit_packaging+''.trim());
             
@@ -580,7 +583,6 @@ class ComponentItem extends Component{
 
         this.el.materialList.append(materialItem);
 
-        console.log(this.el.materialList);
     }
 }
 
