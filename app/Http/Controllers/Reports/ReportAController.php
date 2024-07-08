@@ -73,7 +73,7 @@ class ReportAController extends Controller
         $total_po           = [];
         $material_item_ids  = [];
 
-        $unit_option = ComponentUnit::toOptions();
+        $unit_options = ComponentUnit::toOptions();
 
         foreach($component_items as $component_item){
 
@@ -85,7 +85,7 @@ class ReportAController extends Controller
                         
                         $total_requested[$component_item->id] = (object) [
                             'total' => $mqri->total * $mq->equivalent,
-                            'unit'  => $unit_option[$component_item->component_unit_id]->text
+                            'unit'  => $unit_options[$component_item->component_unit_id]->text
                         ];
                     }
                 }
@@ -102,7 +102,7 @@ class ReportAController extends Controller
                       
                         $total_po[$component_item->id] = (object) [
                             'total' => $poi->total_quantity * $mq->equivalent,
-                            'unit'  => $unit_option[$component_item->component_unit_id]->text
+                            'unit'  => $unit_options[$component_item->component_unit_id]->text
                         ];
                     }
                 }
@@ -126,7 +126,7 @@ class ReportAController extends Controller
             'total_po'              => $total_po,
             'purchase_order_item'   => $purchase_order_item,
             'material_items'        => $material_items,
-            'unit_option'           => $unit_option
+            'unit_options'           => $unit_options
         ]);
     }
 }
