@@ -75,7 +75,7 @@
                 let parent = el.parentElement;
                 let ul = parent.querySelector('.menu-sub-items');
 
-                ul.style.height = '300px';
+                ul.style.height = 'auto';
             }
         });
     </script>
