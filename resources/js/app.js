@@ -241,9 +241,11 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
     
     
     console.log(negativeFlag, charCode, txt.value.indexOf('-'),txt.value);
+
     //do not allow negative sign at the start
     if(negativeFlag && charCode == 45){
 
+        console.log('a');
 
         if (txt.value.indexOf('-') === -1 && txt.value == '') {        
             return true;
@@ -254,6 +256,9 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
 
     //point
     if (charCode == 46) {
+        
+        console.log('b');
+
         //Check if the text already contains the . character
         if (txt.value.indexOf('.') === -1 && decimalPlaces != 0) {
             return true;
@@ -263,12 +268,13 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
 
     } else {
 
-        //allow negative sign
-        if(negativeFlag && charCode == 45){
-            return true;
-        }
-
+        
+        
+        console.log('c');
+        ;
         if (charCode > 31 && (charCode < 48 || charCode > 57)){
+            
+        console.log('d');
             return false;    
         }
         
