@@ -20,7 +20,7 @@
     <div id="bar" class="w-100">
     </div>
     <div class="wrapper d-flex align-items-stretch" id="app">
-        <nav id="sidebar" class="">
+        <nav id="sidebar">
             <div>
                 <button>Hide</button>
             </div>
@@ -28,7 +28,7 @@
                 <li class="menu-item">
                     <div class="nav-item">Item 1</div>
 
-                    <ul class="list-unstyled">
+                    <ul class="list-unstyled" class="menu-sub-items">
                         <li class="nav-sub-item">Item 1.1</li>
                         <li class="nav-sub-item">Item 1.2</li>
                         <li class="nav-sub-item">Item 1.3</li>
@@ -64,5 +64,20 @@
             </div>
         </div>
     </div>
+
+    <script type="module">
+        import {$q} from '/adarna.js';
+
+        $q('.nav-item').apply(el=>{
+
+            el.onclick = (e)=>{
+
+                let parent = el.parentElement;
+                let ul = parent.querySelector('.menu-sub-items');
+
+                console.log(parent,ul);
+            }
+        });
+    </script>
 </body>
 </html>
