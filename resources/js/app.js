@@ -239,11 +239,12 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
 
     let charCode = (evt.which) ? evt.which : evt.keyCode;
     
+    
+    console.log(negativeFlag, charCode, txt.value.indexOf('-'),txt.value);
     //do not allow negative sign at the start
     if(negativeFlag && charCode == 45){
 
-        console.log(txt.value.indexOf('-'),txt.value);
-        
+
         if (txt.value.indexOf('-') === -1 && txt.value == '') {        
             return true;
         } else {
