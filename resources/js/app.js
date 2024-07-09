@@ -240,12 +240,10 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
     let charCode = (evt.which) ? evt.which : evt.keyCode;
     
     
-    console.log(negativeFlag, charCode, txt.value.indexOf('-'),txt.value);
 
     //do not allow negative sign at the start
     if(negativeFlag && charCode == 45){
 
-        console.log('a');
 
         if (txt.value.indexOf('-') === -1 && txt.value == '') {        
             return true;
@@ -257,7 +255,6 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
     //point
     if (charCode == 46) {
         
-        console.log('b');
 
         //Check if the text already contains the . character
         if (txt.value.indexOf('.') === -1 && decimalPlaces != 0) {
@@ -270,11 +267,9 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
 
         
         
-        console.log('c');
         
         if (charCode > 31 && (charCode < 48 || charCode > 57)){
             
-            console.log('d');
             return false;    
         }
         
@@ -289,7 +284,9 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
         let b = /^-?\d+$/.test(txt.value);
         let c = /^-?\d+\.$/.test(txt.value);
         
-        console.log('regex',txt.value,a,b,c);
+        console.log(txt.value,a);
+        console.log(txt.value,b);
+        console.log(txt.value,c);
 
         if(!a && !b && !c && txt.value != ''){
 
