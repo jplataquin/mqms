@@ -283,12 +283,14 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
         let a = (new RegExp(r,'gi')).test(txt.value);
         let b = /^-?\d+$/.test(txt.value);
         let c = /^-?\d+\.$/.test(txt.value);
+        let d = /^-/.test(txt.value);
         
         console.log(txt.value,a);
         console.log(txt.value,b);
         console.log(txt.value,c);
+        console.log(txt.value,d);
 
-        if(!a && !b && !c && txt.value != ''){
+        if(!a && !b && !c && !d && txt.value != ''){
 
             console.log('e');
             return false;
