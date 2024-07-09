@@ -242,6 +242,7 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
      
     //do not allow two negative sign
     if(negativeFlag && charCode == 45){
+        console.log(txt.value.indexOf('-'));
         if (txt.value.indexOf('-') === 0) {
             return true;
         } else {
