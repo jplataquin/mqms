@@ -70,12 +70,25 @@
 
         $q('.nav-item').apply(el=>{
 
-            el.onclick = (e)=>{
+            el.state = 0;
+
+            el.onclick = ()=>{
 
                 let parent = el.parentElement;
                 let ul = parent.querySelector('.menu-sub-items');
 
-                ul.style.height = 'auto';
+                console.log(ul.children.length);
+                ul.style.height = '';
+
+                if(el.state == 0){
+
+                    el.state = 1;
+                }else{
+
+                    el.state = 0;
+                }
+
+                console.log(el.state);
             }
         });
     </script>
