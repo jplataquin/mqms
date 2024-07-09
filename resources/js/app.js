@@ -271,10 +271,10 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
         
         
         console.log('c');
-        ;
+        
         if (charCode > 31 && (charCode < 48 || charCode > 57)){
             
-        console.log('d');
+            console.log('d');
             return false;    
         }
         
@@ -290,6 +290,8 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
         let c = /^\d+\.$/.test(txt.value);
         
         if(!a && !b && !c && txt.value != ''){
+
+            console.log('e');
             return false;
         }
     }
