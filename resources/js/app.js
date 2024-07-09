@@ -289,8 +289,8 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
         let b = /^-?\d+$/.test(txt.value);
         let c = /^-?\d+\.$/.test(txt.value);
         
-        console.log('regex',a,b,c);
-        
+        console.log('regex',txt.value,a,b,c);
+
         if(!a && !b && !c && txt.value != ''){
 
             console.log('e');
