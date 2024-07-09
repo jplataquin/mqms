@@ -286,8 +286,8 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
         let r = "^\\d+\\.\\d{0,"+(decimalPlaces-1)+"}$";
       
         let a = (new RegExp(r,'gi')).test(txt.value);
-        let b = /^\d+$/.test(txt.value);
-        let c = /^\d+\.$/.test(txt.value);
+        let b = /^-?\d+$/.test(txt.value);
+        let c = /^-?\d+\.$/.test(txt.value);
         
         if(!a && !b && !c && txt.value != ''){
 
