@@ -278,17 +278,16 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
     //if one is true then it's good
     if(decimalPlaces){
 
+        if(txt.value == '-') return true;
+        
         let r = "^-?\\d+\\.\\d{0,"+(decimalPlaces-1)+"}$";
       
         let a = (new RegExp(r,'gi')).test(txt.value);
         let b = /^-?\d+$/.test(txt.value);
         let c = /^-?\d+\.$/.test(txt.value);
-        let d = /^-/.test(txt.value);
         
-        console.log(txt.value,a);
-        console.log(txt.value,b);
-        console.log(txt.value,c);
-        console.log(txt.value,d);
+        
+        
 
         if(!a && !b && !c && !d && txt.value != ''){
 
