@@ -35,10 +35,10 @@
                     </ul>
                 </li>
                 <li>
-                    <a class="nav-item">Item 2</a>
+                    <div class="nav-item">Item 2</div>
                 </li>
                 <li>
-                <a class="nav-item">Item 3</a>
+                    <div class="nav-item">Item 3</div>
                     
                 </li> 
             </u>
