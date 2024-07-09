@@ -239,13 +239,9 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
 
     let charCode = (evt.which) ? evt.which : evt.keyCode;
     
-    console.log(txt.value);
-    
     //do not allow two negative sign
     if(negativeFlag && charCode == 45){
-        if (txt.value.indexOf('-') === -1) {
-
-            
+        if (txt.value.indexOf('-') === -1 && txt.value == '') {        
             return true;
         } else {
             return false;
