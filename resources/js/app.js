@@ -276,7 +276,8 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
     }
 
     if(txt.value == '-00') return false;
-
+    if(txt.value == '00') return false;
+    
     //if one is true then it's good
     if(decimalPlaces){
 
