@@ -17,6 +17,8 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
+    <div id="bar" class="w-100">
+    </div>
     <div class="wrapper d-flex align-items-stretch" id="app">
         <nav id="nav">
             <div>
