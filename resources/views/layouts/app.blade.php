@@ -20,7 +20,7 @@
     <div id="bar" class="w-100">
     </div>
     <div class="wrapper d-flex align-items-stretch" id="app">
-        <nav id="sidebar" class="h-100">
+        <nav id="sidebar" class="">
             <div>
                 <button>Hide</button>
             </div>
