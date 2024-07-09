@@ -25,19 +25,19 @@
                 <button>Hide</button>
             </div>
             <ul class="list-unstyled">
-                <li>
+                <li class="menu-item">
                     <div class="nav-item">Item 1</div>
 
-                    <ul class="list-unstyled menu-items">
+                    <ul class="list-unstyled">
                         <li class="nav-sub-item">Item 1.1</li>
                         <li class="nav-sub-item">Item 1.2</li>
                         <li class="nav-sub-item">Item 1.3</li>
                     </ul>
                 </li>
-                <li>
+                <li class="menu-item">
                     <div class="nav-item">Item 2</div>
                 </li>
-                <li>
+                <li class="menu-item">
                     <div class="nav-item">Item 3</div>
                     
                 </li> 
