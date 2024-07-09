@@ -85,10 +85,18 @@ h1, h2, h3, h4, h5, h6{
 
 #bar{
   background-color: #282727;
-  height:50px;
+  height:40px;
 }
 
-#nav{
+#sidebar{
   background-color:#343a40;
   width:15%;
+}
+
+.nav-item{
+
+}
+
+.nav-sub-item{
+  
 }

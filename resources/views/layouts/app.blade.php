@@ -20,14 +20,21 @@
     <div id="bar" class="w-100">
     </div>
     <div class="wrapper d-flex align-items-stretch" id="app">
-        <nav id="nav">
+        <nav id="sidebar" class="h-100">
             <div>
                 <button>Hide</button>
             </div>
-            <ul>
-                <li>Item 1</li>
-                <li>Item 2</li>
-                <li>Item 3</li>
+            <ul class="list-unstyled">
+                <li class="nav-item">
+                    Item 1
+                    <ul class="list-unstyled">
+                        <li class="nav-sub-item">Item 1.1</li>
+                        <li class="nav-sub-item">Item 1.2</li>
+                        <li class="nav-sub-item">Item 1.3</li>
+                    </ul>
+                </li>
+                <li class="nav-item">Item 2</li>
+                <li class="nav-item">Item 3</li> 
             </u>
         </nav>
    
