@@ -28,7 +28,7 @@
                 <li class="menu-item">
                     <div class="nav-item">Item 1</div>
 
-                    <ul class="list-unstyled" class="menu-sub-items">
+                    <ul class="list-unstyled menu-sub-items">
                         <li class="nav-sub-item">Item 1.1</li>
                         <li class="nav-sub-item">Item 1.2</li>
                         <li class="nav-sub-item">Item 1.3</li>
