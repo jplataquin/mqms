@@ -122,9 +122,9 @@ h1, h2, h3, h4, h5, h6{
 
 .menu-item{
   overflow: hidden;
-  transition: all .3s ease;
 }
 
 .menu-sub-items{
   height:0px;
+  transition: all .3s ease;
 }
