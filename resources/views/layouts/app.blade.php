@@ -29,7 +29,7 @@
             </u>
         </nav>
    
-        <main id="content">
+        <main id="content" class="w-100">
             @yield('content')
         </main>
 
