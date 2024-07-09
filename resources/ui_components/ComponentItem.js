@@ -167,7 +167,7 @@ class ComponentItem extends Component{
 
                         t.td({class:''},(el)=>{
                             
-                            this.el.variable = t.input({class:'form-control', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
+                            this.el.variable = t.input({class:'form-control', type:'text', placeholder:'Variable',disabled:true,value:'Loading...'});
 
                         });
                     

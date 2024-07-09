@@ -19,6 +19,8 @@
     .teal-bg{
         background-color: #add8e6;
     }
+
+    
 </style>
 <page>
     <div>
@@ -70,7 +72,7 @@
             $i              = 1;
             $grand_total    = 0;
         @endphp
-
+        <div class="font-size-11">
         @foreach($componentItems as $item)
         
 
@@ -82,14 +84,14 @@
                         </th>
                     </tr>
                     <tr>
-                        <th class="text-center">Budget Price</th>
-                        <th class="text-center">Factor</th>
                         <th class="text-center">ceil( Quantity )</th>
-                        <th class="text-center">Total Amount</th>
+                        <th class="text-center">Factor</th>
+                        <th class="text-center">Budget Price</th>
+                        <th class="text-center">Total Cost</th>
                     </tr>
                     <tr>
                         <td class="text-center">
-                            Php {{ number_format($item->budget_price,2) }}
+                            {{$item->quantity}} {{$unit_options[$item->component_unit_id]->text}}
                         </td>
                         <td class="text-center">
 
@@ -106,8 +108,9 @@
                             <br>
                             {{$component->use_count}} Use(s)
                         </td>
+                        
                         <td class="text-center">
-                            {{$item->quantity}} {{$unit_options[$item->component_unit_id]->text}}
+                            Php {{ number_format($item->budget_price,2) }}
                         </td>
                         <td class="text-center">
                             @php
@@ -150,7 +153,7 @@
 
            @php $i++ @endphp
         @endforeach
-    
+        </div>
         <br>
 
         <table class="table" border="1">
