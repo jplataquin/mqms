@@ -18,9 +18,18 @@
 </head>
 <body>
     <div class="wrapper d-flex align-items-stretch" id="app">
-
+        <nav id="nav">
+            <div>
+                <button>Hide</button>
+            </div>
+            <ul>
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
+            </u>
+        </nav>
    
-        <main id="content" class="p-4 p-md-5 pt-5">
+        <main id="content">
             @yield('content')
         </main>
 
