@@ -55,12 +55,12 @@ class SectionController extends Controller
 
     public function print($id){
         
-        $section = Section::find($id);
+        $section = Section::findOrFail($id);
 
         $components = $section->Components;
 
         $unit_options = ComponentUnit::toOptions();
-
+        
         view('section/print',[
             'section'          => $section,
             'components'       => $components,
