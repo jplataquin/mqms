@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div id="content">
 <div class="container">
 <h6>Master Data » Material Item » Display » {{$materialItem->id}}</h6>
 <hr>
@@ -108,5 +109,5 @@
         document.location.href = '/master_data/material/items';
     }
 </script>
-
+</div>
 @endsection

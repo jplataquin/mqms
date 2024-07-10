@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div id="content">
 <div class="container">
     <h5>Material Quantity Request » Create » Select</h5>
     <hr>
@@ -140,5 +141,5 @@
         document.location.href = '/material_quantity_request/create/'+projectSelect.value+'/'+sectionSelect.value+'/'+componentSelect.value;
     }
 </script>
-
+</div>
 @endsection

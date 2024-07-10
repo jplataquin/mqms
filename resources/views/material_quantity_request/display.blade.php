@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div id="content">
 <div class="container">
 <h5>Material Quantity Request » Display</h5>
 <hr>
@@ -239,5 +240,5 @@
 
     @endif
 </script>
-
+</div>
 @endsection

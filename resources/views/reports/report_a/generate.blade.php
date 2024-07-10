@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div id="content">
 <div class="container">
 <h5>Reports » A » Generate</h5>
 <hr>
@@ -152,4 +153,5 @@
     import {$q,Template,$el,$util} from '/adarna.js';
 
 </script>
+</div>
 @endsection

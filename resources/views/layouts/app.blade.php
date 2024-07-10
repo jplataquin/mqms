@@ -36,16 +36,16 @@
 
                     <ul class="list-unstyled menu-sub-items">
                         <li class="nav-sub-item">
-                            <a href="/review/components" hx-select=".container" hx-target="#content">Components</a>
+                            <a href="/review/components" hx-select="#content" hx-target="#main">Components</a>
                         </li>
                         <li class="nav-sub-item">
-                            <a href="/review/material_quantity_requests">Material Quantity Request</a>
+                            <a href="/review/material_quantity_requests" hx-select="#content" hx-target="#main">Material Quantity Request</a>
                         </li>
                         <li class="nav-sub-item">
-                            <a href="/review/material_canvass">Material Canvass</a>
+                            <a href="/review/material_canvass" hx-select="#content" hx-target="#main">Material Canvass</a>
                         </li>
                         <li class="nav-sub-item">
-                            <a href="/review/purchase_orders">Purchase Orders</a>
+                            <a href="/review/purchase_orders" hx-select="#content" hx-target="#main">Purchase Orders</a>
                         </li>
                     </ul>
                 </li>
@@ -55,13 +55,13 @@
                     </div>
                     <ul class="list-unstyled menu-sub-items">
                         <li class="nav-sub-item">
-                            <a href="/access_codes">Access Codes</a>
+                            <a href="/access_codes" hx-select="#content" hx-target="#main">Access Codes</a>
                         </li>
                         <li class="nav-sub-item">
-                            <a href="/roles">Roles</a>
+                            <a href="/roles" hx-select="#content" hx-target="#main">Roles</a>
                         </li>
                         <li class="nav-sub-item">
-                            <a href="/user_roles">User Roles</a>
+                            <a href="/user_roles" hx-select="#content" hx-target="#main">User Roles</a>
                         </li>
                     </ul>
                 </li>
@@ -71,19 +71,19 @@
                     </div>
                     <ul class="list-unstyled menu-sub-items">
                         <li class="nav-sub-item">
-                            <a href="/master_data/material/groups">Material Groups</a>
+                            <a href="/master_data/material/groups" hx-select="#content" hx-target="#main">Material Groups</a>
                         </li>
                         <li class="nav-sub-item">
-                            <a href="/master_data/material/items">Material Items</a>
+                            <a href="/master_data/material/items" hx-select="#content" hx-target="#main">Material Items</a>
                         </li>
                         <li class="nav-sub-item">
-                            <a href="/master_data/payment_terms">Payment Terms</a>
+                            <a href="/master_data/payment_terms" hx-select="#content" hx-target="#main">Payment Terms</a>
                         </li>
                         <li class="nav-sub-item">
-                            <a href="master_data/suppliers">Suppliers</a>
+                            <a href="master_data/suppliers" hx-select="#content" hx-target="#main">Suppliers</a>
                         </li>
                         <li class="nav-sub-item">
-                            <a href="master_data/component_units">Component Units</a>
+                            <a href="master_data/component_units" hx-select="#content" hx-target="#main">Component Units</a>
                         </li>
                     </ul>
                 </li>
@@ -93,10 +93,10 @@
                     </div>    
                     <ul class="list-unstyled menu-sub-items">
                         <li class="nav-sub-item">
-                            <a href="/project/create">Create</a>
+                            <a href="/project/create" hx-select="#content" hx-target="#main">Create</a>
                         </li>
                         <li class="nav-sub-item">
-                            <a href="/projects">List</a>
+                            <a href="/projects" hx-select="#content" hx-target="#main">List</a>
                         </li>
                     </ul>
                     
@@ -107,13 +107,13 @@
                     </div>
                     <ul class="list-unstyled menu-sub-items">
                         <li class="nav-sub-item">
-                            <a href="/material_quantity_requests">Material Quantity Request</a>
+                            <a href="/material_quantity_requests" hx-select="#content" hx-target="#main">Material Quantity Request</a>
                         </li>
                         <li class="nav-sub-item">
-                            <a href="/material_canvass">Material Canvass</a>
+                            <a href="/material_canvass" hx-select="#content" hx-target="#main">Material Canvass</a>
                         </li>
                         <li class="nav-sub-item">
-                            <a href="/purchase_orders">Purchase Order</a>
+                            <a href="/purchase_orders" hx-select="#content" hx-target="#main">Purchase Order</a>
                         </li>
                     </ul>
                     

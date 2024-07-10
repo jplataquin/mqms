@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div id="content">
 <div class="container">
 <hr>
 
@@ -389,5 +390,5 @@
 
     @endforeach
 </script>
-
+</div>
 @endsection

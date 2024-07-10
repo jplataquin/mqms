@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div id="content">
 <div class="container">
 <h5>Purchase Order » Create</h5>
 <hr>
@@ -283,4 +284,5 @@
        }
     @endif
 </script>
+    </div>
 @endsection

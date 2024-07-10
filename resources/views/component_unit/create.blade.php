@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div id="content">
 <div class="container">
 <h5>Master Data » Component Unit » Create</h5>
 <hr>
@@ -61,5 +62,5 @@
     }
 
 </script>
-
+</div>
 @endsection

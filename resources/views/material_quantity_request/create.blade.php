@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div id="content">
 <div class="container">
 <h5>Request Material » Create</h5>
 <hr>
@@ -175,5 +176,5 @@
     
     setIndexNumber();
 </script>
-
+</div>
 @endsection

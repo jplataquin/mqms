@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div id="content">
 <div class="container">
 <h5>Review » Components » Display</h5>
 <hr>
@@ -227,4 +228,5 @@
         document.location.href = '/review/components/';
     }
 </script>
+</div>
 @endsection

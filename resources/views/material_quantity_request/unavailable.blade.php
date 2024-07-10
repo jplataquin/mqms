@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div id="content">
 <div class="container">
 <h5>Material Quantity Request » Component » Unavailable</h5>
 <hr>
@@ -35,5 +36,6 @@
         <a href="/material_quantity_request/select/create">Click here to return to previous page</a>
     </div>
 
+</div>
 </div>
 @endsection

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div id="content">
 <div class="container">
 <h5>Material Canvass » Display</h5>
 <hr>
@@ -166,4 +167,5 @@
         window.location.href = '/home';
     }
 </script>
+</div>
 @endsection

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div id="content">
 <div class="container">
 <h5>Master Data » Supplier » Create</h5>
 <hr>
@@ -145,5 +146,5 @@
     }
 
 </script>
-
+</div>
 @endsection

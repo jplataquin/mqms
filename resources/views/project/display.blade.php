@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div id="content">
 <div class="container">
 <h5>Project » Display</h5>
 <hr>
@@ -285,5 +286,5 @@
     showData();
 
 </script>
-
+</div>
 @endsection

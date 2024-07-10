@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div id="content">
 <div class="container">
 <h5>Reports » A</h5>
 <hr>
@@ -145,4 +146,5 @@
         window.open('/report/a/generate/'+projectSelect.value+'/'+sectionSelect.value+'/'+componentSelect.value,'_blank');
     }
 </script>
+</div>
 @endsection

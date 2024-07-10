@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div id="content">
 <div class="container">
 <h5>Material Canvass » Display</h5>
 <hr>
@@ -226,4 +227,5 @@
         document.location.href = '/material_canvass/print/{{$material_quantity_request->id}}';
     }
 </script>
+</div>
 @endsection
