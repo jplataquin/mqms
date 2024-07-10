@@ -30,7 +30,7 @@
                 </li>
                 <li class="menu-item">
                     <div class="nav-item inactive-nav-item">
-                        <a href="#">Review</a>
+                        <a href="#" class="inactive-nav-item">Review</a>
                     </div>
 
                     <ul class="list-unstyled menu-sub-items">
@@ -102,7 +102,7 @@
                 </li>
                 <li class="menu-item">
                     <div class="nav-item">
-                        <a href="#">Request</a>
+                        <a href="#" class="inactive-nav-item">Request</a>
                     </div>
                     <ul class="list-unstyled menu-sub-items">
                         <li class="nav-sub-item">
