@@ -53,6 +53,21 @@ class SectionController extends Controller
         return view('project/list');
     }
 
+    public function print($id){
+        
+        $section = Section::findOrFail($id);
+
+        $components = $section->Components;
+
+        $unit_options = ComponentUnit::toOptions();
+        
+        view('section/print',[
+            'section'          => $section,
+            'components'       => $components,
+            'unit_options'     => $unit_options
+        ]);
+    }
+
 
     public function _create(Request $request){
 
