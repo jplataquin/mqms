@@ -81,7 +81,7 @@
                 
 
                 if(el.state == 0){
-                    ul.style.height = (60 * count)+'px';
+                    ul.style.height = (50 * count)+'px';
                     el.state = 1;
                 }else{
                     ul.style.height = '0px';
