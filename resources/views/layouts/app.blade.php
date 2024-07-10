@@ -26,12 +26,21 @@
             </div>
             <ul class="list-unstyled">
                 <li class="menu-item">
-                    <div class="nav-item">Item 1</div>
+                    <div class="nav-item">Review</div>
 
                     <ul class="list-unstyled menu-sub-items">
-                        <li class="nav-sub-item">Item 1.1</li>
-                        <li class="nav-sub-item">Item 1.2</li>
-                        <li class="nav-sub-item">Item 1.3</li>
+                        <li class="nav-sub-item">
+                            <a href="/review/components">Components</a>
+                        </li>
+                        <li class="nav-sub-item">
+                            <a href="/review/material_quantity_requests">Material Quantity Request</a>
+                        </li>
+                        <li class="nav-sub-item">
+                            <a href="/review/material_canvass">Material Canvass</a>
+                        </li>
+                        <li class="nav-sub-item">
+                            <a href="/review/purchase_orders">Purchase Orders</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="menu-item">
