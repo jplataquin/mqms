@@ -1,4 +1,7 @@
-<page>
+<html>
+<head>
+</head>
+<body>
     <table border="1">
 
         @foreach($components as $component)
@@ -12,4 +15,5 @@
         @endforeach
         
     </table>
-</page>
+</body>
+</html>
