@@ -6,13 +6,28 @@
         <table border="1">
 
             @foreach($components as $component)
-                @foreach($component->ComponentItems as $item)
+
+                @php
+                    $component_items = $component->ComponentItems;
+                    $component_count = count($component_items);
+                @endphp
+                <tr>
+                    <td rowspan="{{$component_count}}">
+                        {{$component->name}}
+                    </td>
+                    <td>
+</td>
+                </tr>
+                
+                @foreach($component_items as $item)
+                   
                     <tr>
                         <td>
                             {{$item->name}}
                         </td>
-                    </tr>
+                    </tr>    
                 @endforeach
+                
             @endforeach
             
         </table>
