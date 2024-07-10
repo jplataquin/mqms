@@ -74,11 +74,11 @@
 
             el.onclick = ()=>{
 
-                let parent = el.parentElement;
-                let ul = parent.querySelector('.menu-sub-items');
-
-                console.log(ul.children.length);
-                ul.style.height = '';
+                let parent  = el.parentElement;
+                let ul      = parent.querySelector('.menu-sub-items');
+                let count   = ul.children.length;
+                
+                ul.style.height = (30 * count)+'px';
 
                 if(el.state == 0){
 
