@@ -132,7 +132,7 @@
 
     printBtn.onclick = (e)=>{
         e.preventDefault();
-        document.location.href = '/section/print/{{$section->id}}';
+        document.location.href = '/project/section/print/{{$section->id}}';
     }
 
     quantity.onkeypress = (e)=>{

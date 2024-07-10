@@ -58,6 +58,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/project/{project_id}/section/create', [App\Http\Controllers\SectionController::class, 'create']);
     Route::get('/project/section/{id}', [App\Http\Controllers\SectionController::class, 'display']);
     
+    Route::get('/project/section/print/{id}', [App\Http\Controllers\SectionController::class, 'print']);
+    
+
     Route::get('/component/{id}', [App\Http\Controllers\ComponentController::class, 'display']);
     Route::get('/component/print/{id}', [App\Http\Controllers\ComponentController::class, 'preview']);
     
