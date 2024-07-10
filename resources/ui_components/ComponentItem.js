@@ -547,7 +547,7 @@ class ComponentItem extends Component{
         let materialItem = t.tr((row)=>{
                     t.td(this.materialRegistry[data.material_item_id]);
                     t.td(''+data.equivalent);
-                    t.td(''+data.quantity);
+                    t.td(''+roundTwoDecimal(data.quantity));
                     t.td(''+calculateTotalEquivalent(data.quantity,data.equivalent));
                     t.td({class:'text-center'},()=>{
                         t.a({href:'#'},'[X]').onclick = (e)=>{
