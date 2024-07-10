@@ -21,7 +21,7 @@
     <div id="bar" class="w-100">
     </div>
     <div class="wrapper d-flex align-items-stretch" id="app">
-        <nav id="sidebar" hx-boost="true">
+        <nav id="sidebar" hx-boost="true" class="flex-shrink-0">
             
             <ul class="list-unstyled">
                 <li class="menu-item">
