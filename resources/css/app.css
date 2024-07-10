@@ -68,6 +68,11 @@ h1, h2, h3, h4, h5, h6{
   color: #d44 !important;
 } */
 
+
+html, body {
+  height: 100%;
+}
+
 .fixed-footer-controls{
   position: fixed;
   height: 100px;
