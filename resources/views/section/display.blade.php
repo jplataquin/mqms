@@ -33,7 +33,8 @@
           
         </div>
         <div class="col-lg-6 text-end">
-           
+
+            <button class="btn btn-warning" id="printBtn">Print</button>
             <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
             <button class="btn btn-primary" id="editBtn">Edit</button>
             <button class="btn btn-warning d-none" id="updateBtn">Update</button>
@@ -125,8 +126,14 @@
     let createBtn                   = $q('#createBtn').first();
     let use_count                   = $q('#use_count').first();
     let description                 = $q('#description').first();
+    let printBtn                    = $q('#printBtn').first();
 
     const unit_options = @json($unit_options);
+
+    printBtn.onclick = (e)=>{
+        e.preventDefault();
+        document.location.href '/section/print/{{$section->id}}';
+    }
 
     quantity.onkeypress = (e)=>{
         return window.util.inputNumber(quantity,e,2,false);
