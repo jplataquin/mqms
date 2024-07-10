@@ -10,18 +10,21 @@
                 @php
                     $component_items = $component->ComponentItems;
                     $component_count = count($component_items);
+                    $first = true;
                 @endphp
-                <tr>
-                    <td rowspan="{{$component_count}}">
-                        {{$component->name}}
-                    </td>
-                    <td>
-</td>
-                </tr>
+                
                 
                 @foreach($component_items as $item)
                    
                     <tr>
+                        @if($first == true)
+                        <td rowspan="{{$component_count}}">
+                            {{$component->name}}
+                        </td>
+                            @php
+                                $first = false;
+                            @endphp
+                        @endif
                         <td>
                             {{$item->name}}
                         </td>
