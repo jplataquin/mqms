@@ -20,7 +20,7 @@
 <body>
     <div id="bar" class="w-100">
     </div>
-    <div class="wrapper d-flex align-items-stretch" id="app">
+    <div class="wrapper d-flex align-items-stretch h-100" id="app">
         <nav id="sidebar" hx-boost="true" class="flex-shrink-0">
             
             <ul class="list-unstyled">
