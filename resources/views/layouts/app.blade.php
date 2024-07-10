@@ -121,7 +121,7 @@
             </u>
         </nav>
    
-        <main id="content" class="w-100 container">
+        <main id="main" class="w-100 container">
             @yield('content')
         </main>
 
