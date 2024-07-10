@@ -15,7 +15,13 @@
                 
                 
                 @foreach($component_items as $item)
-                   
+                    @if($first == true)
+                        <tr>
+                            <td colspan="2">
+                                {{$component->description}}
+                            </td>
+                        </tr>
+                    @endif
                     <tr>
                         @if($first == true)
                         <td rowspan="{{$component_count}}">
