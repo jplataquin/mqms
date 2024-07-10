@@ -121,8 +121,10 @@
             </u>
         </nav>
    
-        <main id="main" class="w-100 mt-10">
-            @yield('content')
+        <main class="w-100">
+            <div class="container" id="main">
+                @yield('content')
+            </div>
         </main>
 
     </div>
