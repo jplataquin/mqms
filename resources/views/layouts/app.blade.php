@@ -89,31 +89,33 @@
                 <li class="menu-item">
                     <div class="nav-item">
                         <a href="#">Projects</a>
-                        <ul class="list-unstyled menu-sub-items">
-                            <li class="nav-sub-item">
-                                <a href="/project/create">Create</a>
-                            </li>
-                            <li class="nav-sub-item">
-                                <a href="/projects">List</a>
-                            </li>
-                        </ul>
-                    </div>
+                    </div>    
+                    <ul class="list-unstyled menu-sub-items">
+                        <li class="nav-sub-item">
+                            <a href="/project/create">Create</a>
+                        </li>
+                        <li class="nav-sub-item">
+                            <a href="/projects">List</a>
+                        </li>
+                    </ul>
+                    
                 </li>
                 <li class="menu-item">
                     <div class="nav-item">
                         <a href="#">Request</a>
-                        <ul class="list-unstyled menu-sub-items">
-                            <li class="nav-sub-item">
-                                <a href="/material_quantity_requests">Material Quantity Request</a>
-                            </li>
-                            <li class="nav-sub-item">
-                                <a href="/material_canvass">Material Canvass</a>
-                            </li>
-                            <li class="nav-sub-item">
-                                <a href="/purchase_orders">Purchase Order</a>
-                            </li>
-                        </ul>
                     </div>
+                    <ul class="list-unstyled menu-sub-items">
+                        <li class="nav-sub-item">
+                            <a href="/material_quantity_requests">Material Quantity Request</a>
+                        </li>
+                        <li class="nav-sub-item">
+                            <a href="/material_canvass">Material Canvass</a>
+                        </li>
+                        <li class="nav-sub-item">
+                            <a href="/purchase_orders">Purchase Order</a>
+                        </li>
+                    </ul>
+                    
                 <li>
             </u>
         </nav>
