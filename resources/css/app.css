@@ -115,11 +115,19 @@ h1, h2, h3, h4, h5, h6{
   position: relative;
 }
 
-.nav-item a::after{
+.inactive-nav-item::after{
   content: '▶';
   position: absolute;
   left:95%;
   font-size:0.7em;
+}
+
+.active-nav-item::after{
+  content: '▶';
+  position: absolute;
+  left:95%;
+  font-size:0.7em;
+  transform: rotate(90deg);
 }
 
 .nav-sub-item{

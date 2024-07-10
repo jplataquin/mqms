@@ -29,7 +29,7 @@
                     </div>
                 </li>
                 <li class="menu-item">
-                    <div class="nav-item">
+                    <div class="nav-item inactive-nav-item">
                         <a href="#">Review</a>
                     </div>
 
@@ -50,7 +50,7 @@
                 </li>
                 <li class="menu-item">
                     <div class="nav-item">
-                        <a href="#">Users</a>
+                        <a href="#" class="inactive-nav-item">Users</a>
                     </div>
                     <ul class="list-unstyled menu-sub-items">
                         <li class="nav-sub-item">
@@ -66,7 +66,7 @@
                 </li>
                 <li class="menu-item">
                     <div class="nav-item">
-                        <a href="#">Master Data</a>
+                        <a href="#" class="inactive-nav-item">Master Data</a>
                     </div>
                     <ul class="list-unstyled menu-sub-items">
                         <li class="nav-sub-item">
@@ -88,7 +88,7 @@
                 </li>
                 <li class="menu-item">
                     <div class="nav-item">
-                        <a href="#">Projects</a>
+                        <a href="#" class="inactive-nav-item">Projects</a>
                     </div>    
                     <ul class="list-unstyled menu-sub-items">
                         <li class="nav-sub-item">
@@ -167,9 +167,14 @@
                 if(el.state == 0){
                     ul.style.height = (50 * count)+'px';
                     el.state = 1;
+                    el.classList.remove('inactive-nav-item');
+                    el.classList.add('active-nav-item');
                 }else{
                     ul.style.height = '0px';
                     el.state = 0;
+                    
+                    el.classList.remove('active-nav-item');
+                    el.classList.add('inactive-nav-item');
                 }
 
             }
