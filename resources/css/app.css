@@ -120,6 +120,21 @@ h1, h2, h3, h4, h5, h6{
 }
 
 .nav-sub-item a{
+  color:#ffffff;
+  display: inline-block;
+  width: 100%;
+  text-decoration: none;
+}
+
+.nav-sub-item a:link{
+  color:#ffffff;
+  display: inline-block;
+  width: 100%;
+  text-decoration: none;
+}
+
+.nav-sub-item a:visited{
+  color:#ffffff;
   display: inline-block;
   width: 100%;
   text-decoration: none;
