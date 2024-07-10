@@ -44,7 +44,18 @@
                     </ul>
                 </li>
                 <li class="menu-item">
-                    <div class="nav-item">Item 2</div>
+                    <div class="nav-item">User Access</div>
+                    <ul class="list-unstyled menu-sub-items">
+                        <li class="nav-sub-item">
+                            <a href="/access_codes">Access Codes</a>
+                        </li>
+                        <li class="nav-sub-item">
+                            <a href="/roles">Roles</a>
+                        </li>
+                        <li class="nav-sub-item">
+                            <a href="/user_roles">User Roles</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="menu-item">
                     <div class="nav-item">Item 3</div>
