@@ -122,7 +122,7 @@
         </nav>
    
         <main class="w-100">
-            <div class="container" id="main">
+            <div class="container pt-10" id="main">
                 @yield('content')
             </div>
         </main>
