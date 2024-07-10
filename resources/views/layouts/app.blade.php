@@ -90,13 +90,15 @@
     <script type="module">
         import {$q} from '/adarna.js';
 
-        $q('.nav-item').apply(el=>{
+        $q('.nav-item > a').apply(el=>{
 
             el.state = 0;
 
-            el.onclick = ()=>{
+            el.onclick = (e)=>{
 
-                let parent  = el.parentElement;
+                e.preventDefault();
+                
+                let parent  = el.parentElement.parentElement;
                 let ul      = parent.querySelector('.menu-sub-items');
                 let count   = ul.children.length;
                 
