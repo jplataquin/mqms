@@ -78,13 +78,13 @@
                 let ul      = parent.querySelector('.menu-sub-items');
                 let count   = ul.children.length;
                 
-                ul.style.height = (30 * count)+'px';
+                
 
                 if(el.state == 0){
-
+                    ul.style.height = (60 * count)+'px';
                     el.state = 1;
                 }else{
-
+                    ul.style.height = '0px';
                     el.state = 0;
                 }
 
