@@ -105,15 +105,20 @@ h1, h2, h3, h4, h5, h6{
   color:#ffffff;
 }
 
-.nav-item a::after{
-  content: '▶';
-}
+
 
 .nav-item a{
   text-decoration: none;
   color:#ffffff;
   display: inline-block;
   width: 100%;
+  position: relative;
+}
+
+.nav-item a::after{
+  content: '▶';
+  position: absolute;
+  left:100%;
 }
 
 .nav-sub-item{
