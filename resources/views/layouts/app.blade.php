@@ -121,7 +121,9 @@
 
                 <li class="menu-item">
                     <div class="nav-item">
-                        <a hx-disinherit="*" href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
+                        <button class="btn btn-secondary w-100" hx-disinherit="*" href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                            Logout
+                        </button>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
