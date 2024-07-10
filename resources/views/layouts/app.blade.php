@@ -15,12 +15,13 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <script src="https://unpkg.com/htmx.org@2.0.0"></script>
 </head>
 <body>
     <div id="bar" class="w-100">
     </div>
     <div class="wrapper d-flex align-items-stretch" id="app">
-        <nav id="sidebar">
+        <nav id="sidebar" hx-boost="true">
             
             <ul class="list-unstyled">
                 <li class="menu-item">
@@ -35,7 +36,7 @@
 
                     <ul class="list-unstyled menu-sub-items">
                         <li class="nav-sub-item">
-                            <a href="/review/components">Components</a>
+                            <a href="/review/components" hx-select=".container" hx-target="#content">Components</a>
                         </li>
                         <li class="nav-sub-item">
                             <a href="/review/material_quantity_requests">Material Quantity Request</a>
