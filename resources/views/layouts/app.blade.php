@@ -27,6 +27,11 @@
             <ul class="list-unstyled">
                 <li class="menu-item">
                     <div class="nav-item">
+                        <a href="/home">Dashboard</a>
+                    </div>
+                </li>
+                <li class="menu-item">
+                    <div class="nav-item">
                         <a href="#">Review</a>
                     </div>
 
