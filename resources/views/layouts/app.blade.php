@@ -21,9 +21,7 @@
     </div>
     <div class="wrapper d-flex align-items-stretch" id="app">
         <nav id="sidebar">
-            <div>
-                <button>Hide</button>
-            </div>
+            
             <ul class="list-unstyled">
                 <li class="menu-item">
                     <div class="nav-item">
@@ -67,9 +65,56 @@
                     </ul>
                 </li>
                 <li class="menu-item">
-                    <div class="nav-item">Item 3</div>
-                    
-                </li> 
+                    <div class="nav-item">
+                        <a href="#">Master Data</a>
+                    </div>
+                    <ul class="list-unstyled menu-sub-items">
+                        <li class="nav-sub-item">
+                            <a href="/master_data/material/groups">Material Groups</a>
+                        </li>
+                        <li class="nav-sub-item">
+                            <a href="/master_data/material/items">Material Items</a>
+                        </li>
+                        <li class="nav-sub-item">
+                            <a href="/master_data/payment_terms">Payment Terms</a>
+                        </li>
+                        <li class="nav-sub-item">
+                            <a href="master_data/suppliers">Suppliers</a>
+                        </li>
+                        <li class="nav-sub-item">
+                            <a href="master_data/component_units">Component Units</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <div class="nav-item">
+                        <a href="#">Projects</a>
+                        <ul class="list-unstyled menu-sub-items">
+                            <li class="nav-sub-item">
+                                <a href="/project/create">Create</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a href="/projects">List</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="menu-item">
+                    <div class="nav-item">
+                        <a href="#">Request</a>
+                        <ul class="list-unstyled menu-sub-items">
+                            <li class="nav-sub-item">
+                                <a href="/material_quantity_requests">Material Quantity Request</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a href="/material_canvass">Material Canvass</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a href="/purchase_orders">Purchase Order</a>
+                            </li>
+                        </ul>
+                    </div>
+                <li>
             </u>
         </nav>
    
