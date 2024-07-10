@@ -61,7 +61,7 @@ class SectionController extends Controller
 
         $unit_options = ComponentUnit::toOptions();
         echo 'asdsad';
-        view('section/print',[
+        return view('section/print',[
             'section'          => $section,
             'components'       => $components,
             'unit_options'     => $unit_options
