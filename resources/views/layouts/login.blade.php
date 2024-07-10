@@ -18,6 +18,6 @@
     <script src="https://unpkg.com/htmx.org@2.0.0"></script>
 </head>
 <body>
-    @yeild('content');
+    @yield('content')
 </body>
 </html>
