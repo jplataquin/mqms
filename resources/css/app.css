@@ -119,6 +119,11 @@ h1, h2, h3, h4, h5, h6{
   color:#ffffff;
 }
 
+.nav-sub-item a{
+  display: inline-block;
+  width: 100%;
+  text-decoration: none;
+}
 
 .menu-item{
   overflow: hidden;
@@ -128,3 +133,4 @@ h1, h2, h3, h4, h5, h6{
   height:0px;
   transition: all .5s ease;
 }
+

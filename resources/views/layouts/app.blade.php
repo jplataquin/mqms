@@ -97,7 +97,6 @@
                     el.state = 0;
                 }
 
-                console.log(el.state);
             }
         });
     </script>
