@@ -51,7 +51,9 @@
                     </ul>
                 </li>
                 <li class="menu-item">
-                    <div class="nav-item">User Access</div>
+                    <div class="nav-item">
+                        <a href="#">Users</a>
+                    </div>
                     <ul class="list-unstyled menu-sub-items">
                         <li class="nav-sub-item">
                             <a href="/access_codes">Access Codes</a>
