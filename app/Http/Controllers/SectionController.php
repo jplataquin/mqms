@@ -60,7 +60,7 @@ class SectionController extends Controller
         $components = $section->Components;
 
         $unit_options = ComponentUnit::toOptions();
-        
+        echo 'asdsad';
         view('section/print',[
             'section'          => $section,
             'components'       => $components,
