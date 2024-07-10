@@ -97,7 +97,13 @@
             el.onclick = (e)=>{
 
                 e.preventDefault();
-                
+
+                let href = el.getAttribute('href');
+                if(href != '#'){
+                    document.location.href = href; 
+                    return false;    
+                }
+
                 let parent  = el.parentElement.parentElement;
                 let ul      = parent.querySelector('.menu-sub-items');
                 let count   = ul.children.length;
