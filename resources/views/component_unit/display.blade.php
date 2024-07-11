@@ -6,7 +6,6 @@
 <h5>Master Data » Unit » Display</h5>
 <hr>
 
-    <div class="row">
 
     <div class="row">
         <div class="col-lg-12">
