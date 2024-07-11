@@ -333,7 +333,7 @@ class ComponentController extends Controller
 
             }else if($item->function_type_id == 2){
                
-                $this->updateItemAsDivsior($item,$component,$user_id);
+                $this->updateItemAsDivisor($item,$component,$user_id);
                 
             }else{
                 $this->updateItemAsDirect($item,$user_id);
