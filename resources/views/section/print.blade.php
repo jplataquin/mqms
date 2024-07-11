@@ -8,15 +8,13 @@
                 <th rowspan="2">Item Code</th>
                 <th rowspan="2">Description</th>
                 <th colspan="4">Contract</th>
+            </tr>
             <tr>
-            <tr>
-                <th></th>
-                <th></th>
                 <th>QTY</th>
                 <th>UNIT</th>
                 <th>UNIT PRICE</th>
                 <th>AMOUNT</th>
-            <tr>
+            </tr>
                 
             @foreach($contract_items as $contract_item)
 
