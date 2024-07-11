@@ -73,7 +73,8 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    
+                    <td></td>
+                    <td></td>
                 </tr>
                 @foreach($contract_item->components as $component)
                     
