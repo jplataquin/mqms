@@ -133,7 +133,7 @@
         </nav>
    
         <main class="w-100">
-            <div class="mt-3" id="main">
+            <div class="mt-3 ml-5 mr-5" id="main">
                 @yield('content')
             </div>
         </main>
