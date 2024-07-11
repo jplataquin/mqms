@@ -31,10 +31,12 @@ class Unit extends Model
             $result[$row->id] = (object) [
                 'id'    => $row->id,
                 'text'  => $row->text,
-                'deleted' => (boolean) ($row->deleted_at == null)
+                'deleted' => (boolean) ($row->deleted_at != null)
             ];
         }
 
+       
+       
         return $result;
     }
 }
