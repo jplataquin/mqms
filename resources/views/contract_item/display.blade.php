@@ -42,33 +42,34 @@
             </div>
         </div>
     </div>
-
+    <h5>Contract</h5>
     <div class="row mb-3">
         <div class="col-lg-6">
             <div class="form-group">
-                <label>Contract Quantity</label>
+                <label>Quantity</label>
                 <input type="text" id="contract_quantity" class="form-control editable" disabled="true" value="{{$contract_item->contract_quantity}}"/>
             </div>
         </div>
 
         <div class="col-lg-6">
             <div class="form-group">
-                <label>Contract Unit Price (PHP)</label>
+                <label>Unit Price (PHP)</label>
                 <input type="text" id="contract_unit_price" class="form-control editable" disabled="true" value="{{$contract_item->contract_unit_price}}"/>
             </div>
         </div>
     </div>
+    <h5>POW/DUPA</h5>
     <div class="row mb-3">
         <div class="col-lg-6">
             <div class="form-group">
-                <label>POW/DUPA Quantity</label>
+                <label>Quantity</label>
                 <input type="text" id="ref_1_quantity" class="form-control editable" disabled="true" value="{{$contract_item->ref_1_quantity}}"/>
             </div>
         </div>
 
         <div class="col-lg-6">
             <div class="form-group">
-                <label>POW/DUPA Unit Price (PHP)</label>
+                <label>Unit Price (PHP)</label>
                 <input type="text" id="ref_1_unit_price" class="form-control editable" disabled="true" value="{{$contract_item->ref_1_unit_price}}"/>
             </div>
         </div>
@@ -118,6 +119,12 @@
                     <input type="text" class="form-control" id="component_name" />
                 </div>
             </div>
+            <div class="col-lg-3 col-sm-12">
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" class="form-control" id="component_description" />
+                </div>
+            </div>
             <div class="col-lg-1 col-sm-12">
                 <div class="form-group">
                     <label>Quantity</label>
@@ -140,12 +147,7 @@
                     <input type="text" class="form-control" value="1" id="use_count" />
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-12">
-                <div class="form-group">
-                    <label>Description</label>
-                    <input type="text" class="form-control" id="description" />
-                </div>
-            </div>
+            
             <div class="col-lg-2 col-sm-12">
                 <div class="form-group">
                     <label>&nbsp;</label>
