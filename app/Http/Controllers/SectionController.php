@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Section;
-use App\Models\ComponentUnit;
+use App\Models\Unit;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -36,7 +36,9 @@ class SectionController extends Controller
         $components = $section->components()->orderBy('id','ASC')->get();
         
         
-        $unit_options = ComponentUnit::toOptions();
+
+        
+        $unit_options = Unit::toOptions();
 
 
         return view('section/display',[
@@ -59,7 +61,7 @@ class SectionController extends Controller
 
         $components = $section->Components;
 
-        $unit_options = ComponentUnit::toOptions();
+        $unit_options = Unit::toOptions();
         echo 'asdsad';
         return view('section/print',[
             'section'          => $section,
