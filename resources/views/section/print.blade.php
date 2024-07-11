@@ -20,6 +20,9 @@
                     <td>
                         PHP {{$contract_item->contract_unit_price}}
                     </td>
+                    <td>
+                        PHP {{$contract_item->contract_quantity * $contract_item->contract_unit_price}}
+                    </td>
 
                     <td>
                         {{$contract_item->ref_1_quantity}}
@@ -29,6 +32,9 @@
                     </td>
                     <td>
                         PHP {{$contract_item->ref_1_unit_price}}
+                    </td>
+                    <td>
+                        PHP {{$contract_item->ref_1_quantity * $contract_item->ref_1_unit_price}}
                     </td>
                 </tr>
 
@@ -49,6 +55,8 @@
                         <td>
                             {{$component->name}}
                         </td>
+                        <td></td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
