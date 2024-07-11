@@ -21,7 +21,7 @@ class Unit extends Model
         if(count($ids)){    
             $rows = parent::whereIn('id',$ids)->orderBy('text','ASC')->get();
         }else{
-            $rows = parent::where('deleted_at','=',null)->get();
+            $rows = parent::orderBy('text','ASC')->get();
         }
         
 
