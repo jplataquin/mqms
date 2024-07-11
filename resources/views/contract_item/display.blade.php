@@ -42,8 +42,9 @@
             </div>
         </div>
     </div>
-    <h5>Contract</h5>
-    <hr>
+    
+    <h5 class="mb-3">Contract</h5>
+    
     <div class="row mb-3">
         <div class="col-lg-6">
             <div class="form-group">
@@ -59,8 +60,9 @@
             </div>
         </div>
     </div>
-    <h5>POW/DUPA</h5>
-    <hr>
+
+    <h5 class="mb-3">POW/DUPA</h5>
+
     <div class="row mb-3">
         <div class="col-lg-6">
             <div class="form-group">
