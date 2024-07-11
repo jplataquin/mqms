@@ -5,8 +5,8 @@
         <h1>TEst</h1>
         <table border="1">
             <tr>
-                <th rowspan="2">Item Code</th>
-                <th rowspan="2">Description</th>
+                <td rowspan="2">Item Code</td>
+                <td rowspan="2">Description</td>
                 <th colspan="4">Contract</th>
             <tr>
             <tr>
