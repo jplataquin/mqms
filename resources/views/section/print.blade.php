@@ -10,6 +10,7 @@
                 <th colspan="4">Contract</th>
                 <th colspan="4">POW/DUPA</th>
                 <th>Factor</th>
+                <th colspan="4">Material Budget</th>
             </tr>
             <tr>
                 <th>QTY</th>
@@ -21,6 +22,10 @@
                 <th>UNIT PRICE</th>
                 <th>AMOUNT</th>
                 <th>QTY / UNIT</th>
+                <th>QTY</th>
+                <th>UNIT</th>
+                <th>UNIT COST</th>
+                <th>AMOUNT</th>
             </tr>
                 
             @foreach($contract_items as $contract_item)
@@ -84,6 +89,15 @@
                         <td></td>
                         <td>
                             {{$component->function_variable}}
+                        </td>
+                        <td>
+                            {{$component->quantity}}
+                        </td>
+                        <td>
+                            {{$unit_options[$component->unit_id]->text}}
+                        </td>
+                        <td>
+                            PHP {{$component->price}}
                         </td>
                     </tr>    
                 @endforeach
