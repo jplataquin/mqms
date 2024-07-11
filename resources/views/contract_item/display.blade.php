@@ -42,7 +42,23 @@
             </div>
         </div>
     </div>
-    
+    <div class="row mb-5">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label>Unit</label>
+                <select class="form-control editable" id="unit" disabled="true">
+                    @foreach($unit_options as $unit)
+                    <option value="{{$unit->id}}" 
+                        @if($unit->deleted) disabled @endif
+                    
+                        @if($unit->id == $contract_item->unit_id) selected @endif
+                    
+                    >{{$unit->text}} @if($unit->deleted) [Deleted] @endif</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
     <hr>
     <h5 class="mb-3">Contract</h5>
     
@@ -80,23 +96,7 @@
             </div>
         </div>
     </div>
-    <div class="row mb-5">
-        <div class="col-lg-12">
-            <div class="form-group">
-                <label>Unit</label>
-                <select class="form-control editable" id="unit" disabled="true">
-                    @foreach($unit_options as $unit)
-                    <option value="{{$unit->id}}" 
-                        @if($unit->deleted) disabled @endif
-                    
-                        @if($unit->id == $contract_item->unit_id) selected @endif
-                    
-                    >{{$unit->text}} @if($unit->deleted) [Deleted] @endif</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-    </div>
+    
     
 
     <div class="row mb-3">
@@ -142,7 +142,7 @@
                     <label>Unit</label>
                     <select id="unit_id" class="form-control">
                         @foreach($unit_options as $opt)
-                            <option value="{{$opt->id}}">{{$opt->text}}</option>
+                            <option value="{{$opt->id}}" @if($opt->deleted) disabled @endif>{{$opt->text}}</option>
                         @endforeach
                     </select>
                 </div>
