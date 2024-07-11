@@ -43,7 +43,7 @@
         </div>
     </div>
     
-    <h5 class="mb-3">Contract</h5>
+    <strong class="mb-3">Contract</strong>
     
     <div class="row mb-3">
         <div class="col-lg-6">
@@ -61,7 +61,7 @@
         </div>
     </div>
 
-    <h5 class="mb-3">POW/DUPA</h5>
+    <strong class="mb-3">POW/DUPA</strong>
 
     <div class="row mb-3">
         <div class="col-lg-6">
