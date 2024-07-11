@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('contract_items', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('project_id');
             $table->bigInteger('section_id');
             $table->string('item_code');
             $table->text('description');
