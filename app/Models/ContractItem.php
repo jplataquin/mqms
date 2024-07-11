@@ -11,8 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Section;
-use App\Models\ComponentItem;
-use App\Models\User;
+use App\Models\Component;
 
 class ContractItem extends Model
 {
