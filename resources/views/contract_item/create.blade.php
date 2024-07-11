@@ -10,7 +10,7 @@
         <div class="col-lg-12">
             <div class="form-group">
                 <label>Project</label>
-                <input type="text" id="project" value="{{$project->name}}" class="form-control"/>
+                <input type="text" id="project" value="{{$project->name}}" class="form-control" disabled="true"/>
             </div>
         </div>
     </div>
@@ -19,7 +19,7 @@
         <div class="col-lg-12">
             <div class="form-group">
                 <label>Section</label>
-                <input type="text" id="section" value="{{$section->name}}" class="form-control"/>
+                <input type="text" id="section" value="{{$section->name}}" class="form-control" disabled="true"/>
             </div>
         </div>
     </div>
