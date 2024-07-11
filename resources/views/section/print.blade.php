@@ -64,31 +64,20 @@
                 @foreach($contract_item->components as $component)
 
                     @php
-                        $component_items = $component->ComponentItems;
-                        
-                    @endphp
-                
-                    @foreach($component_items as $component_item)
-                    
-                    @php 
-                        $first = true;
+                        $component_items = $component->ComponentItems; 
+                        $first = true; 
                     @endphp
 
                     <tr>
-
-                            @if($first)
-                            <td rowspan="">
-                                {{$component->name}}
-                            </td>
-
-                                @php
-                                    $first = false;
-                                @endphp
-                                
-                            @endif
-                            
+                        <td>
+                            {{$component->name}}
+                        </td>
+                    </tr>
+                        
+                    @foreach($component_items as $component_item)
                     
-                            
+                    <tr>
+                            <td></td>
                             <td>
                                 {{$component_item->name}}
                             </td>
