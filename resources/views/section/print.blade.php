@@ -36,20 +36,20 @@
                             {{$contract_item->contract_quantity}}
                         </td>
                         <td>
-                            {{$contract_item->unit_id}}
+                            {{$unit_options[$contract_item->unit_id]->text}}
                         </td>
                         <td>
-                            {{$contract_item->contract_unit_price}}
+                            PHP {{$contract_item->contract_unit_price}}
                         </td>
 
                         <td>
                             {{$contract_item->ref_1_quantity}}
                         </td>
                         <td>
-                            {{$contract_item->unit_id}}
+                            {{$unit_options[$contract_item->unit_id]->text}}
                         </td>
                         <td>
-                            {{$contract_item->ref_1_unit_price}}
+                            PHP {{$contract_item->ref_1_unit_price}}
                         </td>
                     </tr>    
                 @endforeach
