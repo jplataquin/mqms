@@ -107,6 +107,22 @@
     const ref_1_unit_price          = $q('#ref_1_unit_price').first();
     const unit                      = $q('#unit').first();
 
+    contract_quantity.onkeypress = (e)=>{
+        return window.util.inputNumber(contract_quantity,e,2,false);
+    }
+
+    contract_unit_price.onkeypress = (e)=>{
+        return window.util.inputNumber(contract_unit_price,e,2,false);
+    }
+
+    ref_1_quantity.onkeypress = (e)=>{
+        return window.util.inputNumber(ref_1_quantity,e,2,false);
+    }
+
+    ref_1_unit_price.onkeypress = (e)=>{
+        return window.util.inputNumber(ref_1_unit_price,e,2,false);
+    }
+    
     createBtn.onclick = (e) => {
 
         window.util.blockUI();
