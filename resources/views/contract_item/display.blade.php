@@ -5,20 +5,89 @@
 <div class="container">
 <h5>Master Data » Unit » Display</h5>
 <hr>
-
-    <div class="row">
-
-    <div class="row">
+<h5>Contract Item » Create</h5>
+<hr>
+    <div class="row mb-3">
         <div class="col-lg-12">
             <div class="form-group">
-                <label>Text</label>
-                <input type="text" disabled="true" id="text" value="{{$unit->text}}" class="form-control"/>
+                <label>Project</label>
+                <input type="text" id="project" value="{{$project->name}}" class="form-control" disabled="true"/>
             </div>
-        </div>   
-
+        </div>
     </div>
 
-    <div class="row mt-5 mb-3">
+    <div class="row mb-3">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label>Section</label>
+                <input type="text" id="section" value="{{$section->name}}" class="form-control" disabled="true"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label>Item Code</label>
+                <input type="text" id="item_code" class="form-control" disabled="true" value="{{$contract_item->item_code}}"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label>Description</label>
+                <input type="text" id="description" class="form-control" disabled="true" value="{{$contract_item->description}}"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Contract Quantity</label>
+                <input type="text" id="contract_quantity" class="form-control" disabled="true" value="{{$contract_item->contract_quantity}}"/>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Contract Unit Price</label>
+                <input type="text" id="contract_unit_price" class="form-control" disabled="true" value="{{$contract_item->contract_unit_price}}"/>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>POW/DUPA Quantity</label>
+                <input type="text" id="ref_1_quantity" class="form-control" disabled="true" value="{{$contract_item->ref_1_quantity}}"/>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>POW/DUPA Unit Price</label>
+                <input type="text" id="ref_1_unit_price" class="form-control" disabled="true" value="{{$contract_item->ref_1_unit_price}}"/>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-5">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label>Unit</label>
+                <select class="form-control" id="unit" disabled="true">
+                    @foreach($unit_options as $unit)
+                    <option value="{{$unit->id}}" @if($unit->deleted) disabled @endif>{{$unit->text}} @if($unit->deleted) [Deleted] @endif</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="row mb-3">
         <div class="col-6 text-start">
             <button class="btn btn-danger" id="deleteBtn">Delete</button>
         </div>
