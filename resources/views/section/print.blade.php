@@ -9,6 +9,7 @@
                 <th rowspan="2">Description</th>
                 <th colspan="4">Contract</th>
                 <th colspan="4">POW/DUPA</th>
+                <th>Factor</th>
             </tr>
             <tr>
                 <th>QTY</th>
@@ -19,6 +20,7 @@
                 <th>UNIT</th>
                 <th>UNIT PRICE</th>
                 <th>AMOUNT</th>
+                <th>QTY / UNIT</th>
             </tr>
                 
             @foreach($contract_items as $contract_item)
@@ -52,6 +54,7 @@
                     <td>
                         PHP {{$contract_item->ref_1_quantity * $contract_item->ref_1_unit_price}}
                     </td>
+                    <td></td>
                 </tr>
 
                 @php
@@ -79,6 +82,9 @@
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td>
+                            {{$component->function_variable}}
+                        </td>
                     </tr>    
                 @endforeach
                 
