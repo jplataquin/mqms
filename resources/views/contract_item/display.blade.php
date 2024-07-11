@@ -146,8 +146,11 @@
                     <input type="text" class="form-control" id="description" />
                 </div>
             </div>
-            <div class="col-lg-2 col-sm-12 text-end">
-                   <button id="createBtn" class="btn btn-warning">Create</button>
+            <div class="col-lg-2 col-sm-12">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <button id="createBtn" class="btn btn-warning w-100">Create</button>
+                </div>
             </div>
         </div>
 
