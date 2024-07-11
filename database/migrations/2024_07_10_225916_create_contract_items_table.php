@@ -26,7 +26,7 @@ return new class extends Migration
             $table->double('ref_1_quantity')->nullable();
             $table->decimal('ref_1_unit_price',2)->nullable();
             
-            $table->bigIntenger('unit_id');
+            $table->bigInteger('unit_id');
             
 
             $table->bigInteger('created_by');
