@@ -67,41 +67,46 @@
                 @endphp
 
                 @foreach($contract_item->components as $component)
-                    <tr>
-                        @if($first)
-                        <td rowspan="{{count($contract_item->components)}}">
-                            {{$component->name}}
-                        </td>
-                            @php
-                                $first = false;
-                            @endphp
-                        @endif
-                        <td>
-                            {{$component->name}}
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            {{$component->function_variable}}
-                        </td>
-                        <td>
-                            {{$component->quantity}}
-                        </td>
-                        <td>
-                            {{$unit_options[$component->unit_id]->text}}
-                        </td>
-                        <td>
-                            PHP {{$component->price}}
-                        </td>
-                    </tr>    
+                    
+                    @php
+                        $component_items = $component->ComponentItems;
+                    @endphp
+                    @foreach($component_items as $component_item)
+                        <tr>
+                            @if($first)
+                            <td rowspan="{{count($component_items)}}">
+                                {{$component->name}}
+                            </td>
+                                @php
+                                    $first = false;
+                                @endphp
+                            @endif
+                            <td>
+                                {{$component_item->name}}
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                {{$component_item->function_variable}}
+                            </td>
+                            <td>
+                                {{$component_item->quantity}}
+                            </td>
+                            <td>
+                                {{$unit_options[$component_item->unit_id]->text}}
+                            </td>
+                            <td>
+                                PHP {{$component_item->budget_price}}
+                            </td>
+                        </tr>    
+                    @endforeach
                 @endforeach
-                
             @endforeach
             
         </table>
