@@ -33,7 +33,7 @@ class SectionController extends Controller
 
         $project = $section->project;
 
-        $components = $section->components()->orderBy('id','ASC')->get();
+        $contract_items = $section->components()->orderBy('code_item','ASC')->get();
         
         
 
@@ -44,7 +44,7 @@ class SectionController extends Controller
         return view('section/display',[
             'section'          => $section,
             'project'          => $project,
-            'components'       => $components,
+            'contract_items'       => $contract_items,
             'unit_options'     => $unit_options
         ]);
     }

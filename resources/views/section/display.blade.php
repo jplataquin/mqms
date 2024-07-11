@@ -46,60 +46,27 @@
     <div class="mt-3">
         
         <div class="">
-            <h3>Components</h3>
+            <h3>Contract Items</h3>
         </div>
 
-        <div class="row mb-3">
-            <div class="col-lg-4 col-sm-12">
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" class="form-control" id="component" />
-                </div>
-            </div>
-            <div class="col-lg-1 col-sm-12">
-                <div class="form-group">
-                    <label>Quantity</label>
-                    <input type="text" class="form-control" id="quantity" />
-                </div>
-            </div>
-            <div class="col-lg-2 col-sm-12">
-                <div class="form-group">
-                    <label>Unit</label>
-                    <select id="unit_id" class="form-control">
-                        @foreach($unit_options as $opt)
-                            <option value="{{$opt->id}}">{{$opt->text}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-1 col-sm-12">
-                <div class="form-group">
-                    <label>Use Count</label>
-                    <input type="text" class="form-control" value="1" id="use_count" />
-                </div>
-            </div>
-            <div class="col-lg-4 col-sm-12">
-            <div class="form-group">
-                    <label>Description</label>
-                    <input type="text" class="form-control" id="description" />
-                </div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-lg-12 col-sm-12 text-end">
                    <button id="createBtn" class="btn btn-warning">Create</button>
             </div>
         </div>
 
-        <div id="component_list" class="mt-3">
-            @foreach($components as $component)
+        <div id="contract_items" class="mt-3">
+            @foreach($contract_items as $contract_item)
 
-                <div class="item row selectable-div fade-in border mb-3" data-id="{{$component->id}}">
+                <div class="item row selectable-div fade-in border mb-3" data-id="{{$contract_item->id}}">
                     <div class="col-lg-12">
-                        <h3>{{$component->name}}</h3>
+                        <h3>{{$contract_item->item_code}}</h3>
                         <h6> 
-                            @if(isset($unit_options[ $component->unit_id ]))
-                                {{$component->quantity}} {{ $unit_options[ $component->unit_id ]->text }}
+
+                            {{contract_item->description}}
+
+                            @if(isset($unit_options[ $contract_item->unit_id ]))
+                                {{$contract_item->contract_quantity}} {{ $unit_options[ $contract_item->unit_id ]->text }}
                             @endif
                         </h6>
                     </div>
@@ -119,13 +86,8 @@
     let updateBtn                   = $q('#updateBtn').first();
     let cancelBtn                   = $q('#cancelBtn').first();
     let deleteBtn                   = $q('#deleteBtn').first();
-    let component                   = $q('#component').first();
-    let unit_id                     = $q('#unit_id').first();
-    let quantity                    = $q('#quantity').first();
-    let component_list              = $q('#component_list').first();
+
     let createBtn                   = $q('#createBtn').first();
-    let use_count                   = $q('#use_count').first();
-    let description                 = $q('#description').first();
     let printBtn                    = $q('#printBtn').first();
 
     const unit_options = @json($unit_options);
@@ -209,75 +171,15 @@
     }
 
 
-    function Component(id){
-
-        const t = new Template();
-
-        let name = t.h3('Loading...');
-        let quantity_unit = t.h6('Loading...');
-
-        let el = t.div({class:'row selectable-div fade-in border mb-3',dataId:id},()=>{
-            t.div({class:'col-lg-12'},(el)=>{
-                el.append(name);
-                el.append(quantity_unit);
-            });
-        });
-
-
-        window.util.$get('/api/component',{
-            id:id
-        }).then(reply=>{
-
-            if(!reply.status){
-
-                alert(reply.message);
-                return false;
-            }
-
-            name.innerText = reply.data.name;
-            quantity_unit.innerText = reply.data.quantity+' '+unit_options[reply.data.unit_id].text;
-
-            el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
-        });
-
-
-        el.onclick = ()=>{
-            document.location.href = '/component/'+id;
-        }
-
-        return el;
-    }
-
-
     createBtn.onclick = ()=>{
 
-        window.util.blockUI();
-
-        window.util.$post('/api/component/create',{
-            section_id: '{{$section->id}}',
-            name: component.value,
-            quantity: quantity.value,
-            unit_id: unit_id.value,
-            use_count: use_count.value,
-            description: description.value
-        }).then(reply=>{
-
-            window.util.unblockUI();
-
-            if(reply.status <= 0){
-                window.util.showMsg(reply.message);
-                return false;
-            }
-
-            $el.append(Component(reply.data.id)).to(component_list);
-        });
-
+        document.location.href = '/project/section/contract_item/create/{{$section->id}}';
     }
 
     $q('.item').apply((el)=>{
 
         el.onclick = (e)=>{
-            document.location.href = '/component/'+el.getAttribute('data-id');
+            document.location.href = '/project/section/contract_item/'+el.getAttribute('data-id');
         }
     });
 
