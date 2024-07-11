@@ -76,6 +76,10 @@
                                 {{$component->name}}
                             </td>
                                 
+                            
+                                @php 
+                                    $first = true;
+                                @endphp
                             @endif
                             <td>
                                 {{$component_item->name}}
@@ -103,9 +107,6 @@
                         </tr>    
                     @endforeach
 
-                    @php 
-                        $first = true;
-                    @endphp
                 @endforeach
             @endforeach
             
