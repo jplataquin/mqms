@@ -38,8 +38,16 @@
             </tr>
                 
             @foreach($contract_items as $contract_item)
-
                 
+                @php 
+                    $components = $contract_item->Components;
+
+                    $component_total_quantity = 0;
+
+                    foreach($components as $component){
+                        $component_total_quantity = $component_total_quantity + $component->quantity;
+                    }   
+                @endphp
                 <tr>
                     <th>{{$contract_item->item_code}}</th>
                     <th>{{$contract_item->description}}</th>
@@ -69,14 +77,18 @@
                         PHP {{$contract_item->ref_1_quantity * $contract_item->ref_1_unit_price}}
                     </th>
                     <th></th>
-                    <th></th>
-                    <th></th>
+                    <th>
+                        {{$component_total_quantity}}
+                    </th>
+                    <th>
+                        {{$unit_options[$contract_item->unit_id]->text}}
+                    </th>
                     <th></th>
                     <th></th>
                 </tr>
 
                 
-                @foreach($contract_item->components as $component)
+                @foreach($components as $component)
                     
                     @php
                         $component_items = $component->ComponentItems;
@@ -104,9 +116,11 @@
                         <td></td>
                         <td></td>
                         <th>
-                            {{$component->quantity}} {{$unit_options[$component->unit_id]->text}}
+                            {{$component->quantity}}
                         </th>
-                        <td></td>
+                        <th>
+                            {{$unit_options[$component->unit_id]->text}}
+                        </th>
                         <td></td>
                         <td></td>
                     </tr>
