@@ -16,6 +16,12 @@
                         <td>{{$project->name}}</td>
                     </tr>
                     <tr>
+                        <th>Section ID</th>
+                        <td>
+                            {{str_pad($section->id,6,0,STR_PAD_LEFT)}}
+                        </td>
+                    </tr>
+                    <tr>
                         <th>Section</th>
                         <td>
                             <input type="text" id="sectionName" value="{{$section->name}}" disabled="true" class="form-control"/>

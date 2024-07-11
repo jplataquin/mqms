@@ -3,7 +3,7 @@
 @section('content')
 <div id="content">
 <div class="container">
-<h6>Master Data » Project » {{$project->id}} » Section » Create</h6>
+<h6>Project » Section » Create</h6>
 <hr>
 
     <div class="row">

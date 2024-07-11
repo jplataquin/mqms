@@ -4,7 +4,7 @@
 <div id="content">
 <div class="container">
 
-<h5>Contract Item » Create</h5>
+<h5>Project » Section » Contract Item » Display</h5>
 <hr>
 
     <table class="table">
