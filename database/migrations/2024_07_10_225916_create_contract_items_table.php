@@ -21,10 +21,10 @@ return new class extends Migration
             $table->text('description');
             
             $table->double('contract_quantity');
-            $table->decimal('contract_unit_price',2);
+            $table->decimal('contract_unit_price',10,2);
 
             $table->double('ref_1_quantity')->nullable();
-            $table->decimal('ref_1_unit_price',2)->nullable();
+            $table->decimal('ref_1_unit_price',10,2)->nullable();
             
             $table->bigInteger('unit_id');
             
