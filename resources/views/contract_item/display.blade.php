@@ -280,7 +280,7 @@
 
 
     cancelBtn.onclick = (e)=>{
-        document.location.href = '/project/section/contract_item/{{$contract_item->id}}';
+        document.location.href = '/project/section/{{$section->id}}';
     }
 
     
