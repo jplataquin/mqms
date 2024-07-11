@@ -108,12 +108,35 @@
 <script type="module">
     import {$q,$el,Template} from '/adarna.js';
 
-    let text                        = $q('#text').first();
-    let editBtn                     = $q('#editBtn').first();
-    let updateBtn                   = $q('#updateBtn').first();
-    let cancelBtn                   = $q('#cancelBtn').first();
-    let deleteBtn                   = $q('#deleteBtn').first();
+    const editBtn                     = $q('#editBtn').first();
+    const updateBtn                   = $q('#updateBtn').first();
+    const cancelBtn                   = $q('#cancelBtn').first();
+    const deleteBtn                   = $q('#deleteBtn').first();
     
+    const item_code                 = $q('#item_code').first();
+    const description               = $q('#description').first();
+    const contract_quantity         = $q('#contract_quantity').first();
+    const contract_unit_price       = $q('#contract_unit_price').first();
+    const ref_1_quantity            = $q('#ref_1_quantity').first();
+    const ref_1_unit_price          = $q('#ref_1_unit_price').first();
+    const unit                      = $q('#unit').first();
+
+    contract_quantity.onkeypress = (e)=>{
+        return window.util.inputNumber(contract_quantity,e,2,false);
+    }
+
+    contract_unit_price.onkeypress = (e)=>{
+        return window.util.inputNumber(contract_unit_price,e,2,false);
+    }
+
+    ref_1_quantity.onkeypress = (e)=>{
+        return window.util.inputNumber(ref_1_quantity,e,2,false);
+    }
+
+    ref_1_unit_price.onkeypress = (e)=>{
+        return window.util.inputNumber(ref_1_unit_price,e,2,false);
+    }
+
     editBtn.onclick = (e)=>{
         e.preventDefault();
 
