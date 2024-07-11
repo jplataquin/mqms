@@ -88,7 +88,7 @@
                     @foreach($component_items as $component_item)
                         <tr>
                             @if($first)
-                            <td rowspan="{{count($component_items)+1}}">
+                            <td rowspan="{{count($component_items)}}">
                                 {{$component->name}}
                             </td>
                                 
