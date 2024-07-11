@@ -63,7 +63,7 @@
                         <h3>{{$contract_item->item_code}}</h3>
                         <h6> 
 
-                            {{contract_item->description}}
+                            {{$contract_item->description}}
 
                             @if(isset($unit_options[ $contract_item->unit_id ]))
                                 {{$contract_item->contract_quantity}} {{ $unit_options[ $contract_item->unit_id ]->text }}
