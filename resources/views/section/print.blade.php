@@ -8,8 +8,13 @@
                 <th rowspan="2">Item Code</th>
                 <th rowspan="2">Description</th>
                 <th colspan="4">Contract</th>
+                <th colspan="4">POW/DUPA</th>
             </tr>
             <tr>
+                <th>QTY</th>
+                <th>UNIT</th>
+                <th>UNIT PRICE</th>
+                <th>AMOUNT</th>
                 <th>QTY</th>
                 <th>UNIT</th>
                 <th>UNIT PRICE</th>
