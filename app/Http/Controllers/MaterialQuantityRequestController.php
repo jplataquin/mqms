@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Validation\Rule;
-use App\Models\ComponentUnit;
+use App\Models\Unit;
 
 class MaterialQuantityRequestController extends Controller
 {
@@ -69,7 +69,7 @@ class MaterialQuantityRequestController extends Controller
             $componentItem_options[$componentItem->id] = [
                 'value'                 => $componentItem->id,
                 'text'                  => $componentItem->name,
-                'component_unit_id'     => $componentItem->component_unit_id,
+                'unit_id'               => $componentItem->unit_id,
                 'quantity'              => $componentItem->quantity
             ];
         }
@@ -99,7 +99,7 @@ class MaterialQuantityRequestController extends Controller
             ];
         }
 
-        $unit_options = ComponentUnit::toOptions();
+        $unit_options = Unit::toOptions();
 
         return view('material_quantity_request/create',[
             'project'               => $project,
@@ -353,7 +353,7 @@ class MaterialQuantityRequestController extends Controller
             $componentItem_options[$componentItem->id] = [
                 'value'                  => $componentItem->id,
                 'text'                   => $componentItem->name,
-                'component_unit_id'      => $componentItem->component_unit_id,
+                'unit_id'      => $componentItem->unit_id,
                 'quantity'               => $componentItem->quantity
             ];
         }
@@ -378,7 +378,9 @@ class MaterialQuantityRequestController extends Controller
             ];
         }
 
-        $unit_options = ComponentUnit::toOptions();
+
+        
+        $unit_options = Unit::toOptions();
 
         return view('material_quantity_request/display',[
             'project'                   => $project,

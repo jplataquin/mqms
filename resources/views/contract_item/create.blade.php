@@ -5,8 +5,7 @@
 <div class="container">
 <h5>Contract Item » Create</h5>
 <hr>
-
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-lg-12">
             <div class="form-group">
                 <label>Project</label>
@@ -15,7 +14,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-lg-12">
             <div class="form-group">
                 <label>Section</label>
@@ -24,7 +23,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-lg-12">
             <div class="form-group">
                 <label>Code Item</label>
@@ -33,7 +32,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-lg-12">
             <div class="form-group">
                 <label>Description</label>
@@ -42,7 +41,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-lg-6">
             <div class="form-group">
                 <label>Contract Quantity</label>
@@ -57,7 +56,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-lg-6">
             <div class="form-group">
                 <label>POW/DUPA Quantity</label>
@@ -72,7 +71,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row mb-5">
         <div class="col-lg-12">
             <div class="form-group">
                 <label>Unit</label>
@@ -84,8 +83,8 @@
             </div>
         </div>
     </div>
-
-    <div class="row mt-5">
+    
+    <div class="row">
         <div class="col-12 text-end">
             <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
             <button class="btn btn-primary" id="createBtn">Create</button>
