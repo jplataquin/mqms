@@ -32,38 +32,38 @@
 
                 
                 <tr>
-                    <td>{{$contract_item->item_code}}</td>
-                    <td>{{$contract_item->description}}</td>
-                    <td>
+                    <th>{{$contract_item->item_code}}</th>
+                    <th>{{$contract_item->description}}</th>
+                    <th>
                         {{$contract_item->contract_quantity}}
-                    </td>
-                    <td>
+                    </th>
+                    <th>
                         {{$unit_options[$contract_item->unit_id]->text}}
-                    </td>
-                    <td>
+                    </th>
+                    <th>
                         PHP {{$contract_item->contract_unit_price}}
-                    </td>
-                    <td>
+                    </th>
+                    <th>
                         PHP {{$contract_item->contract_quantity * $contract_item->contract_unit_price}}
-                    </td>
+                    </th>
 
-                    <td>
+                    <th>
                         {{$contract_item->ref_1_quantity}}
-                    </td>
-                    <td>
+                    </th>
+                    <th>
                         {{$unit_options[$contract_item->unit_id]->text}}
-                    </td>
-                    <td>
+                    </th>
+                    <th>
                         PHP {{$contract_item->ref_1_unit_price}}
-                    </td>
-                    <td>
+                    </th>
+                    <th>
                         PHP {{$contract_item->ref_1_quantity * $contract_item->ref_1_unit_price}}
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    </th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
                 </tr>
 
                 
