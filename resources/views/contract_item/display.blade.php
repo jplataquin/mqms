@@ -378,7 +378,7 @@
     $q('.item').apply((el)=>{
 
         el.onclick = (e)=>{
-            document.location.href = '/project/section/component/'+el.getAttribute('data-id');
+            document.location.href = '/project/section/contract_item/component/'+el.getAttribute('data-id');
         }
     });
 
