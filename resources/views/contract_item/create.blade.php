@@ -42,47 +42,61 @@
     </div>
 
     <div class="row mb-3">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div class="form-group">
                 <label>Contract Quantity</label>
                 <input type="text" id="contract_quantity" class="form-control"/>
             </div>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label>Contract Unit</label>
+                <select class="form-control" id="unit">
+                    @foreach($unit_options as $unit)
+                    <option value="{{$unit->id}}" 
+                        @if($unit->deleted) disabled @endif
+                    
+                        @if($unit->id == $contract_item->unit_id) selected @endif
+                    
+                    >{{$unit->text}} @if($unit->deleted) [Deleted] @endif</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
             <div class="form-group">
                 <label>Contract Unit Price (PHP)</label>
                 <input type="text" id="contract_unit_price" class="form-control"/>
             </div>
         </div>
     </div>
+
     <div class="row mb-3">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div class="form-group">
                 <label>POW/DUPA Quantity</label>
                 <input type="text" id="ref_1_quantity" class="form-control"/>
             </div>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label>POW/DUPA Unit</label>
+                <input type="text" id="ref_1_unit" class="form-control" disabled="true" />
+            </div>
+        </div>
+
+        <div class="col-lg-4">
             <div class="form-group">
                 <label>POW/DUPA Unit Price (PHP)</label>
                 <input type="text" id="ref_1_unit_price" class="form-control"/>
             </div>
         </div>
+        
     </div>
-    <div class="row mb-5">
-        <div class="col-lg-12">
-            <div class="form-group">
-                <label>Unit</label>
-                <select class="form-control" id="unit">
-                    @foreach($unit_options as $unit)
-                    <option value="{{$unit->id}}" @if($unit->deleted) disabled @endif>{{$unit->text}} @if($unit->deleted) [Deleted] @endif</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-    </div>
+   
     
     <div class="row">
         <div class="col-12 text-end">
@@ -105,8 +119,16 @@
     const contract_unit_price       = $q('#contract_unit_price').first();
     const ref_1_quantity            = $q('#ref_1_quantity').first();
     const ref_1_unit_price          = $q('#ref_1_unit_price').first();
-    const unit                      = $q('#unit').first();
+    const ref_1_unit                  = $q('#ref_1_unit').first();
+    const unit                        = $q('#unit').first();
+    
+    unit.onchange = ()=>{
+        ref_1_unit.value = unit.options[unit.selectedIndex].text;
+    }
 
+    ref_1_unit.value = unit.options[unit.selectedIndex].text;
+
+    
     contract_quantity.onkeypress = (e)=>{
         return window.util.inputNumber(contract_quantity,e,2,false);
     }
