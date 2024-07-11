@@ -78,7 +78,7 @@
                                 
                             
                                 @php 
-                                    $first = true;
+                                    $first = false;
                                 @endphp
                             @endif
                             <td>
