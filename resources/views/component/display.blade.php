@@ -23,12 +23,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Description</th>
-                    <td>
-                        <input class="form-control editable_field" type="text" id="description" value="{{$component->description}}" disabled="true"/>
-                    </td>
-                </tr>
-                <tr>
                     <th>Quantity</th>
                     <td>
                         <input class="form-control editable_field" type="text" id="component_quantity" value="{{$component->quantity}}" disabled="true"/>
@@ -189,9 +183,9 @@
     let use_count           = $q('#use_count').first();
     let description         = $q('#description').first();
 
-    let component_item_name         = $q('#component_item_name').first();
-    let component_item_budget_price = $q('#component_item_budget_price').first();
-    let component_item_unit         = $q('#component_item_unit').first();
+    let component_item_name          = $q('#component_item_name').first();
+    let component_item_budget_price  = $q('#component_item_budget_price').first();
+    let component_item_unit          = $q('#component_item_unit').first();
     let component_item_quantity      = $q('#component_item_quantity').first();
     let component_item_function_type = $q('#component_item_function_type').first();
     let component_item_variable      = $q('#component_item_variable').first();
@@ -270,13 +264,12 @@
         window.util.blockUI();
 
         window.util.$post('/api/component/update',{
-            id:'{{$component->id}}',
-            section_id:'{{$section->id}}',
-            name:component.value,
-            unit_id: unit_id.value,
-            quantity: component_quantity.value,
-            use_count: use_count.value,
-            description: description.value
+            id          :'{{$component->id}}',
+            section_id  :'{{$section->id}}',
+            name        : component.value,
+            unit_id     : unit_id.value,
+            quantity    : component_quantity.value,
+            use_count   : use_count.value,
         }).then((reply)=>{
 
             window.util.unblockUI();

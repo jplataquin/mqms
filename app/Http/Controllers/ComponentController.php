@@ -235,7 +235,7 @@ class ComponentController extends Controller
         $name                = $request->input('name') ?? '';
         $quantity            = $request->input('quantity');
         $status              = $request->input('status');
-        $unit_id   = (int) $request->input('unit_id');
+        $unit_id             = (int) $request->input('unit_id');
         $section_id          = (int) $request->input('section_id');
         $use_count           = (int) $request->input('use_count') ?? 1;
 
