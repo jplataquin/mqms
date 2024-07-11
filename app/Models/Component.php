@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Section;
 use App\Models\ComponentItem;
+use App\Models\ContractItem;
 use App\Models\User;
 
 class Component extends Model
@@ -25,6 +26,11 @@ class Component extends Model
     public function Section(): BelongsTo
     {
         return $this->belongsTo(Section::class);
+    }
+
+    public function ContractItem(): BelongsTo
+    {
+        return $this->belongsTo(ContractItem::class);
     }
 
     public function ComponentItems(): HasMany

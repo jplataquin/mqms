@@ -17,6 +17,10 @@
                     <td>{{$section->name}}</td>
                 </tr>
                 <tr>
+                    <th>Contract Item</th>
+                    <td>{{$contract_item->item_code}} - {{$contract_item->description}}</td>
+                </tr>
+                <tr>
                     <th>Component</th>
                     <td>
                         <input class="form-control editable_field" type="text" id="component" value="{{$component->name}}" disabled="true"/>

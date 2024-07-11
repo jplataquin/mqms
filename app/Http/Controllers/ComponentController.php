@@ -144,9 +144,11 @@ class ComponentController extends Controller
     public function display($id){
 
         $component = Component::findOrFail($id);
-
+        
+        $contract_item   = $component->ContractItem;
         $section         = $component->Section;
         $project         = $section->Project;
+        
         $materialItems   = MaterialItem::orderBy('name','ASC')->get();
         $componentItems = $component->componentItems()->orderBy('id','ASC')->withCount('materialQuantities')->get();
 
