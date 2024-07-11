@@ -61,30 +61,29 @@
                     </td>
                     <td></td>
                 </tr>
-
-                @php
-                    $first = true;
-                @endphp
-
                 @foreach($contract_item->components as $component)
-                
-                
-                @php
-                    $component_items = $component->ComponentItems;
-                @endphp
-                
-                <tr>
-                    
-                    @if($first)
-                    <td rowspan="{{count($component_items)}}">
-                        {{$component->name}}
-                    </td>
-                        @php
-                            $first = false;
-                        @endphp
-                    @endif
 
+                    @php
+                        $component_items = $component->ComponentItems;
+                        $first = true;
+                    @endphp
+                
                     @foreach($component_items as $component_item)
+                    
+                    <tr>
+
+                            @if($first)
+                            <td rowspan="{{count($component_items)}}">
+                                {{$component->name}}
+                            </td>
+
+                                @php
+                                    $first = false;
+                                @endphp
+                                
+                            @endif
+                            
+                    
                             
                             <td>
                                 {{$component_item->name}}
