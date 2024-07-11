@@ -128,6 +128,7 @@
         window.util.blockUI();
 
         window.util.$post('/api/contract_item/create',{
+            section_id          : '{{$section->id}}',
             item_code           : item_code.value,
             description         : description.value,
             contract_quantity   : contract_quantity.value,
