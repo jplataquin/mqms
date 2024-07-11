@@ -5,26 +5,22 @@
         <h1>TEst</h1>
         <table border="1">
 
-            @foreach($components as $component)
+            @foreach($contract_items as $contract_item)
+
+                
+                <tr>
+                    <td>{{$contract_item->item_code}}</td>
+                    <td>{{$contract_item->description}}</td>
+                </tr>
 
                 @php
-                    $component_items = $component->ComponentItems;
-                    $component_count = count($component_items);
                     $first = true;
                 @endphp
-                
-                
-                @foreach($component_items as $item)
-                    @if($first == true)
-                        <tr>
-                            <td colspan="2">
-                                {{$component->description}}
-                            </td>
-                        </tr>
-                    @endif
+
+                @foreach($contract_item->components as $component)
                     <tr>
-                        @if($first == true)
-                        <td rowspan="{{$component_count}}">
+                        @if($first)
+                        <td rowspan="{{count($contract_item->components)}}">
                             {{$component->name}}
                         </td>
                             @php
@@ -32,7 +28,7 @@
                             @endphp
                         @endif
                         <td>
-                            {{$item->name}}
+                            {{$component->name}}
                         </td>
                     </tr>    
                 @endforeach

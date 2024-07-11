@@ -56,13 +56,15 @@ class SectionController extends Controller
         
         $section = Section::findOrFail($id);
 
-        $components = $section->Components;
+        $contract_items = $section->ContractItems()->with('components')->get();
 
         $unit_options = Unit::toOptions();
-        echo 'asdsad';
+        
+        foreach($contract_items)
+
         return view('section/print',[
             'section'          => $section,
-            'components'       => $components,
+            'contract_items'   => $contract_items,
             'unit_options'     => $unit_options
         ]);
     }
