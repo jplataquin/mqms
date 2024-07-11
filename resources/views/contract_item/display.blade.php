@@ -193,14 +193,14 @@
     const cancelBtn                   = $q('#cancelBtn').first();
     const deleteBtn                   = $q('#deleteBtn').first();
     
-    const item_code                 = $q('#item_code').first();
-    const description               = $q('#description').first();
-    const contract_quantity         = $q('#contract_quantity').first();
-    const contract_unit_price       = $q('#contract_unit_price').first();
-    const ref_1_quantity            = $q('#ref_1_quantity').first();
-    const ref_1_unit_price          = $q('#ref_1_unit_price').first();
-    const ref_1_unit                = $q('#ref_1_unit').first();
-    const unit                      = $q('#unit').first();
+    const item_code                   = $q('#item_code').first();
+    const description                 = $q('#description').first();
+    const contract_quantity           = $q('#contract_quantity').first();
+    const contract_unit_price         = $q('#contract_unit_price').first();
+    const ref_1_quantity              = $q('#ref_1_quantity').first();
+    const ref_1_unit_price            = $q('#ref_1_unit_price').first();
+    const ref_1_unit                  = $q('#ref_1_unit').first();
+    const unit                        = $q('#unit').first();
     
     const component                   = $q('#component_name').first();
     const unit_id                     = $q('#unit_id').first();
@@ -280,7 +280,7 @@
 
 
     cancelBtn.onclick = (e)=>{
-        document.location.href = '/contract_item/{{$contract_item->id}}';
+        document.location.href = '/project/section/contract_item/{{$contract_item->id}}';
     }
 
     
@@ -306,7 +306,7 @@
                 return false;
             }
 
-            window.location.href = '/contract_items';
+            window.location.href = '/project/section/contract_items';
         });
     }
 
@@ -342,7 +342,7 @@
 
 
         el.onclick = ()=>{
-            document.location.href = '/component/'+id;
+            document.location.href = '/project/section/component/'+id;
         }
 
         return el;
@@ -378,7 +378,7 @@
     $q('.item').apply((el)=>{
 
         el.onclick = (e)=>{
-            document.location.href = '/component/'+el.getAttribute('data-id');
+            document.location.href = '/project/section/component/'+el.getAttribute('data-id');
         }
     });
 

@@ -50,19 +50,21 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/project/{id}', [App\Http\Controllers\ProjectController::class, 'display']);
     Route::get('/projects', [App\Http\Controllers\ProjectController::class, 'list']);
     
+    Route::get('/project/{project_id}/section/create', [App\Http\Controllers\SectionController::class, 'create']);
+    Route::get('/project/section/{id}', [App\Http\Controllers\SectionController::class, 'display']);
+    Route::get('/project/section/print/{id}', [App\Http\Controllers\SectionController::class, 'print']);
+    
+    Route::get('/project/section/contract_item/create/{section_id}', [App\Http\Controllers\ContractItemController::class, 'create']);
+    Route::get('/project/section/contract_item/{id}', [App\Http\Controllers\ContractItemController::class, 'display']);
+    Route::get('/project/section/contract_items', [App\Http\Controllers\ContractItemController::class, 'list']);
+    
+    Route::get('/project/section/contract_item/component/{id}', [App\Http\Controllers\ComponentController::class, 'display']);
+    Route::get('/project/section/contract_item/component/print/{id}', [App\Http\Controllers\ComponentController::class, 'preview']);
+    
+
     Route::get('/master_data/supplier/create', [App\Http\Controllers\SupplierController::class, 'create']);
     Route::get('/master_data/supplier/{id}', [App\Http\Controllers\SupplierController::class, 'display']);
     Route::get('/master_data/suppliers', [App\Http\Controllers\SupplierController::class, 'list']);
-    
-
-    Route::get('/project/{project_id}/section/create', [App\Http\Controllers\SectionController::class, 'create']);
-    Route::get('/project/section/{id}', [App\Http\Controllers\SectionController::class, 'display']);
-    
-    Route::get('/project/section/print/{id}', [App\Http\Controllers\SectionController::class, 'print']);
-    
-
-    Route::get('/component/{id}', [App\Http\Controllers\ComponentController::class, 'display']);
-    Route::get('/component/print/{id}', [App\Http\Controllers\ComponentController::class, 'preview']);
     
     Route::get('/master_data/material/group/create', [App\Http\Controllers\MaterialGroupController::class, 'create']);
     Route::get('/master_data/material/group/{id}', [App\Http\Controllers\MaterialGroupController::class, 'display']);
@@ -80,9 +82,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/master_data/unit/{id}', [App\Http\Controllers\UnitController::class, 'display']);
     Route::get('/master_data/units', [App\Http\Controllers\UnitController::class, 'list']);
     
-    Route::get('/contract_item/create/{section_id}', [App\Http\Controllers\ContractItemController::class, 'create']);
-    Route::get('/contract_item/{id}', [App\Http\Controllers\ContractItemController::class, 'display']);
-    Route::get('/contract_items', [App\Http\Controllers\ContractItemController::class, 'list']);
     
 
     Route::get('/material_quantity_request/create/{project_id}/{section_id}/{component_id}', [App\Http\Controllers\MaterialQuantityRequestController::class, 'create']);

@@ -260,7 +260,7 @@
     }
 
     cancelBtn.onclick = ()=>{
-        document.location.href = '/project/section/{{$section->id}}';
+        document.location.href = '/project/section/contract_item/{{$contract_item->id}}';
     }
 
     updateBtn.onclick = ()=>{
@@ -344,7 +344,7 @@
     }
 
     printBtn.onclick = ()=>{
-        window.open( '/component/print/{{$component->id}}','_blank').focus();
+        window.open( '/project/section/contract_item/component/print/{{$component->id}}','_blank').focus();
     }
 
 
@@ -368,7 +368,7 @@
                 return false;
             }
 
-            window.location.href = '/project/section/{{$section->id}}';
+            window.location.href = '/project/section/contract_item/{{$contract_item->id}}';
         });
     }
 
