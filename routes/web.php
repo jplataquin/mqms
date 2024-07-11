@@ -76,10 +76,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/master_data/payment_term/{id}', [App\Http\Controllers\PaymentTermController::class, 'display']);
     Route::get('/master_data/payment_terms', [App\Http\Controllers\PaymentTermController::class, 'list']);
     
-    Route::get('/master_data/component_unit/create', [App\Http\Controllers\ComponentUnitController::class, 'create']);
-    Route::get('/master_data/component_unit/{id}', [App\Http\Controllers\ComponentUnitController::class, 'display']);
-    Route::get('/master_data/component_units', [App\Http\Controllers\ComponentUnitController::class, 'list']);
+    Route::get('/master_data/unit/create', [App\Http\Controllers\UnitController::class, 'create']);
+    Route::get('/master_data/unit/{id}', [App\Http\Controllers\UnitController::class, 'display']);
+    Route::get('/master_data/units', [App\Http\Controllers\UnitController::class, 'list']);
     
+    Route::get('/contract_item/create/{section_id}', [App\Http\Controllers\ContractItemController::class, 'create']);
+    Route::get('/contract_item/{id}', [App\Http\Controllers\ContractItemController::class, 'display']);
+    Route::get('/contract_items', [App\Http\Controllers\ContractItemController::class, 'list']);
+    
+
     Route::get('/material_quantity_request/create/{project_id}/{section_id}/{component_id}', [App\Http\Controllers\MaterialQuantityRequestController::class, 'create']);
     Route::get('/material_quantity_request/{id}', [App\Http\Controllers\MaterialQuantityRequestController::class, 'display']);
     Route::get('/material_quantity_requests', [App\Http\Controllers\MaterialQuantityRequestController::class, 'list']);

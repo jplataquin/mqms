@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\DB;
 
 class ContractItemController extends Controller
 {
-    public function create($project_id,$section_id){
+    public function create($section_id){
 
-        $project_id = (int) $project_id;
+        $section_id = (int) $section_id;
 
-        $project = Project::findOrFail($project_id);
-        $section = Section::findOrFail($project_id);
+        $section = Section::findOrFail($section_id);
+        $project = $section->Project;
         
         return view('contract_item/create',[
             'project' => $project,
