@@ -67,20 +67,25 @@
                 @endphp
 
                 @foreach($contract_item->components as $component)
+                
+                
+                @php
+                    $component_items = $component->ComponentItems;
+                @endphp
+                
+                <tr>
                     
-                    @php
-                        $component_items = $component->ComponentItems;
-                    @endphp
+                    @if($first)
+                    <td rowspan="{{count($component_items)}}">
+                        {{$component->name}}
+                    </td>
+                        @php
+                            $first = false;
+                        @endphp
+                    @endif
+
                     @foreach($component_items as $component_item)
-                        <tr>
-                            @if($first)
-                            <td rowspan="{{count($component_items)}}">
-                                {{$component->name}}
-                            </td>
-                                @php
-                                    $first = false;
-                                @endphp
-                            @endif
+                            
                             <td>
                                 {{$component_item->name}}
                             </td>
