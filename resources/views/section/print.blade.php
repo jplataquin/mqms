@@ -73,11 +73,11 @@
                     @php 
                         $first = true;
                     @endphp
-                    
+
                     <tr>
 
                             @if($first)
-                            <td rowspan="{{count($component_items)}}">
+                            <td rowspan="">
                                 {{$component->name}}
                             </td>
 
