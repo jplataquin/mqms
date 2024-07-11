@@ -97,15 +97,6 @@
         document.location.href = '/project/section/print/{{$section->id}}';
     }
 
-    quantity.onkeypress = (e)=>{
-        return window.util.inputNumber(quantity,e,2,false);
-    }
-
-    use_count.onkeypress = (e)=>{
-        return window.util.inputNumber(use_count,e,0,false);
-    }
-
-
     editBtn.onclick = (e)=>{
         e.preventDefault();
 

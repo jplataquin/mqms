@@ -206,7 +206,7 @@
 
 
     component_item_variable.onkeypress = (e)=>{
-        return window.util.inputNumber(component_item_variable,e,3,false);
+        return window.util.inputNumber(component_item_variable,e,6,false);
     }
 
     component_item_function_type.onchange = (e) =>{
