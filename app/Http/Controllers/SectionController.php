@@ -59,8 +59,6 @@ class SectionController extends Controller
         $contract_items = $section->ContractItems()->with('components')->get();
 
         $unit_options = Unit::toOptions();
-        
-        foreach($contract_items)
 
         return view('section/print',[
             'section'          => $section,
