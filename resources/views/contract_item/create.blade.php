@@ -51,7 +51,7 @@
 
         <div class="col-lg-6">
             <div class="form-group">
-                <label>Contract Unit Price</label>
+                <label>Contract Unit Price (PHP)</label>
                 <input type="text" id="contract_unit_price" class="form-control"/>
             </div>
         </div>
@@ -66,7 +66,7 @@
 
         <div class="col-lg-6">
             <div class="form-group">
-                <label>POW/DUPA Unit Price</label>
+                <label>POW/DUPA Unit Price (PHP)</label>
                 <input type="text" id="ref_1_unit_price" class="form-control"/>
             </div>
         </div>
