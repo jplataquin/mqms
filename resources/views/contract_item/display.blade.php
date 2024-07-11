@@ -55,12 +55,6 @@
 
         <div class="col-lg-4">
             <div class="form-group">
-                <label>Unit Price (PHP)</label>
-                <input type="text" id="contract_unit_price" class="form-control editable" disabled="true" value="{{$contract_item->contract_unit_price}}"/>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="form-group">
                 <label>Unit</label>
                 <select class="form-control editable" id="unit" disabled="true">
                     @foreach($unit_options as $unit)
@@ -72,6 +66,13 @@
                     >{{$unit->text}} @if($unit->deleted) [Deleted] @endif</option>
                     @endforeach
                 </select>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label>Unit Price (PHP)</label>
+                <input type="text" id="contract_unit_price" class="form-control editable" disabled="true" value="{{$contract_item->contract_unit_price}}"/>
             </div>
         </div>
     </div>
@@ -89,16 +90,18 @@
 
         <div class="col-lg-4">
             <div class="form-group">
-                <label>Unit Price (PHP)</label>
-                <input type="text" id="ref_1_unit_price" class="form-control editable" disabled="true" value="{{$contract_item->ref_1_unit_price}}"/>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="form-group">
                 <label>Unit</label>
                 <input type="text" id="ref_1_unit" class="form-control" disabled="true" />
             </div>
         </div>
+
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label>Unit Price (PHP)</label>
+                <input type="text" id="ref_1_unit_price" class="form-control editable" disabled="true" value="{{$contract_item->ref_1_unit_price}}"/>
+            </div>
+        </div>
+        
     </div>
     
     
