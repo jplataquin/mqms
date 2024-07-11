@@ -62,14 +62,12 @@
                     <td></td>
                 </tr>
 
-                @php
-                    $first = true;
-                @endphp
 
                 @foreach($contract_item->components as $component)
                     
                     @php
                         $component_items = $component->ComponentItems;
+                        $first = true;
                     @endphp
                     @foreach($component_items as $component_item)
                         <tr>
@@ -105,8 +103,8 @@
                         </tr>    
                     @endforeach
 
-                    @php
-                        $first = false;
+                    @php 
+                        $first = true;
                     @endphp
                 @endforeach
             @endforeach
