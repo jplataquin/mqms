@@ -144,7 +144,7 @@ class ComponentController extends Controller
     public function display($id){
 
         $component = Component::findOrFail($id);
-        
+
         $contract_item   = $component->ContractItem;
         $section         = $component->Section;
         $project         = $section->Project;
@@ -168,6 +168,7 @@ class ComponentController extends Controller
         return view('component/display',[
             'project'           => $project,
             'section'           => $section,
+            'contract_item'     => $contract_item,
             'component'         => $component,
             'componentItems'    => $componentItems,
             'materialItems'     => $materialItems,
