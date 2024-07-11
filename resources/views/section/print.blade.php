@@ -63,6 +63,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                 </tr>
 
                 
@@ -93,7 +94,9 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td>{{$component->quantity}} {{$unit_options[$component->unit_id]->text}}</td>
+                        <th>
+                            {{$component->quantity}} {{$unit_options[$component->unit_id]->text}}
+                        </th>
                         <td></td>
                         <td></td>
                         <td></td>
