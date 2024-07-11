@@ -156,7 +156,7 @@ class ContractItemController extends Controller
         $contract_item->unit_id                 = $unit_id;
         $contract_item->created_by              = $user_id;
 
-        $section->save();
+        $contract_item->save();
 
         return response()->json([
             'status'    => 1,
@@ -250,7 +250,7 @@ class ContractItemController extends Controller
         $contract_item->unit_id                 = $unit_id;
         $contract_item->updated_by              = $user_id;
 
-        $section->save();
+        $contract_item->save();
 
 
         return response()->json([
