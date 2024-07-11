@@ -30,7 +30,6 @@ class ComponentController extends Controller
         $unit_id            = (int) $request->input('unit_id');
         $section_id         = (int) $request->input('section_id');
         $use_count          = (int) $request->input('use_count') ?? 1;
-        $description        = $request->input('description') ?? '';
 
         $validator = Validator::make($request->all(),[
             'name' => [
@@ -58,9 +57,6 @@ class ComponentController extends Controller
                 'required',
                 'integer',
                 'gte:1'
-            ],
-            'description' =>[
-                'max:500'
             ],
             'contract_item_id' => [
                 'required',
@@ -91,7 +87,6 @@ class ComponentController extends Controller
         $component->quantity               = $quantity;
         $component->unit_id                = $unit_id;
         $component->use_count              = $use_count;
-        $component->description            = $description;
         $component->status                 = 'PEND';
         $component->section_id             = $section_id;
         $component->created_by             = $user_id;
@@ -240,7 +235,6 @@ class ComponentController extends Controller
         $name                = $request->input('name') ?? '';
         $quantity            = $request->input('quantity');
         $status              = $request->input('status');
-        $description         = $request->input('description') ?? '';
         $unit_id   = (int) $request->input('unit_id');
         $section_id          = (int) $request->input('section_id');
         $use_count           = (int) $request->input('use_count') ?? 1;
@@ -276,9 +270,6 @@ class ComponentController extends Controller
                 'required',
                 'integer',
                 'gte:1'
-            ],
-            'description' =>[
-                'max:500'
             ]
         ]);
 
@@ -306,9 +297,8 @@ class ComponentController extends Controller
 
         $component->name                         = $name;
         $component->quantity                     = $quantity;
-        $component->unit_id            = $unit_id;
+        $component->unit_id                      = $unit_id;
         $component->use_count                    = $use_count;
-        $component->description                  = $description;
         $component->status                       = 'PEND';
         $component->updated_by                   = $user_id;
         $component->save();
