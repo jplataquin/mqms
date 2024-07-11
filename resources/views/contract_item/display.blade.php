@@ -103,6 +103,74 @@
         </div>
     </div>
 
+    <hr>
+
+    <div class="mt-3">
+        
+        <div class="">
+            <h3>Components</h3>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-lg-4 col-sm-12">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" id="component_name" />
+                </div>
+            </div>
+            <div class="col-lg-1 col-sm-12">
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="text" class="form-control" id="quantity" />
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-12">
+                <div class="form-group">
+                    <label>Unit</label>
+                    <select id="unit_id" class="form-control">
+                        @foreach($unit_options as $opt)
+                            <option value="{{$opt->id}}">{{$opt->text}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-1 col-sm-12">
+                <div class="form-group">
+                    <label>Use Count</label>
+                    <input type="text" class="form-control" value="1" id="use_count" />
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-12">
+            <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" class="form-control" id="description" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 text-end">
+                   <button id="createBtn" class="btn btn-warning">Create</button>
+            </div>
+        </div>
+
+        <div id="component_list" class="mt-3">
+            @foreach($components as $component)
+
+                <div class="item row selectable-div fade-in border mb-3" data-id="{{$component->id}}">
+                    <div class="col-lg-12">
+                        <h3>{{$component->name}}</h3>
+                        <h6> 
+                            @if(isset($unit_options[ $component->unit_id ]))
+                                {{$component->quantity}} {{ $unit_options[ $component->unit_id ]->text }}
+                            @endif
+                        </h6>
+                    </div>
+                </div>
+
+            @endforeach
+        </div>
+
+    </div>
    
     
 <script type="module">
@@ -120,6 +188,18 @@
     const ref_1_quantity            = $q('#ref_1_quantity').first();
     const ref_1_unit_price          = $q('#ref_1_unit_price').first();
     const unit                      = $q('#unit').first();
+
+    const component                   = $q('#component_name').first();
+    const unit_id                     = $q('#unit_id').first();
+    const quantity                    = $q('#quantity').first();
+    const component_list              = $q('#component_list').first();
+    const createBtn                   = $q('#createBtn').first();
+    const use_count                   = $q('#use_count').first();
+    const component_description       = $q('#component_description').first();
+    
+    const t             = new Template();
+    const unit_options  = @json($unit_options);
+
 
     contract_quantity.onkeypress = (e)=>{
         return window.util.inputNumber(contract_quantity,e,2,false);
@@ -210,8 +290,78 @@
             window.location.href = '/contract_items';
         });
     }
-    
 
+    function Component(id){
+
+
+        let name = t.h3('Loading...');
+        let quantity_unit = t.h6('Loading...');
+
+        let el = t.div({class:'row selectable-div fade-in border mb-3',dataId:id},()=>{
+            t.div({class:'col-lg-12'},(el)=>{
+                el.append(name);
+                el.append(quantity_unit);
+            });
+        });
+
+
+        window.util.$get('/api/component',{
+            id:id
+        }).then(reply=>{
+
+            if(!reply.status){
+
+                alert(reply.message);
+                return false;
+            }
+
+            name.innerText = reply.data.name;
+            quantity_unit.innerText = reply.data.quantity+' '+unit_options[reply.data.unit_id].text;
+
+            el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+        });
+
+
+        el.onclick = ()=>{
+            document.location.href = '/component/'+id;
+        }
+
+        return el;
+    }
+
+
+    createBtn.onclick = ()=>{
+
+            window.util.blockUI();
+
+            window.util.$post('/api/component/create',{
+                section_id          : '{{$section->id}}',
+                contract_item_id    : '{{$contract_item->id}}',
+                name                : component.value,
+                quantity            : quantity.value,
+                unit_id             : unit_id.value,
+                use_count           : use_count.value,
+                description         : description.value
+            }).then(reply=>{
+
+                window.util.unblockUI();
+
+                if(reply.status <= 0){
+                    window.util.showMsg(reply.message);
+                    return false;
+                }
+
+                $el.append(Component(reply.data.id)).to(component_list);
+            });
+
+    }
+
+    $q('.item').apply((el)=>{
+
+        el.onclick = (e)=>{
+            document.location.href = '/component/'+el.getAttribute('data-id');
+        }
+    });
 
 </script>
 </div>
