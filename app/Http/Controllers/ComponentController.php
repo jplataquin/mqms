@@ -26,6 +26,7 @@ class ComponentController extends Controller
 
         $name               = $request->input('name') ?? '';
         $quantity           = $request->input('quantity') ?? 0;
+        $contract_item_id   = (int) $request->input('contract_item_id');
         $unit_id            = (int) $request->input('unit_id');
         $section_id         = (int) $request->input('section_id');
         $use_count          = (int) $request->input('use_count') ?? 1;
@@ -43,7 +44,7 @@ class ComponentController extends Controller
                         ->where('deleted_at',null);
                 }),
             ],
-            'component_unit_id' =>[
+            'unit_id' =>[
                 'required',
                 'integer',
                 'gte:1'
@@ -61,7 +62,16 @@ class ComponentController extends Controller
             'description' =>[
                 'max:500'
             ],
-            'section_id' => ['required','integer','gte:1']
+            'contract_item_id' => [
+                'required',
+                'integer',
+                'gte:1'
+            ],
+            'section_id' => [
+                'required',
+                'integer',
+                'gte:1'
+            ]
         ]);
          
         if ($validator->fails()) {
@@ -77,8 +87,9 @@ class ComponentController extends Controller
         $component = new Component();
 
         $component->name                   = $name;
+        $component->contract_item_id       = $contract_item_id;
         $component->quantity               = $quantity;
-        $component->component_unit_id      = $component_unit_id;
+        $component->unit_id                = $unit_id;
         $component->use_count              = $use_count;
         $component->description            = $description;
         $component->status                 = 'PEND';
@@ -230,7 +241,7 @@ class ComponentController extends Controller
         $quantity            = $request->input('quantity');
         $status              = $request->input('status');
         $description         = $request->input('description') ?? '';
-        $component_unit_id   = (int) $request->input('component_unit_id');
+        $unit_id   = (int) $request->input('unit_id');
         $section_id          = (int) $request->input('section_id');
         $use_count           = (int) $request->input('use_count') ?? 1;
 
@@ -245,7 +256,7 @@ class ComponentController extends Controller
                 'numeric',
                 'gte:1'
             ],
-            'component_unit_id'   => [
+            'unit_id'   => [
                 'required',
                 'integer',
                 'gte:1'               
@@ -295,7 +306,7 @@ class ComponentController extends Controller
 
         $component->name                         = $name;
         $component->quantity                     = $quantity;
-        $component->component_unit_id            = $component_unit_id;
+        $component->unit_id            = $unit_id;
         $component->use_count                    = $use_count;
         $component->description                  = $description;
         $component->status                       = 'PEND';
