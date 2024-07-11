@@ -112,7 +112,7 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-lg-4 col-sm-12">
+            <div class="col-lg-3 col-sm-12">
                 <div class="form-group">
                     <label>Name</label>
                     <input type="text" class="form-control" id="component_name" />
@@ -141,14 +141,12 @@
                 </div>
             </div>
             <div class="col-lg-4 col-sm-12">
-            <div class="form-group">
+                <div class="form-group">
                     <label>Description</label>
                     <input type="text" class="form-control" id="description" />
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12 col-sm-12 text-end">
+            <div class="col-lg-2 col-sm-12 text-end">
                    <button id="createBtn" class="btn btn-warning">Create</button>
             </div>
         </div>
