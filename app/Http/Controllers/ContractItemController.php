@@ -93,7 +93,7 @@ class ContractItemController extends Controller
             'item_code' => [
                 'required',
                 'max:255',
-                Rule::unique('contrac_items')->where(
+                Rule::unique('contract_items')->where(
                 function ($query) use ($section_id,$item_code) {
                     return $query
                     ->where('section_id', $section_id)
@@ -185,7 +185,7 @@ class ContractItemController extends Controller
             'item_code' => [
                 'required',
                 'max:255',
-                Rule::unique('contrac_items')->where(
+                Rule::unique('contract_items')->where(
                 function ($query) use ($section_id,$item_code,$id) {
                     return $query
                     ->where('section_id', $section_id)
