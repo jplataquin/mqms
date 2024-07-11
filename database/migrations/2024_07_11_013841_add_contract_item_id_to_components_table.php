@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('components', function (Blueprint $table) {
-            $table->bigIntenger('contract_item_id')->after('id');
+            $table->bigInteger('contract_item_id')->after('id');
         
         });
     }
