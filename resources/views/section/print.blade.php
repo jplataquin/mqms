@@ -7,9 +7,9 @@
             <tr>
                 <th rowspan="2">Item Code</th>
                 <th rowspan="2">Description</th>
-            <tr>
-            <tr>
                 <th colspan="4">Contract</th>
+            <tr>
+            <tr>
                 <th>QTY</th>
                 <th>UNIT</th>
                 <th>UNIT PRICE</th>
