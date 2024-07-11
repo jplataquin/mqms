@@ -11,6 +11,7 @@
             <tr>
             <tr>
                 <th></th>
+                <th></th>
                 <th>QTY</th>
                 <th>UNIT</th>
                 <th>UNIT PRICE</th>
