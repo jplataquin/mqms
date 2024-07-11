@@ -10,7 +10,7 @@
                 
                 <tr>
                     <td>{{$contract_item->item_code}}</td>
-                    <td>{{$contract_item->description}}</td>
+                    <td colspan="8">{{$contract_item->description}}</td>
                 </tr>
 
                 @php
@@ -29,6 +29,27 @@
                         @endif
                         <td>
                             {{$component->name}}
+                        </td>
+                        
+                        
+                        <td>
+                            {{$contract_item->contract_quantity}}
+                        </td>
+                        <td>
+                            {{$contract_item->unit_id}}
+                        </td>
+                        <td>
+                            {{$contract_item->contract_unit_price}}
+                        </td>
+
+                        <td>
+                            {{$contract_item->ref_1_quantity}}
+                        </td>
+                        <td>
+                            {{$contract_item->unit_id}}
+                        </td>
+                        <td>
+                            {{$contract_item->ref_1_unit_price}}
                         </td>
                     </tr>    
                 @endforeach
