@@ -26,8 +26,8 @@
     <div class="row mb-3">
         <div class="col-lg-12">
             <div class="form-group">
-                <label>Code Item</label>
-                <input type="text" id="code_item" class="form-control"/>
+                <label>Item Code</label>
+                <input type="text" id="item_code" class="form-control"/>
             </div>
         </div>
     </div>
