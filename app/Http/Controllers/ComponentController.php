@@ -6,8 +6,8 @@ use App\Helpers\CustomHelpers;
 use Illuminate\Http\Request;
 use App\Models\Component;
 use App\Models\MaterialItem;
-use App\Models\ComponentUnit;
-use App\Models\ComponentItem;
+use App\Models\Unit;
+use App\Models\ComponentItem; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
@@ -26,7 +26,7 @@ class ComponentController extends Controller
 
         $name               = $request->input('name') ?? '';
         $quantity           = $request->input('quantity') ?? 0;
-        $component_unit_id  = (int) $request->input('component_unit_id');
+        $unit_id            = (int) $request->input('unit_id');
         $section_id         = (int) $request->input('section_id');
         $use_count          = (int) $request->input('use_count') ?? 1;
         $description        = $request->input('description') ?? '';
@@ -152,7 +152,7 @@ class ComponentController extends Controller
             $materialArr[ $mi->id ] = $mi;
         }
 
-        $unit_options = ComponentUnit::toOptions();
+        $unit_options = Unit::toOptions();
 
         $hash = generateComponentHash($project,$section,$component,$componentItems,$materialArr);
 
@@ -186,7 +186,7 @@ class ComponentController extends Controller
         
         $hash = generateComponentHash($project,$section,$component,$componentItems,$materialItems);
  
-        $unit_options    = ComponentUnit::toOptions();
+        $unit_options    = Unit::toOptions();
 
  
 

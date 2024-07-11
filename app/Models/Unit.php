@@ -9,17 +9,17 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 
-class ComponentUnit extends Model
+class Unit extends Model
 {
     use HasFactory,SoftDeletes;
 
-    protected $table = 'component_units';
+    protected $table = 'units';
 
     //To do make this into a callback later on
     public static function toOptions(Array $ids = []){
 
         if(count($ids)){    
-            $rows = parent::whereIn('id',$ids)->where('deleted_at','=',null)->get();
+            $rows = parent::whereIn('id',$ids)->get();
         }else{
             $rows = parent::where('deleted_at','=',null)->get();
         }
@@ -30,7 +30,8 @@ class ComponentUnit extends Model
         foreach($rows as $row){
             $result[$row->id] = (object) [
                 'id'    => $row->id,
-                'text'  => $row->text
+                'text'  => $row->text,
+                'deleted' => (boolean) ($row->deleted_at == null)
             ];
         }
 

@@ -37,9 +37,9 @@
                 <tr>
                     <th>Unit</th>
                     <td>
-                        <select id="component_unit_id" class="form-control editable_field" disabled="true">
+                        <select id="unit_id" class="form-control editable_field" disabled="true">
                             @foreach($unit_options as $opt)
-                                <option value="{{$opt->id}}" @if($component->component_unit_id == $opt->id) selected @endif>{{$opt->text}}</option>
+                                <option value="{{$opt->id}}" @if($component->unit_id == $opt->id) selected @endif>{{$opt->text}}</option>
                             @endforeach
                         </select>
                     </td>
@@ -185,7 +185,7 @@
     let printBtn            = $q('#printBtn').first();
     let status              = $q('#status').first();
     let component_quantity  = $q('#component_quantity').first();
-    let component_unit_id   = $q('#component_unit_id').first();
+    let unit_id             = $q('#unit_id').first();
     let use_count           = $q('#use_count').first();
     let description         = $q('#description').first();
 
@@ -273,7 +273,7 @@
             id:'{{$component->id}}',
             section_id:'{{$section->id}}',
             name:component.value,
-            component_unit_id: component_unit_id.value,
+            unit_id: unit_id.value,
             quantity: component_quantity.value,
             use_count: use_count.value,
             description: description.value
@@ -307,7 +307,7 @@
             name                : component_item_name.value,
             budget_price        : component_item_budget_price.value,
             quantity            : component_item_quantity.value,
-            component_unit_id   : component_item_unit.value,
+            unit_id             : component_item_unit.value,
             function_type_id    : component_item_function_type.value,
             function_variable   : component_item_variable.value
         }).then(reply=>{

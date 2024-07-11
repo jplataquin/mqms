@@ -6,21 +6,30 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use App\Models\Section;
+use App\Models\ComponentItem;
 use App\Models\User;
 
-class Project extends Model
+class ContractItem extends Model
 {
     use HasFactory,SoftDeletes;
 
-    protected $table = 'projects';
+    protected $table = 'contract_items';
+
     public $deleteException = null;
 
-    public function Sections(): HasMany
+    public function Section(): BelongsTo
     {
-        return $this->hasMany(Section::class);
+        return $this->belongsTo(Section::class);
+    }
+
+    public function Components(): HasMany
+    {
+        return $this->hasMany(Component::class);
     }
 
     public function CreatedByUser(){   
@@ -57,43 +66,41 @@ class Project extends Model
     }
 
 
-
     public function delete(){
-        
+
         DB::beginTransaction();
-    
+
         try {  
-            //Section
-            $sections = $this->Sections;
 
-            if($sections){
+            $components = $this->Components;
 
-                foreach($sections as $section){
+            if($components){
+
+                foreach($components as $component){
                     
-                    if(!$section->delete()){
-                        throw new Exception($section->deleteException);
+                    if(!$component->delete()){
+                        throw new Exception($component->deleteException);
                     }
+                }
+            }
 
-                }//foreach
-    
-            }//if
-            
             $this->deleted_by = Auth::user()->id;
             $this->save();
             parent::delete();
-                
+            
             DB::commit();
-    
+
             return true;
-    
-        }catch(\Exception $e){
+
+         }catch(\Exception $e){
 
             $this->deleteException = $e;
 
             DB::rollback();
+
+            return false;
             
-            return false;         
-            
-        }
+         }
     }
+
 }

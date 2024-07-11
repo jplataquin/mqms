@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Project;
 use App\Models\Component;
+use App\Models\ContractItem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,20 +36,25 @@ class Section extends Model
         return $this->hasMany(Component::class);
     }
 
+    public function ContractItems(): HasMany
+    {
+        return $this->hasMany(ContractItem::class);
+    }
+
     public function delete(){
         DB::beginTransaction();
 
         try {  
 
             //MaterialBudget
-            $components = $this->components;
+            $contract_items = $this->ContractItems;
             
-            if($components){
+            if($contract_items){
                 
-                foreach($components as $component){
+                foreach($contract_items as $contract_item){
                     
-                    if(!$component->delete()){
-                        throw new Exception($component->deleteException);
+                    if(!$contract_item->delete()){
+                        throw new Exception($contract_item->deleteException);
                     }
                 }
             }

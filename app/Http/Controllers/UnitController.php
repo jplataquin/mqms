@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\ComponentUnit;
+use App\Models\Unit;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 
-class ComponentUnitController extends Controller
+class UnitController extends Controller
 {
     public function create(){
 
@@ -20,17 +21,17 @@ class ComponentUnitController extends Controller
 
         $id = (int) $id;
 
-        $componentUnit = componentUnit::findOrFail($id);
+        $unit = Unit::findOrFail($id);
 
-        return view('component_unit/display',[
-            'componentUnit' => $componentUnit
+        return view('unit/display',[
+            'unit' => $unit
         ]);
     }
 
 
     public function list(){
 
-        return view('component_unit/list');
+        return view('unit/list');
     }
 
 
@@ -44,7 +45,7 @@ class ComponentUnitController extends Controller
             'text' => [
                 'required',
                 'max:255',
-                'unique:component_units'
+                'unique:units'
             ]
         ]);
 
@@ -58,19 +59,19 @@ class ComponentUnitController extends Controller
 
         $user_id = Auth::user()->id;
 
-        $componentUnit = new ComponentUnit();
+        $unit = new Unit();
 
-        $componentUnit->text          = $text;
-        $componentUnit->created_by    = $user_id;
+        $unit->text          = $text;
+        $unit->created_by    = $user_id;
     
 
-        $componentUnit->save();
+        $unit->save();
 
         return response()->json([
             'status'    => 1,
             'message'   => '',
             'data'      => [
-                'id'=> $componentUnit->id
+                'id'=> $unit->id
             ]
         ]);
 
@@ -91,7 +92,7 @@ class ComponentUnitController extends Controller
             'text' => [
                 'required',
                 'max:255',
-                Rule::unique('component_units')->ignore($id),
+                Rule::unique('units')->ignore($id),
             ]
         ]);
 
@@ -105,29 +106,27 @@ class ComponentUnitController extends Controller
         }
 
         $user_id = Auth::user()->id;
-        $componentUnit = ComponentUnit::find($id);
+        $unit    = Unit::find($id);
 
-        if(!$componentUnit){
+        if(!$unit){
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Record not found',
-                'data'      => [
-                    'id' => $id
-                ]
+                'data'      => []
             ]);
         }
 
-        $componentUnit->text                         = $text;
-        $componentUnit->updated_by                   = $user_id;
+        $unit->text                         = $text;
+        $unit->updated_by                   = $user_id;
 
-        $componentUnit->save();
+        $unit->save();
 
 
         return response()->json([
             'status'    => 1,
             'message'   => '',
             'data'      => [
-                'id' => $id
+                'id' => $unit->id
             ]
         ]);
 
@@ -145,20 +144,20 @@ class ComponentUnitController extends Controller
         $query      = $request->input('query')          ?? '';
         $result = [];
 
-        $componentUnit = new ComponentUnit();
+        $unit = new Unit();
 
         if($query != ''){
-            $componentUnit = $componentUnit->where('text','LIKE','%'.$query.'%');
+            $unit = $unit->where('text','LIKE','%'.$query.'%');
         }
 
         if($limit > 0){
             $page   = ($page-1) * $limit;
             
-            $result = $componentUnit->orderBy($orderBy,$order)->skip($page)->take($limit)->get();
+            $result = $unit->orderBy($orderBy,$order)->skip($page)->take($limit)->get();
             
         }else{
 
-            $result = $componentUnit->orderBy($orderBy,$order)->take($limit)->get();
+            $result = $unit->orderBy($orderBy,$order)->take($limit)->get();
         }
 
         return response()->json([
@@ -189,30 +188,38 @@ class ComponentUnitController extends Controller
             ]);
         }
 
-        $componentUnit = ComponentUnit::find($id);
+        $unit = Unit::find($id);
 
-        if(!$componentUnit){
+        if(!$unit){
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Record not found',
                 'data'      => []
             ]);
         }
-        
-        $user_id = Auth::user()->id;
-        
-        $componentUnit->deleted_by = $user_id;
-        
-        $componentUnit->save();
 
-        //Soft delete
-        if(!$componentUnit->delete()){
-           
-           return response()->json([
-               'status'    => 0,
-               'message'   => '' ,
-               'data'      => []
-           ]);
+        $user_id = Auth::user()->id;
+
+        DB::beginTransaction();
+
+        try {
+
+            $unit->deleted_by = $user_id;
+            
+            $unit->save();
+
+            //Soft delete
+            $unit->delete();
+              
+            DB::commit();
+
+        }catch(\Exception $e){
+
+            return response()->json([
+                'status'    => 0,
+                'message'   => $e->getMessage(),
+                'data'      => []
+            ]);
         }
 
 

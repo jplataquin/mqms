@@ -3,7 +3,7 @@
 @section('content')
 <div id="content">
 <div class="container">
-<h5>Master Data » Component Unit » Create</h5>
+<h5>Master Data » Unit » Create</h5>
 <hr>
 
     <div class="row">
@@ -38,7 +38,7 @@
 
         window.util.blockUI();
 
-        window.util.$post('/api/component_unit/create',{
+        window.util.$post('/api/unit/create',{
             text: text.value
         }).then(reply=>{
 
@@ -50,14 +50,14 @@
 
             window.util.unblockUI();
       
-            document.location.href = '/master_data/component_unit/'+reply.data.id;
+            document.location.href = '/master_data/unit/'+reply.data.id;
 
         
         });
     }
 
     cancelBtn.onclick = (e) => {
-        document.location.href = '/master_data/component_units';
+        document.location.href = '/master_data/units';
 
     }
 

@@ -54,6 +54,17 @@ class Component extends Model
         return $user;
     }
 
+    public function DeletedByUser(){   
+       
+        $user = User::find($this->deleted_by);
+
+        if(!$user){
+            return User::defaultAttirbutes();
+        }
+
+        return $user;
+    }
+
     public function ApprovedByUser(){   
        
         $user = User::find($this->approved_by);
