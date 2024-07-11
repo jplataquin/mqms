@@ -77,9 +77,7 @@
                             <td rowspan="{{count($component_items)}}">
                                 {{$component->name}}
                             </td>
-                                @php
-                                    $first = false;
-                                @endphp
+                                
                             @endif
                             <td>
                                 {{$component_item->name}}
@@ -106,6 +104,10 @@
                             </td>
                         </tr>    
                     @endforeach
+
+                    @php
+                        $first = false;
+                    @endphp
                 @endforeach
             @endforeach
             
