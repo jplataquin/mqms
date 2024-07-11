@@ -65,10 +65,14 @@
 
                     @php
                         $component_items = $component->ComponentItems;
-                        $first = true;
+                        
                     @endphp
                 
                     @foreach($component_items as $component_item)
+                    
+                    @php 
+                        $first = true;
+                    @endphp
                     
                     <tr>
 
