@@ -65,7 +65,7 @@
             <div class="col-lg-2 col-sm-12">
                 <div class="form-group">
                     <label>Unit</label>
-                    <select id="component_unit_id" class="form-control">
+                    <select id="unit_id" class="form-control">
                         @foreach($unit_options as $opt)
                             <option value="{{$opt->id}}">{{$opt->text}}</option>
                         @endforeach
@@ -98,8 +98,8 @@
                     <div class="col-lg-12">
                         <h3>{{$component->name}}</h3>
                         <h6> 
-                            @if(isset($unit_options[ $component->component_unit_id ]))
-                                {{$component->quantity}} {{ $unit_options[ $component->component_unit_id ]->text }}
+                            @if(isset($unit_options[ $component->unit_id ]))
+                                {{$component->quantity}} {{ $unit_options[ $component->unit_id ]->text }}
                             @endif
                         </h6>
                     </div>
@@ -120,7 +120,7 @@
     let cancelBtn                   = $q('#cancelBtn').first();
     let deleteBtn                   = $q('#deleteBtn').first();
     let component                   = $q('#component').first();
-    let component_unit_id           = $q('#component_unit_id').first();
+    let unit_id                     = $q('#unit_id').first();
     let quantity                    = $q('#quantity').first();
     let component_list              = $q('#component_list').first();
     let createBtn                   = $q('#createBtn').first();
@@ -235,7 +235,7 @@
             }
 
             name.innerText = reply.data.name;
-            quantity_unit.innerText = reply.data.quantity+' '+unit_options[reply.data.component_unit_id].text;
+            quantity_unit.innerText = reply.data.quantity+' '+unit_options[reply.data.unit_id].text;
 
             el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
         });
@@ -257,7 +257,7 @@
             section_id: '{{$section->id}}',
             name: component.value,
             quantity: quantity.value,
-            component_unit_id: component_unit_id.value,
+            unit_id: unit_id.value,
             use_count: use_count.value,
             description: description.value
         }).then(reply=>{

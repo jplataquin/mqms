@@ -134,9 +134,16 @@
 
         window.util.blockUI();
 
-        window.util.$post('/api/unit/update',{
-            text    : text.value,
-            id      : '{{$unit->id}}'
+        window.util.$post('/api/contract_item/update',{
+            id                  : '{{$contract_item->id}}',
+            section_id          : '{{$section->id}}',
+            item_code           : item_code.value,
+            description         : description.value,
+            contract_quantity   : contract_quantity.value,
+            contract_unit_price : contract_unit_price.value,
+            ref_1_quantity      : ref_1_quantity.value,
+            ref_1_unit_price    : ref_1_unit_price.value,
+            unit_id             : unit.value,
         }).then(reply=>{
 
             if(reply.status <= 0){
@@ -158,7 +165,7 @@
 
     deleteBtn.onclick = (e)=>{
 
-        let answer = confirm('Are you sure you want to delete this Component Unit?');
+        let answer = confirm('Are you sure you want to delete this Contract Item?');
 
         if(!answer){
             return false;
@@ -166,8 +173,8 @@
 
         window.util.blockUI();
 
-        window.util.$post('/api/unit/delete',{
-            id: "{{$unit->id}}"
+        window.util.$post('/api/contract_item/delete',{
+            id: "{{$contract_item->id}}"
         }).then(reply=>{
 
             window.util.unblockUI();
@@ -177,7 +184,7 @@
                 return false;
             }
 
-            window.location.href = '/master_data/units';
+            window.location.href = '/contract_items';
         });
     }
     

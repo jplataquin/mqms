@@ -180,6 +180,7 @@ class ContractItemController extends Controller
         $ref_1_unit_price         = $request->input('ref_1_unit_price') ?? '';
         $unit_id                  = (int) $request->input('unit_id') ?? 0;
         $id                       = (int) $request->input('id') ?? 0;
+        $section_id               = (int) $request->input('section_id') ?? 0;
 
         $validator = Validator::make($request->all(),[
             'item_code' => [
@@ -195,6 +196,11 @@ class ContractItemController extends Controller
             ],
             'description' => [
                 'required',
+            ],
+            'section_id' =>[
+                'required',
+                'integer',
+                'gte:1'
             ],
             'unit_id'      =>[
                 'required',
@@ -228,8 +234,8 @@ class ContractItemController extends Controller
             ]);
         }
 
-        $user_id = Auth::user()->id;
-        $contract_item = ContractItem::find($id);
+        $user_id        = Auth::user()->id;
+        $contract_item  = ContractItem::find($id);
 
         if(!$contract_item){
             return response()->json([
