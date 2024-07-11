@@ -19,7 +19,7 @@ class Unit extends Model
     public static function toOptions(Array $ids = []){
 
         if(count($ids)){    
-            $rows = parent::whereIn('id',$ids)->get();
+            $rows = parent::whereIn('id',$ids)->orderBy('text','ASC')->get();
         }else{
             $rows = parent::where('deleted_at','=',null)->get();
         }
