@@ -43,21 +43,18 @@
         </div>
     </div>
     
-    <div class="text-center">
-        <h5 class="mb-3">Contract</h5>
-    </div>
     
     <div class="row mb-3">
         <div class="col-lg-4">
             <div class="form-group">
-                <label>Quantity</label>
+                <label>Contract Quantity</label>
                 <input type="text" id="contract_quantity" class="form-control editable" disabled="true" value="{{$contract_item->contract_quantity}}"/>
             </div>
         </div>
 
         <div class="col-lg-4">
             <div class="form-group">
-                <label>Unit</label>
+                <label>Contract Unit</label>
                 <select class="form-control editable" id="unit" disabled="true">
                     @foreach($unit_options as $unit)
                     <option value="{{$unit->id}}" 
@@ -73,32 +70,30 @@
 
         <div class="col-lg-4">
             <div class="form-group">
-                <label>Unit Price (PHP)</label>
+                <label>Contract Unit Price (PHP)</label>
                 <input type="text" id="contract_unit_price" class="form-control editable" disabled="true" value="{{$contract_item->contract_unit_price}}"/>
             </div>
         </div>
     </div>
 
-    <h5 class="mb-3">POW/DUPA</h5>
-
     <div class="row mb-3">
         <div class="col-lg-4">
             <div class="form-group">
-                <label>Quantity</label>
+                <label>POW/DUPA Quantity</label>
                 <input type="text" id="ref_1_quantity" class="form-control editable" disabled="true" value="{{$contract_item->ref_1_quantity}}"/>
             </div>
         </div>
 
         <div class="col-lg-4">
             <div class="form-group">
-                <label>Unit</label>
+                <label>POW/DUPA Unit</label>
                 <input type="text" id="ref_1_unit" class="form-control" disabled="true" />
             </div>
         </div>
 
         <div class="col-lg-4">
             <div class="form-group">
-                <label>Unit Price (PHP)</label>
+                <label>POW/DUPA Unit Price (PHP)</label>
                 <input type="text" id="ref_1_unit_price" class="form-control editable" disabled="true" value="{{$contract_item->ref_1_unit_price}}"/>
             </div>
         </div>
