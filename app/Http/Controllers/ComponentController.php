@@ -181,6 +181,7 @@ class ComponentController extends Controller
 
         $component = Component::findOrFail($id);
 
+        $contract_item   = $component->ContractItem;
         $section         = $component->section;
         $project         = $section->project;
         $componentItems  = $component->componentItems()->orderBy('id','ASC')->withCount('materialQuantities')->get();
@@ -202,6 +203,7 @@ class ComponentController extends Controller
         $html = view('component/print',[
             'project'           => $project,
             'section'           => $section,
+            'contract_item'     => $contract_item,
             'component'         => $component,
             'componentItems'    => $componentItems,
             'materialItems'     => $materialItems,
