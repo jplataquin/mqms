@@ -33,10 +33,7 @@ class SectionController extends Controller
 
         $project = $section->project;
 
-        $contract_items = $section->components()->orderBy('code_item','ASC')->get();
-        
-        
-
+        $contract_items = $section->components()->orderBy('item_code','ASC')->get();
         
         $unit_options = Unit::toOptions();
 
