@@ -42,8 +42,24 @@
             </div>
         </div>
     </div>
-    <div class="row mb-5">
-        <div class="col-lg-12">
+    <hr>
+    <h5 class="mb-3">Contract</h5>
+    
+    <div class="row mb-3">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label>Quantity</label>
+                <input type="text" id="contract_quantity" class="form-control editable" disabled="true" value="{{$contract_item->contract_quantity}}"/>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label>Unit Price (PHP)</label>
+                <input type="text" id="contract_unit_price" class="form-control editable" disabled="true" value="{{$contract_item->contract_unit_price}}"/>
+            </div>
+        </div>
+        <div class="col-lg-4">
             <div class="form-group">
                 <label>Unit</label>
                 <select class="form-control editable" id="unit" disabled="true">
@@ -59,40 +75,28 @@
             </div>
         </div>
     </div>
-    <hr>
-    <h5 class="mb-3">Contract</h5>
-    
-    <div class="row mb-3">
-        <div class="col-lg-6">
-            <div class="form-group">
-                <label>Quantity</label>
-                <input type="text" id="contract_quantity" class="form-control editable" disabled="true" value="{{$contract_item->contract_quantity}}"/>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="form-group">
-                <label>Unit Price (PHP)</label>
-                <input type="text" id="contract_unit_price" class="form-control editable" disabled="true" value="{{$contract_item->contract_unit_price}}"/>
-            </div>
-        </div>
-    </div>
 
     <hr>
     <h5 class="mb-3">POW/DUPA</h5>
 
     <div class="row mb-3">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div class="form-group">
                 <label>Quantity</label>
                 <input type="text" id="ref_1_quantity" class="form-control editable" disabled="true" value="{{$contract_item->ref_1_quantity}}"/>
             </div>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div class="form-group">
                 <label>Unit Price (PHP)</label>
                 <input type="text" id="ref_1_unit_price" class="form-control editable" disabled="true" value="{{$contract_item->ref_1_unit_price}}"/>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label>Unit</label>
+                <input type="text" id="ref_1_unit" class="form-control editable" disabled="true" />
             </div>
         </div>
     </div>
@@ -196,8 +200,9 @@
     const contract_unit_price       = $q('#contract_unit_price').first();
     const ref_1_quantity            = $q('#ref_1_quantity').first();
     const ref_1_unit_price          = $q('#ref_1_unit_price').first();
+    const ref_1_unit                = $q('#ref_1_unit').first();
     const unit                      = $q('#unit').first();
-
+    
     const component                   = $q('#component_name').first();
     const unit_id                     = $q('#unit_id').first();
     const quantity                    = $q('#quantity').first();
@@ -209,6 +214,12 @@
     const t             = new Template();
     const unit_options  = @json($unit_options);
 
+
+    unit.onchange = ()=>{
+        ref_1_unit.value = unit.options[unit.selectedIndex].text;
+    }
+
+    ref_1_unit.value = unit.options[unit.selectedIndex].text;
 
     contract_quantity.onkeypress = (e)=>{
         return window.util.inputNumber(contract_quantity,e,2,false);
