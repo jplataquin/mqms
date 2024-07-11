@@ -29,11 +29,11 @@ class SectionController extends Controller
 
         $id = (int) $id;
 
-        $section = Section::findOrFail($id);
+        $section        = Section::findOrFail($id);
 
-        $project = $section->project;
+        $project        = $section->project;
 
-        $contract_items = $section->components()->orderBy('item_code','ASC')->get();
+        $contract_items = $section->ContractItems()->orderBy('item_code','ASC')->get();
         
         $unit_options = Unit::toOptions();
 
