@@ -60,6 +60,9 @@
                         PHP {{$contract_item->ref_1_quantity * $contract_item->ref_1_unit_price}}
                     </td>
                     <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
 
                 
@@ -93,6 +96,7 @@
                         <td>{{$component->quantity}} {{$unit_options[$component->unit_id]->text}}</td>
                         <td></td>
                         <td></td>
+                        <td></td>
                     </tr>
                    
                     @foreach($component_items as $component_item)
@@ -120,6 +124,9 @@
                             </td>
                             <td>
                                 PHP {{$component_item->budget_price}}
+                            </td>
+                            <td>
+                                PHP {{$component_item->quantity * $component_item->budget_price}}
                             </td>
                         </tr>    
                     @endforeach
