@@ -1,9 +1,18 @@
 <html>
     <head>
+        <style>
+            table{
+                border-collapse:collapse;
+
+            }
+        </style>
     </head>
     <body>
         <h1>TEst</h1>
         <table border="1">
+            <tr>
+                <td colspan="15" width="100%"></td>
+            </tr>
             <tr>
                 <th rowspan="2">Item Code</th>
                 <th rowspan="2">Description</th>
