@@ -56,9 +56,6 @@
                     @foreach($unit_options as $unit)
                     <option value="{{$unit->id}}" 
                         @if($unit->deleted) disabled @endif
-                    
-                        @if($unit->id == $contract_item->unit_id) selected @endif
-                    
                     >{{$unit->text}} @if($unit->deleted) [Deleted] @endif</option>
                     @endforeach
                 </select>
@@ -128,7 +125,7 @@
 
     ref_1_unit.value = unit.options[unit.selectedIndex].text;
 
-    
+
     contract_quantity.onkeypress = (e)=>{
         return window.util.inputNumber(contract_quantity,e,2,false);
     }
