@@ -19,7 +19,7 @@
             </tr>
             <tr>
                 <th>Contract Item ID</th>
-                <td>{{$contract_item->id}}</td>
+                <td>{{STR_PAD($contract_item->id,6,0,STR_PAD_LEFT)}}</td>
             </tr>
         </tbody>
     </table>
