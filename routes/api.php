@@ -77,10 +77,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/payment_term/update', [App\Http\Controllers\PaymentTermController::class, '_update']);
     Route::post('/payment_term/delete', [App\Http\Controllers\PaymentTermController::class, '_delete']);
     
-    Route::get('/component_unit/list', [App\Http\Controllers\ComponentUnitController::class, '_list']);
-    Route::post('/component_unit/create', [App\Http\Controllers\ComponentUnitController::class, '_create']);
-    Route::post('/component_unit/update', [App\Http\Controllers\ComponentUnitController::class, '_update']);
-    Route::post('/component_unit/delete', [App\Http\Controllers\ComponentUnitController::class, '_delete']);
+    Route::get('/unit/list', [App\Http\Controllers\UnitController::class, '_list']);
+    Route::post('/unit/create', [App\Http\Controllers\UnitController::class, '_create']);
+    Route::post('/unit/update', [App\Http\Controllers\UnitController::class, '_update']);
+    Route::post('/unit/delete', [App\Http\Controllers\UnitController::class, '_delete']);
   
     // Route::get('/material_budget/list', [App\Http\Controllers\MaterialBudgetController::class, '_list']);
     // Route::post('/material_budget/create', [App\Http\Controllers\MaterialBudgetController::class, '_create']);
@@ -140,4 +140,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/purchase_order/create', [App\Http\Controllers\PurchaseOrderController::class, '_create']);
     Route::post('/purchase_order/request_void', [App\Http\Controllers\PurchaseOrderController::class, '_request_void']);
     
+    
+    Route::get('/contract_item/list', [App\Http\Controllers\ContractItemController::class, '_list']);
+    Route::post('/contract_item/create', [App\Http\Controllers\ContractItemController::class, '_create']);
+    Route::post('/contract_item/update', [App\Http\Controllers\ContractItemController::class, '_update']);
+    Route::post('/contract_item/delete', [App\Http\Controllers\ContractItemController::class, '_delete']);
+
 });
