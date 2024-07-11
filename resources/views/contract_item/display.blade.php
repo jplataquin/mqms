@@ -96,7 +96,7 @@
         <div class="col-lg-4">
             <div class="form-group">
                 <label>Unit</label>
-                <input type="text" id="ref_1_unit" class="form-control editable" disabled="true" />
+                <input type="text" id="ref_1_unit" class="form-control" disabled="true" />
             </div>
         </div>
     </div>
