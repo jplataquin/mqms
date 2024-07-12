@@ -28,15 +28,15 @@
             }
 
             .min-col-width{
-                width:5%;
+               
             }
 
             .desc-col-width{
-                width: 15%;
+               
             }
 
             .factor-col-width{
-                width: 10%;
+               
             }
         </style>
     
