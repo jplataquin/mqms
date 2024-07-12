@@ -21,7 +21,7 @@
             }
 
             .text-left{
-                text-align: right;
+                text-align: left;
             }
         </style>
     </head>
