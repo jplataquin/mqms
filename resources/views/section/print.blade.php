@@ -1,5 +1,4 @@
-<page>
-        <style>
+<style>
             table{
                 border-collapse:collapse;
 
@@ -39,8 +38,14 @@
                
             }
 
+            #main{
+                font-size:10px;
+            }
+
         </style>
     
+<page>
+    <div id="main">
         @php
             function formatFactor($factor){
                 
@@ -244,4 +249,5 @@
             @endforeach
             
         </table>
+    </div>
 </page>
