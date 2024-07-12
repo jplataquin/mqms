@@ -46,16 +46,16 @@
             <tr>
                 <th class="min-col-width">QTY</th>
                 <th class="min-col-width">UNIT</th>
-                <t class="min-col-width"h>UNIT PRICE</th>
+                <th class="min-col-width">PRICE</th>
                 <th class="min-col-width">AMOUNT</th>
                 <th class="min-col-width">QTY</th>
                 <th class="min-col-width">UNIT</th>
-                <th class="min-col-width">UNIT PRICE</th>
+                <th class="min-col-width">Rate</th>
                 <th class="min-col-width">AMOUNT</th>
                 <th class="min-col-width">QTY / UNIT</th>
                 <th class="min-col-width">QTY</th>
                 <th class="min-col-width">UNIT</th>
-                <th class="min-col-width">UNIT COST</th>
+                <th class="min-col-width">COST</th>
                 <th class="min-col-width">AMOUNT</th>
             </tr>
                 
