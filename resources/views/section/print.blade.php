@@ -163,14 +163,16 @@
                             <td></td>
                             <td></td>
                             <td>
-                                @if($component_item->function_type == 1)
-                                    {{ round( ($component_item->function_variable / $component->quantity) / $component->use_count,2 ) }} 
+                                @if($component_item->function_type_id == 1)
+                                    {{ 
+                                        round( ($component_item->function_variable  / $component->use_count), 2 ) 
+                                    }} 
                                     {{$unit_options[$component_item->unit_id]->text}}
                                     /
                                     {{$unit_options[$component->unit_id]}}     
                                 @endif
                                 
-                                @if($component_item->function_type == 2)
+                                @if($component_item->function_type_id == 2)
                                     {{ round( ($component_item->quantity / $component->function_variable) / $component->use_count,2 ) }} 
                                     {{$unit_options[$component_item->unit_id]->text}}
                                     /
