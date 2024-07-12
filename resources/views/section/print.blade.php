@@ -3,7 +3,7 @@
                 border-collapse:collapse;
 
             }
-
+            /*
             td{
               padding-left:5px;
               padding-right:5px;  
@@ -12,7 +12,7 @@
             th{
               padding-left:5px;
               padding-right:5px;  
-            }
+            }*/
 
             .text-right{
                 text-align: right;
