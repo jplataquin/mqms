@@ -165,7 +165,7 @@
 
             window.util.unblockUI();
       
-            document.location.href = '/contract_item/'+reply.data.id;
+            document.location.href = '/project/section/contract_item/'+reply.data.id;
 
         
         });
