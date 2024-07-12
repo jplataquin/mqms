@@ -32,7 +32,7 @@
             }
 
             .desc-col-width{
-                width:100px;
+                
             }
 
             .factor-col-width{
@@ -58,7 +58,7 @@
             </tr>
             <tr>
                 <th rowspan="2" class="min-col-width">Item Code</th>
-                <th rowspan="2" class="desc-col-width">Description</th>
+                <th rowspan="2" class="desc-col-width" style="width:10%">Description</th>
                 <th colspan="4">Contract</th>
                 <th colspan="4">POW/DUPA</th>
                 <th class="factor-col-width">Factor</th>
