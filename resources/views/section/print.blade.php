@@ -107,7 +107,7 @@
                     }   
                 @endphp
                 <tr>
-                    <th class="text-left">{{$contract_item->item_code}}</th>
+                    <th class="text-left">{{wordwrap($contract_item->item_code, 10, "<br />\n");}}</th>
                     <th>{{$contract_item->description}}</th>
                     <th class="text-right">
                         {{$contract_item->contract_quantity}}
