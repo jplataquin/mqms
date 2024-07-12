@@ -54,7 +54,7 @@
         @endphp
         <table border="1">
             <tr>
-                <td colspan="15" width="100%"></td>
+                <td colspan="15"></td>
             </tr>
             <tr>
                 <th rowspan="2" class="min-col-width">Item Code</th>
