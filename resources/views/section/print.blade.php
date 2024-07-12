@@ -169,14 +169,14 @@
                                     }} 
                                     {{$unit_options[$component_item->unit_id]->text}}
                                     /
-                                    {{$unit_options[$component->unit_id]}}     
+                                    {{$unit_options[$component->unit_id]->text}}     
                                 @endif
                                 
                                 @if($component_item->function_type_id == 2)
                                     {{ round( ($component_item->quantity / $component->function_variable) / $component->use_count,2 ) }} 
                                     {{$unit_options[$component_item->unit_id]->text}}
                                     /
-                                    {{$unit_options[$component->unit_id]}}     
+                                    {{$unit_options[$component->unit_id]->text}}     
                                 @endif
 
                             </td>
