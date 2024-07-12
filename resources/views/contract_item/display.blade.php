@@ -226,6 +226,10 @@
         return window.util.inputNumber(ref_1_unit_price,e,2,false);
     }
 
+    quantity.onkeypress = (e) =>{
+        return window.util.inputNumber(quantity,e,2,false);
+    }
+
     editBtn.onclick = (e)=>{
         e.preventDefault();
 
