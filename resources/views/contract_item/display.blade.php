@@ -137,7 +137,7 @@
             <div class="col-lg-2 col-sm-12">
                 <div class="form-group">
                     <label>Unit</label>
-                    <input type="text" class="form-control" disabled="true" value="{{$unit_options[$contact_item->unit_id]->text}}"/>
+                    <input type="text" class="form-control" disabled="true" value="{{$unit_options[$contract_item->unit_id]->text}}"/>
                 </div>
             </div>
             <div class="col-lg-2 col-sm-12">
