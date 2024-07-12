@@ -109,7 +109,7 @@
                 <tr>
                     <th class="text-left">{{ Str::wordWrap($contract_item->item_code,10,"\n",false) }}</th>
                     <th>
-                        {!! Str::wordWrap($contract_item->description,20,"<br>",false) !!}
+                        {!! Str::wordWrap($contract_item->description,30,"<br>",false) !!}
                     </th>
                     <th class="text-right">
                         {{$contract_item->contract_quantity}}
