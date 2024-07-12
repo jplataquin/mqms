@@ -27,7 +27,6 @@ class ComponentController extends Controller
         $name               = $request->input('name') ?? '';
         $quantity           = $request->input('quantity') ?? 0;
         $contract_item_id   = (int) $request->input('contract_item_id');
-        $unit_id            = (int) $request->input('unit_id');
         $section_id         = (int) $request->input('section_id');
         $use_count          = (int) $request->input('use_count') ?? 1;
 
@@ -42,11 +41,6 @@ class ComponentController extends Controller
                         ->where('name', $name)
                         ->where('deleted_at',null);
                 }),
-            ],
-            'unit_id' =>[
-                'required',
-                'integer',
-                'gte:1'
             ],
             'quantity' =>[
                 'required',
@@ -78,6 +72,16 @@ class ComponentController extends Controller
             ]);
         }
 
+        $contract_item = ContractItem::find($contract_item_id);
+
+        if ($contract_item->fails()) {
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Section not found',
+                'data'      => $validator->messages()
+            ]);
+        }
+
         $user_id = Auth::user()->id;
 
         $component = new Component();
@@ -85,7 +89,7 @@ class ComponentController extends Controller
         $component->name                   = $name;
         $component->contract_item_id       = $contract_item_id;
         $component->quantity               = $quantity;
-        $component->unit_id                = $unit_id;
+        $component->unit_id                = $contract_item->unit_id;
         $component->use_count              = $use_count;
         $component->status                 = 'PEND';
         $component->section_id             = $section_id;
@@ -240,8 +244,6 @@ class ComponentController extends Controller
         $name                = $request->input('name') ?? '';
         $quantity            = $request->input('quantity');
         $status              = $request->input('status');
-        $unit_id             = (int) $request->input('unit_id');
-        $section_id          = (int) $request->input('section_id');
         $use_count           = (int) $request->input('use_count') ?? 1;
 
         $validator = Validator::make($request->all(),[
@@ -254,11 +256,6 @@ class ComponentController extends Controller
                 'required',
                 'numeric',
                 'gte:1'
-            ],
-            'unit_id'   => [
-                'required',
-                'integer',
-                'gte:1'               
             ],
             'name' => [
                 'required',
@@ -288,6 +285,7 @@ class ComponentController extends Controller
         }
 
         $user_id    = Auth::user()->id;
+        
         $component  = Component::find($id);
 
         if(!$component){
@@ -302,7 +300,6 @@ class ComponentController extends Controller
 
         $component->name                         = $name;
         $component->quantity                     = $quantity;
-        $component->unit_id                      = $unit_id;
         $component->use_count                    = $use_count;
         $component->status                       = 'PEND';
         $component->updated_by                   = $user_id;

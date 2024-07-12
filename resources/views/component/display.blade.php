@@ -37,11 +37,7 @@
                 <tr>
                     <th>Unit</th>
                     <td>
-                        <select id="unit_id" class="form-control editable_field" disabled="true">
-                            @foreach($unit_options as $opt)
-                                <option value="{{$opt->id}}" @if($component->unit_id == $opt->id) selected @endif>{{$opt->text}}</option>
-                            @endforeach
-                        </select>
+                        {{ $unit_options[$contract_item->unit_id]->text }}
                     </td>
                 </tr>
                 <tr>
@@ -185,7 +181,6 @@
     let printBtn            = $q('#printBtn').first();
     let status              = $q('#status').first();
     let component_quantity  = $q('#component_quantity').first();
-    let unit_id             = $q('#unit_id').first();
     let use_count           = $q('#use_count').first();
     let description         = $q('#description').first();
 
@@ -270,10 +265,8 @@
         window.util.blockUI();
 
         window.util.$post('/api/component/update',{
-            id          :'{{$component->id}}',
-            section_id  :'{{$section->id}}',
+            id          :'{{$component->id}}',,
             name        : component.value,
-            unit_id     : unit_id.value,
             quantity    : component_quantity.value,
             use_count   : use_count.value,
         }).then((reply)=>{

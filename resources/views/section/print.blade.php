@@ -110,7 +110,7 @@
                         {{$unit_options[$contract_item->unit_id]->text}}
                     </th>
                     <th></th>
-                    <th>
+                    <th class="text-right">
                         PHP {{ number_format($component_items_total_amount,2) }}
                     </th>
                 </tr>

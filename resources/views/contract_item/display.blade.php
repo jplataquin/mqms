@@ -122,19 +122,13 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-lg-3 col-sm-12">
+            <div class="col-lg-4 col-sm-12">
                 <div class="form-group">
                     <label>Name</label>
                     <input type="text" class="form-control" id="component_name" />
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-12">
-                <div class="form-group">
-                    <label>Description</label>
-                    <input type="text" class="form-control" id="component_description" />
-                </div>
-            </div>
-            <div class="col-lg-1 col-sm-12">
+            <div class="col-lg-2 col-sm-12">
                 <div class="form-group">
                     <label>Quantity</label>
                     <input type="text" class="form-control" id="quantity" />
@@ -143,14 +137,18 @@
             <div class="col-lg-2 col-sm-12">
                 <div class="form-group">
                     <label>Unit</label>
-                    <select id="unit_id" class="form-control">
+                    <select id="unit_id" class="form-control" disabled="true">
                         @foreach($unit_options as $opt)
-                            <option value="{{$opt->id}}" @if($opt->deleted) disabled @endif>{{$opt->text}}</option>
+                            <option value="{{$opt->id}}" 
+                            @if($opt->deleted) disabled @endif
+                            
+                            @if($opt->id == $contract_item->unit_id) selected @endif
+                            >{{$opt->text}}</option>
                         @endforeach
                     </select>
                 </div>
             </div>
-            <div class="col-lg-1 col-sm-12">
+            <div class="col-lg-2 col-sm-12">
                 <div class="form-group">
                     <label>Use Count</label>
                     <input type="text" class="form-control" value="1" id="use_count" />
@@ -358,7 +356,6 @@
                 contract_item_id    : '{{$contract_item->id}}',
                 name                : component.value,
                 quantity            : quantity.value,
-                unit_id             : unit_id.value,
                 use_count           : use_count.value,
                 description         : description.value
             }).then(reply=>{
