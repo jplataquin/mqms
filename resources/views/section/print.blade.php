@@ -80,34 +80,34 @@
                         {{$unit_options[$contract_item->unit_id]->text}}
                     </th>
                     <th class="text-right">
-                        PHP {{$contract_item->contract_unit_price}}
+                        PHP {{ number_format($contract_item->contract_unit_price,2) }}
                     </th>
                     <th>
-                        PHP {{$contract_item->contract_quantity * $contract_item->contract_unit_price}}
+                        PHP {{ number_format($contract_item->contract_quantity * $contract_item->contract_unit_price,2) }}
                     </th>
 
                     <th class="text-right">
-                        {{$contract_item->ref_1_quantity}}
+                        {{ number_format($contract_item->ref_1_quantity,2) }}
                     </th>
                     <th>
                         {{$unit_options[$contract_item->unit_id]->text}}
                     </th>
                     <th class="text-right">
-                        PHP {{$contract_item->ref_1_unit_price}}
+                        PHP {{ number_format($contract_item->ref_1_unit_price,2) }}
                     </th>
                     <th class="text-right">
-                        PHP {{$contract_item->ref_1_quantity * $contract_item->ref_1_unit_price}}
+                        PHP {{ number_format($contract_item->ref_1_quantity * $contract_item->ref_1_unit_price,2) }}
                     </th>
                     <th></th>
                     <th class="text-right">
-                        {{$component_total_quantity}}
+                        {{ number_format($component_total_quantity,2) }}
                     </th>
                     <th>
                         {{$unit_options[$contract_item->unit_id]->text}}
                     </th>
                     <th></th>
                     <th>
-                        PHP {{$component_items_total_amount}}
+                        PHP {{ number_format($component_items_total_amount,2) }}
                     </th>
                 </tr>
 
@@ -139,7 +139,7 @@
                         <td></td>
                         <td></td>
                         <th class="text-right">
-                            {{$component->quantity}}
+                            {{ number_format($component->quantity,2) }}
                         </th>
                         <th>
                             {{$unit_options[$component->unit_id]->text}}
@@ -165,7 +165,7 @@
                             <td>
                                 @if($component_item->function_type_id == 1)
                                     {{ 
-                                        round( ($component_item->function_variable  / $component->use_count), 2 ) 
+                                        number_format(round( ($component_item->function_variable  / $component->use_count), 2 ),2) 
                                     }} 
                                     {{$unit_options[$component_item->unit_id]->text}}
                                     /
@@ -173,7 +173,7 @@
                                 @endif
                                 
                                 @if($component_item->function_type_id == 2)
-                                    {{ round( (1 / $component_item->function_variable) / $component->use_count,2 ) }} 
+                                    {{ number_format(round( (1 / $component_item->function_variable) / $component->use_count,2 ),2) }} 
                                     {{$unit_options[$component_item->unit_id]->text}}
                                     /
                                     {{$unit_options[$component->unit_id]->text}}     
@@ -181,16 +181,16 @@
 
                             </td>
                             <td class="text-right">
-                                {{$component_item->quantity}}
+                                {{ number_format($component_item->quantity,2) }}
                             </td>
                             <td>
                                 {{$unit_options[$component_item->unit_id]->text}}
                             </td>
                             <td class="text-right">
-                                PHP {{$component_item->budget_price}}
+                                PHP {{ number_format($component_item->budget_price,2) }}
                             </td>
                             <td class="text-right">
-                                PHP {{$component_item->quantity * $component_item->budget_price}}
+                                PHP {{ number_format($component_item->quantity * $component_item->budget_price,2) }}
                             </td>
                         </tr>    
                     @endforeach
