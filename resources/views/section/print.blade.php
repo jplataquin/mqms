@@ -29,7 +29,7 @@
             }
 
             .desc-col-width{
-                width: 10%;
+                width: 15%;
             }
         </style>
     </head>
@@ -40,7 +40,7 @@
                 <td colspan="15" width="100%"></td>
             </tr>
             <tr>
-                <th rowspan="2">Item Code</th>
+                <th rowspan="2" class="min-col-width">Item Code</th>
                 <th rowspan="2" class="desc-col-width">Description</th>
                 <th colspan="4">Contract</th>
                 <th colspan="4">POW/DUPA</th>
