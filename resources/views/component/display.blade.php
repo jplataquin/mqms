@@ -265,7 +265,7 @@
         window.util.blockUI();
 
         window.util.$post('/api/component/update',{
-            id          :'{{$component->id}}',,
+            id          :'{{$component->id}}',
             name        : component.value,
             quantity    : component_quantity.value,
             use_count   : use_count.value,
