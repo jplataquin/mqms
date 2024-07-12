@@ -75,10 +75,10 @@ class ComponentController extends Controller
 
         $contract_item = ContractItem::find($contract_item_id);
 
-        if ($contract_item->fails()) {
+        if (!$contract_item) {
             return response()->json([
                 'status'    => 0,
-                'message'   => 'Section not found',
+                'message'   => 'Contract Item not found',
                 'data'      => $validator->messages()
             ]);
         }
