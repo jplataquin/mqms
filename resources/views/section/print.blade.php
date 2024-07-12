@@ -63,7 +63,7 @@
                 <td colspan="15"></td>
             </tr>
             <tr>
-                <th rowspan="2" width="50px">Item Code</th>
+                <col rowspan="2" width="100px">Item Code</col>
                 <th rowspan="2" class="desc-col-width" style="width:10%">Description</th>
                 <th colspan="4">Contract</th>
                 <th colspan="4">POW/DUPA</th>
