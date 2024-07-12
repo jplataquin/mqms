@@ -356,7 +356,7 @@ class ComponentItem extends Component{
             name                    : this.el.name.value,
             budget_price            : this.el.budget_price.value,
             quantity                : this.el.quantity.value,
-            component_unit_id       : this.el.unit.value,
+            unit_id                 : this.el.unit.value,
             function_type_id        : this.el.function_type.value,
             function_variable       : this.el.variable.value,
 
@@ -488,15 +488,15 @@ class ComponentItem extends Component{
            
             this.setState('budget_price',parseFloat(reply.data.budget_price));
             this.setState('quantity',parseFloat(reply.data.quantity));
-            this.setState('unit',reply.data.component_unit_id);
+            this.setState('unit',reply.data.unit_id);
             this.setState('name',reply.data.name);
             this.setState('function_type_id',reply.data.function_type_id);
             this.setState('variable',reply.data.function_variable);
-            
+            console.log(reply.data.unit_id);
             this.el.name.value          = reply.data.name;
             this.el.budget_price.value  = reply.data.budget_price;
             this.el.quantity.value      = reply.data.quantity;
-            this.el.unit.value          = reply.data.component_unit_id;
+            this.el.unit.value          = reply.data.unit_id;
             this.el.function_type.value = reply.data.function_type_id;
             this.el.variable.value      = reply.data.function_variable;
 
