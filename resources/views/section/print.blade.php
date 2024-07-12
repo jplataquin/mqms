@@ -23,6 +23,10 @@
             .text-left{
                 text-align: left;
             }
+
+            .min-col-width{
+                width:7%;
+            }
         </style>
     </head>
     <body>
@@ -40,19 +44,19 @@
                 <th colspan="4">Material Budget</th>
             </tr>
             <tr>
-                <th>QTY</th>
-                <th>UNIT</th>
-                <th>UNIT PRICE</th>
-                <th>AMOUNT</th>
-                <th>QTY</th>
-                <th>UNIT</th>
-                <th>UNIT PRICE</th>
-                <th>AMOUNT</th>
-                <th>QTY / UNIT</th>
-                <th>QTY</th>
-                <th>UNIT</th>
-                <th>UNIT COST</th>
-                <th>AMOUNT</th>
+                <th class="min-col-width">QTY</th>
+                <th class="min-col-width">UNIT</th>
+                <t class="min-col-width"h>UNIT PRICE</th>
+                <th class="min-col-width">AMOUNT</th>
+                <th class="min-col-width">QTY</th>
+                <th class="min-col-width">UNIT</th>
+                <th class="min-col-width">UNIT PRICE</th>
+                <th class="min-col-width">AMOUNT</th>
+                <th class="min-col-width">QTY / UNIT</th>
+                <th class="min-col-width">QTY</th>
+                <th class="min-col-width">UNIT</th>
+                <th class="min-col-width">UNIT COST</th>
+                <th class="min-col-width">AMOUNT</th>
             </tr>
                 
             @foreach($contract_items as $contract_item)
