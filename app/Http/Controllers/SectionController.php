@@ -71,7 +71,7 @@ class SectionController extends Controller
 
 
          
-        $html2pdf = new Html2Pdf('L','Legal','en', false, 'UTF-8', [0, 0, 0, 0]);
+        $html2pdf = new Html2Pdf('L','Legal','en', false, 'UTF-8');
            
 
         try {
