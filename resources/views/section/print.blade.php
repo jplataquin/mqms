@@ -28,7 +28,7 @@
             }
 
             .min-col-width{
-               
+               width:10%;
             }
 
             .desc-col-width{
