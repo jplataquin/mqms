@@ -107,7 +107,7 @@
                     }   
                 @endphp
                 <tr>
-                    <th class="text-left">{{ wordwrap($contract_item->item_code, 10, "\n") }}</th>
+                    <th class="text-left">{{ Str::wordWrap($contract_item->item_code,10,"\n",false) }}</th>
                     <th>{{$contract_item->description}}</th>
                     <th class="text-right">
                         {{$contract_item->contract_quantity}}
@@ -157,7 +157,7 @@
                     <tr>
                             @if($first)
                             <td rowspan="{{count($component_items_arr[$component->id])+1}}">
-                                {{$component->name}}
+                                {{Str::wordWrap($component->name,10,"\n",false)}}
                             </td>
                                 
                             
