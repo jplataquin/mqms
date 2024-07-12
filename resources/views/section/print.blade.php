@@ -119,7 +119,7 @@
                     @endphp
                     <tr>
                             @if($first)
-                            <td rowspan="{{count($component_items)+1}}">
+                            <td rowspan="{{count($component_items_arr[$component->id])+1}}">
                                 {{$component->name}}
                             </td>
                                 
