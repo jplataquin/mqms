@@ -137,15 +137,7 @@
             <div class="col-lg-2 col-sm-12">
                 <div class="form-group">
                     <label>Unit</label>
-                    <select id="unit_id" class="form-control" disabled="true">
-                        @foreach($unit_options as $opt)
-                            <option value="{{$opt->id}}" 
-                            @if($opt->deleted) disabled @endif
-                            
-                            @if($opt->id == $contract_item->unit_id) selected @endif
-                            >{{$opt->text}}</option>
-                        @endforeach
-                    </select>
+                    <input type="text" class="form-control" disabled="true" value="{{$unit_options[$contact_item->unit_id]->text}}"/>
                 </div>
             </div>
             <div class="col-lg-2 col-sm-12">
