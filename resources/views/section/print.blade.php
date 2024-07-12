@@ -50,7 +50,7 @@
                 <th class="min-col-width">AMOUNT</th>
                 <th class="min-col-width">QTY</th>
                 <th class="min-col-width">UNIT</th>
-                <th class="min-col-width">Rate</th>
+                <th class="min-col-width">RATE</th>
                 <th class="min-col-width">AMOUNT</th>
                 <th class="min-col-width">QTY / UNIT</th>
                 <th class="min-col-width">QTY</th>
