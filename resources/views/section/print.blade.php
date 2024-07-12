@@ -34,7 +34,15 @@
         </style>
     </head>
     <body>
-        <h1>TEst</h1>
+        
+        @php
+            function formatFactor($factor){
+                
+
+                return (float) $factor;
+                
+            }
+        @endphp
         <table border="1">
             <tr>
                 <td colspan="15" width="100%"></td>
@@ -182,7 +190,11 @@
                             <td>
                                 @if($component_item->function_type_id == 1)
                                     {{ 
-                                        number_format(round( ($component_item->function_variable  / $component->use_count), 6 ),6) 
+                                        number_format(
+                                            formatFactor(
+                                                round( ($component_item->function_variable  / $component->use_count), 6 )
+                                            )
+                                        )
                                     }} 
                                     {{$unit_options[$component_item->unit_id]->text}}
                                     /
@@ -190,7 +202,11 @@
                                 @endif
                                 
                                 @if($component_item->function_type_id == 2)
-                                    {{ number_format(round( (1 / $component_item->function_variable) / $component->use_count,6 ),6) }} 
+                                    {{ number_format(
+                                            formatFactor(
+                                                round( (1 / $component_item->function_variable) / $component->use_count,6 )
+                                            )
+                                        ) }} 
                                     {{$unit_options[$component_item->unit_id]->text}}
                                     /
                                     {{$unit_options[$component->unit_id]->text}}     
