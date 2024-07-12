@@ -336,7 +336,7 @@
 
 
         el.onclick = ()=>{
-            document.location.href = '/project/section/component/'+id;
+            document.location.href = '/project/section/contract_item/component/'+id;
         }
 
         return el;
