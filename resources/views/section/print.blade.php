@@ -28,11 +28,11 @@
             }
 
             .min-col-width{
-               width:10%;
+               
             }
 
             .desc-col-width{
-               
+                width:100px;
             }
 
             .factor-col-width{
