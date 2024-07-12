@@ -157,7 +157,7 @@
                     <tr>
                             @if($first)
                             <td rowspan="{{count($component_items_arr[$component->id])+1}}">
-                                {{Str::wordWrap($component->name,10,"<\/br>",false)}}
+                                {{Str::wordWrap($component->name,10,"<\br>",false)}}
                             </td>
                                 
                             
