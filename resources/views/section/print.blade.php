@@ -38,6 +38,10 @@
             .factor-col-width{
                
             }
+
+            .helvetica45light{
+               font-family:helvetica45light;
+            }
         </style>
     
         @php
