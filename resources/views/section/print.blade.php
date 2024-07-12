@@ -25,7 +25,11 @@
             }
 
             .min-col-width{
-                width:7%;
+                width:5%;
+            }
+
+            .desc-col-width{
+                width: 10%;
             }
         </style>
     </head>
@@ -37,7 +41,7 @@
             </tr>
             <tr>
                 <th rowspan="2">Item Code</th>
-                <th rowspan="2">Description</th>
+                <th rowspan="2" class="desc-col-width">Description</th>
                 <th colspan="4">Contract</th>
                 <th colspan="4">POW/DUPA</th>
                 <th>Factor</th>
