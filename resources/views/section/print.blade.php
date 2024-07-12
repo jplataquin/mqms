@@ -38,9 +38,13 @@
         @php
             function formatFactor($factor){
                 
-
-                return (float) $factor;
+                $factor_arr = explode('.',$factor);
                 
+                if($factor_arr[1] == '000000'){
+                    return $factor_arr[0].'.00';
+                }
+                
+                return $factor_arr[0].'.'.rtrim($factor_arr[1],'0');
             }
         @endphp
         <table border="1">
@@ -190,10 +194,10 @@
                             <td>
                                 @if($component_item->function_type_id == 1)
                                     {{ 
-                                        number_format(
-                                            formatFactor(
+                                        formatFactor(
+                                            number_format(
                                                 round( ($component_item->function_variable  / $component->use_count), 6 )
-                                            )
+                                            ,6)
                                         )
                                     }} 
                                     {{$unit_options[$component_item->unit_id]->text}}
@@ -203,10 +207,10 @@
                                 
                                 @if($component_item->function_type_id == 2)
                                     {{ 
-                                        number_format(
-                                            formatFactor(
-                                                round( (1 / $component_item->function_variable) / $component->use_count,6 )
-                                            )
+                                        formatFactor(
+                                            number_format(
+                                                round( (1 / $component_item->function_variable) / $component->use_count,6)
+                                            ,6)
                                         ) 
                                     }} 
                                     {{$unit_options[$component_item->unit_id]->text}}
