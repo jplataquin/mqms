@@ -34,7 +34,7 @@
             <table class="table" border="1">
                 <tr>
                     <td colspan="4" class="text-center bold" style="">
-                        <img src="storage/sys_images/header.png" style=width:450px"/>
+                        <img src="storage/sys_images/header.png" style="width:450px"/>
                     </td>
                 </tr>
                 <tr>
