@@ -247,6 +247,20 @@ class ComponentController extends Controller
         $status              = $request->input('status');
         $use_count           = (int) $request->input('use_count') ?? 1;
 
+        $component  = Component::find($id);
+
+        if(!$component){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Record not found',
+                'data'      => [
+                    'id' => $id
+                ]
+            ]);
+        }
+
+        $contract_item_id = $component->contract_item_id;
+        
         $validator = Validator::make($request->all(),[
             'id'   => [
                 'required',
@@ -262,9 +276,9 @@ class ComponentController extends Controller
                 'required',
                 'max:255',
                 Rule::unique('components')->where(
-                function ($query) use ($section_id,$id,$name) {
+                function ($query) use ($contract_item_id,$id,$name) {
                     return $query
-                    ->where('section_id', $section_id)
+                    ->where('contract_item_id', $contract_item_id)
                     ->where('name', $name)
                     ->where('id','!=',$id);
                 }),
@@ -287,17 +301,7 @@ class ComponentController extends Controller
 
         $user_id    = Auth::user()->id;
         
-        $component  = Component::find($id);
-
-        if(!$component){
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Record not found',
-                'data'      => [
-                    'id' => $id
-                ]
-            ]);
-        }
+        
 
         $component->name                         = $name;
         $component->quantity                     = $quantity;
