@@ -3,16 +3,17 @@
                 border-collapse:collapse;
 
             }
-            /*
+
             td{
               padding-left:5px;
               padding-right:5px;  
             }
 
             th{
+              text-wrap: wrap;
               padding-left:5px;
               padding-right:5px;  
-            }*/
+            }
 
             .text-right{
                 text-align: right;
