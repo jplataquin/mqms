@@ -23,6 +23,10 @@
             .text-left{
                 text-align: left;
             }
+            
+            .text-center{
+                text-align: center;
+            }
 
             .min-col-width{
                 width:5%;
@@ -30,6 +34,10 @@
 
             .desc-col-width{
                 width: 15%;
+            }
+
+            .factor-col-width{
+                width: 10%;
             }
         </style>
     </head>
@@ -56,7 +64,7 @@
                 <th rowspan="2" class="desc-col-width">Description</th>
                 <th colspan="4">Contract</th>
                 <th colspan="4">POW/DUPA</th>
-                <th>Factor</th>
+                <th class="factor-col-width">Factor</th>
                 <th colspan="4">Material Budget</th>
             </tr>
             <tr>
@@ -104,10 +112,10 @@
                         {{$unit_options[$contract_item->unit_id]->text}}
                     </th>
                     <th class="text-right">
-                        PHP {{ number_format($contract_item->contract_unit_price,2) }}
+                        P {{ number_format($contract_item->contract_unit_price,2) }}
                     </th>
                     <th>
-                        PHP {{ number_format($contract_item->contract_quantity * $contract_item->contract_unit_price,2) }}
+                        P {{ number_format($contract_item->contract_quantity * $contract_item->contract_unit_price,2) }}
                     </th>
 
                     <th class="text-right">
@@ -117,21 +125,21 @@
                         {{$unit_options[$contract_item->unit_id]->text}}
                     </th>
                     <th class="text-right">
-                        PHP {{ number_format($contract_item->ref_1_unit_price,2) }}
+                        P {{ number_format($contract_item->ref_1_unit_price,2) }}
                     </th>
                     <th class="text-right">
-                        PHP {{ number_format($contract_item->ref_1_quantity * $contract_item->ref_1_unit_price,2) }}
+                        P {{ number_format($contract_item->ref_1_quantity * $contract_item->ref_1_unit_price,2) }}
                     </th>
                     <th></th>
                     <th class="text-right">
                         {{ number_format($component_total_quantity,2) }}
                     </th>
-                    <th>
+                    <th class="text-center">
                         {{$unit_options[$contract_item->unit_id]->text}}
                     </th>
                     <th></th>
                     <th class="text-right">
-                        PHP {{ number_format($component_items_total_amount,2) }}
+                        P {{ number_format($component_items_total_amount,2) }}
                     </th>
                 </tr>
 
@@ -166,7 +174,7 @@
                         <th class="text-right">
                             {{ number_format($component->quantity,2) }}
                         </th>
-                        <th>
+                        <th class="text-center">
                             {{$unit_options[$component->unit_id]->text}}
                         </th>
                         <td></td>
@@ -222,14 +230,14 @@
                             <td class="text-right">
                                 {{ number_format($component_item->quantity,2) }}
                             </td>
-                            <td>
+                            <td class="text-center">
                                 {{$unit_options[$component_item->unit_id]->text}}
                             </td>
                             <td class="text-right">
-                                PHP {{ number_format($component_item->budget_price,2) }}
+                                P {{ number_format($component_item->budget_price,2) }}
                             </td>
                             <td class="text-right">
-                                PHP {{ number_format($component_item->quantity * $component_item->budget_price,2) }}
+                                P {{ number_format($component_item->quantity * $component_item->budget_price,2) }}
                             </td>
                         </tr>    
                     @endforeach
