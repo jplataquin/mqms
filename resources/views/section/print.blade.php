@@ -202,11 +202,13 @@
                                 @endif
                                 
                                 @if($component_item->function_type_id == 2)
-                                    {{ number_format(
+                                    {{ 
+                                        number_format(
                                             formatFactor(
                                                 round( (1 / $component_item->function_variable) / $component->use_count,6 )
                                             )
-                                        ) }} 
+                                        ) 
+                                    }} 
                                     {{$unit_options[$component_item->unit_id]->text}}
                                     /
                                     {{$unit_options[$component->unit_id]->text}}     
