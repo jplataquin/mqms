@@ -115,7 +115,7 @@
                         {!! Str::wordWrap(number_format($contract_item->contract_quantity,2),8,"<br>",false) !!}
                     </th>
                     <th>
-                        {{$unit_options[$contract_item->unit_id]->text}}
+                        {!! Str::wordWrap($unit_options[$contract_item->unit_id]->text,8,"<br>",false) !!}
                     </th>
                     <th class="text-right">
                         P {{ number_format($contract_item->contract_unit_price,2) }}
