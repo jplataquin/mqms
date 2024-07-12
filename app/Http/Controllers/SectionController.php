@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 
 
 class SectionController extends Controller
@@ -60,11 +63,30 @@ class SectionController extends Controller
 
         $unit_options = Unit::toOptions();
 
-        return view('section/print',[
+        $html = view('section/print',[
             'section'          => $section,
             'contract_items'   => $contract_items,
             'unit_options'     => $unit_options
-        ]);
+        ])->render();
+
+
+         
+        $html2pdf = new Html2Pdf('L','Legal','en', false, 'UTF-8', [5, 5, 10, 0]);
+           
+
+        try {
+            $html2pdf->writeHTML($html);
+            $html2pdf->output('Purchase Order - '.str_pad($purchaseOrder->id,0,6,STR_PAD_LEFT ).'.pdf');
+            $html2pdf->clean();
+        
+        }catch(Html2PdfException $e) {
+            $html2pdf->clean();
+        
+            $formatter = new ExceptionFormatter($e);
+            echo $html;
+            echo $formatter->getHtmlMessage();        
+        } 
+       
     }
 
 
