@@ -7,16 +7,20 @@
             }
 
             td{
-              padding-left:3px;
-              padding-right:3px;  
+              padding-left:5px;
+              padding-right:5px;  
             }
 
             th{
-              padding-left:3px;
-              padding-right:3px;  
+              padding-left:5px;
+              padding-right:5px;  
             }
 
             .text-right{
+                text-align: right;
+            }
+
+            .text-left{
                 text-align: right;
             }
         </style>
@@ -71,7 +75,7 @@
                     }   
                 @endphp
                 <tr>
-                    <th>{{$contract_item->item_code}}</th>
+                    <th class="text-left">{{$contract_item->item_code}}</th>
                     <th>{{$contract_item->description}}</th>
                     <th class="text-right">
                         {{$contract_item->contract_quantity}}
@@ -116,6 +120,7 @@
                     
                     @php
                         $first = true;
+                        $item_count = 1;
                     @endphp
                     <tr>
                             @if($first)
@@ -152,7 +157,11 @@
                         <tr>
                             
                             <td>
-                                {{$component_item->name}}
+                                {{$item_count}} {{$component_item->name}}
+
+                                @php
+                                    $item_count++;
+                                @endphp
                             </td>
                             <td></td>
                             <td></td>
