@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="pingback" href="https: //domainname.com/xmlrpc.php" />
-        <title>Happy Birthday Peanut 🥜!</title>
+        <title>🥜Happy Birthday Peanut🥜</title>
     
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -130,7 +130,7 @@ html {
 
 .circle-img {
   border-radius: 50%;
-  width:200px;
+  width:300px;
   position: absolute;
   z-index:2;
   transition-property: color, transform;
