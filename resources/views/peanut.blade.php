@@ -145,7 +145,10 @@ html {
   transition-timing-function: cubic-bezier(0.420, 0.000, 0.580, 1.000);
 }
 
-
+.stxt{
+    color: #FFC0CB;
+    font-size:10px;
+}
 .main-container{
     
 }
@@ -159,7 +162,7 @@ html {
         <![endif]-->
         
 
-        <p>Click card to open</p>
+        <p style="background-color:pink;color:#FFFFFF">Click card to open</p>
         <div class="main-container">
         <div class="card__container js-card-opener">
             <div class="card">
@@ -178,15 +181,20 @@ html {
                         <div id="msg" class="peanut text-left">
                         ❤️🥜
                         </div>
-                        Happy Birthday to
-                        <br>
-                        the most wonderful girl 
-                        <br>
-                        in the world!
-                        <br>
-                        Jiwon "Peanut" Jang
-                        <br>
-                        Please have an amazing day!
+                        <span class="mtxt">Happy Birthday to</span>
+                        <span class="stxt">세상에서 가장 멋진</span>
+                        
+                        <span class="mtxt">the most wonderful girl</span> 
+                        <span class="stxt">소녀의 생일을 축하합</pan>
+                        
+                        <span class="mtxt">in the world!</span>
+                        <span class="stxt">니다!</span>
+                        
+                        <span class="mtxt">Jiwon "Peanut" Jang</span>
+                        <span class="stxt">'땅콩' 장지원, 즐거운</span>
+                        
+                        <span class="mtxt">Please have an amazing day!</span>
+                        <span class="stxt">하루 보내세요!</span>
                         <div id="msg" class="peanut text-right">
                         🥜❤️
                         </div>
