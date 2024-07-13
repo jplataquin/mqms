@@ -143,6 +143,7 @@ html {
     position:relative;
     overflow-x:scroll;
     width:100%;
+    height:500px;
 }
 
         </style>
