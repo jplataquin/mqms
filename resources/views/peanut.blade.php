@@ -37,7 +37,7 @@ body {
   cursor: pointer;
   position: absolute;
   top: 50%;
-  left:20%;
+  left:50%;
   transform: translate(-50%, -50%);
   perspective: 1400px;
   transition: all 0.2s ease;
@@ -140,10 +140,7 @@ html {
 
 
 .main-container{
-    position:relative;
-    overflow-x:scroll;
-    width:300%;
-    height:500px;
+    
 }
 
         </style>
@@ -273,9 +270,11 @@ html {
 
                 document.body.classList.toggle("open");
 
+                let card_container = document.querySelector('.card__container');
+                
                 if(document.body.classList.contains('open')){
                     
-                    document.querySelector('.card__container').style.left = '50%';
+                    card_container.style.left = '50%';
                     audio.play();
                
                     fireConfetti();
@@ -286,7 +285,7 @@ html {
 
                 }else{
                     
-                    document.querySelector('.card__container').style.left = '20%';
+                    card_container.style.left = '20%';
                     audio.pause();
                     audio.currentTime = 0;
                
