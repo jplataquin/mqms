@@ -133,7 +133,6 @@ html {
   width:25%;
   position: absolute;
   z-index:2;
-  display: none;
   transition-property: color, transform;
   transition-duration: 150ms;
   transition-timing-function: cubic-bezier(0.420, 0.000, 0.580, 1.000);
