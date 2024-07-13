@@ -140,7 +140,10 @@ html {
 }
 
 
-
+.main-container{
+    position:relative;
+    overflow-x:scroll;
+}
 
         </style>
 
@@ -152,7 +155,7 @@ html {
         
 
         <p>Click card to open</p>
-
+        <div class="main-container">
         <div class="card__container js-card-opener">
             <div class="card">
                 <div class="card__panel card__panel--front">
@@ -196,6 +199,7 @@ html {
                     - Skydiver JP -</p>
                 </div>
             </div>
+        </div>
         </div>
 
 
