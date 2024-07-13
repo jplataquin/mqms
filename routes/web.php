@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Process;
 |
 */
 
+Route::view('/peanut', 'peanut');
+
 Route::get('/', function () {
     return view('welcome');
 });
