@@ -130,7 +130,7 @@ html {
 
 .circle-img {
   border-radius: 50%;
-  width:300px;
+  width:200px;
   position: absolute;
   z-index:2;
   transition-property: color, transform;
@@ -167,7 +167,7 @@ html {
                 </div>
                 
                 <div class="card__panel card__panel--inside-right">
-                    <p class="text-left">
+                    <p class="text-left" id="msg">
                         You were swallowed by fierce storms.
                         </br>
                         Defeated by rough waters.
@@ -186,7 +186,7 @@ html {
                         beautiful woman in the world.
                         <br>
                         <br>
-                        🎂 Happy Birthday, Skydiver Zet! 🎂
+                        🎂 Happy Birthday, PEANUT! 🎂
                         
                     </p>
                     
@@ -265,7 +265,7 @@ html {
 
 
             const openBtn = document.querySelector(".js-card-opener");
-
+            const msg = document.querySelector('#msg');
             openBtn.onclick = function () {
 
                 document.body.classList.toggle("open");
@@ -278,7 +278,7 @@ html {
                     audio.play();
                
                     fireConfetti();
-
+                    msg.scrollIntoView();
                     
 //                    imgDrop();
 
