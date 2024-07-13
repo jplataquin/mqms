@@ -257,65 +257,9 @@ html {
                 sf+sf+sf
             ];
             
-            function fall(img){
-              (function frame() {
 
-                    img.style.top = (img.offsetTop+1) +'px';
-                    
              
 
-                    if(img.offsetTop > window.screen.height){
-                      img.style.top = '0px';
-                      img.style.left =  lefOptions[randomInt(0,3)]+'px';
-                    }
-
-                    
-                    imgReq.push( requestAnimationFrame(frame) );
-          
-         
-              })();
-            }
-
-            function imgClick(img){
-
-              img.onclick = ()=>{
-                img.style.top = '0px';
-                img.style.left =  lefOptions[randomInt(0,3)]+'px';
-      
-              };
-            }
-
-            function clearImg(){
-              const items = document.querySelectorAll('.circle-img');
-              items.forEach(itm=>{
-                itm.style.display = 'none';
-              });
-            }
-
-            function imgDrop(){
-              const items = document.querySelectorAll('.circle-img');
-
-              items.forEach(itm=>{
-
-                let t = 1;
-                
-                t = randomInt(t,3000);
-
-                  setTimeout(()=>{
-
-                    itm.style.display = 'inline';
-                    itm.style.top = '0px';
-                   
-                    itm.style.left = lefOptions[randomInt(0,3)]+'px';
-                    
-                  
-                    imgClick(itm);
-                    fall(itm);
-                  },t);
-
-
-              });
-            }
 
             const openBtn = document.querySelector(".js-card-opener");
 
@@ -343,12 +287,6 @@ html {
                         myReq = null;
                     }
 
-                    imgReq.forEach(img=>{
-                      cancelAnimationFrame(img);
-                    });
-
-                    imgReq = [];
-                    clearImg();
                 }
                 
             };
