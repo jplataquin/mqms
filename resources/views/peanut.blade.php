@@ -197,7 +197,7 @@ html {
                     </p>
                     
                     <p>From your #1 fan<br>
-                    - Skydiver JP -</p>
+                    - Moop "JP" -</p>
                 </div>
             </div>
         </div>
