@@ -278,7 +278,11 @@ html {
                     audio.play();
                
                     fireConfetti();
-                    msg.scrollIntoView();
+
+                    setTimeout(()=>{
+                        msg.scrollIntoView();
+                    },1000)
+                    
                     
 //                    imgDrop();
 
