@@ -37,6 +37,7 @@ body {
   cursor: pointer;
   position: absolute;
   top: 50%;
+  left:20%;
   transform: translate(-50%, -50%);
   perspective: 1400px;
   transition: all 0.2s ease;
