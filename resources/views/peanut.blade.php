@@ -142,7 +142,7 @@ html {
 .main-container{
     position:relative;
     overflow-x:scroll;
-    width:200%;
+    width:300%;
     height:500px;
 }
 
