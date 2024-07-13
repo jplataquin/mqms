@@ -274,7 +274,7 @@ html {
                 
                 if(document.body.classList.contains('open')){
                     
-                    card_container.style.left = '50%';
+                    card_container.style.left = '70%';
                     audio.play();
                
                     fireConfetti();
@@ -285,7 +285,7 @@ html {
 
                 }else{
                     
-                    card_container.style.left = '20%';
+                    card_container.style.left = '50%';
                     audio.pause();
                     audio.currentTime = 0;
                
