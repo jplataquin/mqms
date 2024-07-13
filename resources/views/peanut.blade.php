@@ -70,15 +70,12 @@ body {
 }
 
 .head{
-    grid-area:head;
 }
 
 .body{
-    grid-area:body;
 }
 
 .foot{
-    grid-area:foot;
 }
 
 .open .card {
@@ -91,11 +88,6 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  display: grid;
-  grid-template-areas:
-    'head head head head head head'
-    'body body body body body body'
-    'foot foot foot foot foot foot';
   transition: all 1s ease;
   backface-visibility: visible;
   transform-origin: left;
