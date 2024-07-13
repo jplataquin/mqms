@@ -26,7 +26,6 @@
 
 body {
   text-align: center;
-  background: gray;
   font-family: "Inconsolata", monospace;
   font-optical-sizing: auto;
   font-weight: normal;
@@ -143,6 +142,7 @@ html {
 .main-container{
     position:relative;
     overflow-x:scroll;
+    width:100%;
 }
 
         </style>
