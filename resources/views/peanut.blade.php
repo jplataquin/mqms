@@ -168,10 +168,10 @@ html {
     
                 </div>
                 
-                <div id="msg" class="card__panel card__panel--inside-right">
+                <div  class="card__panel card__panel--inside-right">
                     <p class="text-left" >
                         
-                        <div class="peanut text-left">
+                        <div id="msg" class="peanut text-left">
                         🥜
                         </div>
                         <br>
