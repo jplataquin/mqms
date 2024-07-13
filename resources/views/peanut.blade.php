@@ -329,7 +329,8 @@ html {
                     fireConfetti();
 
                     
-                    imgDrop();
+//                    imgDrop();
+
 
                 }else{
 
