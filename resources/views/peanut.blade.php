@@ -13,7 +13,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">
-        <audio id="audio" src="{{asset('images/hbd.mp3')}}"></audio>
+        <audio id="audio" src="http://test-client.beam.gifts/images/hbd.mp3"></audio>
 
         <style>
 
@@ -176,7 +176,7 @@ html {
                     <p class="text-left" >
                         
                         <div id="msg" class="peanut text-left">
-                        🥜
+                        ❤️🥜
                         </div>
                         Happy Birthday to
                         <br>
@@ -188,7 +188,7 @@ html {
                         <br>
                         Please have an amazing day!
                         <div id="msg" class="peanut text-right">
-                        🥜
+                        🥜❤️
                         </div>
                         <br>
                         <br>
@@ -196,9 +196,6 @@ html {
                         
                     </p>
                     
-                    <!--
-                    <img src="{{asset('images/zandj.png')}}" width="100px"/>
-                    -->
                     <p>From your #1 fan<br>
                     - Skydiver JP -</p>
                 </div>
@@ -217,10 +214,6 @@ html {
             let myReq = null;
 
             let imgReq = [];
-
-            function randomInt(min, max) { // min and max included 
-                return Math.floor(Math.random() * (max - min + 1) + min);
-            }
 
             function fireConfetti(){
                 const end = Date.now() + 15 * 500;
@@ -291,8 +284,6 @@ html {
                     },1000)
                     
                     
-//                    imgDrop();
-
 
                 }else{
                     
