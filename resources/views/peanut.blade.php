@@ -130,7 +130,7 @@ html {
 
 .circle-img {
   border-radius: 50%;
-  width:25%;
+  width:500px;
   position: absolute;
   z-index:2;
   transition-property: color, transform;
