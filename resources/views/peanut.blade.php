@@ -274,12 +274,13 @@ html {
                 if(document.body.classList.contains('open')){
                     
                     card_container.style.left = '150%';
+                    window.scrollTo(200,0);
                     audio.play();
                
                     fireConfetti();
 
                     setTimeout(()=>{
-                        msg.scrollIntoView();
+                        //msg.scrollIntoView();
                         
                     },1000)
                     
