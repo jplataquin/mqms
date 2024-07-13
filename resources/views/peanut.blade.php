@@ -42,6 +42,7 @@ body {
   transform: translate(-50%, -50%);
   perspective: 1400px;
   transition: all 0.2s ease;
+  overflow: 'scroll';
 
 }
 
