@@ -23,6 +23,10 @@
     text-align: left !important;
 }
 
+.text-right{
+    text-align: right !important;
+}
+
 .peanut{
     font-size:50px;
 }
@@ -174,6 +178,18 @@ html {
                         <div id="msg" class="peanut text-left">
                         🥜
                         </div>
+                        Happy Birthday to
+                        <br>
+                        the most wonderful girl 
+                        <br>
+                        in the world!
+                        <br>
+                        Jiwon "Peanut" Jang
+                        <br>
+                        Please have an amazing day!
+                        <div id="msg" class="peanut text-right">
+                        🥜
+                        </div>
                         <br>
                         <br>
                         🎂 Happy Birthday, PEANUT! 🎂
@@ -271,6 +287,7 @@ html {
 
                     setTimeout(()=>{
                         msg.scrollIntoView();
+                        
                     },1000)
                     
                     
