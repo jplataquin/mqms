@@ -192,7 +192,7 @@ html {
                         <span class="stxt">세상에서 가장 멋진</span>
                         
                         <span class="mtxt">the most wonderful girl</span> 
-                        <span class="stxt">소녀의 생일을 축하합</pan>
+                        <span class="stxt">소녀의 생일을 축하합</span>
                         
                         <span class="mtxt">in the world!</span>
                         <span class="stxt">니다!</span>
