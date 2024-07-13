@@ -148,7 +148,14 @@ html {
 .stxt{
     color: #FFC0CB;
     font-size:10px;
+    display:'block'
 }
+
+.mtxt{
+    display:'block';
+    font-size:12px;
+}
+
 .main-container{
     
 }
