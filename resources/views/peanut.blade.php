@@ -146,14 +146,14 @@ html {
 }
 
 .stxt{
-    color: #FFC0CB;
-    font-size:10px;
+    color: #FF4162;
+    font-size:9px;
     display:'block'
 }
 
 .mtxt{
     display:'block';
-    font-size:12px;
+    font-size:10px;
 }
 
 .main-container{
