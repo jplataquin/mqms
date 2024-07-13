@@ -182,10 +182,10 @@ html {
     
                 </div>
                 
-                <div  class="card__panel card__panel--inside-right">
+                <div  class="card__panel card__panel--inside-right" id="msg">
                     <p class="text-left" >
                         
-                        <div id="msg" class="peanut text-left">
+                        <div  class="peanut text-left">
                         ❤️🥜
                         </div>
                         <span class="mtxt">Happy Birthday to</span>
@@ -295,7 +295,7 @@ html {
                     fireConfetti();
 
                     setTimeout(()=>{
-                        //msg.scrollIntoView();
+                        msg.scrollIntoView();
                         
                     },1000)
                     
