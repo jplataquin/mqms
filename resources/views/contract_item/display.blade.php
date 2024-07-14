@@ -274,7 +274,7 @@
 
 
     cancelBtn.onclick = (e)=>{
-        window.util.nav('/project/section/{{$section->id}}');
+        window.util.navTo('/project/section/{{$section->id}}');
     }
 
     
@@ -300,7 +300,7 @@
                 return false;
             }
 
-            window.util.nav('/project/section/contract_items');
+            window.util.navTo('/project/section/contract_items');
         });
     }
 
@@ -336,7 +336,7 @@
 
 
         el.onclick = ()=>{
-            window.util.nav('/project/section/contract_item/component/'+id);
+            window.util.navTo('/project/section/contract_item/component/'+id);
         }
 
         return el;
@@ -371,7 +371,7 @@
     $q('.item').apply((el)=>{
 
         el.onclick = (e)=>{
-            window.util.nav('/project/section/contract_item/component/'+el.getAttribute('data-id'));
+            window.util.navTo('/project/section/contract_item/component/'+el.getAttribute('data-id'));
         }
     });
 

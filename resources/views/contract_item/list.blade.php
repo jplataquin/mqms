@@ -80,7 +80,7 @@
             });
 
             row.onclick = ()=>{
-                window.util.nav('/master_data/unit/'+item.id);
+                window.util.navTo('/master_data/unit/'+item.id);
             };
 
             $el.append(row).to(list);
@@ -162,7 +162,7 @@
     }
 
     createBtn.onclick = ()=>{
-        window.util.nav('/master_data/unit/create');
+        window.util.navTo('/master_data/unit/create');
     }
 
     showData();
