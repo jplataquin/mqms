@@ -7,7 +7,7 @@ use App\Models\Project;
 use App\Models\Section;
 use App\Models\Component;
 use App\Models\MaterialItem;
-use App\Models\ComponentUnit;
+use App\Models\Unit;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
@@ -83,7 +83,7 @@ class ComponentReviewController extends Controller
         
         $hash = generateComponentHash($project,$section,$component,$componentItems,$materialItems);
 
-        $unit_options  = ComponentUnit::toOptions();
+        $unit_options  = Unit::toOptions();
 
 
         return view('review/component/display',[

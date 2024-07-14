@@ -32,7 +32,7 @@
                     </tr>
                     <tr>
                         <th>Quantity / Unit</th>
-                        <td>{{$component->quantity}} {{$unit_options[$component->component_unit_id]->text}}</td>
+                        <td>{{$component->quantity}} {{$unit_options[$component->unit_id]->text}}</td>
                     </tr>
                     <tr>
                         <th>Use Count</th>
@@ -94,9 +94,9 @@
                         <td class="text-center">
 
                             @if($item->function_type_id == 1)
-                             {{$item->function_variable}} {{ $unit_options[ $item->component_unit_id ]->text }} / {{$unit_options[$component->component_unit_id]->text}}
+                             {{$item->function_variable}} {{ $unit_options[ $item->unit_id ]->text }} / {{$unit_options[$component->unit_id]->text}}
                             @elseif($item->function_type_id == 2)
-                             1 {{$unit_options[$component->component_unit_id]->text}} / {{$item->function_variable}} {{ $unit_options[ $item->component_unit_id ]->text }}
+                             1 {{$unit_options[$component->unit_id]->text}} / {{$item->function_variable}} {{ $unit_options[ $item->unit_id ]->text }}
                             @else
                                 N/A
                             @endif
@@ -107,7 +107,7 @@
                             {{$component->use_count}} Use(s)
                         </td>
                         <td class="text-center">
-                            {{$item->quantity}} {{$unit_options[$item->component_unit_id]->text}}
+                            {{$item->quantity}} {{$unit_options[$item->unit_id]->text}}
                         </td>
                         <td class="text-center">
                             @php

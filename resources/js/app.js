@@ -301,3 +301,15 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
     return true;
     
 }
+
+
+window.util.nav = function(url){
+    let el = document.getElementById('#__nav_helper');
+
+    if(el){
+        el.href = url;
+        el.click();
+    }else{
+        console.error('Nav helper element not found');
+    }
+}
