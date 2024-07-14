@@ -22,7 +22,7 @@
     </div>
     <div class="wrapper d-flex align-items-stretch h-100" id="app">
         <nav id="sidebar" hx-boost="true" class="flex-shrink-0">
-            <a  hx-select="#content" hx-target="#main" href="#" id="#__nav_helper">test</a>
+            <a  hx-select="#content" hx-target="#main" href="/roles" id="#__nav_helper">test</a>
             <ul class="list-unstyled">
                 <li class="menu-item">
                     <div class="nav-item">
