@@ -242,7 +242,7 @@
         updateBtn.classList.remove('d-none');
         
         cancelBtn.onclick = ()=>{
-            document.location.reload(true);
+            window.util.navReload();
         }
     }
 
@@ -268,13 +268,13 @@
                 return false;
             }
 
-            document.location.reload(true);
+            window.util.navReload();
         });
     }
 
 
     cancelBtn.onclick = (e)=>{
-        document.location.href = '/project/section/{{$section->id}}';
+        window.util.nav('/project/section/{{$section->id}}');
     }
 
     
@@ -300,7 +300,7 @@
                 return false;
             }
 
-            window.location.href = '/project/section/contract_items';
+            window.util.nav('/project/section/contract_items');
         });
     }
 
@@ -336,7 +336,7 @@
 
 
         el.onclick = ()=>{
-            document.location.href = '/project/section/contract_item/component/'+id;
+            window.util.nav('/project/section/contract_item/component/'+id);
         }
 
         return el;
@@ -371,7 +371,7 @@
     $q('.item').apply((el)=>{
 
         el.onclick = (e)=>{
-            document.location.href = '/project/section/contract_item/component/'+el.getAttribute('data-id');
+            window.util.nav('/project/section/contract_item/component/'+el.getAttribute('data-id'));
         }
     });
 

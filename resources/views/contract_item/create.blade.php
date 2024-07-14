@@ -165,14 +165,14 @@
 
             window.util.unblockUI();
       
-            document.location.href = '/project/section/contract_item/'+reply.data.id;
+            window.util.nav('/project/section/contract_item/'+reply.data.id);
 
         
         });
     }
 
     cancelBtn.onclick = (e) => {
-        document.location.href = '/project/section/{{$section->id}}';
+        window.util.nav('/project/section/{{$section->id}}');
 
     }
 

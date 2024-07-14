@@ -252,12 +252,12 @@
         updateBtn.classList.remove('d-none');
 
         cancelBtn.onclick = ()=>{
-            document.location.reload(true);
+            window.util.navReload();
         }
     }
 
     cancelBtn.onclick = ()=>{
-        document.location.href = '/project/section/contract_item/{{$contract_item->id}}';
+        window.util.navTo('/project/section/contract_item/{{$contract_item->id}}');
     }
 
     updateBtn.onclick = ()=>{
@@ -278,7 +278,7 @@
                 return false;
             }
 
-            document.location.reload(true);
+            window.util.navReload();
         });
     }
     
@@ -363,7 +363,7 @@
                 return false;
             }
 
-            window.location.href = '/project/section/contract_item/{{$contract_item->id}}';
+            window.util.navTo('/project/section/contract_item/{{$contract_item->id}}');
         });
     }
 

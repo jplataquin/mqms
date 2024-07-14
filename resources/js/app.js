@@ -303,11 +303,29 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
 }
 
 
-window.util.nav = function(url){
+window.util.navTo = function(url){
     let el = document.getElementById('#__nav_helper');
+
+    if(!url){
+        console.error('URL not defined');
+        return false;
+    }
 
     if(el){
         el.href = url;
+        htmx.process(el);
+        el.click();
+    }else{
+        console.error('Nav helper element not found');
+    }
+}
+
+
+window.util.navReload = function(){
+    let el = document.getElementById('#__nav_helper');
+
+    if(el){
+        el.href = document.location.href;
         htmx.process(el);
         el.click();
     }else{
