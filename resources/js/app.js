@@ -311,7 +311,7 @@ window.util.nav = function(url){
     el.setAttribute('hx-target','#main');
     el.setAttribute('hx-select','#content');
     el.style.display = 'none';
-    let sidebar = document.getElementById('#sidebar');
+    let sidebar = document.getElementById('sidebar');
 
     sidebar.append(el);
 
