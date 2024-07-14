@@ -308,7 +308,7 @@ window.util.nav = function(url){
 
     if(el){
         el.href = url;
-        htmlx.process(el);
+        htmx.process(el);
         el.click();
     }else{
         console.error('Nav helper element not found');
