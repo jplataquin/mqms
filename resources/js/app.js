@@ -304,12 +304,18 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
 
 
 window.util.nav = function(url){
-    let el = document.getElementById('#__nav_helper');
 
-    if(el){
-        el.href = url;
-        el.click();
-    }else{
-        console.error('Nav helper element not found');
-    }
+    let el = document.createElement('a');
+
+    el.href = url;
+    el.setAttribute('hx-target','#main');
+    el.setAttribute('hx-select','#content');
+    el.style.display = 'none';
+    let sidebar = document.getElementById('#sidebar');
+
+    sidebar.append(el);
+
+    el.click();
+
+    el.remove();
 }
