@@ -313,13 +313,11 @@ window.util.nav = function(url){
     el.href = url;
     el.setAttribute('hx-target','#main');
     el.setAttribute('hx-select','#content');
-    el.style.display = 'none';
+    el.innerHTML = 'test';
     
     parent.append(el);
 
     document.body.append(parent);
 
-    el.click();
 
-    parent.remove();
 }
