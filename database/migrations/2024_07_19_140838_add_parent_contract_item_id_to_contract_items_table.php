@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('contract_items', function (Blueprint $table) {
-            $this->bigInteger('parent_contract_item_id')->nullable()->after('id');
+            $table->bigInteger('parent_contract_item_id')->nullable()->after('id');
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('contract_items', function (Blueprint $table) {
-            $this->dropColumn('parent_contract_item_id');
+            $table->dropColumn('parent_contract_item_id');
         });
     }
 };
