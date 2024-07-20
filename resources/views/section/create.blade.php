@@ -57,14 +57,14 @@
 
             window.util.unblockUI();
       
-            document.location.href = '/project/section/'+reply.data.id;
+            window.util.navTo('/project/section/'+reply.data.id);
 
         
         });
     }
 
     cancelBtn.onclick = (e) => {
-        document.location.href = '/project/{{$project->id}}';
+        window.util.navTo('/project/{{$project->id}}');
     }
 
 </script>

@@ -100,7 +100,7 @@
 
     printBtn.onclick = (e)=>{
         e.preventDefault();
-        document.location.href = '/project/section/print/{{$section->id}}';
+        window.util.navTo('/project/section/print/{{$section->id}}');
     }
 
     editBtn.onclick = (e)=>{
@@ -140,7 +140,7 @@
                 return false;
             }
 
-            window.location.href = '/project/{{$project->id}}';
+            window.util.navTo('/project/{{$project->id}}');
         });
     }
 
@@ -164,19 +164,19 @@
     }
 
     cancelBtn.onclick = (e)=>{
-        document.location.href = '/project/{{$project->id}}';
+        window.util.navTo('/project/{{$project->id}}');
     }
 
 
     createBtn.onclick = ()=>{
 
-        document.location.href = '/project/section/contract_item/create/{{$section->id}}';
+        window.util.navTo('/project/section/contract_item/create/{{$section->id}}');
     }
 
     $q('.item').apply((el)=>{
 
         el.onclick = (e)=>{
-            document.location.href = '/project/section/contract_item/'+el.getAttribute('data-id');
+            window.util.navTo('/project/section/contract_item/'+el.getAttribute('data-id'));
         }
     });
 

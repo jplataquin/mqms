@@ -158,18 +158,7 @@
     }
     
 
-    parent_contract_item.onchange = (e)=>{
-        if(parent_contract_item.value == ''){
-
-            contract_unit_price.disabled = false;
-
-            return true;
-        }
-
-        contract_unit_price.disabled = true;
-        contract_unit_price.value = '';
-
-    }
+    
 
     createBtn.onclick = (e) => {
 
