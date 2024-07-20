@@ -101,7 +101,8 @@ class ContractItemController extends Controller
                 function ($query) use ($section_id,$item_code) {
                     return $query
                     ->where('section_id', $section_id)
-                    ->where('item_code', $item_code);
+                    ->where('item_code', $item_code)
+                    ->where('deleted_at',null);
                 }),
             ],
             'section_id'=>[
@@ -212,7 +213,7 @@ class ContractItemController extends Controller
         
         //Check if parent contract item exists and is not a child contract item
         if($parent_contract_item_id){
-            
+
             $parent_contract_item = ContractItem::find($parent_contract_item_id);
 
             //Check if exists
