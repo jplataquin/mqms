@@ -357,6 +357,8 @@
         window.util.$post('/api/component/delete',{
             id: "{{$component->id}}"
         }).then(reply=>{
+            
+            window.util.unblockUI();
 
             if(reply.status <= 0){
                 window.util.showMsg(reply.message);

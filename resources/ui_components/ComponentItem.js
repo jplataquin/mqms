@@ -492,7 +492,7 @@ class ComponentItem extends Component{
             this.setState('name',reply.data.name);
             this.setState('function_type_id',reply.data.function_type_id);
             this.setState('variable',reply.data.function_variable);
-            console.log(reply.data.unit_id);
+            
             this.el.name.value          = reply.data.name;
             this.el.budget_price.value  = reply.data.budget_price;
             this.el.quantity.value      = reply.data.quantity;
