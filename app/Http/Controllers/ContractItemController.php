@@ -251,11 +251,10 @@ class ContractItemController extends Controller
         $contract_item->description             = $description;
         $contract_item->contract_quantity       = $contract_quantity;
         $contract_item->contract_unit_price     = $contract_unit_price;
-        $contract_item->ref_1_quantity          = $ref_1_quantity;
-        $contract_item->ref_1_unit_price        = $ref_1_unit_price;
+        $contract_item->ref_1_quantity          = $ref_1_quantity ?? null;
+        $contract_item->ref_1_unit_price        = $ref_1_unit_price ?? null;
         $contract_item->unit_id                 = $unit_id;
         $contract_item->created_by              = $user_id;
-        $contract_item->parent_contract_item_id = null;
 
         if($parent_contract_item_id){
             $contract_item->parent_contract_item_id = $parent_contract_item_id;
