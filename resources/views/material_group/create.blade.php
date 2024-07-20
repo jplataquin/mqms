@@ -58,14 +58,14 @@
 
             window.util.unblockUI();
       
-            document.location.href = '/master_data/material/group/'+reply.data.id;
+             window.util.navTo('/master_data/material/group/'+reply.data.id);
 
         
         });
     }
 
     cancelBtn.onclick = (e) => {
-        document.location.href = '/master_data/material/groups';
+         window.util.navTo('/master_data/material/groups');
     }
 
 </script>

@@ -76,7 +76,7 @@
             });
 
             row.onclick = ()=>{
-                document.location.href = '/master_data/material/group/'+item.id;
+                 window.util.navTo('/master_data/material/group/'+item.id);
             };
 
             $el.append(row).to(list);
@@ -158,7 +158,7 @@
     }
 
     createBtn.onclick = ()=>{
-        document.location.href = '/master_data/material/group/create';
+         window.util.navTo('/master_data/material/group/create');
     }
 
     showData();

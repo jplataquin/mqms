@@ -78,7 +78,7 @@
         updateBtn.classList.remove('d-none');
         
         cancelBtn.onclick = ()=>{
-            document.location.reload(true);
+            window.util.navReload();
         }
     }
 
@@ -106,7 +106,7 @@
 
 
     cancelBtn.onclick = (e)=>{
-        document.location.href = '/master_data/material/items';
+         window.util.navTo('/master_data/material/items');
     }
 </script>
 </div>

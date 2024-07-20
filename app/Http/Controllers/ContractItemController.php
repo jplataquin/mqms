@@ -22,6 +22,8 @@ class ContractItemController extends Controller
         $section = Section::findOrFail($section_id);
         $project = $section->Project;
         
+        $contract_items = ContractItem::where('section_id',$section_id)->get();
+
         return view('contract_item/create',[
             'project' => $project,
             'section' => $section,
@@ -86,6 +88,7 @@ class ContractItemController extends Controller
         $ref_1_unit_price         = $request->input('ref_1_unit_price') ?? '';
         $unit_id                  = (int) $request->input('unit_id') ?? 0;
         $section_id               = (int) $request->input('section_id') ?? 0;
+        $parent_contract_item_id  = (int) $request->input('parent_contract_item_id') ?? 0;
 
         //TODO check if project exists;
 
@@ -156,6 +159,10 @@ class ContractItemController extends Controller
         $contract_item->unit_id                 = $unit_id;
         $contract_item->created_by              = $user_id;
 
+        if($parent_contract_item_id){
+            $contract_item->parent_contract_item_id = $parent_contract_item_id;
+        }
+        
         $contract_item->save();
 
         return response()->json([

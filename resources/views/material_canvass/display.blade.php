@@ -214,13 +214,13 @@
                 return false;
             }
 
-            window.location.reload();
+            window.util.navReload();
         });
     }
 
 
     cancelBtn.onclick = (e)=>{
-        document.location.href = '/home';
+         window.util.navTo('/home');
     }
 
     printBtn.onclick = (e)=>{

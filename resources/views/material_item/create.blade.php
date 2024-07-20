@@ -81,14 +81,14 @@
 
             window.util.unblockUI();
       
-            document.location.href = '/master_data/material/item/'+reply.data.id;
+             window.util.navTo('/master_data/material/item/'+reply.data.id);
 
         
         });
     }
 
     cancelBtn.onclick = (e) => {
-        document.location.href = '/master_data/materials';
+         window.util.navTo('/master_data/materials');
     }
 
 </script>

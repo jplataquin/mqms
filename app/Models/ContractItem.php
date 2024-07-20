@@ -21,6 +21,17 @@ class ContractItem extends Model
 
     public $deleteException = null;
 
+    
+    public function ParentContractItem(): BelongsTo
+    {
+        return $this->belongsTo('ComponentItem','parent_contract_item_id','id');
+    }
+
+    public function SubContractItems(): HasMany
+    {
+        return $this->hasMany('ContractItem','parent_contract_item_id','id');
+    }
+
     public function Section(): BelongsTo
     {
         return $this->belongsTo(Section::class);
