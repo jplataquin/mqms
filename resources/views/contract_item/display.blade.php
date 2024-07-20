@@ -281,9 +281,9 @@
 
     deleteBtn.onclick = (e)=>{
 
-        let answer = confirm('Are you sure you want to delete this Contract Item?');
+        let answer = prompt("Are you sure you want to delete this contract item? \n Type \"{{$contract_item->item_code}}\" to continue");
 
-        if(!answer){
+        if(answer != '{{$contract_item->item_code}}'){
             return false;
         }
 
