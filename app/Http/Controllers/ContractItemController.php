@@ -153,7 +153,8 @@ class ContractItemController extends Controller
                 function ($query) use ($section_id,$item_code) {
                     return $query
                     ->where('section_id', $section_id)
-                    ->where('item_code', $item_code);
+                    ->where('item_code', $item_code)
+                    ->where('deleted_at',null);
                 }),
             ],
             'section_id'=>[
@@ -169,16 +170,28 @@ class ContractItemController extends Controller
                 'gte:1'
             ],
             'contract_quantity'=>[
-                'numeric'
+                'nullable',
+                'numeric',
+                'gt:0',
+                'required_with:contract_unit_price'
             ],
             'contract_unit_price'=>[
-                'numeric'
+                'nullable',
+                'numeric',
+                'gte:0',
+                'required_with:contract_quantity'
             ],
             'ref_1_quantity'=>[
-                'numeric'
+                'nullable',
+                'numeric',
+                'gt:0',
+                'required_with:ref_1_unit_price'
             ],
             'ref_1_unit_price'=>[
-                'numeric'
+                'nullable',
+                'numeric',
+                'gte:0',
+                'required_with:ref_1_quantity'
             ],
             
         ];
@@ -256,13 +269,20 @@ class ContractItemController extends Controller
             
             $contract_item->ref_1_quantity          = $ref_1_quantity;
             $contract_item->ref_1_unit_price        = $ref_1_unit_price;
-        }
         
+        }else{
+            $contract_item->ref_1_quantity          = null;
+            $contract_item->ref_1_unit_price        = null;
+        
+        }
+
         $contract_item->unit_id                 = $unit_id;
         $contract_item->created_by              = $user_id;
 
         if($parent_contract_item_id){
             $contract_item->parent_contract_item_id = $parent_contract_item_id;
+        }else{
+            $contract_item->parent_contract_item_id = null;
         }
         
         $contract_item->save();
