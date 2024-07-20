@@ -27,6 +27,7 @@ class ContractItemController extends Controller
         return view('contract_item/create',[
             'project' => $project,
             'section' => $section,
+            'contract_items'   => $contract_items, 
             'unit_options' => Unit::toOptions()
         ]);
     }
@@ -67,11 +68,11 @@ class ContractItemController extends Controller
         $components = $section->Components;
 
         $unit_options = Unit::toOptions();
-        echo 'asdsad';
+      
         return view('section/print',[
             'section'          => $section,
             'components'       => $components,
-            'unit_options'     => $unit_options
+            'unit_options'     => $unit_options,
         ]);
     }
 

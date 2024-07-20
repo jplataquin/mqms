@@ -64,7 +64,7 @@
     }
 
     cancelBtn.onclick = (e) => {
-        document.location.href = '/project/sections';
+        document.location.href = '/project/{{$project->id}}';
     }
 
 </script>
