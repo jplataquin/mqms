@@ -300,7 +300,7 @@
                 return false;
             }
 
-            window.util.navTo('/project/section/contract_items');
+            window.util.navTo('/project/section/{{$section->id}}');
         });
     }
 
