@@ -121,17 +121,25 @@ class ContractItemController extends Controller
             
             'contract_quantity'=>[
                 'required',
-                'numeric'
+                'numeric',
+                'gt:0',
             ],
             'contract_unit_price'=>[
                 'required',
-                'numeric'
+                'numeric',
+                'gt:0',
             ],
             'ref_1_quantity'=>[
-                'numeric'
+                'nullable',
+                'numeric',
+                'gt:0',
+                'required_with:ref_1_unit_price'
             ],
             'ref_1_unit_price'=>[
-                'numeric'
+                'nullable',
+                'numeric',
+                'gt:0',
+                'required_with:ref_1_quantity'
             ],
             
         ];
