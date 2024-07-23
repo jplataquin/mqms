@@ -347,7 +347,7 @@
     }
 
 
-    createBtn.onclick = ()=>{
+    createComponentBtn.onclick = ()=>{
 
             window.util.blockUI();
 
