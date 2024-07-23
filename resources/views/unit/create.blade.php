@@ -50,14 +50,14 @@
 
             window.util.unblockUI();
       
-            document.location.href = '/master_data/unit/'+reply.data.id;
+            window.util.navTo('/master_data/unit/'+reply.data.id);
 
         
         });
     }
 
     cancelBtn.onclick = (e) => {
-        document.location.href = '/master_data/units';
+        window.util.navTo('/master_data/units');
 
     }
 

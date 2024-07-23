@@ -192,7 +192,7 @@
             };
 
 
-            document.location.href = '/review/components/';
+            window.util.navTo('/review/components/');
 
         });
     }
@@ -219,13 +219,13 @@
             };
 
 
-            document.location.href = '/review/components/';
+            window.util.navTo('/review/components/');
 
         });
     }
     cancelBtn.onclick = (e)=>{
         e.preventDefault();
-        document.location.href = '/review/components/';
+        window.util.navTo('/review/components/');
     }
 </script>
 </div>

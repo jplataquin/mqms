@@ -73,7 +73,7 @@
             });
 
             row.onclick = ()=>{
-                document.location.href = '/user_role/'+item.id;
+                window.util.navTo('/user_role/'+item.id);
             };
 
             $el.append(row).to(list);

@@ -118,7 +118,7 @@
 
     cancelBtn.onclick = (e)=>{
         e.preventDefault();
-        document.location.href = '/review/material_quantity_requests';
+        window.util.navTo('/review/material_quantity_requests');
     }
 
     function setIndexNumber(){
@@ -161,7 +161,7 @@
 
                 window.util.unblockUI();
 
-                document.location.href = '/review/material_quantity_requests/';
+                window.util.navTo('/review/material_quantity_requests/');
 
             });
         }
@@ -187,10 +187,11 @@
 
                 window.util.unblockUI();
 
-                document.location.href = '/review/material_quantity_requests/';
+                window.util.navTo('/review/material_quantity_requests/');
 
             });
         }
+        
         function formValidation(){
 
             return true;

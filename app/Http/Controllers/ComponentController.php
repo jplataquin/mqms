@@ -30,6 +30,7 @@ class ComponentController extends Controller
         $contract_item_id   = (int) $request->input('contract_item_id');
         $section_id         = (int) $request->input('section_id');
         $use_count          = (int) $request->input('use_count') ?? 1;
+        $unit_id            = (int) $request->input('unit_id');
 
         $validator = Validator::make($request->all(),[
             'name' => [
@@ -62,6 +63,11 @@ class ComponentController extends Controller
                 'required',
                 'integer',
                 'gte:1'
+            ],
+            'unit_id' =>[
+                'required',
+                'intenger',
+                'gte:1'
             ]
         ]);
          
@@ -73,16 +79,6 @@ class ComponentController extends Controller
             ]);
         }
 
-        $contract_item = ContractItem::find($contract_item_id);
-
-        if (!$contract_item) {
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Contract Item not found',
-                'data'      => $validator->messages()
-            ]);
-        }
-
         $user_id = Auth::user()->id;
 
         $component = new Component();
@@ -90,7 +86,7 @@ class ComponentController extends Controller
         $component->name                   = $name;
         $component->contract_item_id       = $contract_item_id;
         $component->quantity               = $quantity;
-        $component->unit_id                = $contract_item->unit_id;
+        $component->unit_id                = $unit_id;
         $component->use_count              = $use_count;
         $component->status                 = 'PEND';
         $component->section_id             = $section_id;
@@ -246,6 +242,7 @@ class ComponentController extends Controller
         $quantity            = $request->input('quantity');
         $status              = $request->input('status');
         $use_count           = (int) $request->input('use_count') ?? 1;
+        $unit_id             = (int) $request->input('unite_id');
 
         $component  = Component::find($id);
 
@@ -287,6 +284,11 @@ class ComponentController extends Controller
                 'required',
                 'integer',
                 'gte:1'
+            ],
+            'unit_id'   => [
+                'required',
+                'integer',
+                'gte:1'               
             ]
         ]);
 
@@ -308,6 +310,7 @@ class ComponentController extends Controller
         $component->use_count                    = $use_count;
         $component->status                       = 'PEND';
         $component->updated_by                   = $user_id;
+        $component->unit_id                      = $unit_id;
         $component->save();
 
         $this->updateComponentItems($component, $user_id);

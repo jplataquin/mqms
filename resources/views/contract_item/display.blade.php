@@ -131,26 +131,30 @@
             <div class="col-lg-2 col-sm-12">
                 <div class="form-group">
                     <label>Quantity</label>
-                    <input type="text" class="form-control" id="quantity" />
+                    <input type="text" class="form-control" id="component_quantity" />
                 </div>
             </div>
             <div class="col-lg-2 col-sm-12">
                 <div class="form-group">
                     <label>Unit</label>
-                    <input type="text" class="form-control" disabled="true" value="{{$unit_options[$contract_item->unit_id]->text}}"/>
+                    <select class="form-control" id="component_unit" disabled="true">
+                        @foreach($unit_options as $unit)
+                        <option value="{{$unit->id}}" @if($unit->deleted) disabled @endif>{{$unit->text}} @if($unit->deleted) [Deleted] @endif</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="col-lg-2 col-sm-12">
                 <div class="form-group">
                     <label>Use Count</label>
-                    <input type="text" class="form-control" value="1" id="use_count" />
+                    <input type="text" class="form-control" value="1" id="component_use_count" />
                 </div>
             </div>
             
             <div class="col-lg-2 col-sm-12">
                 <div class="form-group">
                     <label>&nbsp;</label>
-                    <button id="createBtn" class="btn btn-warning w-100">Create</button>
+                    <button id="createComponentBtn" class="btn btn-warning w-100">Create</button>
                 </div>
             </div>
         </div>
@@ -192,13 +196,13 @@
     const ref_1_unit                  = $q('#ref_1_unit').first();
     const unit                        = $q('#unit').first();
     
-    const component                   = $q('#component_name').first();
-    const unit_id                     = $q('#unit_id').first();
-    const quantity                    = $q('#quantity').first();
+    const component_name              = $q('#component_name').first();
+    const component_unit              = $q('#component_unit').first();
+    const quantity                    = $q('#component_quantity').first();
+    const component_use_count         = $q('#component_use_count').first();
+    const createComponentBtn          = $q('#createComponentBtn').first();
+    
     const component_list              = $q('#component_list').first();
-    const createBtn                   = $q('#createBtn').first();
-    const use_count                   = $q('#use_count').first();
-    const component_description       = $q('#component_description').first();
     
     const t             = new Template();
     const unit_options  = @json($unit_options);
@@ -350,10 +354,10 @@
             window.util.$post('/api/component/create',{
                 section_id          : '{{$section->id}}',
                 contract_item_id    : '{{$contract_item->id}}',
-                name                : component.value,
-                quantity            : quantity.value,
-                use_count           : use_count.value,
-                description         : description.value
+                name                : component_name.value,
+                quantity            : component_quantity.value,
+                use_count           : component_use_count.value,
+                unit_id             : component_unit.value
             }).then(reply=>{
 
                 window.util.unblockUI();

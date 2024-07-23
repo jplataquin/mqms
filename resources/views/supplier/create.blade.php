@@ -126,23 +126,21 @@
             secondary_email: secondaryEmail.value
         }).then(reply=>{
 
+            window.util.unblockUI();
+                
             if(reply.status <= 0 ){
-                window.util.unblockUI();
                 alert(reply.message);
                 return false;
             };
 
-            window.util.unblockUI();
-      
-            document.location.href = '/master_data/supplier/'+reply.data.id;
+            window.util.navTo('/master_data/supplier/'+reply.data.id);
 
         
         });
     }
 
     cancelBtn.onclick = (e) => {
-        document.location.href = '/mater_data/suppliers';
-
+        window.util.navTo('/mater_data/suppliers');
     }
 
 </script>

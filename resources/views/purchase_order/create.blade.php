@@ -421,7 +421,7 @@
                     return false;
                 }
 
-                document.location.href = '/purchase_order/'+reply.data.id;
+                window.util.navTo('/purchase_order/'+reply.data.id);
             });
         }
 
@@ -435,7 +435,7 @@
         }
 
         cancelBtn.onclick = (e)=>{
-            document.location.href = '/purchase_orders';
+            window.util.navTo('/purchase_orders');
         }
 
 

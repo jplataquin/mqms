@@ -133,7 +133,7 @@
             });
 
             row.onclick = ()=>{
-                document.location.href = '/review/purchase_order/'+item.id;
+                window.util.navTo('/review/purchase_order/'+item.id);
             };
 
 
@@ -295,7 +295,7 @@
     }
 
     cancelBtn.onclick = ()=>{
-        window.location.href = '/home';
+        window.util.navTo('/home');
     }
 
     showData();

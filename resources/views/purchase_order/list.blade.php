@@ -159,7 +159,7 @@
             });
 
             row.onclick = ()=>{
-                document.location.href = '/purchase_order/'+item.id;
+                window.util.navTo('/purchase_order/'+item.id);
             };
 
             $el.append(row).to(list);
@@ -321,7 +321,7 @@
     }               
     
     createBtn.onclick = ()=>{
-        window.location.href = '/purchase_order/create/select';
+       window.util.navTo('/purchase_order/create/select');
     }
 
     showData();

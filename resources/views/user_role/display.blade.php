@@ -110,7 +110,7 @@
 
    
     cancelBtn.onclick = (e) => {
-        document.location.href = '/user_roles';
+        window.util.navTo('/user_roles');
 
     }
 
@@ -178,18 +178,18 @@
 
         window.util.$get('/api/user_role/{{$user->id}}/list',{}).then(reply=>{
 
+            window.util.unblockUI();
+
             if(reply.status <= 0 ){
-                window.util.unblockUI();
                 
                 let message = reply.message;
 
                 
-                alert(message);
+                window.util.showMsg(message);
                 return false;
             };
 
 
-            window.util.unblockUI();
 
             if(reply.data.length){
                 renderRows(reply.data); 

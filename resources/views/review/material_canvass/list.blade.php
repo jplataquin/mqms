@@ -132,7 +132,7 @@
             
 
             row.onclick = ()=>{
-                document.location.href = '/review/material_canvass/'+item.id;
+                window.util.navTo('/review/material_canvass/'+item.id);
             };
 
             $el.append(row).to(list);
@@ -209,7 +209,7 @@
 
     cancelBtn.onclick = (e)=>{
         e.preventDefault();
-        document.location.href = '/home';
+        window.util.navTo('/home');
     }
 
    

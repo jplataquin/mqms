@@ -162,7 +162,7 @@
     }
 
     createBtn.onclick = ()=>{
-        document.location.href = '/master_data/unit/create';
+        window.util.navTo('/master_data/unit/create');
     }
 
     showData();

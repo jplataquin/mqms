@@ -80,7 +80,7 @@
             });
 
             row.onclick = ()=>{
-                document.location.href = '/project/'+item.id;
+                window.util.navTo('/project/'+item.id);
             };
 
             $el.append(row).to(list);
@@ -162,7 +162,7 @@
     }
 
     createBtn.onclick = ()=>{
-        document.location.href = '/project/create';
+        window.util.navTo('/project/create');
     }
 
     showData();

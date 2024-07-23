@@ -118,7 +118,7 @@
         updateBtn.classList.remove('d-none');
         
         cancelBtn.onclick = ()=>{
-            document.location.reload(true);
+            window.util.navReload();
         }
     }
 
@@ -144,11 +144,11 @@
 
 
     cancelBtn.onclick = (e)=>{
-        document.location.href = '/projects';
+        window.util.navTo('/projects');
     }
 
     createBtn.onclick = (e)=>{
-        document.location.href = '/project/{{$project->id}}/section/create';
+        window.util.navTo('/project/{{$project->id}}/section/create');
     }
 
     deleteBtn.onclick = (e)=>{
@@ -173,7 +173,7 @@
                 return false;
             }
 
-            window.location.href = '/projects';
+            window.util.navTo('/projects');
         });
     }
     
@@ -200,7 +200,7 @@
             });
 
             row.onclick = ()=>{
-                document.location.href = '/project/section/'+item.id;
+                window.util.navTo('/project/section/'+item.id);
             };
 
             $el.append(row).to(list);

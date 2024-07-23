@@ -174,7 +174,7 @@
     let cancelBtn = $q('#cancelBtn').first();
 
     cancelBtn.onclick = ()=>{
-        window.location.href = '/review/purchase_order';
+        window.util.navTo('/review/purchase_order');
     }
 
     @if($purchase_order->status == 'REVO')
@@ -221,7 +221,7 @@
                     return false;
                 }
 
-                window.location.href = "/review/purchase_orders";
+                window.util.navTo("/review/purchase_orders");
             });
         }
     @endif
@@ -253,7 +253,7 @@
                     return false;
                 }
 
-                window.location.href = "/review/purchase_orders";
+                window.util.navTo("/review/purchase_orders");
             });
        }
 
@@ -279,7 +279,7 @@
                     return false;
                 }
 
-                window.location.href = "/review/purchase_orders";
+                window.util.navTo("/review/purchase_orders");
             });
        }
     @endif

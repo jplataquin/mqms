@@ -134,7 +134,7 @@
               
 
             row.onclick = ()=>{
-                document.location.href = '/review/material_quantity_request/'+item.id;
+                window.util.navTo('/review/material_quantity_request/'+item.id);
             };
 
             $el.append(row).to(list);
@@ -210,7 +210,7 @@
     }
 
     cancelBtn.onclick = ()=>{
-        document.location.href = '/home';
+        window.util.navTo('/home');
     }
 
 

@@ -57,14 +57,14 @@
 
             window.util.unblockUI();
 
-            document.location.href = '/role/'+reply.data.id;
+            window.util.navTo('/role/'+reply.data.id);
 
 
         });
     }
 
     cancelBtn.onclick = (e) => {
-        document.location.href = '/roles';
+        window.util.navTo('/roles');
 
     }
 

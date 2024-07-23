@@ -80,7 +80,7 @@
             });
 
             row.onclick = ()=>{
-                document.location.href = '/role/'+item.id;
+                window.util.navTo('/role/'+item.id);
             };
 
             $el.append(row).to(list);
@@ -162,7 +162,7 @@
     }
 
     createBtn.onclick = ()=>{
-        document.location.href = '/role/create';
+        window.util.navTo('/role/create');
     }
 
     showData();

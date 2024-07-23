@@ -80,7 +80,7 @@
             });
 
             row.onclick = ()=>{
-                document.location.href = '/supplier/'+item.id;
+                window.util.navTo('/supplier/'+item.id);
             };
 
             $el.append(row).to(list);
@@ -162,7 +162,7 @@
     }
 
     createBtn.onclick = ()=>{
-        document.location.href = '/master_data/supplier/create';
+        window.util.navTo('/master_data/supplier/create');
     }
 
     showData();

@@ -126,7 +126,7 @@
             
 
             row.onclick = ()=>{
-                document.location.href = '/purchase_order/create/'+item.id;
+                window.util.navTo('/purchase_order/create/'+item.id);
             };
 
             $el.append(row).to(list);
@@ -203,7 +203,7 @@
 
     cancelBtn.onclick = (e)=>{
         e.preventDefault();
-        document.location.href = '/purchase_orders';
+        window.util.navTo('/purchase_orders');
     }
 
    

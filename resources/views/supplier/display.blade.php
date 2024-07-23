@@ -171,11 +171,11 @@
 
 
     cancelBtn.onclick = (e)=>{
-        document.location.href = '/suppliers';
+        window.util.navTo('/suppliers');
     }
 
     createBtn.onclick = (e)=>{
-        document.location.href = '/supplier/create';
+        window.util.navTo('/supplier/create');
     }
 
     deleteBtn.onclick = (e)=>{
@@ -200,7 +200,7 @@
                 return false;
             }
 
-            window.location.href = '/suppliers';
+            window.util.navTo('/suppliers');
         });
     }
     

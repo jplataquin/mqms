@@ -164,7 +164,7 @@
 
     cancelBtn.onclick = (e)=>{
         
-        window.location.href = '/home';
+        window.util.navTo('/home');
     }
 </script>
 </div>

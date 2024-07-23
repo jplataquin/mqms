@@ -181,7 +181,7 @@
     let cancelBtn = $q('#cancelBtn').first();
 
     cancelBtn.onclick = ()=>{
-        window.location.href = '/purchase_orders';
+        window.util.navTo('/purchase_orders');
     }
 
     @if($purchase_order->status == 'PEND')
@@ -210,7 +210,7 @@
                     return false;
                 }
 
-                window.location.href = "/purchase_orders";
+                window.util.navTo("/purchase_orders");
             });
        }
     @endif
@@ -242,12 +242,12 @@
                     return false;
                 }
 
-                window.location.href = "/purchase_order/"+reply.data.id;
+                window.util.navTo("/purchase_order/"+reply.data.id);
             });
         }
 
         printBtn.onclick = (e)=>{
-            window.location.href = '/purchase_order/print/{{$purchase_order->id}}';
+            window.util.navTo('/purchase_order/print/{{$purchase_order->id}}');
         }
     @endif
 </script>
