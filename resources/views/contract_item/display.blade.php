@@ -137,7 +137,7 @@
             <div class="col-lg-2 col-sm-12">
                 <div class="form-group">
                     <label>Unit</label>
-                    <select class="form-control" id="component_unit" disabled="true">
+                    <select class="form-control" id="component_unit">
                         @foreach($unit_options as $unit)
                             <option value="{{$unit->id}}" @if($unit->deleted) disabled @endif>{{$unit->text}} @if($unit->deleted) [Deleted] @endif</option>
                         @endforeach
