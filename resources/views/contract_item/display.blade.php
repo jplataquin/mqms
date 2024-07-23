@@ -139,7 +139,7 @@
                     <label>Unit</label>
                     <select class="form-control" id="component_unit" disabled="true">
                         @foreach($unit_options as $unit)
-                        <option value="{{$unit->id}}" @if($unit->deleted) disabled @endif>{{$unit->text}} @if($unit->deleted) [Deleted] @endif</option>
+                            <option value="{{$unit->id}}" @if($unit->deleted) disabled @endif>{{$unit->text}} @if($unit->deleted) [Deleted] @endif</option>
                         @endforeach
                     </select>
                 </div>
