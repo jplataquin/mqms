@@ -15,9 +15,9 @@ class ComponentItemController extends Controller
 {   
     public function display($id){
 
-        $componentItem = ComponentItem::findOrFail($id);
+        $component_item = ComponentItem::findOrFail($id);
 
-        $component       = $componentItem->Component;
+        $component       = $component_item->Component;
         $section         = $component->Section;
         $project         = $section->Project;
 
@@ -108,19 +108,19 @@ class ComponentItemController extends Controller
 
         $user_id = Auth::user()->id;
 
-        $componentItem = new ComponentItem();
+        $component_item = new ComponentItem();
 
-        $componentItem->component_id              = $component_id;
-        $componentItem->name                      = $name;
-        $componentItem->budget_price              = $budget_price;
-        $componentItem->quantity                  = $quantity;
-        $componentItem->unit_id                   = $unit_id;
-        $componentItem->function_type_id          = $function_type_id;
-        $componentItem->function_variable         = $function_variable;
-        $componentItem->created_by                = $user_id;
-        $componentItem->sum_flag                  = $sum_flag;
+        $component_item->component_id              = $component_id;
+        $component_item->name                      = $name;
+        $component_item->budget_price              = $budget_price;
+        $component_item->quantity                  = $quantity;
+        $component_item->unit_id                   = $unit_id;
+        $component_item->function_type_id          = $function_type_id;
+        $component_item->function_variable         = $function_variable;
+        $component_item->created_by                = $user_id;
+        $component_item->sum_flag                  = $sum_flag;
 
-        $componentItem->save();
+        $component_item->save();
 
 
         if($component->status != 'PEND'){
@@ -134,7 +134,7 @@ class ComponentItemController extends Controller
             'status'    => 1,
             'message'   => '',
             'data'      => [
-                'id'=> $componentItem->id
+                'id'=> $component_item->id
             ]
         ]);
     }
@@ -159,9 +159,9 @@ class ComponentItemController extends Controller
             ]);
         }
 
-        $componentItem = ComponentItem::find($id);
+        $component_item = ComponentItem::find($id);
 
-        if(!$componentItem){
+        if(!$component_item){
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Record not found',
@@ -169,13 +169,13 @@ class ComponentItemController extends Controller
             ]);
         }
 
-        $componentItem->loadCount('materialQuantities');
+        $component_item->loadCount('materialQuantities');
 
         
         return response()->json([
             'status'    => 1,
             'message'   => '',
-            'data'      => $componentItem
+            'data'      => $component_item
         ]);
     }
 
@@ -186,12 +186,13 @@ class ComponentItemController extends Controller
          $name              = $request->input('name') ?? '';
          $budget_price      = $request->input('budget_price') ?? '';
          $quantity          = $request->input('quantity') ?? '';
+         $function_variable = $request->input('function_variable');
          $id                = (int) $request->input('id');
          $component_id      = (int) $request->input('component_id');
          $function_type_id  = (int) $request->input('function_type_id');
-         $unit_id = (int) $request->input('unit_id') ?? 0;
-         $function_variable = $request->input('function_variable');
-
+         $unit_id           = (int) $request->input('unit_id') ?? 0;
+         $sum_flag          = (boolean) $request->input('sum_flag');
+         
          $validator = Validator::make($request->all(),[
              'name' => [
                  'required',
@@ -247,14 +248,10 @@ class ComponentItemController extends Controller
              ]);
          }
  
-         
-         
-         
-         $user_id = Auth::user()->id;
- 
-         $componentItem = ComponentItem::find($id);
+         $user_id        = Auth::user()->id;
+         $component_item = ComponentItem::find($id);
 
-         if(!$componentItem){
+         if(!$component_item){
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Record not found',
@@ -262,7 +259,7 @@ class ComponentItemController extends Controller
             ]);
         }
 
-        if($componentItem->component_id != $component_id){
+        if($component_item->component_id != $component_id){
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Component ID does not match',
@@ -271,7 +268,7 @@ class ComponentItemController extends Controller
         }
 
         //Get all previous material quantities and check if they are within budget with regards to the new data.
-        $material_quantities = $componentItem->MaterialQuantities;
+        $material_quantities = $component_item->MaterialQuantities;
 
 
         foreach($material_quantities as $mq){
@@ -287,17 +284,18 @@ class ComponentItemController extends Controller
             }
         }
  
-         $componentItem->name                   = $name;
-         $componentItem->quantity               = $quantity;
-         $componentItem->budget_price           = $budget_price;
-         $componentItem->unit_id                = $unit_id;
-         $componentItem->function_type_id       = $function_type_id;
-         $componentItem->function_variable      = $function_variable;
-         $componentItem->updated_by             = $user_id;
+         $component_item->name                   = $name;
+         $component_item->quantity               = $quantity;
+         $component_item->budget_price           = $budget_price;
+         $component_item->unit_id                = $unit_id;
+         $component_item->function_type_id       = $function_type_id;
+         $component_item->function_variable      = $function_variable;
+         $component_item->sum_flag               = $sum_flag;
+         $component_item->updated_by             = $user_id;
  
-         $componentItem->save();
+         $component_item->save();
  
-         $component = $componentItem->component;
+         $component = $component_item->component;
  
          if($component->status != 'PEND'){
              $component->status      = 'PEND';
@@ -310,7 +308,7 @@ class ComponentItemController extends Controller
              'status'    => 1,
              'message'   => '',
              'data'      => [
-                 'id'=> $componentItem->id
+                 'id'=> $component_item->id
              ]
          ]);
     }
@@ -338,9 +336,9 @@ class ComponentItemController extends Controller
             ]);
         }
 
-        $componentItem = ComponentItem::find($id);
+        $component_item = ComponentItem::find($id);
 
-        if(!$componentItem){
+        if(!$component_item){
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Record not found',
@@ -348,9 +346,9 @@ class ComponentItemController extends Controller
             ]);
         }
         
-        $component = $componentItem->component;
+        $component = $component_item->component;
 
-        if(!$componentItem->delete()){
+        if(!$component_item->delete()){
 
             return response()->json([
                 'status'    => 0,
