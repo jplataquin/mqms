@@ -25,6 +25,8 @@
             
             .text-center{
                 text-align: center !important;
+                padding-left: auto;
+                padding-right:auto;
             }
 
             .min-col-width{
