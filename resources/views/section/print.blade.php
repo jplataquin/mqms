@@ -52,6 +52,10 @@
             .bg-excluded-sum-component_item{
                 background-color: #fffec8;
             }
+
+            .font-color-danger{
+                color: #ff0000;
+            }
         </style>
     
 <page>
@@ -159,7 +163,7 @@
                     </th>
                     <th></th>
                     <th class="text-right">
-                        {{ number_format($component_total_quantity,2) }}---
+                        {{ number_format($component_total_quantity,2) }}
                     </th>
                     <th class="text-center">
                         {{$unit_options[$contract_item->unit_id]->text}}
@@ -203,7 +207,7 @@
                         <td></td>
                         <td></td>
 
-                        <th>
+                        <th class="@if($component_item_quantity_total_per_component[$component->id] > $component->quantity) font-color-danger @endif">
                             {{ $component_item_quantity_total_per_component[$component->id] }}
                         </th>
                         <th>
