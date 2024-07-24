@@ -211,8 +211,8 @@
     const status                = $q('#status').first();
     const component_quantity    = $q('#component_quantity').first();
     const use_count             = $q('#use_count').first();
-    const description           = $q('#description').first();
     const component_sum_flag    = $q('#component_sum_flag').first();
+    const component_unit        = $q('#component_unit').first();
 
     const component_item_name          = $q('#component_item_name').first();
     const component_item_budget_price  = $q('#component_item_budget_price').first();
@@ -299,6 +299,7 @@
             name        : component.value,
             quantity    : component_quantity.value,
             use_count   : use_count.value,
+            unit        : component_unit.value,
             sum_flag    : (component_sum_flag.checked == true) ? 1 : 0
         }).then((reply)=>{
 
