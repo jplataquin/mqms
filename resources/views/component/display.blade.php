@@ -126,12 +126,7 @@
     </div>
     
     <div class="row mt-3">
-        <div class="col-lg-2">
-            <div class="form-group">
-                <label>Budget Price / Unit</label>
-                <input id="component_item_budget_price" type="text" class="form-control"/>
-            </div>
-        </div>
+        
         <div class="col-lg-2">
             <div class="form-group">
                 <label>Function Type</label>
@@ -163,6 +158,12 @@
                         <option value="{{$opt->id}}">{{$opt->text}}</option>
                     @endforeach
                 </select>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="form-group">
+                <label>Budget Price / Unit</label>
+                <input id="component_item_budget_price" type="text" class="form-control"/>
             </div>
         </div>
         <div class="col-lg-1">
@@ -338,14 +339,15 @@
             component_item_unit.value           = '';
             component_item_function_type.value  = '';
             component_item_variable.value       = '';
+            component_sum_flag.checked          = true;
 
             let item = ComponentItemEl({
                 id: reply.data.id,
                 component_id:'{{$component->id}}',
-                materialItemOptions: materialItemOptions,
-                unitOptions: @json($unit_options),
                 component_quantity: parseFloat('{{$component->quantity}}'),
-                component_use_count: parseFloat('{{$component->use_count}}')
+                component_use_count: parseFloat('{{$component->use_count}}'),
+                materialItemOptions: materialItemOptions,
+                unitOptions: @json($unit_options)
             });
 
             $el.append(item).to(component_item_list);
@@ -394,7 +396,6 @@
         component_item_list.append(
             ComponentItemEl({
                 id:'{{$item->id}}',
-                sum_flag:'{{$item->sum_flag}}',
                 component_id:'{{$component->id}}',
                 component_quantity: parseFloat('{{$component->quantity}}'),
                 component_use_count: parseFloat('{{$component->use_count}}'),
