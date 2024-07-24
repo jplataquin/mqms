@@ -173,21 +173,23 @@
                                 @endphp
                             @endif
                         <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <th class="text-right">
                             {{ number_format($component->quantity,2) }}
                         </th>
                         <th class="text-center">
                             {{$unit_options[$component->unit_id]->text}}
                         </th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <td></td>
+                        <td></td>
+                        
                         <td></td>
                         <td></td>
                     </tr>
