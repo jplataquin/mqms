@@ -120,7 +120,7 @@
                             }
                         }
 
-                        $component_item_quantity_total_per_component[$component->id] = $component_item_total_quantity;
+                        $component_item_quantity_total_per_component[$component->id] = $component_items_total_quantity;
                     }   
                 @endphp
                 <tr class="bg-contract-item">
