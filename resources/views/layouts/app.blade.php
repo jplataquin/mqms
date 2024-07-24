@@ -49,6 +49,22 @@
                         </li>
                     </ul>
                 </li>
+                
+                <li class="menu-item">
+                    <div class="nav-item">
+                        <a href="#" class="inactive-nav-item">Projects</a>
+                    </div>    
+                    <ul class="list-unstyled menu-sub-items">
+                        <li class="nav-sub-item">
+                            <a href="/project/create" hx-select="#content" hx-target="#main">Create</a>
+                        </li>
+                        <li class="nav-sub-item">
+                            <a href="/projects" hx-select="#content" hx-target="#main">List</a>
+                        </li>
+                    </ul>
+                    
+                </li>
+             
                 <li class="menu-item">
                     <div class="nav-item">
                         <a href="#" class="inactive-nav-item">Users</a>
@@ -86,20 +102,6 @@
                             <a href="/master_data/units" hx-select="#content" hx-target="#main">Units</a>
                         </li>
                     </ul>
-                </li>
-                <li class="menu-item">
-                    <div class="nav-item">
-                        <a href="#" class="inactive-nav-item">Projects</a>
-                    </div>    
-                    <ul class="list-unstyled menu-sub-items">
-                        <li class="nav-sub-item">
-                            <a href="/project/create" hx-select="#content" hx-target="#main">Create</a>
-                        </li>
-                        <li class="nav-sub-item">
-                            <a href="/projects" hx-select="#content" hx-target="#main">List</a>
-                        </li>
-                    </ul>
-                    
                 </li>
                 <li class="menu-item">
                     <div class="nav-item">

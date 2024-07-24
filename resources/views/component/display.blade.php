@@ -23,30 +23,6 @@
                     <td>{{$contract_item->item_code}} - {{$contract_item->description}}</td>
                 </tr>
                 <tr>
-                    <th>Component</th>
-                    <td>
-                        <input class="form-control editable_field" type="text" id="component" value="{{$component->name}}" disabled="true"/>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Quantity</th>
-                    <td>
-                        <input class="form-control editable_field" type="text" id="component_quantity" value="{{$component->quantity}}" disabled="true"/>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Unit</th>
-                    <td>
-                        {{ $unit_options[$contract_item->unit_id]->text }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Use Count</th>
-                    <td>
-                        <input class="form-control editable_field" type="text" id="use_count" value="{{$component->use_count}}" disabled="true"/>
-                    </td>
-                </tr>
-                <tr>
                     <th>Status</th>
                     <td id="status">
                         {{$component->status}}
@@ -84,6 +60,38 @@
                 </tr>
                 
             </table>    
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label>Component</label>
+                <input class="form-control editable_field" type="text" id="component" value="{{$component->name}}" disabled="true"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label>Quantity</label>
+                <input class="form-control editable_field" type="text" id="component_quantity" value="{{$component->quantity}}" disabled="true"/>
+            </div>
+        </div>
+        <div clas="col-lg-4">
+            <div class="form-group">
+                <label>Unit</label>   
+                <select id="component_unit" class="form-control editable_field" disabled="true">
+                    @foreach($unit_options as $opt)
+                        <option value="{{$opt->id}}" @if($component->unit_id == $opt->id) selected @endif >{{$opt->text}}</option>
+                    @endforeach
+                </select>         
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+               <label>Use Count</label>
+            <input class="form-control editable_field" type="text" id="use_count" value="{{$component->use_count}}" disabled="true"/>
+            </div>
         </div>
     </div>
 
