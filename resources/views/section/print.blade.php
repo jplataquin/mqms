@@ -159,7 +159,7 @@
                     </th>
                     <th></th>
                     <th class="text-right">
-                        {{ number_format($component_total_quantity,2) }}
+                        {{ number_format($component_total_quantity,2) }}---
                     </th>
                     <th class="text-center">
                         {{$unit_options[$contract_item->unit_id]->text}}
