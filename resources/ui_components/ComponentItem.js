@@ -143,7 +143,7 @@ class ComponentItem extends Component{
                         t.th('Quantity');
                         t.th('Unit');
                         t.th('Total Amount');
-                        t.th('Options');
+                        t.th('Sum Flag');
                     })
                     
                     t.tr(()=>{
@@ -193,7 +193,14 @@ class ComponentItem extends Component{
                             this.el.total_amount = t.input({class:'form-control',disabled:true});
                         });
 
-                        t.td({class:'text-center'},(el)=>{
+                        t.td({class:'form-switch'},()=>{
+                            t.input({class:'form-check-input',value:1,type:'checkbox'});
+                        });
+
+                    });
+
+                    t.tr(()=>{
+                        t.td({colspan:6, class:'text-end'},(el)=>{
                             
                             this.el.deleteComponentButton = t.button({class:'btn btn-danger me-3',style:{
                                 display: (()=>{
@@ -224,7 +231,6 @@ class ComponentItem extends Component{
                             }},'Update');
                             
                         });
-
                     });
 
 

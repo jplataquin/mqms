@@ -28,6 +28,14 @@
                         {{$component->status}}
                     </td>
                 </tr>
+                
+                <tr>
+                    <th>Hash</th>
+                    <td>
+                        {{$hash}}
+                    </td>
+                </tr>
+                
                 <tr>
                     <th>Created By</th>
                     <td>
@@ -50,12 +58,6 @@
                     <th>Rejected By</th>
                     <td>
                     {{$component->rejectedByUser()->name}} {{$component->approved_at}}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Hash</th>
-                    <td>
-                        {{$hash}}
                     </td>
                 </tr>
                 
