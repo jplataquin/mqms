@@ -74,13 +74,13 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="form-group">
                 <label>Quantity</label>
                 <input class="form-control editable_field" type="text" id="component_quantity" value="{{$component->quantity}}" disabled="true"/>
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="form-group">
                 <label>Unit</label>   
                 <select id="component_unit" class="form-control editable_field" disabled="true">
@@ -90,10 +90,19 @@
                 </select>         
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="form-group">
                <label>Use Count</label>
             <input class="form-control editable_field" type="text" id="use_count" value="{{$component->use_count}}" disabled="true"/>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Sum Flag</label>
+                <div class="form-switch text-center">
+                    <input type="checkbox" class="form-check-input editable_field" id="component_sum_flag" value="1" @if($component->sum_fag) checked @endif disable="true"/>
+                </div>
             </div>
         </div>
     </div>

@@ -354,7 +354,7 @@ class ComponentController extends Controller
 
         $item_quantity = ($component->quantity / $item->function_variable ) / $component->use_count;
 
-        $item->quantity = ceil($item_quantity);
+        $item->quantity     = ceil($item_quantity);
 
         $item->quantity     = $item_quantity;
         $item->updated_by   = $user_id;
