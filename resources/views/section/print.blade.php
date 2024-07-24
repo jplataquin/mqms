@@ -48,6 +48,10 @@
             .bg-contract-item{
                 background-color: #d3d3d3;
             }
+
+            .bg-excluded-sum-component_item{
+                background-color: #fffec8;
+            }
         </style>
     
 <page>
@@ -199,19 +203,19 @@
                         <td></td>
                         <td></td>
 
-                        <td>
+                        <th>
                             {{ $component_item_quantity_total_per_component[$component->id] }}
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             {{$unit_options[$component->unit_id]->text}}
-                        </td>
+                        </th>
                         
                         <td></td>
                         <td></td>
                     </tr>
                    
                     @foreach($component_items_arr[$component->id] as $component_item)
-                        <tr>
+                        <tr class="@if(!$component_item->sum_flag) bg-excluded-sum-component-item @endif">
                             
                             <td>
                                 {{$item_count}} {{$component_item->name}}
