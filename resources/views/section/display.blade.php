@@ -102,7 +102,7 @@
 
     printBtn.onclick = (e)=>{
         e.preventDefault();
-        window.util.navTo('/project/section/print/{{$section->id}}');
+        window.open('/project/section/print/{{$section->id}}','_blank').focus();
     }
 
     editBtn.onclick = (e)=>{
