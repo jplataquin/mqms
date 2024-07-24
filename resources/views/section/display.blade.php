@@ -21,16 +21,18 @@
                             {{str_pad($section->id,6,0,STR_PAD_LEFT)}}
                         </td>
                     </tr>
-                    <tr>
-                        <th>Section</th>
-                        <td>
-                            <input type="text" id="sectionName" value="{{$section->name}}" disabled="true" class="form-control"/>
-                        </td>
-                    </tr>
                 </tbody>
             </table>    
         </div>
 
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label>Section</label>
+                <input type="text" id="sectionName" value="{{$section->name}}" disabled="true" class="form-control"/>        
+            </div>
+        </div>
     </div>
 
     <div class="row mt-5">
@@ -176,7 +178,7 @@
     $q('.item').apply((el)=>{
 
         el.onclick = (e)=>{
-            window.util.navTo('/project/section/contract_item/'+el.getAttribute('data-id'));
+            window.util.navTo('/project/section/contract_item/'+el.getAttribute('data-id')) ;
         }
     });
 
