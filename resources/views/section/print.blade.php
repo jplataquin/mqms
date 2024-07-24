@@ -102,7 +102,9 @@
                         $component_items_arr[$component->id] = $component->ComponentItems;
                         
                         foreach($component_items_arr[$component->id] as $component_item){
-                            $component_items_total_amount = $component_items_total_amount + ($component_item->quantity * $component_item->budget_price);
+                            if($component_item->sum_flag && ($component_item->unit_id == $component->unit_id) ){
+                                $component_items_total_amount = $component_items_total_amount + ($component_item->quantity * $component_item->budget_price);
+                            }
                         }
                     }   
                 @endphp
