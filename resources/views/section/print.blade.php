@@ -16,15 +16,15 @@
             }
 
             .text-right{
-                text-align: right;
+                text-align: right !important;
             }
 
             .text-left{
-                text-align: left;
+                text-align: left !important;
             }
             
             .text-center{
-                text-align: center;
+                text-align: center !important;
             }
 
             .min-col-width{
@@ -43,6 +43,9 @@
                 font-size:9px;
             }
 
+            .bg-contract-item{
+                background-color: #d3d3d3;
+            }
         </style>
     
 <page>
@@ -64,27 +67,27 @@
                 <td colspan="15"></td>
             </tr>
             <tr>
-                <th rowspan="2" style="width:5%">Item Code</th>
-                <th rowspan="2" class="desc-col-width">Description</th>
-                <th colspan="4">Contract</th>
-                <th colspan="4">POW/DUPA</th>
-                <th class="factor-col-width">Factor</th>
-                <th colspan="4">Material Budget</th>
+                <th class="text-center" rowspan="2" style="width:5%">Item Code</th>
+                <th class="text-center" rowspan="2" class="desc-col-width">Description</th>
+                <th class="text-center" colspan="4">Contract</th>
+                <th class="text-center" colspan="4">POW/DUPA</th>
+                <th class="text-center" class="factor-col-width">Factor</th>
+                <th class="text-center" colspan="4">Material Budget</th>
             </tr>
             <tr>
-                <th class="min-col-width">QTY</th>
-                <th class="min-col-width">UNIT</th>
-                <th class="min-col-width">PRICE</th>
-                <th class="min-col-width">AMOUNT</th>
-                <th class="min-col-width">QTY</th>
-                <th class="min-col-width">UNIT</th>
-                <th class="min-col-width">RATE</th>
-                <th class="min-col-width">AMOUNT</th>
-                <th class="min-col-width">QTY / UNIT</th>
-                <th class="min-col-width">QTY</th>
-                <th class="min-col-width">UNIT</th>
-                <th class="min-col-width">COST</th>
-                <th class="min-col-width">AMOUNT</th>
+                <th class="min-col-width text-center">QTY</th>
+                <th class="min-col-width text-center">UNIT</th>
+                <th class="min-col-width text-center">PRICE</th>
+                <th class="min-col-width text-center">AMOUNT</th>
+                <th class="min-col-width text-center">QTY</th>
+                <th class="min-col-width text-center">UNIT</th>
+                <th class="min-col-width text-center">RATE</th>
+                <th class="min-col-width text-center">AMOUNT</th>
+                <th class="min-col-width text-center">QTY / UNIT</th>
+                <th class="min-col-width text-center">QTY</th>
+                <th class="min-col-width text-center">UNIT</th>
+                <th class="min-col-width text-center">COST</th>
+                <th class="min-col-width text-center">AMOUNT</th>
             </tr>
                 
             @foreach($contract_items as $contract_item)
@@ -102,13 +105,11 @@
                         $component_items_arr[$component->id] = $component->ComponentItems;
                         
                         foreach($component_items_arr[$component->id] as $component_item){
-                            if($component_item->sum_flag && ($component_item->unit_id == $component->unit_id) ){
-                                $component_items_total_amount = $component_items_total_amount + ($component_item->quantity * $component_item->budget_price);
-                            }
+                            $component_items_total_amount = $component_items_total_amount + ($component_item->quantity * $component_item->budget_price);
                         }
                     }   
                 @endphp
-                <tr>
+                <tr class="bg-contract-item">
                     <th class="text-left">{{ Str::wordWrap($contract_item->item_code,10,"\n",false) }}</th>
                     <th>
                         {!! Str::wordWrap($contract_item->description,30,"<br>",false) !!}
