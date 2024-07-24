@@ -298,8 +298,8 @@
             id          :'{{$component->id}}',
             name        : component.value,
             quantity    : component_quantity.value,
+            unit_id     : component_unit.value,
             use_count   : use_count.value,
-            unit        : component_unit.value,
             sum_flag    : (component_sum_flag.checked == true) ? 1 : 0
         }).then((reply)=>{
 
