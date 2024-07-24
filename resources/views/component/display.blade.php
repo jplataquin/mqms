@@ -144,7 +144,7 @@
                 <input id="component_item_quantity" type="text" class="form-control" disabled="true"/>
             </div>
         </div>
-        <div class="col-lg-2">
+        <div class="col-lg-1">
             <div class="form-group">
                 <label>Unit</label>
                 <select id="component_item_unit" class="form-control">
@@ -152,6 +152,12 @@
                         <option value="{{$opt->id}}">{{$opt->text}}</option>
                     @endforeach
                 </select>
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <div class="form-group">
+                <label>Sum Flag</label>
+                <input type="checkbox" class="form-control" id="sum_flag" checked/>
             </div>
         </div>
         <div class="col-lg-2">
