@@ -19,6 +19,7 @@ class ComponentItem extends Component{
             quantity: 0,
             unit:'',
             name:'',
+            sum_flag:true,
             editable: false,
             function_type_id:'',
             variable:''
@@ -266,8 +267,6 @@ class ComponentItem extends Component{
             this.calculateTotalAmount();
         }
 
-        
-
         this.el.material_quantity.onkeypress = (e)=>{
             return window.util.inputNumber(this.el.material_quantity,e,2,false);
         }
@@ -335,9 +334,15 @@ class ComponentItem extends Component{
 
         this.el.cancelEditComponentButton.onclick = (e)=>{
             this.setState('editable',false);
-            this.el.unit.value = this._state.unit;
-            this.el.name.value = this._state.name;
-            this.el.quantity.value = this._state.quantity;
+            this.el.unit.value      = this._state.unit;
+            this.el.name.value      = this._state.name;
+            this.el.quantity.value  = this._state.quantity;
+            
+            if(this._state.sum_flag){
+                this.el.sum_flag.checked = true;
+            }else{
+                this.el.sum_flag.checked = false;
+            }
         }
 
         this.el.updateComponentButton.onclick = (e)=>{
@@ -441,14 +446,16 @@ class ComponentItem extends Component{
         this.el.variable.disabled           = !newVal;
         this.el.sum_flag.disabled           = !newVal;
 
+        //Editable (true)
         if(newVal){
+
             this.el.editComponentButton.style.display   = 'none';
             this.el.deleteComponentButton.style.display = 'none';
 
             this.el.cancelEditComponentButton.style.display = 'inline';
             this.el.updateComponentButton.style.display = 'inline';
             
-        }else{
+        }else{ //Editable (false)
             this.el.editComponentButton.style.display   = 'inline';
             this.el.deleteComponentButton.style.display = 'inline';
 
@@ -502,6 +509,7 @@ class ComponentItem extends Component{
             this.setState('name',reply.data.name);
             this.setState('function_type_id',reply.data.function_type_id);
             this.setState('variable',reply.data.function_variable);
+            this.setState('sum_flag',reply.data.sum_flag);
             
             this.el.name.value          = reply.data.name;
             this.el.budget_price.value  = reply.data.budget_price;
