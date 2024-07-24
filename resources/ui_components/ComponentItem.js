@@ -372,7 +372,7 @@ class ComponentItem extends Component{
             unit_id                 : this.el.unit.value,
             function_type_id        : this.el.function_type.value,
             function_variable       : this.el.variable.value,
-            sum_flag                : this.el.sum_flag.value
+            sum_flag                : (this.el.sum_flag.checked == true) ? 1 : 0
 
         }).then(reply=>{
 
