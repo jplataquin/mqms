@@ -194,8 +194,8 @@ class ComponentItem extends Component{
                         });
 
                         t.td({},()=>{
-                            t.div({class:'form-switch'},()=>{                  
-                                t.input({class:'form-check-input',value:1,type:'checkbox'});
+                            t.div({class:'form-switch text-center'},()=>{                  
+                                t.input({class:'form-check-input',value:1,type:'checkbox', disabled:true});
                             });
                         });
 

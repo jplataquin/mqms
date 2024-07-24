@@ -35,7 +35,7 @@
                         {{$hash}}
                     </td>
                 </tr>
-                
+
                 <tr>
                     <th>Created By</th>
                     <td>
@@ -168,7 +168,7 @@
         <div class="col-lg-1">
             <div class="form-group">
                 <label>Sum Flag</label>
-                <div class="form-switch">
+                <div class="form-switch text-center">
                     <input type="checkbox" class="form-check-input" id="component_sum_flag" value="1" checked/>
                 </div>
             </div>
