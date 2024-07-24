@@ -97,18 +97,30 @@
                 @php 
                     $components = $contract_item->Components;
 
-                    $component_total_quantity       = 0;
-                    $component_items_total_amount   = 0;
-                    $component_items_arr            = [];
+                    $component_total_quantity                    = 0;
+                    $component_items_total_amount                = 0;
+                    $component_items_total_quantity              = 0;
+                    $component_items_arr                         = [];
+                    $component_item_quantity_total_per_component = [];
 
                     foreach($components as $component){
                         $component_total_quantity = $component_total_quantity + $component->quantity;
 
                         $component_items_arr[$component->id] = $component->ComponentItems;
                         
+                        //Each component item row
                         foreach($component_items_arr[$component->id] as $component_item){
+                           
+                            //Total the amount for each row
                             $component_items_total_amount = $component_items_total_amount + ($component_item->quantity * $component_item->budget_price);
+                            
+                            //Total the quantity for all component item
+                            if($component_item->sum_flag && ($component_item->unit_id == $component->unit_id)){
+                                $component_items_total_quantity = $component_items_total_quantity + $component_item->quantity;
+                            }
                         }
+
+                        $component_item_quantity_total_per_component[$component->id] = $component_item_total_quantity;
                     }   
                 @endphp
                 <tr class="bg-contract-item">
@@ -187,8 +199,12 @@
                         <td></td>
                         <td></td>
 
-                        <td></td>
-                        <td></td>
+                        <td>
+                            {{ $component_item_quantity_total_per_component[$component->id] }}
+                        </td>
+                        <td>
+                            {{$unit_options[$component->unit_id]->text}}
+                        </td>
                         
                         <td></td>
                         <td></td>
