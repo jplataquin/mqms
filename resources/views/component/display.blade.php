@@ -70,7 +70,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group">
@@ -78,7 +78,7 @@
                 <input class="form-control editable_field" type="text" id="component_quantity" value="{{$component->quantity}}" disabled="true"/>
             </div>
         </div>
-        <div clas="col-lg-4">
+        <div class="col-lg-4">
             <div class="form-group">
                 <label>Unit</label>   
                 <select id="component_unit" class="form-control editable_field" disabled="true">
