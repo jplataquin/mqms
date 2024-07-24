@@ -215,9 +215,10 @@
                     </tr>
                    
                     @foreach($component_items_arr[$component->id] as $component_item)
-                        <tr class="@if(!$component_item->sum_flag) bg-excluded-sum-component-item @endif">
+                        <tr class="@if(!$component_item->sum_flag) bg-excluded-sum-component_item @endif">
                             
                             <td>
+                                {{$component_item->sum_flag}}=
                                 {{$item_count}} {{$component_item->name}}
 
                                 @php
