@@ -157,7 +157,8 @@
         <div class="col-lg-1">
             <div class="form-group">
                 <label>Sum Flag</label>
-                <input type="checkbox" class="form-control" id="sum_flag" value="1" checked/>
+                
+                <input type="checkbox" class="d-block form-check-input" id="sum_flag" value="1" checked/>
             </div>
         </div>
         <div class="col-lg-2">
