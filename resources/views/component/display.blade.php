@@ -64,7 +64,7 @@
             </table>    
         </div>
     </div>
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-lg-12">
             <div class="form-group">
                 <label>Component</label>
@@ -73,7 +73,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mb-5">
         <div class="col-lg-3">
             <div class="form-group">
                 <label>Quantity</label>
@@ -108,7 +108,7 @@
     </div>
 
 
-    <div class="row mt-5">
+    <div class="row">
         <div class="col-lg-6">
             <button class="btn btn-danger" id="deleteBtn">Delete</button>
         </div>
