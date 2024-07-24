@@ -138,24 +138,17 @@ class ComponentItem extends Component{
                     })
 
                     t.tr(()=>{
-                        t.th('Budget Price');
                         t.th('Function Type');
                         t.th('Variable');
                         t.th('Quantity');
                         t.th('Unit');
+                        t.th('Budget Price');
                         t.th('Total Amount');
                         t.th('Sum Flag');
                     })
                     
                     t.tr(()=>{
                         
-
-                        t.td({class:''},(el)=>{
-                            
-                            this.el.budget_price = t.input({class:'form-control', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
-                            
-                        });
-
                         t.td({class:''},(el)=>{
                             
                             this.el.function_type = t.select({class:'form-control',disabled:true},()=>{
@@ -189,6 +182,13 @@ class ComponentItem extends Component{
                             });
         
                         });
+
+                        t.td({class:''},(el)=>{
+                            
+                            this.el.budget_price = t.input({class:'form-control', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
+                            
+                        });
+
 
                         t.td({},()=>{
                             this.el.total_amount = t.input({class:'form-control',disabled:true});
