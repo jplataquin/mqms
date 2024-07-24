@@ -394,11 +394,12 @@
         component_item_list.append(
             ComponentItemEl({
                 id:'{{$item->id}}',
+                sum_flag:'{{$item->sum_flag}}',
                 component_id:'{{$component->id}}',
-                materialItemOptions: materialItemOptions,
-                unitOptions: @json($unit_options),
                 component_quantity: parseFloat('{{$component->quantity}}'),
-                component_use_count: parseFloat('{{$component->use_count}}')
+                component_use_count: parseFloat('{{$component->use_count}}'),
+                materialItemOptions: materialItemOptions,
+                unitOptions: @json($unit_options)
             })
         );
 

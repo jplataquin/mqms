@@ -29,10 +29,10 @@ class ComponentItem extends Component{
         return {
             id:null,
             component_id:null,
-            materialItemOptions:[],
-            unitOptions:[],
             component_quantity:0,
-            component_use_count:1
+            component_use_count:1,
+            materialItemOptions:[],
+            unitOptions:[]
         }
     }
 
@@ -195,14 +195,14 @@ class ComponentItem extends Component{
 
                         t.td({},()=>{
                             t.div({class:'form-switch text-center'},()=>{                  
-                                t.input({class:'form-check-input',value:1,type:'checkbox', disabled:true});
+                                this.el.sum_flag = t.input({class:'form-check-input',value:1,type:'checkbox', disabled:true});
                             });
                         });
 
                     });
 
                     t.tr(()=>{
-                        t.td({colspan:6, class:'text-end'},(el)=>{
+                        t.td({colspan:7, class:'text-end'},(el)=>{
                             
                             this.el.deleteComponentButton = t.button({class:'btn btn-danger me-3',style:{
                                 display: (()=>{
@@ -367,6 +367,7 @@ class ComponentItem extends Component{
             unit_id                 : this.el.unit.value,
             function_type_id        : this.el.function_type.value,
             function_variable       : this.el.variable.value,
+            sum_flag                : this.el.sum_flag.value
 
         }).then(reply=>{
 
@@ -438,6 +439,7 @@ class ComponentItem extends Component{
         this.el.budget_price.disabled       = !newVal;
         this.el.function_type.disabled      = !newVal;
         this.el.variable.disabled           = !newVal;
+        this.el.sum_flag.disabled           = !newVal;
 
         if(newVal){
             this.el.editComponentButton.style.display   = 'none';
@@ -507,6 +509,12 @@ class ComponentItem extends Component{
             this.el.unit.value          = reply.data.unit_id;
             this.el.function_type.value = reply.data.function_type_id;
             this.el.variable.value      = reply.data.function_variable;
+            
+            if(reply.data.sum_flag){
+                this.el.sum_flag.checked = true;
+            }else{
+                this.el.sum_flag.checked = false;
+            }
 
             this.calculateTotalAmount();
         });
