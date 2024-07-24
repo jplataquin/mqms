@@ -158,7 +158,7 @@
             <div class="form-group">
                 <label>Sum Flag</label>
                 <div class="form-switch">
-                    <input type="checkbox" class="form-check-input" id="sum_flag" value="1" checked/>
+                    <input type="checkbox" class="form-check-input" id="component_sum_flag" value="1" checked/>
                 </div>
             </div>
         </div>
@@ -192,13 +192,13 @@
     let use_count           = $q('#use_count').first();
     let description         = $q('#description').first();
 
-    let component_item_name          = $q('#component_item_name').first();
-    let component_item_budget_price  = $q('#component_item_budget_price').first();
-    let component_item_unit          = $q('#component_item_unit').first();
-    let component_item_quantity      = $q('#component_item_quantity').first();
-    let component_item_function_type = $q('#component_item_function_type').first();
-    let component_item_variable      = $q('#component_item_variable').first();
-    
+    const component_item_name          = $q('#component_item_name').first();
+    const component_item_budget_price  = $q('#component_item_budget_price').first();
+    const component_item_unit          = $q('#component_item_unit').first();
+    const component_item_quantity      = $q('#component_item_quantity').first();
+    const component_item_function_type = $q('#component_item_function_type').first();
+    const component_item_variable      = $q('#component_item_variable').first();
+    const component_item_sum_flag      = $q('#component_item_sum_flag').first();
     
     const t = new Template();
 
@@ -309,7 +309,8 @@
             quantity            : component_item_quantity.value,
             unit_id             : component_item_unit.value,
             function_type_id    : component_item_function_type.value,
-            function_variable   : component_item_variable.value
+            function_variable   : component_item_variable.value,
+            sum_flag            : component_item_sum_flag.value
         }).then(reply=>{
 
             window.util.unblockUI();

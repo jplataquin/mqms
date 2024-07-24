@@ -36,10 +36,11 @@ class ComponentItemController extends Controller
         $name              = $request->input('name') ?? '';
         $quantity          = $request->input('quantity') ?? '';
         $budget_price      = $request->input('budget_price') ?? '';
-        $unit_id = (int) $request->input('unit_id') ?? 0;
+        $unit_id           = (int) $request->input('unit_id') ?? 0;
         $component_id      = (int) $request->input('component_id');
         $function_type_id  = (int) $request->input('function_type_id');
         $function_variable = $request->input('function_variable');
+        $sum_flag          = (boolean) $request->input('sum_flag');
         
         $validator = Validator::make($request->all(),[
             'name' => [
@@ -113,10 +114,11 @@ class ComponentItemController extends Controller
         $componentItem->name                      = $name;
         $componentItem->budget_price              = $budget_price;
         $componentItem->quantity                  = $quantity;
-        $componentItem->unit_id         = $unit_id;
+        $componentItem->unit_id                   = $unit_id;
         $componentItem->function_type_id          = $function_type_id;
         $componentItem->function_variable         = $function_variable;
         $componentItem->created_by                = $user_id;
+        $componentItem->sum_flag                  = $sum_flag;
 
         $componentItem->save();
 
