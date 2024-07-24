@@ -31,6 +31,7 @@ class ComponentController extends Controller
         $section_id         = (int) $request->input('section_id');
         $use_count          = (int) $request->input('use_count') ?? 1;
         $unit_id            = (int) $request->input('unit_id');
+        $sum_flag           = (boolean) $request->input('sum_flag');
 
         $validator = Validator::make($request->all(),[
             'name' => [
@@ -90,6 +91,7 @@ class ComponentController extends Controller
         $component->use_count              = $use_count;
         $component->status                 = 'PEND';
         $component->section_id             = $section_id;
+        $component->sum_flag               = $sum_flag;
         $component->created_by             = $user_id;
 
         $component->save();
@@ -243,6 +245,7 @@ class ComponentController extends Controller
         $status              = $request->input('status');
         $use_count           = (int) $request->input('use_count') ?? 1;
         $unit_id             = (int) $request->input('unite_id');
+        $sum_flag            = (boolean) $request->input('sum_flag');
 
         $component  = Component::find($id);
 
@@ -311,6 +314,7 @@ class ComponentController extends Controller
         $component->status                       = 'PEND';
         $component->updated_by                   = $user_id;
         $component->unit_id                      = $unit_id;
+        $component->sum_flag                     = $sum_flag;
         $component->save();
 
         $this->updateComponentItems($component, $user_id);

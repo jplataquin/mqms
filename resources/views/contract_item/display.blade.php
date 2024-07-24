@@ -211,6 +211,7 @@
     const component_unit              = $q('#component_unit').first();
     const quantity                    = $q('#component_quantity').first();
     const component_use_count         = $q('#component_use_count').first();
+    const component_sum_flag          = $q('#component_sum_flag').first();
     const createComponentBtn          = $q('#createComponentBtn').first();
     
     const component_list              = $q('#component_list').first();
@@ -368,7 +369,8 @@
                 name                : component_name.value,
                 quantity            : component_quantity.value,
                 use_count           : component_use_count.value,
-                unit_id             : component_unit.value
+                unit_id             : component_unit.value,
+                sum_flag            : (component_sum_flag.checked == true) ? 1 : 0
             }).then(reply=>{
 
                 window.util.unblockUI();

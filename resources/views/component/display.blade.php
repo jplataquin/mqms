@@ -170,7 +170,7 @@
             <div class="form-group">
                 <label>Sum Flag</label>
                 <div class="form-switch text-center">
-                    <input type="checkbox" class="form-check-input" id="component_sum_flag" value="1" checked/>
+                    <input type="checkbox" class="form-check-input" id="component_item_sum_flag" value="1" checked/>
                 </div>
             </div>
         </div>
