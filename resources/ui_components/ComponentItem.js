@@ -193,8 +193,10 @@ class ComponentItem extends Component{
                             this.el.total_amount = t.input({class:'form-control',disabled:true});
                         });
 
-                        t.td({class:'form-switch'},()=>{
-                            t.input({class:'form-check-input',value:1,type:'checkbox'});
+                        t.td({},()=>{
+                            t.div({class:'form-switch'},()=>{                  
+                                t.input({class:'form-check-input',value:1,type:'checkbox'});
+                            });
                         });
 
                     });
