@@ -199,19 +199,20 @@
     import {Template,$q,$el,State,Signal} from '/adarna.js';
     import ComponentItemEl from '/ui_components/ComponentItem.js';
 
-    let materialItemOptions = @json($materialItems);
-    let component           = $q('#component').first();
-    let component_item_list = $q('#component_item_list').first();
-    let editBtn             = $q('#editBtn').first();
-    let cancelBtn           = $q('#cancelBtn').first();
-    let updateBtn           = $q('#updateBtn').first();
-    let createBtn           = $q('#createBtn').first();
-    let deleteBtn           = $q('#deleteBtn').first();
-    let printBtn            = $q('#printBtn').first();
-    let status              = $q('#status').first();
-    let component_quantity  = $q('#component_quantity').first();
-    let use_count           = $q('#use_count').first();
-    let description         = $q('#description').first();
+    const materialItemOptions   = @json($materialItems);
+    const component             = $q('#component').first();
+    const component_item_list   = $q('#component_item_list').first();
+    const editBtn               = $q('#editBtn').first();
+    const cancelBtn             = $q('#cancelBtn').first();
+    const updateBtn             = $q('#updateBtn').first();
+    const createBtn             = $q('#createBtn').first();
+    const deleteBtn             = $q('#deleteBtn').first();
+    const printBtn              = $q('#printBtn').first();
+    const status                = $q('#status').first();
+    const component_quantity    = $q('#component_quantity').first();
+    const use_count             = $q('#use_count').first();
+    const description           = $q('#description').first();
+    const component_sum_flag    = $q('#component_sum_flag').first();
 
     const component_item_name          = $q('#component_item_name').first();
     const component_item_budget_price  = $q('#component_item_budget_price').first();
@@ -298,6 +299,7 @@
             name        : component.value,
             quantity    : component_quantity.value,
             use_count   : use_count.value,
+            sum_flag    : (component_sum_flag.checked == true) ? 1 : 0
         }).then((reply)=>{
 
             window.util.unblockUI();
