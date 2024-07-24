@@ -66,7 +66,7 @@ class ComponentController extends Controller
             ],
             'unit_id' =>[
                 'required',
-                'intenger',
+                'integer',
                 'gte:1'
             ]
         ]);
