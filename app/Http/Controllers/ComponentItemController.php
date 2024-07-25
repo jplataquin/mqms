@@ -36,10 +36,13 @@ class ComponentItemController extends Controller
         $name              = $request->input('name') ?? '';
         $quantity          = $request->input('quantity') ?? '';
         $budget_price      = $request->input('budget_price') ?? '';
+        $function_variable = $request->input('function_variable');
+        $ref_1_quantity    = $request->input('ref_1_quantity');
+        $ref_1_unit_price  = $request->input('ref_1_unit_price');
         $unit_id           = (int) $request->input('unit_id') ?? 0;
         $component_id      = (int) $request->input('component_id');
         $function_type_id  = (int) $request->input('function_type_id');
-        $function_variable = $request->input('function_variable');
+        $ref_1_unit_id     = (int) $request->input('ref_1_unit_id');
         $sum_flag          = (boolean) $request->input('sum_flag');
         
         $validator = Validator::make($request->all(),[
@@ -84,6 +87,19 @@ class ComponentItemController extends Controller
                 'required',
                 'integer',
                 'gte:1'
+            ],
+            'ref_1_quantity' =>[
+                'required_with:ref_1_unit_id',
+                'numeric',
+                'gte:1',
+            ],
+            'ref_1_unit_id'=>[
+                'required_with:ref_1_quantity',
+                'integer',
+                'gte:1'
+            ],
+            'ref_1_unit_price'=>[
+                'number'
             ]
         ]);
 
@@ -119,6 +135,9 @@ class ComponentItemController extends Controller
         $component_item->function_variable         = $function_variable;
         $component_item->created_by                = $user_id;
         $component_item->sum_flag                  = $sum_flag;
+        $component_item->ref_1_quantity            = $ref_1_quantity;
+        $component_item->ref_1_unit_id             = $ref_1_unit_id;
+        $component_item->ref_1_unit_price          = $ref_1_unit_price;
 
         $component_item->save();
 
