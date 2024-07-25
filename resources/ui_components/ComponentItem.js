@@ -387,6 +387,10 @@ class ComponentItem extends Component{
             this.el.name.value      = this._state.name;
             this.el.quantity.value  = this._state.quantity;
             
+            this.el.ref_1_quantity.value        = this._state.ref_1_quantity;
+            this.el.ref_1_unit_id.value         = this._state.ref_1_unit_id;
+            this.el.ref_1_unit_price.value      = this._state.ref_1_unit_price;
+            
             if(this._state.sum_flag){
                 this.el.sum_flag.checked = true;
             }else{
