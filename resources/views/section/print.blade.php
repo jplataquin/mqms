@@ -249,7 +249,7 @@
                             </td>
                             <td>
                                 @if($component_item->ref_1_unit_price)
-                                    {{ number_format($component_item->ref_1_unit_price,2) }}
+                                    P {{ number_format($component_item->ref_1_unit_price,2) }}
                                 @endif
                             </td>
                             <td>
@@ -258,7 +258,7 @@
                                 @endphp
 
                                 @if($ref_1_total > 0)
-                                    {{ number_format($ref_1_total,2) }}
+                                    P {{ number_format($ref_1_total,2) }}
                                 @endif
                             </td>
                             <td>
