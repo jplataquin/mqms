@@ -203,7 +203,7 @@
                             @endif
                         <td></td>
                         <th class="text-right">
-                            {{ number_format($component->quantity,2) }}
+                            {{ number_format($component->quantity) }}
                         </th>
                         <th style="text-align:center">
                             {{ $unit_options[$component->unit_id]->text }}
@@ -241,10 +241,16 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td>X</td>
-                            <td>X</td>
-                            <td>X</td>
-                            <td>X</td>
+                            <td>{{$component_item->ref_1_quantity}}</td>
+                            <td>
+                                @if(isset($unit_options[$component_item->ref_1_unit_id]))
+                                    {{ $unit_options[$component_item->ref_1_unit_id]->text }}
+                                @endif
+                            </td>
+                            <td>{{ number_format($component_item->ref_1_unit_price,2) }}</td>
+                            <td>
+                                {{ number_format($component_item->ref_1_unit_price * $component_item->ref_1_quantity,2) }}
+                            </td>
                             <td>
                                 @if($component_item->function_type_id == 1)
                                     {{ 
