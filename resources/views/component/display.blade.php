@@ -374,7 +374,7 @@
             function_variable               : component_item_variable.value,
             sum_flag                        : component_item_sum_flag.value,
             ref_1_quantity                  : component_item_ref_1_quantity.value,
-            ref_1_unit_id                   : component_item_ref_1_unit_id.value,
+            ref_1_unit_id                   : component_item_ref_1_unit.value,
             ref_1_unit_price                : component_item_ref_1_unit_price.value
         }).then(reply=>{
 
