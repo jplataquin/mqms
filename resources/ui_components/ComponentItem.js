@@ -2,7 +2,7 @@ import {Template,Component,Signal} from '/adarna.js';
 
 //D.R.Y. coding helpers
 function roundTwoDecimal(num) {
-    console.log(num);
+    num = parseFloat(num);
     return Math.round((num + Number.EPSILON) * 100) / 100;
 }
 
