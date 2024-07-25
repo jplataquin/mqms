@@ -428,6 +428,10 @@ class ComponentItem extends Component{
             this.setState('variable',this.el.variable.value);
             this.setState('editable',false);
 
+            this.setState('ref_1_quantity',this.el.ref_1_quantity.value);
+            this.setState('ref_1_unit_id',this.el.ref_1_unit_id.value);
+            this.setState('ref_1_unit_price',this.el.ref_1_unit_price.value);
+
             
             signal.broadcast('set-component-status','PEND');
         });
@@ -482,6 +486,9 @@ class ComponentItem extends Component{
         this.el.function_type.disabled      = !newVal;
         this.el.variable.disabled           = !newVal;
         this.el.sum_flag.disabled           = !newVal;
+        this.el.ref_1_quantity              = !newVal;
+        this.el.ref_1_unit_id               = !newVal;
+        this.el.ref_1_unit_price            = !newVal;
 
         //Editable (true)
         if(newVal){
