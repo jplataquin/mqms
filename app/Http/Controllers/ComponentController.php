@@ -167,7 +167,6 @@ class ComponentController extends Controller
 
         $hash = generateComponentHash($project,$section,$component,$componentItems,$materialArr);
 
-        echo  $component->sum_flag;exit;
         return view('component/display',[
             'project'           => $project,
             'section'           => $section,
