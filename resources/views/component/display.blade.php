@@ -169,13 +169,13 @@
                 </select>
             </div>
         </div>
-        <div class="col-lg-2">
+        <div class="col-lg-3">
             <div class="form-group">
                 <label>Budget Price / Unit</label>
                 <input id="component_item_budget_price" type="text" class="form-control"/>
             </div>
         </div>
-        <div class="col-lg-1">
+        <div class="col-lg-2">
             <div class="form-group">
                 <label>Sum Flag</label>
                 <div class="form-switch text-center">
@@ -183,12 +183,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-2">
-            <label>&nbsp;</label>
-            <button id="createBtn" class="btn btn-warning w-100">Create</button>
-        </div>
     </div>
-    <div class="row">
+    <div class="row mt-3">
         <h5>POW/DUPA</h5>
         <div class="col-lg-4">
             <div class="form-group">
@@ -211,6 +207,11 @@
                 <label>Price</label>
                 <input type="text" id="component_item_ref_1_unit_price" class="form-control"/>
             </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-lg-12 text-end">
+            <button id="createBtn" class="btn btn-warning w-100">Create</button>
         </div>
     </div>
 
