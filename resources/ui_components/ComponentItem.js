@@ -2,6 +2,7 @@ import {Template,Component,Signal} from '/adarna.js';
 
 //D.R.Y. coding helpers
 function roundTwoDecimal(num) {
+    console.log(num);
     return Math.round((num + Number.EPSILON) * 100) / 100;
 }
 
@@ -386,7 +387,7 @@ class ComponentItem extends Component{
             this.el.unit.value      = this._state.unit;
             this.el.name.value      = this._state.name;
             this.el.quantity.value  = this._state.quantity;
-            
+
             this.el.ref_1_quantity.value        = this._state.ref_1_quantity;
             this.el.ref_1_unit_id.value         = this._state.ref_1_unit_id;
             this.el.ref_1_unit_price.value      = this._state.ref_1_unit_price;
