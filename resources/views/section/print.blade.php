@@ -83,11 +83,11 @@
             </tr>
             <tr>
                 <th rowspan="2" style="text-align: center;width:5%">Item Code</th>
-                <th class="text-center" rowspan="2" class="desc-col-width">Description</th>
-                <th class="text-center" colspan="4">Contract</th>
-                <th class="text-center" colspan="4">POW/DUPA</th>
-                <th class="text-center" class="factor-col-width">Factor</th>
-                <th class="text-center" colspan="4">Material Budget</th>
+                <th style="text-align:center" rowspan="2" class="desc-col-width">Description</th>
+                <th style="text-align:center" colspan="4">Contract</th>
+                <th style="text-align:center" colspan="4">POW/DUPA</th>
+                <th style="text-align:center" class="factor-col-width">Factor</th>
+                <th style="text-align:center" colspan="4">Material Budget</th>
             </tr>
             <tr>
                 <th class="min-col-width text-center">QTY</th>
@@ -205,7 +205,7 @@
                         <th class="text-right">
                             {{ number_format($component->quantity,2) }}
                         </th>
-                        <th class="text-center">
+                        <th style="text-align:center">
                             {{ $unit_options[$component->unit_id]->text }}
                         </th>
                         <td></td>
@@ -276,7 +276,7 @@
                             <td class="text-right">
                                 {{ number_format($component_item->quantity,2) }}
                             </td>
-                            <td class="text-center">
+                            <td style="text-align:center">
                                 {{$unit_options[$component_item->unit_id]->text}}
                             </td>
                             <td class="text-right">
