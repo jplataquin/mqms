@@ -243,7 +243,7 @@ class ComponentController extends Controller
         $quantity            = $request->input('quantity');
         $status              = $request->input('status');
         $use_count           = (int) $request->input('use_count') ?? 1;
-        $unit_id             = (int) $request->input('unite_id');
+        $unit_id             = (int) $request->input('unit_id');
         $sum_flag            = (boolean) $request->input('sum_flag');
 
         $component  = Component::find($id);
