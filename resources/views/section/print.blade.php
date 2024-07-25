@@ -198,7 +198,7 @@
                             {{ number_format($component->quantity,2) }}
                         </th>
                         <th class="text-center">
-                            {{ $component->unit_id}} $unit_options[$component->unit_id]->text
+                            {{ $unit_options[$component->unit_id]->text }}
                         </th>
                         <td></td>
                         <td></td>
@@ -212,7 +212,7 @@
                             {{ $component_item_quantity_total_per_component[$component->id] }}
                         </th>
                         <th class="@if($component_item_quantity_total_per_component[$component->id] > $component->quantity) font-color-danger @endif">
-                        {{ $component->unit_id}} $unit_options[$component->unit_id]->text
+                            {{$unit_options[$component->unit_id]->text}}
                         </th>
                         
                         <td></td>
@@ -248,7 +248,7 @@
                                     }} 
                                     {{$unit_options[$component_item->unit_id]->text}}
                                     /
-                                    {{ $component->unit_id}} $unit_options[$component->unit_id]->text  
+                                    {{$unit_options[$component->unit_id]->text}}     
                                 @endif
                                 
                                 @if($component_item->function_type_id == 2)
