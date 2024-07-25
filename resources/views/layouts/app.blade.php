@@ -210,7 +210,7 @@
 
             el.onclick = ()=>{
 
-                $q('.selected-nav-item').all().map(item=>{
+                $q('.selected-nav-item').items().map(item=>{
                     item.classList.remove('selected-nav-item');
                 });
 
