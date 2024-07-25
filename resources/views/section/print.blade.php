@@ -247,9 +247,19 @@
                                     {{ $unit_options[$component_item->ref_1_unit_id]->text }}
                                 @endif
                             </td>
-                            <td>{{ number_format($component_item->ref_1_unit_price,2) }}</td>
                             <td>
-                                {{ number_format($component_item->ref_1_unit_price * $component_item->ref_1_quantity,2) }}
+                                @if($component_item->ref_1_unit_price)
+                                    {{ number_format($component_item->ref_1_unit_price,2) }}
+                                @endif
+                            </td>
+                            <td>
+                                @php
+                                    $ref_1_total = (float) $component_item->ref_1_unit_price * (float) $component_item->ref_1_quantity;
+                                @endphp
+
+                                @if($ref_1_total > 0)
+                                    {{ number_format($ref_1_total,2) }}
+                                @endif
                             </td>
                             <td>
                                 @if($component_item->function_type_id == 1)
