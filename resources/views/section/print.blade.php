@@ -171,10 +171,10 @@
                         P {{ number_format($contract_item->ref_1_quantity * $contract_item->ref_1_unit_price,2) }}
                     </th>
                     <th></th>
-                    <th class="text-right @if($component_total_quantity > $contract_item->quantity) font-color-danger @endif">
+                    <th class="text-right @if($component_total_quantity > $contract_item->contract_quantity) font-color-danger @endif">
                         {{ number_format($component_total_quantity,2) }}
                     </th>
-                    <th class="text-center @if($component_total_quantity > $contract_item->quantity) font-color-danger @endif"">
+                    <th class="text-center @if($component_total_quantity > $contract_item->contract_quantity) font-color-danger @endif"">
                         {{$unit_options[$contract_item->unit_id]->text}}
                     </th>
                     <th></th>
