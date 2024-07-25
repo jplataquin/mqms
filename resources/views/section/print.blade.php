@@ -190,7 +190,7 @@
                         $first = true;
                         $item_count = 1;
                     @endphp
-                    <tr class="@if(!$component->sum_flag || ($component->unit_id != $contract_item->unit_id)) bg-exclude-sum-component @endif">
+                    <tr class="@if(!$component->sum_flag || ($component->unit_id != $contract_item->unit_id)) bg-excluded-sum-component @endif">
                             @if($first)
                             <td rowspan="{{count($component_items_arr[$component->id])+1}}">
                                 {!! Str::wordWrap($component->name,10,"<br>",false) !!}
