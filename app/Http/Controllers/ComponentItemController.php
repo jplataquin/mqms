@@ -261,12 +261,10 @@ class ComponentItemController extends Controller
            'function_variable' =>[
                'required',
                'numeric'
-           ],
-           
-           
+           ]
          ];
 
-         if($ref_1_quantity != '' || $ref_1_unit_id != ''){
+         if($ref_1_quantity != '' || $ref_1_unit_id != 0){
 
             $rule['ref_1_quantity'] = [
                'required_with:ref_1_unit_id',
