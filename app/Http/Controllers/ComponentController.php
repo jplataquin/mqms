@@ -167,7 +167,7 @@ class ComponentController extends Controller
 
         $hash = generateComponentHash($project,$section,$component,$componentItems,$materialArr);
 
-
+        echo  $component->sum_flag;exit;
         return view('component/display',[
             'project'           => $project,
             'section'           => $section,
@@ -247,7 +247,6 @@ class ComponentController extends Controller
         $unit_id             = (int) $request->input('unite_id');
         $sum_flag            = (boolean) $request->input('sum_flag');
 
-        echo $sum_flag;exit;
         $component  = Component::find($id);
 
         if(!$component){
