@@ -486,9 +486,9 @@ class ComponentItem extends Component{
         this.el.function_type.disabled      = !newVal;
         this.el.variable.disabled           = !newVal;
         this.el.sum_flag.disabled           = !newVal;
-        this.el.ref_1_quantity              = !newVal;
-        this.el.ref_1_unit_id               = !newVal;
-        this.el.ref_1_unit_price            = !newVal;
+        this.el.ref_1_quantity.disabled     = !newVal;
+        this.el.ref_1_unit_id.disabled      = !newVal;
+        this.el.ref_1_unit_price.disabled   = !newVal;
 
         //Editable (true)
         if(newVal){
