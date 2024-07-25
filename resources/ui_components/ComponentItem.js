@@ -295,7 +295,7 @@ class ComponentItem extends Component{
         }
 
         this.el.material_quantity.onkeypress = (e)=>{
-            return window.util.inputNumber(this.el.material_quantity,e,2,false);
+            return window.util.inputNumber(this.el.material_quantity,e,6,false);
         }
 
         this.el.budget_price.onkeypress = (e)=>{
@@ -313,6 +313,13 @@ class ComponentItem extends Component{
            
         }
 
+        this.el.ref_1_quantity.onkeypress = (e)=>{
+            return window.util.inputNumber(this.el.ref_1_quantity,e,6,false);
+        }
+
+        this.el.ref_1_unit_price.onkeypress = (e)=>{
+            return window.util.inputNumber(this.el.ref_1_unit_price,e,2,false);
+        }
 
         this.el.addBtn.onclick = ()=>{
 
@@ -399,7 +406,10 @@ class ComponentItem extends Component{
             unit_id                 : this.el.unit.value,
             function_type_id        : this.el.function_type.value,
             function_variable       : this.el.variable.value,
-            sum_flag                : (this.el.sum_flag.checked == true) ? 1 : 0
+            sum_flag                : (this.el.sum_flag.checked == true) ? 1 : 0,
+            ref_1_quantity          : this.el.ref_1_quantity.value,
+            ref_1_unit_id           : this.el.ref_1_unit_id.value,
+            ref_1_unit_price        : this.el.ref_1_unit_price.value
 
         }).then(reply=>{
 
