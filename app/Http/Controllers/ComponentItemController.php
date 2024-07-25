@@ -274,8 +274,7 @@ class ComponentItemController extends Controller
                 'gte:1'
             ],
             'ref_1_unit_price'=>[
-                'numeric',
-                'gt:0'
+                'numeric'
             ]
          ]);
  
