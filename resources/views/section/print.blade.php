@@ -113,8 +113,11 @@
                     $component_item_quantity_total_per_component = [];
 
                     foreach($components as $component){
-                        $component_total_quantity = $component_total_quantity + $component->quantity;
 
+                        if($component->sum_flag && ($component->unit_id == $contract_item->unit_id) )
+                            $component_total_quantity = $component_total_quantity + $component->quantity;
+                        }
+                        
                         $component_items_arr[$component->id] = $component->ComponentItems;
                         
                         //Each component item row
