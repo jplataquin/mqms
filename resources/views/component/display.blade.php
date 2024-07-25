@@ -195,6 +195,7 @@
             <div class="form-group">
                 <label>POW/DUPA Unit</label>
                 <select id="component_item_ref_1_unit" class="form-control">
+                    <option value=""> - </option>
                     @foreach($unit_options as $opt)
                         <option value="{{$opt->id}}">{{$opt->text}}</option>
                     @endforeach

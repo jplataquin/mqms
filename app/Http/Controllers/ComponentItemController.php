@@ -45,7 +45,7 @@ class ComponentItemController extends Controller
         $ref_1_unit_id     = (int) $request->input('ref_1_unit_id');
         $sum_flag          = (boolean) $request->input('sum_flag');
         
-        $validator = Validator::make($request->all(),[
+        $rules = [
             'name' => [
                 'required',
                 'max:255',
@@ -87,22 +87,32 @@ class ComponentItemController extends Controller
                 'required',
                 'integer',
                 'gte:1'
-            ],
-            'ref_1_quantity' =>[
+            ]
+        ];
+
+        if($ref_1_quantity != '' || $ref_1_unit_id != 0){
+
+            $rules['ref_1_quantity'] = [
                 'required_with:ref_1_unit_id',
                 'numeric',
                 'gte:1',
-            ],
-            'ref_1_unit_id'=>[
+            ];
+
+            $rules['ref_1_unit_id'] = [
                 'required_with:ref_1_quantity',
                 'integer',
                 'gte:1'
-            ],
-            'ref_1_unit_price'=>[
+            ];
+        }
+         
+        if($ref_1_unit_price){
+            $rules['ref_1_unit_price'] = [
                 'numeric',
-                'gte:1'
-            ]
-        ]);
+                'gt:0'
+            ];
+        }
+
+        $validator = Validator::make($request->all(),$rules);
 
         if ($validator->fails()) {
             return response()->json([
@@ -216,7 +226,7 @@ class ComponentItemController extends Controller
          $sum_flag          = (boolean) $request->input('sum_flag');
          $ref_1_unit_id     = (int) $request->input('ref_1_unit_id');
         
-         $rule = [
+         $rules = [
             'name' => [
                 'required',
                 'max:255',
@@ -266,13 +276,13 @@ class ComponentItemController extends Controller
 
          if($ref_1_quantity != '' || $ref_1_unit_id != 0){
 
-            $rule['ref_1_quantity'] = [
+            $rules['ref_1_quantity'] = [
                'required_with:ref_1_unit_id',
                'numeric',
                'gte:1',
             ];
 
-            $rule['ref_1_unit_id'] = [
+            $rules['ref_1_unit_id'] = [
                'required_with:ref_1_quantity',
                'integer',
                'gte:1'
@@ -280,16 +290,14 @@ class ComponentItemController extends Controller
          }
          
          if($ref_1_unit_price){
-            $rule['ref_1_unit_price'] = [
+            $rules['ref_1_unit_price'] = [
                'numeric',
                'gt:0'
             ];
          }
 
-        
 
-
-         $validator = Validator::make($request->all(),$rule);
+         $validator = Validator::make($request->all(),$rules);
  
          if ($validator->fails()) {
              return response()->json([
