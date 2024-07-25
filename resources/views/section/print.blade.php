@@ -219,7 +219,7 @@
                         <th class="@if($component_item_quantity_total_per_component[$component->id] > $component->quantity) font-color-danger @endif">
                             {{ $component_item_quantity_total_per_component[$component->id] }}
                         </th>
-                        <th class="@if($component_item_quantity_total_per_component[$component->id] > $component->quantity) font-color-danger @endif">
+                        <th style="text-align:center" class="@if($component_item_quantity_total_per_component[$component->id] > $component->quantity) font-color-danger @endif">
                             {{$unit_options[$component->unit_id]->text}}
                         </th>
                         
