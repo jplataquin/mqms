@@ -101,7 +101,7 @@
             <div class="form-group">
                 <label>Sum Flag</label>
                 <div class="form-switch text-center">
-                    <input type="checkbox" class="form-check-input editable_field" id="component_sum_flag" value="1"  disabled="true" checked/>
+                    <input type="checkbox" class="form-check-input editable_field" id="component_sum_flag" value="1"  disabled="true" @if($component->sum_flag == 1) checked @endif/>
                 </div>
             </div>
         </div>
