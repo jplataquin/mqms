@@ -22,7 +22,10 @@ class ComponentItem extends Component{
             sum_flag:true,
             editable: false,
             function_type_id:'',
-            variable:''
+            variable:'',
+            ref_1_quantity:'',
+            ref_1_unit_id:'',
+            ref_1_unit_price:''
         }
     }
 
@@ -534,6 +537,9 @@ class ComponentItem extends Component{
             this.setState('function_type_id',reply.data.function_type_id);
             this.setState('variable',reply.data.function_variable);
             this.setState('sum_flag',reply.data.sum_flag);
+            this.setState('ref_1_quantity',reply.data.ref_1_quantity);
+            this.setState('ref_1_unit_id',reply.data.ref_1_unit_id);
+            this.setState('ref_1_unit_price',reply.data.ref_1_unit_price);
             
             this.el.name.value          = reply.data.name;
             this.el.budget_price.value  = reply.data.budget_price;
@@ -541,6 +547,9 @@ class ComponentItem extends Component{
             this.el.unit.value          = reply.data.unit_id;
             this.el.function_type.value = reply.data.function_type_id;
             this.el.variable.value      = reply.data.function_variable;
+            this.el.ref_1_quantity      = reply.data.ref_1_quantity;
+            this.el.ref_1_unit_id       = reply.data.ref_1_unit_id;
+            this.el.ref_1_unit_price    = reply.data.ref_1_unit_price;
             
             if(reply.data.sum_flag){
                 this.el.sum_flag.checked = true;
