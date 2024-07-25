@@ -179,8 +179,11 @@ class ComponentItem extends Component{
                             this.el.unit = t.select({class:'form-control',disabled:true},()=>{
                                 for(let i in this._model.unitOptions){
 
-
-                                    t.option({value:i}, this._model.unitOptions[i].text );
+                                    if(this._model.unitOptions[i].deleted){
+                                        t.option({value:i,disabled:true},this._model.unitOptions[i].text+' [Deleted]');
+                                    }else{
+                                        t.option({value:i}, this._model.unitOptions[i].text );
+                                    }
                                 }
                             });
         
@@ -212,22 +215,30 @@ class ComponentItem extends Component{
                     });
 
                     t.tr(()=>{
+                        
                         t.td({colspan:2},()=>{
                             this.el.ref_1_quantity = t.input({class:'form-control',disabled:true});
                         });
+
                         t.td({colspan:2},()=>{
-                            
+
                             this.el.ref_1_unit_id = t.select({class:'form-control',disabled:true},()=>{
                                 
                                 t.option({value:''},' - ');
 
                                 for(let i in this._model.unitOptions){
 
-
-                                    t.option({value:i}, this._model.unitOptions[i].text );
+                                    if(this._model.unitOptions[i].deleted){
+                                        t.option({value:i,disabled:true},this._model.unitOptions[i].text+' [Deleted]');
+                                    }else{
+                                        t.option({value:i}, this._model.unitOptions[i].text );
+                                    }
+                                   
                                 }
                             });
+
                         });
+
                         t.td({colspan:4},()=>{
                             this.el.ref_1_unit_price = t.input({class:'form-control',disabled:true});
                         });

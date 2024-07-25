@@ -85,7 +85,7 @@
                 <label>Unit</label>   
                 <select id="component_unit" class="form-control editable_field" disabled="true">
                     @foreach($unit_options as $opt)
-                        <option value="{{$opt->id}}" @if($component->unit_id == $opt->id) selected @endif >{{$opt->text}}</option>
+                        <option value="{{$opt->id}}" @if($component->unit_id == $opt->id) selected @endif @if($opt->deleted) disabled="true" @endif>{{$opt->text}} @if($opt->deleted) [Deleted] @endif</option>
                     @endforeach
                 </select>         
             </div>
@@ -164,7 +164,9 @@
                 <label>Unit</label>
                 <select id="component_item_unit" class="form-control">
                     @foreach($unit_options as $opt)
-                        <option value="{{$opt->id}}">{{$opt->text}}</option>
+                        @if(!$opt->deleted)
+                            <option value="{{$opt->id}}">{{$opt->text}}</option>
+                        @endif
                     @endforeach
                 </select>
             </div>
@@ -197,7 +199,9 @@
                 <select id="component_item_ref_1_unit" class="form-control">
                     <option value=""> - </option>
                     @foreach($unit_options as $opt)
+                        @if(!$opt->deleted)
                         <option value="{{$opt->id}}">{{$opt->text}}</option>
+                        @endif
                     @endforeach
                 </select>
             </div>
