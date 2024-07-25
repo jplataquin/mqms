@@ -262,17 +262,25 @@ class ComponentItemController extends Controller
                'required',
                'numeric'
            ],
-           'ref_1_quantity' =>[
+           
+           
+         ];
+
+         if($ref_1_quantity){
+            $rule['ref_1_quantity'] = [
                'required_with:ref_1_unit_id',
                'numeric',
                'gte:1',
-           ],
-           'ref_1_unit_id'=>[
+            ];
+         }
+
+         if($ref_1_unit_id){
+            $rule['ref_1_unit_id'] = [
                'required_with:ref_1_quantity',
                'integer',
                'gte:1'
-           ]
-         ];
+            ];
+         }
          
          if($ref_1_unit_price){
             $rule['ref_1_unit_price'] = [
@@ -280,6 +288,8 @@ class ComponentItemController extends Controller
                'gt:0'
             ];
          }
+
+        
 
 
          $validator = Validator::make($request->all(),$rule);
