@@ -541,15 +541,15 @@ class ComponentItem extends Component{
             this.setState('ref_1_unit_id',reply.data.ref_1_unit_id);
             this.setState('ref_1_unit_price',reply.data.ref_1_unit_price);
             
-            this.el.name.value          = reply.data.name;
-            this.el.budget_price.value  = reply.data.budget_price;
-            this.el.quantity.value      = reply.data.quantity;
-            this.el.unit.value          = reply.data.unit_id;
-            this.el.function_type.value = reply.data.function_type_id;
-            this.el.variable.value      = reply.data.function_variable;
-            this.el.ref_1_quantity      = reply.data.ref_1_quantity;
-            this.el.ref_1_unit_id       = reply.data.ref_1_unit_id;
-            this.el.ref_1_unit_price    = reply.data.ref_1_unit_price;
+            this.el.name.value                  = reply.data.name;
+            this.el.budget_price.value          = reply.data.budget_price;
+            this.el.quantity.value              = reply.data.quantity;
+            this.el.unit.value                  = reply.data.unit_id;
+            this.el.function_type.value         = reply.data.function_type_id;
+            this.el.variable.value              = reply.data.function_variable;
+            this.el.ref_1_quantity.value        = reply.data.ref_1_quantity;
+            this.el.ref_1_unit_id.value         = reply.data.ref_1_unit_id;
+            this.el.ref_1_unit_price.value      = reply.data.ref_1_unit_price;
             
             if(reply.data.sum_flag){
                 this.el.sum_flag.checked = true;
