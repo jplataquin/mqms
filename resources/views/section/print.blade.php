@@ -174,7 +174,7 @@
                     <th class="text-right @if($component_total_quantity > $contract_item->contract_quantity) font-color-danger @endif">
                         {{ number_format($component_total_quantity,2) }}
                     </th>
-                    <th class="text-center @if($component_total_quantity > $contract_item->contract_quantity) font-color-danger @endif"">
+                    <th style="text-align:center" class="text-center @if($component_total_quantity > $contract_item->contract_quantity) font-color-danger @endif">
                         {{$unit_options[$contract_item->unit_id]->text}}
                     </th>
                     <th></th>
