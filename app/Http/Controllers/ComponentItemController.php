@@ -187,11 +187,15 @@ class ComponentItemController extends Controller
          $budget_price      = $request->input('budget_price') ?? '';
          $quantity          = $request->input('quantity') ?? '';
          $function_variable = $request->input('function_variable');
+         $ref_1_quantity    = $request->input('ref_1_quantity');
+         $ref_1_unit_price  = $request->input('ref_1_unit_price');
          $id                = (int) $request->input('id');
          $component_id      = (int) $request->input('component_id');
          $function_type_id  = (int) $request->input('function_type_id');
          $unit_id           = (int) $request->input('unit_id') ?? 0;
          $sum_flag          = (boolean) $request->input('sum_flag');
+         $ref_1_unit_id     = (int) $request->input('ref_1_unit_id');
+        
          
          $validator = Validator::make($request->all(),[
              'name' => [
@@ -213,7 +217,8 @@ class ComponentItemController extends Controller
              ],
              'quantity' => [
                  'required',
-                 'numeric'
+                 'numeric',
+                 'gte:1'
              ],
              'budget_price' => [
                  'required',
@@ -237,6 +242,19 @@ class ComponentItemController extends Controller
             'function_variable' =>[
                 'required',
                 'numeric'
+            ],
+            'ref_1_quantity' =>[
+                'required_with:ref_1_unit_id',
+                'numeric',
+                'gte:1',
+            ],
+            'ref_1_unit_id'=>[
+                'required_with:ref_1_quantity',
+                'integer',
+                'gte:1'
+            ],
+            'ref_1_unit_price'=>[
+                'number'
             ]
          ]);
  
@@ -291,6 +309,9 @@ class ComponentItemController extends Controller
          $component_item->function_type_id       = $function_type_id;
          $component_item->function_variable      = $function_variable;
          $component_item->sum_flag               = $sum_flag;
+         $component_item->ref_1_quantity         = $ref_1_quantity;
+         $component_item->ref_1_unit_id          = $ref_1_unit_id;
+         $component_item->ref_1_unit_price       = $ref_1_unit_price;
          $component_item->updated_by             = $user_id;
  
          $component_item->save();

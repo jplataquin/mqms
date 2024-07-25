@@ -113,7 +113,7 @@
             <button class="btn btn-danger" id="deleteBtn">Delete</button>
         </div>
         <div class="col-lg-6 text-end">
-            <button class="btn btn-secondary" id="printBtn">Print</button>
+            <button class="btn btn-warning" id="printBtn">Print</button>
             <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
             <button class="btn btn-warning d-none" id="updateBtn">Update</button>
             <button class="btn btn-primary" id="editBtn">Edit</button>
@@ -365,14 +365,17 @@
         window.util.blockUI();
 
         window.util.$post('/api/component_item/create',{
-            component_id        : '{{$component->id}}',
-            name                : component_item_name.value,
-            budget_price        : component_item_budget_price.value,
-            quantity            : component_item_quantity.value,
-            unit_id             : component_item_unit.value,
-            function_type_id    : component_item_function_type.value,
-            function_variable   : component_item_variable.value,
-            sum_flag            : component_item_sum_flag.value
+            component_id                    : '{{$component->id}}',
+            name                            : component_item_name.value,
+            budget_price                    : component_item_budget_price.value,
+            quantity                        : component_item_quantity.value,
+            unit_id                         : component_item_unit.value,
+            function_type_id                : component_item_function_type.value,
+            function_variable               : component_item_variable.value,
+            sum_flag                        : component_item_sum_flag.value,
+            ref_1_quantity                  : component_item_ref_1_quantity.value,
+            ref_1_unit_id                   : component_item_ref_1_unit_id.value,
+            ref_1_unit_price                : component_item_ref_1_unit_price.value
         }).then(reply=>{
 
             window.util.unblockUI();
