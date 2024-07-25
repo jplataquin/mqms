@@ -106,6 +106,7 @@
                     $components = $contract_item->Components;
 
                     $component_total_quantity                    = 0;
+
                     $component_items_total_amount                = 0;
                     $component_items_total_quantity              = 0;
                     $component_items_arr                         = [];
@@ -197,7 +198,7 @@
                             {{ number_format($component->quantity,2) }}
                         </th>
                         <th class="text-center">
-                            {{$unit_options[$component->unit_id]->text}}
+                            {{ $component->unit_id}} $unit_options[$component->unit_id]->text
                         </th>
                         <td></td>
                         <td></td>
