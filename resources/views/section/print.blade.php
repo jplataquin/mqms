@@ -90,19 +90,19 @@
                 <th style="text-align:center" colspan="4">Material Budget</th>
             </tr>
             <tr>
-                <th class="min-col-width text-center">QTY</th>
-                <th class="min-col-width text-center">UNIT</th>
-                <th class="min-col-width text-center">PRICE</th>
-                <th class="min-col-width text-center">AMOUNT</th>
-                <th class="min-col-width text-center">QTY</th>
-                <th class="min-col-width text-center">UNIT</th>
-                <th class="min-col-width text-center">RATE</th>
-                <th class="min-col-width text-center">AMOUNT</th>
-                <th class="min-col-width text-center">QTY / UNIT</th>
-                <th class="min-col-width text-center">QTY</th>
-                <th class="min-col-width text-center">UNIT</th>
-                <th class="min-col-width text-center">COST</th>
-                <th class="min-col-width text-center">AMOUNT</th>
+                <th class="min-col-width" style="text-align:center">QTY</th>
+                <th class="min-col-width" style="text-align:center">UNIT</th>
+                <th class="min-col-width" style="text-align:center">PRICE</th>
+                <th class="min-col-width" style="text-align:center">AMOUNT</th>
+                <th class="min-col-width" style="text-align:center">QTY</th>
+                <th class="min-col-width" style="text-align:center">UNIT</th>
+                <th class="min-col-width" style="text-align:center">RATE</th>
+                <th class="min-col-width" style="text-align:center">AMOUNT</th>
+                <th class="min-col-width" style="text-align:center">QTY / UNIT</th>
+                <th class="min-col-width" style="text-align:center">QTY</th>
+                <th class="min-col-width" style="text-align:center">UNIT</th>
+                <th class="min-col-width" style="text-align:center">COST</th>
+                <th class="min-col-width" style="text-align:center">AMOUNT</th>
             </tr>
                 
             @foreach($contract_items as $contract_item)
