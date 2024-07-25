@@ -670,7 +670,7 @@ class ComponentItem extends Component{
                 });//tr
             
         
-        if(data.quantity > this._state.quantity){
+        if(parseFloat(data.quantity) > parseFloat(this._state.quantity)){
             materialItem.classList.add('border');
             materialItem.classList.add('border-danger');
         }
