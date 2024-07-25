@@ -54,7 +54,7 @@
             }
 
             .bg-excluded-sum-component{
-                background-color: #fffec8;
+                background-color: #ADD8E6;
             }
 
 
@@ -171,7 +171,7 @@
                         P {{ number_format($contract_item->ref_1_quantity * $contract_item->ref_1_unit_price,2) }}
                     </th>
                     <th></th>
-                    <th class="text-right">
+                    <th class="text-right @if($component_total_quantity > $contract_item->quantity) font-color-danger @endif">
                         {{ number_format($component_total_quantity,2) }}
                     </th>
                     <th class="text-center">
