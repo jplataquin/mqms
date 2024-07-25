@@ -16,6 +16,11 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <script src="https://unpkg.com/htmx.org@2.0.0"></script>
+    <style>
+        .selected-nav-item{
+            background-color: #dd7214 !important;
+        }
+    </style>
 </head>
 <body>
     <div id="bar" class="w-100">
@@ -172,6 +177,7 @@
                 e.preventDefault();
 
                 let href = el.getAttribute('href');
+
                 if(href != '#'){
                     document.location.href = href; 
                     return false;    
@@ -196,6 +202,19 @@
                     el.classList.add('inactive-nav-item');
                 }
 
+            }
+        });
+
+
+        $q('.nav-sub-item > a').apply(el=>{
+
+            el.onclick = ()=>{
+
+                $q('.selected-nav-item').all().map(item=>{
+                    item.classList.remove('selected-nav-item');
+                });
+
+                el.parentElement.classList.add('selected-nav-item');
             }
         });
     </script>
