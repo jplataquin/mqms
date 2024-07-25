@@ -211,7 +211,7 @@
     </div>
     <div class="row mt-3">
         <div class="col-lg-12 text-end">
-            <button id="createBtn" class="btn btn-warning w-100">Create</button>
+            <button id="createBtn" class="btn btn-warning">Create</button>
         </div>
     </div>
 
