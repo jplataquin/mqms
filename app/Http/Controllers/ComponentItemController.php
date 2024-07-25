@@ -275,13 +275,13 @@ class ComponentItemController extends Controller
          ];
          
          if($ref_1_unit_price){
-            $rule['ref_1_unit_price'] =>[
+            $rule['ref_1_unit_price'] = [
                'numeric',
                'gt:0'
             ];
          }
 
-         
+
          $validator = Validator::make($request->all(),$rule);
  
          if ($validator->fails()) {
