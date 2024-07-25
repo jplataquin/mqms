@@ -159,7 +159,7 @@
                 <input id="component_item_quantity" type="text" class="form-control" disabled="true"/>
             </div>
         </div>
-        <div class="col-lg-1">
+        <div class="col-lg-2">
             <div class="form-group">
                 <label>Unit</label>
                 <select id="component_item_unit" class="form-control">
@@ -169,7 +169,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-2">
             <div class="form-group">
                 <label>Budget Price / Unit</label>
                 <input id="component_item_budget_price" type="text" class="form-control"/>
@@ -184,17 +184,16 @@
             </div>
         </div>
     </div>
-    <div class="row mt-3 border border-warning p-3">
-        <h5>POW/DUPA</h5>
+    <div class="row mt-3">
         <div class="col-lg-4">
             <div class="form-group">
-                <label>Quantity</label>
+                <label>POW/DUPA Quantity</label>
                 <input type="text" id="component_item_ref_1_quantity" class="form-control"/>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                <label>Unit</label>
+                <label>POW/DUPA Unit</label>
                 <select id="component_item_ref_1_unit" class="form-control">
                     @foreach($unit_options as $opt)
                         <option value="{{$opt->id}}">{{$opt->text}}</option>
@@ -204,7 +203,7 @@
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                <label>Price</label>
+                <label>POW/DUPA Price</label>
                 <input type="text" id="component_item_ref_1_unit_price" class="form-control"/>
             </div>
         </div>
