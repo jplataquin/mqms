@@ -188,6 +188,31 @@
             <button id="createBtn" class="btn btn-warning w-100">Create</button>
         </div>
     </div>
+    <div class="row">
+        <h5>POW/DUPA</h5>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label>Quantity</label>
+                <input type="text" id="component_item_ref_1_quantity" class="form-control"/>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label>Unit</label>
+                <select id="component_item_ref_1_unit" class="form-control">
+                    @foreach($unit_options as $opt)
+                        <option value="{{$opt->id}}">{{$opt->text}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label>Price</label>
+                <input type="text" id="component_item_ref_1_unit_price" class="form-control"/>
+            </div>
+        </div>
+    </div>
 
     <div id="component_item_list" class="row mt-3">
             
@@ -221,6 +246,10 @@
     const component_item_function_type = $q('#component_item_function_type').first();
     const component_item_variable      = $q('#component_item_variable').first();
     const component_item_sum_flag      = $q('#component_item_sum_flag').first();
+
+    const component_item_ref_1_quantity     = $q('#component_item_ref_1_quantity').first();
+    const component_item_ref_1_unit         = $q('#component_item_ref_1_unit').first();
+    const component_item_ref_1_unit_price   = $q('#component_item_ref_1_unit_price').first(); 
     
     const t = new Template();
 
@@ -269,7 +298,15 @@
     }
 
     component_quantity.onkeypress = (e)=>{
-        return window.util.inputNumber(component_quantity,e,2,false);
+        return window.util.inputNumber(component_quantity,e,6,false);
+    }
+
+    component_item_ref_1_quantity.onkeypress = (e)=>{
+        return window.util.inputNumber(component_item_ref_1_quantity,e,6,false);
+    }
+
+    component_item_ref_1_unit_price.onkeypress = (e)=>{
+        return window.util.inputNumber(component_item_ref_1_unit_price,e,2,false);
     }
 
     editBtn.onclick = ()=>{
