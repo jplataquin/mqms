@@ -241,10 +241,10 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>X</td>
+                            <td>X</td>
+                            <td>X</td>
+                            <td>X</td>
                             <td>
                                 @if($component_item->function_type_id == 1)
                                     {{ 
