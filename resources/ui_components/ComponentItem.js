@@ -216,7 +216,11 @@ class ComponentItem extends Component{
                             this.el.ref_1_quantity = t.input({class:'form-control',disabled:true});
                         });
                         t.td({colspan:2},()=>{
+                            
                             this.el.ref_1_unit_id = t.select({class:'form-control',disabled:true},()=>{
+                                
+                                t.option({value:''},' - ');
+
                                 for(let i in this._model.unitOptions){
 
 

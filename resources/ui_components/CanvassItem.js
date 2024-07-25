@@ -291,7 +291,7 @@ class CanvassItem extends Component{
             this.el.errorList.innerHTML = '';
 
             if(this._model.status != ''){
-                console.log('here');
+                
                 return true;
             }
 
