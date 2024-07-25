@@ -20,8 +20,10 @@
 <body>
     <div id="bar" class="w-100">
     </div>
-    <div class="wrapper d-flex align-items-stretch h-100" id="app">
-        <nav id="sidebar" hx-boost="true" class="flex-shrink-0">
+    <div class="wrapper d-flex h-100" id="app">
+        
+        <div class="d-flex">
+        <nav id="sidebar" hx-boost="true">
             <a class="d-none" hx-select="#content" hx-target="#main" href="/roles" id="#__nav_helper">test</a>
             <ul class="list-unstyled">
                 <li class="menu-item">
@@ -133,6 +135,7 @@
                 </li>
             </u>
         </nav>
+        </div>
    
         <main class="w-100">
             <div class="mt-3 ms-3 me-3" id="main">
