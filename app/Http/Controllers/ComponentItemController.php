@@ -266,15 +266,14 @@ class ComponentItemController extends Controller
            
          ];
 
-         if($ref_1_quantity){
+         if($ref_1_quantity != '' || $ref_1_unit_id != ''){
+
             $rule['ref_1_quantity'] = [
                'required_with:ref_1_unit_id',
                'numeric',
                'gte:1',
             ];
-         }
 
-         if($ref_1_unit_id){
             $rule['ref_1_unit_id'] = [
                'required_with:ref_1_quantity',
                'integer',
