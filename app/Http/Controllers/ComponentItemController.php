@@ -216,67 +216,73 @@ class ComponentItemController extends Controller
          $sum_flag          = (boolean) $request->input('sum_flag');
          $ref_1_unit_id     = (int) $request->input('ref_1_unit_id');
         
-         
-         $validator = Validator::make($request->all(),[
-             'name' => [
-                 'required',
-                 'max:255',
-                 Rule::unique('component_items')->where(
-                     function ($query) use ($name,$component_id,$id) {
-                         return $query
-                         ->where('component_id', $component_id)
-                         ->where('id','!=',$id)
-                         ->where('name', $name)
-                         ->where('deleted_at',null);
-                 }),
-             ],
-             'unit_id' => [
-                 'required',
-                 'integer',
-                 'gte:1'
-             ],
-             'quantity' => [
-                 'required',
-                 'numeric',
-                 'gte:1'
-             ],
-             'budget_price' => [
-                 'required',
-                 'numeric'
-             ],
-             'component_id' => [
+         $rule = [
+            'name' => [
+                'required',
+                'max:255',
+                Rule::unique('component_items')->where(
+                    function ($query) use ($name,$component_id,$id) {
+                        return $query
+                        ->where('component_id', $component_id)
+                        ->where('id','!=',$id)
+                        ->where('name', $name)
+                        ->where('deleted_at',null);
+                }),
+            ],
+            'unit_id' => [
                 'required',
                 'integer',
                 'gte:1'
             ],
-             'id'            => [
+            'quantity' => [
                 'required',
-                'integer',
-                'gte:1'
-            ],
-            'function_type_id' =>[
-                'required',
-                'integer',
-                'gte:1'
-            ],
-            'function_variable' =>[
-                'required',
-                'numeric'
-            ],
-            'ref_1_quantity' =>[
-                'required_with:ref_1_unit_id',
                 'numeric',
-                'gte:1',
-            ],
-            'ref_1_unit_id'=>[
-                'required_with:ref_1_quantity',
-                'integer',
                 'gte:1'
             ],
-            'ref_1_unit_price'=>[
+            'budget_price' => [
+                'required',
                 'numeric'
-            ]
-         ]);
+            ],
+            'component_id' => [
+               'required',
+               'integer',
+               'gte:1'
+           ],
+            'id'            => [
+               'required',
+               'integer',
+               'gte:1'
+           ],
+           'function_type_id' =>[
+               'required',
+               'integer',
+               'gte:1'
+           ],
+           'function_variable' =>[
+               'required',
+               'numeric'
+           ],
+           'ref_1_quantity' =>[
+               'required_with:ref_1_unit_id',
+               'numeric',
+               'gte:1',
+           ],
+           'ref_1_unit_id'=>[
+               'required_with:ref_1_quantity',
+               'integer',
+               'gte:1'
+           ]
+         ];
+         
+         if($ref_1_unit_price){
+            $rule['ref_1_unit_price'] =>[
+               'numeric',
+               'gt:0'
+            ];
+         }
+
+         
+         $validator = Validator::make($request->all(),$rule);
  
          if ($validator->fails()) {
              return response()->json([
