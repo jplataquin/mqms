@@ -22,7 +22,7 @@
     </div>
     <div class="wrapper d-flex h-100" id="app">
         
-        <div class="d-flex">
+        <div>
         <nav id="sidebar" hx-boost="true">
             <a class="d-none" hx-select="#content" hx-target="#main" href="/roles" id="#__nav_helper">test</a>
             <ul class="list-unstyled">
