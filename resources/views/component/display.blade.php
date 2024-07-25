@@ -184,7 +184,7 @@
             </div>
         </div>
     </div>
-    <div class="row mt-3 border border-warning p-3">
+    <div class="row mt-3 border border-warning">
         <h5>POW/DUPA</h5>
     </div>
     <div class="row mt-3">
