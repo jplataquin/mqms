@@ -248,7 +248,7 @@
                                     }} 
                                     {{$unit_options[$component_item->unit_id]->text}}
                                     /
-                                    {{$unit_options[$component->unit_id]->text}}     
+                                    {{ $component->unit_id}} $unit_options[$component->unit_id]->text  
                                 @endif
                                 
                                 @if($component_item->function_type_id == 2)
