@@ -671,6 +671,8 @@ class ComponentItem extends Component{
             
         
         if(parseFloat(data.quantity) > parseFloat(this._state.quantity)){
+
+            console.log(data.quantity,this._state.quantity);
             materialItem.classList.add('border');
             materialItem.classList.add('border-danger');
         }
