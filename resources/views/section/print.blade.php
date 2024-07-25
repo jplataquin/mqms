@@ -53,6 +53,11 @@
                 background-color: #fffec8;
             }
 
+            .bg-excluded-sum-component{
+                background-color: #fffec8;
+            }
+
+
             .font-color-danger{
                 color: #ff0000;
             }
@@ -185,7 +190,7 @@
                         $first = true;
                         $item_count = 1;
                     @endphp
-                    <tr>
+                    <tr class="@if(!$component->sum_flag || ($component->unit_id != $contract_item->unit_id)) bg-exclude-sum-component @endif">
                             @if($first)
                             <td rowspan="{{count($component_items_arr[$component->id])+1}}">
                                 {!! Str::wordWrap($component->name,10,"<br>",false) !!}
