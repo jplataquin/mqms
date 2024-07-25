@@ -82,7 +82,7 @@
                 <td colspan="15"></td>
             </tr>
             <tr>
-                <th class="text-center" rowspan="2" style="width:5%">Item Code</th>
+                <th class="text-center" algin="center" rowspan="2" style="width:5%">Item Code</th>
                 <th class="text-center" rowspan="2" class="desc-col-width">Description</th>
                 <th class="text-center" colspan="4">Contract</th>
                 <th class="text-center" colspan="4">POW/DUPA</th>
