@@ -184,6 +184,7 @@
         window.util.navTo('/project/create');
     }
 
+    reinitalize();
     showData();
 </script>
 </div>
