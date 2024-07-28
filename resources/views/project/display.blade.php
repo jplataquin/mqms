@@ -87,7 +87,7 @@
         </div>
     </div>
 
-    <div class="container mb-3" id="list"></div>
+    <div class="row mb-3" id="list"></div>
 
     <div class="row">
         <div class="col-lg-12">
