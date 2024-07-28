@@ -87,7 +87,7 @@
         </div>
     </div>
 
-    <div class="container pl-12 pr-12 mb-3" id="list"></div>
+    <div class="container mb-3" id="list"></div>
     
     <div class="row">
         <div class="col-lg-12">
