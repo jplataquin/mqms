@@ -37,7 +37,7 @@
         </li>
     </ul>
  </div>
- 
+
 <hr>
 
     <table class="table">
@@ -124,7 +124,7 @@
 
         <div class="col-lg-4">
             <div class="form-group">
-                <label>POW/DUPA Unit x</label>
+                <label>POW/DUPA Unit</label>
                 <select class="form-control" id="ref_1_unit">
                     <option value=""> - </option>
                     @foreach($unit_options as $unit)

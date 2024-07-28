@@ -215,14 +215,12 @@
         <div id="component_list" class="mt-3">
             @foreach($components as $component)
 
-                <div class="item row selectable-div fade-in border mb-3" data-id="{{$component->id}}">
-                    <div class="col-lg-12">
-                        <h3>{{$component->name}}</h3>
-                        <h6> 
+                <div class="item item-container fade-in" data-id="{{$component->id}}">
+                    <div class="item-header">{{$component->name}}</div>
+                    <div class="item-body">
                             @if(isset($unit_options[ $component->unit_id ]))
                                 {{$component->quantity}} {{ $unit_options[ $component->unit_id ]->text }}
                             @endif
-                        </h6>
                     </div>
                 </div>
 
@@ -362,12 +360,15 @@
     function Component(id){
 
 
-        let name = t.h3('Loading...');
-        let quantity_unit = t.h6('Loading...');
+        let name = t.txt('Loading...');
+        let quantity_unit = t.txt('Loading...');
 
-        let el = t.div({class:'row selectable-div fade-in border mb-3',dataId:id},()=>{
-            t.div({class:'col-lg-12'},(el)=>{
+        let el = t.div({class:'item-container fade-in',dataId:id},()=>{
+            t.div({class:'item-header'},(el)=>{
                 el.append(name);
+            });
+
+            t.div({class:'item-body'},(el)=>{
                 el.append(quantity_unit);
             });
         });

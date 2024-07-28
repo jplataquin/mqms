@@ -256,10 +256,7 @@
         </div>
     </div>
 
-    <div id="component_item_list" class="row mt-3">
-            
-  
-    </div>
+    <div id="component_item_list" class="row mt-3"></div>
 </div>
 
 <script type="module">

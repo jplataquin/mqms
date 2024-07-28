@@ -90,7 +90,7 @@
         <div id="contract_items" class="mt-3">
             @foreach($contract_items as $contract_item)
 
-                <div class="item item-container" data-id="{{$contract_item->id}}">
+                <div class="item item-container fade-in" data-id="{{$contract_item->id}}">
                     <div class="item-header">{{$contract_item->item_code}}</div>
                          
                     <div class="item-body">
