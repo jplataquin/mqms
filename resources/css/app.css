@@ -107,6 +107,10 @@ html, body {
   margin-bottom: 10px;
 }
 
+.item-container:hover{
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  cursor: pointer;
+}
 
 
 /*** Sidebar ***/
