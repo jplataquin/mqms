@@ -90,18 +90,17 @@
         <div id="contract_items" class="mt-3">
             @foreach($contract_items as $contract_item)
 
-                <div class="item row selectable-div fade-in border mb-3" data-id="{{$contract_item->id}}">
-                    <div class="col-lg-12">
-                        <h3>{{$contract_item->item_code}}</h3>
-                        <h6> 
-
+                <div class="item item-container" data-id="{{$contract_item->id}}">
+                    <div class="item-header">{{$contract_item->item_code}}</div>
+                         
+                    <div class="item-body">
                             {{$contract_item->description}}
 
                             @if(isset($unit_options[ $contract_item->unit_id ]))
                                 {{$contract_item->contract_quantity}} {{ $unit_options[ $contract_item->unit_id ]->text }}
                             @endif
-                        </h6>
                     </div>
+                        
                 </div>
 
             @endforeach
