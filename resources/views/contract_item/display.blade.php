@@ -87,7 +87,17 @@
         <div class="col-lg-4">
             <div class="form-group">
                 <label>POW/DUPA Unit</label>
-                <input type="text" id="ref_1_unit" class="form-control" disabled="true" />
+                <select class="form-control editable" id="ref_1_unit" disabled="true">
+                    @foreach($unit_options as $unit)
+                    <option value=""> - </option>
+                    <option value="{{$unit->id}}" 
+                        @if($unit->deleted) disabled @endif
+                    
+                        @if($unit->id == $contract_item->ref_1_unit_id) selected @endif
+                    
+                    >{{$unit->text}} @if($unit->deleted) [Deleted] @endif</option>
+                    @endforeach
+                </select>
             </div>
         </div>
 
@@ -220,11 +230,6 @@
     const unit_options  = @json($unit_options);
 
 
-    unit.onchange = ()=>{
-        ref_1_unit.value = unit.options[unit.selectedIndex].text;
-    }
-
-    ref_1_unit.value = unit.options[unit.selectedIndex].text;
 
     contract_quantity.onkeypress = (e)=>{
         return window.util.inputNumber(contract_quantity,e,2,false);
@@ -275,6 +280,7 @@
             contract_unit_price : contract_unit_price.value,
             ref_1_quantity      : ref_1_quantity.value,
             ref_1_unit_price    : ref_1_unit_price.value,
+            ref_1_unit_id       : ref_1_unit.value,
             unit_id             : unit.value,
         }).then(reply=>{
 

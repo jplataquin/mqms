@@ -143,8 +143,7 @@ class ContractItemController extends Controller
             ],
             'ref_1_unit_price'=>[
                 'nullable',
-                'numeric',
-                'gt:0'
+                'numeric'
             ]
         ]);
 
@@ -203,6 +202,7 @@ class ContractItemController extends Controller
         $contract_unit_price      = $request->input('contract_unit_price') ?? '';
         $ref_1_quantity           = $request->input('ref_1_quantity') ?? '';
         $ref_1_unit_price         = $request->input('ref_1_unit_price') ?? '';
+        $ref_1_unit_id            = (int) $request->input('ref_1_unit_id') ?? 0;
         $unit_id                  = (int) $request->input('unit_id') ?? 0;
         $id                       = (int) $request->input('id') ?? 0;
         $section_id               = (int) $request->input('section_id') ?? 0;
@@ -241,12 +241,22 @@ class ContractItemController extends Controller
                 'required',
                 'numeric'
             ],
-            'ref_1_quantity'        =>[
-                'numeric'
+            'ref_1_quantity'=>[
+                'nullable',
+                'numeric',
+                'gt:0',
+                'required_with:ref_1_unit_id'
             ],
-            'ref_2_unit_price'      =>[
-                'numeric'
+            'ref_1_unit_id' =>[
+                'nullable',
+                'numeric',
+                'gte:1',
+                'required_with:ref_1_quantity'
             ],
+            'ref_1_unit_price'=>[
+                'nullable',
+                'numeric'
+            ]
 
         ]);
 
@@ -276,10 +286,22 @@ class ContractItemController extends Controller
         $contract_item->description             = $description;
         $contract_item->contract_quantity       = $contract_quantity;
         $contract_item->contract_unit_price     = $contract_unit_price;
-        $contract_item->ref_1_quantity          = $ref_1_quantity;
-        $contract_item->ref_1_unit_price        = $ref_1_unit_price;
         $contract_item->unit_id                 = $unit_id;
         $contract_item->updated_by              = $user_id;
+
+        if($ref_1_quantity){
+            $contract_item->ref_1_quantity          = $ref_1_quantity;
+            $contract_item->ref_1_unit_id           = $ref_1_unit_id;
+        }else{
+            $contract_item->ref_1_quantity          = null;
+            $contract_item->ref_1_unit_id           = null;
+        }
+
+        if($ref_1_unit_price){
+            $contract_item->ref_1_unit_price        = $ref_1_unit_price;
+        }else{
+            $contract_item->ref_1_unit_price        = null;
+        }
 
         $contract_item->save();
 
