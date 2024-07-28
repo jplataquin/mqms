@@ -100,7 +100,7 @@ html, body {
   border-top: 1px solid grey;
   border-bottom: 1px solid grey;
   border-right: 1px solid grey;
-  border-left: 6px solid blue;
+  border-left: 6px solid #dd7214;
   padding:3px;
   min-height:70px;
   width: 100%;
@@ -194,6 +194,10 @@ html, body {
   transition: all .5s ease;
 }
 
+.selected-nav-item{
+  background-color: #dd7214 !important;
+}
+
 /*** Breadcrumbs ***/
 .breadcrumbs {
   font-family: "Inter", sans-serif;
@@ -239,8 +243,8 @@ html, body {
 
 .breadcrumbs a:hover, a.active {
   outline: 0;
-  color: #6366f1;
-  border-color: #6366f1;
+  color: #dd7214;
+  border-color: #dd7214;
   z-index: 1;
 }
 
