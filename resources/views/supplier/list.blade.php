@@ -99,8 +99,8 @@
         
         data.map(item=>{
 
-            let row = t.div({class:'row mt-1 mb-1 border selectable-div fade-in'},()=>{
-                t.div({class:'col-lg-12'},item.name );
+            let row = t.div({class:'item-container fade-in'},()=>{
+                t.div({class:'item-header'},item.name);
             });
 
             row.onclick = ()=>{
@@ -189,6 +189,7 @@
         window.util.navTo('/master_data/supplier/create');
     }
 
+    reinitalize();
     showData();
 </script>
 </div>
