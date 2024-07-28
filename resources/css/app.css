@@ -112,6 +112,11 @@ html, body {
   cursor: pointer;
 }
 
+.item-header{
+  font-weight: bold;
+  font-size: 15px;
+}
+
 
 /*** Sidebar ***/
 #sidebar{
