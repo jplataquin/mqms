@@ -262,32 +262,32 @@
         showData();
     }
 
-    sortSelect.onchange = ()=>{
-        reinitalize();
+    // sortSelect.onchange = ()=>{
+    //     reinitalize();
 
-        let select = parseInt(sortSelect.value);
+    //     let select = parseInt(sortSelect.value);
 
-        switch(select){
-            case 1:
-                order   = 'ASC';
-                orderBy = 'name';
-                break;
-            case 2:
-                order   = 'DESC';
-                orderBy = 'name';
-                break;
-            case 3:
-                order   = 'DESC';
-                orderBy = 'id';
-                break;
-            case 4:
-                order   = 'ASC';
-                orderBy = 'id';
-            break;
-        }
+    //     switch(select){
+    //         case 1:
+    //             order   = 'ASC';
+    //             orderBy = 'name';
+    //             break;
+    //         case 2:
+    //             order   = 'DESC';
+    //             orderBy = 'name';
+    //             break;
+    //         case 3:
+    //             order   = 'DESC';
+    //             orderBy = 'id';
+    //             break;
+    //         case 4:
+    //             order   = 'ASC';
+    //             orderBy = 'id';
+    //         break;
+    //     }
 
-        showData();
-    }
+    //     showData();
+    // }
 
 
     showData();
