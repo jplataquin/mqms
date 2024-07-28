@@ -5,23 +5,19 @@
 <div class="container">
 <h5>Project » Section » Contract Item » Create</h5>
 <hr>
-    <div class="row mb-3">
-        <div class="col-lg-12">
-            <div class="form-group">
-                <label>Project</label>
-                <input type="text" id="project" value="{{$project->name}}" class="form-control" disabled="true"/>
-            </div>
-        </div>
-    </div>
 
-    <div class="row mb-3">
-        <div class="col-lg-12">
-            <div class="form-group">
-                <label>Section</label>
-                <input type="text" id="section" value="{{$section->name}}" class="form-control" disabled="true"/>
-            </div>
-        </div>
-    </div>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Project</th>
+                <td>{{$project->name}}</td>
+            </tr>
+            <tr>
+                <th>Section</th>
+                <td>{{$section->name}}</td>
+            </tr>
+        </tbody>
+    </table>
     <!--
     <div class="row mb-3">
         <div class="col-lg-12">
