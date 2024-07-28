@@ -97,9 +97,9 @@ html, body {
 /*** Item ***/
 
 .item-container{
-  border-top: 1px solid grey;
-  border-bottom: 1px solid grey;
-  border-right: 1px solid grey;
+  border-top: 1px solid #6b7280;
+  border-bottom: 1px solid #6b7280;
+  border-right: 1px solid #6b7280;
   border-left: 6px solid #6366f1;
   padding:3px;
   min-height:70px;
@@ -115,6 +115,7 @@ html, body {
 .item-header{
   font-weight: bold;
   font-size: 15px;
+  color: #6b7280;
 }
 
 
