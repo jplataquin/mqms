@@ -114,8 +114,10 @@ html, body {
 
 .item-header{
   font-weight: bold;
-  font-size: 15px;
+  font-size: 20px;
   color: #6b7280;
+  padding:3px;
+  border-bottom: 1px dashed;
 }
 
 
