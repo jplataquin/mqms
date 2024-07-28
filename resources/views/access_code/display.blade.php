@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+
+<div id="content">
 <div class="container">
     <div class="breadcrumbs">
         <ul>
@@ -128,5 +130,5 @@
     }
 
 </script>
-
+</div>
 @endsection
