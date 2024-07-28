@@ -2,7 +2,24 @@
 
 @section('content')
 <div class="container">
-<h5>Access Codes</h5>
+    <div class="breadcrumbs">
+        <ul>
+            <li>
+                <a href="#">
+                    <span>
+                        Access Code
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <span>
+                        List
+                    </span>		
+                </a>
+            </li>
+        </ul>
+    </div>
 <hr>
     <div class="row">
         <div class="col-lg-4">

@@ -4,7 +4,38 @@
 <div id="content">
 <div class="container">
 
-<h5>Project » Section » Contract Item » Display</h5>
+    <div class="breadcrumbs">
+        <ul>
+            <li>
+                <a href="#">
+                    <span>
+                        Project
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span>
+                    Section
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span>
+                    Contract Item
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <span>
+                        Display
+                    </span>		
+                </a>
+            </li>
+        </ul>
+    </div>
 <hr>
 
     <table class="table">
@@ -286,7 +317,7 @@
         }).then(reply=>{
             
             window.util.unblockUI();
-            
+
             if(reply.status <= 0){
                 window.util.showMsg(reply.message);
                 return false;

@@ -3,7 +3,32 @@
 @section('content')
 <div id="content">
 <div class="container">
-<h6>Master Data » Material Item » Display » {{$materialItem->id}}</h6>
+<div class="breadcrumbs">
+        <ul>
+            <li>
+                <a href="#">
+                    <span>
+                        Master Data
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span>
+                       Material Item
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <span>
+                        Display
+                    </span>		
+                </a>
+            </li>
+        </ul>
+    </div>
+
 <hr>
 
     <div class="row">

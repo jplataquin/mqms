@@ -3,7 +3,31 @@
 @section('content')
 <div id="content">
 <div class="container">
-<h5>Master Data » Materia Item » List</h5>
+<div class="breadcrumbs">
+        <ul>
+            <li>
+                <a href="#">
+                    <span>
+                        Master Data
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span>
+                       Material Item
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <span>
+                        List
+                    </span>		
+                </a>
+            </li>
+        </ul>
+    </div>
 <hr>
 
     <div class="row mb-5">
@@ -160,7 +184,7 @@
     }
 
     createBtn.onclick = ()=>{
-         window.util.navTo('/master_data/material/item/create');
+         window.util.navTo('/master_data/material/item/create') ;
     }
 
     showData();
