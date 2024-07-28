@@ -2,8 +2,8 @@
 
 @section('content')
 <div id="content">
-<div class="container">
-<div class="breadcrumbs">
+    <div class="container">
+    <div class="breadcrumbs">
         <ul>
             <li>
                 <a href="#">
@@ -50,7 +50,6 @@
     </div>
 
 </div>
-
 <script type="module">
     import {$q} from '/adarna.js';
 
@@ -99,5 +98,6 @@
     }
 
 </script>
+
 </div>
 @endsection

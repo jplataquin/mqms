@@ -27,8 +27,9 @@
                 </a>
             </li>
         </ul>
-    </div>
-<hr>
+    <div>
+    
+    <hr>
 
     <div class="row">
 
