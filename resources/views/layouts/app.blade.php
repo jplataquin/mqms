@@ -27,119 +27,119 @@
     </div>
     <div class="wrapper d-flex h-100" id="app">
         
-        <div>
-        <nav id="sidebar" hx-boost="true" class="w-100 h-100">
-            <a class="d-none" hx-select="#content" hx-target="#main" href="/roles" id="#__nav_helper">test</a>
-            <ul class="list-unstyled">
-                <li class="menu-item">
-                    <div class="nav-item">
-                        <a href="/home">Dashboard</a>
-                    </div>
-                </li>
-                <li class="menu-item">
-                    <div class="nav-item">
-                        <a href="#" class="inactive-nav-item">Review</a>
-                    </div>
+        <div id="side-bar-container">
+            <nav id="sidebar" hx-boost="true" class="w-100 h-100">
+                <a class="d-none" hx-select="#content" hx-target="#main" href="/roles" id="#__nav_helper">test</a>
+                <ul class="list-unstyled">
+                    <li class="menu-item">
+                        <div class="nav-item">
+                            <a href="/home">Dashboard</a>
+                        </div>
+                    </li>
+                    <li class="menu-item">
+                        <div class="nav-item">
+                            <a href="#" class="inactive-nav-item">Review</a>
+                        </div>
 
-                    <ul class="list-unstyled menu-sub-items">
-                        <li class="nav-sub-item">
-                            <a href="/review/components" hx-select="#content" hx-target="#main">Components</a>
-                        </li>
-                        <li class="nav-sub-item">
-                            <a href="/review/material_quantity_requests" hx-select="#content" hx-target="#main">Material Quantity Request</a>
-                        </li>
-                        <li class="nav-sub-item">
-                            <a href="/review/material_canvass" hx-select="#content" hx-target="#main">Material Canvass</a>
-                        </li>
-                        <li class="nav-sub-item">
-                            <a href="/review/purchase_orders" hx-select="#content" hx-target="#main">Purchase Orders</a>
-                        </li>
-                    </ul>
-                </li>
+                        <ul class="list-unstyled menu-sub-items">
+                            <li class="nav-sub-item">
+                                <a href="/review/components" hx-select="#content" hx-target="#main">Components</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a href="/review/material_quantity_requests" hx-select="#content" hx-target="#main">Material Quantity Request</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a href="/review/material_canvass" hx-select="#content" hx-target="#main">Material Canvass</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a href="/review/purchase_orders" hx-select="#content" hx-target="#main">Purchase Orders</a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li class="menu-item">
+                        <div class="nav-item">
+                            <a href="#" class="inactive-nav-item">Projects</a>
+                        </div>    
+                        <ul class="list-unstyled menu-sub-items">
+                            <li class="nav-sub-item">
+                                <a href="/projects" hx-select="#content" hx-target="#main">List</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a href="/project/create" hx-select="#content" hx-target="#main">Create</a>
+                            </li>
+                        </ul>
+                        
+                    </li>
                 
-                <li class="menu-item">
-                    <div class="nav-item">
-                        <a href="#" class="inactive-nav-item">Projects</a>
-                    </div>    
-                    <ul class="list-unstyled menu-sub-items">
-                        <li class="nav-sub-item">
-                            <a href="/project/create" hx-select="#content" hx-target="#main">Create</a>
-                        </li>
-                        <li class="nav-sub-item">
-                            <a href="/projects" hx-select="#content" hx-target="#main">List</a>
-                        </li>
-                    </ul>
-                    
-                </li>
-             
-                <li class="menu-item">
-                    <div class="nav-item">
-                        <a href="#" class="inactive-nav-item">Users</a>
-                    </div>
-                    <ul class="list-unstyled menu-sub-items">
-                        <li class="nav-sub-item">
-                            <a href="/access_codes" hx-select="#content" hx-target="#main">Access Codes</a>
-                        </li>
-                        <li class="nav-sub-item">
-                            <a href="/roles" hx-select="#content" hx-target="#main">Roles</a>
-                        </li>
-                        <li class="nav-sub-item">
-                            <a href="/user_roles" hx-select="#content" hx-target="#main">User Roles</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="menu-item">
-                    <div class="nav-item">
-                        <a href="#" class="inactive-nav-item">Master Data</a>
-                    </div>
-                    <ul class="list-unstyled menu-sub-items">
-                        <li class="nav-sub-item">
-                            <a href="/master_data/material/groups" hx-select="#content" hx-target="#main">Material Groups</a>
-                        </li>
-                        <li class="nav-sub-item">
-                            <a href="/master_data/material/items" hx-select="#content" hx-target="#main">Material Items</a>
-                        </li>
-                        <li class="nav-sub-item">
-                            <a href="/master_data/payment_terms" hx-select="#content" hx-target="#main">Payment Terms</a>
-                        </li>
-                        <li class="nav-sub-item">
-                            <a href="master_data/suppliers" hx-select="#content" hx-target="#main">Suppliers</a>
-                        </li>
-                        <li class="nav-sub-item">
-                            <a href="/master_data/units" hx-select="#content" hx-target="#main">Units</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="menu-item">
-                    <div class="nav-item">
-                        <a href="#" class="inactive-nav-item">Request</a>
-                    </div>
-                    <ul class="list-unstyled menu-sub-items">
-                        <li class="nav-sub-item">
-                            <a href="/material_quantity_requests" hx-select="#content" hx-target="#main">Material Quantity Request</a>
-                        </li>
-                        <li class="nav-sub-item">
-                            <a href="/material_canvass" hx-select="#content" hx-target="#main">Material Canvass</a>
-                        </li>
-                        <li class="nav-sub-item">
-                            <a href="/purchase_orders" hx-select="#content" hx-target="#main">Purchase Order</a>
-                        </li>
-                    </ul>
-                    
-                <li>
+                    <li class="menu-item">
+                        <div class="nav-item">
+                            <a href="#" class="inactive-nav-item">Users</a>
+                        </div>
+                        <ul class="list-unstyled menu-sub-items">
+                            <li class="nav-sub-item">
+                                <a href="/access_codes" hx-select="#content" hx-target="#main">Access Codes</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a href="/roles" hx-select="#content" hx-target="#main">Roles</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a href="/user_roles" hx-select="#content" hx-target="#main">User Roles</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <div class="nav-item">
+                            <a href="#" class="inactive-nav-item">Master Data</a>
+                        </div>
+                        <ul class="list-unstyled menu-sub-items">
+                            <li class="nav-sub-item">
+                                <a href="/master_data/material/groups" hx-select="#content" hx-target="#main">Material Groups</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a href="/master_data/material/items" hx-select="#content" hx-target="#main">Material Items</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a href="/master_data/payment_terms" hx-select="#content" hx-target="#main">Payment Terms</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a href="master_data/suppliers" hx-select="#content" hx-target="#main">Suppliers</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a href="/master_data/units" hx-select="#content" hx-target="#main">Units</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <div class="nav-item">
+                            <a href="#" class="inactive-nav-item">Request</a>
+                        </div>
+                        <ul class="list-unstyled menu-sub-items">
+                            <li class="nav-sub-item">
+                                <a href="/material_quantity_requests" hx-select="#content" hx-target="#main">Material Quantity Request</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a href="/material_canvass" hx-select="#content" hx-target="#main">Material Canvass</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a href="/purchase_orders" hx-select="#content" hx-target="#main">Purchase Order</a>
+                            </li>
+                        </ul>
+                        
+                    <li>
 
-                <li class="menu-item">
-                    <div class="nav-item">
-                        <button class="btn btn-secondary w-100" hx-disinherit="*" href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                            Logout
-                        </button>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </div>
-                </li>
-            </u>
-        </nav>
+                    <li class="menu-item">
+                        <div class="nav-item">
+                            <button class="btn btn-secondary w-100" hx-disinherit="*" href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                Logout
+                            </button>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+                </u>
+            </nav>
         </div>
    
         <main class="w-100 overflow-scroll">

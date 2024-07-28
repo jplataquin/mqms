@@ -73,6 +73,13 @@ html, body {
   height: 100%;
 }
 
+#bar{
+  background-color: #282727;
+  height:40px;
+}
+
+
+/*** Miscellaneous ***/
 .fixed-footer-controls{
   position: fixed;
   height: 100px;
@@ -83,16 +90,13 @@ html, body {
   background-color:#000000;
 }
 
-
 .bg-teal{
   background-color: #add8e6 !important; 
 }
 
-#bar{
-  background-color: #282727;
-  height:40px;
-}
 
+
+/*** Sidebar ***/
 #sidebar{
   background-color:#343a40;
   width:15%;
@@ -109,8 +113,6 @@ html, body {
   padding-bottom: 10px;
   color:#ffffff;
 }
-
-
 
 .nav-item a{
   text-decoration: none;
@@ -175,3 +177,17 @@ html, body {
   transition: all .5s ease;
 }
 
+
+/*** Viewports ***/
+@media (min-width:320px)  { /* smartphones, iPhone, portrait 480x320 phones */
+  #side-bar-container{
+    display: none;
+    position:absolute;
+    z-index:3;
+  }
+}
+@media (min-width:481px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ }
+@media (min-width:641px)  { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ }
+@media (min-width:961px)  { /* tablet, landscape iPad, lo-res laptops ands desktops */ }
+@media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */ }
+@media (min-width:1281px) { /* hi-res laptops and desktops */ }
