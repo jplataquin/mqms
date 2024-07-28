@@ -142,7 +142,7 @@
 
             if(reply.status <= 0){
                 window.util.unblockUI();
-                alert(reply.message);
+                window.util.showMsg(reply.message);
                 return false;
             }
 
@@ -308,7 +308,7 @@
     //     showData();
     // }
 
-
+    reinitalize();
     showData();
 
 </script>
