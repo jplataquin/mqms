@@ -168,7 +168,7 @@
 
             if(reply.status <= 0){
 
-                window.util.showMsg(reply.data.messsage);
+                window.util.showMsg(reply.message);
                 return false;
             }
 
