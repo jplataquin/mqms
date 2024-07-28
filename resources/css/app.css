@@ -94,6 +94,15 @@ html, body {
   background-color: #add8e6 !important; 
 }
 
+/*** Item ***/
+
+.item-container{
+  border-top: 6px solid blue;
+  padding:3px;
+  min-height:100px;
+  width: 100%;
+}
+
 
 
 /*** Sidebar ***/

@@ -92,8 +92,10 @@
         
         data.map(item=>{
 
-            let row = t.div({class:'row mt-1 mb-1 border selectable-div fade-in'},()=>{
-                t.div({class:'col-lg-12'},item.name );
+            let row = t.div({class:'item-container'},()=>{
+              
+                t.div({class:'item-header'},item.name);
+                t.div({class:'item-body'});
             });
 
             row.onclick = ()=>{
