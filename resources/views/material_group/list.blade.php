@@ -95,7 +95,7 @@
         
         data.map(item=>{
 
-            let row = t.div({class:'item-contianer fade-in'},()=>{
+            let row = t.div({class:'item-container fade-in'},()=>{
                 t.div({class:'item-header'},item.name);
             });
 
