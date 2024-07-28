@@ -113,6 +113,7 @@
     const section_name                = $q('#section_name').first();
     const createBtn                   = $q('#createBtn').first();
     
+
     
     editBtn.onclick = (e)=>{
         e.preventDefault();
@@ -155,7 +156,25 @@
     }
 
     createBtn.onclick = (e)=>{
-        
+
+        window.util.blockUI();
+
+        window.util.$post('/api/section/create',{
+            name: section_name.value,
+            project_id: '{{$project->id}}'
+        }).then(reply=>{
+
+            window.util.unblockUI();
+
+            if(reply.status <= 0){
+
+                window.util.showMsg(reply.data.messsage);
+                return false;
+            }
+
+            reinitalize();
+            showData();
+        });
     }
 
     deleteBtn.onclick = (e)=>{

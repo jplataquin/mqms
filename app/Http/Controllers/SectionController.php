@@ -96,7 +96,6 @@ class SectionController extends Controller
         //todo check role
 
         $name           = $request->input('name') ?? '';
-        $status         = $request->input('status');
         $project_id     = (int) $request->input('project_id') ?? 0;
 
         //TODO check if project exists;
@@ -111,6 +110,11 @@ class SectionController extends Controller
                     ->where('project_id', $project_id)
                     ->where('name', $name);
                 }),
+            ],
+            'project_id' =>[
+                'required',
+                'numeric',
+                'gte:1'
             ]
         ]);
 
