@@ -95,7 +95,14 @@
         <div class="col-lg-4">
             <div class="form-group">
                 <label>POW/DUPA Unit</label>
-                <input type="text" id="ref_1_unit" class="form-control" disabled="true" />
+                <select class="form-control" id="ref_1_unit">
+                    <option value=""> - </option>
+                    @foreach($unit_options as $unit)
+                    <option value="{{$unit->id}}" 
+                        @if($unit->deleted) disabled @endif
+                    >{{$unit->text}} @if($unit->deleted) [Deleted] @endif</option>
+                    @endforeach
+                </select>
             </div>
         </div>
 
@@ -131,8 +138,8 @@
     const contract_unit_price       = $q('#contract_unit_price').first();
     const ref_1_quantity            = $q('#ref_1_quantity').first();
     const ref_1_unit_price          = $q('#ref_1_unit_price').first();
-    const ref_1_unit                  = $q('#ref_1_unit').first();
-    const unit                        = $q('#unit').first();
+    const ref_1_unit                = $q('#ref_1_unit').first();
+    const unit                      = $q('#unit').first();
     
     unit.onchange = ()=>{
         ref_1_unit.value = unit.options[unit.selectedIndex].text;
@@ -173,6 +180,7 @@
             contract_unit_price         : contract_unit_price.value,
             ref_1_quantity              : ref_1_quantity.value,
             ref_1_unit_price            : ref_1_unit_price.value,
+            ref_1_unit                  : ref_1_unit.value,
             unit_id                     : unit.value
         }).then(reply=>{
 
