@@ -3,7 +3,31 @@
 @section('content')
 <div id="content">
 <div class="container">
-    <h5>Material Quantity Request » Create » Select</h5>
+<div class="breadcrumbs">
+        <ul>
+            <li>
+                <a href="#">
+                    <span>
+                        Request
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span>
+                       Material Quantity
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <span>
+                        Select
+                    </span>		
+                </a>
+            </li>
+        </ul>
+    </div>
     <hr>
     
     <div class="row">

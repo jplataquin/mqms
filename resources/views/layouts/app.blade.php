@@ -116,7 +116,7 @@
                         </div>
                         <ul class="list-unstyled menu-sub-items">
                             <li class="nav-sub-item">
-                                <a href="/material_quantity_requests" hx-select="#content" hx-target="#main">Material Quantity Request</a>
+                                <a href="/material_quantity_requests" hx-select="#content" hx-target="#main">Material Quantity</a>
                             </li>
                             <li class="nav-sub-item">
                                 <a href="/material_canvass" hx-select="#content" hx-target="#main">Material Canvass</a>

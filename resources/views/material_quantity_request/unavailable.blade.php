@@ -3,7 +3,32 @@
 @section('content')
 <div id="content">
 <div class="container">
-<h5>Material Quantity Request » Component » Unavailable</h5>
+
+<div class="breadcrumbs">
+        <ul>
+            <li>
+                <a href="#">
+                    <span>
+                        Request
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span>
+                       Material Quantity
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <span>
+                        Unavailable
+                    </span>		
+                </a>
+            </li>
+        </ul>
+    </div>
 <hr>
 
     <table class="table bordered">

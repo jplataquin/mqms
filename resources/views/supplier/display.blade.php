@@ -4,9 +4,31 @@
 <div id="content">
 <div class="container">
     
-    <h5>Master Data » Supplier » Display</h5>
-
-
+<div class="breadcrumbs">
+        <ul>
+            <li>
+                <a href="#">
+                    <span>
+                       Master Data
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span>
+                       Supplier
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <span>
+                        Display
+                    </span>		
+                </a>
+            </li>
+        </ul>
+    </div>
     <div class="row">
 
         <div class="col-lg-12">

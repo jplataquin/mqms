@@ -3,7 +3,31 @@
 @section('content')
 <div id="content">
 <div class="container">
-<h5>Review » Material Quantity Request » Display</h5>
+<div class="breadcrumbs">
+        <ul>
+            <li>
+                <a href="#">
+                    <span>
+                       Review
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span>
+                       Material Quantity
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <span>
+                        Display
+                    </span>		
+                </a>
+            </li>
+        </ul>
+    </div>
 <hr>
     <table class="table">
         <tbody>

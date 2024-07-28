@@ -3,7 +3,7 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs">
+    <div class="breadcrumbs">
         <ul>
             <li>
                 <a href="#">
