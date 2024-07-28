@@ -183,6 +183,7 @@ html, body {
   display: flex;
   flex-direction: column;
   background-color: #f3f4f6;
+  margin-left:-28px;
 }
 
 .breadcrumbs  ul {
