@@ -92,6 +92,7 @@
             <div class="form-group">
                 <label>POW/DUPA Unit x</label>
                 <select class="form-control" id="ref_1_unit">
+                    <option value=""> - </option>
                     @foreach($unit_options as $unit)
                         <option value="{{$unit->id}}" @if($unit->deleted) disabled @endif> {{$unit->text}} @if($unit->deleted) [Deleted] @endif </option>
                     @endforeach
