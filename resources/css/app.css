@@ -186,11 +186,11 @@ html, body {
 }
 
 .breadcrumbs  ul {
+  list-style-type: none;
   display: flex;
 }
 
 .breadcrumbs li {
-  text-decoration: none;
   margin-left: -2px;
 }
 
