@@ -87,13 +87,14 @@ class ContractItemController extends Controller
         $contract_unit_price      = $request->input('contract_unit_price') ?? '';
         $ref_1_quantity           = $request->input('ref_1_quantity') ?? '';
         $ref_1_unit_price         = $request->input('ref_1_unit_price') ?? '';
+        $ref_1_unit_id            = (int) $request->input('ref_1_unit_id') ?? 0;
         $unit_id                  = (int) $request->input('unit_id') ?? 0;
         $section_id               = (int) $request->input('section_id') ?? 0;
-        $parent_contract_item_id  = (int) $request->input('parent_contract_item_id') ?? 0;
+       // $parent_contract_item_id  = (int) $request->input('parent_contract_item_id') ?? 0;
 
         //TODO check if project exists;
 
-        $validation_scenario_A = [
+        $validator = Validator::make($request->all(),[
             'item_code' => [
                 'required',
                 'max:255',
@@ -118,7 +119,6 @@ class ContractItemController extends Controller
                 'integer',
                 'gte:1'
             ],
-            
             'contract_quantity'=>[
                 'required',
                 'numeric',
@@ -133,95 +133,20 @@ class ContractItemController extends Controller
                 'nullable',
                 'numeric',
                 'gt:0',
-                'required_with:ref_1_unit_price'
+                'required_with:ref_1_unit_id'
+            ],
+            'ref_1_unit_id' =>[
+                'nullable',
+                'numeric',
+                'gte:1',
+                'required_with:ref_1_quantity'
             ],
             'ref_1_unit_price'=>[
                 'nullable',
                 'numeric',
-                'gt:0',
-                'required_with:ref_1_quantity'
-            ],
-            
-        ];
-
-
-        $validation_scenario_B = [
-            'item_code' => [
-                'required',
-                'max:255',
-                Rule::unique('contract_items')->where(
-                function ($query) use ($section_id,$item_code) {
-                    return $query
-                    ->where('section_id', $section_id)
-                    ->where('item_code', $item_code)
-                    ->where('deleted_at',null);
-                }),
-            ],
-            'section_id'=>[
-                'required',
-                'integer',
-                'gte:1'
-            ],
-            'description' => [
-                'required',
-            ],
-            'unit_id' =>[
-                'integer',
-                'gte:1'
-            ],
-            'contract_quantity'=>[
-                'nullable',
-                'numeric',
-                'gt:0',
-                'required_with:contract_unit_price'
-            ],
-            'contract_unit_price'=>[
-                'nullable',
-                'numeric',
-                'gte:0',
-                'required_with:contract_quantity'
-            ],
-            'ref_1_quantity'=>[
-                'nullable',
-                'numeric',
-                'gt:0',
-                'required_with:ref_1_unit_price'
-            ],
-            'ref_1_unit_price'=>[
-                'nullable',
-                'numeric',
-                'gte:0',
-                'required_with:ref_1_quantity'
-            ],
-            
-        ];
-
-
-        $validation_scenario = [[]];
-
-        //The validation change depending on the input of parent contract item id
-        if($parent_contract_item_id){
-            $validation_scenario = $validation_scenario_B;
-
-            //If contract quantity or other ref quantity has value then unit input is required
-            if(
-                ($contract_quantity || $ref_1_quantity) 
-                && 
-                !$unit_id
-            ){
-                return response()->json([
-                    'status'    => 0,
-                    'message'   => 'Unit input is required',
-                    'data'      => []
-                ]);
-            }
-
-
-        }else{
-            $validation_scenario = $validation_scenario_A;
-        }
-
-        $validator = Validator::make($request->all(),$validation_scenario);
+                'gt:0'
+            ]
+        ]);
 
         if ($validator->fails()) {
             return response()->json([
@@ -232,29 +157,6 @@ class ContractItemController extends Controller
         }
 
         
-        //Check if parent contract item exists and is not a child contract item
-        if($parent_contract_item_id){
-
-            $parent_contract_item = ContractItem::find($parent_contract_item_id);
-
-            //Check if exists
-            if(!$parent_contract_item){
-                return response()->json([
-                    'status'    => 0,
-                    'message'   => 'Parent Contract Item does not exists',
-                    'data'      => []
-                ]);
-            }
-
-            if($parent_contract_item->parent_contract_item_id != null){
-                return response()->json([
-                    'status'    => 0,
-                    'message'   => 'The selected parent contract item must not have a parent',
-                    'data'      => []
-                ]);
-            }
-        }
-        
         $user_id = Auth::user()->id;
 
         $contract_item = new ContractItem();
@@ -263,27 +165,21 @@ class ContractItemController extends Controller
         $contract_item->item_code               = $item_code;
         $contract_item->description             = $description;
         $contract_item->contract_quantity       = $contract_quantity;
+        $contract_item->unit_id                 = $unit_id;
         $contract_item->contract_unit_price     = $contract_unit_price;
 
-        if($ref_1_quantity && $ref_1_unit_price){
-            
+        if($ref_1_quantity){
             $contract_item->ref_1_quantity          = $ref_1_quantity;
-            $contract_item->ref_1_unit_price        = $ref_1_unit_price;
-        
-        }else{
-            $contract_item->ref_1_quantity          = null;
-            $contract_item->ref_1_unit_price        = null;
-        
+            $contract_item->ref_1_unit_id           = $ref_1_unit_id;
         }
 
-        $contract_item->unit_id                 = $unit_id;
+        if($ref_1_unit_price){
+
+            $contract_item->ref_1_unit_price        = $ref_1_unit_price;
+        }
+
         $contract_item->created_by              = $user_id;
 
-        if($parent_contract_item_id){
-            $contract_item->parent_contract_item_id = $parent_contract_item_id;
-        }else{
-            $contract_item->parent_contract_item_id = null;
-        }
         
         $contract_item->save();
 
