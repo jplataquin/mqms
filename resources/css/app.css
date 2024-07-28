@@ -179,75 +179,71 @@ html, body {
 
 /*** Breadcrumbs ***/
 .breadcrumbs {
-	font-family: "Inter", sans-serif;
-	line-height: 1.5;
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	background-color: #f3f4f6;
+  font-family: "Inter", sans-serif;
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f4f6;
 }
 
-.breadcrumbs > ul {
-	display: flex;
+.breadcrumbs  ul {
+  display: flex;
 }
 
-.breadcrumbs > li {
-	margin-left: -2px;
-	&:first-child {
-		a {
-			border-radius: 8px 0 0 8px;
-		}
-	}
-	&:last-child {
-		a {
-			border-radius: 0 8px 8px 0;
-		}
-	}
+.breadcrumbs li {
+  margin-left: -2px;
 }
 
-.breadcrumbs > a {
-	background-color: #fff;
-	color: #6b7280;
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	text-decoration: none;
-	font-size: 1.25rem;
-	font-weight: 600;
-	border: 2px solid #d1d5db;
-	height: 3em;
-	padding-left: 1.5em;
-	padding-right: 1.5em;
-	border-radius: 0;
-	transform: skew(-30deg);
-	position: relative;
-	transition: color 0.15s ease, border-color 0.15s ease;
+.breadcrumbs li:first-child a {
+  border-radius: 8px 0 0 8px;
+}
 
-	&:hover,
-	&:focus,
-	&.active {
-		outline: 0;
-		color: #6366f1;
-		border-color: #6366f1;
-		z-index: 1;
-	}
+.breadcrumbs li:last-child a {
+  border-radius: 0 8px 8px 0;
+}
 
-	& > * {
-		transform: skew(30deg);
-	}
+.breadcrumbs a {
+  background-color: #fff;
+  color: #6b7280;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border: 2px solid #d1d5db;
+  height: 3em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  border-radius: 0;
+  transform: skew(-30deg);
+  position: relative;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
 
-	span {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		svg {
-			margin-right: 0.375em;
-			width: 1.5em;
-			height: 1.5em;
-		}
-	}
+.breadcrumbs a:hover, a:focus, a.active {
+  outline: 0;
+  color: #6366f1;
+  border-color: #6366f1;
+  z-index: 1;
+}
+.breadcrumbs a > * {
+  transform: skew(30deg);
+}
+
+.breadcrumbs a span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.breadcrumbs a span svg {
+  margin-right: 0.375em;
+  width: 1.5em;
+  height: 1.5em;
 }
 
 /*** Viewports ***/
