@@ -98,9 +98,13 @@ html, body {
 
 .item-container{
   border-top: 6px solid blue;
+  border-bottom: 1px solid grey;
+  border-right: 1px solid grey;
+  border-left: 3px solid grey;
   padding:3px;
   min-height:100px;
   width: 100%;
+  margin-bottom: 3px;
 }
 
 
