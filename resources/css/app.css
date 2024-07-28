@@ -191,7 +191,7 @@ html, body {
 }
 
 .breadcrumbs li {
-  margin-left: -2px;
+  margin-left: -28px;
 }
 
 .breadcrumbs li:first-child a {
