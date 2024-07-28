@@ -284,9 +284,10 @@
             ref_1_unit_id       : ref_1_unit.value,
             unit_id             : unit.value,
         }).then(reply=>{
-
+            
+            window.util.unblockUI();
+            
             if(reply.status <= 0){
-                window.util.unblockUI();
                 window.util.showMsg(reply.message);
                 return false;
             }
