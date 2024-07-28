@@ -97,14 +97,14 @@ html, body {
 /*** Item ***/
 
 .item-container{
-  border-top: 6px solid blue;
+  border-top: 1px solid grey;
   border-bottom: 1px solid grey;
   border-right: 1px solid grey;
-  border-left: 3px solid grey;
+  border-left: 6px solid blue;
   padding:3px;
-  min-height:100px;
+  min-height:70px;
   width: 100%;
-  margin-bottom: 3px;
+  margin-bottom: 10px;
 }
 
 
