@@ -16,7 +16,7 @@
                         Project
                     </th>
                     <td>
-                        <input type="text" disabled="true" id="projectName" value="{{$project->name}}" class="form-control"/>
+                        <input type="text" disabled="true" id="project_name" value="{{$project->name}}" class="form-control"/>
                     </td>
                 </tr>
                 <tr>
@@ -52,8 +52,9 @@
     <div class="">
         <h3>Sections</h3>
     </div>
-    <div class="row mb-3">
-        <div class="col-lg-4">
+
+<!-- 
+<div class="col-lg-4">
             <div class="form-group">
                 <label>Sort By</label>
                 <select class="form-control" id="sortSelect">
@@ -69,14 +70,16 @@
                 <label>Query</label>
                 <input type="text" id="query" class="form-control"/>
             </div>
-        </div>
-        <div class="col-lg-2">
+        </div>    
+-->
+    <div class="row mb-3">
+        <div class="col-lg-8">
             <div class="form-group">
-                <label>&nbsp;</label>
-                <button id="searchBtn" class="btn w-100 btn-primary">Search</button>
+                <label>Name</label> 
+                <input type="text" class="form-control" id="section_name"/>
             </div>
         </div>
-        <div class="col-lg-2">
+        <div class="col-lg-4">
             <div class="form-group">
                 <label>&nbsp;</label>
                 <button id="createBtn" class="btn w-100 btn-warning">Create</button>
@@ -96,23 +99,27 @@
 <script type="module">
     import {$q,$el,Template} from '/adarna.js';
 
-    let projectName                 = $q('#projectName').first();
-    let status                      = $q('#status').first();
-    let createBtn                   = $q('#createBtn').first();
-    let searchBtn                   = $q('#searchBtn').first();
-    let editBtn                     = $q('#editBtn').first();
-    let updateBtn                   = $q('#updateBtn').first();
-    let cancelBtn                   = $q('#cancelBtn').first();
-    let deleteBtn                   = $q('#deleteBtn').first();
-    let list                        = $q('#list').first();
-    let showMoreBtn                 = $q('#showMoreBtn').first();
+    const project_name                 = $q('#project_name').first();
+    const status                      = $q('#status').first();
+   // let searchBtn                   = $q('#searchBtn').first();
+    const editBtn                     = $q('#editBtn').first();
+    const updateBtn                   = $q('#updateBtn').first();
+    const cancelBtn                   = $q('#cancelBtn').first();
+    const deleteBtn                   = $q('#deleteBtn').first();
+    const list                        = $q('#list').first();
+    const showMoreBtn                 = $q('#showMoreBtn').first();
 
+
+    const section_name                = $q('#section_name').first();
+    const createBtn                   = $q('#createBtn').first();
+    
+    
     editBtn.onclick = (e)=>{
         e.preventDefault();
 
         editBtn.classList.add('d-none');
 
-        projectName.disabled              = false;
+        project_name.disabled             = false;
         status.disabled                   = false;
      
         updateBtn.classList.remove('d-none');
@@ -127,7 +134,7 @@
         window.util.blockUI();
 
         window.util.$post('/api/project/update',{
-            name                            : projectName.value,
+            name                            : project_name.value,
             status                           : status.value,
             id: '{{$project->id}}'
         }).then(reply=>{
@@ -148,7 +155,7 @@
     }
 
     createBtn.onclick = (e)=>{
-        window.util.navTo('/project/{{$project->id}}/section/create');
+        
     }
 
     deleteBtn.onclick = (e)=>{
@@ -215,7 +222,7 @@
 
         window.util.$get('/api/section/list',{
             project_id: '{{$project->id}}',
-            query: query.value,
+            query: '',
             page: page,
             order: order,
             order_by: orderBy,
@@ -245,11 +252,11 @@
         });
     }
    
-    searchBtn.onclick = ()=>{
-        showMoreBtn.style.display = 'block';
-        reinitalize();
-        showData();
-    }
+    // searchBtn.onclick = ()=>{
+    //     showMoreBtn.style.display = 'block';
+    //     reinitalize();
+    //     showData();
+    // }
 
     showMoreBtn.onclick = ()=>{
         showData();
