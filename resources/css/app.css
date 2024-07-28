@@ -220,7 +220,7 @@ html, body {
   transition: color 0.15s ease, border-color 0.15s ease;
 }
 
-.breadcrumbs a:hover {
+.breadcrumbs a:hover, a.active {
   outline: 0;
   color: #6366f1;
   border-color: #6366f1;
