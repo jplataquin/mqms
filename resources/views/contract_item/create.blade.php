@@ -90,13 +90,10 @@
 
         <div class="col-lg-4">
             <div class="form-group">
-                <label>POW/DUPA Unit</label>
+                <label>POW/DUPA Unit x</label>
                 <select class="form-control" id="ref_1_unit">
-                    
                     @foreach($unit_options as $unit)
-                    <option value="{{$unit->id}}" 
-                        @if($unit->deleted) disabled @endif
-                    >{{$unit->text}} @if($unit->deleted) [Deleted] @endif</option>
+                        <option value="{{$unit->id}}" @if($unit->deleted) disabled @endif> {{$unit->text}} @if($unit->deleted) [Deleted] @endif </option>
                     @endforeach
                 </select>
             </div>
