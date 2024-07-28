@@ -10,20 +10,34 @@
         <li>
             <a href="#">
                 <span>
-                    Account
+                    Project
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span>
+                   Section
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span>
+                   Contract Item
                 </span>
             </a>
         </li>
         <li>
             <a href="#" class="active">
                 <span>
-                    Shipping
+                    Create
                 </span>		
             </a>
-            
         </li>
     </ul>
  </div>
+ 
 <hr>
 
     <table class="table">

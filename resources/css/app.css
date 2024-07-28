@@ -180,12 +180,8 @@ html, body {
 /*** Breadcrumbs ***/
 .breadcrumbs {
   font-family: "Inter", sans-serif;
-  line-height: 1.5;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   background-color: #f3f4f6;
 }
 
@@ -194,6 +190,7 @@ html, body {
 }
 
 .breadcrumbs li {
+  text-decoration: none;
   margin-left: -2px;
 }
 
@@ -212,10 +209,8 @@ html, body {
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  font-size: 1.25rem;
   font-weight: 600;
   border: 2px solid #d1d5db;
-  height: 3em;
   padding-left: 1.5em;
   padding-right: 1.5em;
   border-radius: 0;
@@ -230,6 +225,7 @@ html, body {
   border-color: #6366f1;
   z-index: 1;
 }
+
 .breadcrumbs a > * {
   transform: skew(30deg);
 }
