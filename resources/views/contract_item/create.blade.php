@@ -22,7 +22,7 @@
             </div>
         </div>
     </div>
-
+    <!--
     <div class="row mb-3">
         <div class="col-lg-12">
             <div class="form-group">
@@ -36,7 +36,7 @@
             </div>
         </div>
     </div>
-
+    -->
     <div class="row mb-3">
         <div class="col-lg-12">
             <div class="form-group">
@@ -131,7 +131,7 @@
     const createBtn                 = $q('#createBtn').first();
     const cancelBtn                 = $q('#cancelBtn').first();
     
-    const parent_contract_item      = $q('#parent_contract_item').first();
+   // const parent_contract_item      = $q('#parent_contract_item').first();
     const item_code                 = $q('#item_code').first();
     const description               = $q('#description').first();
     const contract_quantity         = $q('#contract_quantity').first();
@@ -173,15 +173,16 @@
 
         window.util.$post('/api/contract_item/create',{
             section_id                  : '{{$section->id}}',
-            parent_contract_item_id     : parent_contract_item.value, 
+           // parent_contract_item_id     : parent_contract_item.value, 
             item_code                   : item_code.value,
             description                 : description.value,
             contract_quantity           : contract_quantity.value,
             contract_unit_price         : contract_unit_price.value,
+            unit_id                     : unit.value,
             ref_1_quantity              : ref_1_quantity.value,
             ref_1_unit_price            : ref_1_unit_price.value,
-            ref_1_unit                  : ref_1_unit.value,
-            unit_id                     : unit.value
+            ref_1_unit_id               : ref_1_unit.value
+            
         }).then(reply=>{
 
             if(reply.status <= 0 ){
