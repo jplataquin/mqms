@@ -159,38 +159,6 @@
 
     <hr>
 
-    <style>
-        .folder-form-container{
-            width:100%;
-            margin-bottom:10px;
-            margin-top:10px;
-        }
-
-        .folder-form-tab{
-            background-color: #d3dce6;
-            padding:10px;
-            width: 200px;
-            font-size:18px;
-            font-weight: bold;
-            text-align:center;
-            box-shadow: 16px 16px 48px #2e364330;
-            clip-path: polygon(0% 100%, 100% 100%, calc(100% - 30px) 0%, 0% 0%, calc(100% - 30px) 0%, 0% 0%);
-            
-            border-top-left-radius: 25px;
-        }
-
-        .folder-form-body{
-            width: 100%;
-            padding-top:10px;
-            padding-bottom:10px;
-            padding-right:20px;
-            padding-left:20px;
-            box-shadow: 16px 16px 48px #2e364330;
-            background-color: #d3dce6;
-            border-top-right-radius: 25px;
-            border-bottom-right-radius: 25px;
-        }
-    </style>
     <div class="folder-form-container">
         <div class="folder-form-tab">
             Items

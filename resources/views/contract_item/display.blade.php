@@ -157,57 +157,59 @@
 
     <hr>
 
-    <div class="mt-3">
-        
-        <div class="">
-            <h3>Components</h3>
-        </div>
-
-        <div class="row mb-3">
-            <div class="col-lg-4 col-sm-12">
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" class="form-control" id="component_name" />
-                </div>
+    <div>
+        <div class="folder-form-container">
+            <div class="folder-form-tab">
+                Components
             </div>
-            <div class="col-lg-2 col-sm-12">
-                <div class="form-group">
-                    <label>Quantity</label>
-                    <input type="text" class="form-control" id="component_quantity" />
-                </div>
-            </div>
-            <div class="col-lg-2 col-sm-12">
-                <div class="form-group">
-                    <label>Unit</label>
-                    <select class="form-control" id="component_unit">
-                        @foreach($unit_options as $unit)
-                            <option value="{{$unit->id}}" @if($unit->deleted) disabled @endif>{{$unit->text}} @if($unit->deleted) [Deleted] @endif</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-1 col-sm-12">
-                <div class="form-group">
-                    <label>Use Count</label>
-                    <input type="text" class="form-control" value="1" id="component_use_count" />
-                </div>
-            </div>
-
-
-            <div class="col-lg-1">
-                <div class="form-group">
-                    <label>Sum Flag</label>
-                    <div class="form-switch text-center">
-                        <input type="checkbox" class="form-check-input" id="component_sum_flag" value="1" checked/>
+            <div class="folder-form-body">
+                <div class="row mb-3">
+                    <div class="col-lg-4 col-sm-12">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" id="component_name" />
+                        </div>
                     </div>
-                </div>
-            </div>
+                    <div class="col-lg-2 col-sm-12">
+                        <div class="form-group">
+                            <label>Quantity</label>
+                            <input type="text" class="form-control" id="component_quantity" />
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-12">
+                        <div class="form-group">
+                            <label>Unit</label>
+                            <select class="form-control" id="component_unit">
+                                @foreach($unit_options as $unit)
+                                    <option value="{{$unit->id}}" @if($unit->deleted) disabled @endif>{{$unit->text}} @if($unit->deleted) [Deleted] @endif</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 col-sm-12">
+                        <div class="form-group">
+                            <label>Use Count</label>
+                            <input type="text" class="form-control" value="1" id="component_use_count" />
+                        </div>
+                    </div>
 
-            
-            <div class="col-lg-2 col-sm-12">
-                <div class="form-group">
-                    <label>&nbsp;</label>
-                    <button id="createComponentBtn" class="btn btn-warning w-100">Create</button>
+
+                    <div class="col-lg-1">
+                        <div class="form-group">
+                            <label>Sum Flag</label>
+                            <div class="form-switch text-center">
+                                <input type="checkbox" class="form-check-input" id="component_sum_flag" value="1" checked/>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="col-lg-2 col-sm-12">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button id="createComponentBtn" class="btn btn-warning w-100">Create</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
