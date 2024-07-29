@@ -171,6 +171,7 @@
             background-color: #d3dce6;
             padding:10px;
             width: 10%;
+            height: 70px;
         }
 
         .folder-form-body{
@@ -182,7 +183,7 @@
     </style>
     <div class="folder-form-container">
         <div class="folder-form-tab">
-            <h3>Items</h3>
+            Items
         </div>
         <div class="folder-form-body">
             <div class="row">
