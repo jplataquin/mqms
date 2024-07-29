@@ -66,9 +66,6 @@
    
     <hr>
     
-    <div class="">
-        <h3>Sections</h3>
-    </div>
 
 <!-- 
 <div class="col-lg-4">
@@ -89,20 +86,28 @@
             </div>
         </div>    
 -->
-    <div class="row mb-3">
-        <div class="col-lg-8">
-            <div class="form-group">
-                <label>Name</label> 
-                <input type="text" class="form-control" id="section_name"/>
-            </div>
+    <div class="folder-form-container">
+        <div class="folder-form-tab">
+            Section
         </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label>&nbsp;</label>
-                <button id="createBtn" class="btn w-100 btn-warning">Create</button>
+        <div class="folder-form-body">
+            <div class="row mb-3">
+                <div class="col-lg-8">
+                    <div class="form-group">
+                        <label>Name</label> 
+                        <input type="text" class="form-control" id="section_name"/>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>&nbsp;</label>
+                        <button id="createBtn" class="btn w-100 btn-warning">Create</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    
 
     <div class="container mb-3" id="list"></div>
     
