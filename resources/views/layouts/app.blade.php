@@ -99,7 +99,7 @@
                                 <a href="/master_data/payment_terms" hx-select="#content" hx-target="#main">Payment Terms</a>
                             </li>
                             <li class="nav-sub-item">
-                                <a href="master_data/suppliers" hx-select="#content" hx-target="#main">Suppliers</a>
+                                <a href="/master_data/suppliers" hx-select="#content" hx-target="#main">Suppliers</a>
                             </li>
                             <li class="nav-sub-item">
                                 <a href="/master_data/units" hx-select="#content" hx-target="#main">Units</a>
