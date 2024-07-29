@@ -72,122 +72,122 @@
 
     </div>
 
-<script type="module">
-    import {$q,Template,$el} from '/adarna.js';
+    <script type="module">
+        import {$q,Template,$el} from '/adarna.js';
 
-    let list            = $q('#list').first();
-    let query           = $q('#query').first();
-    let searchBtn       = $q('#searchBtn').first();
-    let showMoreBtn     = $q('#showMoreBtn').first();
-    let sortSelect      = $q('#sortSelect').first();
-    let createBtn       = $q('#createBtn').first();
-    let page            = 1;
-    let order           = 'DESC';
-    let orderBy         = 'id';
-    
-    const t = new Template();
-    
-    function reinitalize(){
-        page = 1;
-        $el.clear(list);   
-    }
-
-    function renderRows(data){
+        let list            = $q('#list').first();
+        let query           = $q('#query').first();
+        let searchBtn       = $q('#searchBtn').first();
+        let showMoreBtn     = $q('#showMoreBtn').first();
+        let sortSelect      = $q('#sortSelect').first();
+        let createBtn       = $q('#createBtn').first();
+        let page            = 1;
+        let order           = 'DESC';
+        let orderBy         = 'id';
         
-        data.map(item=>{
-
-            let row = t.div({class:'item-container fade-in'},()=>{
-                t.div({class:'item-header'},item.name);
-            });
-
-            row.onclick = ()=>{
-                window.util.navTo('/supplier/'+item.id);
-            };
-
-            $el.append(row).to(list);
-            
-        });
-
-    }
-
-    function showData(){
-
-        window.util.blockUI();
-
-        window.util.$get('/api/supplier/list',{
-            query: query.value,
-            page: page,
-            order: order,
-            order_by: orderBy,
-            limit: 10
-        }).then(reply=>{
-
-            if(reply.status <= 0 ){
-                window.util.unblockUI();
-                
-                let message = reply.message;
-
-                
-                alert(message);
-                return false;
-            };
-
-            page++;
-
-            window.util.unblockUI();
-
-            if(reply.data.length){
-                renderRows(reply.data); 
-            }else{
-                showMoreBtn.style.display = 'none';
-            }
-            
-        });
-    }
-   
-    searchBtn.onclick = ()=>{
-        showMoreBtn.style.display = 'block';
-        reinitalize();
-        showData();
-    }
-
-    showMoreBtn.onclick = ()=>{
-        showData();
-    }
-
-    sortSelect.onchange = ()=>{
-        reinitalize();
-
-        let select = parseInt(sortSelect.value);
-
-        switch(select){
-            case 1:
-                order   = 'ASC';
-                orderBy = 'name';
-                break;
-            case 2:
-                order   = 'DESC';
-                orderBy = 'name';
-                break;
-            case 3:
-                order   = 'DESC';
-                orderBy = 'id';
-                break;
-            case 4:
-                order   = 'ASC';
-                orderBy = 'id';
-            break;
+        const t = new Template();
+        
+        function reinitalize(){
+            page = 1;
+            $el.clear(list);   
         }
 
+        function renderRows(data){
+            
+            data.map(item=>{
+
+                let row = t.div({class:'item-container fade-in'},()=>{
+                    t.div({class:'item-header'},item.name);
+                });
+
+                row.onclick = ()=>{
+                    window.util.navTo('/supplier/'+item.id);
+                };
+
+                $el.append(row).to(list);
+                
+            });
+
+        }
+
+        function showData(){
+
+            window.util.blockUI();
+
+            window.util.$get('/api/supplier/list',{
+                query: query.value,
+                page: page,
+                order: order,
+                order_by: orderBy,
+                limit: 10
+            }).then(reply=>{
+
+                if(reply.status <= 0 ){
+                    window.util.unblockUI();
+                    
+                    let message = reply.message;
+
+                    
+                    alert(message);
+                    return false;
+                };
+
+                page++;
+
+                window.util.unblockUI();
+
+                if(reply.data.length){
+                    renderRows(reply.data); 
+                }else{
+                    showMoreBtn.style.display = 'none';
+                }
+                
+            });
+        }
+    
+        searchBtn.onclick = ()=>{
+            showMoreBtn.style.display = 'block';
+            reinitalize();
+            showData();
+        }
+
+        showMoreBtn.onclick = ()=>{
+            showData();
+        }
+
+        sortSelect.onchange = ()=>{
+            reinitalize();
+
+            let select = parseInt(sortSelect.value);
+
+            switch(select){
+                case 1:
+                    order   = 'ASC';
+                    orderBy = 'name';
+                    break;
+                case 2:
+                    order   = 'DESC';
+                    orderBy = 'name';
+                    break;
+                case 3:
+                    order   = 'DESC';
+                    orderBy = 'id';
+                    break;
+                case 4:
+                    order   = 'ASC';
+                    orderBy = 'id';
+                break;
+            }
+
+            showData();
+        }
+
+        createBtn.onclick = ()=>{
+            window.util.navTo('/master_data/supplier/create');
+        }
+
+        reinitalize();
         showData();
-    }
-
-    createBtn.onclick = ()=>{
-        window.util.navTo('/master_data/supplier/create');
-    }
-
-    reinitalize();
-    showData();
-</script>
+    </script>
 </div>
 @endsection
