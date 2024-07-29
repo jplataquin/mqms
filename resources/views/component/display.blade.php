@@ -162,17 +162,19 @@
     <style>
         .folder-form-container{
             width:100%;
+            margin-bottom:10px;
+            margin-top:10px;
         }
 
-        .folder-form-header{
+        .folder-form-tab{
             border-right: 25px solid transparent;
             background-color: #d3dce6;
-            padding:5px;
+            padding:10px;
         }
 
         .folder-form-body{
             width: 100%;
-            padding:5px;
+            padding:10px;
             box-shadow: 16px 16px 48px #2e364330;
             background-color: #d3dce6;
         }
