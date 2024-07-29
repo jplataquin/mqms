@@ -3,7 +3,7 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs">
+    <div class="breadcrumbs">
         <ul>
             <li>
                 <a href="#">
@@ -28,7 +28,7 @@
             </li>
         </ul>
     </div>
-<hr>
+    <hr>
 
     <div class="row">
 
@@ -75,24 +75,25 @@
 
     <hr>
     
-    <div class="mt-3">
-        
-        <div class="">
-            <h3>Contract Items</h3>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-12 col-sm-12 text-end">
-                   <button id="createBtn" class="btn btn-warning">Create</button>
+    <div>
+        <div class="folder-form-container">
+            <div class="folder-form-tab">
+                Contract Items
+            </div>
+            <div class="folder-form-body">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 text-end">
+                        <button id="createBtn" class="btn btn-warning">Create</button>
+                    </div>
+                </div>
             </div>
         </div>
-
         <div id="contract_items" class="mt-3">
             @foreach($contract_items as $contract_item)
 
                 <div class="item item-container fade-in" data-id="{{$contract_item->id}}">
                     <div class="item-header">{{$contract_item->item_code}}</div>
-                         
+                        
                     <div class="item-body">
                             {{$contract_item->description}}
 
@@ -105,9 +106,9 @@
 
             @endforeach
         </div>
-
     </div>
-</div>
+
+</div>   
 
 <script type="module">
     import {$q,$el, Template} from '/adarna.js';
