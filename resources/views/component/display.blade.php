@@ -179,7 +179,10 @@
 
         .folder-form-body{
             width: 100%;
-            padding:10px;
+            padding-top:10px;
+            padding-bottom:10px;
+            padding-right:20px;
+            padding-left:20px;
             box-shadow: 16px 16px 48px #2e364330;
             background-color: #d3dce6;
         }
