@@ -127,6 +127,7 @@ html, body {
 /*** Sidebar ***/
 #side-bar-container{
   width:200px;
+  overflow-y: scroll;
 }
 
 #sidebar{
