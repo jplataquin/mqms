@@ -162,8 +162,8 @@
                         {{ number_format($contract_item->ref_1_quantity,2) }}
                     </th>
                     <th>
-                        @if(isset($unit_options[$contract_item->ref_1_unit_id]))
-                            {{$unit_options[$contract_item->ref_1_unit_id]->text}}
+                        @if( isset( $unit_options[$contract_item->ref_1_unit_id] ) )
+                            {{ $unit_options[$contract_item->ref_1_unit_id]->text }}
                         @endif
                     </th>
                     <th class="text-right">
@@ -177,7 +177,7 @@
                         {{ number_format($component_total_quantity,2) }}
                     </th>
                     <th style="text-align:center" class="text-center @if($component_total_quantity > $contract_item->contract_quantity) font-color-danger @endif">
-                        $if(isset($unit_options[$contract_item->unit_id]))
+                        @if(isset($unit_options[$contract_item->unit_id]))
                         {{$unit_options[$contract_item->unit_id]->text}}
                         @endif
                     </th>
