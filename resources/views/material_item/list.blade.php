@@ -98,7 +98,7 @@
         data.map(item=>{
 
             let row = t.div({class:'item-container fade-in'},()=>{
-                t.div({class:'item-container-header'},item.brand+' '+item.name +' '+item.specification_unit_packaging+''.trim());
+                t.div({class:'item-header'},item.brand+' '+item.name +' '+item.specification_unit_packaging+''.trim());
             });
 
             row.onclick = ()=>{
