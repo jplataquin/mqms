@@ -169,7 +169,7 @@
         .folder-form-tab{
             background-color: #d3dce6;
             padding:10px;
-            width: 200px;
+            min-width: 200px;
             font-size:18px;
             font-weight: bold;
             text-align:center;
