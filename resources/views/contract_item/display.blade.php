@@ -386,8 +386,8 @@
                 return false;
             }
 
-            name.innerText = reply.data.name;
-            quantity_unit.innerText = reply.data.quantity+' '+unit_options[reply.data.unit_id].text;
+            name.nodeValue = reply.data.name;
+            quantity_unit.nodeValue = reply.data.quantity+' '+unit_options[reply.data.unit_id].text;
 
             el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
         });
