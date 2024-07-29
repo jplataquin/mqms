@@ -186,6 +186,8 @@
             box-shadow: 16px 16px 48px #2e364330;
             background-color: #d3dce6;
             border-top-right-radius: 25px;
+            border-bottom-right-radius: 25px;
+            border-bottom-left-radius: 25px;
         }
     </style>
     <div class="folder-form-container">
