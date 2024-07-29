@@ -127,14 +127,13 @@ html, body {
 /*** Sidebar ***/
 #side-bar-container{
   width:200px;
-  overflow-y: scroll;
 }
 
 #sidebar{
   background-color:#343a40;
-  width:15%;
   padding-left:3px;
   padding-right:3px;
+  overflow-y: scroll;
 }
 
 .nav-item{
