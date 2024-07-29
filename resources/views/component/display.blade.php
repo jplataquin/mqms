@@ -170,6 +170,7 @@
             border-right: 25px solid transparent;
             background-color: #d3dce6;
             padding:10px;
+            width: 10%;
         }
 
         .folder-form-body{
