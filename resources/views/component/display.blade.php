@@ -167,12 +167,12 @@
         }
 
         .folder-form-tab{
-            border-right: 25px solid transparent;
             background-color: #d3dce6;
             padding:10px;
-            border-top: 30px solid transparent;
-            border-left: 180px solid #66B2ff;
             width: 200px;
+            font-size:18px;
+            font-weight: bold;
+            clip-path: polygon(0% 100%, 100% 100%, calc(100% - 30px) 0%, 0% 0%, calc(100% - 30px) 0%, 0% 0%);
         }
 
         .folder-form-body{
