@@ -159,103 +159,124 @@
 
     <hr>
 
-    <div class="">
-        <h3>Items</h3>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="form-group">
-                <label>Name</label>
-                <input id="component_item_name" type="text" class="form-control"/>
-            </div>
+    <style>
+        .folder-form-container{
+            width:100%;
+        }
+
+        .folder-form-header{
+            border-right: 25px solid transparent;
+            background-color: #d3dce6;
+            padding:5px;
+        }
+
+        .folder-form-body{
+            width: 100%;
+            padding:5px;
+            box-shadow: 16px 16px 48px #2e364330;
+            background-color: #d3dce6;
+        }
+    </style>
+    <div class="folder-form-container">
+        <div class="folder-form-tab">
+            <h3>Items</h3>
         </div>
-    </div>
-    
-    <div class="row mt-3">
-        
-        <div class="col-lg-2">
-            <div class="form-group">
-                <label>Function Type</label>
-                <select id="component_item_function_type" class="form-control">
-                    <option value="1">As Factor</option>
-                    <option value="2">As Divisor</option>
-                    <option value="3">As Direct</option>
-                </select>
+        <div class="folder-form-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input id="component_item_name" type="text" class="form-control"/>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-lg-2">
-            <div class="form-group">
-                <label>Variable</label>
-                <input id="component_item_variable" type="text" class="form-control"/>
+            
+            <div class="row mt-3">
+                
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label>Function Type</label>
+                        <select id="component_item_function_type" class="form-control">
+                            <option value="1">As Factor</option>
+                            <option value="2">As Divisor</option>
+                            <option value="3">As Direct</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label>Variable</label>
+                        <input id="component_item_variable" type="text" class="form-control"/>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <input id="component_item_quantity" type="text" class="form-control" disabled="true"/>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label>Unit</label>
+                        <select id="component_item_unit" class="form-control">
+                            @foreach($unit_options as $opt)
+                                @if(!$opt->deleted)
+                                    <option value="{{$opt->id}}">{{$opt->text}}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label>Budget Price / Unit</label>
+                        <input id="component_item_budget_price" type="text" class="form-control"/>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label>Sum Flag</label>
+                        <div class="form-switch text-center">
+                            <input type="checkbox" class="form-check-input" id="component_item_sum_flag" value="1" checked/>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        
-        <div class="col-lg-2">
-            <div class="form-group">
-                <label>Quantity</label>
-                <input id="component_item_quantity" type="text" class="form-control" disabled="true"/>
+            <div class="row mt-3">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>POW/DUPA Quantity</label>
+                    <input type="text" id="component_item_ref_1_quantity" class="form-control"/>
+                </div>
             </div>
-        </div>
-        <div class="col-lg-2">
-            <div class="form-group">
-                <label>Unit</label>
-                <select id="component_item_unit" class="form-control">
-                    @foreach($unit_options as $opt)
-                        @if(!$opt->deleted)
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>POW/DUPA Unit</label>
+                    <select id="component_item_ref_1_unit" class="form-control">
+                        <option value=""> - </option>
+                        @foreach($unit_options as $opt)
+                            @if(!$opt->deleted)
                             <option value="{{$opt->id}}">{{$opt->text}}</option>
-                        @endif
-                    @endforeach
-                </select>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="col-lg-2">
-            <div class="form-group">
-                <label>Budget Price / Unit</label>
-                <input id="component_item_budget_price" type="text" class="form-control"/>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>POW/DUPA Price</label>
+                    <input type="text" id="component_item_ref_1_unit_price" class="form-control"/>
+                </div>
             </div>
-        </div>
-        <div class="col-lg-2">
-            <div class="form-group">
-                <label>Sum Flag</label>
-                <div class="form-switch text-center">
-                    <input type="checkbox" class="form-check-input" id="component_item_sum_flag" value="1" checked/>
+            </div>
+            <div class="row mt-3">
+                <div class="col-lg-12 text-end">
+                    <button id="createBtn" class="btn btn-warning">Create</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row mt-3">
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label>POW/DUPA Quantity</label>
-                <input type="text" id="component_item_ref_1_quantity" class="form-control"/>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label>POW/DUPA Unit</label>
-                <select id="component_item_ref_1_unit" class="form-control">
-                    <option value=""> - </option>
-                    @foreach($unit_options as $opt)
-                        @if(!$opt->deleted)
-                        <option value="{{$opt->id}}">{{$opt->text}}</option>
-                        @endif
-                    @endforeach
-                </select>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label>POW/DUPA Price</label>
-                <input type="text" id="component_item_ref_1_unit_price" class="form-control"/>
-            </div>
-        </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-lg-12 text-end">
-            <button id="createBtn" class="btn btn-warning">Create</button>
-        </div>
-    </div>
-
     <div id="component_item_list" class="row mt-3"></div>
 </div>
 
