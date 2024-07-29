@@ -97,8 +97,8 @@
         
         data.map(item=>{
 
-            let row = t.div({class:'row mt-1 mb-1 border selectable-div fade-in'},()=>{
-                t.div({class:'col-lg-12'},item.brand+' '+item.name +' '+item.specification_unit_packaging+''.trim());
+            let row = t.div({class:'item-container fade-in'},()=>{
+                t.div({class:'item-container-header'},item.brand+' '+item.name +' '+item.specification_unit_packaging+''.trim());
             });
 
             row.onclick = ()=>{
@@ -187,6 +187,7 @@
          window.util.navTo('/master_data/material/item/create') ;
     }
 
+    reinitalize();
     showData();
 </script>
 </div>
