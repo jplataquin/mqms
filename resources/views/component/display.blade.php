@@ -175,6 +175,8 @@
             text-align:center;
             box-shadow: 16px 16px 48px #2e364330;
             clip-path: polygon(0% 100%, 100% 100%, calc(100% - 30px) 0%, 0% 0%, calc(100% - 30px) 0%, 0% 0%);
+            
+            border-top-left-radius: 25px;
         }
 
         .folder-form-body{
@@ -187,7 +189,6 @@
             background-color: #d3dce6;
             border-top-right-radius: 25px;
             border-bottom-right-radius: 25px;
-            border-bottom-left-radius: 25px;
         }
     </style>
     <div class="folder-form-container">
