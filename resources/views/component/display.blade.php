@@ -170,10 +170,9 @@
             border-right: 25px solid transparent;
             background-color: #d3dce6;
             padding:10px;
-            border-bottom: 30px solid transparent;
             border-top: 30px solid transparent;
             border-left: 180px solid #66B2ff;
-            height: 70px;
+            width: 200px;
         }
 
         .folder-form-body{
