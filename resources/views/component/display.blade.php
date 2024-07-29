@@ -172,6 +172,8 @@
             width: 200px;
             font-size:18px;
             font-weight: bold;
+            text-align:center;
+            box-shadow: 16px 16px 48px #2e364330;
             clip-path: polygon(0% 100%, 100% 100%, calc(100% - 30px) 0%, 0% 0%, calc(100% - 30px) 0%, 0% 0%);
         }
 
