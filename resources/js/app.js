@@ -5,7 +5,7 @@ import {Template,$util} from '/node_modules/adarna/dist/adarna.js';
 window.util = {};
 window.ui   = {};
 
-let primaryModalElement = document.getElementById('primary_modal');
+const primaryModalElement = document.getElementById('primary_modal');
 
 window.ui.primaryModal = new Modal(primaryModalElement);
 
@@ -80,8 +80,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 
 
-window.util.showMsg = ($message) => {
-    alert($message);
+window.util.showMsg = ($message,$title) => {
+    
+    window.ui.primaryModal.hide();
+
+    window.ui.primaryModalTitle.innerHTML    = '';
+    window.ui.primaryModalBody.innerHTML     = '';
+    window.ui.primaryModalFooter.innerHTML   = '';
+
+    window.ui.primaryModalTitle.innerText    = $title ?? '';
+    window.ui.primaryModalBody.innerText     = $message ?? '';
+    
+    window.ui.primaryModal.show();
 }
 
 window.util.$get = async (url,data,headers) => {
@@ -332,3 +342,4 @@ window.util.navReload = function(){
         console.error('Nav helper element not found');
     }
 }
+
