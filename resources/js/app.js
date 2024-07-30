@@ -88,7 +88,8 @@ window.util.showMsg = ($message,$title) => {
     window.ui.primaryModalBody.innerHTML     = '';
     window.ui.primaryModalFooter.innerHTML   = '';
 
-    window.ui.primaryModalTitle.innerText    = $title ?? '';
+    window.ui.primaryModalTitle.innerText    = $title ?? 'Message';
+
     window.ui.primaryModalBody.innerText     = $message ?? '';
     
     window.ui.primaryModal.show();
