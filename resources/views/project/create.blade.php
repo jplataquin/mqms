@@ -3,7 +3,7 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs">
+    <div class="breadcrumbs">
         <ul>
             <li>
                 <a href="#">
@@ -69,10 +69,11 @@
             name: projectName.value,
             status: status.value
         }).then(reply=>{
-
+            
+            window.util.unblockUI();
+            
             if(reply.status <= 0 ){
-                window.util.unblockUI();
-                alert(reply.message);
+                window.util.showMsg(reply.message);
                 return false;
             };
 
