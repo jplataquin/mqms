@@ -79,7 +79,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 })();
 
-window.util.showMsgx = (reply) => {
+window.util.showMsg = (reply) => {
     
     let message = '';
     let title   = '';
@@ -154,21 +154,6 @@ window.util.showMsgx = (reply) => {
     }
 
     window.util.alert(title,message);
-}
-
-window.util.showMsg = ($message,$title) => {
-    
-    window.ui.primaryModal.hide();
-
-    window.ui.primaryModalTitle.innerHTML    = '';
-    window.ui.primaryModalBody.innerHTML     = '';
-    window.ui.primaryModalFooter.innerHTML   = '';
-
-    window.ui.primaryModalTitle.innerText    = $title ?? 'Message';
-
-    window.ui.primaryModalBody.innerText     = $message ?? '';
-    
-    window.ui.primaryModal.show();
 }
 
 
