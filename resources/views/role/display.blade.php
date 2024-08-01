@@ -79,6 +79,12 @@
     let list            = $q('#list').first();
     let showMoreBtn     = $q('#showMoreBtn').first(); 
 
+
+    function reinitalize(){
+        
+        $el.clear(list);
+    }
+    
     addCode.onclick = (e) => {
 
         let val = $q('.code-option[value="'+accessCode.value+'"]').first();
@@ -101,16 +107,16 @@
             access_code_id: val
         }).then(reply=>{
 
+            window.util.unblockUI();
+
             if(reply.status <= 0 ){
-                window.util.unblockUI();
-                alert(reply.message);
+               
+                window.util.showMsg(reply);
                 return false;
             };
-            
-            $el.clear(list);
 
+            reinitalize();
             showData();
-            window.util.unblockUI();
 
         });
     }
@@ -136,15 +142,15 @@
             id: '{{$role->id}}'
         }).then(reply=>{
 
+            window.util.unblockUI();
+                
             if(reply.status <= 0 ){
-                window.util.unblockUI();
-                alert(reply.message);
+                window.util.showMsg(reply);
                 return false;
             };
 
-            window.util.unblockUI();
 
-            document.location.href = '/role/'+reply.data.id;
+            window.util.showMsg('/role/'+reply.data.id);
 
 
         });
@@ -165,13 +171,15 @@
             id: '{{$role->id}}'
         }).then(reply=>{
 
+            window.util.unblockUI();
+
             if(reply.status <= 0 ){
-                window.util.unblockUI();
-                alert(reply.message);
+                
+                window.util.showMsg(reply);
                 return false;
             };
 
-            document.location.href = '/roles';
+            window.util.showMsg('/roles');
 
         });
 
@@ -180,7 +188,7 @@
     cancelBtn.onclick = (e) => {
         
         e.preventDefault();
-        document.location.href = '/roles';
+        window.util.showMsg('/roles');
 
     }
 
@@ -214,17 +222,17 @@
                             access_code_id: item.access_code_id
                         }).then(reply=>{
 
-                            if(reply.status <= 0 ){
-                                window.util.unblockUI();
-                                
-                                let message = reply.message;  
+                            
+                            window.util.unblockUI();
 
-                                alert(message);
+                            if(reply.status <= 0 ){
+                                
+                                window.util.showMsg(reply);  
+
                                 return false;
                             };
 
                             $el.remove(row);
-                            window.util.unblockUI();
 
                         });
                     };
@@ -245,18 +253,15 @@
 
         window.util.$get('/api/role_access_code/{{$role->id}}/list',{}).then(reply=>{
 
-            if(reply.status <= 0 ){
-                window.util.unblockUI();
+            window.util.unblockUI();
                 
-                let message = reply.message;
 
+            if(reply.status <= 0 ){
                 
-                alert(message);
+                window.util.showMsg(reply);
                 return false;
             };
 
-
-            window.util.unblockUI();
 
             if(reply.data.length){
                 renderRows(reply.data); 
@@ -267,6 +272,7 @@
         });
     }
 
+    reinitalize();
     showData();
 
 </script>

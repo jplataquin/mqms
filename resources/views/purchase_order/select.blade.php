@@ -166,19 +166,17 @@
             limit: 10
         }).then(reply=>{
 
-            if(reply.status <= 0 ){
-                window.util.unblockUI();
+            window.util.unblockUI();
                 
-                let message = reply.message;
 
+            if(reply.status <= 0 ){
                 
-                alert(message);
+                window.util.showMsg(reply);
                 return false;
             };
 
             page++;
 
-            window.util.unblockUI();
 
             if(reply.data.length){
                 renderRows(reply.data); 
@@ -239,11 +237,12 @@
             orderBy:'name',
             order:'ASC'
         }).then(reply=>{
+            
+            window.util.unblockUI();
 
-            if(!reply.status){
+            if(reply.status <= 0){
 
-                window.util.unblockUI()
-                alert(reply.message);
+                window.util.showMsg(reply);
                 return false;
             }
 
@@ -259,7 +258,6 @@
 
             });
 
-            window.util.unblockUI();
         });
     }
 
@@ -276,11 +274,12 @@
             orderBy:'name',
             order:'ASC'
         }).then(reply=>{
+            
+            window.util.unblockUI();
 
-            if(!reply.status){
+            if(reply.status <= 0){
 
-                window.util.unblockUI()
-                alert(reply.message);
+                window.util.showMsg(reply);
                 return false;
             }
 
@@ -296,11 +295,10 @@
 
             });
 
-            window.util.unblockUI();
         });
     }
 
-
+    reinitalize();
     showData();
 </script>
 </div>

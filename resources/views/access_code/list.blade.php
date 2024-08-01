@@ -97,7 +97,7 @@
             });
 
             row.onclick = ()=>{
-                document.location.href = '/access_code/'+item.id;
+                window.util.navTo('/access_code/'+item.id);
             };
 
             $el.append(row).to(list);
@@ -118,13 +118,12 @@
             limit: 10
         }).then(reply=>{
 
+            window.util.unblockUI();
+             
             if(reply.status <= 0 ){
-                window.util.unblockUI();
                 
-                let message = reply.message;
+                window.util.showMsg(reply);
 
-                
-                alert(message);
                 return false;
             };
 
@@ -179,7 +178,7 @@
     }
 
     createBtn.onclick = ()=>{
-        document.location.href = '/access_code/create';
+        window.util.navTo('/access_code/create');
     }
 
     reinitalize();

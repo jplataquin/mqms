@@ -66,16 +66,16 @@
             code: access_code.value,
             description: description.value
         }).then(reply=>{
-
+            
+            window.util.unblockUI();
+                
             if(reply.status <= 0 ){
-                window.util.unblockUI();
-                alert(reply.message);
+                window.util.showMsg(reply);
                 return false;
             };
 
-            window.util.unblockUI();
 
-            document.location.href = '/access_code/'+reply.data.id;
+            window.util.navTo('/access_code/'+reply.data.id);
 
 
         });

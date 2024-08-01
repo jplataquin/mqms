@@ -177,7 +177,7 @@
             
 
             row.onclick = ()=>{
-                document.location.href = '/material_quantity_request/'+item.id;
+                window.util.navTo('/material_quantity_request/'+item.id);
             };
 
             $el.append(row).to(list);
@@ -201,19 +201,16 @@
             limit: 10
         }).then(reply=>{
 
-            if(reply.status <= 0 ){
-                window.util.unblockUI();
+            window.util.unblockUI();
                 
-                let message = reply.message;
 
+            if(reply.status <= 0 ){
                 
-                alert(message);
+                window.util.showMsg(reply);
                 return false;
             };
 
             page++;
-
-            window.util.unblockUI();
 
             if(reply.data.length){
                 renderRows(reply.data); 
@@ -278,10 +275,11 @@
             order:'ASC'
         }).then(reply=>{
 
-            if(!reply.status){
+            window.util.unblockUI();
 
-                window.util.unblockUI()
-                alert(reply.message);
+            if(reply.status <= 0){
+
+                window.util.showMsg(reply);
                 return false;
             }
 
@@ -297,7 +295,6 @@
 
             });
 
-            window.util.unblockUI();
         });
     }
 
@@ -315,10 +312,12 @@
             order:'ASC'
         }).then(reply=>{
 
-            if(!reply.status){
+            
+            window.util.unblockUI();
 
-                window.util.unblockUI()
-                alert(reply.message);
+            if(reply.status <= 0){
+
+                window.util.showMsg(reply);
                 return false;
             }
 
@@ -334,11 +333,10 @@
 
             });
 
-            window.util.unblockUI();
         });
     }
 
-
+    reinitalize();
     showData();
 </script>
 </div>

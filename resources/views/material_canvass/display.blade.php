@@ -225,9 +225,9 @@
 
             window.util.unblockUI();
 
-            if(!reply.status){
+            if(reply.status <= 0){
 
-                window.util.showMsg(reply.message);
+                window.util.showMsg(reply);
                 return false;
             }
 

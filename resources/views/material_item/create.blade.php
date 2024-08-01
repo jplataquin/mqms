@@ -3,7 +3,7 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs">
+    <div class="breadcrumbs">
         <ul>
             <li>
                 <a href="#">
@@ -96,14 +96,13 @@
             material_group_id: materialGroup.value,
             brand: brandName.value
         }).then(reply=>{
+            
+            window.util.unblockUI();
 
             if(reply.status <= 0 ){
-                window.util.unblockUI();
-                alert(reply.message);
+                window.util.showMsg(reply);
                 return false;
             };
-
-            window.util.unblockUI();
       
              window.util.navTo('/master_data/material/item/'+reply.data.id);
 

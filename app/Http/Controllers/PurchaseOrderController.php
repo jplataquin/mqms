@@ -393,7 +393,7 @@ class PurchaseOrderController extends Controller
 
         if ($itemsValidation->fails()) {
             return response()->json([
-                'status'    => 0,
+                'status'    => -2,
                 'message'   => 'Failed Validation',
                 'data'      => $itemsValidation->messages()
             ]);
@@ -414,7 +414,7 @@ class PurchaseOrderController extends Controller
 
         if ($extrasValidation->fails()) {
             return response()->json([
-                'status'    => 0,
+                'status'    => -2,
                 'message'   => 'Failed Validation',
                 'data'      => $extrasValidation->messages()
             ]);
@@ -449,7 +449,7 @@ class PurchaseOrderController extends Controller
 
         if ($validation->fails()) {
             return response()->json([
-                'status'    => 0,
+                'status'    => -2,
                 'message'   => 'Failed Validation',
                 'data'      => $validation->messages()
             ]);

@@ -94,13 +94,12 @@
             limit: 10
         }).then(reply=>{
 
-            if(reply.status <= 0 ){
-                window.util.unblockUI();
-                
-                let message = reply.message;
+            
+            window.util.unblockUI();
 
+            if(reply.status <= 0 ){
                 
-                alert(message);
+                window.util.showMsg(reply);
                 return false;
             };
 

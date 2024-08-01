@@ -49,13 +49,13 @@
             description: description.value
         }).then(reply=>{
 
+            
+            window.util.unblockUI();
+
             if(reply.status <= 0 ){
-                window.util.unblockUI();
-                alert(reply.message);
+                window.util.showMsg(reply);
                 return false;
             };
-
-            window.util.unblockUI();
 
             window.util.navTo('/role/'+reply.data.id);
 
@@ -65,7 +65,6 @@
 
     cancelBtn.onclick = (e) => {
         window.util.navTo('/roles');
-
     }
 
 </script>

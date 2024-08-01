@@ -149,7 +149,7 @@ class ContractItemController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'status'    => 0,
+                'status'    => -2,
                 'message'   => 'Failed Validation',
                 'data'      => $validator->messages()
             ]);
@@ -263,7 +263,7 @@ class ContractItemController extends Controller
         if ($validator->fails()) {
             
             return response()->json([
-                'status'    => 0,
+                'status'    => -2,
                 'message'   => 'Failed Validation',
                 'data'      => $validator->messages()
             ]);
@@ -369,7 +369,7 @@ class ContractItemController extends Controller
          if($validator->fails()){
              
              return response()->json([
-                 'status'    => 0,
+                 'status'    => -2,
                  'message'   => 'Failed Validation',
                  'data'      => $validator->messages()
              ]);

@@ -42,7 +42,7 @@ class MaterialQuantityController extends Controller
         if($validator->fails()){
             
             return response()->json([
-                'status'    => 0,
+                'status'    => -2,
                 'message'   => 'Failed Validation',
                 'data'      => $validator->messages()
             ]);
@@ -141,7 +141,7 @@ class MaterialQuantityController extends Controller
         if($validator->fails()){
             
             return response()->json([
-                'status'    => 0,
+                'status'    => -2,
                 'message'   => 'Failed Validation',
                 'data'      => $validator->messages()
             ]);

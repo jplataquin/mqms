@@ -3,7 +3,24 @@
 @section('content')
 <div id="content">
     <div class="container">
-        <h5>Purchase Order » Create</h5>
+    <div class="breadcrumbs">
+        <ul>
+            <li>
+                <a href="#">
+                    <span>
+                       Purchase Order
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <span>
+                        Create
+                    </span>		
+                </a>
+            </li>
+        </ul>
+    </div>
         <hr>
         <table class="table">
             <tbody>
@@ -415,9 +432,10 @@
                 component_id                    : '{{$component->id}}'
             }).then(reply=>{
 
-                if(!reply.status){
-                    window.util.unblockUI();
-                    window.util.showMsg(reply.message);
+                window.util.unblockUI();
+
+                if(reply.status <= 0){
+                    window.util.showMsg(reply);
                     return false;
                 }
 
@@ -455,7 +473,7 @@
             }).then(reply=>{
 
                 if(reply.status <= 0){
-                    window.util.showMsg(reply.message);
+                    window.util.showMsg(reply);
                     return false;
                 }
 

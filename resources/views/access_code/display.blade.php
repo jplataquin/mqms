@@ -80,13 +80,14 @@
             id: '{{$id}}'
         }).then(reply=>{
 
+            window.util.unblockUI();
+
             if(reply.status <= 0 ){
-                window.util.unblockUI();
-                alert(reply.message);
+                window.util.showMsg(reply);
                 return false;
             };
 
-            document.location.href = '/access_codes';
+            window.util.navTo('/access_codes');
 
         });
 
@@ -109,16 +110,16 @@
             description: description.value,
             id: '{{$id}}'
         }).then(reply=>{
+            
+            window.util.unblockUI();
 
             if(reply.status <= 0 ){
-                window.util.unblockUI();
-                alert(reply.message);
+                window.util.showMsg(reply);
                 return false;
             };
 
-            window.util.unblockUI();
-
-            document.location.href = '/access_code/'+reply.data.id;
+            
+            window.util.navReload();
 
 
         });

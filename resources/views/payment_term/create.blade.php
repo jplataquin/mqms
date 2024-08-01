@@ -66,22 +66,21 @@
             text: text.value
         }).then(reply=>{
 
+            window.util.unblockUI();
+
             if(reply.status <= 0 ){
-                window.util.unblockUI();
-                window.util.showMsg(reply.message);
+                
+                window.util.showMsg(reply);
                 return false;
             };
 
-            window.util.unblockUI();
-      
-            document.location.href = '/master_data/payment_term/'+reply.data.id;
+            window.util.navTo('/master_data/payment_term/'+reply.data.id);
 
-        
         });
     }
 
     cancelBtn.onclick = (e) => {
-        document.location.href = '/master_data/payment_terms';
+        window.util.navTo('/master_data/payment_terms');
 
     }
 

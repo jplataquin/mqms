@@ -181,21 +181,21 @@
             items:JSON.stringify(items)
         }).then(reply=>{
 
+            
+            window.util.unblockUI();
+
             if(reply.status <= 0 ){
-                window.util.unblockUI();
-                alert(reply.message);
+                window.util.showMsg(reply);
                 return false;
             };
 
-            window.util.unblockUI();
-
-            document.location.href = '/material_quantity_request/'+reply.data.id;
+           window.util.navTo('/material_quantity_request/'+reply.data.id);
 
         });
     }
 
     cancelBtn.onclick = ()=>{
-        document.location.href = '/material_quantity_requests';
+        window.util.navTo('/material_quantity_requests');
     }
     
     setIndexNumber();

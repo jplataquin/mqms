@@ -319,7 +319,7 @@
             window.util.unblockUI();
 
             if(reply.status <= 0){
-                window.util.showMsg(reply.message);
+                window.util.showMsg(reply);
                 return false;
             }
 
@@ -351,7 +351,7 @@
             window.util.unblockUI();
             
             if(reply.status <= 0){
-                window.util.showMsg(reply.message);
+                window.util.showMsg(reply);
                 return false;
             }
 
@@ -380,9 +380,9 @@
             id:id
         }).then(reply=>{
 
-            if(!reply.status){
+            if(reply.status <= 0){
 
-                alert(reply.message);
+                window.util.showMsg(reply);
                 return false;
             }
 
@@ -418,7 +418,7 @@
                 window.util.unblockUI();
 
                 if(reply.status <= 0){
-                    window.util.showMsg(reply.message);
+                    window.util.showMsg(reply);
                     return false;
                 }
 

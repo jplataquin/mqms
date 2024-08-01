@@ -3,7 +3,31 @@
 @section('content')
 <div id="content">
 <div class="container">
-<h5>Master Data » Unit » Create</h5>
+<div class="breadcrumbs">
+        <ul>
+            <li>
+                <a href="#">
+                    <span>
+                       Master Data
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span>
+                       Unit
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <span>
+                        Create
+                    </span>		
+                </a>
+            </li>
+        </ul>
+    </div>
 <hr>
 
     <div class="row">
@@ -42,13 +66,14 @@
             text: text.value
         }).then(reply=>{
 
+            
+            window.util.unblockUI();
+
             if(reply.status <= 0 ){
-                window.util.unblockUI();
-                window.util.showMsg(reply.message);
+                window.util.showMsg(reply);
                 return false;
             };
 
-            window.util.unblockUI();
       
             window.util.navTo('/master_data/unit/'+reply.data.id);
 

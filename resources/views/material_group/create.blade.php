@@ -66,24 +66,16 @@
             name: materialGroup.value
         }).then(reply=>{
 
+            window.util.unblockUI();
+                
             if(reply.status <= 0 ){
-                window.util.unblockUI();
                 
-                let message = reply.message;
-
-                for(let key in reply.data){
-                    let value = reply.data[key];
-
-                    console.log(key,value);
-                }
-                
-                alert(message);
+                window.util.showMsg(reply);
                 return false;
             };
 
-            window.util.unblockUI();
       
-             window.util.navTo('/master_data/material/group/'+reply.data.id);
+            window.util.navTo('/master_data/material/group/'+reply.data.id);
 
         
         });

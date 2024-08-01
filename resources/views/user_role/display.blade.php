@@ -71,6 +71,11 @@
     let addRole         = $q('#addRole').first();
     let list            = $q('#list').first();
 
+    function reinitialize(){
+        
+        $el.clear(list);
+    }
+
     addRole.onclick = (e) => {
 
         let val = $q('.role-option[value="'+role.value+'"]').first();
@@ -93,16 +98,16 @@
             role_id: val
         }).then(reply=>{
 
+            
+            window.util.unblockUI();
+
             if(reply.status <= 0 ){
-                window.util.unblockUI();
-                alert(reply.message);
+                window.util.showMsg(reply);
                 return false;
             };
             
-            $el.clear(list);
-
+            reinitialize();
             showData();
-            window.util.unblockUI();
 
         });
     }
@@ -128,7 +133,7 @@
                     
                     t.a({class:'me-3',href:'#'},'[view]').onclick = (e)=>{
                         e.preventDefault();
-                        window.location.href = '/role/'+item.id;
+                        window.util.navTo('/role/'+item.id);
                     };
 
                     
@@ -147,17 +152,15 @@
                             role_id: item.id
                         }).then(reply=>{
 
-                            if(reply.status <= 0 ){
-                                window.util.unblockUI();
+                            window.util.unblockUI();
                                 
-                                let message = reply.message;  
-
-                                alert(message);
+                            if(reply.status <= 0 ){
+                                
+                                window.util.showMsg(reply);
                                 return false;
                             };
 
                             $el.remove(row);
-                            window.util.unblockUI();
 
                         });
                     };
@@ -182,10 +185,7 @@
 
             if(reply.status <= 0 ){
                 
-                let message = reply.message;
-
-                
-                window.util.showMsg(message);
+                window.util.showMsg(reply);
                 return false;
             };
 
@@ -198,6 +198,7 @@
         });
     }
 
+    reinitialize();
     showData();
 
 </script>

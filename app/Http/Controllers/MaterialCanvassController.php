@@ -277,7 +277,7 @@ class MaterialCanvassController extends Controller
 
         if ($validator1->fails()) {
             return response()->json([
-                'status'    => 0,
+                'status'    => -2,
                 'message'   => 'Failed Validation',
                 'data'      => $validator1->messages()
             ]);
@@ -328,7 +328,7 @@ class MaterialCanvassController extends Controller
 
         if ($validator2->fails()) {
             return response()->json([
-                'status'    => 0,
+                'status'    => -2,
                 'message'   => 'Failed Validation',
                 'data'      => $validator2->messages()
             ]);

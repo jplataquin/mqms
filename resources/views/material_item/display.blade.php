@@ -119,13 +119,15 @@
             id: '{{$materialItem->id}}'
         }).then(reply=>{
 
+            
+            window.util.unblockUI();
+
             if(reply.status <= 0){
-                window.util.unblockUI();
-                alert(reply.message);
+                window.util.showMsg(reply);
                 return false;
             }
 
-            document.location.reload(true);
+            window.util.navReload();
         });
     }
 

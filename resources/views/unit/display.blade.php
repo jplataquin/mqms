@@ -86,13 +86,15 @@
             id      : '{{$unit->id}}'
         }).then(reply=>{
 
+            
+            window.util.unblockUI();
+
             if(reply.status <= 0){
-                window.util.unblockUI();
-                window.util.showMsg(reply.message);
+                window.util.showMsg(reply);
                 return false;
             }
 
-            document.location.reload(true);
+            window.util.navReload();
         });
     }
 
@@ -120,7 +122,7 @@
             window.util.unblockUI();
             
             if(reply.status <= 0){
-                window.util.showMsg(reply.message);
+                window.util.showMsg(reply);
                 return false;
             }
 

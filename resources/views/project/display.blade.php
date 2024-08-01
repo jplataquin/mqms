@@ -162,13 +162,15 @@
             id: '{{$project->id}}'
         }).then(reply=>{
 
+            window.util.unblockUI();
+
             if(reply.status <= 0){
-                window.util.unblockUI();
-                window.util.showMsg(reply.message);
+                
+                window.util.showMsg(reply);
                 return false;
             }
 
-            document.location.reload(true);
+            window.util.navReload();
         });
     }
 
@@ -190,7 +192,7 @@
 
             if(reply.status <= 0){
 
-                window.util.showMsg(reply.message);
+                window.util.showMsg(reply);
                 return false;
             }
 
@@ -217,7 +219,7 @@
             window.util.unblockUI();
             
             if(reply.status <= 0){
-                window.util.showMsg(reply.message);
+                window.util.showMsg(reply);
                 return false;
             }
 
@@ -271,19 +273,15 @@
             limit: 10
         }).then(reply=>{
 
+            window.util.unblockUI();
+            
             if(reply.status <= 0 ){
-                window.util.unblockUI();
                 
-                let message = reply.message;
-
-                
-                alert(message);
+                window.util.showMsg(reply);
                 return false;
             };
 
             page++;
-
-            window.util.unblockUI();
 
             if(reply.data.length){
                 renderRows(reply.data); 

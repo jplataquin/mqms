@@ -135,20 +135,17 @@
             order_by: orderBy,
             limit: 10
         }).then(reply=>{
+            
+            window.util.unblockUI();
+                
 
             if(reply.status <= 0 ){
-                window.util.unblockUI();
                 
-                let message = reply.message;
-
-                
-                alert(message);
+                window.util.showMsg(reply);
                 return false;
             };
 
             page++;
-
-            window.util.unblockUI();
 
             if(reply.data.length){
                 renderRows(reply.data); 
@@ -203,6 +200,7 @@
         }
     }
     
+    reinitalize();
     showData();
 </script>
 </div>

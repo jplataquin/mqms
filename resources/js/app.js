@@ -5,6 +5,7 @@ import {Template,$util} from '/node_modules/adarna/dist/adarna.js';
 window.util = {};
 window.ui   = {};
 
+const t                   = new Template();
 const primaryModalElement = document.getElementById('primary_modal');
 
 window.ui.primaryModal = new Modal(primaryModalElement);
@@ -78,7 +79,82 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 })();
 
+window.util.showMsgx = (reply) => {
+    
+    let message = '';
+    let title   = '';
 
+    switch (reply.status){
+
+        //Soft Error
+        case 0:
+
+            message = reply.message;
+            title   = 'Error';
+
+            break;
+        
+        //Unauthenticated
+        case -1:
+
+            message = 'Please sign in';
+            title   = 'Authentication Required';
+            
+            break;
+
+        //Input validation error
+        case -2:
+
+            title = 'Validation Error';
+
+            messsage = t.div();
+
+            for(let name in reply.data){
+                let msgs = reply.data[name];
+
+                let error = t.div(()=>{
+                    t.label({style:{fontWeight:'bold'}},name);
+                    t.ul(()=>{
+                        
+                        msgs.map(msg =>{
+                            t.li(msg);
+                        });
+
+                    });
+                });
+
+                messsage.appendChild(error);
+            }
+
+            break;
+
+        //Unkown Error
+        case -3:
+
+            message = reply.message ?? 'Unknown';
+            title   = 'Unknown Error';
+
+            break;
+        
+        //Resource not found
+        case -4:
+
+            message = 'Resource not found';
+            title   = 'Error';
+
+            break;
+        
+        //Hard Error
+        case -5:
+
+            message = reply.message ?? 'Something went wrong';
+            title   = 'Server Error';
+            break;
+
+    }
+
+    window.util.alert(title,message);
+}
 
 window.util.showMsg = ($message,$title) => {
     
@@ -96,6 +172,34 @@ window.util.showMsg = ($message,$title) => {
 }
 
 
+window.util.alert = ($title,$message,$footer) => {
+    window.ui.primaryModal.hide();
+
+    window.ui.primaryModalTitle.innerHTML    = '';
+    window.ui.primaryModalBody.innerHTML     = '';
+    window.ui.primaryModalFooter.innerHTML   = '';
+
+    if($title instanceof Element || $title instanceof HTMLElement){
+        window.ui.primaryModalTitle.appendChild($title);
+    }else{
+        window.ui.primaryModalTitle.innerText    = $title ?? 'Message';
+    }
+    
+    if($message instanceof Element || $message instanceof HTMLElement){
+        window.ui.primaryModalTitle.appendChild($message);
+    }else{
+        window.ui.primaryModalBody.innerText     = $message ?? '';
+    }
+   
+    if($footer instanceof Element || $footer instanceof HTMLElement){
+        window.ui.primaryModalTitle.appendChild($footer);
+    }else{
+        window.ui.primaryModalBody.innerText     = $footer ?? '';
+    }
+
+    window.ui.primaryModal.show();
+}
+
 window.util.$get = async (url,data,headers) => {
 
     headers                 = headers ?? {};
@@ -112,6 +216,7 @@ window.util.$get = async (url,data,headers) => {
         
         status = response.status;
 
+        //Access Denied
         if(response.status == 401){
             return {
                     status:-1,
@@ -120,11 +225,20 @@ window.util.$get = async (url,data,headers) => {
             }
         };
 
+        if(response.status == 404){
+            return {
+                    status:-4,
+                    message:'Resource not found',
+                    data:{}
+            }
+        };
+
+        //Server error
         if(response.status == 500){
 
             console.error(response);
             return {
-                    status:0,
+                    status:-5,
                     message:'Something went wrong',
                     data:{}
             }
@@ -134,7 +248,7 @@ window.util.$get = async (url,data,headers) => {
     }).catch(e=>{
 
         return {
-            status:0,
+            status:-3,
             message:e.message,
             data:{
                 httpStatus: status

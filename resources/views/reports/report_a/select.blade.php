@@ -102,11 +102,12 @@
             orderBy:'name',
             order:'ASC'
         }).then(reply=>{
+            
+            window.util.unblockUI();
 
-            if(!reply.status){
+            if(reply.status <= 0){
 
-                window.util.unblockUI()
-                alert(reply.message);
+                window.util.showMsg(reply);
                 return false;
             }
 
@@ -122,11 +123,10 @@
 
             });
 
-            window.util.unblockUI();
         });
-        }
+    }
 
-        sectionSelect.onchange = (e)=>{
+    sectionSelect.onchange = (e)=>{
 
         e.preventDefault();
 
@@ -140,10 +140,11 @@
             order:'ASC'
         }).then(reply=>{
 
-            if(!reply.status){
+            window.util.unblockUI();
 
-                window.util.unblockUI()
-                alert(reply.message);
+            if(reply.status <= 0){
+
+                window.util.showMsg(reply);
                 return false;
             }
 
@@ -159,7 +160,6 @@
 
             });
 
-            window.util.unblockUI();
         });
     }
 

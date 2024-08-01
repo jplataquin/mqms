@@ -73,21 +73,18 @@
             window.util.unblockUI();
             
             if(reply.status <= 0 ){
-                window.util.showMsg(reply.message);
+                window.util.showMsg(reply);
                 return false;
             };
 
-            window.util.unblockUI();
-      
-            document.location.href = '/project/'+reply.data.id;
+            window.util.navTo('/project/'+reply.data.id);
 
         
         });
     }
 
     cancelBtn.onclick = (e) => {
-        document.location.href = '/projects';
-
+        window.util.navTo('/projects');
     }
 
 </script>

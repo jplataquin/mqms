@@ -93,10 +93,12 @@
             order:'ASC'
         }).then(reply=>{
 
-            if(!reply.status){
+            window.util.unblockUI();
+                
 
-                window.util.unblockUI()
-                alert(reply.message);
+            if(reply.status <= 0){
+
+                window.util.showMsg(reply);
                 return false;
             }
 
@@ -112,7 +114,6 @@
 
             });
 
-            window.util.unblockUI();
         });
     }
 
@@ -131,10 +132,11 @@
             order:'ASC'
         }).then(reply=>{
 
-            if(!reply.status){
+            window.util.unblockUI();
 
-                window.util.unblockUI()
-                alert(reply.message);
+            if(reply.status <= 0){
+
+                window.util.showMsg(reply);
                 return false;
             }
 
@@ -150,7 +152,6 @@
 
             });
 
-            window.util.unblockUI();
         });
     }
 

@@ -182,19 +182,16 @@
             limit: 10
         }).then(reply=>{
 
-            if(reply.status <= 0 ){
-                window.util.unblockUI();
-                
-                let message = reply.message;
+            
+            window.util.unblockUI();
 
+            if(reply.status <= 0 ){
                 
-                alert(message);
+                window.util.showMsg(reply);
                 return false;
             };
 
             page++;
-
-            window.util.unblockUI();
 
             if(reply.data.length){
                 renderRows(reply.data); 
@@ -258,10 +255,11 @@
             order:'ASC'
         }).then(reply=>{
 
-            if(!reply.status){
+            window.util.unblockUI();
+                
+            if(reply.status <= 0){
 
-                window.util.unblockUI()
-                alert(reply.message);
+                window.util.showMsg(reply);
                 return false;
             }
 
@@ -277,11 +275,10 @@
 
             });
 
-            window.util.unblockUI();
         });
-        }
+    }
 
-        sectionSelect.onchange = (e)=>{
+    sectionSelect.onchange = (e)=>{
 
         e.preventDefault();
 
@@ -295,10 +292,12 @@
             order:'ASC'
         }).then(reply=>{
 
-            if(!reply.status){
+            
+            window.util.unblockUI();
 
-                window.util.unblockUI()
-                alert(reply.message);
+            if(reply.status <= 0){
+
+                window.util.showMsg(reply);
                 return false;
             }
 
@@ -314,7 +313,6 @@
 
             });
 
-            window.util.unblockUI();
         });
     }
 
@@ -322,6 +320,7 @@
         window.util.navTo('/home');
     }
 
+    reinitalize();
     showData();
 </script>
 </div>

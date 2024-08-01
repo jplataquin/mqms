@@ -221,11 +221,11 @@
 
                 if(reply.status <= 0){
 
-                    window.util.showMsg(reply.message);
+                    window.util.showMsg(reply);
                     return false;
                 }
 
-                window.location.href = "/review/purchase_orders";
+                window.util.showMsg('/review/purchase_orders');
             });
         }
 
@@ -241,7 +241,7 @@
 
                 if(reply.status <= 0){
 
-                    window.util.showMsg(reply.message);
+                    window.util.showMsg(reply);
                     return false;
                 }
 
@@ -273,7 +273,7 @@
 
                 if(reply.status <= 0){
 
-                    window.util.showMsg(reply.message);
+                    window.util.showMsg(reply);
                     return false;
                 }
 
@@ -299,7 +299,7 @@
 
                 if(reply.status <= 0){
 
-                    window.util.showMsg(reply.message);
+                    window.util.showMsg(reply);
                     return false;
                 }
 

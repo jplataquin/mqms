@@ -248,16 +248,15 @@
                 items:JSON.stringify(items),
                 delete_items: JSON.stringify(deleteItems)
             }).then(reply=>{
+                
+                window.util.unblockUI();
 
                 if(reply.status <= 0 ){
-                    window.util.unblockUI();
-                    alert(reply.message);
+                    window.util.showMsg(reply);
                     return false;
                 };
 
-                window.util.unblockUI();
-
-                document.location.href = '/material_quantity_request/'+reply.data.id;
+                window.util.navTo('/material_quantity_request/'+reply.data.id);
 
             });
         }

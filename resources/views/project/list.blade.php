@@ -93,7 +93,6 @@
         data.map(item=>{
 
             let row = t.div({class:'item-container fade-in'},()=>{
-              
                 t.div({class:'item-header'},item.name);
                 t.div({class:'item-body'});
             });
@@ -120,19 +119,16 @@
             limit: 10
         }).then(reply=>{
 
-            if(reply.status <= 0 ){
-                window.util.unblockUI();
+            window.util.unblockUI();
                 
-                let message = reply.message;
 
+            if(reply.status <= 0 ){
                 
-                alert(message);
+                window.util.showMsg(reply);
                 return false;
             };
 
             page++;
-
-            window.util.unblockUI();
 
             if(reply.data.length){
                 renderRows(reply.data); 
