@@ -107,7 +107,7 @@ window.util.showMsg = (reply) => {
 
             title = 'Validation Error';
 
-            messsage = t.div();
+            message = t.div();
 
             for(let name in reply.data){
                 let msgs = reply.data[name];
@@ -123,7 +123,7 @@ window.util.showMsg = (reply) => {
                     });
                 });
 
-                messsage.appendChild(error);
+                message.appendChild(error);
             }
 
             break;
