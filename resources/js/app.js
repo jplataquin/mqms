@@ -171,15 +171,15 @@ window.util.alert = ($title,$message,$footer) => {
     }
     
     if($message instanceof Element || $message instanceof HTMLElement){
-        window.ui.primaryModalTitle.appendChild($message);
+        window.ui.primaryModalBody.appendChild($message);
     }else{
         window.ui.primaryModalBody.innerText     = $message ?? '';
     }
    
     if($footer instanceof Element || $footer instanceof HTMLElement){
-        window.ui.primaryModalTitle.appendChild($footer);
+        window.ui.primaryModalFooter.appendChild($footer);
     }else{
-        window.ui.primaryModalBody.innerText     = $footer ?? '';
+        window.ui.primaryModalFooter.innerText     = $footer ?? '';
     }
 
     window.ui.primaryModal.show();
