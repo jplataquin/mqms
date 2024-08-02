@@ -90,7 +90,7 @@ window.util.showMsg = (reply) => {
         case 0:
 
             message = reply.message;
-            title   = 'Error';
+            title   = '🚩 Error';
 
             break;
         
@@ -98,14 +98,14 @@ window.util.showMsg = (reply) => {
         case -1:
 
             message = 'Please sign in';
-            title   = 'Authentication Required';
+            title   = '🔐 Authentication Required';
             
             break;
 
         //Input validation error
         case -2:
 
-            title = 'Validation Error';
+            title = '🚩 Validation Error';
 
             message = t.div();
 
@@ -132,7 +132,7 @@ window.util.showMsg = (reply) => {
         case -3:
 
             message = reply.message ?? 'Unknown';
-            title   = 'Unknown Error';
+            title   = '🚩 Unknown Error';
 
             break;
         
@@ -140,7 +140,7 @@ window.util.showMsg = (reply) => {
         case -4:
 
             message = 'Resource not found';
-            title   = 'Error';
+            title   = '🚩 Error';
 
             break;
         
@@ -148,7 +148,7 @@ window.util.showMsg = (reply) => {
         case -5:
 
             message = reply.message ?? 'Something went wrong';
-            title   = 'Server Error';
+            title   = '🚩 Server Error';
             break;
 
     }
