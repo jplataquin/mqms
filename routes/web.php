@@ -118,8 +118,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/report/a/select', [App\Http\Controllers\Reports\ReportAController::class, 'select']);
     Route::get('/report/a/generate/{project_id}/{section_id}/{component_id}', [App\Http\Controllers\Reports\ReportAController::class, 'generate']);
    
-    
+
     Route::get('/users', [App\Http\Controllers\UserController::class, 'list']);
+    Route::get('/users/create', [App\Http\Controllers\UserController::class, 'create']);
+    Route::get('/user/{id}', [App\Http\Controllers\UserController::class, 'display']);
     
 });
 

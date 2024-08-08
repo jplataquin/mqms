@@ -70,14 +70,15 @@
 <script type="module">
     import {$q,Template,$el} from '/adarna.js';
 
-    let list            = $q('#list').first();
-    let query           = $q('#query').first();
-    let searchBtn       = $q('#searchBtn').first();
-    let showMoreBtn     = $q('#showMoreBtn').first();
-    let sortSelect      = $q('#sortSelect').first();
-    let page            = 1;
-    let order           = 'DESC';
-    let orderBy         = 'id';
+    const list            = $q('#list').first();
+    const query           = $q('#query').first();
+    const searchBtn       = $q('#searchBtn').first();
+    const showMoreBtn     = $q('#showMoreBtn').first();
+    const createBtn       = $q('#createBtn').first();
+    const sortSelect      = $q('#sortSelect').first();
+    const page            = 1;
+    const order           = 'DESC';
+    const orderBy         = 'id';
     
     const t = new Template();
     
@@ -146,6 +147,10 @@
 
     showMoreBtn.onclick = ()=>{
         showData();
+    }
+
+    createBtn.onclick = ()=>{
+        window.util.navTo('/users/create');
     }
 
     sortSelect.onchange = ()=>{

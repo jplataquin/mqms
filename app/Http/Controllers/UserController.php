@@ -12,6 +12,14 @@ use App\Models\User;
 class UserController extends Controller
 {
     
+    public function create(){
+        return view('user/list');
+    }
+
+    public function _create(Request $request){
+
+    }
+
     public function list(){
 
         return view('user/list');
