@@ -86,7 +86,8 @@
         data.map(item=>{
 
             let row = t.div({class:'item-container fade-in'},()=>{
-                t.div({class:'item-header'},item.name+' ['+item.email+']' );
+                t.div({class:'item-header'},item.name);
+                t.div({class:'item-body'},item.email);
             });
 
             row.onclick = ()=>{
