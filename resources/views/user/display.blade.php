@@ -28,7 +28,7 @@
         <div class="col-lg-12">
             <div class="form-group">
                 <label>ID No.</label>
-                <input type="text" id="name" value="{{str_pad($user->id,6,0,STR_PAD_RIGHT)}}" class="form-control" disabled="true"/>
+                <input type="text" id="name" value="{{str_pad($user->id,6,0,STR_PAD_LEFT)}}" class="form-control" disabled="true"/>
             </div>
         </div>
     </div>
@@ -51,6 +51,18 @@
         </div>
     </div>
 
+    <div class="row mb-3">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label>Status</label>
+                <select class="form-control" id="status">
+                    @foreach($status_options as $val=>$text)
+                        <option value="{{$val}}" @if($user->status == $val) selected @endif>{{$text}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
 
     <div class="row mt-5">
         <div class="col-12 text-end">
