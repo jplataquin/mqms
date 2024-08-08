@@ -76,6 +76,8 @@ html, body {
 #bar{
   background-color: #282727;
   height:40px;
+  position:sticky;
+  top:0;
 }
 
 
