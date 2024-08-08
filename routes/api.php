@@ -38,7 +38,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
 
     Route::get('/user/list', [App\Http\Controllers\UserController::class, '_list']);
-    
+    Route::get('/user/create', [App\Http\Controllers\UserController::class, '_create']);
+    Route::get('/user/update', [App\Http\Controllers\UserController::class, '_update']);
 
     Route::get('/user_role/{id}/list', [App\Http\Controllers\UserRoleController::class, '_list']);
     
