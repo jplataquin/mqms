@@ -87,7 +87,7 @@
 
     editBtn.onclick = ()=>{
         
-        $('.editable').apply((el)=>{
+        $q('.editable').apply((el)=>{
 
             if(!editable_flag){
 
