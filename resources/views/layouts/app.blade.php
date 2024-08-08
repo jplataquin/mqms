@@ -211,6 +211,8 @@
                 });
 
                 el.parentElement.classList.add('selected-nav-item');
+
+                window.scrollTo(0,0);
             }
         });
     </script>
