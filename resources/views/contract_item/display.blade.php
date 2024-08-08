@@ -36,7 +36,7 @@
             </li>
         </ul>
     </div>
-<hr>
+    <hr>
 
     <table class="table">
         <tbody>
@@ -231,7 +231,7 @@
 
     </div>
    
-    
+</div>  
 <script type="module">
     import {$q,$el,Template} from '/adarna.js';
 
