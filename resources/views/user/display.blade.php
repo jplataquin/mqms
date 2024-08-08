@@ -27,6 +27,16 @@
 
         <div class="col-lg-12">
             <div class="form-group">
+                <label>ID No.</label>
+                <input type="text" id="name" value="{{str_pad($user->id,6,0,STR_PAD_RIGHT)}}" class="form-control" disabled="true"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+
+        <div class="col-lg-12">
+            <div class="form-group">
                 <label>Name</label>
                 <input type="text" id="name" value="{{$user->name}}" class="editable form-control" disabled="true"/>
             </div>
@@ -46,6 +56,7 @@
         <div class="col-12 text-end">
             <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
             <button class="btn btn-primary" id="editBtn">Edit</button>
+            <button class="btn btn-warning d-none" id="updateBtn">Update</button>
         </div>
     </div>
 
@@ -56,6 +67,7 @@
 
     const editBtn              = $q('#createBtn').first();
     const cancelBtn            = $q('#cancelBtn').first();
+    const updateBtn            = $q('#updateBtn').first();
     const name                 = $q('#name').first();
     const email                = $q('#email').first();
 

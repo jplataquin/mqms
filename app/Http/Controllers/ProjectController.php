@@ -45,7 +45,12 @@ class ProjectController extends Controller
             'name' => [
                 'required',
                 'max:255',
-                'unique:projects'
+                Rule::unique('projects')->where(
+                    function ($query) use ($name) {
+                        return $query
+                        ->where('name', $name)
+                        ->where('deleted_at',null);
+                }),
             ],
             'status' => [
                 'required',
@@ -98,7 +103,13 @@ class ProjectController extends Controller
             'name' => [
                 'required',
                 'max:255',
-                Rule::unique('projects')->ignore($id),
+                Rule::unique('projects')->where(
+                    function ($query) use ($name,$id) {
+                        return $query
+                        ->where('name', $name)
+                        ->where('id','!=',$id)
+                        ->where('deleted_at',null);
+                }),
             ],
             'status' => [
                 'required',

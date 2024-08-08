@@ -49,6 +49,13 @@ class User extends Authenticatable
         return $this->hasMany(UserRole::class);
     }
 
+    public function statusOptions(){
+        return [
+            'ACTV' => 'Active',
+            'DCTV' => 'Deactivated'
+        ]
+    }
+
     public static function defaultAttirbutes(){
         return (object) [
             'id' => '',
