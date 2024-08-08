@@ -55,7 +55,7 @@
         <div class="col-lg-12">
             <div class="form-group">
                 <label>Status</label>
-                <select class="form-control" id="status">
+                <select class="form-control editable" id="status" disabled="true">
                     @foreach($status_options as $val=>$text)
                         <option value="{{$val}}" @if($user->status == $val) selected @endif>{{$text}}</option>
                     @endforeach
