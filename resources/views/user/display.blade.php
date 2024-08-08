@@ -91,7 +91,7 @@
 
             if(!editable_flag){
 
-                el.setAttribute('disabled',false);
+                el.disabled = false;
             }
         });
 
