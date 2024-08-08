@@ -70,8 +70,11 @@ class UserController extends Controller
         $id = (int) $id;
         $user = User::findOrFail($id);
 
+        $status_options = $user->statusOptions();
+
         return view('user/display',[
-            'user' => $user
+            'user'              => $user,
+            'status_options'    => $status_options
         ]);
     }
 

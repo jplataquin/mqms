@@ -53,7 +53,7 @@ class User extends Authenticatable
         return [
             'ACTV' => 'Active',
             'DCTV' => 'Deactivated'
-        ]
+        ];
     }
 
     public static function defaultAttirbutes(){
