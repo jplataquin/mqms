@@ -98,6 +98,9 @@
         if(!editable_flag){
             editable_flag = true;
         }
+
+        editBtn.classList.add('d-none');
+        updateBtn.classList.remove('d-none');
     }
     
 
