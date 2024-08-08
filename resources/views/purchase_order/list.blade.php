@@ -339,7 +339,8 @@
     createBtn.onclick = ()=>{
        window.util.navTo('/purchase_order/create/select');
     }
-
+    
+    reinitalize();
     showData();
 </script>
 </div>

@@ -24,7 +24,7 @@
     <div class="wrapper d-flex h-100" id="app">
         
         <div id="side-bar-container">
-            <nav id="sidebar" hx-boost="true" class="w-100 h-100">
+            <nav id="sidebar" hx-boost="true" class="h-100">
                 <a class="d-none" hx-select="#content" hx-target="#main" href="/roles" id="#__nav_helper">test</a>
                 <ul class="list-unstyled">
                     <li class="menu-item">

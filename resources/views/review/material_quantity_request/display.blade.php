@@ -212,7 +212,6 @@
                     return false;
                 };
 
-
                 window.util.navTo('/review/material_quantity_requests/');
 
             });

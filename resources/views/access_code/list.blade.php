@@ -129,7 +129,6 @@
 
             page++;
 
-            window.util.unblockUI();
 
             if(reply.data.length){
                 renderRows(reply.data); 

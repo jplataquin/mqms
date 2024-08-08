@@ -134,6 +134,7 @@ html, body {
   padding-left:3px;
   padding-right:3px;
   overflow-y: scroll;
+  position:fixed;
 }
 
 .nav-item{
