@@ -138,8 +138,8 @@
             </nav>
         </div>
    
-        <main class="w-100 overflow-scroll">
-            <div class="mt-3 ms-3 me-3" id="main">
+        <main class="w-100">
+            <div class="mt-3 ms-3 me-3 overflow-scroll h-100" id="main">
                 @yield('content')
             </div>
         </main>
