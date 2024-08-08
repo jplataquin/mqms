@@ -70,7 +70,7 @@ class UserController extends Controller
         $id = (int) $id;
         $user = User::findOrFail($id);
 
-        return view('user/diplay',[
+        return view('user/display',[
             'user' => $user
         ]);
     }
