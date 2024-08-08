@@ -65,17 +65,41 @@
 <script type="module">
     import {$q} from '/adarna.js';
 
-    const editBtn              = $q('#createBtn').first();
     const cancelBtn            = $q('#cancelBtn').first();
     const updateBtn            = $q('#updateBtn').first();
+    const editBtn            = $q('#editBtn').first();  
     const name                 = $q('#name').first();
     const email                = $q('#email').first();
 
-    
+    let editable_flag = false;
+
     cancelBtn.onclick = (e) => {
+
+        if(editable_flag){
+
+            window.util.navReload();
+            return false;
+        }
+
         window.util.navTo('/users');
 
     }
+
+    editBtn.onclick = ()=>{
+        
+        $('.editable').apply((el)=>{
+
+            if(!editable_flag){
+
+                el.setAttribute('disabled',false);
+            }
+        });
+
+        if(!editable_flag){
+            editable_flag = true;
+        }
+    }
+    
 
 </script>
 </div>
