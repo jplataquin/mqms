@@ -82,9 +82,6 @@
                             <li class="nav-sub-item">
                                 <a href="/roles" hx-select="#content" hx-target="#main">Roles</a>
                             </li>
-                            <li class="nav-sub-item">
-                                <a href="/user_roles" hx-select="#content" hx-target="#main">User Roles</a>
-                            </li>
                         </ul>
                     </li>
                     <li class="menu-item">
