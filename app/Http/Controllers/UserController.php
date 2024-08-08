@@ -29,7 +29,8 @@ class UserController extends Controller
                ],
                'email' => [
                    'required',
-                   'email'
+                   'email',
+                   'unique:users,email'
                ]
            ]);
    
@@ -40,8 +41,38 @@ class UserController extends Controller
                    'data'      => $validator->messages()
                ]);
            }
-   
+           
 
+           $user_id = Auth::user()->id;
+
+           $user = new User();
+
+           $user->name              = $name;
+           $user->email             = $email;
+           $user->status            = 'ACTV';
+           $user->password          = 'RESET';
+           $user->created_by        = $user_id;
+           $user->reset_password    = 1;
+
+           $user->save();
+
+           return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data'      => [
+                'id' => $user->id
+            ]
+        ]);
+    }
+
+    public function display($id){
+
+        $id = (int) $id;
+        $user = User::findOrFail($id);
+
+        return view('user/diplay',[
+            'user' => $user
+        ]);
     }
 
     public function list(){
