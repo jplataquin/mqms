@@ -17,6 +17,30 @@ class UserController extends Controller
     }
 
     public function _create(Request $request){
+           //todo check role
+
+           $name    = $request->input('name') ?? '';
+           $email   = $request->input('email') ?? '';
+
+           $validator = Validator::make($request->all(),[
+               'name' => [
+                   'required',
+                   'max:255'
+               ],
+               'email' => [
+                   'required',
+                   'email'
+               ]
+           ]);
+   
+           if ($validator->fails()) {
+               return response()->json([
+                   'status'    => -2,
+                   'message'   => 'Failed Validation',
+                   'data'      => $validator->messages()
+               ]);
+           }
+   
 
     }
 
