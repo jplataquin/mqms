@@ -28,7 +28,7 @@
         <div class="col-lg-12">
             <div class="form-group">
                 <label>Name</label>
-                <input type="text" id="name" value="{{$user->name}}" class="editable form-control" disalbed="true"/>
+                <input type="text" id="name" value="{{$user->name}}" class="editable form-control" disabled="true"/>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
         <div class="col-lg-12">
             <div class="form-group">
                 <label>Email</label>
-                <input type="text" id="email" value="{{$user->email}}" class="editable form-control" disalbed="true"/>
+                <input type="text" id="email" value="{{$user->email}}" class="editable form-control" disabled="true"/>
             </div>
         </div>
     </div>
