@@ -76,9 +76,10 @@
     const showMoreBtn     = $q('#showMoreBtn').first();
     const createBtn       = $q('#createBtn').first();
     const sortSelect      = $q('#sortSelect').first();
-    const page            = 1;
-    const order           = 'DESC';
-    const orderBy         = 'id';
+    
+    let page            = 1;
+    let order           = 'DESC';
+    let orderBy         = 'id';
     
     const t = new Template();
     
