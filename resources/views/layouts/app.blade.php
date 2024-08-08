@@ -212,7 +212,10 @@
 
                 el.parentElement.classList.add('selected-nav-item');
 
-                window.scrollTo(0,0);
+                setTimeout(()=>{
+                    window.scrollTo(0,0);
+                },1000);
+                
             }
         });
     </script>
