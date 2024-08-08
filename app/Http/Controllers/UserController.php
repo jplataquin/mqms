@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     
     public function create(){
-        return view('user/list');
+        return view('user/create');
     }
 
     public function _create(Request $request){
