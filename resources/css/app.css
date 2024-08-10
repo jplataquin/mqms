@@ -290,6 +290,7 @@ html, body {
   border-top-left-radius: 25px;
   min-height: 20px;
   font-size:18px;
+  font-weight: bold;
 }
 
 .form-footer{
