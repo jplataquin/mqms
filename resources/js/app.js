@@ -446,5 +446,9 @@ window.util.navReload = function(){
     }else{
         console.error('Nav helper element not found');
     }
+
+    setTimeout(()=>{
+        window.scrollTo(0,0);
+    },1000);
 }
 
