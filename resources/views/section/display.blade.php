@@ -35,12 +35,6 @@
                         <th>Project</th>
                         <td>{{$project->name}}</td>
                     </tr>
-                    <tr>
-                        <th>Section ID</th>
-                        <td>
-                            {{str_pad($section->id,6,0,STR_PAD_LEFT)}}
-                        </td>
-                    </tr>
                 </tbody>
             </table>    
         </div>
@@ -52,11 +46,15 @@
         Section
     </div>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <div class="form-group">
                 <label>Name</label>
                 <input type="text" id="sectionName" value="{{$section->name}}" disabled="true" class="form-control"/>        
             </div>
+        </div>
+        <div class="col-lg-6">
+            <label>ID</label>
+            <input type="text" value="{{str_pad($section->id,6,0,STR_PAD_LEFT)}}" disabled="true" class="form-control"/>
         </div>
     </div>
 
