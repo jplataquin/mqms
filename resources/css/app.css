@@ -283,6 +283,20 @@ html, body {
   height: 1.5em;
 }
 
+/*** form ***/
+.form-header{
+  background-color: #d3dce6;
+  border-top-right-radius: 25px;
+  border-top-left-radius: 25px;
+  min-height: 20px;
+}
+
+.form-footer{
+  background-color: #d3dce6;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  min-height: 20px;
+}
 
 /*** folder-form ***/
 .folder-form-container{

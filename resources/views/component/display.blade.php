@@ -58,13 +58,9 @@
         </div>
     </div>
     
-    <div class="folder-form-container">
-        <div class="folder-form-tab">
+        <div class="form-header text-center">
             Component
         </div>
-        <div class="folder-form-body">
-        </div>
-    </div>
             <div class="row mb-3">
                 <div class="col-lg-6">
                     <div class="form-group">
@@ -128,7 +124,7 @@
                 </div>
             </div>
 
-
+        <div class="form-footer"></div>
     <hr>
 
     <div class="folder-form-container">
