@@ -16,7 +16,10 @@
                 <a href="#" class="active">
                     <span>
                         List
-                    </span>		
+                    </span>
+                    
+                    
+                    <i class="ms-2 bi bi-list-ul"></i>
                 </a>
             </li>
         </ul>
