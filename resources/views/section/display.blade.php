@@ -54,7 +54,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="form-group">
-                <label>Section</label>
+                <label>Name</label>
                 <input type="text" id="sectionName" value="{{$section->name}}" disabled="true" class="form-control"/>        
             </div>
         </div>
