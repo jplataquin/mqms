@@ -7,31 +7,26 @@
     <div class="breadcrumbs">
         <ul>
             <li>
-                <a href="#">
+                <a href="/project/{{$project->id}}">
                     <span>
                         Project
                     </span>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="/project/section/{{$section->id}}">
                     <span>
                     Section
                     </span>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="#" class="active">
                     <span>
                     Contract Item
                     </span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="active">
-                    <span>
-                        Display
-                    </span>		
+                    
+                    <i class="ms-2 bi bi-display"></i>
                 </a>
             </li>
         </ul>
@@ -48,20 +43,23 @@
                 <th>Section</th>
                 <td>{{$section->name}}</td>
             </tr>
-            <tr>
-                <th>Contract Item ID</th>
-                <td>{{STR_PAD($contract_item->id,6,0,STR_PAD_LEFT)}}</td>
-            </tr>
         </tbody>
     </table>
 
-
+    <div class="form-header text-center mb-3">
+        Contract Item
+    </div>
+    
     <div class="row mb-3">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <div class="form-group">
                 <label>Item Code</label>
                 <input type="text" id="item_code" class="form-control editable" disabled="true" value="{{$contract_item->item_code}}"/>
             </div>
+        </div>
+        <div class="col-lg-6">
+            <label>ID</label>
+            <input type="text" class="form-control" disabled="true" value="{{STR_PAD($contract_item->id,6,0,STR_PAD_LEFT)}}"/>
         </div>
     </div>
 
