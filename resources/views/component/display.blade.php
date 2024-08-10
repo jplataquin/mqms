@@ -65,33 +65,7 @@
                     <td>
                         {{$hash}}
                     </td>
-                </tr>
-
-                <tr>
-                    <th>Created By</th>
-                    <td>
-                        {{$component->CreatedByUser()->name}} {{$component->created_at}}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Updated By</th>
-                    <td>
-                    {{$component->UpdatedByUser()->name}} {{$component->updated_at}}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Approved By</th>
-                    <td>
-                    {{$component->ApprovedByUser()->name}} {{$component->approved_at}}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Rejected By</th>
-                    <td>
-                    {{$component->rejectedByUser()->name}} {{$component->approved_at}}
-                    </td>
-                </tr>
-                
+                </tr>   
             </table>    
         </div>
     </div>
