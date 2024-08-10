@@ -6,16 +6,9 @@
 <div class="breadcrumbs">
     <ul>
         <li>
-            <a href="#">
-                <span>
-                    Users
-                </span>
-            </a>
-        </li>
-        <li>
             <a href="#" class="active">
                 <span>
-                    List
+                    Users
                 </span>
                 
                 <i class="ms-2 bi bi-list-ul"></i>
