@@ -25,9 +25,6 @@
     </div>
     <hr>
 
-    <div class="form-header text-center mb-3">
-        Section
-    </div>
 
     <div class="row">
 
@@ -48,6 +45,11 @@
             </table>    
         </div>
 
+    </div>
+
+    
+    <div class="form-header text-center mb-3">
+        Section
     </div>
     <div class="row">
         <div class="col-lg-12">
