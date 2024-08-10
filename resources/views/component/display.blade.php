@@ -67,7 +67,7 @@
 
         <div class="col-lg-6">
             <div class="form-group">
-                <label>Status<lable>
+                <label>Status</lable>
                 <input class="form-control" type="text" id="status" value="{{$component->status}}" disabled="true"/>
             </div>
         </div>
