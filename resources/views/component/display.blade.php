@@ -53,27 +53,22 @@
                     <th>Contract Item</th>
                     <td>{{$contract_item->item_code}} - {{$contract_item->description}}</td>
                 </tr>
-                <tr>
-                    <th>Status</th>
-                    <td id="status">
-                        {{$component->status}}
-                    </td>
-                </tr>
-                
-                <tr>
-                    <th>Hash</th>
-                    <td>
-                        {{$hash}}
-                    </td>
-                </tr>   
+                   
             </table>    
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <div class="form-group">
                 <label>Component</label>
                 <input class="form-control editable_field" type="text" id="component" value="{{$component->name}}" disabled="true"/>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Status<lable>
+                <input class="form-control" type="text" id="status" value="{{$component->status}}" disabled="true"/>
             </div>
         </div>
     </div>
