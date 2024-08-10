@@ -3,27 +3,31 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs">
-    <ul>
-        <li>
-            <a href="#">
-                <span>
-                    Users
-                </span>
-            </a>
-        </li>
-        <li>
-            <a href="#" class="active">
-                <span>
-                    List
-                </span>
-                
-                <i class="ms-2 bi bi-list-ul"></i>
-            </a>
-        </li>
-    </ul>
-</div>
-<hr>
+    <div class="breadcrumbs" hx-boost="true">
+        <ul>
+            <li>
+                <a href="/dashboard">
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <span>
+                        Users
+                    </span>
+
+                    
+                    <i class="ms-2 bi bi-list-ul"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <div class="form-header text-center mb-3">
+        Users
+    </div>
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group">
