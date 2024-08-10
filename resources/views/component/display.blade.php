@@ -3,7 +3,7 @@
 @section('content')
 <div id="content">
 <div class="container">
-    <div class="breadcrumbs">
+    <div class="breadcrumbs" hx-boost="true">
         <ul>
             <li>
                 <a href="#">
@@ -20,16 +20,16 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="/contract_item/{{$component->contract_item_id}}">
                     <span>
                         Contract Item
                     </span>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="#" class="active">
                     <span>
-                        Component
+                        Component <i class="bi bi-display"></i>
                     </span>
                 </a>
             </li>
