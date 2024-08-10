@@ -6,29 +6,28 @@
     <div class="breadcrumbs">
         <ul>
             <li>
-                <a href="#">
+                <a href="/project/{{$project->id}}">
                     <span>
                        Project
                     </span>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="#" class="active">
                     <span>
                        Section
                     </span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="active">
-                    <span>
-                        Display
-                    </span>		
+                    
+                    <i class="ms-2 bi bi-display"></i>
                 </a>
             </li>
         </ul>
     </div>
     <hr>
+
+    <div class="form-header text-center mb-3">
+        Section
+    </div>
 
     <div class="row">
 
