@@ -426,10 +426,13 @@ window.util.navTo = function(url){
         el.href = url;
         htmx.process(el);
         el.click();
-        window.scrollTo(0,0);
     }else{
         console.error('Nav helper element not found');
     }
+
+    setTimeout(()=>{
+        window.scrollTo(0,0);
+    },1000);
 }
 
 
