@@ -20,7 +20,7 @@
                 </a>
             </li>
             <li>
-                <a href="/contract_item/{{$component->contract_item_id}}">
+                <a href="/project/section/contract_item/{{$component->contract_item_id}}">
                     <span>
                         Contract Item
                     </span>
@@ -29,15 +29,9 @@
             <li>
                 <a href="#" class="active">
                     <span>
-                        Component <i class="bi bi-display"></i>
+                        Component 
                     </span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="active">
-                    <span>
-                        Display
-                    </span>		
+                    <i class="ml-3 bi bi-display"></i>
                 </a>
             </li>
         </ul>
