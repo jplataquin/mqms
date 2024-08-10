@@ -31,7 +31,7 @@
                     <span>
                         Component 
                     </span>
-                    <i class="ml-2 bi bi-display"></i>
+                    <i class="ms-2 bi bi-display"></i>
                 </a>
             </li>
         </ul>
