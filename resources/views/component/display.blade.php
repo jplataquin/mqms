@@ -13,7 +13,7 @@
                 </a>
             </li>
             <li>
-                <a href="/project/section/{{$component->section()->id}}">
+                <a href="/project/section/{{$component->section_id}}">
                     <span>
                        Section
                     </span>
