@@ -13,7 +13,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="/project/section/{{$component->section()->id}}">
                     <span>
                        Section
                     </span>
@@ -31,7 +31,7 @@
                     <span>
                         Component 
                     </span>
-                    <i class="ml-3 bi bi-display"></i>
+                    <i class="ml-2 bi bi-display"></i>
                 </a>
             </li>
         </ul>
