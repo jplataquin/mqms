@@ -58,7 +58,7 @@
         </div>
     </div>
     
-        <div class="form-header text-center">
+        <div class="form-header text-center mb-3">
             Component
         </div>
             <div class="row mb-3">
@@ -124,7 +124,6 @@
                 </div>
             </div>
 
-        <div class="form-footer"></div>
     <hr>
 
     <div class="folder-form-container">
