@@ -6,14 +6,14 @@
     <div class="breadcrumbs" hx-boost="true">
         <ul>
             <li>
-                <a href="#">
+                <a href="/project/{{$project->id}}">
                     <span>
                         Project
                     </span>
                 </a>
             </li>
             <li>
-                <a href="/project/section/{{$component->section_id}}">
+                <a href="/project/section/{{$section->id}}">
                     <span>
                        Section
                     </span>
