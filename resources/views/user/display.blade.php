@@ -255,7 +255,7 @@
             });
 
             row.onclick = ()=>{
-                window.util.navTo('/access_code/'+item.id);
+                window.util.navTo('/role/'+item.id);
             };
 
             $el.append(row).to(list);
