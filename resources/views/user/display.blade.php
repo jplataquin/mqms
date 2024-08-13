@@ -131,7 +131,7 @@
 </div>
 
 <script type="module">
-    import {$q,$el} from '/adarna.js';
+    import {$q,$el,Template} from '/adarna.js';
 
     const cancelBtn            = $q('#cancelBtn').first();
     const updateBtn            = $q('#updateBtn').first();
@@ -144,6 +144,7 @@
     const list                 = $q('#list').first();
     const showMoreBtn          = $q('#showMoreBtn').first();
 
+    const t = new Template();
 
     let editable_flag = false;
     
