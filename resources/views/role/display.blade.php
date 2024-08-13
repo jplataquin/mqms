@@ -231,7 +231,7 @@
         data.map(item=>{
            
             let row = t.div({class:'item-container fade-in'},()=>{
-                t.div({class:'item-header'},item.access_code );
+                t.div({class:'item-header'},item.access_code_id );
                 t.div({class:'item-body'},item.description );
             });
 
