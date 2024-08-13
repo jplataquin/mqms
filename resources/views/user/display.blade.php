@@ -250,6 +250,7 @@
         data.map(item=>{
 
             let row = t.div({class:'item-container fade-in'},()=>{
+                
                 t.div({class:'item-header'},()=>{
                     t.div({class:'row'},()=>{
                         t.div({class:'col-6'},()=>{
@@ -263,9 +264,29 @@
                                 t.i({class:'bi bi-trash-fill'});
                             }).onclick = (e)=>{
                                 e.stopPropagation();
-                                alert('adasd');
-                            };
+                               
+                                window.util.prompt('Are you sure you want to remove this role?',(res)=>{
 
+                                    if(!res){
+                                        return false;
+                                    }
+
+                                    window.util.blockUI();
+                                    window.util.$post('/api/user/role/remove',{
+                                        user_id: '{{$user->id}}',
+                                        role_id: item.id
+                                    }).then(reply=>{
+                                        window.util.unblockUI();
+
+                                        if(reply.status <= 0){
+                                            window.util.showMsg(reply);
+                                            return false;
+                                        }
+
+                                        row.remove();
+                                    });
+                                });
+                            };
                         });
                     })
                 });
