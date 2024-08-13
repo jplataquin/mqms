@@ -7,17 +7,11 @@
     <div class="breadcrumbs">
         <ul>
             <li>
-                <a href="#">
-                    <span>
-                        Access Code
-                    </span>
-                </a>
-            </li>
-            <li>
                 <a href="#" class="active">
                     <span>
-                        Display
+                        Access Code
                     </span>		
+                    <i class="ms-2 bi bi-display"></i>
                 </a>
             </li>
         </ul>
