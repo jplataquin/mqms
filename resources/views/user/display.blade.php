@@ -22,56 +22,62 @@
         </ul>
     </div>
 <hr>
+    <div class="form-container">
+        <div class="form-header">
+            User
+        </div>
+        <div class="form-body">
+            <div class="row mb-3">
 
-    <div class="row mb-3">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>ID No.</label>
+                        <input type="text" id="name" value="{{str_pad($user->id,6,0,STR_PAD_LEFT)}}" class="form-control" disabled="true"/>
+                    </div>
+                </div>
+            </div>
 
-        <div class="col-lg-12">
-            <div class="form-group">
-                <label>ID No.</label>
-                <input type="text" id="name" value="{{str_pad($user->id,6,0,STR_PAD_LEFT)}}" class="form-control" disabled="true"/>
+            <div class="row mb-3">
+
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="name" value="{{$user->name}}" class="editable form-control" disabled="true"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" id="email" value="{{$user->email}}" class="editable form-control" disabled="true"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select class="form-control editable" id="status" disabled="true">
+                            @foreach($status_options as $val=>$text)
+                                <option value="{{$val}}" @if($user->status == $val) selected @endif>{{$text}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-12 text-end">
+                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                    <button class="btn btn-primary" id="editBtn">Edit</button>
+                    <button class="btn btn-warning d-none" id="updateBtn">Update</button>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="row mb-3">
-
-        <div class="col-lg-12">
-            <div class="form-group">
-                <label>Name</label>
-                <input type="text" id="name" value="{{$user->name}}" class="editable form-control" disabled="true"/>
-            </div>
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-lg-12">
-            <div class="form-group">
-                <label>Email</label>
-                <input type="text" id="email" value="{{$user->email}}" class="editable form-control" disabled="true"/>
-            </div>
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <div class="col-lg-12">
-            <div class="form-group">
-                <label>Status</label>
-                <select class="form-control editable" id="status" disabled="true">
-                    @foreach($status_options as $val=>$text)
-                        <option value="{{$val}}" @if($user->status == $val) selected @endif>{{$text}}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-    </div>
-
-    <div class="row mt-5">
-        <div class="col-12 text-end">
-            <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
-            <button class="btn btn-primary" id="editBtn">Edit</button>
-            <button class="btn btn-warning d-none" id="updateBtn">Update</button>
-        </div>
-    </div>
-
     <hr>
 
     <div class="folder-form-container">
