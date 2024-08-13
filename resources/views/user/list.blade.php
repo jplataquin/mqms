@@ -25,11 +25,12 @@
 
     <hr>
 
-    <div class="form-container">
-        <div class="form-header text-center mb-3">
+    <div class="folder-form-container">
+        
+        <div class="folder-form-tab">
             Users
         </div>
-        <div class="form-body">
+        <div class="folder-form-body">
             <div class="row">
                 <div class="col-lg-5">
                     <div class="form-group">
