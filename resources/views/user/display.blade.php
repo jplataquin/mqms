@@ -214,7 +214,7 @@
         let val = $q('.role-option[value="'+role.value+'"]').first();
 
         if(!val){
-            window.util.alert('Code not found');
+            window.util.alert('Error','Role not found');
             
             role.value = '';
             return false;
@@ -266,8 +266,8 @@
                                 e.stopPropagation();
                                
                                 window.util.prompt('Are you sure you want to remove this role?',(e,res)=>{
-                                 
-                                    if(res){
+                                    
+                                    if(!res){
                                         return false;
                                     }
 
