@@ -256,8 +256,8 @@
                                     window.util.blockUI();
 
                                     window.util.$post('/api/role/access_code/remove',{
-                                        user_id: '{{$user->id}}',
-                                        role_id: item.id
+                                        role_id: '{{$role->id}}',
+                                        access_code_id: item.id
                                     }).then(reply=>{
                                         window.util.unblockUI();
 
