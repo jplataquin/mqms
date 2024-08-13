@@ -83,6 +83,8 @@ class UserController extends Controller
 
         $roles = $user->Roles;
 
+        print_r($roles);exit;
+        
         return view('user/display',[
             'user'              => $user,
             'status_options'    => $status_options,
