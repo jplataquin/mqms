@@ -30,7 +30,7 @@
         </div>
 
         <div class="form-body">
-            <div class="row">
+            <div class="row mb-3">
 
                 <div class="col-12">
                     <div class="form-group">

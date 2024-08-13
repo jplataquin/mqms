@@ -61,11 +61,9 @@
             </div>
         </div>
     </div>
-    <hr>
+   
 
-    <div class="container" id="list">
-
-    </div>
+    <div class="container" id="list"></div>
 
     <div class="row mt-3">
         <div class="col-lg-12">
