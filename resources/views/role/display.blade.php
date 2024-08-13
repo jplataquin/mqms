@@ -132,7 +132,7 @@
 
         window.util.blockUI();
 
-        window.util.$post('/api/role_access_code/add',{
+        window.util.$post('/api/role/access_code/add',{
             role_id: '{{$role->id}}',
             access_code_id: val
         }).then(reply=>{
@@ -217,8 +217,7 @@
 
     cancelBtn.onclick = (e) => {
         
-        e.preventDefault();
-        window.util.showMsg('/roles');
+        window.util.navTo('/roles');
 
     }
 
@@ -229,9 +228,52 @@
     function renderRows(data){
         
         data.map(item=>{
-            console.log(item);
+           
             let row = t.div({class:'item-container fade-in'},()=>{
-                t.div({class:'item-header'},item.code );
+               
+                t.div({class:'item-header'},()=>{
+                    
+                    t.div({class:'row'},()=>{
+
+                        t.div({class:'col-6'},()=>{
+
+                            t.txt(item.code);
+                        });
+
+                        t.div({class:'col-6 text-end'},()=>{
+                            
+                            t.button({class:'btn btn-danger'},()=>{
+                                t.i({class:'bi bi-trash-fill'});
+                            }).onclick = (e)=>{
+                                e.stopPropagation();
+                               
+                                window.util.prompt('Are you sure you want to remove this role?',(e,res)=>{
+                                    
+                                    if(!res){
+                                        return false;
+                                    }
+
+                                    window.util.blockUI();
+
+                                    window.util.$post('/api/role/access_code/remove',{
+                                        user_id: '{{$user->id}}',
+                                        role_id: item.id
+                                    }).then(reply=>{
+                                        window.util.unblockUI();
+
+                                        if(reply.status <= 0){
+                                            window.util.showMsg(reply);
+                                            return false;
+                                        }
+
+                                        row.remove();
+                                    });
+                                });
+                            };
+                        });
+                    })
+                });
+
                 t.div({class:'item-body'},item.description );
             });
 
@@ -249,7 +291,7 @@
 
         window.util.blockUI();
 
-        window.util.$get('/api/role_access_code/{{$role->id}}/list',{}).then(reply=>{
+        window.util.$get('/api/role/access_codes/{{$role->id}}',{}).then(reply=>{
 
             window.util.unblockUI();
                 

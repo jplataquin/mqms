@@ -30,18 +30,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/role/list', [App\Http\Controllers\RoleController::class, '_list']);
     Route::post('/role/create', [App\Http\Controllers\RoleController::class, '_create']);
     Route::post('/role/update', [App\Http\Controllers\RoleController::class, '_update']);
-    Route::post('/role/delete', [App\Http\Controllers\RoleController::class, '_delete']);
-    
-    Route::get('/role_access_code/{role_id}/list', [App\Http\Controllers\RoleAccessCodeController::class, '_list']);
-    Route::post('/role_access_code/add', [App\Http\Controllers\RoleAccessCodeController::class, '_add']);
-    Route::post('/role_access_code/delete', [App\Http\Controllers\RoleAccessCodeController::class, '_delete']);
+    Route::post('/role/delete', [App\Http\Controllers\RoleController::class, '_delete']); 
+    Route::get('/role/access_codes/{role_id}', [App\Http\Controllers\RoleController::class, '_access_codes']);
+    Route::post('/role/access_code/add', [App\Http\Controllers\RoleController::class, '_access_code_add']);
+    Route::post('/role_access_code/remove', [App\Http\Controllers\RoleController::class, '_access_code_remove']);
     
 
     Route::get('/user/list', [App\Http\Controllers\UserController::class, '_list']);
     Route::post('/user/create', [App\Http\Controllers\UserController::class, '_create']);
     Route::post('/user/update', [App\Http\Controllers\UserController::class, '_update']);
     Route::post('/user/reset_password', [App\Http\Controllers\UserController::class, '_reset_password']);
-   
     Route::get('/user/roles/{id}', [App\Http\Controllers\UserController::class, '_roles']);
     Route::post('/user/role/add', [App\Http\Controllers\UserController::class, '_add_role']);
     Route::post('/user/role/remove', [App\Http\Controllers\UserController::class, '_remove_role']);
