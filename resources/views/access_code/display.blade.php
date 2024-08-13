@@ -22,33 +22,41 @@
             </li>
         </ul>
     </div>
-<hr>
+    <hr>
 
-    <div class="row">
+    <div class="form-container">
+        <div class="form-header">
+            Access Code
+        </div>
 
-        <div class="col-12">
-            <div class="form-group">
-                <label>Code</label>
-                <input type="text" disabled="true" maxlength="6" value="{{$code}}" id="access_code" class="form-control"/>
+        <div class="form-body">
+            <div class="row">
+
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Code</label>
+                        <input type="text" disabled="true" maxlength="6" value="{{$code}}" id="access_code" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="description" disabled="true" class="form-control">{{$description}}</textarea>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="col-12">
-            <div class="form-group">
-                <label>Description</label>
-                <textarea id="description" disabled="true" class="form-control">{{$description}}</textarea>
+            <div class="row mt-5 mb-3">
+                <div class="col-6 text-start">
+                    <button class="btn btn-danger" id="deleteBtn">Delete</button>
+                </div>
+                <div class="col-6 text-end">
+                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                    <button class="btn btn-primary" id="editBtn">Edit</button>
+                    <button class="btn btn-warning d-none" id="updateBtn">Update</button>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <div class="row mt-5 mb-3">
-        <div class="col-6 text-start">
-            <button class="btn btn-danger" id="deleteBtn">Delete</button>
-        </div>
-        <div class="col-6 text-end">
-            <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
-            <button class="btn btn-primary" id="editBtn">Edit</button>
-            <button class="btn btn-warning d-none" id="updateBtn">Update</button>
         </div>
     </div>
 

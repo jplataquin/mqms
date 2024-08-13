@@ -23,31 +23,36 @@
         </ul>
     </div>
 <hr>
-
-    <div class="row">
-
-        <div class="col-12">
-            <div class="form-group">
-                <label>Code</label>
-                <input type="text" maxlength="6" id="access_code" class="form-control"/>
-            </div>
+    <div class="form-container">
+        <div class="form-header">
+            Create Access Code
         </div>
+        <div class="form-body">
+            <div class="row">
 
-        <div class="col-12">
-            <div class="form-group">
-                <label>Description</label>
-                <textarea id="description" class="form-control"></textarea>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Code</label>
+                        <input type="text" maxlength="6" id="access_code" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="description" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-12 text-end">
+                <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                <button class="btn btn-primary" id="createBtn">Create</button>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="row mt-5">
-        <div class="col-12 text-end">
-        <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
-        <button class="btn btn-primary" id="createBtn">Create</button>
-        </div>
-    </div>
-
 </div>
 
 <script type="module">
