@@ -103,6 +103,13 @@ window.util.prompt = (msg,callback) => {
         window.ui.primaryModal.hide();
     }
 
+    let footer = t.div({class:'text-end'},(el)=>{
+        el.appendChild(no);
+        el.appendChild(yes);
+    });
+
+    window.primaryModalFooter.appendChild(footer);
+    
     window.ui.primaryModal.show();
 }
 
