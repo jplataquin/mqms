@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 use App\Models\Role;
 use App\Models\AccessCode;
 use App\Models\RoleAccessCode;
+use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
