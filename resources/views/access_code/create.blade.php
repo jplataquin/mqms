@@ -28,9 +28,9 @@
             Create Access Code
         </div>
         <div class="form-body">
-            <div class="row mb-3">
+            <div class="row">
 
-                <div class="col-12">
+                <div class="col-12 mb-3">
                     <div class="form-group">
                         <label>Code</label>
                         <input type="text" maxlength="6" id="access_code" class="form-control"/>
