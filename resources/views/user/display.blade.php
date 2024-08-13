@@ -225,7 +225,7 @@
 
         window.util.blockUI();
 
-        window.util.$post('/api/user/add/role',{
+        window.util.$post('/api/user/role/add',{
             role_id: val,
             user_id: '{{$user->id}}'
         }).then(reply=>{
