@@ -18,7 +18,7 @@
                     <span>
                         Create
                     </span>
-                    <i class="ms-2 bi-plus-circle"></i>
+                    <i class="ms-2 bi bi-file-earmark-plus"></i>
                 </a>
             </li>
         </ul>
