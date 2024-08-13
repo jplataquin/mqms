@@ -230,46 +230,14 @@
         
         data.map(item=>{
            
-            let row = t.div({class:'row mt-1 mb-1 border selectable-div fade-in'},()=>{
-                t.div({class:'col-6'},item.code );
-                t.div({class:'col-6 text-center'},()=>{
-                    
-                    t.a({class:'me-3',href:'#'},'[view]');
-
-                    
-
-                    t.a({href:'#'},'[delete]').onclick = (e)=>{
-                        e.preventDefault();
-
-                        if(!confirm('Are you sure you want to delete this role?')){
-                            return false;
-                        }
-
-                        window.util.blockUI();
-
-                        window.util.$post('/api/role_access_code/delete',{
-                            role_id:'{{$role->id}}',
-                            access_code_id: item.access_code_id
-                        }).then(reply=>{
-
-                            
-                            window.util.unblockUI();
-
-                            if(reply.status <= 0 ){
-                                
-                                window.util.showMsg(reply);  
-
-                                return false;
-                            };
-
-                            $el.remove(row);
-
-                        });
-                    };
-
-                });
+            let row = t.div({class:'item-container fade-in'},()=>{
+                t.div({class:'item-header'},item.access_code );
+                t.div({class:'item-body'},item.description );
             });
 
+            row.onclick = ()=>{
+                window.util.navTo('/acess_code/'+item.id);
+            };
 
             $el.append(row).to(list);
             
