@@ -248,21 +248,27 @@
     function renderRows(data){
         
         data.map(item=>{
-            console.log(item);
+
             let row = t.div({class:'item-container fade-in'},()=>{
-                t.div({class:'item-header'},item.name );
-                t.div({class:'item-body'},()=>{
-                    
+                t.div({class:'item-header'},()=>{
                     t.div({class:'row'},()=>{
                         t.div({class:'col-6'},()=>{
 
-                            t.txt(item.description);
+                            t.txt(item.name);
                         });
 
                         t.div({class:'col-6 text-end'},()=>{
-                            t.button({class:'btn btn-danger'},'Remove');
+                            t.button({class:'btn btn-danger'},()=>{
+                                t.i({class:'bi bi-trash-fill'});
+                            });
                         });
                     })
+                });
+
+                t.div({class:'item-body'},()=>{
+                    
+                    t.txt(item.description);
+                  
                      
                 });
             });
