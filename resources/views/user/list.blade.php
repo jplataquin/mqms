@@ -62,9 +62,7 @@
     
     <hr>
 
-    <div class="container" id="list">
-
-    </div>
+    <div class="container" id="list"></div>
 
     <div class="row mt-3">
         <div class="col-lg-12">
@@ -81,7 +79,6 @@
     const query           = $q('#query').first();
     const searchBtn       = $q('#searchBtn').first();
     const showMoreBtn     = $q('#showMoreBtn').first();
-    const createBtn       = $q('#createBtn').first();
     const sortSelect      = $q('#sortSelect').first();
     
     let page            = 1;
@@ -157,9 +154,6 @@
         showData();
     }
 
-    createBtn.onclick = ()=>{
-        window.util.navTo('/users/create');
-    }
 
     sortSelect.onchange = ()=>{
         reinitalize();
