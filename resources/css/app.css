@@ -293,6 +293,11 @@ html, body {
   font-weight: bold;
 }
 
+.form-body{
+  padding-left:3px;
+  padding-right:3px;
+}
+
 .form-footer{
   background-color: #d3dce6;
   border-bottom-right-radius: 25px;

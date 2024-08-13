@@ -28,37 +28,40 @@
     <div class="form-header text-center mb-3">
         Users
     </div>
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label>Sort By</label>
-                <select class="form-control" id="sortSelect">
-                    <option value="1">A-Z name</option>
-                    <option value="2">Z-A name</option>
-                    <option value="3" selected>Latest Entry</option>
-                    <option value="4">Oldest Entry</option>
-                </select>
+    <div class="form-body">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>Sort By</label>
+                    <select class="form-control" id="sortSelect">
+                        <option value="1">A-Z name</option>
+                        <option value="2">Z-A name</option>
+                        <option value="3" selected>Latest Entry</option>
+                        <option value="4">Oldest Entry</option>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label>Query</label>
-                <input type="text" id="query" class="form-control"/>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>Query</label>
+                    <input type="text" id="query" class="form-control"/>
+                </div>
             </div>
-        </div>
-        <div class="col-lg-2">
-            <div class="form-group">
-                <label>&nbsp;</label>
-                <button id="searchBtn" class="btn w-100 btn-primary">Search</button>
+            <div class="col-lg-2">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <button id="searchBtn" class="btn w-100 btn-primary">Search</button>
+                </div>
             </div>
-        </div>
-        <div class="col-lg-2">
-            <div class="form-group">
-                <label></label>
-                <button id="createBtn" class="btn w-100 btn-warning">Create</button>
+            <div class="col-lg-2">
+                <div class="form-group">
+                    <label></label>
+                    <button id="createBtn" class="btn w-100 btn-warning">Create</button>
+                </div>
             </div>
         </div>
     </div>
+    
     <hr>
 
     <div class="container" id="list">
