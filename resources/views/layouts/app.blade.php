@@ -70,7 +70,7 @@
                 
                     <li class="menu-item">
                         <div class="nav-item">
-                            <a href="#" class="inactive-nav-item">Users</a>
+                            <a href="#" class="inactive-nav-item">Users List</a>
                         </div>
                         <ul class="list-unstyled menu-sub-items">
                            
