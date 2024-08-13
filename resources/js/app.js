@@ -79,6 +79,33 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 })();
 
+window.util.prompt = (msg,callback) => {
+
+    window.ui.primaryModal.hide();
+
+    window.ui.primaryModalTitle.innerHTML    = '';
+    window.ui.primaryModalBody.innerHTML     = '';
+    window.ui.primaryModalFooter.innerHTML   = '';
+
+    window.ui.primaryModalTitle.innerText = 'Prompt';
+    window.ui.primaryModalBody.innerText = msg;
+
+    let no  = t.button({class:'btn btn-danger'},'No');
+    let yes = t.button({class:'btn btn-success'},'Yes');
+
+    yes.onclick = (e)=>{
+        callback(e,true);
+        window.ui.primaryModal.hide();
+    }
+
+    no.onclick = (e)=>{
+        callback(e,false);
+        window.ui.primaryModal.hide();
+    }
+
+    window.ui.primaryModal.show();
+}
+
 window.util.showMsg = (reply) => {
     
     let message = '';
