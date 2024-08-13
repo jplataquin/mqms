@@ -121,7 +121,7 @@ class UserController extends Controller
     public function _reset_password(Request $request){
         //todo check role
 
-        $name    = (int) $request->input('id') ?? '';
+        $id = (int) $request->input('id') ?? 0;
 
         $validator = Validator::make($request->all(),[
             'id' => [
