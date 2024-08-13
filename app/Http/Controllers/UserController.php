@@ -179,4 +179,85 @@ class UserController extends Controller
             ]
         ]);
     }
+
+
+    public function _add_role(Request $request){
+        
+        $role_id        = (int) $request->input('role_id');
+        $user_id        = (int) $request->input('user_id');
+
+        $validator = Validator::make($request->all(),[
+            'user_id' => [
+                'required',
+                'integer'
+            ],
+            'role_id' => [
+                'required',
+                'integer',
+                Rule::unique('user_roles')->where(function ($query) use($role_id,$user_id) {
+                    return $query->where('role_id', $role_id)
+                    ->where('user_id', $user_id);
+                })
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => $validator->messages()
+            ]);
+        }
+
+        $userRole = new UserRole();
+
+        $userRole->role_id            = $role_id;
+        $userRole->user_id            = $user_id;
+
+        $userRole->save();
+
+        return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data'      => [
+                'id'=> $userRole->id
+            ]
+        ]);
+
+    }
+
+    public function _remove_role(Request $request){
+        
+        $role_id    = (int) $request->input('role_id');
+        $user_id    = (int) $request->input('user_id');
+
+        $validator = Validator::make($request->all(),[
+            'role_id' => [
+                'required',
+                'integer'
+            ],
+            'user_id' => [
+                'required',
+                'integer'
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => $validator->messages()
+            ]);
+        }
+
+        DB::table('user_roles')
+        ->where('role_id',$role_id)
+        ->where('user_id',$user_id)->delete();
+
+        return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data'      => []
+        ]);
+    }
 }

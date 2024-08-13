@@ -97,7 +97,27 @@
             Roles
         </div>
         <div class="folder-form-body">
-        test
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="form-group">
+                        <label>Role</label>
+                        <input list="role-list" id="role" class="form-control" />
+
+                            <datalist id="role-list">
+                                @foreach($roles as $role)
+                                    <option class="role-option" value="{{$role->name}}" data-id="{{$role->id}}"></option>
+                                @endforeach
+                            </datalist>
+                            
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>&nbsp</label>
+                        <button class="btn btn-primary form-control" id="addCode">Add</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -114,6 +134,8 @@
     const name                 = $q('#name').first();
     const email                = $q('#email').first();
     const resetBtn             = $q('#resetBtn').first();
+    const role                 = $q('#role').first();
+
 
 
     let editable_flag = false;
@@ -173,6 +195,42 @@
         updateBtn.classList.remove('d-none');
     }
     
+
+    addRole.onclick = (e) => {
+
+        let val = $q('.role-option[value="'+role.value+'"]').first();
+
+        if(!val){
+            window.util.alert('Code not found');
+            
+            accessCode.value = '';
+            return false;
+        }
+
+        val = val.getAttribute('data-id');
+
+        accessCode.value = '';
+
+        window.util.blockUI();
+
+        window.util.$post('/api/role_access_code/add',{
+            role_id: '{{$role->id}}',
+            access_code_id: val
+        }).then(reply=>{
+
+            window.util.unblockUI();
+
+            if(reply.status <= 0 ){
+            
+                window.util.showMsg(reply);
+                return false;
+            };
+
+            reinitalize();
+            showData();
+
+        });
+    }
 
 </script>
 </div>
