@@ -123,6 +123,11 @@
 
     <div id="list" class="row mt-3"></div>
 
+    <div class="row mt-3">
+        <div class="col-lg-12">
+            <button id="showMoreBtn" class="btn w-100 btn-primary">Show More</button>
+        </div>
+    </div>
 </div>
 
 <script type="module">
@@ -137,6 +142,7 @@
     const role                 = $q('#role').first();
     const addRoleBtn           = $q('#addRoleBtn').first();
     const list                 = $q('#list').first();
+    const showMoreBtn          = $q('#showMoreBtn').first();
 
 
     let editable_flag = false;
