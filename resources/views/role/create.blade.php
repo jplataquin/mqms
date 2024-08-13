@@ -3,7 +3,26 @@
 @section('content')
 <div id="content">
 <div class="container">
-<h5>Role » Create</h5>
+<div class="breadcrumbs" hx-boost="true">
+        <ul>
+            <li>
+                <a href="/roles">
+                    <span>
+                       Roles
+                    </span>                    
+                    
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span>
+                        Create
+                    </span>
+                    <i class="ms-2 bi-plus-circle"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
 <hr>
 
     <div class="row">
