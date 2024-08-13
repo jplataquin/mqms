@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use App\Models\User;
+use App\Models\Role;
+use App\Models\UserRole;
 
 class UserController extends Controller
 {
@@ -81,7 +83,7 @@ class UserController extends Controller
 
         $status_options = $user->statusOptions();
 
-        $roles = Roles::where('deleted_at','!=',null)->get();
+        $roles = Role::where('deleted_at','!=',null)->get();
 
         return view('user/display',[
             'user'              => $user,
