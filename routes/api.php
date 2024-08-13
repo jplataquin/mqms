@@ -38,6 +38,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
 
     Route::get('/user/list', [App\Http\Controllers\UserController::class, '_list']);
+    Route::get('/user/roles/{$id}', [App\Http\Controllers\UserController::class, '_roles']);
     Route::post('/user/create', [App\Http\Controllers\UserController::class, '_create']);
     Route::post('/user/update', [App\Http\Controllers\UserController::class, '_update']);
     Route::post('/user/reset_password', [App\Http\Controllers\UserController::class, '_reset_password']);

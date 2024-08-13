@@ -126,7 +126,7 @@
 </div>
 
 <script type="module">
-    import {$q} from '/adarna.js';
+    import {$q,$el} from '/adarna.js';
 
     const cancelBtn            = $q('#cancelBtn').first();
     const updateBtn            = $q('#updateBtn').first();
@@ -139,6 +139,11 @@
 
 
     let editable_flag = false;
+    
+
+    function reinitalize(){
+        $el.clear(list);
+    }
 
     resetBtn.onclick = (e) =>{
         window.util.prompt('Are you sure you want to initiate reset password?',(e,result)=>{
@@ -231,6 +236,53 @@
 
         });
     }
+
+    function renderRows(data){
+        
+        data.map(item=>{
+            console.log(item);
+            let row = t.div({class:'item-container fade-in'},()=>{
+                t.div({class:'item-header'},item.code );
+                t.div({class:'item-body'},item.description );
+            });
+
+            row.onclick = ()=>{
+                window.util.navTo('/access_code/'+item.id);
+            };
+
+            $el.append(row).to(list);
+            
+        });
+
+    }
+
+    function showData(){
+
+        window.util.blockUI();
+
+        window.util.$get('/api/user/roles/{{$user->id}}/list',{}).then(reply=>{
+
+            window.util.unblockUI();
+                
+
+            if(reply.status <= 0 ){
+                
+                window.util.showMsg(reply);
+                return false;
+            };
+
+
+            if(reply.data.length){
+                renderRows(reply.data); 
+            }else{
+                showMoreBtn.style.display = 'none';
+            }
+            
+        });
+    }
+
+    reinitalize();
+    showData();
 
 </script>
 </div>

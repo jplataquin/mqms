@@ -83,7 +83,8 @@ class UserController extends Controller
 
         $status_options = $user->statusOptions();
 
-        $roles = Role::get();
+        $roles = Role::all();
+
 
         return view('user/display',[
             'user'              => $user,
@@ -263,6 +264,21 @@ class UserController extends Controller
             'status'    => 1,
             'message'   => '',
             'data'      => []
+        ]);
+    }
+
+    public function _roles($id){
+
+        $user_id    = (int) $user_id;
+        
+        $result = DB::table('user_roles')
+        ->join('roles', 'user_roles.role_id', '=', 'roles.id')
+        ->where('user_roles.user_id',$user_id)->get();
+
+        return response()->json([
+            'status' => 1,
+            'message'=>'',
+            'data'=> $result
         ]);
     }
 }
