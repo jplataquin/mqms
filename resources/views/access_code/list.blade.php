@@ -24,7 +24,7 @@
     </div>
 <hr>
     <div class="folder-form-container">
-        <div class="folder-form-header">
+        <div class="folder-form-tab">
             Access Codes
         </div>
         <div class="folder-form-body">
