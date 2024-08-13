@@ -39,13 +39,5 @@ class LoginController extends Controller
     }
 
 
-    public function authenticate(Request $request): RedirectResponse
-    {
-
-        print_r($request);exit;
-
-        parent::authenticate();
-
-
-    }
+  
 }

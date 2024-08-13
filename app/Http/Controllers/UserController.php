@@ -19,8 +19,10 @@ class UserController extends Controller
     public function _create(Request $request){
            //todo check role
 
-           $name    = $request->input('name') ?? '';
-           $email   = $request->input('email') ?? '';
+           $name        = $request->input('name') ?? '';
+           $email       = $request->input('email') ?? '';
+           $password    = $request->input('password') ?? '';
+
 
            $validator = Validator::make($request->all(),[
                'name' => [
@@ -31,7 +33,14 @@ class UserController extends Controller
                    'required',
                    'email',
                    'unique:users,email'
+               ],
+               'password' => [
+                    'required',
+                    'min:6',
+                    'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'
                ]
+           ],[
+                'password.regex' => 'The password must contain 1 lowercase AND 1 uppercase AND 1 number AND 1 symbol'
            ]);
    
            if ($validator->fails()) {
@@ -50,7 +59,7 @@ class UserController extends Controller
            $user->name              = $name;
            $user->email             = $email;
            $user->status            = 'ACTV';
-           $user->password          = 'RESET';
+           $user->password          = Hash::make($password);;
            $user->created_by        = $user_id;
            $user->reset_password    = 1;
 
