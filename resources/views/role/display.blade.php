@@ -3,37 +3,62 @@
 @section('content')
 <div id="content">
 <div class="container">
-<h5>Role » Display</h5>
+<div class="breadcrumbs" hx-boost="true">
+        <ul>
+            <li>
+                <a href="/roles">
+                    <span>
+                       Roles
+                    </span>                    
+                    
+                </a>
+            </li>
+            <li>
+                <a href="#" class="active" >
+                    <span>
+                        Display
+                    </span>
+                    <i class="ms-2 bi bi-display"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
 <hr>
 
-    <div class="row">
-
-        <div class="col-12">
-            <div class="form-group">
-                <label>Name</label>
-                <input type="text" disabled="true" value="{{$role->name}}" id="name" class="form-control"/>
-            </div>
+    <div class="form-container">
+        <div class="form-header">
+            Role
         </div>
+        <div class="form-body">
+            <div class="row">
 
-        <div class="col-12">
-            <div class="form-group">
-                <label>Description</label>
-                <textarea id="description" disabled="true" class="form-control">{{$role->description}}</textarea>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" disabled="true" value="{{$role->name}}" id="name" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="description" disabled="true" class="form-control">{{$role->description}}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5 mb-3">
+                <div class="col-6 text-start">
+                    <button class="btn btn-danger" id="deleteBtn">Delete</button>
+                </div>
+                <div class="col-6 text-end">
+                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                    <button class="btn btn-primary" id="editBtn">Edit</button>
+                    <button class="btn btn-warning d-none" id="updateBtn">Update</button>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="row mt-5 mb-3">
-        <div class="col-6 text-start">
-            <button class="btn btn-danger" id="deleteBtn">Delete</button>
-        </div>
-        <div class="col-6 text-end">
-            <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
-            <button class="btn btn-primary" id="editBtn">Edit</button>
-            <button class="btn btn-warning d-none" id="updateBtn">Update</button>
-        </div>
-    </div>
-    
     <hr>
 
     <div class="row">
