@@ -138,7 +138,7 @@
                     return false;
                 }
 
-                window.util.navReleod();
+                window.util.navReload();
             });
         });
     }
