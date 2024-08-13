@@ -81,7 +81,7 @@ class UserController extends Controller
 
         $status_options = $user->statusOptions();
 
-        $roles = $user->Roles;
+        $roles = Roles::where('deleted_at','!=',null)->get();
 
         return view('user/display',[
             'user'              => $user,
