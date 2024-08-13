@@ -32,7 +32,7 @@
         <div class="form-body">
             <div class="row">
 
-                <div class="col-12">
+                <div class="col-12 mb-3">
                     <div class="form-group">
                         <label>Name</label>
                         <input type="text" disabled="true" value="{{$role->name}}" id="name" class="form-control"/>
@@ -61,32 +61,37 @@
     </div>
     <hr>
 
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="form-group">
-                <label>Access Code</label>
-                <input list="access-code-list" id="accessCode" class="form-control" />
-
-                    <datalist id="access-code-list">
-                        @foreach($accessCodes as $code)
-                            <option class="code-option" value="{{$code->code}}" data-id="{{$code->id}}"></option>
-                        @endforeach
-                    </datalist>
-                    
-            </div>
+    <div class="folder-form-container">
+        <div class="folder-form-tab">
+            Access Codes
         </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label>&nbsp</label>
-                <button class="btn btn-primary form-control" id="addCode">Add</button>
+        <div class="folder-form-body">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="form-group">
+                        <label>Code</label>
+                        <input list="access-code-list" id="accessCode" class="form-control" />
+
+                            <datalist id="access-code-list">
+                                @foreach($accessCodes as $code)
+                                    <option class="code-option" value="{{$code->code}}" data-id="{{$code->id}}"></option>
+                                @endforeach
+                            </datalist>
+                            
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>&nbsp</label>
+                        <button class="btn btn-primary form-control" id="addCode">Add</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    
 
 
-    <div class="container" id="list">
-    </div>
+    <div class="container" id="list"></div>
 
 
 </div>
