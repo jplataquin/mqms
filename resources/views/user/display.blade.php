@@ -6,7 +6,7 @@
 <div class="breadcrumbs">
         <ul>
             <li>
-                <a href="#">
+                <a href="/users">
                     <span>
                        Users
                     </span>
@@ -16,7 +16,8 @@
                 <a href="#" class="active">
                     <span>
                         Display
-                    </span>		
+                    </span>	
+                    <i class="ms-2 bi bi-display"></i>	
                 </a>
             </li>
         </ul>
