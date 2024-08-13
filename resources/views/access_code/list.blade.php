@@ -23,7 +23,6 @@
         </ul>
     </div>
 <hr>
-
     <div class="folder-form-container">
         <div class="folder-form-header">
             Access Codes
@@ -59,14 +58,14 @@
                         <button id="createBtn" class="btn w-100 btn-warning">Create</button>
                     </div>
                 </div>
-                
             </div>
         </div>
     </div>
-
     <hr>
 
-    <div class="container" id="list"></div>
+    <div class="container" id="list">
+
+    </div>
 
     <div class="row mt-3">
         <div class="col-lg-12">
