@@ -31,7 +31,7 @@
         </div>
         <div class="form-body">
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-5">
                     <div class="form-group">
                         <label>Sort By</label>
                         <select class="form-control" id="sortSelect">
@@ -42,7 +42,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-5">
                     <div class="form-group">
                         <label>Query</label>
                         <input type="text" id="query" class="form-control"/>
@@ -54,12 +54,7 @@
                         <button id="searchBtn" class="btn w-100 btn-primary">Search</button>
                     </div>
                 </div>
-                <div class="col-lg-2">
-                    <div class="form-group">
-                        <label></label>
-                        <button id="createBtn" class="btn w-100 btn-warning">Create</button>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>

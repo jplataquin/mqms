@@ -73,8 +73,12 @@
                             <a href="#" class="inactive-nav-item">Users</a>
                         </div>
                         <ul class="list-unstyled menu-sub-items">
+                           
                             <li class="nav-sub-item">
                                 <a href="/users" hx-select="#content" hx-target="#main">List</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a href="/user/create" hx-select="#content" hx-target="#main">Create</a>
                             </li>
                             <li class="nav-sub-item">
                                 <a href="/access_codes" hx-select="#content" hx-target="#main">Access Codes</a>
