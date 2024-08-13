@@ -260,7 +260,10 @@
                         t.div({class:'col-6 text-end'},()=>{
                             t.button({class:'btn btn-danger'},()=>{
                                 t.i({class:'bi bi-trash-fill'});
-                            });
+                            }).onclick = (e)=>{
+                                e.preventDefault();
+                                alert('adasd');
+                            };
                         });
                     })
                 });
