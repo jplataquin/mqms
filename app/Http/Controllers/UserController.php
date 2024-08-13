@@ -269,11 +269,11 @@ class UserController extends Controller
 
     public function _roles($id){
 
-        $user_id    = (int) $user_id;
+        $id = (int) $id;
         
         $result = DB::table('user_roles')
         ->join('roles', 'user_roles.role_id', '=', 'roles.id')
-        ->where('user_roles.user_id',$user_id)->get();
+        ->where('user_roles.user_id',$id)->get();
 
         return response()->json([
             'status' => 1,
