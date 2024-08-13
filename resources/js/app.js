@@ -90,7 +90,7 @@ window.util.prompt = (msg,callback) => {
     window.ui.primaryModalTitle.innerText = 'Prompt';
     window.ui.primaryModalBody.innerText = msg;
 
-    let no  = t.button({class:'btn btn-danger'},'No');
+    let no  = t.button({class:'btn btn-danger me-3'},'No');
     let yes = t.button({class:'btn btn-success'},'Yes');
 
     yes.onclick = (e)=>{
