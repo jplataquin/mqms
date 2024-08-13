@@ -251,9 +251,9 @@
             console.log(item);
             let row = t.div({class:'item-container fade-in'},()=>{
                 t.div({class:'item-header'},item.name );
-                t.div({class:'item-body'},
-                ()=>{
-                    t.div({class:'row',()=>{
+                t.div({class:'item-body'},()=>{
+                    
+                    t.div({class:'row'},()=>{
                         t.div({class:'col-6'},()=>{
 
                             t.txt(item.description);
@@ -262,7 +262,7 @@
                         t.div({class:'col-6 text-end'},()=>{
                             t.button({class:'btn btn-danger'},'Remove');
                         });
-                    }}
+                    })
                      
                 });
             });
