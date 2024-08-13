@@ -88,7 +88,6 @@ class UserController extends Controller
 
         //todo check role
 
-
         $page       = (int) $request->input('page')     ?? 1;
         $limit      = (int) $request->input('limit')    ?? 10;
         $orderBy    = $request->input('order_by')       ?? 'id';
@@ -119,5 +118,56 @@ class UserController extends Controller
         ]);
     }
 
-   
+    public function _reset_password(Request $request){
+        //todo check role
+
+        $name    = (int) $request->input('id') ?? '';
+
+        $validator = Validator::make($request->all(),[
+            'id' => [
+                'required',
+                'integer',
+                'gte:1'
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => $validator->messages()
+            ]);
+        }
+
+
+         $user = User::find($id);   
+
+         if(!$user){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Record not found'
+            ]);
+         }
+
+         if($user->deleted_at != null){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Record not found'
+            ]);
+         }
+
+         $user_id = Auth::user()->id;
+
+         $user->reset_password = 1;
+         $user->updated_by     = $user_id;
+         $user->save();
+
+         return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data' => [
+                'id' => $user->id
+            ]
+        ]);
+    }
 }

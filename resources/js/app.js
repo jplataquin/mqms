@@ -306,14 +306,14 @@ window.util.$post = async (url,data,headers) => {
             break;
             case 500:
                 return {
-                        status:0,
+                        status:-5,
                         message:'Something went wrong',
                         data:{}
                 }
             break;
             case 404:
                 return {
-                        status:0,
+                        status:-4,
                         message:'Resource not found',
                         data:{}
                 }
