@@ -108,8 +108,8 @@ window.util.prompt = (msg,callback) => {
         el.appendChild(yes);
     });
 
-    window.primaryModalFooter.appendChild(footer);
-    
+    window.ui.primaryModalFooter.appendChild(footer);
+
     window.ui.primaryModal.show();
 }
 
