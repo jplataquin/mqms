@@ -261,7 +261,7 @@
 
         window.util.blockUI();
 
-        window.util.$get('/api/user/roles/{{$user->id}}/list',{}).then(reply=>{
+        window.util.$get('/api/user/roles/{{$user->id}}',{}).then(reply=>{
 
             window.util.unblockUI();
                 
