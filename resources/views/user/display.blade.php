@@ -265,13 +265,14 @@
                             }).onclick = (e)=>{
                                 e.stopPropagation();
                                
-                                window.util.prompt('Are you sure you want to remove this role?',(res)=>{
-
-                                    if(!res){
+                                window.util.prompt('Are you sure you want to remove this role?',(e,res)=>{
+                                 
+                                    if(res){
                                         return false;
                                     }
 
                                     window.util.blockUI();
+
                                     window.util.$post('/api/user/role/remove',{
                                         user_id: '{{$user->id}}',
                                         role_id: item.id
