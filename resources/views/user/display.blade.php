@@ -114,7 +114,7 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label>&nbsp</label>
-                        <button class="btn btn-primary form-control" id="addCode">Add</button>
+                        <button class="btn btn-primary form-control" id="addRoleBtn">Add</button>
                     </div>
                 </div>
             </div>
@@ -135,7 +135,7 @@
     const email                = $q('#email').first();
     const resetBtn             = $q('#resetBtn').first();
     const role                 = $q('#role').first();
-
+    const addRoleBtn           = $q('#addRoleBtn').first();
 
 
     let editable_flag = false;
@@ -196,7 +196,7 @@
     }
     
 
-    addRole.onclick = (e) => {
+    addRoleBtn.onclick = (e) => {
 
         let val = $q('.role-option[value="'+role.value+'"]').first();
 
