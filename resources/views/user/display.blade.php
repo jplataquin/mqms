@@ -121,7 +121,7 @@
         </div>
     </div>
 
-    <div id="role_list" class="row mt-3"></div>
+    <div id="list" class="row mt-3"></div>
 
 </div>
 
@@ -136,6 +136,7 @@
     const resetBtn             = $q('#resetBtn').first();
     const role                 = $q('#role').first();
     const addRoleBtn           = $q('#addRoleBtn').first();
+    const list                 = $q('#list').first();
 
 
     let editable_flag = false;
