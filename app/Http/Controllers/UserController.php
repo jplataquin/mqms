@@ -81,9 +81,12 @@ class UserController extends Controller
 
         $status_options = $user->statusOptions();
 
+        $roles = $user->Roles;
+
         return view('user/display',[
             'user'              => $user,
-            'status_options'    => $status_options
+            'status_options'    => $status_options,
+            'roles'             => $roles
         ]);
     }
 
@@ -227,7 +230,7 @@ class UserController extends Controller
     }
 
     public function _remove_role(Request $request){
-        
+
         $role_id    = (int) $request->input('role_id');
         $user_id    = (int) $request->input('user_id');
 
