@@ -203,19 +203,19 @@
         if(!val){
             window.util.alert('Code not found');
             
-            accessCode.value = '';
+            role.value = '';
             return false;
         }
 
         val = val.getAttribute('data-id');
 
-        accessCode.value = '';
+        role.value = '';
 
         window.util.blockUI();
 
-        window.util.$post('/api/role_access_code/add',{
-            role_id: '{{$role->id}}',
-            access_code_id: val
+        window.util.$post('/api/user/add/role',{
+            role_id: val,
+            user_id: '{{$user->id}}'
         }).then(reply=>{
 
             window.util.unblockUI();
