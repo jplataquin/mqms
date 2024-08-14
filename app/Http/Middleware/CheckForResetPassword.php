@@ -19,9 +19,9 @@ class CheckForResetPassword
     {
         if(Auth::check()){
             
-        echo Auth::user()->reset_password; exit;
+        //echo Auth::user()->reset_password; exit;
             if(Auth::user()->reset_password){
-                redirect('/projects');
+                return redirect('/projects');
             }
         }
 
