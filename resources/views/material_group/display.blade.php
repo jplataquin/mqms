@@ -191,7 +191,7 @@
             page: page,
             order: order,
             order_by: orderBy,
-            material_group_id: '{{$material_group->id}}',
+            material_group_id: '{{$id}}',
             limit: 10
         }).then(reply=>{
 
