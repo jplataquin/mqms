@@ -6,7 +6,7 @@
 <div class="breadcrumbs" hx-boost="true">
         <ul>
             <li>
-                <a href="/master_data/material/groups">
+                <a href="/master_data/material/groups" hx-select="#content" hx-target="#main">
                     <span>
                        Material Groups
                     </span>
