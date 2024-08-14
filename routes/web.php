@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Process;
-
+use \App\Http\Middleware\CheckForResetPassword;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,9 +31,14 @@ Route::get('/gitpull',function(){
     return $result->output();
 });
 
+Route::middleware(['auth'])->group(function(){
 
+    Route::get('/reset_password',function(){
+        echo 'TAE';
+    });
+});
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth',CheckForResetPassword::class])->group(function () {
 
     Route::get('/access_code/create', [App\Http\Controllers\AccessCodeController::class, 'create']);
     Route::get('/access_code/{id}', [App\Http\Controllers\AccessCodeController::class, 'display']);
