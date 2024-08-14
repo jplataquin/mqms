@@ -100,7 +100,7 @@
     
 </div>
 <script type="module">
-    import {$q} from '/adarna.js';
+    import {$q,$el} from '/adarna.js';
 
     const materialGroupName   = $q('#materialGroupName').first();
     const editBtn             = $q('#editBtn').first();
