@@ -3,19 +3,12 @@
 @section('content')
 <div id="content">
 <div class="container">
-    <div class="breadcrumbs">
+    <div class="breadcrumbs" hx-boost="true">
         <ul>
             <li>
-                <a href="#">
+                <a href="/master_data/material/groups">
                     <span>
-                        Master Data
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span>
-                       Material Group
+                       Material Groups
                     </span>
                 </a>
             </li>
@@ -23,7 +16,8 @@
                 <a href="#" class="active">
                     <span>
                         Create
-                    </span>		
+                    </span>	
+                    <i class="ms-2 bi bi-file-earmark-plus"></i>	
                 </a>
             </li>
         </ul>
@@ -31,24 +25,31 @@
     
     <hr>
 
-    <div class="row">
+    <div class="form-container">
+        <div class="form-header">
+            Create Material Group
+        </div>
 
-        <div class="col-12">
-            <div class="form-group">
-                <label>Material Group Name</label>
-                <input type="text" id="materialGroup" class="form-control"/>
+        <div class="form-body">
+            <div class="row">
+
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Material Group Name</label>
+                        <input type="text" id="materialGroup" class="form-control"/>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-12 text-end">
+                <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                <button class="btn btn-primary" id="createBtn">Create</button>
+                </div>
             </div>
         </div>
-
     </div>
-
-    <div class="row mt-5">
-        <div class="col-12 text-end">
-        <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
-        <button class="btn btn-primary" id="createBtn">Create</button>
-        </div>
-    </div>
-
 </div>
 
 <script type="module">
