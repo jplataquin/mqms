@@ -57,7 +57,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="container" id="list"></div>
 
         <div class="row mt-3">
@@ -97,7 +97,7 @@
                 });
 
                 row.onclick = ()=>{
-                    window.util.navTo('/supplier/'+item.id);
+                    window.util.navTo('/master_data/supplier/'+item.id);
                 };
 
                 $el.append(row).to(list);
