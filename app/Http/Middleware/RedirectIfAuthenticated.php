@@ -25,6 +25,7 @@ class RedirectIfAuthenticated
             if (Auth::guard($guard)->check()) {
 
                 //Redirect if reset password flag is true
+                echo Auth::user()->reset_password;exit;
                 if(Auth::user()->reset_password){
                     return redirect('/projects');
                 }
