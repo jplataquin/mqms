@@ -25,7 +25,7 @@ class RedirectIfAuthenticated
             
             if (Auth::guard($guard)->check()) {
 
-                echo Auth::user()->reset_password;exit;
+                echo Auth::user()->reset_password.' HERE';
                 if(Auth::user()->reset_password){
                     return redirect('/projects');
                 }
@@ -34,6 +34,6 @@ class RedirectIfAuthenticated
             }
         }
 
-       // return $next($request);
+        return $next($request);
     }
 }
