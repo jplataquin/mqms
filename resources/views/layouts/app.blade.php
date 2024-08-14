@@ -32,6 +32,13 @@
                             <a href="/home">Dashboard</a>
                         </div>
                     </li>
+                    
+                    <li class="menu-item">
+                        <div class="nav-item">
+                            <a href="/projects" class="inactive-nav-item">Projects</a>
+                        </div>          
+                    </li>
+                    
                     <li class="menu-item">
                         <div class="nav-item">
                             <a href="#" class="inactive-nav-item">Review</a>
@@ -53,20 +60,6 @@
                         </ul>
                     </li>
                     
-                    <li class="menu-item">
-                        <div class="nav-item">
-                            <a href="#" class="inactive-nav-item">Projects</a>
-                        </div>    
-                        <ul class="list-unstyled menu-sub-items">
-                            <li class="nav-sub-item">
-                                <a href="/projects" hx-select="#content" hx-target="#main">List</a>
-                            </li>
-                            <li class="nav-sub-item">
-                                <a href="/project/create" hx-select="#content" hx-target="#main">Create</a>
-                            </li>
-                        </ul>
-                        
-                    </li>
                 
                     <li class="menu-item">
                         <div class="nav-item">
