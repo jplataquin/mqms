@@ -6,9 +6,9 @@
 <div class="breadcrumbs">
         <ul>
             <li>
-                <a href="#">
+                <a href="/projects">
                     <span>
-                       Project
+                       Projects
                     </span>
                 </a>
             </li>
@@ -16,76 +16,63 @@
                 <a href="#" class="active">
                     <span>
                         Display
-                    </span>		
+                    </span>
+                    <i class="ms-2 bi bi-display"></i>	
                 </a>
             </li>
         </ul>
     </div>
-<hr>
+    
+    <hr>
 
-    <div class="row">
+    <div class="form-container">
+        <div class="form-header">
+            Project
+        </div>
+        <div class="form-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="w-100 table">
+                        <tr>
+                            <th>
+                                Project
+                            </th>
+                            <td>
+                                <input type="text" disabled="true" id="project_name" value="{{$project->name}}" class="form-control"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Status
+                            </th>
+                            <td>
+                                <select id="status" disabled="true" class="form-control">
+                                    <option value="ACTV" @if($project->status == "ACTV") selected @endif>Active</option>
+                                    <option value="INAC" @if($project->status == "INAC") selected @endif>Inactive</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>   
 
-    <div class="row">
-        <div class="col-lg-12">
-            <table class="w-100 table">
-                <tr>
-                    <th>
-                        Project
-                    </th>
-                    <td>
-                        <input type="text" disabled="true" id="project_name" value="{{$project->name}}" class="form-control"/>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        Status
-                    </th>
-                    <td>
-                        <select id="status" disabled="true" class="form-control">
-                            <option value="ACTV" @if($project->status == "ACTV") selected @endif>Active</option>
-                            <option value="INAC" @if($project->status == "INAC") selected @endif>Inactive</option>
-                        </select>
-                    </td>
-                </tr>
-            </table>
-        </div>   
+            </div>
 
+            <div class="row mt-5 mb-3">
+                <div class="col-6 text-start">
+                    <button class="btn btn-danger" id="deleteBtn">Delete</button>
+                </div>
+                <div class="col-6 text-end">
+                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                    <button class="btn btn-primary" id="editBtn">Edit</button>
+                    <button class="btn btn-warning d-none" id="updateBtn">Update</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="row mt-5 mb-3">
-        <div class="col-6 text-start">
-            <button class="btn btn-danger" id="deleteBtn">Delete</button>
-        </div>
-        <div class="col-6 text-end">
-            <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
-            <button class="btn btn-primary" id="editBtn">Edit</button>
-            <button class="btn btn-warning d-none" id="updateBtn">Update</button>
-        </div>
-    </div>
-
-   
     <hr>
     
 
-<!-- 
-<div class="col-lg-4">
-            <div class="form-group">
-                <label>Sort By</label>
-                <select class="form-control" id="sortSelect">
-                    <option value="1">A-Z name</option>
-                    <option value="2">Z-A name</option>
-                    <option value="3" selected>Latest Entry</option>
-                    <option value="4">Oldest Entry</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label>Query</label>
-                <input type="text" id="query" class="form-control"/>
-            </div>
-        </div>    
--->
     <div class="folder-form-container">
         <div class="folder-form-tab">
             Section
