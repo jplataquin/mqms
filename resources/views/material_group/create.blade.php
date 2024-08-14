@@ -35,7 +35,7 @@
 
                 <div class="col-12">
                     <div class="form-group">
-                        <label>Material Group Name</label>
+                        <label>Name</label>
                         <input type="text" id="materialGroup" class="form-control"/>
                     </div>
                 </div>
