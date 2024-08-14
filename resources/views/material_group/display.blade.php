@@ -102,11 +102,19 @@
 <script type="module">
     import {$q} from '/adarna.js';
 
-    let materialGroupName   = $q('#materialGroupName').first();
-    let editBtn             = $q('#editBtn').first();
-    let updateBtn           = $q('#updateBtn').first();
-    let cancelBtn           = $q('#cancelBtn').first();
+    const materialGroupName   = $q('#materialGroupName').first();
+    const editBtn             = $q('#editBtn').first();
+    const updateBtn           = $q('#updateBtn').first();
+    const cancelBtn           = $q('#cancelBtn').first();
 
+    const list            = $q('#list').first();
+    const query           = $q('#query').first();
+    const searchBtn       = $q('#searchBtn').first();
+    
+    let page            = 1;
+    let order           = 'DESC';
+    let orderBy         = 'id';
+    
 
     editBtn.onclick = (e)=>{
         e.preventDefault();
@@ -148,6 +156,108 @@
          window.util.navTo('/master_data/material/groups');
     }
 
+
+
+    function reinitalize(){
+        page = 1;
+        $el.clear(list);   
+    }
+
+    function renderRows(data){
+        
+        data.map(item=>{
+
+            let row = t.div({class:'item-container fade-in'},()=>{
+                t.div({class:'item-header'},item.brand+' '+item.name +' '+item.specification_unit_packaging+''.trim());
+            });
+
+            row.onclick = ()=>{
+                 window.util.navTo('/master_data/material/item/'+item.id);
+            };
+
+            $el.append(row).to(list);
+            
+        });
+
+    }
+
+    /*** Material Items ***/
+    function showData(){
+
+        window.util.blockUI();
+
+        window.util.$get('/api/material/item/list',{
+            query: query.value,
+            page: page,
+            order: order,
+            order_by: orderBy,
+            material_group_id: '{{$material_group->id}}',
+            limit: 10
+        }).then(reply=>{
+
+            
+            window.util.unblockUI();
+
+            if(reply.status <= 0 ){
+                
+                window.util.showMsg(reply);
+                return false;
+            };
+
+            page++;
+
+            if(reply.data.length){
+                renderRows(reply.data); 
+            }else{
+                showMoreBtn.style.display = 'none';
+            }
+            
+        });
+    }
+   
+    searchBtn.onclick = ()=>{
+        showMoreBtn.style.display = 'block';
+        reinitalize();
+        showData();
+    }
+
+    showMoreBtn.onclick = ()=>{
+        showData();
+    }
+
+    sortSelect.onchange = ()=>{
+        reinitalize();
+
+        let select = parseInt(sortSelect.value);
+
+        switch(select){
+            case 1:
+                order   = 'ASC';
+                orderBy = 'name';
+                break;
+            case 2:
+                order   = 'DESC';
+                orderBy = 'name';
+                break;
+            case 3:
+                order   = 'DESC';
+                orderBy = 'id';
+                break;
+            case 4:
+                order   = 'ASC';
+                orderBy = 'id';
+            break;
+        }
+
+        showData();
+    }
+
+    createBtn.onclick = ()=>{
+         window.util.navTo('/master_data/material/item/create') ;
+    }
+
+    reinitalize();
+    showData();
 </script>
 
 </div>
