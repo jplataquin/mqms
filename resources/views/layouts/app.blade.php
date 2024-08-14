@@ -35,10 +35,10 @@
                     
                     <li class="menu-item">
                         <div class="nav-item">
-                            <a href="/projects" class="inactive-nav-item">Projects</a>
+                            <a href="/projects">Projects</a>
                         </div>          
                     </li>
-                    
+
                     <li class="menu-item">
                         <div class="nav-item">
                             <a href="#" class="inactive-nav-item">Review</a>
