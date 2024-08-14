@@ -57,10 +57,12 @@
             </table>    
         </div>
     </div>
-    
-        <div class="form-header text-center mb-3">
+
+    <div class="form-container">
+        <div class="form-header">
             Component
         </div>
+        <div class="form-body">
             <div class="row mb-3">
                 <div class="col-lg-6">
                     <div class="form-group">
@@ -123,7 +125,9 @@
                     <button class="btn btn-primary" id="editBtn">Edit</button>
                 </div>
             </div>
-
+        </div>
+    </div>
+    
     <hr>
 
     <div class="folder-form-container">
