@@ -24,14 +24,10 @@ class RedirectIfAuthenticated
         foreach ($guards as $guard) {
             
             
-            echo Auth::user()->reset_password.' HERE';
             if (Auth::guard($guard)->check()) {
 
-                if(Auth::user()->reset_password){
-                    return redirect('/projects');
-                }
-
-                return redirect(RouteServiceProvider::HOME);
+                //RouteServiceProvider::HOME
+                return redirect('/projects');
             }
         }
 
