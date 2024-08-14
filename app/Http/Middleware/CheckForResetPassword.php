@@ -20,7 +20,7 @@ class CheckForResetPassword
         if(Auth::check()){
             
             if(Auth::user()->reset_password){
-                return redirect('/projects');
+                return redirect('/reset_password');
             }
         }
 
