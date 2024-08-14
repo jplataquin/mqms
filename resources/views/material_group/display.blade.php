@@ -100,7 +100,7 @@
     
 </div>
 <script type="module">
-    import {$q,$el} from '/adarna.js';
+    import {$q,$el,Template} from '/adarna.js';
 
     const materialGroupName   = $q('#materialGroupName').first();
     const editBtn             = $q('#editBtn').first();
@@ -111,6 +111,7 @@
     const query           = $q('#query').first();
     const searchBtn       = $q('#searchBtn').first();
     
+    const t             = new Template();
     let page            = 1;
     let order           = 'DESC';
     let orderBy         = 'id';
