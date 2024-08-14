@@ -38,16 +38,17 @@
                 </div>
 
                 <a class="d-none" hx-select="#content" hx-target="#main" href="/roles" id="#__nav_helper"></a>
+                
                 <ul class="list-unstyled">
                     <li class="menu-item">
                         <div class="nav-item">
-                            <a href="/home">Dashboard</a>
+                            <a href="/home" hx-select="#content" hx-target="#main">Dashboard</a>
                         </div>
                     </li>
                     
                     <li class="menu-item">
                         <div class="nav-item">
-                            <a href="/projects">Projects</a>
+                            <a href="/projects" hx-select="#content" hx-target="#main">Projects</a>
                         </div>          
                     </li>
 
