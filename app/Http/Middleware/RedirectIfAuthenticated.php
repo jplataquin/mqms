@@ -22,9 +22,11 @@ class RedirectIfAuthenticated
         $guards = empty($guards) ? [null] : $guards;
       
         foreach ($guards as $guard) {
+            
+            echo 1231312; exit;
+            
             if (Auth::guard($guard)->check()) {
 
-                echo 1231312; exit;
                 if(Auth::user()->reset_password){
                     return redirect('/projects');
                 }
