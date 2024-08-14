@@ -23,6 +23,12 @@ class RedirectIfAuthenticated
         
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
+
+                //Redirect if reset password flag is true
+                if(Auth::user()->reset_password){
+                    return redirect('/projects');
+                }
+
                 return redirect(RouteServiceProvider::HOME);
             }
         }
