@@ -3,52 +3,52 @@
 @section('content')
 <div id="content">
     <div class="container">
-    <div class="breadcrumbs">
+    <div class="breadcrumbs" hx-boost="true">
         <ul>
             <li>
-                <a href="#">
+                <a href="/master_data/material/groups" hx-select="#content" hx-target="#main">
                     <span>
-                        Master Data
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span>
-                       Material Group
+                       Material Groups
                     </span>
                 </a>
             </li>
             <li>
                 <a href="#" class="active">
                     <span>
-                        Display
+                        List
                     </span>		
+                    <i class="ms-2 bi bi-display"></i>
                 </a>
             </li>
         </ul>
     </div>
-<hr>
+    <hr>
 
-    <div class="row">
+    <div class="form-container">
+        <div class="form-header">
+            Material Group
+        </div>
+        <div class="form-body">
+            <div class="row">
 
-        <div class="col-12">
-            <div class="form-group">
-                <label>Name</label>
-                <input type="text" id="materialGroupName" disabled="true" value="{{$name}}" class="form-control"/>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="materialGroupName" disabled="true" value="{{$name}}" class="form-control"/>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-12 text-end">
+                <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                <button class="btn btn-primary" id="editBtn">Edit</button>
+                <button class="btn btn-warning d-none" id="updateBtn">Update</button>
+                </div>
             </div>
         </div>
-
     </div>
-
-    <div class="row mt-5">
-        <div class="col-12 text-end">
-        <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
-        <button class="btn btn-primary" id="editBtn">Edit</button>
-        <button class="btn btn-warning d-none" id="updateBtn">Update</button>
-        </div>
-    </div>
-
 </div>
 <script type="module">
     import {$q} from '/adarna.js';
