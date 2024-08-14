@@ -100,7 +100,7 @@
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label>Secondary Email</label>
-                                <input type="text" id="secondary" value="{{$supplier->secondary_email}}" disabled="true" class="form-control"/>
+                                <input type="text" id="secondaryEmail" value="{{$supplier->secondary_email}}" disabled="true" class="form-control"/>
                             </div>
                         </div>
                     </div>
