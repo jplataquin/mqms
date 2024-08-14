@@ -3,19 +3,12 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs">
+<div class="breadcrumbs" hx-boost="true">
         <ul>
             <li>
-                <a href="#">
+                <a href="/master_data/material/groups">
                     <span>
-                        Master Data
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span>
-                       Material Group
+                       Material Groups
                     </span>
                 </a>
             </li>
@@ -24,43 +17,52 @@
                     <span>
                         List
                     </span>		
+                    <i class="ms-2 bi bi-list-ul"></i>
                 </a>
             </li>
         </ul>
     </div>
 <hr>
 
-    <div class="row mb-5">
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label>Sort By</label>
-                <select class="form-control" id="sortSelect">
-                    <option value="1">A-Z name</option>
-                    <option value="2">Z-A name</option>
-                    <option value="3" selected>Latest Entry</option>
-                    <option value="4">Oldest Entry</option>
-                </select>
-            </div>
+    <div class="folder-form-container">
+        <div class="folder-form-tab">
+            Material Groups
         </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label>Query</label>
-                <input type="text" id="query" class="form-control"/>
-            </div>
-        </div>
-        <div class="col-lg-2">
-            <div class="form-group">
-                <label>&nbsp;</label>
-                <button id="searchBtn" class="btn w-100 btn-primary">Search</button>
-            </div>
-        </div>
-        <div class="col-lg-2">
-            <div class="form-group">
-                <label>&nbsp;</label>
-                <button id="createBtn" class="btn w-100 btn-warning">Create</button>
+        <div class="folder-form-body">
+            <div class="row mb-5">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Sort By</label>
+                        <select class="form-control" id="sortSelect">
+                            <option value="1">A-Z name</option>
+                            <option value="2">Z-A name</option>
+                            <option value="3" selected>Latest Entry</option>
+                            <option value="4">Oldest Entry</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Query</label>
+                        <input type="text" id="query" class="form-control"/>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label>&nbsp;</label>
+                        <button id="searchBtn" class="btn w-100 btn-primary">Search</button>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label>&nbsp;</label>
+                        <button id="createBtn" class="btn w-100 btn-warning">Create</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
     <div class="container mb-5" id="list"></div>
 
     <div class="row">
