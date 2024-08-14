@@ -23,10 +23,9 @@ class RedirectIfAuthenticated
       
         foreach ($guards as $guard) {
             
-            echo 1231312; exit;
-            
             if (Auth::guard($guard)->check()) {
 
+                echo Auth::user()->reset_password;exit;
                 if(Auth::user()->reset_password){
                     return redirect('/projects');
                 }
@@ -35,6 +34,6 @@ class RedirectIfAuthenticated
             }
         }
 
-        return $next($request);
+       // return $next($request);
     }
 }
