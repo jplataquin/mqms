@@ -17,8 +17,9 @@ class CheckForResetPassword
      */
     public function handle(Request $request, Closure $next)
     {
-        echo Auth::check(); exit;
         if(Auth::check()){
+            
+        echo Auth::user()->reset_password; exit;
             if(Auth::user()->reset_password){
                 redirect('/projects');
             }
