@@ -281,4 +281,15 @@ class UserController extends Controller
             'data'=> $result
         ]);
     }
+
+    public function reset_password(){
+
+        return view('/user/reset_password',[
+            'user' => Auth::user()
+        ]);
+    }
+
+    public function _reset_password(){
+
+    }
 }

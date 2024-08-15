@@ -14,7 +14,7 @@ class UnitController extends Controller
 {
     public function create(){
 
-        return view('component_unit/create');
+        return view('unit/create');
     }
 
     public function display($id){
