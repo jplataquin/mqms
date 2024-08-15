@@ -6,19 +6,13 @@
 <div class="breadcrumbs" hx-boost="true">
         <ul>
             <li>
-                <a href="#">
-                    <span>
-                        Request
-                    </span>
-                </a>
-            </li>
-            <li>
                 <a href="#" class="active">
                     <span>
-                       Material Quantity
+                       Material Quantity Request
                     </span>
+                    <i class="ms-2 bi bi-list-ul"></i>
                 </a>
-                <i class="ms-2 bi bi-list-ul"></i>
+                
             </li>
         </ul>
     </div>
