@@ -204,6 +204,7 @@
             status: statusSelect.value,
             project_id: projectSelect.value,
             section_id: sectionSelect.value,
+            contract_item_id: contractItemSelect.value,
             component_id: componentSelect.value,
             limit: 10
         }).then(reply=>{
