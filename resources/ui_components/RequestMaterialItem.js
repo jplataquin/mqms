@@ -178,7 +178,7 @@ class RequestMaterialItem extends Component{
                             this.el.materialBudgetQuantity = t.input({
                                 type:'text',
                                 disabled:true,
-                                class:'form-control',
+                                class:'form-control text-center',
                                 value:this.el.materialBudgetQuantity
                             });
                         });              
@@ -190,7 +190,7 @@ class RequestMaterialItem extends Component{
                             this.el.prevApprovedQuantity = t.input({
                                 type:'text',
                                 disabled:true,
-                                class:'form-control',
+                                class:'form-control text-center',
                                 value:this._model.prevApprovedQuantity
                             });
                         })                
@@ -203,7 +203,7 @@ class RequestMaterialItem extends Component{
                             this.el.quantityRemaining = t.input({
                                 type:'text',
                                 disabled:true,
-                                class:'form-control',
+                                class:'form-control text-center',
                                 value:''
                             });
                         });                
