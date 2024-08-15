@@ -103,7 +103,7 @@
                 <button id="searchBtn" class="btn btn-primary">Search</button>
                 
                 <div>
-                    <button id="createBtn" class="btnbtn-warning">Create</button>
+                    <button id="createBtn" class="btn btn-warning">Create</button>
                 </div>
             </div>
 
