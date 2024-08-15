@@ -289,7 +289,5 @@ class UserController extends Controller
         ]);
     }
 
-    public function _reset_password(){
-
-    }
+   
 }
