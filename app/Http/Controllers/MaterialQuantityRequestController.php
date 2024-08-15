@@ -73,14 +73,16 @@ class MaterialQuantityRequestController extends Controller
                 'quantity'              => $componentItem->quantity
             ];
         }
-        
+        DB::enableQueryLog();
         $material_item_result = DB::table('material_quantities')
         ->whereIn('component_item_id',$component_item_ids)
         ->join('material_items','material_quantities.material_item_id','=','material_items.id')
         ->get();
 
+        echo DB::getQueryLog();
         print_r($component_item_ids);
         print_r( $material_item_result );exit;
+
         if(!count($material_item_result)){
             return abort(404);
         };
