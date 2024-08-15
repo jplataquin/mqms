@@ -62,8 +62,8 @@
                     </div>
                 </div>
                 
-            </div>
-            <div class="row">
+        </div>
+        <div class="row">
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label>Section</label>
@@ -91,17 +91,21 @@
                         <button id="cancelBtn" class="btn w-100 btn-secondary">Cancel</button>
                     </div>
                 </div>
-            </div>
-            <div class="row mb-5">
-                <div class="col-lg-8"></div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label>&nbsp;</label>
-                        <button id="createBtn" class="btn w-100 btn-warning">Create</button>
-                    </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-lg-8"></div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <button id="createBtn" class="btn w-100 btn-warning">Create</button>
                 </div>
             </div>
-            <div class="container">
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
                 <table class="table border">
                     <thead>
                         <tr>
@@ -123,10 +127,6 @@
                     <button id="showMoreBtn" class="btn w-100 btn-primary">Show More</button>
                 </div>
             </div>
-
-        </div>
-    </div>
-</div>
 
 
 <script type="module">
