@@ -57,9 +57,10 @@ class MaterialQuantityRequestController extends Controller
         //If the component is not approved then do not allow
         if($component->status != 'APRV'){
             return view('material_quantity_request/unavailable',[
-                'project'   => $project,
-                'section'   => $section,
-                'component' => $component,
+                'project'       => $project,
+                'section'       => $section,
+                'component'     => $component,
+                'contract_item' => $contract_item,
                 'message'   => 'Component status is not yet approved'
             ]);
         }
@@ -92,10 +93,11 @@ class MaterialQuantityRequestController extends Controller
         //If not materials quantities are found inform the user that they cannot request
         if(!count($material_item_result)){
             return view('material_quantity_request/unavailable',[
-                'project'   => $project,
-                'section'   => $section,
-                'component' => $component,
-                'message'   => 'There are no material quantities maintained in any of the component items'
+                'project'       => $project,
+                'section'       => $section,
+                'component'     => $component,
+                'contract_item' => $contract_item,
+                'message'       => 'There are no material quantities maintained in any of the component items'
             ]);
         };
 
@@ -118,12 +120,13 @@ class MaterialQuantityRequestController extends Controller
         $unit_options = Unit::toOptions();
 
         return view('material_quantity_request/create',[
-            'project'               => $project,
-            'section'               => $section,
-            'component'             => $component,
-            'material_options'      => $material_options,
-            'component_item_options' => $component_item_options,
-            'unit_options'          => $unit_options
+            'project'                   => $project,
+            'section'                   => $section,
+            'component'                 => $component,
+            'contract_item'             => $contract_item,
+            'material_options'          => $material_options,
+            'component_item_options'    => $component_item_options,
+            'unit_options'              => $unit_options
         ]);
     }
 
