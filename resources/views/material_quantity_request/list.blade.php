@@ -343,7 +343,7 @@
             reply.data.forEach((item)=>{
 
                 contractItemSelect.append(
-                    t.option({value:item.id},'['+item.code+'] '+item.description)
+                    t.option({value:item.id},'['+item.item_code+'] '+item.description)
                 );
 
             });
