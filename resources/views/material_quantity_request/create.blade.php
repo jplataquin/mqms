@@ -23,7 +23,7 @@
         </ul>
     </div>
     <hr>
-    <div class="folder-form-container">
+    <div class="folder-form-container mb-5">
         <div class="folder-form-tab">
             Material Quantity Request
         </div>
