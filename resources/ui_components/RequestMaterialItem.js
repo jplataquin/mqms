@@ -64,7 +64,9 @@ class RequestMaterialItem extends Component{
                     display: (this._model.editable) ? 'inline' : 'none'
                 }},()=>{
                     t.div({class:'col-12 text-end'},()=>{
-                        this.el.deleteBtn = t.a({href:'#'},'[ X ]');
+                        this.el.deleteBtn = t.a({href:'#'},()=>{
+                            t.i({class:'bi bi-trash-fill'});
+                        });
                     });
                 });
 
@@ -172,7 +174,7 @@ class RequestMaterialItem extends Component{
                     
                     t.div({class:'col-4'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Material Budget');
+                            t.label('Budget Quantity');
                             this.el.materialBudgetQuantity = t.input({
                                 type:'text',
                                 disabled:true,
@@ -197,7 +199,7 @@ class RequestMaterialItem extends Component{
 
                     t.div({class:'col-4'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Quantity Remaining');
+                            t.label('Remaining Quantity');
                             this.el.quantityRemaining = t.input({
                                 type:'text',
                                 disabled:true,
