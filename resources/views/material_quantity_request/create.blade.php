@@ -23,6 +23,13 @@
         </ul>
     </div>
     <hr>
+    <div class="folder-form-container">
+        <div class="folder-form-tab">
+            Material Quantity Request
+        </div>
+        <div class="folder-form-body">
+</div>
+    </div>
     <table class="table">
         <tbody>
             <tr>
