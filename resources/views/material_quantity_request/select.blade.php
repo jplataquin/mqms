@@ -216,7 +216,7 @@
                 return false;
             }
             
-            widnow.util.navTo('/material_quantity_request/create/'+projectSelect.value+'/'+sectionSelect.value+'/'+contractItemSelect.value+'/'+componentSelect.value);
+            window.util.navTo('/material_quantity_request/create/'+projectSelect.value+'/'+sectionSelect.value+'/'+contractItemSelect.value+'/'+componentSelect.value);
         }
     </script>
 </div>
