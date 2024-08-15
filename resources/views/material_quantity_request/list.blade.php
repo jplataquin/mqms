@@ -102,7 +102,7 @@
                 <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
                 <button id="searchBtn" class="btn btn-primary">Search</button>
                 
-                <div>
+                <div class="mt-3">
                     <button id="createBtn" class="btn btn-warning">Create</button>
                 </div>
             </div>
