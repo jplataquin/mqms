@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Section;
+use App\Models\ContractItem;
 use App\Models\Component;
 use App\Models\MaterialQuantityRequest;
 use App\Models\MaterialQuantityRequestItem;
@@ -30,7 +31,7 @@ class MaterialQuantityRequestController extends Controller
 
     
 
-    public function create($project_id,$section_id,$component_id){
+    public function create($project_id,$section_id,$contract_item_id,$component_id){
         
         $project_id = (int) $project_id;
         $project = Project::findOrFail($project_id);
@@ -46,6 +47,9 @@ class MaterialQuantityRequestController extends Controller
 
         $section_id = (int) $section_id;
         $section = Section::findOrFail($section_id);
+
+        $contract_item_id = (int) $contract_item_id;
+        $contract_item = ContractItem::findOrFail($contract_item_id);
 
         $component_id = (int) $component_id;
         $component = Component::findOrFail($component_id);
@@ -670,6 +674,7 @@ class MaterialQuantityRequestController extends Controller
         $materialQuantityRequest = new MaterialQuantityRequest();
 
         $user_id = Auth::user()->id;
+        
         $materialQuantityRequest = $materialQuantityRequest->where('created_by','=',$user_id);
         
         if($query){

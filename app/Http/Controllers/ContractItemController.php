@@ -330,11 +330,16 @@ class ContractItemController extends Controller
 
         $contract_item = new ContractItem();
 
-        $contract_item = $contract_item->where('section_id',$section_id);
+        if($section_id){
+            $contract_item = $contract_item->where('section_id',$section_id);
+        }
 
         if($query != ''){
             $contract_item = $contract_item->where('name','LIKE','%'.$query.'%');
         }
+
+        //Filter out deleted records
+        $contract_item = $contract_item->where('deleted_at','=',null);
 
         if($limit > 0){
             $page   = ($page-1) * $limit;
@@ -347,9 +352,9 @@ class ContractItemController extends Controller
         }
 
         return response()->json([
-            'status' => 1,
-            'message'=>'',
-            'data'=> $result
+            'status'    => 1,
+            'message'   =>'',
+            'data'      => $result
         ]);
     }
 

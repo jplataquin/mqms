@@ -436,14 +436,14 @@ class ComponentController extends Controller
         //todo check role
 
         $section_id         = (int) $request->input('section_id') ?? 0;
-        $contract_item_id    = (int) $request->input('contract_item_id') ?? 0;
-        $page       = (int) $request->input('page')     ?? 1;
-        $limit      = (int) $request->input('limit')    ?? 0;
-        $orderBy    = $request->input('order_by')       ?? 'id';
-        $order      = $request->input('order')          ?? 'DESC';
-        $query      = $request->input('query')          ?? '';
-        $status     = $request->input('status')         ?? '';
-        $result     = [];
+        $contract_item_id   = (int) $request->input('contract_item_id') ?? 0;
+        $page               = (int) $request->input('page')     ?? 1;
+        $limit              = (int) $request->input('limit')    ?? 0;
+        $orderBy            = $request->input('order_by')       ?? 'id';
+        $order              = $request->input('order')          ?? 'DESC';
+        $query              = $request->input('query')          ?? '';
+        $status             = $request->input('status')         ?? '';
+        $result             = [];
 
         $component = new Component();
 
@@ -462,6 +462,9 @@ class ComponentController extends Controller
         if($status != ''){
             $component = $component->where('status','=',$status);
         }
+
+        //filter out deleted
+        $component = $component->where('deleted_at','=',null);
 
         if($limit > 0){
             $page   = ($page-1) * $limit;

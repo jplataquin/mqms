@@ -230,6 +230,9 @@ class SectionController extends Controller
             $section = $section->where('name','LIKE','%'.$query.'%');
         }
 
+        //Filter deleted
+        $section = $section->where('deleted_at','=',null);
+        
         if($limit > 0){
             $page   = ($page-1) * $limit;
             
