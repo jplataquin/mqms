@@ -112,7 +112,7 @@
         e.preventDefault();
 
         if(count >= 6){
-            alert('Maximum of 6 items per request');
+            window.util.alert('Error','Maximum of 6 items per request');
             return false;
         }
 
@@ -126,7 +126,7 @@
         item.handler.deleteCallback((dom)=>{
                 
             if(count == 1){
-                alert('At least one item must remain');
+                window.util.alert('Error','At least one item must remain');
                 return false;
             }
 

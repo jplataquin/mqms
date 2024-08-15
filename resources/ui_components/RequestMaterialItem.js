@@ -52,7 +52,7 @@ class RequestMaterialItem extends Component{
 
         const t = this.t;
 
-        let el = t.div({class:'form-container mb-3'},()=>{
+        let el = t.div({class:'items form-container mb-3'},()=>{
 
             t.div({class:'form-header'},()=>{
                 this.el.indexNumber = t.label('Item #');
@@ -230,7 +230,7 @@ class RequestMaterialItem extends Component{
                 t.div({class:'row mt-3'},()=>{
                     t.div({class:'col-12'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Request');
+                            t.label('Request Quantity');
                             this.el.requestedQuantity = t.input({
                                 type:'text',
                                 class:'form-control',
