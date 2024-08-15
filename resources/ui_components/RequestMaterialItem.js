@@ -65,7 +65,7 @@ class RequestMaterialItem extends Component{
                 }},()=>{
                     t.div({class:'col-12 text-end'},()=>{
                         this.el.deleteBtn = t.a({href:'#'},()=>{
-                            t.i({class:'bi bi-trash-fill'});
+                            t.i({class:'bi bi-x-circle'});
                         });
                     });
                 });
