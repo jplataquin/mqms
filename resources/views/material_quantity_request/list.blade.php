@@ -335,7 +335,46 @@
             reply.data.forEach((item)=>{
 
                 contractItemSelect.append(
-                    t.option({value:item.id},'['+item.item_code+'] '+item.description)
+                    t.option({value:item.id},'[ '+item.item_code+' ] '+item.description)
+                );
+
+            });
+
+        });
+    }
+
+
+    contractItemSelect.onchange = (e)=>{
+
+        e.preventDefault();
+
+        componentSelect.innerHTML = '';
+
+        window.util.blockUI();
+
+        window.util.$get('/api/component/list',{
+            coontract_item_id: contractItemSelect.value,
+            orderBy:'name',
+            order:'ASC'
+        }).then(reply=>{
+
+            
+            window.util.unblockUI();
+
+            if(reply.status <= 0){
+
+                window.util.showMsg(reply);
+                return false;
+            }
+
+            componentSelect.append(
+                t.option({value:''},' - ')
+            );
+
+            reply.data.forEach((item)=>{
+
+                componentSelect.append(
+                    t.option({value:item.id},item.name)
                 );
 
             });

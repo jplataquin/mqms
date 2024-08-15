@@ -435,7 +435,8 @@ class ComponentController extends Controller
 
         //todo check role
 
-        $section_id = (int) $request->input('section_id') ?? 0;
+        $section_id         = (int) $request->input('section_id') ?? 0;
+        $contrat_item_id    = (int) $request->input('contract_item_id') ?? 0;
         $page       = (int) $request->input('page')     ?? 1;
         $limit      = (int) $request->input('limit')    ?? 0;
         $orderBy    = $request->input('order_by')       ?? 'id';
@@ -446,7 +447,13 @@ class ComponentController extends Controller
 
         $component = new Component();
 
-        $component = $component->where('section_id',$section_id);
+        if($section_id){
+            $component = $component->where('section_id',$section_id);
+        }
+
+        if($contract_item_id){
+            $component = $component->where('contract_item_id',$contract_item_id);
+        }
 
         if($query != ''){
             $component = $component->where('name','LIKE','%'.$query.'%');
