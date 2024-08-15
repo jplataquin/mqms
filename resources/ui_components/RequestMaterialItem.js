@@ -127,7 +127,7 @@ class RequestMaterialItem extends Component{
                 t.div({class:'row mt-3'},()=>{
                     t.div({class:'col-6'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Component Item Budget');
+                            t.label('Item Budget');
                             this.el.componentItemBudget = t.input({
                                 type:'text',
                                 disabled:true,
