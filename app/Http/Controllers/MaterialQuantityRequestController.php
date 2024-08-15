@@ -79,7 +79,7 @@ class MaterialQuantityRequestController extends Controller
         ->join('material_items','material_quantities.material_item_id','=','material_items.id')
         ->get();
 
-        echo DB::getQueryLog();
+        dd(DB::getQueryLog());
         print_r($component_item_ids);
         print_r( $material_item_result );exit;
 
