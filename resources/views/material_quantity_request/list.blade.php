@@ -54,7 +54,7 @@
         </div>
         <div class="row">
                 
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="form-group">
                         <label>Project</label>
                         <select class="form-control" id="projectSelect">
@@ -66,7 +66,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="form-group">
                         <label>Section</label>
                         <select class="form-control" id="sectionSelect">
@@ -74,7 +74,16 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4">
+                
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label>Contract Item</label>
+                        <select class="form-control" id="contractItemSelect">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
                     <div class="form-group">
                         <label>Component</label>
                         <select class="form-control" id="componentSelect">
@@ -105,7 +114,7 @@
                     <button id="searchBtn" class="btn w-100 btn-primary">Search</button>
                 </div>
             </div>
-            
+
         </div>
     </div>
 </div>
