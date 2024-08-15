@@ -124,8 +124,10 @@ class RequestMaterialItem extends Component{
                 })//div row
 
 
+                /***
                 t.div({class:'row mt-3'},()=>{
-                    t.div({class:'col-6'},()=>{
+                    
+                    t.div({class:'col-4'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Item Budget');
                             this.el.componentItemBudget = t.input({
@@ -137,8 +139,8 @@ class RequestMaterialItem extends Component{
                             
                         });                
                     });
-
-                    t.div({class:'col-6'},()=>{
+                    
+                    t.div({class:'col-4'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Material Equivalent');
                             this.el.equivalent = t.input({
@@ -149,12 +151,8 @@ class RequestMaterialItem extends Component{
                         });               
                     });
 
-                });//div row
 
-                t.div({class:'row mt-3'},()=>{
-                    
-
-                    t.div({class:'col-6'},()=>{
+                    t.div({class:'col-4'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Material Budget Quantity');
                             this.el.materialBudgetQuantity = t.input({
@@ -166,7 +164,25 @@ class RequestMaterialItem extends Component{
                         });              
                     });
 
-                    t.div({class:'col-6'},()=>{
+
+                });//div row
+                ***/
+
+                t.div({class:'row mt-3'},()=>{
+                    
+                    t.div({class:'col-4'},()=>{
+                        t.div({class:'form-group'},()=>{
+                            t.label('Material Budget');
+                            this.el.materialBudgetQuantity = t.input({
+                                type:'text',
+                                disabled:true,
+                                class:'form-control',
+                                value:this.el.materialBudgetQuantity
+                            });
+                        });              
+                    });
+
+                    t.div({class:'col-4'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Approved Quantity');
                             this.el.prevApprovedQuantity = t.input({
@@ -177,14 +193,9 @@ class RequestMaterialItem extends Component{
                             });
                         })                
                     });
-                    
-                });//div row
 
-           
-                t.div({class:'row mt-3'},()=>{
-                    
-                    
-                    t.div({class:'col-6'},()=>{
+
+                    t.div({class:'col-4'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Quantity Remaining');
                             this.el.quantityRemaining = t.input({
@@ -196,6 +207,14 @@ class RequestMaterialItem extends Component{
                         });                
                     });
 
+                    
+                });//div row
+
+                /**
+                t.div({class:'row mt-3'},()=>{
+                    
+                    
+                    
                     t.div({class:'col-6'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Total Material Equivalent');
@@ -205,11 +224,12 @@ class RequestMaterialItem extends Component{
                     
 
                 });//div row
+                **/
 
                 t.div({class:'row mt-3'},()=>{
                     t.div({class:'col-12'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Requested Quantity');
+                            t.label('Request');
                             this.el.requestedQuantity = t.input({
                                 type:'text',
                                 class:'form-control',
@@ -250,9 +270,9 @@ class RequestMaterialItem extends Component{
             
             if( parseFloat(this.el.requestedQuantity.value) > remaining ){
                  this.el.requestedQuantity.value = 0; 
-                 this.el.totalEquivalent.value = '';
+               //  this.el.totalEquivalent.value = '';
                  this.el.requestedQuantity.blur();
-                 window.util.showMsg('Not enough material budget');
+                 window.util.alert('Error','Not enough material budget');
             }
 
             this.setState('requestedQuantity',this.el.requestedQuantity.value);
