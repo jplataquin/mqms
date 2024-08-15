@@ -134,6 +134,7 @@
     </div>
 </div>
 
+
 <script type="module">
     import {$q,Template,$el,$util} from '/adarna.js';
 
