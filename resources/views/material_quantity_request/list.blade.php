@@ -24,7 +24,7 @@
     </div>
     <div class="folder-form-body">
         <div class="row">
-                <div class="col-lg-2">
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label>Sort By</label>
                         <select class="form-control" id="sortSelect">
@@ -33,21 +33,10 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label>ID</label>
                         <input type="text" id="query" class="form-control"/>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label>Project</label>
-                        <select class="form-control" id="projectSelect">
-                            <option value=""> - </option>
-                            @foreach($projects as $project)
-                                <option value="{{$project->id}}">{{$project->name}}</option>
-                            @endforeach
-                        </select>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -64,6 +53,19 @@
                 
         </div>
         <div class="row">
+                
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Project</label>
+                        <select class="form-control" id="projectSelect">
+                            <option value=""> - </option>
+                            @foreach($projects as $project)
+                                <option value="{{$project->id}}">{{$project->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label>Section</label>
@@ -71,6 +73,7 @@
                         </select>
                     </div>
                 </div>
+
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label>Component</label>
@@ -79,27 +82,28 @@
                     </div>
                 </div>
 
-                <div class="col-lg-2">
-                    <div class="form-group">
-                        <label>&nbsp;</label>
-                        <button id="searchBtn" class="btn w-100 btn-primary">Search</button>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="form-group">
-                        <label>&nbsp;</label>
-                        <button id="cancelBtn" class="btn w-100 btn-secondary">Cancel</button>
-                    </div>
-                </div>
+             
         </div>
         <div class="row mb-5">
-            <div class="col-lg-8"></div>
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>&nbsp;</label>
                     <button id="createBtn" class="btn w-100 btn-warning">Create</button>
                 </div>
             </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <button id="searchBtn" class="btn w-100 btn-primary">Search</button>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <button id="cancelBtn" class="btn w-100 btn-secondary">Cancel</button>
+                </div>
+            </div>
+         
         </div>
     </div>
 </div>
