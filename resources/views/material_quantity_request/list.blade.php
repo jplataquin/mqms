@@ -102,8 +102,9 @@
                 <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
                 <button id="searchBtn" class="btn btn-primary">Search</button>
                 
-                <button id="createBtn" class="btn d-block btn-warning">Create</button>
-                    
+                <div>
+                    <button id="createBtn" class="btnbtn-warning">Create</button>
+                </div>
             </div>
 
         </div>
