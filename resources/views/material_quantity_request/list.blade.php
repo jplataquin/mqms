@@ -93,7 +93,7 @@
 
              
         </div>
-        <div class="row mb-5">
+        <div class="row mt-5">
             <div class="col-lg-8">
                 
             </div>
@@ -102,7 +102,7 @@
                 <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
                 <button id="searchBtn" class="btn btn-primary">Search</button>
                 
-                <button id="createBtn" class="btn btn-block btn-warning">Create</button>
+                <button id="createBtn" class="btn d-block btn-warning">Create</button>
                     
             </div>
 
