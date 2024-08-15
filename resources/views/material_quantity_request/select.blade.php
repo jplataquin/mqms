@@ -123,7 +123,7 @@
 
         e.preventDefault();
 
-        componentSelect.innerHTML = '';
+        contractItemSelect.innerHTML = '';
 
         window.util.blockUI();
 
@@ -157,15 +157,55 @@
         });
     }
 
+
+    contractItemSelect.onchange = (e)=>{
+
+        e.preventDefault();
+
+        componentSelect.innerHTML = '';
+
+        window.util.blockUI();
+
+        window.util.$get('/api/component/list',{
+            contract_item_id: contractItemSelect.value,
+            orderBy:'name',
+            status:'APRV',
+            order:'ASC'
+        }).then(reply=>{
+
+            window.util.unblockUI();
+
+            if(reply.status <= 0){
+
+                window.util.showMsg(reply);
+                return false;
+            }
+
+            componentSelect.append(
+                t.option({value:''},' - ')
+            );
+
+            reply.data.forEach((item)=>{
+
+                componentSelect.append(
+                    t.option({value:item.id},item.name)
+                );
+
+            });
+
+        });
+        }
+
+
     createBtn.onclick = (e)=>{
         e.preventDefault();
 
         if(projectSelect.value == '' || sectionSelect.value == '' || componentSelect.value == ''){
-            window.util.showMsg('All fields are required to create a request');
+            window.util.alert('Error','All fields are required to create a request');
             return false;
         }
         
-        document.location.href = '/material_quantity_request/create/'+projectSelect.value+'/'+sectionSelect.value+'/'+componentSelect.value;
+        widnow.util.navTo('/material_quantity_request/create/'+projectSelect.value+'/'+sectionSelect.value+'/'+componentSelect.value);
     }
 </script>
 </div>

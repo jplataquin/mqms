@@ -310,7 +310,7 @@
 
         e.preventDefault();
 
-        componentSelect.innerHTML = '';
+        contractItemSelect.innerHTML = '';
 
         window.util.blockUI();
 
