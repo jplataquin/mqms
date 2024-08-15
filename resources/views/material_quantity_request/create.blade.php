@@ -58,28 +58,6 @@
             </div>
         </div>
     </div>
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Project</th>
-                <td>{{$project->name}}</td>
-            </tr>
-            <tr>
-                <th>Section</th>
-                <td>{{$section->name}}</td>
-            </tr>
-            <tr>
-                <th>Component</th>
-                <td>{{$component->name}}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>
-                    <textarea class="w-100" id="description"></textarea>
-                </td>
-            </tr>
-        </tbody>
-    </table>
     
     <div id="itemContainer"></div>
     <div>
@@ -203,9 +181,10 @@
         });
 
         window.util.$post('/api/material_quantity_request/create',{
-            project_id:'{{$project->id}}',
-            section_id: '{{$section->id}}',
-            component_id: '{{$component->id}}',
+            project_id          : '{{$project->id}}',
+            section_id          : '{{$section->id}}',
+            contract_item_id    : '{{$contract_item->id}}',
+            component_id        : '{{$component->id}}',
             description: description.value,
             items:JSON.stringify(items)
         }).then(reply=>{

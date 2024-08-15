@@ -52,173 +52,181 @@ class RequestMaterialItem extends Component{
 
         const t = this.t;
 
-        let el = t.div({class:'items border border-primary ps-3 pe-3 pb-3 mt-3'},()=>{
-            this.el.deleteRow = t.div({class:'row',style:{
-                display: (this._model.editable) ? 'inline' : 'none'
-            }},()=>{
-                t.div({class:'col-12 text-end'},()=>{
-                    this.el.deleteBtn = t.a({href:'#'},'[ X ]');
+        let el = t.div({class:'form-container'},()=>{
+
+            t.div({class:'form-header'},'Item');
+
+            t.div ({class:'form-body'},()=>{
+
+            
+                this.el.deleteRow = t.div({class:'row',style:{
+                    display: (this._model.editable) ? 'inline' : 'none'
+                }},()=>{
+                    t.div({class:'col-12 text-end'},()=>{
+                        this.el.deleteBtn = t.a({href:'#'},'[ X ]');
+                    });
                 });
-            });
 
-            t.div({class:'row'},()=>{
-                t.div({class:'col-12'},()=>{
-                    t.div({class:'form-group'},()=>{
-                        this.el.indexNumber = t.label('Item #');
-                        
-                        this.el.componentItemSelect = t.select({class:'form-control'},()=>{
-                            t.option({
-                                value: ''
-                            },'-')
-
-                            for(let key in this._model.componentItemList){
-                               
-                                let item = this._model.componentItemList[key];
-
-                                t.option({
-                                    value: item.value,
-                                },item.text);
-                            }
-                        });//select
-
-                        if(this._model.editable){
-                            this.el.componentItemSelect.disabled = false;
-                        }else{
-                            this.el.componentItemSelect.disabled = true;
-                        }
-
-                    });//div
-                });//div
-
-            })//div row
-
-            t.div({class:'row mt-3'},()=>{
-                t.div({class:'col-12'},()=>{
-                    t.div({class:'form-group'},()=>{
-                        t.label('Material');
-                        
-                        this.el.materialSelect = t.select({class:'form-control'},()=>{
+                t.div({class:'row'},()=>{
+                    t.div({class:'col-12'},()=>{
+                        t.div({class:'form-group'},()=>{
+                            this.el.indexNumber = t.label('Item #');
                             
-                            t.option({
-                                value: ''
-                            },'-')
+                            this.el.componentItemSelect = t.select({class:'form-control'},()=>{
+                                t.option({
+                                    value: ''
+                                },'-')
 
-                        });//select
+                                for(let key in this._model.componentItemList){
+                                
+                                    let item = this._model.componentItemList[key];
 
-                        if(this._model.editable){
-                            this.el.materialSelect.disabled = false;
-                        }else{
-                            this.el.materialSelect.disabled = true;
-                        }
+                                    t.option({
+                                        value: item.value,
+                                    },item.text);
+                                }
+                            });//select
 
+                            if(this._model.editable){
+                                this.el.componentItemSelect.disabled = false;
+                            }else{
+                                this.el.componentItemSelect.disabled = true;
+                            }
+
+                        });//div
                     });//div
-                });//div
 
-            })//div row
+                })//div row
+
+                t.div({class:'row mt-3'},()=>{
+                    t.div({class:'col-12'},()=>{
+                        t.div({class:'form-group'},()=>{
+                            t.label('Material');
+                            
+                            this.el.materialSelect = t.select({class:'form-control'},()=>{
+                                
+                                t.option({
+                                    value: ''
+                                },'-')
+
+                            });//select
+
+                            if(this._model.editable){
+                                this.el.materialSelect.disabled = false;
+                            }else{
+                                this.el.materialSelect.disabled = true;
+                            }
+
+                        });//div
+                    });//div
+
+                })//div row
 
 
-            t.div({class:'row mt-3'},()=>{
-                t.div({class:'col-6'},()=>{
-                    t.div({class:'form-group'},()=>{
-                        t.label('Component Item Budget');
-                        this.el.componentItemBudget = t.input({
-                            type:'text',
-                            disabled:true,
-                            class:'form-control',
-                            value:this._model.componentItemBudget +' '+this._model.unit
-                        });
-                        
-                    });                
+                t.div({class:'row mt-3'},()=>{
+                    t.div({class:'col-6'},()=>{
+                        t.div({class:'form-group'},()=>{
+                            t.label('Component Item Budget');
+                            this.el.componentItemBudget = t.input({
+                                type:'text',
+                                disabled:true,
+                                class:'form-control',
+                                value:this._model.componentItemBudget +' '+this._model.unit
+                            });
+                            
+                        });                
+                    });
+
+                    t.div({class:'col-6'},()=>{
+                        t.div({class:'form-group'},()=>{
+                            t.label('Material Equivalent');
+                            this.el.equivalent = t.input({
+                                type:'text',
+                                disabled:true,
+                                class:'form-control',
+                                value:this._model.equivalent+' '+this._model.unit});
+                        });               
+                    });
+
                 });
 
-                t.div({class:'col-6'},()=>{
-                    t.div({class:'form-group'},()=>{
-                        t.label('Material Equivalent');
-                        this.el.equivalent = t.input({
-                            type:'text',
-                            disabled:true,
-                            class:'form-control',
-                            value:this._model.equivalent+' '+this._model.unit});
-                    });               
+                t.div({class:'row mt-3'},()=>{
+                    
+
+                    t.div({class:'col-6'},()=>{
+                        t.div({class:'form-group'},()=>{
+                            t.label('Material Budget Quantity');
+                            this.el.materialBudgetQuantity = t.input({
+                                type:'text',
+                                disabled:true,
+                                class:'form-control',
+                                value:this.el.materialBudgetQuantity
+                            });
+                        });              
+                    });
+
+                    t.div({class:'col-6'},()=>{
+                        t.div({class:'form-group'},()=>{
+                            t.label('Approved Quantity');
+                            this.el.prevApprovedQuantity = t.input({
+                                type:'text',
+                                disabled:true,
+                                class:'form-control',
+                                value:this._model.prevApprovedQuantity
+                            });
+                        })                
+                    });
+                    
                 });
-
-            });
-
-            t.div({class:'row mt-3'},()=>{
-                
-
-                t.div({class:'col-6'},()=>{
-                    t.div({class:'form-group'},()=>{
-                        t.label('Material Budget Quantity');
-                        this.el.materialBudgetQuantity = t.input({
-                            type:'text',
-                            disabled:true,
-                            class:'form-control',
-                            value:this.el.materialBudgetQuantity
-                        });
-                    });              
-                });
-
-                t.div({class:'col-6'},()=>{
-                    t.div({class:'form-group'},()=>{
-                        t.label('Approved Quantity');
-                        this.el.prevApprovedQuantity = t.input({
-                            type:'text',
-                            disabled:true,
-                            class:'form-control',
-                            value:this._model.prevApprovedQuantity
-                        });
-                    })                
-                });
-                
-            });
 
 
            
-            t.div({class:'row mt-3'},()=>{
-                
-                
-                t.div({class:'col-6'},()=>{
-                    t.div({class:'form-group'},()=>{
-                        t.label('Quantity Remaining');
-                        this.el.quantityRemaining = t.input({
-                            type:'text',
-                            disabled:true,
-                            class:'form-control',
-                            value:''
+                t.div({class:'row mt-3'},()=>{
+                    
+                    
+                    t.div({class:'col-6'},()=>{
+                        t.div({class:'form-group'},()=>{
+                            t.label('Quantity Remaining');
+                            this.el.quantityRemaining = t.input({
+                                type:'text',
+                                disabled:true,
+                                class:'form-control',
+                                value:''
+                            });
+                        });                
+                    });
+
+                    t.div({class:'col-6'},()=>{
+                        t.div({class:'form-group'},()=>{
+                            t.label('Total Material Equivalent');
+                            this.el.totalEquivalent = t.input({type:'text',disabled:true,class:'form-control'});
+                        })                
+                    });
+                    
+
+                });//row
+
+                t.div({class:'row mt-3'},()=>{
+                    t.div({class:'col-12'},()=>{
+                        t.div({class:'form-group'},()=>{
+                            t.label('Requested Quantity');
+                            this.el.requestedQuantity = t.input({
+                                type:'text',
+                                class:'form-control',
+                                value:this._model.requestedQuantity
+                            });
+
+                            if(this._model.editable){
+                                this.el.requestedQuantity.disabled = false;
+                            }else{
+                                this.el.requestedQuantity.disabled = true;
+                            }
                         });
-                    });                
-                });
-
-                t.div({class:'col-6'},()=>{
-                    t.div({class:'form-group'},()=>{
-                        t.label('Total Material Equivalent');
-                        this.el.totalEquivalent = t.input({type:'text',disabled:true,class:'form-control'});
-                    })                
-                });
-                
-
-            });//row
-
-            t.div({class:'row mt-3'},()=>{
-                t.div({class:'col-12'},()=>{
-                    t.div({class:'form-group'},()=>{
-                        t.label('Requested Quantity');
-                        this.el.requestedQuantity = t.input({
-                            type:'text',
-                            class:'form-control',
-                            value:this._model.requestedQuantity
-                        });
-
-                        if(this._model.editable){
-                            this.el.requestedQuantity.disabled = false;
-                        }else{
-                            this.el.requestedQuantity.disabled = true;
-                        }
                     });
                 });
-            });
 
+            });//div
+            
         });//div
 
         return el;
