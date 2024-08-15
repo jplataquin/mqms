@@ -28,7 +28,27 @@
             Material Quantity Request
         </div>
         <div class="folder-form-body">
-</div>
+            <div class="row mb-3">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label>Project</label>
+                        <input type="text" class="form-control" disabled="true"/>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label>Section</label>
+                        <input type="text" class="form-control" disabled="true"/>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label>Contract Item</label>
+                        <input type="text" class="form-control" disabled="true"/>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <table class="table">
         <tbody>
