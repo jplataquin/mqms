@@ -63,6 +63,22 @@
     <div>
         <button class="btn btn-warning w-100 mt-3" id="addBtn">Add More</button>
     </div>
+
+    <div class="form-container mt-5">
+        <div class="form-header">
+            Remarks
+        </div>
+        <div class="form-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <textarea id="description" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row mt-5">
         <div class="col-12 text-end">
         <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
@@ -186,7 +202,7 @@
             section_id          : '{{$section->id}}',
             contract_item_id    : '{{$contract_item->id}}',
             component_id        : '{{$component->id}}',
-            description: description.value,
+            description         : description.value,
             items:JSON.stringify(items)
         }).then(reply=>{
 
