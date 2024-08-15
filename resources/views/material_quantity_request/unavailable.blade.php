@@ -55,8 +55,8 @@
     </table>
 
     <div class="text-center">
-        <br>
-        <h5>*** Material request is not available for these parameters, because the Project and/or Component status is not yet "approved" or "active" ***</h5>
+        <h1>Unavailable</h1>
+        <h5>*** {{$message}} ***</h5>
         <br>
         <a href="/material_quantity_request/select/create">Click here to return to previous page</a>
     </div>
