@@ -148,18 +148,18 @@
 <script type="module">
     import {$q,Template,$el,$util} from '/adarna.js';
 
-    const list            = $q('#list').first();
-    const query           = $q('#query').first();
-    const projectSelect   = $q('#projectSelect').first();
-    const sectionSelect   = $q('#sectionSelect').first();
-    const sectionSelect   = $q('#contractItemSelect').first();
-    const componentSelect = $q('#componentSelect').first();
-    const statusSelect    = $q('#statusSelect').first();    
-    const searchBtn       = $q('#searchBtn').first();
-    const showMoreBtn     = $q('#showMoreBtn').first();
-    const sortSelect      = $q('#sortSelect').first();
-    const cancelBtn       = $q('#cancelBtn').first();
-    const createBtn       = $q('#createBtn').first();
+    const list                  = $q('#list').first();
+    const query                 = $q('#query').first();
+    const projectSelect         = $q('#projectSelect').first();
+    const sectionSelect         = $q('#sectionSelect').first();
+    const contractItemSelect    = $q('#contractItemSelect').first();
+    const componentSelect       = $q('#componentSelect').first();
+    const statusSelect          = $q('#statusSelect').first();    
+    const searchBtn             = $q('#searchBtn').first();
+    const showMoreBtn           = $q('#showMoreBtn').first();
+    const sortSelect            = $q('#sortSelect').first();
+    const cancelBtn             = $q('#cancelBtn').first();
+    const createBtn             = $q('#createBtn').first();
     
     let page            = 1;
     let order           = 'DESC';
