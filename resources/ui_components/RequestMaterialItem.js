@@ -17,8 +17,8 @@ class RequestMaterialItem extends Component{
             componentItemId:'',
             materialItemId:'',
             unit:'',
-            componentItemBudget:'',
-            equivalent:'',
+            //componentItemBudget:'',
+           // equivalent:'',
             prevApprovedQuantity:'',
             materialBudgetQuantity:'',
             requestedQuantity:'',
@@ -36,9 +36,9 @@ class RequestMaterialItem extends Component{
             materialItemId: null,
 
             unit:'',
-            componentItemBudget:'',
+            //componentItemBudget:'',
         
-            equivalent: '',
+           // equivalent: '',
             prevApprovedQuantity:'',
             materialBudgetQuantity:'',
 
@@ -207,7 +207,6 @@ class RequestMaterialItem extends Component{
                         });                
                     });
 
-                    
                 });//div row
 
                 /**
@@ -264,7 +263,7 @@ class RequestMaterialItem extends Component{
         }
 
         this.el.requestedQuantity.onkeyup = ()=>{
-            this.el.totalEquivalent.value = parseFloat(this.el.requestedQuantity.value * this._state.equivalent).toFixed(2)+' '+this._state.unit;
+           // this.el.totalEquivalent.value = parseFloat(this.el.requestedQuantity.value * this._state.equivalent).toFixed(2)+' '+this._state.unit;
 
             let remaining = this.el.materialBudgetQuantity.value - this.el.prevApprovedQuantity.value;
             
@@ -358,13 +357,13 @@ class RequestMaterialItem extends Component{
         
         this.el.materialSelect.innerHTML        = '';
 
-        this.el.componentItemBudget.value = '';
-        this.setState('componentItemBudget','');
+       // this.el.componentItemBudget.value = '';
+       // this.setState('componentItemBudget','');
        
         this.setState('unit','');
 
-        this.el.equivalent.value = '';
-        this.setState('equivalent','');
+       // this.el.equivalent.value = '';
+       // this.setState('equivalent','');
 
         this.el.materialBudgetQuantity.value = '';
         this.setState('materialBudgetQuantity','');
@@ -390,8 +389,8 @@ class RequestMaterialItem extends Component{
 
         this.setState('unit', this._model.unitOptions[componentItem.unit_id].text );
 
-        this.el.componentItemBudget.value = componentItem.quantity +' '+this._model.unitOptions[componentItem.unit_id].text;
-        this.setState('componentItemBudget',componentItem.quantity);
+        //this.el.componentItemBudget.value = componentItem.quantity +' '+this._model.unitOptions[componentItem.unit_id].text;
+        //this.setState('componentItemBudget',componentItem.quantity);
        
         
         this.setState('materialItemId','');
@@ -446,8 +445,8 @@ class RequestMaterialItem extends Component{
 
         if(!material){
             
-            this.el.equivalent.value = '';
-            this.setState('equivalent','');
+            //this.el.equivalent.value = '';
+            //this.setState('equivalent','');
 
             this.el.materialBudgetQuantity.value = '';
             this.setState('materialBudgetQuantity','');
@@ -461,10 +460,10 @@ class RequestMaterialItem extends Component{
             return false;
         }
         
-        this.el.totalEquivalent.value = '';
+       // this.el.totalEquivalent.value = '';
 
-        this.el.equivalent.value = material.equivalent +' '+this._state.unit;
-        this.setState('equivalent',material.equivalent);
+        //this.el.equivalent.value = material.equivalent +' '+this._state.unit;
+        //this.setState('equivalent',material.equivalent);
 
         this.el.materialBudgetQuantity.value = material.quantity; 
         this.setState('materialBudgetQuantity',material.quantity);
