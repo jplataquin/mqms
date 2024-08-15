@@ -52,7 +52,7 @@ class RequestMaterialItem extends Component{
 
         const t = this.t;
 
-        let el = t.div({class:'form-container'},()=>{
+        let el = t.div({class:'form-container mb-3'},()=>{
 
             t.div({class:'form-header'},()=>{
                 this.el.indexNumber = t.label('Item #');
