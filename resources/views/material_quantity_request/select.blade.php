@@ -17,7 +17,7 @@
                     <span>
                         Select
                     </span>
-                    <i class="bi bi-ui-checks-grid"></i>		
+                    <i class="ms-2 bi bi-ui-checks-grid"></i>		
                 </a>
             </li>
         </ul>
