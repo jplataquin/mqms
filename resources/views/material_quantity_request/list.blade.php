@@ -128,6 +128,7 @@
                             <th>Status</th>
                             <th>Project</th>
                             <th>Section</th>
+                            <th>Contract Item</th>
                             <th>Component</th>
                             <th>Date</th>
                         </tr>
@@ -147,17 +148,19 @@
 <script type="module">
     import {$q,Template,$el,$util} from '/adarna.js';
 
-    let list            = $q('#list').first();
-    let query           = $q('#query').first();
-    let projectSelect   = $q('#projectSelect').first();
-    let sectionSelect   = $q('#sectionSelect').first();
-    let componentSelect = $q('#componentSelect').first();
-    let statusSelect    = $q('#statusSelect').first();    
-    let searchBtn       = $q('#searchBtn').first();
-    let showMoreBtn     = $q('#showMoreBtn').first();
-    let sortSelect      = $q('#sortSelect').first();
-    let cancelBtn       = $q('#cancelBtn').first();
-    let createBtn       = $q('#createBtn').first();
+    const list            = $q('#list').first();
+    const query           = $q('#query').first();
+    const projectSelect   = $q('#projectSelect').first();
+    const sectionSelect   = $q('#sectionSelect').first();
+    const sectionSelect   = $q('#contractItemSelect').first();
+    const componentSelect = $q('#componentSelect').first();
+    const statusSelect    = $q('#statusSelect').first();    
+    const searchBtn       = $q('#searchBtn').first();
+    const showMoreBtn     = $q('#showMoreBtn').first();
+    const sortSelect      = $q('#sortSelect').first();
+    const cancelBtn       = $q('#cancelBtn').first();
+    const createBtn       = $q('#createBtn').first();
+    
     let page            = 1;
     let order           = 'DESC';
     let orderBy         = 'id';
@@ -178,6 +181,7 @@
                 t.td(item.status);
                 t.td(item.project.name);
                 t.td(item.section.name);
+                t.td('');
                 t.td(item.component.name);
                 t.td(
                     $util.dateTime(
@@ -263,12 +267,12 @@
 
     cancelBtn.onclick = (e)=>{
         e.preventDefault();
-        document.location.href = '/home';
+        window.util.navTo('/home');
     }
 
     createBtn.onclick = (e)=>{
         e.preventDefault();
-        document.location.href = '/material_quantity_request/select/create';
+        window.util.navTo('/material_quantity_request/select/create');
     }
 
     projectSelect.onchange = (e)=>{
@@ -317,7 +321,7 @@
 
         window.util.blockUI();
 
-        window.util.$get('/api/component/list',{
+        window.util.$get('/api/contract_item/list',{
             section_id: sectionSelect.value,
             orderBy:'name',
             order:'ASC'
@@ -332,14 +336,14 @@
                 return false;
             }
 
-            componentSelect.append(
+            contractItemSelect.append(
                 t.option({value:''},' - ')
             );
 
             reply.data.forEach((item)=>{
 
-                componentSelect.append(
-                    t.option({value:item.id},item.name)
+                contractItemSelect.append(
+                    t.option({value:item.id},'['+item.code+'] '+item.description)
                 );
 
             });
