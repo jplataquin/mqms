@@ -64,7 +64,7 @@
                 <div class="row mt-3">
                     <div class="col-8"></div>
                     <div class="col-2">
-                        <button class="btn w-100 btn-secondary">Cancel</button>
+                        <button id="cancelBtn" class="btn w-100 btn-secondary">Cancel</button>
                     </div>
                     <div class="col-2">
                         <button id="createBtn" class="btn w-100 btn-warning">Create</button>
@@ -81,9 +81,15 @@
         const contractItemSelect    = $q('#contractItemSelect').first();
         const componentSelect       = $q('#componentSelect').first();
         const createBtn             = $q('#createBtn').first();
+        const cancelBtn             = $q('#cancelBtn').first();
         
         const t = new Template();
 
+        cancelBtn.onclick = (e)=>{
+            e.preventDefault();
+            window.util.navTo('/material_quantity_requets');
+        }
+        
         projectSelect.onchange = (e)=>{
 
             e.preventDefault();
@@ -199,7 +205,7 @@
                 });
 
             });
-            }
+        }
 
 
         createBtn.onclick = (e)=>{
