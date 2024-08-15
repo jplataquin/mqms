@@ -3,19 +3,12 @@
 @section('content')
 <div id="content">
 <div class="container">
-    <div class="breadcrumbs">
+    <div class="breadcrumbs" hx-boost="true">
         <ul>
             <li>
-                <a href="#">
+                <a href="/master_data/material/items" hx-select="#content" hx-target="#main">
                     <span>
-                        Master Data
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span>
-                       Material Item
+                        Material Items
                     </span>
                 </a>
             </li>
@@ -23,7 +16,8 @@
                 <a href="#" class="active">
                     <span>
                         Create
-                    </span>		
+                    </span>	
+                    <i class="ms-2 bi bi-file-earmark-plus"></i>	
                 </a>
             </li>
         </ul>

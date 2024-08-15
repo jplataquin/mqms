@@ -33,7 +33,12 @@ class MaterialQuantityRequestController extends Controller
     public function create($project_id,$section_id,$component_id){
         
         $project_id = (int) $project_id;
-        $project = Project::findOrFail($project_id);
+        $project = Project::find($project_id);
+
+        if(!$project){
+            echo 'Project not found '.$project_id;
+            exit;
+        }
 
         //If the project is not active then do not allow
         if($project->status != 'ACTV'){
@@ -45,10 +50,19 @@ class MaterialQuantityRequestController extends Controller
         }
 
         $section_id = (int) $section_id;
-        $section = Section::findOrFail($section_id);
+        $section = Section::find($section_id);
+
+        if(!$section){
+            echo 'Section not found'.$section_id;
+            exit;
+        }
 
         $component_id = (int) $component_id;
         $component = Component::findOrFail($component_id);
+        if(!$component){
+            echo 'Component not found'.$component_id;
+            exit;
+        }
 
         //If the component is not approved then do not allow
         if($component->status != 'APRV'){
