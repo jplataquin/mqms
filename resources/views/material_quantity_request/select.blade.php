@@ -211,7 +211,7 @@
         createBtn.onclick = (e)=>{
             e.preventDefault();
 
-            if(projectSelect.value == '' || sectionSelect.value == '' || componentSelect.value == ''){
+            if(projectSelect.value == '' || sectionSelect.value == '' || contractItemSelect.value == '' || componentSelect.value == ''){
                 window.util.alert('Error','All fields are required to create a request');
                 return false;
             }
