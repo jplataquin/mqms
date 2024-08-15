@@ -133,11 +133,12 @@ class MaterialQuantityRequestController extends Controller
 
     public function _create(Request $request){
 
-        $project_id     = (int) $request->input('project_id');
-        $section_id     = (int) $request->input('section_id');
-        $component_id   = (int) $request->input('component_id');
-        $description    = $request->input('description');
-        $items          = $request->input('items');
+        $project_id         = (int) $request->input('project_id');
+        $section_id         = (int) $request->input('section_id');
+        $contract_item_id   = (int) $request->input('contract_item_id'); 
+        $component_id       = (int) $request->input('component_id');
+        $description        = $request->input('description');
+        $items              = $request->input('items');
         
        
         $validator = Validator::make($request->all(),[
@@ -151,15 +152,22 @@ class MaterialQuantityRequestController extends Controller
             'section_id' => [
                 'required',
                 'integer',
+                'gte:1'
                 // Rule::exists('sections')->where(function (Builder $query) use ($project_id,$section_id) {
                 //     return $query->where('id', $section_id)
                 //     ->where('project_id',$project_id)
                 //     ->where('deleted_at',null);
                 // })
             ],
+            'contract_item_id' =>[
+                'required',
+                'integer',
+                'gte:1'
+            ],
             'component_id' => [
                 'required',
                 'integer',
+                'gte:1'
                 // Rule::exists('components')->where(function (Builder $query) use ($section_id,$component_id) {
                 //     return $query->where('id', $component_id)
                 //     ->where('section_id',$section_id)
@@ -258,7 +266,7 @@ class MaterialQuantityRequestController extends Controller
 
                 return response()->json([
                     'status'    => 0,
-                    'message'   => 'Error: Double entry with the same component item and material Item',
+                    'message'   => 'Double entry with the same component item and material item',
                     'data'      => []
                 ]);
 
@@ -304,12 +312,13 @@ class MaterialQuantityRequestController extends Controller
 
             $materialQuantityRequest = new MaterialQuantityRequest();
 
-            $materialQuantityRequest->project_id    = $project_id;
-            $materialQuantityRequest->section_id    = $section_id;
-            $materialQuantityRequest->component_id  = $component_id;
-            $materialQuantityRequest->description   = $description;
-            $materialQuantityRequest->status        = 'PEND';
-            $materialQuantityRequest->created_by    = $user_id;
+            $materialQuantityRequest->project_id        = $project_id;
+            $materialQuantityRequest->section_id        = $section_id;
+            $materialQuantityRequest->contract_item_id  = $contract_item_id;
+            $materialQuantityRequest->component_id      = $component_id;
+            $materialQuantityRequest->description       = $description;
+            $materialQuantityRequest->status            = 'PEND';
+            $materialQuantityRequest->created_by        = $user_id;
 
             $materialQuantityRequest->save();
 

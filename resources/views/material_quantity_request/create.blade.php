@@ -66,12 +66,13 @@
 
     <div class="form-container mt-5">
         <div class="form-header">
-            Remarks
+            &nbsp;
         </div>
         <div class="form-body">
             <div class="row">
                 <div class="col-12">
                     <div class="form-group">
+                        <label>Remarks</label>
                         <textarea id="description" class="form-control"></textarea>
                     </div>
                 </div>
