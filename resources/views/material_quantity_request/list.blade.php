@@ -91,19 +91,21 @@
                     <button id="createBtn" class="btn w-100 btn-warning">Create</button>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <div class="form-group">
-                    <label>&nbsp;</label>
-                    <button id="searchBtn" class="btn w-100 btn-primary">Search</button>
-                </div>
-            </div>
+        
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>&nbsp;</label>
                     <button id="cancelBtn" class="btn w-100 btn-secondary">Cancel</button>
                 </div>
             </div>
-         
+
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <button id="searchBtn" class="btn w-100 btn-primary">Search</button>
+                </div>
+            </div>
+            
         </div>
     </div>
 </div>
