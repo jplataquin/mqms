@@ -54,11 +54,12 @@ class RequestMaterialItem extends Component{
 
         let el = t.div({class:'form-container'},()=>{
 
-            t.div({class:'form-header'},'Item');
+            t.div({class:'form-header'},()=>{
+                this.el.indexNumber = t.label('Item #');
+            });
 
             t.div ({class:'form-body'},()=>{
 
-            
                 this.el.deleteRow = t.div({class:'row',style:{
                     display: (this._model.editable) ? 'inline' : 'none'
                 }},()=>{
@@ -70,7 +71,7 @@ class RequestMaterialItem extends Component{
                 t.div({class:'row'},()=>{
                     t.div({class:'col-12'},()=>{
                         t.div({class:'form-group'},()=>{
-                            this.el.indexNumber = t.label('Item #');
+                            t.label('Component Item');
                             
                             this.el.componentItemSelect = t.select({class:'form-control'},()=>{
                                 t.option({
@@ -148,7 +149,7 @@ class RequestMaterialItem extends Component{
                         });               
                     });
 
-                });
+                });//div row
 
                 t.div({class:'row mt-3'},()=>{
                     
@@ -177,8 +178,7 @@ class RequestMaterialItem extends Component{
                         })                
                     });
                     
-                });
-
+                });//div row
 
            
                 t.div({class:'row mt-3'},()=>{
@@ -204,7 +204,7 @@ class RequestMaterialItem extends Component{
                     });
                     
 
-                });//row
+                });//div row
 
                 t.div({class:'row mt-3'},()=>{
                     t.div({class:'col-12'},()=>{
@@ -226,7 +226,7 @@ class RequestMaterialItem extends Component{
                 });
 
             });//div
-            
+
         });//div
 
         return el;
