@@ -55,35 +55,44 @@ class MaterialQuantityRequestController extends Controller
             return view('material_quantity_request/unavailable',[
                 'project'   => $project,
                 'section'   => $section,
-                'component' => $component
+                'component' => $component,
+                'message'   => ''
             ]);
         }
 
         $component_item_ids     = [];
-        $componentItem_options  = [];
+        $component_item_options  = [];
 
-        foreach($component->ComponentItems as $componentItem){
-            $component_item_ids[] = $componentItem->id;
+        foreach($component->ComponentItems as $component_item){
+
+            //Skip soft deleted
+            if($component_item->deleted_at != null) continue;
+
+            $component_item_ids[] = $component_item->id;
 
             
-            $componentItem_options[$componentItem->id] = [
-                'value'                 => $componentItem->id,
-                'text'                  => $componentItem->name,
-                'unit_id'               => $componentItem->unit_id,
-                'quantity'              => $componentItem->quantity
+            $component_item_options[$component_item->id] = [
+                'value'                 => $component_item->id,
+                'text'                  => $component_item->name,
+                'unit_id'               => $component_item->unit_id,
+                'quantity'              => $component_item->quantity
             ];
         }
-        DB::enableQueryLog();
+
+        //Query material quantities of the component item
         $material_item_result = DB::table('material_quantities')
         ->whereIn('component_item_id',$component_item_ids)
         ->join('material_items','material_quantities.material_item_id','=','material_items.id')
         ->get();
 
-       =print_r($component_item_ids);
-        print_r( $material_item_result );exit;
-
+        //If not materials quantities are found inform the user that they cannot request
         if(!count($material_item_result)){
-            return abort(404);
+            return view('material_quantity_request/unavailable',[
+                'project'   => $project,
+                'section'   => $section,
+                'component' => $component,
+                'message'   => 'There are no material quantities maintained in any of the component items'
+            ]);
         };
 
         $material_options = [];
@@ -109,7 +118,7 @@ class MaterialQuantityRequestController extends Controller
             'section'               => $section,
             'component'             => $component,
             'material_options'      => $material_options,
-            'componentItem_options' => $componentItem_options,
+            'component_item_options' => $component_item_options,
             'unit_options'          => $unit_options
         ]);
     }
@@ -348,12 +357,12 @@ class MaterialQuantityRequestController extends Controller
         $request_items   = $materialQuantityRequest->Items;
 
         $component_item_ids     = [];
-        $componentItem_options  = [];
+        $component_item_options  = [];
 
         foreach($component->ComponentItems as $componentItem){
             $component_item_ids[] = $componentItem->id;
 
-            $componentItem_options[$componentItem->id] = [
+            $component_item_options[$componentItem->id] = [
                 'value'                  => $componentItem->id,
                 'text'                   => $componentItem->name,
                 'unit_id'      => $componentItem->unit_id,
@@ -392,7 +401,7 @@ class MaterialQuantityRequestController extends Controller
             'material_quantity_request' => $materialQuantityRequest,
             'request_items'             => $request_items,
             'material_options'          => $material_options,
-            'componentItem_options'     => $componentItem_options,
+            'component_item_options'     => $component_item_options,
             'unit_options'              => $unit_options
         ]);
     }
