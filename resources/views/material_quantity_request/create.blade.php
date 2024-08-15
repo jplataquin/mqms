@@ -119,7 +119,8 @@
         let item = RequestMaterialItem({
             componentId:        '{{$component->id}}',
             componentItemList:  @json($component_item_options),
-            materialList:       @json($material_options)
+            materialList:       @json($material_options),
+            unitOptions:        @json($unit_options)
         });
 
         item.handler.deleteCallback((dom)=>{
