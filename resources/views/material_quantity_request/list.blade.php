@@ -98,10 +98,11 @@
                 
             </div>
 
-            <div class="col-lg-4">
+            <div class="col-lg-4 text-end">
                 <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
                 <button id="searchBtn" class="btn btn-primary">Search</button>
-                <button id="createBtn" class="btn btn-warning">Create</button>
+                
+                <button id="createBtn" class="btn btn-block btn-warning">Create</button>
                     
             </div>
 
