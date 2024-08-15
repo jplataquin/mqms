@@ -56,7 +56,7 @@ class MaterialQuantityRequestController extends Controller
                 'project'   => $project,
                 'section'   => $section,
                 'component' => $component,
-                'message'   => ''
+                'message'   => 'Component status is not yet approved'
             ]);
         }
 
