@@ -3,19 +3,12 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs">
+<div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="#">
+                <a href="/material_quantity_requests">
                     <span>
-                        Request
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span>
-                       Material Quantity
+                       Material Quantity Request
                     </span>
                 </a>
             </li>
@@ -23,7 +16,8 @@
                 <a href="#" class="active">
                     <span>
                         Select
-                    </span>		
+                    </span>
+                    <i class="bi bi-ui-checks-grid"></i>		
                 </a>
             </li>
         </ul>
@@ -46,6 +40,12 @@
             <div class="form-group">
                 <label>Section</label>
                 <select id="sectionSelect" class="form-control"></select>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label>Contract Item</label>
+                <select id="contractItemSelect" class="form-control"></select>
             </div>
         </div>
         <div class="col-4">
