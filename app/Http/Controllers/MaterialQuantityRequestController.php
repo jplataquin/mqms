@@ -659,6 +659,7 @@ class MaterialQuantityRequestController extends Controller
         $limit              = (int) $request->input('limit')    ?? 10;
         $project_id         = (int) $request->input('project_id')  ?? 0;
         $section_id         = (int) $request->input('section_id')  ?? 0;
+        $contract_item_id   = (int) $request->input('contract_item_id') ?? 0;
         $component_id       = (int) $request->input('component_id')  ?? 0;
         $query              = (int) $request->input('query')    ?? 0;
         $status             = $request->input('status')    ?? '';
