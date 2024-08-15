@@ -25,7 +25,7 @@
     <hr>
     
     <div class="row">
-        <div class="col-4">
+        <div class="col-3">
             <div class="form-group">
                 <label>Project</label>
                 <select id="projectSelect" class="form-control">
@@ -36,25 +36,26 @@
                 </select>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <div class="form-group">
                 <label>Section</label>
                 <select id="sectionSelect" class="form-control"></select>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <div class="form-group">
                 <label>Contract Item</label>
                 <select id="contractItemSelect" class="form-control"></select>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <div class="form-group">
                 <label>Component</label>
                 <select id="componentSelect" class="form-control"></select>
             </div>
         </div>
     </div>
+
     <div class="row mt-3">
         <div class="col-8"></div>
         <div class="col-2">
@@ -70,10 +71,11 @@
 <script type="module">
     import {$q,Template} from '/adarna.js';
     
-    let projectSelect   = $q('#projectSelect').first();
-    let sectionSelect   = $q('#sectionSelect').first();
-    let componentSelect = $q('#componentSelect').first();
-    let createBtn       = $q('#createBtn').first();
+    const projectSelect         = $q('#projectSelect').first();
+    const sectionSelect         = $q('#sectionSelect').first();
+    const contractItemSelect    = $q('#contractItemSelect').first();
+    const componentSelect       = $q('#componentSelect').first();
+    const createBtn             = $q('#createBtn').first();
     
     const t = new Template();
 
@@ -125,7 +127,7 @@
 
         window.util.blockUI();
 
-        window.util.$get('/api/component/list',{
+        window.util.$get('/api/contract_item/list',{
             section_id: sectionSelect.value,
             orderBy:'name',
             status:'APRV',
@@ -140,14 +142,14 @@
                 return false;
             }
 
-            componentSelect.append(
+            contractItemSelect.append(
                 t.option({value:''},' - ')
             );
 
             reply.data.forEach((item)=>{
 
-                componentSelect.append(
-                    t.option({value:item.id},item.name)
+                contractItemSelect.append(
+                    t.option({value:item.id},'[ '+item.item_code+' ] '+item.description)
                 );
 
             });
