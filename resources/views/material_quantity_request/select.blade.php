@@ -87,9 +87,9 @@
 
         cancelBtn.onclick = (e)=>{
             e.preventDefault();
-            window.util.navTo('/material_quantity_requets');
+            window.util.navTo('/material_quantity_requests');
         }
-        
+
         projectSelect.onchange = (e)=>{
 
             e.preventDefault();
