@@ -11,7 +11,8 @@
                     
                     <div>
                         <h3>{{$materialQuantityRequestPendCount}}</h3>
-                        <h5>Pending Material Quantity Request</h5>
+                        <h5>Pending</h5>
+                        <h5>Material Quantity Request</h5>
                     </div>
                 </div>
             </div>
