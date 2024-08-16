@@ -270,8 +270,8 @@ class MaterialQuantityRequestReviewController extends Controller
             $mytime = Carbon::now();
 
             $materialQuantityRequest->status           = 'REJC';
-            $materialQuantityRequest->disapproved_by   = $user_id;
-            $materialQuantityRequest->disapproved_at   = $mytime->toDateTimeString();
+            $materialQuantityRequest->rejected_by   = $user_id;
+            $materialQuantityRequest->rejected_at   = $mytime->toDateTimeString();
             $materialQuantityRequest->save();
 
             $affected = DB::table('material_quantity_request_items')
