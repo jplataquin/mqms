@@ -45,9 +45,24 @@
                         <input type="text" id="email" class="form-control"/>
                     </div>
                 </div>
-
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="password" class="form-control"/>
+                    </div>
+                </div>
             </div>
 
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>Retype Password</label>
+                        <input type="password" id="repassword" class="form-control"/>
+                    </div>
+                </div>
+            </div>
             <div class="row mt-5">
                 <div class="col-12 text-end">
                     <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
