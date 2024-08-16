@@ -9,7 +9,7 @@
 
                 <div class="card-body text-center">
                     
-                    <div>
+                    <div class="border primary-border p-5">
                         <h5>Pending</h5>
                         
                         <h3>{{$materialQuantityRequestPendCount}}</h3>
