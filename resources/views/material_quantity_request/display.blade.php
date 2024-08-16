@@ -232,7 +232,7 @@
 
             cancelBtn.onclick = (e)=>{
                 e.preventDefault();
-                window.util.navTo('/request_material/{{$material_quantity_request->id}}');
+                window.util.navReload();
             }
         }
 
