@@ -3,19 +3,12 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs">
+<div class="breadcrumbs" hx-boost="true" >
         <ul>
             <li>
-                <a href="#">
+                <a href="/material_quantity_requests">
                     <span>
-                        Request
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span>
-                       Material Quantity
+                       Material Quantity Requests
                     </span>
                 </a>
             </li>
@@ -23,48 +16,72 @@
                 <a href="#" class="active">
                     <span>
                         Display
-                    </span>		
+                    </span>
+                    <i class="ms-2 bi bi-display"></i>		
                 </a>
             </li>
         </ul>
     </div>
-<hr>
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>MQR ID</th>
-                <td>{{$material_quantity_request->id}}</td>
-            </tr>
-            <tr>
-                <th>Project</th>
-                <td>{{$project->name}}</td>
-            </tr>
-            <tr>
-                <th>Section</th>
-                <td>{{$section->name}}</td>
-            </tr>
-            <tr>
-                <th>Component</th>
-                <td>{{$component->name}}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{$material_quantity_request->status}}</td>
-            </tr>
-            
-            <tr>
-                <th>Description</th>
-                <td>
-                    <textarea disabled="true" class="w-100" id="description">{{$material_quantity_request->description}}</textarea>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <hr>
+    <div class="folder-form-container mb-5">
+        <div class="folder-form-tab">
+            Material Quantity Request
+        </div>
+        <div class="folder-form-body">
+            <div class="row mb-3">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label>Project</label>
+                        <input type="text" value="{{$project->name}}" class="form-control" disabled="true"/>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label>Section</label>
+                        <input type="text" value="{{$section->name}}" class="form-control" disabled="true"/>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label>Contract Item</label>
+                        <input type="text" value="{{$contract_item->item_code}} - {{$contract_item->description}}" class="form-control" disabled="true"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Component</label>
+                        <input type="text" value="{{$component->name}}" class="form-control" disabled="true"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <div id="itemContainer"></div>
     <div>
         <button class="btn btn-warning w-100 mt-3 d-none" id="addBtn">Add More</button>
     </div>
+
+
+    <div class="form-container mt-5">
+        <div class="form-header">
+            &nbsp;
+        </div>
+        <div class="form-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Remarks</label>
+                        <textarea id="description" class="form-control" disabled="true">{{$material_quantity_request->description}}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="row mt-5">
         <div class="col-12 text-end">
             <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
@@ -176,7 +193,7 @@
 
     cancelBtn.onclick = (e)=>{
         e.preventDefault();
-        document.location.href = '/material_quantity_requests';
+        window.util.navTo('/material_quantity_requests');
     }
 
     function setIndexNumber(){
@@ -215,7 +232,7 @@
 
             cancelBtn.onclick = (e)=>{
                 e.preventDefault();
-                document.location.href = '/request_material/{{$material_quantity_request->id}}';
+                window.util.navTo('/request_material/{{$material_quantity_request->id}}');
             }
         }
 
