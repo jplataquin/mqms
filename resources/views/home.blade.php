@@ -9,7 +9,7 @@
 
                 <div class="card-body text-center">
                     
-                    <div class="border border-primary p-5 d-inline">
+                    <div class="border border-primary p-5 d-inline" style="width:200px">
                         <h5>Pending</h5>
                         
                         <h3>{{$materialQuantityRequestPendCount}}</h3>
@@ -17,7 +17,7 @@
                         <h5>Material Quantity Request</h5>
                     </div>
 
-                    <div class="border border-primary p-5 d-inline">
+                    <div class="border border-primary p-5 d-inline" style="width:200px">
                         <h5>Pending</h5>
                         
                         <h3>{{$materialQuantityRequestPendCount}}</h3>
