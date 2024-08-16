@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\MaterialQuantityRequestItem;
 use App\Models\Project;
 use App\Models\Section;
+use App\Models\ContractItem;
 use App\Models\Component;
 use App\Models\ComponentItem;
 use App\Models\User;
@@ -40,6 +41,11 @@ class MaterialQuantityRequest extends Model
     public function Component(): BelongsTo
     {
         return $this->belongsTo(Component::class);
+    }
+
+    public function ContractItem(): BelongsTo
+    {
+        return $this->belongsTo(ContractItem::class);
     }
 
 
