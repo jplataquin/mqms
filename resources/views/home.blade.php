@@ -10,8 +10,10 @@
                 <div class="card-body text-center">
                     
                     <div>
-                        <h3>{{$materialQuantityRequestPendCount}}</h3>
                         <h5>Pending</h5>
+                        
+                        <h3>{{$materialQuantityRequestPendCount}}</h3>
+                        
                         <h5>Material Quantity Request</h5>
                     </div>
                 </div>
