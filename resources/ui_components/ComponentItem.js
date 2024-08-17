@@ -708,25 +708,43 @@ class ComponentItem extends Component{
 
         const t = new Template();
 
+        const quantityInput     = t.input({class:'form-control',value:roundTwoDecimal(entry.quantity)});
+        const equivalentInput   = t.input({class:'form-control',value:entry.equivalent});
+
+        const totalInput = t.input({ class:'form-control', disabled:true});
+
+        [quantityInput,equivalentInput].map(item=>{
+
+            item.onchange = ()=>{
+                let val = calculateTotalEquivalent(equivalentInput.value,quantityInput.value);
+
+                totalInput.value = val;
+            }
+        });
+
+
         const content = t.div(()=>{
             t.div({class:'row'},()=>{
                 
                 t.div({class:'col-4'},()=>{
-                    t.div({class:'form-group'},()=>{
+                    t.div({class:'form-group'},(el)=>{
                         t.label('Quantity'),
-                        t.input({class:'form-control',value:roundTwoDecimal(entry.quantity)});
+                        el.append(quantityInput);
                     });
                 });
 
                 t.div({class:'col-4'},()=>{
-                    t.div({class:'form-group'},()=>{
+                    t.div({class:'form-group'},(el)=>{
                         t.label('Equivalent / Unit'),
-                        t.input({class:'form-control',value:entry.equivalent});
+                        el.append(equivalentInput);
                     });
                 });
 
                 t.div({class:'col-4'},()=>{
-
+                    t.div({class:'form-group'},(el)=>{
+                        t.label('Total'),
+                        el.append(totalInput);
+                    });
                 });
             });
 
