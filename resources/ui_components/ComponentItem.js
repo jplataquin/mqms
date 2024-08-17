@@ -751,9 +751,18 @@ class ComponentItem extends Component{
 
         const content = t.div(()=>{
             
-            t.div({class:'row'},()=>{
+            t.div({class:'row mb-3'},()=>{
                 t.div({class:'col-12 mb-3'},()=>{
-                    t.h6(this.materialRegistry[entry.material_item_id])
+                    t.table({class:'table borderd'},()=>{
+                        t.tr(()=>{
+                            t.th('Comp. Item',);
+                            t.td(this._state.name);
+                        });
+                        t.tr(()=>{
+                            t.th('Matt. Item',);
+                            t.td(this.materialRegistry[entry.material_item_id])
+                        });
+                    })
                 });
             });
 
