@@ -62,7 +62,7 @@
                                 <a href="/review/components" hx-select="#content" hx-target="#main">Components</a>
                             </li>
                             <li class="nav-sub-item">
-                                <a href="/review/material_quantity_requests" hx-select="#content" hx-target="#main">Material Quantity</a>
+                                <a href="/review/material_quantity_requests" hx-select="#content" hx-target="#main">Material Request</a>
                             </li>
                             <li class="nav-sub-item">
                                 <a href="/review/material_canvass" hx-select="#content" hx-target="#main">Material Canvass</a>
@@ -122,7 +122,7 @@
                         </div>
                         <ul class="list-unstyled menu-sub-items">
                             <li class="nav-sub-item">
-                                <a href="/material_quantity_requests" hx-select="#content" hx-target="#main">Material Quantity</a>
+                                <a href="/material_quantity_requests" hx-select="#content" hx-target="#main">Material Request</a>
                             </li>
                             <li class="nav-sub-item">
                                 <a href="/material_canvass" hx-select="#content" hx-target="#main">Material Canvass</a>
