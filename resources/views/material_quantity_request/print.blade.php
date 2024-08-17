@@ -12,8 +12,12 @@
     th,td{
         padding: 5px;
     }
+
+    .mb-5{
+        margin-bottom: 5px;
+    }
 </style>
-<table>
+<table class="mb-5">
     <tr>
         <th>ID No.</th>
         <td colspan="3">{{$material_quantity_request->id}}
@@ -38,5 +42,16 @@
         <th>Component</th>
         <td>{{$component->name}}</td>
     </tr>
+<table>
+
 
 <table>
+    @foreach($request_items as $request_item)
+    <tr>
+        <td>
+            {{ $material_options[$request_item->material_item_id]->text }}
+        </td>
+    </tr>
+    @endforeach
+</table>
+
