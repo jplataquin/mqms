@@ -113,13 +113,13 @@
     </div>
 
 
-    <div class="row mt-5">
+    <div class="row mt-5 mb-3">
         <div class="col-6">
            
         </div>
         <div class="col-6 text-end">
             
-             <button class="btn-warning btn" id="printBtn">Print</button>
+             <button class="btn-warning btn me-3" id="printBtn">Print</button>
             <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
 
             @if($material_quantity_request->status == 'PEND')
