@@ -748,7 +748,8 @@ class ComponentItem extends Component{
             }
         });
 
-
+        totalInput.value = calculateTotalEquivalent(equivalentInput.value,quantityInput.value);
+        
         const content = t.div(()=>{
             t.div({class:'row'},()=>{
                 
