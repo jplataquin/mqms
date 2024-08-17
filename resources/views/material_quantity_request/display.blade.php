@@ -135,10 +135,11 @@
     import {$q,$el} from '/adarna.js';
     import RequestMaterialItem from '/ui_components/RequestMaterialItem.js';
 
-    let itemContainer = $q('#itemContainer').first();
-    let addBtn        = $q('#addBtn').first();
-    let cancelBtn     = $q('#cancelBtn').first();
-    let description   = $q('#description').first();
+    const itemContainer = $q('#itemContainer').first();
+    const addBtn        = $q('#addBtn').first();
+    const cancelBtn     = $q('#cancelBtn').first();
+    const description   = $q('#description').first();
+    const printBtn      = $q('#printBtn').first();
     let count         = 0;
     let deleteItems   = [];
     
@@ -147,6 +148,10 @@
     const component_item_options    = @json($component_item_options);
     const material_options          = @json($material_options);
     
+    printBtn.onclick = (e)=>{
+        document.location.href = '/material_quantity_request/print/{{$material_quantity_request->id}}';
+    }
+
     request_items.map(request_item => {
 
         count++;
