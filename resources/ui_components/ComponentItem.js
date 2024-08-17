@@ -735,7 +735,7 @@ class ComponentItem extends Component{
         const controls =  t.div({class:'row'},()=>{
             t.div({class:'col-12 text-end'},()=>{
                 t.button({class:'btn btn-secondary'},'Cancel');
-                t.buttin({class:'btn btn-warning'},'Update');
+                t.button({class:'btn btn-warning'},'Update');
             });
         });
 
