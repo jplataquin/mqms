@@ -58,6 +58,17 @@
                     </div>
                 </div>
             </div>
+
+            
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>ID No.</label>
+                        <input type="text" value="{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}" class="form-control" disabled="true"/>
+                    </div>
+                </div>
+            </div>
+
             <div class="row mb-3">
                 <div class="col-12">
                     <div class="form-group">
@@ -66,11 +77,13 @@
                     </div>
                 </div>
             </div>
+
+            
             <div class="row mb-3">
                 <div class="col-12">
                     <div class="form-group">
-                        <label>ID No.</label>
-                        <input type="text" value="{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}" class="form-control" disabled="true"/>
+                        <label>Date Created</label>
+                        <input type="text" value="{{ $material_quantity_request->created_at }}" class="form-control" disabled="true"/>
                     </div>
                 </div>
             </div>
