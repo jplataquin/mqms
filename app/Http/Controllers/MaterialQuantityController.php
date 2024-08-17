@@ -127,7 +127,7 @@ class MaterialQuantityController extends Controller
 
     public function _update(Request $request){
 
-        $id         = (int) $requet->input('id');
+        $id         = (int) $request->input('id');
         $quantity   = $request->input('quantity');
         $equivalent = $request->input('equivalent');
 
