@@ -70,7 +70,7 @@
                 <div class="col-12">
                     <div class="form-group">
                         <label>ID No.</label>
-                        <input type="text" value="{{ str_pad($material_quantity_request->id,6,0,STR_PAD_RIGHT) }}" class="form-control" disabled="true"/>
+                        <input type="text" value="{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}" class="form-control" disabled="true"/>
                     </div>
                 </div>
             </div>
