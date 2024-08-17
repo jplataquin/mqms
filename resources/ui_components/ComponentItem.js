@@ -713,12 +713,26 @@ class ComponentItem extends Component{
 
         const totalInput = t.input({ class:'form-control', disabled:true});
 
+        let throttle = false;
+
         [quantityInput,equivalentInput].map(item=>{
 
-            item.onchange = ()=>{
-                let val = calculateTotalEquivalent(equivalentInput.value,quantityInput.value);
+            item.onkeyup = ()=>{
 
-                totalInput.value = val;
+                if(!throttle){
+                    
+                    throttle = true;
+
+                    setTimeout(()=>{
+                            
+                        let val = calculateTotalEquivalent(equivalentInput.value,quantityInput.value);
+
+                        totalInput.value = val;
+
+                        throttle = false;
+                    },500);
+                }
+                
             }
         });
 
