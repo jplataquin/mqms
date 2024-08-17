@@ -788,7 +788,7 @@ class ComponentItem extends Component{
 
         const controls =  t.div({class:'row'},()=>{
             t.div({class:'col-12 text-end'},(el)=>{
-                el.apoend(cancelBtn);
+                el.append(cancelBtn);
                 el.append(updateBtn);
             });
         });
@@ -816,6 +816,8 @@ class ComponentItem extends Component{
                     window.util.showMsg(reply);
                     return false;
                 }
+
+
             })
         }
 
