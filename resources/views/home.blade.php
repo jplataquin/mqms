@@ -15,7 +15,7 @@
                             
                             <h3>{{$materialQuantityRequestPendCount}}</h3>
                             
-                            <h5>Material Quantity Request</h5>
+                            <h5>Material Request</h5>
                         </div>
 
                         <div class="text-center col-6 border border-primary p-5 me-5 rounded" style="width:300px">

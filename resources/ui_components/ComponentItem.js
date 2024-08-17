@@ -285,7 +285,7 @@ class ComponentItem extends Component{
                 t.tfoot({},()=>{
                     t.tr({},()=>{
                         t.td({colspan:7},()=>{
-                            t.div({class:'ms-3 row'},(el)=>{
+                            t.div({class:'row'},(el)=>{
                                 el.append(this.el.materialMenu);
                             });
                         });
@@ -646,7 +646,16 @@ class ComponentItem extends Component{
                     t.td(''+roundTwoDecimal(data.quantity));
                     t.td(''+calculateTotalEquivalent(data.quantity,data.equivalent));
                     t.td({class:'text-center'},()=>{
-                        t.a({href:'#'},'[X]').onclick = (e)=>{
+                        
+                        t.a({href:'#'},()=>{
+                            t.i({class:'bi bi-pencil-square'});
+                        }).onclick = (e)=>{
+                            e.preventDefault();
+                        }
+
+                        t.a({href:'#'},()=>{
+                            t.i({class:'bi bi-trash-fill'});
+                        }).onclick = (e)=>{
                             e.preventDefault();
                             
                             if(confirm('Are you sure you want to delete this entry')){
