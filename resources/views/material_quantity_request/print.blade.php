@@ -49,7 +49,7 @@
     @foreach($request_items as $request_item)
     <tr>
         <td>
-            {{ $material_options[$request_item->material_item_id]->text }}
+            {{ $material_options[$request_item->component_item_id][$request_item->material_item_id]->text }}
         </td>
     </tr>
     @endforeach
