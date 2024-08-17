@@ -83,12 +83,6 @@ class ComponentItem extends Component{
                                     });
                                 });
                                 
-                                t.th(()=>{
-                                    t.div({class:'form-group'},()=>{
-                                        t.label('Equivalent');
-                                        this.el.equivalent = t.input({class:'form-control', type:'text'});
-                                    });
-                                });
 
                                 t.th(()=>{
                                     t.div({class:'form-group'},()=>{
@@ -96,6 +90,15 @@ class ComponentItem extends Component{
                                         this.el.material_quantity = t.input({class:'form-control', type:'text'});
                                     });
                                 });
+
+                                
+                                t.th(()=>{
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Equivalent / Unit');
+                                        this.el.equivalent = t.input({class:'form-control', type:'text'});
+                                    });
+                                });
+
                                 t.th(()=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('Total');
@@ -643,8 +646,8 @@ class ComponentItem extends Component{
         
         let materialItem = t.tr((row)=>{
                     t.td(this.materialRegistry[data.material_item_id]);
-                    t.td(''+data.equivalent);
                     t.td(''+roundTwoDecimal(data.quantity));
+                    t.td(''+data.equivalent);
                     t.td(''+calculateTotalEquivalent(data.quantity,data.equivalent));
                     t.td({class:'text-center'},()=>{
                         
@@ -749,8 +752,15 @@ class ComponentItem extends Component{
         });
 
         totalInput.value = calculateTotalEquivalent(equivalentInput.value,quantityInput.value);
-        
+
         const content = t.div(()=>{
+            
+            t.div({class:'row'},()=>{
+                t.div({class:'col-12 mb-3'},()=>{
+                    t.h6(this.materialRegistry[entry.material_item_id])
+                });
+            });
+
             t.div({class:'row'},()=>{
                 
                 t.div({class:'col-4'},()=>{
@@ -779,7 +789,7 @@ class ComponentItem extends Component{
 
         const controls =  t.div({class:'row'},()=>{
             t.div({class:'col-12 text-end'},()=>{
-                t.button({class:'btn btn-secondary'},'Cancel');
+                t.button({class:'btn btn-secondary me-3'},'Cancel');
                 t.button({class:'btn btn-warning'},'Update');
             });
         });
