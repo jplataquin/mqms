@@ -149,7 +149,7 @@
     const material_options          = @json($material_options);
     
     printBtn.onclick = (e)=>{
-        document.location.href = '/material_quantity_request/print/{{$material_quantity_request->id}}';
+        window.open('/material_quantity_request/print/{{$material_quantity_request->id}}','_blank').focus();
     }
 
     request_items.map(request_item => {
