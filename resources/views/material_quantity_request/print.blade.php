@@ -5,6 +5,10 @@
         border-collapse: collapse;
     } 
 
+    table{
+        width: 100%;
+    }
+
     th,td{
         padding: 5px;
     }
