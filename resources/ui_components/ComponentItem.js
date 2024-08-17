@@ -647,7 +647,7 @@ class ComponentItem extends Component{
                     t.td(''+calculateTotalEquivalent(data.quantity,data.equivalent));
                     t.td({class:'text-center'},()=>{
                         
-                        t.a({href:'#'},()=>{
+                        t.a({class:'me-5',href:'#'},()=>{
                             t.i({class:'bi bi-pencil-square'});
                         }).onclick = (e)=>{
                             e.preventDefault();
