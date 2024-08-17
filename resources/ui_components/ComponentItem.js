@@ -651,6 +651,12 @@ class ComponentItem extends Component{
                             t.i({class:'bi bi-pencil-square'});
                         }).onclick = (e)=>{
                             e.preventDefault();
+
+                            this.updateMaterialEntry({
+                                material_item_id: data.material_item_id,
+                                equivalent: data.equivalent,
+                                quantity: data.quantity
+                            });
                         }
 
                         t.a({href:'#'},()=>{
@@ -689,6 +695,55 @@ class ComponentItem extends Component{
 
         this.el.materialList.append(materialItem);
 
+    }
+
+    updateMaterialEntry(entry){
+
+        
+        window.ui.primaryModal.hide();
+
+        window.ui.primaryModalTitle.innerHTML    = 'Modify Material Entry';
+        window.ui.primaryModalBody.innerHTML     = '';
+        window.ui.primaryModalFooter.innerHTML   = '';
+
+        const t = new Template();
+
+        const content = t.div(()=>{
+            t.div({class:'row'},()=>{
+                
+                t.div({class:'col-4'},()=>{
+                    t.div({class:'form-group'},()=>{
+                        t.label('Quantity'),
+                        t.input({class:'form-control',value:roundTwoDecimal(entry.quantity)});
+                    });
+                });
+
+                t.div({class:'col-4'},()=>{
+                    t.div({class:'form-group'},()=>{
+                        t.label('Equivalent / Unit'),
+                        t.input({class:'form-control',value:entry.equivalent});
+                    });
+                });
+
+                t.div({class:'col-4'},()=>{
+
+                });
+            });
+
+        });
+
+        const controls =  t.div({class:'row'},()=>{
+            t.div({class:'col-12 text-end'},()=>{
+                t.button({class:'btn btn-secondary'},'Cancel');
+                t.buttin({class:'btn btn-warning'},'Update');
+            });
+        });
+
+        window.ui.primaryModalBody.append(content);
+
+        window.ui.primaryModalFooter.append(controls);
+
+        window.ui.primaryModal.show();
     }
 }
 
