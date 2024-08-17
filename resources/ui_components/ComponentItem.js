@@ -535,7 +535,8 @@ class ComponentItem extends Component{
 
     updateMaterialList(){
 
-
+        this.el.materialList.innerHTML = '';
+        
         window.util.$get('/api/material_quantity/list',{
             component_item_id:this._model.id,
             page:1,
