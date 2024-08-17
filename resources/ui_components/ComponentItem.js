@@ -310,10 +310,7 @@ class ComponentItem extends Component{
             this.calculateTotalAmount();
         }
 
-        this.el.material_quantity.onkeypress = (e)=>{
-            return window.util.inputNumber(this.el.material_quantity,e,6,false);
-        }
-
+        
         this.el.budget_price.onkeypress = (e)=>{
             return window.util.inputNumber(this.el.budget_price,e,2,false);
         }
@@ -329,8 +326,12 @@ class ComponentItem extends Component{
            
         }
 
+        this.el.material_quantity.onkeypress = (e)=>{
+            return window.util.inputNumber(this.el.material_quantity,e,2,false);
+        }
+
         this.el.ref_1_quantity.onkeypress = (e)=>{
-            return window.util.inputNumber(this.el.ref_1_quantity,e,6,false);
+            return window.util.inputNumber(this.el.ref_1_quantity,e,2,false);
         }
 
         this.el.ref_1_unit_price.onkeypress = (e)=>{
@@ -710,8 +711,19 @@ class ComponentItem extends Component{
 
         const quantityInput     = t.input({class:'form-control',value:roundTwoDecimal(entry.quantity)});
         const equivalentInput   = t.input({class:'form-control',value:entry.equivalent});
+        const totalInput        = t.input({ class:'form-control', disabled:true});
 
-        const totalInput = t.input({ class:'form-control', disabled:true});
+
+        // equivalentInput.onkeyup = ()=>{
+        //     this.el.material_quantity.value = roundTwoDecimal(this.el.quantity.value / this.el.equivalent.value);
+        //     this.el.total.value = calculateTotalEquivalent( this.el.material_quantity.value, this.el.equivalent.value);
+           
+        // }
+
+        quantityInput.onkeypress = (e)=>{
+            return window.util.inputNumber(quantityInput,e,2,false);
+        }
+
 
         let throttle = false;
 
