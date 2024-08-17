@@ -196,7 +196,13 @@ class MaterialQuantityController extends Controller
              $component->save();
          }
 
-
+         return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data'      => [
+                'id'=> $materialQuantity->id
+            ]
+        ]);
     }
 
 

@@ -99,6 +99,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::get('/material_quantity/list', [App\Http\Controllers\MaterialQuantityController::class, '_list']);
     Route::post('/material_quantity/create', [App\Http\Controllers\MaterialQuantityController::class, '_create']);
+    Route::post('/material_quantity/update', [App\Http\Controllers\MaterialQuantityController::class, '_update']);
     Route::post('/material_quantity/delete', [App\Http\Controllers\MaterialQuantityController::class, '_delete']);
     
     Route::post('/material_quantity_request/create', [App\Http\Controllers\MaterialQuantityRequestController::class, '_create']);
