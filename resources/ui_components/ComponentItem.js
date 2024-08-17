@@ -644,7 +644,7 @@ class ComponentItem extends Component{
     appendMaterial(data){
         const t = new Template();
         
-        let materialItem = t.tr((row)=>{
+        const materialItem = t.tr((row)=>{
                     t.td(this.materialRegistry[data.material_item_id]);
                     t.td(''+roundTwoDecimal(data.quantity));
                     t.td(''+data.equivalent);
@@ -657,6 +657,7 @@ class ComponentItem extends Component{
                             e.preventDefault();
 
                             this.updateMaterialEntry({
+                                material_quantity_id: data.id,
                                 material_item_id: data.material_item_id,
                                 equivalent: data.equivalent,
                                 quantity: data.quantity
@@ -717,11 +718,6 @@ class ComponentItem extends Component{
         const totalInput        = t.input({ class:'form-control', disabled:true});
 
 
-        // equivalentInput.onkeyup = ()=>{
-        //     this.el.material_quantity.value = roundTwoDecimal(this.el.quantity.value / this.el.equivalent.value);
-        //     this.el.total.value = calculateTotalEquivalent( this.el.material_quantity.value, this.el.equivalent.value);
-           
-        // }
 
         quantityInput.onkeypress = (e)=>{
             return window.util.inputNumber(quantityInput,e,2,false);
@@ -787,12 +783,41 @@ class ComponentItem extends Component{
 
         });
 
+        const cancelBtn = t.button({class:'btn btn-secondary me-3'},'Cancel');
+        const updateBtn = t.button({class:'btn btn-warning'},'Update');
+
         const controls =  t.div({class:'row'},()=>{
-            t.div({class:'col-12 text-end'},()=>{
-                t.button({class:'btn btn-secondary me-3'},'Cancel');
-                t.button({class:'btn btn-warning'},'Update');
+            t.div({class:'col-12 text-end'},(el)=>{
+                el.apoend(cancelBtn);
+                el.append(updateBtn);
             });
         });
+
+        cancelBtn.onclick = (e)=>{
+            window.ui.primaryModal.hide();
+        }
+
+
+        updateBtn.onclick = (e)=>{
+
+            window.ui.primaryModal.hide();
+            
+            window.util.blockUI();
+
+            window.util.$post('/api/material_quantity/update',{
+                id: entry.material_quantity_id,
+                material_item_id: entry.material_item_id,
+                quantity: quantityInput.value,
+                equivalent: equivalentInput.value
+            }).then(reply=>{
+                window.util.unblockUI();
+
+                if(reply.status <= 0){
+                    window.util.showMsg(reply);
+                    return false;
+                }
+            })
+        }
 
         window.ui.primaryModalBody.append(content);
 

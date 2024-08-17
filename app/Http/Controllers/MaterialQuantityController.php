@@ -55,7 +55,7 @@ class MaterialQuantityController extends Controller
 
         $materialQuantity->component_item_id      = $component_item_id;
         $materialQuantity->material_item_id       = $material_item_id;
-        $materialQuantity->quantity               = $quantity;
+        $materialQuantity->quantity               = round($quantity,2);
         $materialQuantity->equivalent             = $equivalent;
        
         $materialQuantity->created_by             = $user_id;
@@ -124,6 +124,81 @@ class MaterialQuantityController extends Controller
             'data'=> $result
         ]);
     }
+
+    public function _update(Request $request){
+
+        $id         = (int) $requet->input('id');
+        $quantity   = $request->input('quantity');
+        $equivalent = $request->input('equivalent');
+
+
+        $validator = Validator::make($request->all(),[
+            'id' => [
+                'required',
+                'integer',
+                'gte:1'
+            ],
+            'equivalent' => [
+                'required',
+                'numeric',
+                'gt:0'
+            ],
+            'quantity' => [
+                'required',
+                'numeric',
+                'gt:0'
+            ]
+        ]);
+
+        if($validator->fails()){
+            
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => $validator->messages()
+            ]);
+        }
+
+
+
+        $user_id = Auth::user()->id;
+
+        $materialQuantity = MaterialQuantity::find($id);
+
+        if(!$materialQuantity){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Record not found',
+                'data'      => []
+            ]);
+        }
+
+        //No change do nothing
+        if($materialQuantity->quantity == $quantity && $materialQuantity == $equivalent){
+            return response()->json([
+                'status'    => 1,
+                'message'   => '',
+                'data'      => []
+            ]);
+        }
+
+        $materialQuantity->quantity               = round($quantity,2);
+        $materialQuantity->equivalent             = $equivalent;
+        $materialQuantity->updated_by             = $user_id;
+
+        $materialQuantity->save();
+
+        $component = $materialQuantity->componentItem->component;
+        
+        //Todo enclosed in a transaction
+         if($component->status != 'PEND'){
+             $component->status = 'PEND';
+             $component->save();
+         }
+
+
+    }
+
 
     public function _delete(Request $request){
 
