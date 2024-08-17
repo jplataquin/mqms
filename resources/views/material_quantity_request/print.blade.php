@@ -1,5 +1,10 @@
 
-<table broder="1">
+<style>    
+    table, th, td {
+    border: 1px solid black;
+    } 
+</style>
+<table>
     <tr>
         <th>ID No.</th>
         <td colspan="3">{{$material_quantity_request->id}}
