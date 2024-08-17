@@ -424,6 +424,68 @@ class MaterialQuantityRequestController extends Controller
         ]);
     }
 
+    public function print($id){
+        
+        $id = (int) $id;
+
+        $materialQuantityRequest = MaterialQuantityRequest::findOrFail($id);
+
+        $project         = $materialQuantityRequest->Project;
+        $section         = $materialQuantityRequest->Section;
+        $contract_item   = $materialQuantityRequest->ContractItem;
+        $component       = $materialQuantityRequest->Component;
+        $request_items   = $materialQuantityRequest->Items;
+
+        $component_item_ids     = [];
+        $component_item_options  = [];
+
+        foreach($component->ComponentItems as $componentItem){
+            $component_item_ids[] = $componentItem->id;
+
+            $component_item_options[$componentItem->id] = [
+                'value'        => $componentItem->id,
+                'text'         => $componentItem->name,
+                'unit_id'      => $componentItem->unit_id,
+                'quantity'     => $componentItem->quantity
+            ];
+        }
+        
+        $material_item_result = DB::table('material_quantities')->whereIn('component_item_id',$component_item_ids)
+        ->join('material_items','material_quantities.material_item_id','=','material_items.id')
+        ->get();
+
+        $material_options = [];
+
+        foreach($material_item_result as $row){
+
+            if(!isset($material_options[$row->component_item_id])){
+                $material_options[$row->component_item_id] = [];
+            }
+
+            $material_options[$row->component_item_id][$row->id] = [
+                'value'         => $row->material_item_id,
+                'text'          => trim($row->name.' '.$row->specification_unit_packaging.' '.$row->brand),
+                'equivalent'    => $row->equivalent,
+                'quantity'      => $row->quantity
+            ];
+        }
+
+
+        
+        $unit_options = Unit::toOptions();
+
+        return view('material_quantity_request/print',[
+            'project'                   => $project,
+            'section'                   => $section,
+            'contract_item'             => $contract_item,
+            'component'                 => $component,
+            'material_quantity_request' => $materialQuantityRequest,
+            'request_items'             => $request_items,
+            'material_options'          => $material_options,
+            'component_item_options'    => $component_item_options,
+            'unit_options'              => $unit_options
+        ]);
+    }
 
     public function _update(Request $request){
 
