@@ -8,7 +8,7 @@
             <li>
                 <a href="/material_quantity_requests">
                     <span>
-                       Material Quantity Requests
+                       Material Requests
                     </span>
                 </a>
             </li>
@@ -114,7 +114,12 @@
 
 
     <div class="row mt-5">
-        <div class="col-12 text-end">
+        <div class="col-6">
+           
+        </div>
+        <div class="col-6 text-end">
+            
+             <button class="btn-warning btn" id="printBtn">Print</button>
             <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
 
             @if($material_quantity_request->status == 'PEND')
