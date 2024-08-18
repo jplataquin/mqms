@@ -83,25 +83,25 @@
 
 <table>
     <tr>
-        <th style="width:5%">
+        <th style="width:5%;text-align:center">
             #
         </th>
-        <th style="width:35%">
+        <th style="width:35%;text-align:center">
             Items
         </th>
-        <th style="width:10%">
+        <th style="width:10%;text-align:center">
             Budget
         </th>
-        <th style="width:10%">
+        <th style="width:10%;text-align:center">
             Approved
         </th>
-        <th>
+        <th style="width:10%;text-align:center">
             Remaining
         </th>
-        <th>
+        <th style="width:10%;text-align:center">
             Requested
         </th>
-        <th>
+        <th style="width:10%;text-align:center">
             Balance
         </th>
     </tr>
