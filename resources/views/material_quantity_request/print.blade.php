@@ -44,17 +44,15 @@
     </tr>
     <tr>
         <th>Date Requested</th>
-        <td colspan="3">{{$material_quantity_request->created_at}}</td>
-    </tr>
-    <tr>
-        <th>Date Printed</th>
-        <td colspan="3">{{$date_printed}}</td>
+        <td width="40%">{{$material_quantity_request->created_at}}</td>
+        <th width="10%">Date Printed</th>
+        <td width="40%">{{$date_printed}}</td>
     </tr>
     <tr>
         <th>Project</th>
-        <td width="40%">{{$project->name}}</td>
-        <th width="10%">Section</th>
-        <td width="40%">{{$section->name}}</td>
+        <td>{{$project->name}}</td>
+        <th>Section</th>
+        <td>{{$section->name}}</td>
     </tr>
     <tr>
         <th>Contract Item</th>
@@ -68,6 +66,7 @@
 <table>
     <tr>
         <th>
+            Items
         </th>
         <th>
             Budget
