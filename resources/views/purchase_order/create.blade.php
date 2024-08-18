@@ -53,6 +53,7 @@
         </table>
 
             <div class="row">
+                
                 <div class="col-6">
                     <div class="form-group">
                         <label>Supplier</label>
@@ -64,6 +65,7 @@
                         </select>
                     </div>
                 </div>
+
                 <div class="col-6">
                     <div class="form-group">
                         <label>Payment Terms</label>
@@ -73,6 +75,7 @@
                     </div>
                 </div>
             </div>
+            
             <hr>
             <div id="item_container"></div>
             
