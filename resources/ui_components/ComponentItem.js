@@ -24,6 +24,7 @@ class ComponentItem extends Component{
             editable: false,
             function_type_id:'',
             variable:'',
+            grand_total:0,
             ref_1_quantity:'',
             ref_1_unit_id:'',
             ref_1_unit_price:''
@@ -122,7 +123,7 @@ class ComponentItem extends Component{
                                 t.td();
                                 t.td();
                                 this.el.grandTotal = t.td(()=>{
-                                    t.txt('test');
+                                    t.txt('0');
                                 });
                                 t.td();
                             });
@@ -512,6 +513,9 @@ class ComponentItem extends Component{
         }
     }
 
+    onStateChange_grand_total(newVal){
+        this.el.grandTotal.innerText = newVal;
+    }
 
     onStateChange_editable(newVal){
        
@@ -560,6 +564,8 @@ class ComponentItem extends Component{
                 return false;
             }
 
+            let grand_total = 0;
+
             reply.data.map(item=>{
                 this.appendMaterial({
                     id:item.id,
@@ -567,7 +573,11 @@ class ComponentItem extends Component{
                     quantity: item.quantity,
                     equivalent: item.equivalent
                 });
+
+                grand_total = grand_total + (item.quantity * item.equivalent)
             });
+
+            this.setState('grand_total',grand_total);
         });
     }
 
