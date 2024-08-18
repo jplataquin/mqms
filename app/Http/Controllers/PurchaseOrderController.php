@@ -668,7 +668,8 @@ class PurchaseOrderController extends Controller
             'payment_term'                      => $paymentTerm,
             'items'                             => $materialQuantityRequestItems,
             'extras'                            => $extras,
-            'materialItemArr'                   => $materialItemArr
+            'materialItemArr'                   => $materialItemArr,
+            'current_datetime'                  => Carbon::now()
             
         ])->render();
         

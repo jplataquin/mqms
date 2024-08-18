@@ -39,7 +39,7 @@
                 </tr>
                 <tr>
                     <td colspan="4" class="text-center bold">
-                        Purchase Order
+                        Purchase Order - {{$copy}} Copy
                     </td>
                 </tr>
                 <tr>
@@ -47,7 +47,7 @@
                         <table class="table" style="margin-top:2px; margin-bottom:2px" border="1">
                             <tr>
                                 <td class="text-left bold" style="width:20%">PO#</td>
-                                <td style="width:30%">{{$purchase_order->id}}</td>
+                                <td style="width:30%">{{ str_pad($purchase_order->id,6,0,STR_PAD_LEFT) }}</td>
                                 <td class="text-left bold"  style="width:20%">Supplier</td>
                                 <td style="width:30%">{{$supplier->name}}</td>
                             </tr>
@@ -58,13 +58,13 @@
                                 <td>{{$payment_term->text}}</td>
                             </tr>
                             <tr>
-                                <td class="text-left bold">Copy</td>
-                                <td>{{$copy}}</td>
+                                <td class="text-left bold">Date Printed</td>
+                                <td>{{$current_datetime}}</td>
                                 <td class="text-left bold">Contact Person</td>
                                 <td>{{$supplier->primary_contact_person}}</td>
                             </tr>
                             <tr>
-                                <td class="text-left bold">Date</td>
+                                <td class="text-left bold">Date Issued</td>
                                 <td>{{$purchase_order->approved_at}}</td>
                                 <td class="text-left bold">Contact No:</td>
                                 <td>{{$supplier->primary_contact_no}}</td>
