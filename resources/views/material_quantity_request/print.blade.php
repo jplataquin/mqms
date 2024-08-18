@@ -89,20 +89,32 @@
 
         
              @php 
-                $balance = ($request_item->budget_quantity - $request_item->approved_quantity );
+                $remaining = ($request_item->budget_quantity - $request_item->approved_quantity );
 
                 $red = '';
 
-                if($balance < 0){
+                if($remaining < 0){
                     $red = 'text-red';
                 }
             @endphp
 
         <td class="{{$red}} text-center"  width="100px">
-            {{$balance}}
+            {{$remaining}}
         </td>
         <td  class="text-center" width="100px">
             {{$request_item->requested_quantity}}
+        </td>
+        @php
+            $balance = $remaining - $request_item->requested_quantity;
+
+            $red = '';
+
+            if($balance < 0){
+                $red = 'text-red';
+            }
+        @endphp
+        <td class="{{$red}} text-center">
+            {{$balance}}
         </td>
     </tr>
 
