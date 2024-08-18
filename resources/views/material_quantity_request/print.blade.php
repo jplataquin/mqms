@@ -46,7 +46,7 @@
         
         </td>
         <td style="text-align:center;width:10%">
-            <qrcode value="{{}}" ec="H" style="width: 20mm; background-color: white; color: black;"></qrcode>
+            <qrcode value="asdad" ec="H" style="width: 20mm; background-color: white; color: black;"></qrcode>
         </td>
     </tr>
 </table>
