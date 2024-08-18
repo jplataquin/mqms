@@ -32,8 +32,8 @@
 
 <table class="mb-20">
     <tr>
-        <td>
-            <img src="/storage/sys_images/header.png" style="width:450px"/>
+        <td width="500px">
+            <img src="/storage/sys_images/header.png" style="width:500px"/>
         </td>
         <td>
             <h3>Material Request</h3>
