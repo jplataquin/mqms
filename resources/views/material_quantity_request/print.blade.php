@@ -44,11 +44,11 @@
     </tr>
     <tr>
         <th>Date Requested</th>
-        <td colspan="3">{{$material_quantity_request->created_at}}
+        <td colspan="3">{{$material_quantity_request->created_at}}</td>
     </tr>
     <tr>
         <th>Date Printed</th>
-        <td colspan="3">{{$date_printed}}
+        <td colspan="3">{{$date_printed}}</td>
     </tr>
     <tr>
         <th>Project</th>
