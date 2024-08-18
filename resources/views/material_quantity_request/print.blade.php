@@ -45,8 +45,8 @@
             <h1>Material Request</h1>
         
         </td>
-        <td>
-            <qrcode value="Value to Coder" ec="H" style="width: 20mm; background-color: white; color: black;"></qrcode>
+        <td style="text-align:center;width:10%">
+            <qrcode value="{{}}" ec="H" style="width: 20mm; background-color: white; color: black;"></qrcode>
         </td>
     </tr>
 </table>
