@@ -35,8 +35,8 @@
         <td width="500px">
             <img src="/storage/sys_images/header.png" style="width:500px"/>
         </td>
-        <td>
-            <h3>Material Request</h3>
+        <td class="text-center">
+            <h1>Material Request</h1>
         </td>
     </tr>
 </table>
