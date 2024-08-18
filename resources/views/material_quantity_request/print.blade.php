@@ -111,7 +111,7 @@
         @endphp
         <td width="500px">
             <div class="text-bold">
-                {{ $component_item_options[$request_item->component_item_id]->name }}
+                {{ $component_item_options[$request_item->component_item_id]->text }}
             </div>
             <div class="ps-10">
                 {{ $item->text }}
