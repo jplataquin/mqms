@@ -16,6 +16,14 @@
     .mb-5{
         margin-bottom: 5px;
     }
+
+    .text-center{
+        text-align: center !important;
+    }
+
+    .text-red{
+        color: #ff0000 !important;
+    }
 </style>
 <table class="mb-5">
     <tr>
@@ -72,14 +80,26 @@
         <td width="300px">
             {{ $request_item->text }}
         </td>
-        <td>
+        <td class="text-center">
             {{ $request_item->budget_quantity}}
         </td>
-        <td>
+        <td class="text-center">
             {{ $request_item->approved_quantity}}
         </td>
-        <td>
-            {{ ($request_item->budget_quantity - $request_item->budget_quantity ) }}
+
+        
+             @php 
+                $balance = ($request_item->budget_quantity - $request_item->budget_quantity );
+
+                $red = '';
+
+                if($balance < 0){
+                    $red = 'text-red';
+                }
+            @endphp
+            
+        <td class="{{$red}} text-center">
+            {{$balance}}
         </td>
         <td>
 
