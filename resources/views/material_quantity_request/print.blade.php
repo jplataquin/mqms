@@ -41,10 +41,11 @@
         <td style="width:50%;text-align:center">
             <img src="storage/sys_images/header.png" style="width:500px"/>
         </td>
-        <td class="text-center" style="width:50%;text-align:center">
+        <td class="text-center" style="width:40%;text-align:center">
             <h1>Material Request</h1>
-            
-
+        
+        </td>
+        <td>
             <qrcode value="Value to Coder" ec="H" style="width: 20mm; background-color: white; color: black;"></qrcode>
         </td>
     </tr>
