@@ -460,7 +460,7 @@ class MaterialQuantityRequestController extends Controller
         foreach($component->ComponentItems as $componentItem){
             $component_item_ids[] = $componentItem->id;
 
-            $component_item_options[$componentItem->id] = [
+            $component_item_options[$componentItem->id] = (object) [
                 'value'        => $componentItem->id,
                 'text'         => $componentItem->name,
                 'unit_id'      => $componentItem->unit_id,
