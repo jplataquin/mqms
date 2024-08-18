@@ -88,7 +88,7 @@
         @php
             $item = $item_options[$request_item->component_item_id][$request_item->material_item_id];
         @endphp
-        <td width="300px">
+        <td width="500px">
             {{ $item->text }}
         </td>
         <td class="text-center" width="100px">
