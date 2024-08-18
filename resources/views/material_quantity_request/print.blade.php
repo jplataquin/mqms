@@ -17,8 +17,8 @@
         margin-bottom: 20px;
     }
 
-    .ps-10{
-        padding-left: 10px;
+    .ps-20{
+        padding-left: 20px;
     }
 
     .text-center{
@@ -83,44 +83,53 @@
 
 <table>
     <tr>
-        <th>
+        <th width="5%">
+            #
+        </th>
+        <th width="35%">
             Items
         </th>
-        <th>
+        <th width="10%">
             Budget
         </th>
-        <th>
+        <th width="10%">
             Approved
         </th>
-        <th>
+        <th width="10%">
             Remaining
         </th>
-        <th>
+        <th width="10%">
             Requested
         </th>
-        <th>
+        <th width="20%">
             Balance
         </th>
     </tr>
 
+    @php
+        $count = 1;
+    @endphp
     @foreach($request_items as $request_item)
     
     <tr>
         @php
             $item = $item_options[$request_item->component_item_id][$request_item->material_item_id];
         @endphp
-        <td width="500px">
+        <td>
+            {{$count}}
+        </td>
+        <td>
             <div class="text-bold">
                 {{ $component_item_options[$request_item->component_item_id]->text }}
             </div>
-            <div class="ps-10">
+            <div class="ps-20">
                 {{ $item->text }}
             </div>
         </td>
-        <td class="text-center" width="100px">
+        <td class="text-center">
             {{ $item->budget_quantity}}
         </td>
-        <td class="text-center"  width="100px">
+        <td class="text-center">
             {{ $item->approved_quantity}}
         </td>
 
@@ -136,10 +145,10 @@
 
             @endphp
 
-        <td class="{{$red}} text-center"  width="100px">
+        <td class="{{$red}} text-center">
             {{$remaining}}
         </td>
-        <td  class="text-center text-bold" width="100px">
+        <td  class="text-center text-bold">
             {{$request_item->requested_quantity}}
         </td>
         @php
