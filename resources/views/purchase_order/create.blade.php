@@ -2,25 +2,27 @@
 
 @section('content')
 <div id="content">
+
     <div class="container">
-    <div class="breadcrumbs">
-        <ul>
-            <li>
-                <a href="#">
-                    <span>
-                       Purchase Order
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="active">
-                    <span>
-                        Create
-                    </span>		
-                </a>
-            </li>
-        </ul>
-    </div>
+        <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
+            <ul>
+                <li>
+                    <a href="/purchase_orders">
+                        <span>
+                        Purchase Order
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="active">
+                        <span>
+                            Create
+                        </span>	
+                        <i class="ms-2 bi bi-file-earmark-plus"></i>	
+                    </a>
+                </li>
+            </ul>
+        </div>
         <hr>
         <table class="table">
             <tbody>
@@ -485,6 +487,6 @@
                 remainingBalanceEl.value = requested_quantity - reply.data.total_ordered;
             });
         }
-</script>
+    </script>
 </div>
 @endsection
