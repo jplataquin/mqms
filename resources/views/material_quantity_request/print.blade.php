@@ -119,12 +119,9 @@
             {{$count}}
         </td>
         <td>
-            <div class="text-bold">
-                {{ $component_item_options[$request_item->component_item_id]->text }}
-            </div>
-            <div class="ps-20">
+             {{ $component_item_options[$request_item->component_item_id]->text }}
                 {{ $item->text }}
-            </div>
+            
         </td>
         <td class="text-center">
             {{ $item->budget_quantity}}
@@ -164,7 +161,10 @@
             {{$balance}}
         </td>
     </tr>
-
+        
+        @php
+                $count++;
+        @endphp
     @endforeach
 </table>
 
