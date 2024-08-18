@@ -49,7 +49,7 @@
 
 <table class="mb-20">
     <tr>
-        <th width="10%">ID No.</th>
+        <th style="width:10%">ID No.</th>
         <td colspan="3">{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}</td>
     </tr>
     <tr>
@@ -62,9 +62,9 @@
     </tr>
     <tr>
         <th>Date Requested</th>
-        <td width="40%">{{$material_quantity_request->created_at}}</td>
-        <th width="10%">Date Printed</th>
-        <td width="40%">{{$date_printed}}</td>
+        <td style="width:40%">{{$material_quantity_request->created_at}}</td>
+        <th style="width:10%">Date Printed</th>
+        <td style="width:40%">{{$date_printed}}</td>
     </tr>
     <tr>
         <th>Project</th>
