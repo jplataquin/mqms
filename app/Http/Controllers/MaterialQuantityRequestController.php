@@ -503,7 +503,8 @@ class MaterialQuantityRequestController extends Controller
             'request_items'             => $request_items,
             'item_options'              => $item_options,
             'component_item_options'    => $component_item_options,
-            'unit_options'              => $unit_options
+            'unit_options'              => $unit_options,
+            'date_printed'              => Carbon::now();
         ]);
     }
 

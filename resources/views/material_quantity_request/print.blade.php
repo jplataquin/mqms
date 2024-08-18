@@ -48,7 +48,7 @@
     </tr>
     <tr>
         <th>Date Printed</th>
-        <td colspan="3">{{Carbon::now()}}
+        <td colspan="3">{{$date_printed}}
     </tr>
     <tr>
         <th>Project</th>
