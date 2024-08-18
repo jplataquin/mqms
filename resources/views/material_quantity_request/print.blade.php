@@ -41,7 +41,7 @@
         <td width="500px">
             <img src="storage/sys_images/header.png" style="width:500px"/>
         </td>
-        <td class="text-center">
+        <td class="text-center" width="500px">
             <h1>Material Request</h1>
         </td>
     </tr>
