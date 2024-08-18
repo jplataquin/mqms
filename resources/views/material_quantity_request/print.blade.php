@@ -29,6 +29,18 @@
         font-weight: bold !important;
     }
 </style>
+
+<table class="mb-20">
+    <tr>
+        <td>
+            <img src="/storage/sys_images/header.png" style="width:450px"/>
+        </td>
+        <td>
+            <h3>Material Request</h3>
+        </td>
+    </tr>
+</table>
+
 <table class="mb-20">
     <tr>
         <th width="10%">ID No.</th>
