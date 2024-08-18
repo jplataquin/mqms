@@ -128,8 +128,8 @@
         
         data.map(item=>{
 
-            console.log(item);
-            
+            console.log(item.id, item.component);
+
             let row = t.tr({class:'selectable-div'},()=>{
                 t.td(String(item.id).padStart(6,0));
             
