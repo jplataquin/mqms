@@ -115,6 +115,16 @@ class ComponentItem extends Component{
                         });
     
                         this.el.materialList = t.tbody();
+
+                        t.tfoot(()=>{
+                            t.tr(()=>{
+                                t.td();
+                                t.td();
+                                t.td();
+                                t.td();
+                                t.td();
+                            });
+                        });
                     });
                 });
                 
