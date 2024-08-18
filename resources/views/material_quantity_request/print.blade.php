@@ -86,22 +86,22 @@
         <th style="width:5%">
             #
         </th>
-        <th style="width:35%">
+        <th>
             Items
         </th>
-        <th style="width:10%">
+        <th>
             Budget
         </th>
-        <th style="width:10%">
+        <th>
             Approved
         </th>
-        <th style="width:10%">
+        <th>
             Remaining
         </th>
-        <th style="width:10%">
+        <th>
             Requested
         </th>
-        <th style="width:20%">
+        <th>
             Balance
         </th>
     </tr>
