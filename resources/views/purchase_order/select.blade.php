@@ -3,7 +3,7 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs">
+<div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
                 <a href="/purchase_orders">
@@ -16,7 +16,8 @@
                 <a href="#" class="active">
                     <span>
                         Select
-                    </span>		
+                    </span>	
+                    <i class="ms-2 bi bi-ui-checks-grid"></i>	
                 </a>
             </li>
         </ul>
