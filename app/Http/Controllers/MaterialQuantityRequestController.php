@@ -472,22 +472,20 @@ class MaterialQuantityRequestController extends Controller
         ->join('material_items','material_quantities.material_item_id','=','material_items.id')
         ->get();
 
-        $material_options = [];
+        $item_options = [];
 
         foreach($material_item_result as $row){
 
             if(!isset($material_options[$row->component_item_id])){
-                $material_options[$row->component_item_id] = [];
+                $item_options[$row->component_item_id] = [];
             }
 
-            $material_options[$row->component_item_id][$row->id] = (object) [
+            $item_options[$row->component_item_id][$row->id] = (object) [
                 'value'                     => $row->material_item_id,
                 'text'                      => trim($row->name.' '.$row->specification_unit_packaging.' '.$row->brand),
                 'equivalent'                => $row->equivalent,
                 'budget_quantity'           => $row->quantity,
-                'approved_quantity'         => $this->get_total_approve_quantity($row->component_item_id,$row->material_item_id),
-                'requested_quantity'        => $row->requested_quantity,
-                
+                'approved_quantity'         => $this->get_total_approve_quantity($row->component_item_id,$row->material_item_id),   
             ];
         }
 
@@ -502,7 +500,7 @@ class MaterialQuantityRequestController extends Controller
             'component'                 => $component,
             'material_quantity_request' => $materialQuantityRequest,
             'request_items'             => $request_items,
-            'material_options'          => $material_options,
+            'item_options'              => $item_options,
             'component_item_options'    => $component_item_options,
             'unit_options'              => $unit_options
         ]);

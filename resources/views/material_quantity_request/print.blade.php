@@ -75,7 +75,7 @@
     
     <tr>
         @php
-            $item = $material_options[$request_item->component_item_id][$request_item->material_item_id];
+            $item = $item_options[$request_item->component_item_id][$request_item->material_item_id];
         @endphp
         <td width="300px">
             {{ $item->text }}
