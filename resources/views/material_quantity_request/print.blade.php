@@ -38,7 +38,7 @@
 
 <table class="mb-20" width="100%">
     <tr>
-        <td width="500px">
+        <td>
             <img src="storage/sys_images/header.png" style="width:500px"/>
         </td>
         <td class="text-center">
