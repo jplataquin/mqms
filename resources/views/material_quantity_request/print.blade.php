@@ -119,9 +119,12 @@
             {{$count}}
         </td>
         <td>
-             {{ $component_item_options[$request_item->component_item_id]->text }}
+            <div class="text-bold" style="width:500px">
+                {{ $component_item_options[$request_item->component_item_id]->text }}
+            </div>
+            <div class="ps-20" style="width:500px">
                 {{ $item->text }}
-            
+            </div>
         </td>
         <td class="text-center">
             {{ $item->budget_quantity}}
