@@ -14,7 +14,7 @@
     }
 
     .mb-20{
-        margin-bottom: 5px;
+        margin-bottom: 20px;
     }
 
     .text-center{
