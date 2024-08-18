@@ -46,23 +46,25 @@
 
 
 <table>
-    @foreach($request_items as $request_item)
     <tr>
         <th>
         </th>
         <th>
-            Budget Quantity
+            Budget
         </th>
         <th>
-            Approved Quantity
+            Approved
         </th>
         <th>
-            Balance Quantity
+            Balance
         </th>
         <th>
-            Requested Quantity
+            Requested
         </th>
     </tr>
+
+    @foreach($request_items as $request_item)
+    
     <tr>
         @php
             $request_item = $material_options[$request_item->component_item_id][$request_item->material_item_id];
@@ -80,7 +82,7 @@
             {{ ($request_item->budget_quantity - $request_item->budget_quantity ) }}
         </td>
         <td>
-            
+
         </td>
     </tr>
 

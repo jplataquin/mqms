@@ -174,7 +174,7 @@ class RequestMaterialItem extends Component{
                     
                     t.div({class:'col-4'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Budget Quantity');
+                            t.label('Budget');
                             this.el.materialBudgetQuantity = t.input({
                                 type:'text',
                                 disabled:true,
@@ -186,7 +186,7 @@ class RequestMaterialItem extends Component{
 
                     t.div({class:'col-4'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Approved Quantity');
+                            t.label('Approved');
                             this.el.prevApprovedQuantity = t.input({
                                 type:'text',
                                 disabled:true,
@@ -199,7 +199,7 @@ class RequestMaterialItem extends Component{
 
                     t.div({class:'col-4'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Remaining Quantity');
+                            t.label('Remaining');
                             this.el.quantityRemaining = t.input({
                                 type:'text',
                                 disabled:true,
