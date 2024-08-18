@@ -94,7 +94,7 @@
 
                     <tr>
                         <th colspan="2" class="text-center">
-                            (Optional) Additional / Discount Charges
+                            (Optional) Discount / Additional Charges
                         </th>
                     </tr>
                     <tr>
