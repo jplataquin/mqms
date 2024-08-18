@@ -83,6 +83,11 @@
             <div class="d-flex justify-content-end">
                 <table class="table w-50 table-border">
                     <tr>
+                        <th colspan="2">
+                            (Add / Sub) Charges
+                        </th>
+                    </tr>
+                    <tr>
                         <td>
                             <input type="text" disabled="true" value="Sub Total" class="form-control"/>
                         </td>
