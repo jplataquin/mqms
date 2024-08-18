@@ -115,7 +115,7 @@
         @php
             $item = $item_options[$request_item->component_item_id][$request_item->material_item_id];
         @endphp
-        <td class="text-center">
+        <td class="text-center" style="text-align:center">
             {{$count}}
         </td>
         <td>
