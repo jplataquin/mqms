@@ -36,12 +36,12 @@
 
 </style>
 
-<table class="mb-20" width="100%">
+<table class="mb-20">
     <tr>
-        <td width="50%">
+        <td style="width:50%">
             <img src="storage/sys_images/header.png" style="width:500px"/>
         </td>
-        <td class="text-center" width="50%">
+        <td class="text-center" style="width:50%">
             <h1>Material Request</h1>
         </td>
     </tr>
