@@ -485,7 +485,7 @@ class MaterialQuantityRequestController extends Controller
                 'text'                      => trim($row->name.' '.$row->specification_unit_packaging.' '.$row->brand),
                 'equivalent'                => $row->equivalent,
                 'budget_quantity'           => $row->quantity,
-                'approved_quantity'         => $this->get_total_approve_quantity($row->component_item_id,$row->material_item_id),   
+                'approved_quantity'         => $this->get_total_approved_quantity($row->component_item_id,$row->material_item_id),   
             ];
         }
 
