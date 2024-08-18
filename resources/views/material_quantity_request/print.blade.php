@@ -24,15 +24,23 @@
     .text-red{
         color: #ff0000 !important;
     }
+
+    .text-bold{
+        font-weight: 'bold' !important;
+    }
 </style>
 <table class="mb-5">
     <tr>
         <th>ID No.</th>
-        <td colspan="3">{{$material_quantity_request->id}}
+        <td colspan="3">{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}
     </tr>
     <tr>
         <th>Status</th>
-        <td colspan="3">{{$material_quantity_request->statusq}}
+        <td colspan="3">{{$material_quantity_request->status}}</td>
+    </tr>
+    <tr>
+        <th>Requested By</th>
+        <td colspan="3">{{$material_quantity_request->CreatedByUser()->name}}</td>
     </tr>
     <tr>
         <th>Date Created</th>
@@ -105,7 +113,7 @@
         <td class="{{$red}} text-center"  width="100px">
             {{$remaining}}
         </td>
-        <td  class="text-center" width="100px">
+        <td  class="text-center text-bold" width="100px">
             {{$request_item->requested_quantity}}
         </td>
         @php
