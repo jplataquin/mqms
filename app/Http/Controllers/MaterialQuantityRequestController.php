@@ -827,7 +827,7 @@ class MaterialQuantityRequestController extends Controller
         ]);
     }
 
-    private function get_total_approve_quantity($component_item_id,$material_item_id){
+    private function get_total_approved_quantity($component_item_id,$material_item_id){
 
         $total_approved_quantity = MaterialQuantityRequestItem::where('status','=','APRV')
         ->where('component_item_id','=',$component_item_id)
