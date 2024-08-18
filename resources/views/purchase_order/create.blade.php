@@ -98,8 +98,8 @@
                         </th>
                     </tr>
                     <tr>
-                        <th>Particular</th>
-                        <th>Amount</th>
+                        <th class="text-center">Particular</th>
+                        <th class="text-center">Amount</th>
                     </tr>
                     <tr class="extra">
                         <td>
