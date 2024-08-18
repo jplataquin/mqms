@@ -152,7 +152,7 @@
         let payment_terms_options   = @json($payment_terms_options);
         let component_item_arr      = @json($component_item_arr);
 
-        conosole.log(supplier);
+        console.log(supplier);
         const t = new Template();
 
         function clearItems(){
