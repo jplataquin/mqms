@@ -119,10 +119,10 @@
             {{$count}}
         </td>
         <td>
-            <div class="text-bold" style="width:400px;font-weight:bold">
+            <div class="text-bold" style="width:500px;font-weight:bold">
                 {{ $component_item_options[$request_item->component_item_id]->text }}
             </div>
-            <div class="ps-20" style="width:400px">
+            <div class="ps-20" style="width:500px">
                 {{ $item->text }}
             </div>
         </td>
