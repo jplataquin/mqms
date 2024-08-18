@@ -51,6 +51,24 @@
                             <a href="/projects" hx-select="#content" hx-target="#main">Projects</a>
                         </div>          
                     </li>
+                    
+                    <li class="menu-item">
+                        <div class="nav-item">
+                            <a href="#" class="inactive-nav-item">Request</a>
+                        </div>
+                        <ul class="list-unstyled menu-sub-items">
+                            <li class="nav-sub-item">
+                                <a href="/material_quantity_requests" hx-select="#content" hx-target="#main">Material Request</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a href="/material_canvass" hx-select="#content" hx-target="#main">Material Canvass</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a href="/purchase_orders" hx-select="#content" hx-target="#main">Purchase Order</a>
+                            </li>
+                        </ul>
+                        
+                    <li>
 
                     <li class="menu-item">
                         <div class="nav-item">
@@ -116,23 +134,6 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="menu-item">
-                        <div class="nav-item">
-                            <a href="#" class="inactive-nav-item">Request</a>
-                        </div>
-                        <ul class="list-unstyled menu-sub-items">
-                            <li class="nav-sub-item">
-                                <a href="/material_quantity_requests" hx-select="#content" hx-target="#main">Material Request</a>
-                            </li>
-                            <li class="nav-sub-item">
-                                <a href="/material_canvass" hx-select="#content" hx-target="#main">Material Canvass</a>
-                            </li>
-                            <li class="nav-sub-item">
-                                <a href="/purchase_orders" hx-select="#content" hx-target="#main">Purchase Order</a>
-                            </li>
-                        </ul>
-                        
-                    <li>
 
                     <li class="menu-item">
                         <div class="nav-item">
