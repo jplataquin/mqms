@@ -78,7 +78,7 @@
         <th>Component</th>
         <td>{{$component->name}}</td>
     </tr>
-<table>
+</table>
 
 
 <table>
