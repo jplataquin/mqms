@@ -206,7 +206,7 @@ class MaterialQuantityController extends Controller
         
   
         //Check if total entries is not more than component item quantity
-        $entries = MaterialQuantity::where('component_item_id',$component_item_id)->get();
+        $entries = MaterialQuantity::where('component_item_id',$component_item->id)->get();
   
         $grand_total = 0;
 
