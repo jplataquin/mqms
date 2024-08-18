@@ -52,32 +52,39 @@
             </tbody>
         </table>
 
-            <div class="row">
-                
-                <div class="col-6">
-                    <div class="form-group">
-                        <label>Supplier</label>
-                        <select id="supplier" class="form-control">
-                            <option value=""> - </option>
-                            @foreach($supplier_options as $supplier)
-                                <option value="{{$supplier->id}}">{{$supplier->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="form-group">
-                        <label>Payment Terms</label>
-                        <select id="payment_term" class="form-control">
-                            <option value=""> - </option>
-                        </select>
-                    </div>
-                </div>
-
+        <div class="folder-form-container">
+            <div class="folder-form-tab">
+                Create Purchase Order
             </div>
+            <div class="folder-form-body">
+                <div class="row">
+                    
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>Supplier</label>
+                            <select id="supplier" class="form-control">
+                                <option value=""> - </option>
+                                @foreach($supplier_options as $supplier)
+                                    <option value="{{$supplier->id}}">{{$supplier->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
 
-            <hr>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>Payment Terms</label>
+                            <select id="payment_term" class="form-control">
+                                <option value=""> - </option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <hr>
             <div id="item_container"></div>
             
             <div class="d-flex justify-content-end">
