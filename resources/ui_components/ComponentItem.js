@@ -121,7 +121,7 @@ class ComponentItem extends Component{
                             t.tr(()=>{
                                 t.td();
                                 t.td();
-                                t.td();
+                                t.td('Grand Total');
                                 this.el.grandTotal = t.td(()=>{
                                     t.txt('0');
                                 });
@@ -515,6 +515,15 @@ class ComponentItem extends Component{
 
     onStateChange_grand_total(newVal){
         this.el.grandTotal.innerText = newVal;
+
+        if(newVal > this._state.quantity){
+            this.el.grandTotal.style.color = '#ff0000';
+
+            window.util.alert('Error','The Grand Total quantity is more than the Component quantity');
+
+        }else{
+            this.el.grandTotal.style.color = '#000000';
+        }
     }
 
     onStateChange_editable(newVal){
