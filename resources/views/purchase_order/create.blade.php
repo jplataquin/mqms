@@ -74,8 +74,9 @@
                         </select>
                     </div>
                 </div>
+
             </div>
-            
+
             <hr>
             <div id="item_container"></div>
             
@@ -138,7 +139,7 @@
                     <button id="createBtn" class="btn btn-primary">Create</button>
                 </div>
             </div>
-        </div>
+        
     </div>
 
     <script type="module">
@@ -491,5 +492,6 @@
             });
         }
     </script>
+    
 </div>
 @endsection
