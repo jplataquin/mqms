@@ -48,16 +48,20 @@
 <table>
     @foreach($request_items as $request_item)
     <tr>
+        @php
+            $request_item = $material_options[$request_item->component_item_id][$request_item->material_item_id];
+        @endphp
         <td width="300px">
-            {{ $material_options[$request_item->component_item_id][$request_item->material_item_id]->text }}
+            {{ $request_item->text }}
         </td>
         <td>
-            {{ $material_options[$request_item->component_item_id][$request_item->material_item_id]->quantity}}
+            {{ $request_item->budget_quantity}}
         </td>
         <td>
+            {{ $request_item->approved_quantity}}
         </td>
         <td>
-
+            {{ ($request_item->budget_quantity - $request_item->budget_quantity ) }}
         </td>
     </tr>
 

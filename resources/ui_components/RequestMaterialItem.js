@@ -431,9 +431,9 @@ class RequestMaterialItem extends Component{
                 return false;
             }
 
-            this.el.prevApprovedQuantity.value = reply.data.total_requested;
+            this.el.prevApprovedQuantity.value = reply.data.total_approved_quantity;
 
-            this.el.quantityRemaining.value = this.el.materialBudgetQuantity.value - reply.data.total_requested;
+            this.el.quantityRemaining.value = this.el.materialBudgetQuantity.value - reply.data.total_approved_quantity;
         });
     }
 
