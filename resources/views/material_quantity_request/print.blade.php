@@ -13,7 +13,7 @@
         padding: 5px;
     }
 
-    .mb-5{
+    .mb-20{
         margin-bottom: 5px;
     }
 
@@ -29,7 +29,7 @@
         font-weight: bold !important;
     }
 </style>
-<table class="mb-5">
+<table class="mb-20">
     <tr>
         <th width="10%">ID No.</th>
         <td colspan="3">{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}
