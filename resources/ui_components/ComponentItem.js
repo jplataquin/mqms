@@ -121,7 +121,9 @@ class ComponentItem extends Component{
                                 t.td();
                                 t.td();
                                 t.td();
-                                t.td();
+                                this.el.grandTotal = t.td(()=>{
+                                    t.txt('test');
+                                });
                                 t.td();
                             });
                         });
