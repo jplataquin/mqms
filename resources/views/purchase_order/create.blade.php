@@ -156,7 +156,6 @@
         let payment_terms_options   = @json($payment_terms_options);
         let component_item_arr      = @json($component_item_arr);
 
-        console.log(supplier);
         const t = new Template();
 
         function clearItems(){
@@ -265,7 +264,6 @@
                 );
             });
 
-            console.log(payment_term);
         }
 
         payment_term.onchange = ()=>{
@@ -492,6 +490,6 @@
             });
         }
     </script>
-    
+
 </div>
 @endsection
