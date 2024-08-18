@@ -89,7 +89,7 @@
 
         
              @php 
-                $balance = ($request_item->budget_quantity - $request_item->budget_quantity );
+                $balance = ($request_item->budget_quantity - $request_item->budget_approved_quantity );
 
                 $red = '';
 
@@ -97,7 +97,7 @@
                     $red = 'text-red';
                 }
             @endphp
-            
+
         <td class="{{$red}} text-center">
             {{$balance}}
         </td>
