@@ -80,10 +80,10 @@
         <td width="300px">
             {{ $request_item->text }}
         </td>
-        <td class="text-center">
+        <td class="text-center" width="100px">
             {{ $request_item->budget_quantity}}
         </td>
-        <td class="text-center">
+        <td class="text-center"  width="100px">
             {{ $request_item->approved_quantity}}
         </td>
 
@@ -98,11 +98,11 @@
                 }
             @endphp
 
-        <td class="{{$red}} text-center">
+        <td class="{{$red}} text-center"  width="100px">
             {{$balance}}
         </td>
-        <td>
-
+        <td  class="text-center" width="100px">
+            {{$request_item->requested_quantity}}
         </td>
     </tr>
 
