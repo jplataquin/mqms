@@ -455,6 +455,7 @@ class MaterialQuantityRequestController extends Controller
         $component_item_ids     = [];
         $component_item_options  = [];
 
+        //Arrange Component Items
         foreach($component->ComponentItems as $componentItem){
             $component_item_ids[] = $componentItem->id;
 
@@ -465,6 +466,7 @@ class MaterialQuantityRequestController extends Controller
                 'quantity'     => $componentItem->quantity
             ];
         }
+
         
         $material_item_result = DB::table('material_quantities')->whereIn('component_item_id',$component_item_ids)
         ->join('material_items','material_quantities.material_item_id','=','material_items.id')
@@ -484,7 +486,8 @@ class MaterialQuantityRequestController extends Controller
                 'equivalent'                => $row->equivalent,
                 'budget_quantity'           => $row->quantity,
                 'approved_quantity'         => $this->get_total_approve_quantity($row->component_item_id,$row->material_item_id),
-                'requested_quantity'        => $row->requested_quantity
+                'requested_quantity'        => $row->requested_quantity,
+                
             ];
         }
 

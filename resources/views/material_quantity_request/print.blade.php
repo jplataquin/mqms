@@ -75,16 +75,16 @@
     
     <tr>
         @php
-            $request_item = $material_options[$request_item->component_item_id][$request_item->material_item_id];
+            $item = $material_options[$request_item->component_item_id][$request_item->material_item_id];
         @endphp
         <td width="300px">
-            {{ $request_item->text }}
+            {{ $item->text }}
         </td>
         <td class="text-center" width="100px">
-            {{ $request_item->budget_quantity}}
+            {{ $item->budget_quantity}}
         </td>
         <td class="text-center"  width="100px">
-            {{ $request_item->approved_quantity}}
+            {{ $item->approved_quantity}}
         </td>
 
         
