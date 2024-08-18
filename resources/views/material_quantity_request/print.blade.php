@@ -89,10 +89,10 @@
         <th style="width:35%">
             Items
         </th>
-        <th>
+        <th style="width:10%">
             Budget
         </th>
-        <th>
+        <th style="width:10%">
             Approved
         </th>
         <th>
