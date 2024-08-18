@@ -31,7 +31,7 @@
 </style>
 <table class="mb-5">
     <tr>
-        <th>ID No.</th>
+        <th width="10%">ID No.</th>
         <td colspan="3">{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}
     </tr>
     <tr>
@@ -52,13 +52,13 @@
     </tr>
     <tr>
         <th>Project</th>
-        <td>{{$project->name}}</td>
+        <td width="40%">{{$project->name}}</td>
         <th>Section</th>
         <td>{{$section->name}}</td>
     </tr>
     <tr>
-        <th>Contract Item</th>
-        <td>{{$contract_item->item_code}} {{$contract_item->description}}</td>
+        <th width="10%">Contract Item</th>
+        <td width="40%">{{$contract_item->item_code}} {{$contract_item->description}}</td>
         <th>Component</th>
         <td>{{$component->name}}</td>
     </tr>
