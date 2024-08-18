@@ -6,7 +6,7 @@
 <div class="breadcrumbs">
         <ul>
             <li>
-                <a href="#">
+                <a href="/purchase_orders">
                     <span>
                        Purchase Order
                     </span>
@@ -22,59 +22,65 @@
         </ul>
     </div>
 <hr>
-
-<div class="row">
-        <div class="col-lg-6">
-            <div class="form-group">
-                <label>Sort By</label>
-                <select class="form-control" id="sortSelect">
-                    <option value="1" selected>Latest Entry</option>
-                    <option value="2">Oldest Entry</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="form-group">
-                <label>Material Request ID</label>
-                <input type="text" id="query" class="form-control"/>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label>Project</label>
-                <select class="form-control" id="projectSelect">
-                    <option value=""> - </option>
-                    @foreach($projects as $project)
-                        <option value="{{$project->id}}">{{$project->name}}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-       
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label>Section</label>
-                <select class="form-control" id="sectionSelect">
-                </select>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label>Component</label>
-                <select class="form-control" id="componentSelect">
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12 text-end mt-3 mb-3">
-            <button id="searchBtn" class="btn btn-primary">Search</button>
-            <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
-        </div>
-    </div>
     
+    <div class="folder-form-container">
+            <div class="folder-form-tab">
+                Select Material Request
+            </div>
+            <div class="folder-form-body">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Sort By</label>
+                        <select class="form-control" id="sortSelect">
+                            <option value="1" selected>Latest Entry</option>
+                            <option value="2">Oldest Entry</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Material Request ID</label>
+                        <input type="text" id="query" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Project</label>
+                        <select class="form-control" id="projectSelect">
+                            <option value=""> - </option>
+                            @foreach($projects as $project)
+                                <option value="{{$project->id}}">{{$project->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Section</label>
+                        <select class="form-control" id="sectionSelect">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Component</label>
+                        <select class="form-control" id="componentSelect">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-end mt-3 mb-3">
+                    <button id="searchBtn" class="btn btn-primary">Search</button>
+                    <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <table class="table border">
             <thead>
