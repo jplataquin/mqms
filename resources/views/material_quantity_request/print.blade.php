@@ -43,8 +43,12 @@
         <td colspan="3">{{$material_quantity_request->CreatedByUser()->name}}</td>
     </tr>
     <tr>
-        <th>Date Created</th>
+        <th>Date Requested</th>
         <td colspan="3">{{$material_quantity_request->created_at}}
+    </tr>
+    <tr>
+        <th>Date Printed</th>
+        <td colspan="3">{{Carbon::now()}}
     </tr>
     <tr>
         <th>Project</th>
