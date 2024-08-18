@@ -82,52 +82,12 @@ class UserRoleController extends Controller
 
     public function _list($user_id){
 
-        $user_id    = (int) $user_id;
-        
-        $result = DB::table('user_roles')
-        ->join('roles', 'user_roles.role_id', '=', 'roles.id')
-        ->where('user_roles.user_id',$user_id)->get();
-
-        return response()->json([
-            'status' => 1,
-            'message'=>'',
-            'data'=> $result
-        ]);
+      
     }
 
     public function _delete(Request $request){
 
-        $role_id    = (int) $request->input('role_id');
-        $user_id    = (int) $request->input('user_id');
-
-        $validator = Validator::make($request->all(),[
-            'role_id' => [
-                'required',
-                'integer'
-            ],
-            'user_id' => [
-                'required',
-                'integer'
-            ]
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status'    => -2,
-                'message'   => 'Failed Validation',
-                'data'      => $validator->messages()
-            ]);
-        }
-
-        DB::table('user_roles')
-        ->where('role_id',$role_id)
-        ->where('user_id',$user_id)->delete();
-
-        return response()->json([
-            'status'    => 1,
-            'message'   => '',
-            'data'      => []
-        ]);
+       
     }
 
 

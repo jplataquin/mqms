@@ -231,15 +231,18 @@ class MaterialQuantityRequestController extends Controller
         $itemValidator = Validator::make(['items'=> $items],[
             'items.*.component_item_id' => [
                 'required',
-                'integer'
+                'integer',
+                'gte:1'
             ],
             'items.*.material_item_id' => [
                 'required',
-                'integer'
+                'integer',
+                'gte:1'
             ],
             'items.*.requested_quantity' =>[
                 'required',
-                'numeric'
+                'numeric',
+                'gt:0'
             ]
         ]);
 
@@ -251,7 +254,8 @@ class MaterialQuantityRequestController extends Controller
             ]);
         }
 
-        $doubleEntry = [];
+        $doubleEntry         = [];
+        $doubleComponentItem = [];
 
         foreach($items as $item){
 
@@ -260,9 +264,9 @@ class MaterialQuantityRequestController extends Controller
 
 
             //check for double entry
-            $check = $item['component_item_id'].'-'.$item['material_item_id'];
+            $check_combination = $item['component_item_id'].'-'.$item['material_item_id'];
 
-            if(in_array($check,$doubleEntry)){
+            if( in_array($check_combination,$doubleEntry) ){
 
                 return response()->json([
                     'status'    => 0,
@@ -271,7 +275,19 @@ class MaterialQuantityRequestController extends Controller
                 ]);
 
             }else{
-                $doubleEntry[] = $check;
+                $doubleEntry[] = $check_combination_item;
+            }
+
+            if( in_array($item['component_item_id'],$doubleComponentItem) ){
+                
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Cannot have two or more entries with the same component item',
+                    'data'      => []
+                ]);
+
+            }else{
+                $doubleComponentItem[] = $item['component_item_id'];
             }
         }
 
@@ -298,7 +314,7 @@ class MaterialQuantityRequestController extends Controller
 
                 return response()->json([
                     'status'    => 0,
-                    'message'   => 'Error: Material is out of budget',
+                    'message'   => 'Out of budget',
                     'data'      => []
                 ]);
 

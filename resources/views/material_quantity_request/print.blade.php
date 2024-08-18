@@ -51,7 +51,13 @@
         <td>
             {{ $material_options[$request_item->component_item_id][$request_item->material_item_id]->text }}
         </td>
+        <td>
+            {{ $material_options[$request_item->component_item_id][$request_item->material_item_id]->quantity}}
+        </td>
+        <td>
+</td>
     </tr>
+
     @endforeach
 </table>
 

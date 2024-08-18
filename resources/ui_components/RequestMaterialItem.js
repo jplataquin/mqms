@@ -179,7 +179,7 @@ class RequestMaterialItem extends Component{
                                 type:'text',
                                 disabled:true,
                                 class:'form-control text-center',
-                                value:this.el.materialBudgetQuantity
+                                value:this._model.materialBudgetQuantity
                             });
                         });              
                     });
@@ -389,7 +389,6 @@ class RequestMaterialItem extends Component{
 
         let componentItem = this._model.componentItemList[ componentItemId ];
 
-        console.log(componentItem.unit_id,this._model.unitOptions);
         this.setState('unit', this._model.unitOptions[componentItem.unit_id].text );
 
         //this.el.componentItemBudget.value = componentItem.quantity +' '+this._model.unitOptions[componentItem.unit_id].text;

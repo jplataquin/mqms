@@ -3,7 +3,7 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs" hx-boost="true">
+    <div class="breadcrumbs" hx-boost="true">
         <ul>
             <li>
                 <a href="/master_data/material/groups" hx-select="#content" hx-target="#main">
@@ -22,7 +22,7 @@
             </li>
         </ul>
     </div>
-<hr>
+    <hr>
 
     <div class="folder-form-container">
         <div class="folder-form-tab">
@@ -76,12 +76,13 @@
 <script type="module">
     import {$q,Template,$el} from '/adarna.js';
 
-    let list            = $q('#list').first();
-    let query           = $q('#query').first();
-    let searchBtn       = $q('#searchBtn').first();
-    let showMoreBtn     = $q('#showMoreBtn').first();
-    let sortSelect      = $q('#sortSelect').first();
-    let createBtn       = $q('#createBtn').first();
+    const list            = $q('#list').first();
+    const query           = $q('#query').first();
+    const searchBtn       = $q('#searchBtn').first();
+    const showMoreBtn     = $q('#showMoreBtn').first();
+    const sortSelect      = $q('#sortSelect').first();
+    const createBtn       = $q('#createBtn').first();
+    
     let page            = 1;
     let order           = 'DESC';
     let orderBy         = 'id';

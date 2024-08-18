@@ -39,6 +39,7 @@ class ContractItemController extends Controller
         $contract_item  = ContractItem::findOrFail($id);
         $section        = $contract_item->Section;
         $project        = $section->project;
+        
 
         $components = $contract_item->components()->orderBy('id','ASC')->get();
         
