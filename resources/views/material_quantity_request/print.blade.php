@@ -86,7 +86,7 @@
         <th style="width:5%">
             #
         </th>
-        <th>
+        <th style="width:35%">
             Items
         </th>
         <th>
@@ -115,7 +115,7 @@
         @php
             $item = $item_options[$request_item->component_item_id][$request_item->material_item_id];
         @endphp
-        <td>
+        <td class="text-center">
             {{$count}}
         </td>
         <td>
