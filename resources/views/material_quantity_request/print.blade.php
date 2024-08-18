@@ -17,6 +17,10 @@
         margin-bottom: 20px;
     }
 
+    .ps-10{
+        padding-left: 10px;
+    }
+
     .text-center{
         text-align: center !important;
     }
@@ -28,6 +32,8 @@
     .text-bold{
         font-weight: bold !important;
     }
+
+
 </style>
 
 <table class="mb-20">
@@ -104,7 +110,12 @@
             $item = $item_options[$request_item->component_item_id][$request_item->material_item_id];
         @endphp
         <td width="500px">
-            {{ $item->text }}
+            <div class="text-bold">
+                {{ component_item_options[$request_item->component_item_id]->name }}
+            </div>
+            <div class="ps-10">
+                {{ $item->text }}
+            </div>
         </td>
         <td class="text-center" width="100px">
             {{ $item->budget_quantity}}
