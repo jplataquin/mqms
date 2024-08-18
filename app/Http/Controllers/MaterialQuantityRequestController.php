@@ -856,7 +856,8 @@ class MaterialQuantityRequestController extends Controller
         ->where('component_item_id','=',$component_item_id)
         ->where('material_item_id','=',$material_item_id)
         ->sum('requested_quantity');
-       
+        
+        
         return $total_approved_quantity;
     }
 }

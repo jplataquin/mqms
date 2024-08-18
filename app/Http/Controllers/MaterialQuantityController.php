@@ -69,6 +69,8 @@ class MaterialQuantityController extends Controller
             $grand_total = $grand_total + ($entry->quantity * $entry->equivalent);
         }
 
+        $grand_total = $grand_total + ($quantity * $equivalent);
+
         if($component_item->quantity < $grand_total){
             return response()->json([
                 'status'    => 0,
@@ -188,6 +190,37 @@ class MaterialQuantityController extends Controller
             ]);
         }
 
+          //Get Component Item
+          $component_item = ComponentItem::find($component_item_id);
+
+          if(!$component_item){
+              
+              return response()->json([
+                  'status'    => 0,
+                  'message'   => 'Component Item record not found',
+                  'data'      => []
+              ]);
+          }
+  
+          //Check if total entries is not more than component item quantity
+          $entries = MaterialQuantity::where('component_item_id',$component_item_id)->get();
+  
+          $grand_total = 0;
+  
+          foreach($entries as $entry){
+              $grand_total = $grand_total + ($entry->quantity * $entry->equivalent);
+          }
+          
+          $grand_total = $grand_total + ($quantity * $equivalent);
+
+          if($component_item->quantity < $grand_total){
+              return response()->json([
+                  'status'    => 0,
+                  'message'   => 'The Grand Total Quantity ('.$grand_total.') should not be more than Component Item Quantity ('.$component_item->quantity.')',
+                  'data'      => []
+              ]);
+          }
+  
 
 
         $user_id = Auth::user()->id;
