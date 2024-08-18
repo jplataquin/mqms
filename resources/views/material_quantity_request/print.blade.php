@@ -64,10 +64,13 @@
             Approved
         </th>
         <th>
-            Balance
+            Remaining
         </th>
         <th>
             Requested
+        </th>
+        <th>
+            Balance
         </th>
     </tr>
 
