@@ -53,12 +53,12 @@
     <tr>
         <th>Project</th>
         <td width="40%">{{$project->name}}</td>
-        <th>Section</th>
-        <td>{{$section->name}}</td>
+        <th width="10%">Section</th>
+        <td width="40%">{{$section->name}}</td>
     </tr>
     <tr>
-        <th width="10%">Contract Item</th>
-        <td width="40%">{{$contract_item->item_code}} {{$contract_item->description}}</td>
+        <th>Contract Item</th>
+        <td>{{$contract_item->item_code}} {{$contract_item->description}}</td>
         <th>Component</th>
         <td>{{$component->name}}</td>
     </tr>
