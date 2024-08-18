@@ -92,13 +92,14 @@
 
         
              @php 
-                $remaining = ($request_item->budget_quantity - $request_item->approved_quantity );
+                $remaining = $item->budget_quantity - $item->approved_quantity;
 
                 $red = '';
 
                 if($remaining < 0){
                     $red = 'text-red';
                 }
+
             @endphp
 
         <td class="{{$red}} text-center"  width="100px">
