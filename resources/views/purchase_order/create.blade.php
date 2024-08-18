@@ -257,6 +257,8 @@
                     t.option({value:id},payment_terms_options[id].text)
                 );
             });
+
+            console.log(payment_term);
         }
 
         payment_term.onchange = ()=>{
