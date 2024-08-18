@@ -371,20 +371,20 @@ class ComponentItem extends Component{
             let answer = prompt('Please confirm by entering "'+this._state.name+'"');
 
             if(answer != this._state.name){
-                util.showMsg('Invalid answer');
+                window.util.alert('Error','Invalid answer');
                 return false;
             }
 
-            util.blockUI();
+            window.util.blockUI();
 
-            util.$post('/api/component_item/delete',{
+            window.util.$post('/api/component_item/delete',{
                 id:this._model.id
             }).then(reply=>{
 
-                util.unblockUI();
+                window.util.unblockUI();
 
                 if(reply.status <= 0){
-                    util.showMsg(reply.message);
+                    window.util.showMsg(reply);
                     return false;
                 }
 
@@ -452,7 +452,7 @@ class ComponentItem extends Component{
             window.util.unblockUI();
 
             if(reply.status <= 0){
-                util.showMsg(reply.message);
+                window.util.showMsg(reply);
 
                 return false;
             }
@@ -569,7 +569,7 @@ class ComponentItem extends Component{
         }).then(reply=>{
             
             if(reply.status <= 0 ){
-                window.util.showMsg(reply.message);
+                window.util.showMsg(reply);
                 return false;
             }
 
@@ -653,7 +653,7 @@ class ComponentItem extends Component{
             this.el.addBtn.disabled = false;
              
             if(reply.status <= 0){
-                window.util.showMsg(reply.message);
+                window.util.showMsg(reply);
                 return false;
             }
 
@@ -712,7 +712,7 @@ class ComponentItem extends Component{
                                     window.util.unblockUI();
 
                                     if(reply.status <= 0){
-                                        window.util.showMsg(reply.message);
+                                        window.util.showMsg(reply);
                                         return false;
                                     }
 
