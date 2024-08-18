@@ -264,7 +264,7 @@
         }
 
         printBtn.onclick = (e)=>{
-            window.util.navTo('/purchase_order/print/{{$purchase_order->id}}');
+            window.open('/purchase_order/print/{{$purchase_order->id}}','_blank').focus();
         }
     @endif
 </script>
