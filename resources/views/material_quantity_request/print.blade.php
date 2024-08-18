@@ -26,7 +26,7 @@
     }
 
     .text-bold{
-        font-weight: 'bold' !important;
+        font-weight: bold !important;
     }
 </style>
 <table class="mb-5">
