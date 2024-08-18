@@ -126,10 +126,10 @@
                 {{ $item->text }}
             </div>
         </td>
-        <td class="text-center">
+        <td class="text-center" style="text-align:center">
             {{ $item->budget_quantity}}
         </td>
-        <td class="text-center">
+        <td class="text-center" style="text-align:center">
             {{ $item->approved_quantity}}
         </td>
 
@@ -154,13 +154,13 @@
         @php
             $balance = $remaining - $request_item->requested_quantity;
 
-            $red = '';
+            $red = '#000000';
 
             if($balance < 0){
-                $red = 'text-red';
+                $red = '#ff0000';
             }
         @endphp
-        <td class="{{$red}} text-center">
+        <td class="text-center" style="color:{{$red}};text-align:center">
             {{$balance}}
         </td>
     </tr>
