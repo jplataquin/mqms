@@ -50,7 +50,7 @@
 <table class="mb-20">
     <tr>
         <th width="10%">ID No.</th>
-        <td colspan="3">{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}
+        <td colspan="3">{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}</td>
     </tr>
     <tr>
         <th>Status</th>
