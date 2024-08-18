@@ -468,7 +468,8 @@ class ComponentItem extends Component{
             this.setState('ref_1_unit_id',this.el.ref_1_unit_id.value);
             this.setState('ref_1_unit_price',this.el.ref_1_unit_price.value);
 
-            
+            this.updateMaterialList();
+
             signal.broadcast('set-component-status','PEND');
         });
     }
@@ -728,6 +729,12 @@ class ComponentItem extends Component{
 
             materialItem.classList.add('border');
             materialItem.classList.add('border-danger');
+        
+        }else{
+            
+            materialItem.classList.remove('border');
+            materialItem.classList.remove('border-danger');
+        
         }
 
         this.el.materialList.append(materialItem);
