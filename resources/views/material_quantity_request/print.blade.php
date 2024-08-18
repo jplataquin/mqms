@@ -137,18 +137,18 @@
              @php 
                 $remaining = $item->budget_quantity - $item->approved_quantity;
 
-                $red = '';
+                $red = '#000000';
 
                 if($remaining < 0){
-                    $red = 'text-red';
+                    $red = '#ff0000';
                 }
 
             @endphp
 
-        <td class="{{$red}} text-center">
+        <td class="text-center" style="color:{{$red}};text-align:center">
             {{$remaining}}
         </td>
-        <td  class="text-center text-bold">
+        <td  class="text-center text-bold" style="font-weight:bold;text-align:center">
             {{$request_item->requested_quantity}}
         </td>
         @php
