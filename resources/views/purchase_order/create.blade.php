@@ -84,7 +84,7 @@
                 <table class="table w-50 table-border">
                     <tr>
                         <th colspan="2">
-                            (Add / Sub) Charges
+                            (Additional / Discount) Charges
                         </th>
                     </tr>
                     <tr>
