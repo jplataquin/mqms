@@ -482,7 +482,7 @@ class MaterialQuantityRequestController extends Controller
         
         $material_item_result = DB::table('material_quantities')
         ->whereIn('component_item_id',$component_item_ids)
-        ->whereIn('material_quantities.material_item_id',$request_item_ids)
+        ->whereIn('material_item_id',$request_item_ids)
         ->join('material_items','material_quantities.material_item_id','=','material_items.id')
         ->get();
 
