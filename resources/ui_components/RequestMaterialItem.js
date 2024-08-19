@@ -266,6 +266,8 @@ class RequestMaterialItem extends Component{
         this.el.componentItemSelect.onchange();
         setTimeout(()=>{
             console.log(this.el.materialSelect,this.el.materialSelect.value, this._model.materialItemId);
+            this.el.materialSelect.value            = this._model.materialItemId;
+       
             this.el.materialSelect.onchange();
         },500);
         
