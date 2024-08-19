@@ -866,8 +866,7 @@ class MaterialQuantityRequestController extends Controller
         ->where('material_item_id','=',$material_item_id);
 
         if($material_quantity_request_item_id){
-            $total_approved_quantity = ->where('id','!=',$material_quantity_request_item_id)
-            ->where('id','!=',$material_quantity_request_item_id);
+            $total_approved_quantity = $total_approved_quantity->where('id','!=',$material_quantity_request_item_id);
         }
         
         $total_approved_quantity->sum('requested_quantity');
