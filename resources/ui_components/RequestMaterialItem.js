@@ -256,22 +256,22 @@ class RequestMaterialItem extends Component{
             this.getApprovedQuantity(this._state.componentItemId, this._state.materialItemId,false);
         }
 
+        
+        
+        this._state.editable                    = this._model.editable;      
+        
         this.el.componentItemSelect.value       = this._model.componentItemId;
-        this.el.materialSelect.value            = this._model.materialItemId;
-        this.el.requestedQuantity.value         = this._model.requestedQuantity;
-        
-        this._state.requestedQuantity           = this._model.requestedQuantity;
-        this._state.editable                    = this._model.editable;        
-
         this.el.componentItemSelect.onchange();
-        setTimeout(()=>{
-            console.log(this.el.materialSelect,this.el.materialSelect.value, this._model.materialItemId);
-            this.el.materialSelect.value            = this._model.materialItemId;
-       
-            this.el.materialSelect.onchange();
-        },500);
         
+        this.el.materialSelect.value            = this._model.materialItemId;
+        this.el.materialSelect.onchange();
+        
+        this.el.requestedQuantity.value         = this._model.requestedQuantity;        
+        this._state.requestedQuantity           = this._model.requestedQuantity;
         this.el.requestedQuantity.onkeyup();
+          
+
+        
 
     }
 
