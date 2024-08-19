@@ -280,7 +280,7 @@ class MaterialQuantityRequestController extends Controller
                 ]);
 
             }else{
-                $doubleEntry[] = $check_combination_item;
+                $doubleEntry[] = $check_combination;
             }
 
             if( in_array($item['component_item_id'],$doubleComponentItem) ){
