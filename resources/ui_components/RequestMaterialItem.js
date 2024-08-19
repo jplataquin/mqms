@@ -205,11 +205,11 @@ class RequestMaterialItem extends Component{
         this.deleteCallback = ()=>{};
 
         this.el.componentItemSelect.onchange = ()=>{
-            this.setState('componentItemId',this.el.componentItemSelect.value);
+            this.setState('componentItemId',this.el.componentItemSelect.value,true);
         }
 
         this.el.materialSelect.onchange = ()=>{
-            this.setState('materialItemId',this.el.materialSelect.value);
+            this.setState('materialItemId',this.el.materialSelect.value,true);
         }
 
         this.el.requestedQuantity.onkeyup = ()=>{
@@ -234,7 +234,7 @@ class RequestMaterialItem extends Component{
         }
 
         dom.handler.setIndexNumber = (index)=>{
-            this.setState('indexNumber',index);
+            this.setState('indexNumber',index,true);
         }
 
         dom.handler.getValues = ()=>{
@@ -248,7 +248,7 @@ class RequestMaterialItem extends Component{
         }
 
         dom.handler.editable = (flag)=>{
-            this.setState('editable',flag);
+            this.setState('editable',flag,true);
         }
 
         dom.handler.updateApprovedQuantity = ()=>{
@@ -260,6 +260,7 @@ class RequestMaterialItem extends Component{
         
         this._state.editable                    = this._model.editable;      
 
+        //This must happen in exact order
         this.el.componentItemSelect.value       = this._model.componentItemId;
         this.el.componentItemSelect.onchange();
         
@@ -359,7 +360,7 @@ class RequestMaterialItem extends Component{
     }
 
     onStateChange_requestedQuantity(newVal){
-        console.log('test');
+        
         if(!isNaN(this.el.prevApprovedQuantity.value)){
 
             let remaining = parseFloat(this.el.materialBudgetQuantity.value) - parseFloat(this.el.prevApprovedQuantity.value);
@@ -381,9 +382,9 @@ class RequestMaterialItem extends Component{
         }
 
         
-        console.log('here',!isNaN(this.el.quantityRemaining.value));
 
         if(!isNaN(this.el.quantityRemaining.value)){
+            console.log(this.el.quantityRemaining.value, newVal);
             this.el.balanceQuantity.value = parseFloat(this.el.quantityRemaining.value) - parseFloat(newVal);
         }else{
             this.el.balanceQuantity.value = 'Calculating...';
