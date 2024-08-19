@@ -265,7 +265,10 @@ class RequestMaterialItem extends Component{
         this._state.editable                    = this._model.editable;        
 
         this.el.componentItemSelect.onchange();
-        this.el.materialSelect.onchange();
+        setTimeout(()=>{
+            this.el.materialSelect.onchange();
+        },500);
+        
         this.el.requestedQuantity.onkeyup();
 
     }
