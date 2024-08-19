@@ -256,6 +256,7 @@ class RequestMaterialItem extends Component{
             this.getApprovedQuantity(this._state.componentItemId, this._state.materialItemId,false);
         }
 
+        console.log(this._model.materialItemId);
         this.el.componentItemSelect.value       = this._model.componentItemId;
         this.el.materialSelect.value            = this._model.materialItemId;
         this.el.requestedQuantity.value         = this._model.requestedQuantity;
