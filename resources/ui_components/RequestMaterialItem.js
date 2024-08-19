@@ -185,7 +185,8 @@ class RequestMaterialItem extends Component{
                             this.el.balanceQuantity = t.input({
                                 type:'text',
                                 class:'form-control',
-                                value: ''
+                                value: '',
+                                disabled:true
                             });
 
                         });
