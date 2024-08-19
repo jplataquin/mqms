@@ -213,7 +213,7 @@ class RequestMaterialItem extends Component{
         }
 
         this.el.requestedQuantity.onkeyup = ()=>{
-            this.setState('requestedQuantity',this.el.requestedQuantity.value);
+            this.setState('requestedQuantity',this.el.requestedQuantity.value,true);
         }
 
         this.el.requestedQuantity.onkeypress = (e)=>{
