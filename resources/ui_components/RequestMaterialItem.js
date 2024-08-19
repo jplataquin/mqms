@@ -418,6 +418,7 @@ class RequestMaterialItem extends Component{
         }
         
         window.util.$get('/api/material_quantity_request/total_approved_quantity',{
+            material_quantity_request_item_id: this._model.id,
             component_item_id:component_item_id,
             material_item_id: material_item_id
         }).then(reply=>{

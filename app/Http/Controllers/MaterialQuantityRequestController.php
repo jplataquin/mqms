@@ -490,7 +490,11 @@ class MaterialQuantityRequestController extends Controller
                 'text'                      => trim($row->name.' '.$row->specification_unit_packaging.' '.$row->brand),
                 'equivalent'                => $row->equivalent,
                 'budget_quantity'           => $row->quantity,
-                'approved_quantity'         => $this->get_total_approved_quantity($row->component_item_id,$row->material_item_id),   
+                'approved_quantity'         => $this->get_total_approved_quantity(
+                    $materialQuantityRequest->id,
+                    $row->component_item_id,
+                    $row->material_item_id
+                ),   
             ];
         }
 
@@ -838,8 +842,13 @@ class MaterialQuantityRequestController extends Controller
         
         $component_item_id  = (int) $request->input('component_item_id');
         $material_item_id   = (int) $request->input('material_item_id');
+        $material_quantity_request_item_id = (int) $request->input('material_quantity_request_item_id');
 
-        $total_approved_quantity = $this->get_total_approved_quantity($component_item_id,$material_item_id);
+        $total_approved_quantity = $this->get_total_approved_quantity(
+            $material_quantity_request_item_id,
+            $component_item_id,
+            $material_item_id
+        );
 
         return response()->json([
             'status' => 1,
@@ -850,12 +859,18 @@ class MaterialQuantityRequestController extends Controller
         ]);
     }
 
-    private function get_total_approved_quantity($component_item_id,$material_item_id){
+    private function get_total_approved_quantity($material_quantity_request_item_id,$component_item_id,$material_item_id){
 
         $total_approved_quantity = MaterialQuantityRequestItem::where('status','=','APRV')
         ->where('component_item_id','=',$component_item_id)
-        ->where('material_item_id','=',$material_item_id)
-        ->sum('requested_quantity');
+        ->where('material_item_id','=',$material_item_id);
+
+        if($material_quantity_request_item_id){
+            $total_approved_quantity = ->where('id','!=',$material_quantity_request_item_id)
+            ->where('id','!=',$material_quantity_request_item_id);
+        }
+        
+        $total_approved_quantity->sum('requested_quantity');
         
         
         return $total_approved_quantity;
