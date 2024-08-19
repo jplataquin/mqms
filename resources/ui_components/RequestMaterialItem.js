@@ -321,13 +321,15 @@ class RequestMaterialItem extends Component{
             );
         };
 
-        let component_item = this._model.componentItemList[ component_item_id ];
+       // let component_item = this._model.componentItemList[ component_item_id ];
 
-        //Set state to default
-        if(component_item){
-            this.setState('unit', this._model.unitOptions[component_item.unit_id].text );
-        }
         
+        // if(component_item){
+        //     this.setState('unit', this._model.unitOptions[component_item.unit_id].text );
+        // }
+
+
+         //Set state to default
         this.setState('materialBudgetQuantity','');
         this.setState('totalRequeted','');
         this.setState('requestedQuantity','');
