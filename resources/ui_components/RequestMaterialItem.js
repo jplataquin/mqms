@@ -259,7 +259,7 @@ class RequestMaterialItem extends Component{
         
         
         this._state.editable                    = this._model.editable;      
-        
+
         this.el.componentItemSelect.value       = this._model.componentItemId;
         this.el.componentItemSelect.onchange();
         
@@ -380,7 +380,9 @@ class RequestMaterialItem extends Component{
             this.el.requestedQuantity.blur();
         }
 
-            
+        
+        console.log('here',!isNaN(this.el.quantityRemaining.value));
+
         if(!isNaN(this.el.quantityRemaining.value)){
             this.el.balanceQuantity.value = parseFloat(this.el.quantityRemaining.value) - parseFloat(newVal);
         }else{
