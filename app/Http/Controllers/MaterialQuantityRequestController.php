@@ -861,15 +861,21 @@ class MaterialQuantityRequestController extends Controller
 
     private function get_total_approved_quantity($material_quantity_request_item_id,$component_item_id,$material_item_id){
 
-        $total_approved_quantity = MaterialQuantityRequestItem::where('status','=','APRV')
-        ->where('component_item_id','=',$component_item_id)
-        ->where('material_item_id','=',$material_item_id);
-
-        if($material_quantity_request_item_id){
-            $total_approved_quantity = $total_approved_quantity->where('id','!=',$material_quantity_request_item_id);
-        }
         
-        $total_approved_quantity->sum('requested_quantity');
+        $total_approved_quantity = 0;
+        
+        if($material_quantity_request_item_id){
+            $total_approved_quantity = MaterialQuantityRequestItem::where('status','=','APRV')
+            ->where('component_item_id','=',$component_item_id)
+            ->where('material_item_id','=',$material_item_id)
+            ->where('id','!=',$material_quantity_request_item_id)
+            ->sum('requested_quantity');
+        }else{
+            $total_approved_quantity = MaterialQuantityRequestItem::where('status','=','APRV')
+            ->where('component_item_id','=',$component_item_id)
+            ->where('material_item_id','=',$material_item_id)
+            ->sum('requested_quantity');
+        }
         
         
         return $total_approved_quantity;
