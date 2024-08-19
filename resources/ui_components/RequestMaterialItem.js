@@ -359,7 +359,7 @@ class RequestMaterialItem extends Component{
     }
 
     onStateChange_requestedQuantity(newVal){
-
+        console.log('test');
         if(!isNaN(this.el.prevApprovedQuantity.value)){
 
             let remaining = parseFloat(this.el.materialBudgetQuantity.value) - parseFloat(this.el.prevApprovedQuantity.value);
