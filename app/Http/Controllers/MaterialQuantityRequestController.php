@@ -472,7 +472,7 @@ class MaterialQuantityRequestController extends Controller
             ];
         }
 
-        //Arrange request items
+        //Arrange request items for easier query
         $request_item_arr = [];
         $request_item_ids = [];
         foreach($request_items as $rq){

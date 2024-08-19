@@ -11,40 +11,31 @@ class RequestMaterialItem extends Component{
 
     model(){
         return {
-            id:'',
-            editable: true,
-            componentId:'',
-            componentItemId:'',
-            materialItemId:'',
-            unit:'',
-            //componentItemBudget:'',
-           // equivalent:'',
-            prevApprovedQuantity:'',
-            materialBudgetQuantity:'',
-            requestedQuantity:'',
-            componentItemList:{},
-            materialList:{},
-            unitOptions:{}
+            id                      :'',
+            editable                : true,
+            componentId             :'',
+            componentItemId         :'',
+            materialItemId          :'',
+            unit                    :'',
+            prevApprovedQuantity    :'',
+            materialBudgetQuantity  :'',
+            requestedQuantity       :'',
+            componentItemList       :{},
+            materialList            :{},
+            unitOptions             :{}
         }
     }
 
     state(){
         return {
-            editable: true,
-
-            componentItemId: null,
-            materialItemId: null,
-
-            unit:'',
-            //componentItemBudget:'',
-        
-           // equivalent: '',
-            prevApprovedQuantity:'',
-            materialBudgetQuantity:'',
-
-            requestedQuantity:'',
-
-            indexNumber: 0
+            editable                : true,
+            componentItemId         : null,
+            materialItemId          : null,
+            unit                    :'',
+            prevApprovedQuantity    :'',
+            materialBudgetQuantity  :'',
+            requestedQuantity       :'',
+            indexNumber             : 0
         }
     }
 
@@ -126,50 +117,6 @@ class RequestMaterialItem extends Component{
                 })//div row
 
 
-                /***
-                t.div({class:'row mt-3'},()=>{
-                    
-                    t.div({class:'col-4'},()=>{
-                        t.div({class:'form-group'},()=>{
-                            t.label('Item Budget');
-                            this.el.componentItemBudget = t.input({
-                                type:'text',
-                                disabled:true,
-                                class:'form-control',
-                                value:this._model.componentItemBudget +' '+this._model.unit
-                            });
-                            
-                        });                
-                    });
-                    
-                    t.div({class:'col-4'},()=>{
-                        t.div({class:'form-group'},()=>{
-                            t.label('Material Equivalent');
-                            this.el.equivalent = t.input({
-                                type:'text',
-                                disabled:true,
-                                class:'form-control',
-                                value:this._model.equivalent+' '+this._model.unit});
-                        });               
-                    });
-
-
-                    t.div({class:'col-4'},()=>{
-                        t.div({class:'form-group'},()=>{
-                            t.label('Material Budget Quantity');
-                            this.el.materialBudgetQuantity = t.input({
-                                type:'text',
-                                disabled:true,
-                                class:'form-control',
-                                value:this.el.materialBudgetQuantity
-                            });
-                        });              
-                    });
-
-
-                });//div row
-                ***/
-
                 t.div({class:'row mt-3'},()=>{
                     
                     t.div({class:'col-4'},()=>{
@@ -211,26 +158,12 @@ class RequestMaterialItem extends Component{
 
                 });//div row
 
-                /**
+
                 t.div({class:'row mt-3'},()=>{
-                    
-                    
-                    
                     t.div({class:'col-6'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Total Material Equivalent');
-                            this.el.totalEquivalent = t.input({type:'text',disabled:true,class:'form-control'});
-                        })                
-                    });
-                    
-
-                });//div row
-                **/
-
-                t.div({class:'row mt-3'},()=>{
-                    t.div({class:'col-12'},()=>{
-                        t.div({class:'form-group'},()=>{
                             t.label('Request Quantity');
+                           
                             this.el.requestedQuantity = t.input({
                                 type:'text',
                                 class:'form-control',
@@ -244,6 +177,19 @@ class RequestMaterialItem extends Component{
                             }
                         });
                     });
+
+                    t.div({class:'col-6'},()=>{
+                        t.div({class:'form-group'},()=>{
+                            t.label('Balance Quantity');
+                           
+                            this.el.balanceQuantity = t.input({
+                                type:'text',
+                                class:'form-control',
+                                value: ''
+                            });
+
+                        });
+                    });
                 });
 
             });//div
@@ -255,27 +201,17 @@ class RequestMaterialItem extends Component{
 
     controller(dom){
         
+        this.deleteCallback = ()=>{};
+
         this.el.componentItemSelect.onchange = ()=>{
             this.setState('componentItemId',this.el.componentItemSelect.value);
         }
 
         this.el.materialSelect.onchange = ()=>{
-            
             this.setState('materialItemId',this.el.materialSelect.value);
         }
 
         this.el.requestedQuantity.onkeyup = ()=>{
-           // this.el.totalEquivalent.value = parseFloat(this.el.requestedQuantity.value * this._state.equivalent).toFixed(2)+' '+this._state.unit;
-
-            let remaining = this.el.materialBudgetQuantity.value - this.el.prevApprovedQuantity.value;
-            
-            if( parseFloat(this.el.requestedQuantity.value) > remaining ){
-                 this.el.requestedQuantity.value = 0; 
-               //  this.el.totalEquivalent.value = '';
-                 this.el.requestedQuantity.blur();
-                 window.util.alert('Error','Not enough material budget');
-            }
-
             this.setState('requestedQuantity',this.el.requestedQuantity.value);
         }
 
@@ -287,12 +223,8 @@ class RequestMaterialItem extends Component{
             e.preventDefault();
         }
 
-        this.deleteCallback = ()=>{};
-
         this.el.deleteBtn.onclick = (e) =>{
-            
             e.preventDefault();
-
             this.deleteCallback(dom);
         }
 
@@ -324,16 +256,16 @@ class RequestMaterialItem extends Component{
         }
 
         this.el.componentItemSelect.value       = this._model.componentItemId;
-        this.el.componentItemSelect.onchange();
-        
         this.el.materialSelect.value            = this._model.materialItemId;
-        this.el.materialSelect.onchange();
-        
         this.el.requestedQuantity.value         = this._model.requestedQuantity;
+        
         this._state.requestedQuantity           = this._model.requestedQuantity;
+        this._state.editable                    = this._model.editable;        
+
+        this.el.componentItemSelect.onchange();
+        this.el.materialSelect.onchange();
         this.el.requestedQuantity.onkeyup();
 
-        this._state.editable                    = this._model.editable;
     }
 
     onStateChange_editable(flag){
@@ -355,51 +287,24 @@ class RequestMaterialItem extends Component{
         this.el.indexNumber.innerHTML = 'Item #'+num;
     }
 
-    onStateChange_componentItemId(componentItemId){
+    onStateChange_componentItemId(component_item_id){
         
-        this.el.materialSelect.innerHTML        = '';
-
-       // this.el.componentItemBudget.value = '';
-       // this.setState('componentItemBudget','');
-       
-        this.setState('unit','');
-
-       // this.el.equivalent.value = '';
-       // this.setState('equivalent','');
-
-        this.el.materialBudgetQuantity.value = '';
-        this.setState('materialBudgetQuantity','');
-
-        this.el.prevApprovedQuantity.value = '';
-        this.setState('totalRequeted','');
-        
-        this.el.requestedQuantity.value = '';
-        this.setState('requestedQuantity');
-        
-        
+        //Set elements to default
+        this.el.materialSelect.innerHTML        = '';        
+        this.el.materialBudgetQuantity.value    = '';
+        this.el.prevApprovedQuantity.value      = '';
+        this.el.requestedQuantity.value         = '';
+        this.el.balanceQuantity.value           = '';
         this.el.materialSelect.append(
             this.t.option({
                 value: ''
             },'-')
         );
 
-        if(typeof this._model.materialList[ componentItemId ] == 'undefined'){
-            return false;
-        }
+        //Repopulate material list based on component_item_id
+        for(let key in this._model.materialList[ component_item_id ]){
 
-        let componentItem = this._model.componentItemList[ componentItemId ];
-
-        this.setState('unit', this._model.unitOptions[componentItem.unit_id].text );
-
-        //this.el.componentItemBudget.value = componentItem.quantity +' '+this._model.unitOptions[componentItem.unit_id].text;
-        //this.setState('componentItemBudget',componentItem.quantity);
-       
-        
-        this.setState('materialItemId','');
-       
-        for(let key in this._model.materialList[ componentItemId ]){
-
-            let item = this._model.materialList[ componentItemId ][key];
+            let item = this._model.materialList[ component_item_id ][key];
 
             this.el.materialSelect.append(
                 this.t.option({
@@ -408,7 +313,15 @@ class RequestMaterialItem extends Component{
             );
         };
 
-        
+        let component_item = this._model.componentItemList[ component_item_id ];
+
+        //Set state to default
+        this.setState('unit', this._model.unitOptions[component_item.unit_id].text );
+        this.setState('materialBudgetQuantity','');
+        this.setState('totalRequeted','');
+        this.setState('requestedQuantity','');
+        this.setState('materialItemId','');
+     
     }
 
     getApprovedQuantity(component_item_id,material_item_id,blockUI){
@@ -433,9 +346,40 @@ class RequestMaterialItem extends Component{
             }
 
             this.el.prevApprovedQuantity.value = reply.data.total_approved_quantity;
+            this.el.quantityRemaining.value    = parseFloat(this.el.materialBudgetQuantity.value) - parseFloat(reply.data.total_approved_quantity);
 
-            this.el.quantityRemaining.value = this.el.materialBudgetQuantity.value - reply.data.total_approved_quantity;
         });
+    }
+
+    onStateChange_requestedQuantity(newVal){
+
+        if(!isNaN(this.el.prevApprovedQuantity.value)){
+
+            let remaining = parseFloat(this.el.materialBudgetQuantity.value) - parseFloat(this.el.prevApprovedQuantity.value);
+            
+            if( parseFloat(this.el.requestedQuantity.value) > remaining ){
+            
+                window.util.alert('Error','Requested quantity is out of budget');
+            
+                this.el.requestedQuantity.value = 0; 
+                this.el.requestedQuantity.blur();
+            }
+
+        }else{
+
+            window.util.alert('Error','Please wait wait for the approved quantity to finish calculation');
+            
+            this.el.requestedQuantity.value = 0; 
+            this.el.requestedQuantity.blur();
+        }
+
+            
+        if(!isNaN(this.el.quantityRemaining.value)){
+            this.el.balanceQuantity.value = parseFloat(this.el.quantityRemaining.value) - parseFloat(newVal);
+        }else{
+            this.el.balanceQuantity.value = 'Calculating...';
+        }
+        
     }
 
     onStateChange_materialItemId(material_id){
@@ -447,35 +391,25 @@ class RequestMaterialItem extends Component{
         }
 
         if(!material){
-            
-            //this.el.equivalent.value = '';
-            //this.setState('equivalent','');
 
-            this.el.materialBudgetQuantity.value = '';
+            this.el.materialBudgetQuantity.value    = '';
+            this.el.prevApprovedQuantity.value      = '';
+            this.el.requestedQuantity.value         = '';
+
             this.setState('materialBudgetQuantity','');
-
-            this.el.prevApprovedQuantity.value = '';
             this.setState('prevApprovedQuantity','');
-
-            this.el.requestedQuantity.value = '';
             this.setState('requestedQuantity','');
 
             return false;
         }
         
-       // this.el.totalEquivalent.value = '';
-
-        //this.el.equivalent.value = material.equivalent +' '+this._state.unit;
-        //this.setState('equivalent',material.equivalent);
-
-        this.el.materialBudgetQuantity.value = material.quantity; 
+        this.el.materialBudgetQuantity.value    = material.quantity; 
+        this.el.requestedQuantity.value         = '';
+        this.el.prevApprovedQuantity.value      = '';
+        this.el.balanceQuantity.value           = '';
+        
         this.setState('materialBudgetQuantity',material.quantity);
-
-        this.el.requestedQuantity.value = '';
         this.setState('requestedQuantity','');
-            
-
-        this.el.prevApprovedQuantity.value = '';
         this.setState('prevApprovedQuantity','');
         
         this.getApprovedQuantity(this._state.componentItemId, material_id,true);
