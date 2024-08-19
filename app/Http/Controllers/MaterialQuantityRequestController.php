@@ -474,10 +474,12 @@ class MaterialQuantityRequestController extends Controller
 
         //Arrange request items
         $request_item_arr = [];
+
         foreach($request_items as $rq){
             $request_item_arr[$materialQuantityRequest->id.'-'.$rq->component_item_id.'-'.$rq->material_item_id] = $rq;
         }
         
+        print_r($requested_item_arr);exit;
         $material_item_result = DB::table('material_quantities')->whereIn('component_item_id',$component_item_ids)
         ->join('material_items','material_quantities.material_item_id','=','material_items.id')
         ->get();
