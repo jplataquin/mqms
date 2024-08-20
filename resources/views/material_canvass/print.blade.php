@@ -65,16 +65,16 @@
             @endphp
         
         <nobreak>
-        <table class="table" border="1" style="width:100%;margin-bottom:5px">
+        <table class="table" border="1" style="margin-bottom:5px">
             
             <tr>
-                <th>
+                <th style="width:60%">
                     Material
                 </th>
-                <th>
+                <th style="width:20%">
                     Quantity
                 </th>
-                <th>
+                <th style="width:20%">
                     Budget Price
                 </th>
             </tr>
