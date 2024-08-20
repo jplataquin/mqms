@@ -55,7 +55,7 @@
         </tr>
     </table>
 
-    <table class="table mb-20">
+    <table class="table">
         <tbody>
             <tr>
                 <th>Material Request ID</th>
