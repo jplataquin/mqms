@@ -25,6 +25,11 @@
     <table class="record-table-horizontal mb-3">
         <tbody>
             <tr>
+                <th class="text-center" colspan="2">
+                    Material Canvass
+                </th>
+            </tr>
+            <tr>
                 <th width="230px">Material Quantity Request ID</th>
                 <td>{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
             </tr>
@@ -67,7 +72,7 @@
     </table>
     <div class="row">
         <div class="col-12 text-end">
-            <button class="btn btn-secondary" id="printBtn">Print</button>
+            <button class="btn btn-warning" id="printBtn">Print</button>
         </div>
     </div>
     <hr>
