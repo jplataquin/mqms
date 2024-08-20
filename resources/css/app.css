@@ -367,7 +367,8 @@ html, body {
 }
 
 .record-table-horizontal tr:hover{
-  background-color: #d0dfe3;
+  background-color: #a1b2b7;
+  
 }
 
 /*** Viewports ***/
