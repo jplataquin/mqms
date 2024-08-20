@@ -11,6 +11,7 @@ use App\Models\MaterialQuantityRequest;
 use App\Models\MaterialQuantityRequestItem;
 use App\Models\MaterialQuantity;
 use App\Models\MaterialCanvass;
+use App\Models\ContractItem;
 use App\Models\PaymentTerm;
 use App\Models\Supplier;
 use Illuminate\Support\Facades\DB;
@@ -160,6 +161,7 @@ class MaterialCanvassController extends Controller
         $project                = $materialQuantityRequest->Project;
         $section                = $materialQuantityRequest->Section;
         $component              = $materialQuantityRequest->Component;
+        $contract_item          = $materialQuantityRequest->ContractItem;
         $items                  = $materialQuantityRequest->Items()->with('MaterialCanvass')->get();
        
         $component_item_id  = [];
@@ -210,6 +212,7 @@ class MaterialCanvassController extends Controller
             'material_quantity_request' => $materialQuantityRequest,
             'project'                   => $project,
             'section'                   => $section,
+            'contract_item'             => $contract_item,
             'component'                 => $component,
             'items'                     => $items,
             'component_item_arr'        => $component_item_arr,

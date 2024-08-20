@@ -61,12 +61,13 @@
             <tr>
                 <th>Project</th>
                 <td>{{$project->name}}</td>
-            </tr>
-            <tr>
+                
                 <th>Section</th>
                 <td>{{$section->name}}</td>
             </tr>
             <tr>
+                <th>Contract Item</th>
+                <td>{{$contract_item->description}}</td>
                 <th>Component</th>
                 <td>{{$component->name}}</td>
             </tr>
