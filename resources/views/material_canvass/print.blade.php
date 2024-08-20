@@ -121,33 +121,27 @@
                 <th style="width:20%">Price</th>
                 <th style="width:20%">Total</th>
             </tr>             
-            <tr>
-                <td colspan="3">
-                    <table class="table" border="1">
-                        
-                        @foreach($item->MaterialCanvass as $mcItem)
-                        <tr>
-                            <td style="width:10%">
-                                {{$mcItem->status}}
-                            </td>
-                            <td style="width:30%">
-                                {{ $supplier_arr[ $mcItem->supplier_id ]->name }}
-                            </td>
-                            <td style="width:30%">
-                                {{ $payment_term_arr[ $mcItem->payment_term_id ]->text }}
-                            </td>
-                            <td style="width:10%">
-                               P {{ number_format($mcItem->price,2) }}
-                            </td>
-                            <td style="width:20%">
-                               P {{ number_format($item->requested_quantity * $mcItem->price,2) }}
-                            </td>
-                        </tr>
-                        @endforeach
-        
-                    </table>
-                </td>        
-            </tr>
+            
+            @foreach($item->MaterialCanvass as $mcItem)
+                <tr>
+                    <td>
+                        {{$mcItem->status}}
+                    </td>
+                    <td>
+                        {{ $supplier_arr[ $mcItem->supplier_id ]->name }}
+                    </td>
+                    <td>
+                        {{ $payment_term_arr[ $mcItem->payment_term_id ]->text }}
+                    </td>
+                    <td>
+                        P {{ number_format($mcItem->price,2) }}
+                    </td>
+                    <td>
+                        P {{ number_format($item->requested_quantity * $mcItem->price,2) }}
+                    </td>
+                </tr>
+            @endforeach
+            
         </table>
         </nobreak>
         @endforeach
