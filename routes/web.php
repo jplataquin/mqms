@@ -32,9 +32,7 @@ Route::get('/gitpull',function(){
 
 Route::middleware(['auth'])->group(function(){
 
-    Route::get('/reset_password',function(){
-        return 'Reset Password';
-    });
+    Route::get('/reset_password',[App\Http\Controllers\UserController::class, 'reset_password']);
 });
 
 Route::middleware(['auth',CheckForResetPassword::class])->group(function () {
