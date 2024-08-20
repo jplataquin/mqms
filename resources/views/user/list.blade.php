@@ -6,14 +6,14 @@
     <div class="breadcrumbs" hx-boost="true">
         <ul>
             <li>
-                <a href="/dashboard">
-                    <span>Dashboard</span>
+                <a href="#">
+                    <span>User</span>
                 </a>
             </li>
             <li>
                 <a href="#" class="active">
                     <span>
-                        Users
+                        List
                     </span>
 
                     
