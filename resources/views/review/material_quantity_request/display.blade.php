@@ -38,7 +38,7 @@
             <table class="record-table-horizontal">
                 <tbody>
                     <tr>
-                        <th width="120px">ID</th>
+                        <th width="150px">ID</th>
                         <td>{{$material_quantity_request->id}}</td>
                     </tr>
                     <tr>

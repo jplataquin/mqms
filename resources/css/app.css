@@ -366,6 +366,10 @@ html, body {
   font-style: normal;
 }
 
+.record-table-horizontal tr:hover{
+  background-color: #ccc;
+}
+
 /*** Viewports ***/
 
 @media (max-width:320px)  { /* smartphones, iPhone, portrait 480x320 phones */
