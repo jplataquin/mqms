@@ -55,8 +55,8 @@
     <table border="1" class="table">
         <tbody>
             <tr>
-                <th style="width:20%">Material Quantity Request ID</th>
-                <td style="width:80%">{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
+                <th>Material Quantity Request ID</th>
+                <td colspan="3">{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
             </tr>
             <tr>
                 <th>Project</th>
@@ -68,24 +68,16 @@
             <tr>
                 <th>Contract Item</th>
                 <td>{{$contract_item->description}}</td>
+
                 <th>Component</th>
                 <td>{{$component->name}}</td>
             </tr>
             <tr>
                 <th>Status</th>
                 <td>{{$material_quantity_request->status}}</td>
-            </tr>
-            <tr>
+            
                 <th>Created By</th>
                 <td>{{$material_quantity_request->CreatedByUser()->name}} {{$material_quantity_request->created_at}}</td>
-            </tr>
-            <tr>
-                <th>Updated By</th>
-                <td>{{$material_quantity_request->UpdatedByUser()->name}} {{$material_quantity_request->updated_at}}</td>
-            </tr>
-            <tr>
-                <th>Approved By</th>
-                <td>{{$material_quantity_request->ApprovedByUser()->name}} {{$material_quantity_request->approve_at}}</td>
             </tr>
             <tr>
                 <th>Description</th>
