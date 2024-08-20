@@ -33,6 +33,9 @@
         font-weight: bold !important;
     }
 
+    .grey{
+        background-color: #d3d3d3 !important;
+    }
 
 </style>
 
@@ -100,13 +103,13 @@
         <table class="table" border="1" style="margin-bottom:5px">
             
             <tr>
-                <th style="width:60%" colspan="3">
+                <th style="width:60%" colspan="3" class="grey">
                     Material
                 </th>
-                <th style="width:20%">
+                <th style="width:20%" class="grey">
                     Quantity
                 </th>
-                <th style="width:20%">
+                <th style="width:20%" class="grey">
                     Budget Price
                 </th>
             </tr>
