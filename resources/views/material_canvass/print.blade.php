@@ -92,6 +92,7 @@
                 $component_item = $component_item_arr[ $item->component_item_id ];
             @endphp
         
+        <nobreak>
         <table class="table" border="1" style="margin-bottom:10px">
             
             <tr>
@@ -135,17 +136,17 @@
                     <td>
                         {{ $payment_term_arr[ $mcItem->payment_term_id ]->text }}
                     </td>
-                    <td>
+                    <td style="text-align:center">
                         P {{ number_format($mcItem->price,2) }}
                     </td>
-                    <td>
+                    <td style="text-align:center">
                         P {{ number_format($item->requested_quantity * $mcItem->price,2) }}
                     </td>
                 </tr>
             @endforeach
             
         </table>
-
+</nobreak>
         @endforeach
 
         
