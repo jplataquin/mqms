@@ -346,8 +346,6 @@ html, body {
 
 /*** Record Table ***/
 .record-table {
-  border: 1px solid #ccc;
-  border-collapse: collapse;
   margin: 0;
   padding: 0;
   table-layout: fixed;
@@ -356,6 +354,8 @@ html, body {
 
 .record-table th {
  
+  border: 1px solid #ccc;
+  border-collapse: collapse;
   border-collapse: collapse;
   font-weight: bold;
   padding: 5px;
