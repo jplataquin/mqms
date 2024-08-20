@@ -33,18 +33,25 @@
     </div>
     <hr>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Project</th>
-                <td>{{$project->name}}</td>
-            </tr>
-            <tr>
-                <th>Section</th>
-                <td>{{$section->name}}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="folder-form-container">
+        <div class="folder-form-tab">
+            &nbsp;
+        </div>
+        <div class="folder-form-body">
+            <table class="record-table-horizontal">
+                <tbody>
+                    <tr>
+                        <th width="150px">Project</th>
+                        <td>{{$project->name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Section</th>
+                        <td>{{$section->name}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
     <div class="form-container">
         <div class="form-header text-center mb-3">
             Contract Item
