@@ -28,8 +28,10 @@
                 </div>
 
                 <div class="row">
-                    <button class="btn btn-secondary">Logout</button>
-                    <button class="btn btn-primary">Submit</button>
+                    <div class="col-12 text-end">
+                        <button class="btn btn-secondary">Logout</button>
+                        <button class="btn btn-primary">Submit</button>
+                    </div>
                 </div>
         </div>
     </div>
