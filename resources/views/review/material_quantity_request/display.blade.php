@@ -30,7 +30,16 @@
         </ul>
     </div>
 <hr>
-
+    <table>
+        <tr>
+            <th>test 1</th>
+            <th>test 2</th>
+        </tr>
+        <tr>
+            <td>asdad 1</td>
+            <td>asdad 2</td>
+        </tr>
+    </table>
     <div class="folder-form-container">
         <div class="folder-form-tab">
             Material Request Review
