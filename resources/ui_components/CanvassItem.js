@@ -36,6 +36,7 @@ class CanvassItem extends Component{
             t.i({class:'bi bi-check-square'});
         });
         this.el.voidBtn         = t.button({class:'btn btn-secondary form-control'},()=>{
+            
             t.i({class:'bi bi-x-square'});
         });
         
