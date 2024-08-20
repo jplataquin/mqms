@@ -81,7 +81,7 @@
             </div>
         </div>
     </div>
-    <hr>
+    
     <div class="mt-5">
         @foreach($items as $item)
         <div class="border border-primary p-3 mb-3">
@@ -111,7 +111,7 @@
             <div class="row">
                 <div class="col-12 canvass-container" id="canvass_{{$item->id}}"></div>
                 <div class="text-center mt-3">
-                    <button data-id="{{$item->id}}" class="add-canvass-btn btn btn-warning w-100">Add Canvass</button>
+                    <button data-id="{{$item->id}}" class="add-canvass-btn btn btn-secondary w-100">Add Canvass</button>
                 </div>
             </div>
         </div>   
