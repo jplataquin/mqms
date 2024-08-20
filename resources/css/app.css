@@ -352,10 +352,6 @@ html, body {
   width:100%;
 }
 
-.record-table-horizontal tr{
-  margin-bottom: 3px;
-}
-
 .record-table-horizontal th {
   font-weight: bold;
   padding: 5px;
@@ -368,7 +364,6 @@ html, body {
   font-family: "Zen Kaku Gothic New", sans-serif;
   font-weight: 400;
   font-style: normal;
-  background-color: #f8fafc;
 }
 
 .record-table-horizontal tr:hover{
