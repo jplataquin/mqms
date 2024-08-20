@@ -37,7 +37,21 @@
 </style>
 
 <page>
-    <h3>Material Canvass</h3>
+    <table class="mb-20">
+        <tr>
+            <td style="width:50%;text-align:center">
+                <img src="storage/sys_images/header.png" style="width:500px"/>
+            </td>
+            <td class="text-center" style="width:40%;text-align:center">
+                <h1>Material Request</h1>
+            
+            </td>
+            <td style="text-align:center;width:10%">
+                <qrcode value="{{json_encode(['t'=>'MC','id'=>$material_quantity_request->id])}}" ec="H" style="width: 20mm; background-color: white; color: black;"></qrcode>
+            </td>
+        </tr>
+    </table>
+
     <table border="1" class="table">
         <tbody>
             <tr>
