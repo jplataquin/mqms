@@ -35,7 +35,7 @@
 
     <div class="folder-form-container">
         <div class="folder-form-tab">
-            &nbsp;
+            Record Data
         </div>
         <div class="folder-form-body">
             <table class="record-table-horizontal">
