@@ -17,6 +17,7 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <script src="https://unpkg.com/htmx.org@2.0.0"></script>
     
+    
 </head>
 <body>
     <div id="bar" class="w-100"></div>
