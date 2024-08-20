@@ -76,13 +76,6 @@
                 <td>{{$component->name}}</td>
             </tr>
             <tr>
-                <th>Status</th>
-                <td>{{$material_quantity_request->status}}</td>
-            
-                <th>Created By</th>
-                <td>{{$material_quantity_request->CreatedByUser()->name}} {{$material_quantity_request->created_at}}</td>
-            </tr>
-            <tr>
                 <th>Description</th>
                 <td colspan="3">
                     {{$material_quantity_request->description}}
