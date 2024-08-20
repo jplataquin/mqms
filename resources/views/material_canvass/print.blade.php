@@ -120,8 +120,8 @@
                 <th style="width:10%;text-align:center">Status</th>
                 <th style="width:30%;text-align:center">Supplier</th>
                 <th style="width:20%;text-align:center">Payment Terms</th>
-                <th style="width:10%;text-align:center">Price</th>
-                <th style="width:10%;text-align:center">Total</th>
+                <th style="width:20%;text-align:center">Price</th>
+                <th style="width:20%;text-align:center">Total</th>
             </tr>             
             
             @foreach($item->MaterialCanvass as $mcItem)
