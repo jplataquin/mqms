@@ -363,6 +363,8 @@ html, body {
 
 .record-table td{
   width: 100%;
+  border-collapse: collapse;
+  font-weight: bold;
   padding-left: 3px;
   padding-right:3px;
 }
