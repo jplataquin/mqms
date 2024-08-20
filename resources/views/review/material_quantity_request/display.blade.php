@@ -30,7 +30,7 @@
         </ul>
     </div>
 <hr>
-    <table>
+    <table class="record-table">
         <tr>
             <th>test 1</th>
             <th>test 2</th>
