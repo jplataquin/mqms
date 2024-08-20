@@ -191,13 +191,12 @@ class MaterialCanvassController extends Controller
             $material_item_arr[$mi->id] = $mi;
         }
 
-        $payment_terms = (object) PaymentTerm::toOptions();
+        $payment_terms = PaymentTerm::toOptions();
 
         $payment_term_arr = [];
 
         foreach($payment_terms as $payment_term){
 
-            print_r($payment_term);exit;
             $payment_term_arr[ $payment_term->id ] = $payment_term;
         }
 

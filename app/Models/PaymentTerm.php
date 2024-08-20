@@ -28,7 +28,7 @@ class PaymentTerm extends Model
         $result = [];
         
         foreach($rows as $row){
-            $result[] = [
+            $result[] = (object) [
                 'id'    => $row->id,
                 'text'  => $row->text
             ];
