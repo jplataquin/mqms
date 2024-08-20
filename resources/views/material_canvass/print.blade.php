@@ -1,15 +1,30 @@
+
 <style>
-    .table{
-        border-collapse: collapse;
-    }
+        .text-left{
+            text-align: left;
+        }
 
-    .table td{
-        padding:3px;
-    }
+        .text-center{
+            text-align: center;
+        }
 
-    .table th{
-        padding:3px;
-    }
+        .text-right{
+            text-align: right;
+        }
+        
+        .bold{
+            font-weight: bold;
+        }
+
+        .table{
+            border-collapse:collapse;
+        }
+
+        td{
+            padding: 3px;
+        }
+
+        
 </style>
 <page>
     <h3>Material Canvass</h3>
