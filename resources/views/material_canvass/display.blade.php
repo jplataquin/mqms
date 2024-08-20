@@ -3,7 +3,7 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs">
+<div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
                 <a href="#">
@@ -72,11 +72,13 @@
                 </tbody>
                 
             </table>
-        </div>
-    </div>
+
+            
     <div class="row">
         <div class="col-12 text-end">
             <button class="btn btn-warning" id="printBtn">Print</button>
+        </div>
+    </div>
         </div>
     </div>
     <hr>
