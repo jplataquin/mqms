@@ -93,6 +93,7 @@
             @endphp
         
         <nobreak>
+            <div></div>
         <table class="table" border="1" style="margin-bottom:10px">
             
             <tr>
@@ -146,7 +147,7 @@
             @endforeach
             
         </table>
-</nobreak>
+        </nobreak>
         @endforeach
 
         
