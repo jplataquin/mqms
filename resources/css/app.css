@@ -351,6 +351,7 @@ html, body {
   margin: 0;
   padding: 0;
   table-layout: fixed;
+  width:100%;
 }
 
 .record-table th {
@@ -362,10 +363,8 @@ html, body {
 }
 
 .record-table td{
-  width: 100%;
   border: 1px solid #ccc;
   border-collapse: collapse;
-  font-weight: bold;
   padding-left: 5px;
   padding-right:5px;
 }
