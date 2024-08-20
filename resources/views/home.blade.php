@@ -11,7 +11,7 @@
                     
                     <div class="d-flex flex-wrap justify-content-evenly">
                         
-                        <div class="text-center rounded border border-primary p-5 me-5 rounded" style="width:300px">
+                        <div class="text-center m-3 rounded border border-primary p-5 rounded" style="width:300px">
                             <h5>Component</h5>
                             
                             <h3>{{$componentPendCount}}</h3>
