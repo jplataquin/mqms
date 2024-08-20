@@ -94,11 +94,11 @@
                 <td colspan="3">
                     <table class="table" border="1">
                         <tr>
-                            <th>Status</th>
-                            <th>Supplier</th>
-                            <th>Payment Terms</th>
-                            <th>Price</th>
-                            <th>Total</th>
+                            <th style="width:20%">Status</th>
+                            <th style="width:20%">Supplier</th>
+                            <th style="width:20%">Payment Terms</th>
+                            <th style="width:20%">Price</th>
+                            <th style="width:20%">Total</th>
                         </tr>
                         @foreach($item->MaterialCanvass as $mcItem)
                         <tr>
