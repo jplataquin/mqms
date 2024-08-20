@@ -55,7 +55,7 @@ class MaterialCanvassController extends Controller
 
         $materialQuantityRequest = $materialQuantityRequest->where('status','=','APRV');
         
-        $materialQuantityRequest = $materialQuantityRequest->where('created_by','=',$user_id);
+        //$materialQuantityRequest = $materialQuantityRequest->where('created_by','=',$user_id);
        
         if($query){
             $materialQuantityRequest = $materialQuantityRequest->where('id','=',$query);
