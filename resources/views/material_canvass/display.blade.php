@@ -22,54 +22,57 @@
         </ul>
     </div>
 <hr>
-    <table class="record-table-horizontal mb-3">
-        <tbody>
-            <tr>
-                <th class="text-center" colspan="2">
-                    Material Canvass
-                </th>
-            </tr>
-            <tr>
-                <th width="230px">Material Quantity Request ID</th>
-                <td>{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
-            </tr>
-            <tr>
-                <th>Project</th>
-                <td>{{$project->name}}</td>
-            </tr>
-            <tr>
-                <th>Section</th>
-                <td>{{$section->name}}</td>
-            </tr>
-            <tr>
-                <th>Component</th>
-                <td>{{$component->name}}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{$material_quantity_request->status}}</td>
-            </tr>
-            <tr>
-                <th>Created By</th>
-                <td>{{$material_quantity_request->CreatedByUser()->name}} {{$material_quantity_request->created_at}}</td>
-            </tr>
-            <tr>
-                <th>Updated By</th>
-                <td>{{$material_quantity_request->UpdatedByUser()->name}} {{$material_quantity_request->updated_at}}</td>
-            </tr>
-            <tr>
-                <th>Approved By</th>
-                <td>{{$material_quantity_request->ApprovedByUser()->name}} {{$material_quantity_request->approve_at}}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>
-                    <textarea disabled="true" class="w-100" id="description">{{$material_quantity_request->description}}</textarea>
-                </td>
-            </tr>
-        </tbody>
-        
-    </table>
+
+    <div class="folder-form-container">
+        <div class="folder-form-tab">
+            Material Canvass
+        </div>
+        <div class="folder-form-body">        
+            <table class="record-table-horizontal mb-3">
+                <tbody>
+                    <tr>
+                        <th width="230px">Material Quantity Request ID</th>
+                        <td>{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
+                    </tr>
+                    <tr>
+                        <th>Project</th>
+                        <td>{{$project->name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Section</th>
+                        <td>{{$section->name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Component</th>
+                        <td>{{$component->name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>{{$material_quantity_request->status}}</td>
+                    </tr>
+                    <tr>
+                        <th>Created By</th>
+                        <td>{{$material_quantity_request->CreatedByUser()->name}} {{$material_quantity_request->created_at}}</td>
+                    </tr>
+                    <tr>
+                        <th>Updated By</th>
+                        <td>{{$material_quantity_request->UpdatedByUser()->name}} {{$material_quantity_request->updated_at}}</td>
+                    </tr>
+                    <tr>
+                        <th>Approved By</th>
+                        <td>{{$material_quantity_request->ApprovedByUser()->name}} {{$material_quantity_request->approve_at}}</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>
+                            <textarea disabled="true" class="w-100" id="description">{{$material_quantity_request->description}}</textarea>
+                        </td>
+                    </tr>
+                </tbody>
+                
+            </table>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12 text-end">
             <button class="btn btn-warning" id="printBtn">Print</button>
