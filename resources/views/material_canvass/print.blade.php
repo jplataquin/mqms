@@ -98,10 +98,10 @@
                 <th style="background-color:#d3d3d3" colspan="3">
                     Material
                 </th>
-                <th style="background-color:#d3d3d3">
+                <th style="background-color:#d3d3d3;text-align:center">
                     Quantity
                 </th>
-                <th style="background-color:#d3d3d3">
+                <th style="background-color:#d3d3d3;text-align:center">
                     Budget Price
                 </th>
             </tr>
@@ -109,10 +109,10 @@
                 <td colspan="3">
                     {{$material_item->brand}} {{$material_item->name}} {{$material_item->specification_unit_packaging}}
                 </td>
-                <td>
+                <td style="text-align:center">
                     {{ $item->requested_quantity }}
                 </td>
-                <td>
+                <td style="text-align:center">
                     P {{ number_format($component_item->budget_price,2) }}
                 </td>
             </tr>
