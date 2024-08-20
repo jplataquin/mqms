@@ -65,7 +65,7 @@
                 <th>Project</th>
                 <td>{{$project->name}}</td>
                 
-                <th>Section</th>
+                <th style="width:20%">Section</th>
                 <td>{{$section->name}}</td>
             </tr>
             <tr>
