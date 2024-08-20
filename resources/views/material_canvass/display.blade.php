@@ -25,7 +25,7 @@
     <table class="record-table-horizontal mb-3">
         <tbody>
             <tr>
-                <th width="200px">Material Quantity Request ID</th>
+                <th width="230px">Material Quantity Request ID</th>
                 <td>{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
             </tr>
             <tr>
