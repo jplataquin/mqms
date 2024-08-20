@@ -248,7 +248,7 @@
 
 
     cancelBtn.onclick = (e)=>{
-         window.util.navTo('/master_data/material_canvass');
+         window.util.navTo('/material_canvass');
     }
 
     printBtn.onclick = (e)=>{
