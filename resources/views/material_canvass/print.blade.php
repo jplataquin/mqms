@@ -117,7 +117,7 @@
                 </td>
             </tr>
             <tr>
-                <th style="width:10%;text-align:center">Status</th>
+                <th style="width:20%;text-align:center">Status</th>
                 <th style="width:10%;text-align:center">Supplier</th>
                 <th style="width:10%;text-align:center">Payment Terms</th>
                 <th style="width:10%;text-align:center">Price</th>
