@@ -9,7 +9,7 @@
         </div>
         <div class="form-body">
 
-                <div class="row">
+                <div class="row mb-5">
                     <div class="col-12">
                         <div class="form-group">
                             <label>Password</label>
@@ -18,7 +18,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row mb-5">
                     <div class="col-12">
                         <div class="form-group">
                             <label>Retype Password</label>
