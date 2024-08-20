@@ -1,31 +1,41 @@
 
-<style>
-        .text-left{
-            text-align: left;
-        }
+<style>    
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    } 
 
-        .text-center{
-            text-align: center;
-        }
+    table{
+        width: 100%;
+    }
 
-        .text-right{
-            text-align: right;
-        }
-        
-        .bold{
-            font-weight: bold;
-        }
+    th,td{
+        padding: 5px;
+    }
 
-        .table{
-            border-collapse:collapse;
-        }
+    .mb-20{
+        margin-bottom: 20px;
+    }
 
-        td{
-            padding: 3px;
-        }
+    .ps-20{
+        padding-left: 20px;
+    }
 
-        
+    .text-center{
+        text-align: center !important;
+    }
+
+    .text-red{
+        color: #ff0000 !important;
+    }
+
+    .text-bold{
+        font-weight: bold !important;
+    }
+
+
 </style>
+
 <page>
     <h3>Material Canvass</h3>
     <table border="1" class="table">
