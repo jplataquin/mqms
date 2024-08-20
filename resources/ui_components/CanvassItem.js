@@ -32,8 +32,12 @@ class CanvassItem extends Component{
         this.el.status          = t.input({class:'form-control',disabled:true,value:this._model.status});
         this.el.deleteBtn       = t.button({class:'btn btn-danger form-control'},'X');
         this.el.disapproveBtn   = t.button({class:'btn btn-danger form-control'},'X');
-        this.el.approveBtn      = t.button({class:'btn btn-primary form-control'},'O');
-        this.el.voidBtn         = t.button({class:'btn btn-secondary form-control'},'!');
+        this.el.approveBtn      = t.button({class:'btn btn-primary form-control'},()=>{
+            t.i({class:'bi bi-check-square'});
+        });
+        this.el.voidBtn         = t.button({class:'btn btn-secondary form-control'},()=>{
+            t.i({class:'bi bi-x-square'});
+        });
         
         
         return  t.div({},()=>{
