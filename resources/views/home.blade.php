@@ -26,7 +26,7 @@
 
                         <div class="text-center rounded border border-primary p-5 me-5 rounded" style="width:300px">
                             <h5>Material Canvass</h5>    
-                            <h3>{{materialCanvassPendCount}}</h3>
+                            <h3>{{$materialCanvassPendCount}}</h3>
                             <h5>Pending</h5>    
                         </div>
 
