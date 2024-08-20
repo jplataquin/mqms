@@ -33,7 +33,7 @@
     </div>
     <hr>
 
-    <table class="record-table-horizontal mb-5">
+    <table class="record-table-horizontal mb-3">
         <tbody>
             <tr>
                 <th width="150px">Project</th>
