@@ -93,7 +93,7 @@
         <table class="table" border="1" style="margin-bottom:5px">
             
             <tr>
-                <th style="width:60%">
+                <th style="width:60%" colspan="3">
                     Material
                 </th>
                 <th style="width:20%">
@@ -104,7 +104,7 @@
                 </th>
             </tr>
             <tr>
-                <td>
+                <td colspan="3">
                     {{$material_item->brand}} {{$material_item->name}} {{$material_item->specification_unit_packaging}}
                 </td>
                 <td>
@@ -114,17 +114,17 @@
                     P {{ number_format($component_item->budget_price,2) }}
                 </td>
             </tr>
-
+            <tr>
+                <th style="width:20%">Status</th>
+                <th style="width:20%">Supplier</th>
+                <th style="width:20%">Payment Terms</th>
+                <th style="width:20%">Price</th>
+                <th style="width:20%">Total</th>
+            </tr>             
             <tr>
                 <td colspan="3">
                     <table class="table" border="1">
-                        <tr>
-                            <th style="width:20%">Status</th>
-                            <th style="width:20%">Supplier</th>
-                            <th style="width:20%">Payment Terms</th>
-                            <th style="width:20%">Price</th>
-                            <th style="width:20%">Total</th>
-                        </tr>
+                        
                         @foreach($item->MaterialCanvass as $mcItem)
                         <tr>
                             <td style="width:10%">
