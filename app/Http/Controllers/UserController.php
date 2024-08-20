@@ -21,7 +21,8 @@ class UserController extends Controller
     }
 
     public function _create(Request $request){
-           //todo check role
+         
+            //todo check role
 
            $name        = $request->input('name') ?? '';
            $email       = $request->input('email') ?? '';
@@ -140,6 +141,70 @@ class UserController extends Controller
     }
 
     public function _reset_password(Request $request){
+
+           $password    = $request->input('password') ?? '';
+           $repassword  = $request->input('repassword') ?? '';
+
+           $validator = Validator::make($request->all(),[
+               'password' => [
+                    'required',
+                    'min:6',
+                    'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'
+               ],
+               'repassword' => [
+                    'required_with:password',
+                    'same:password'
+               ]
+           ],[
+                'password.regex' => 'The password must contain 1 lowercase AND 1 uppercase AND 1 number AND 1 symbol'
+           ]);
+   
+           if ($validator->fails()) {
+               return response()->json([
+                   'status'    => -2,
+                   'message'   => 'Failed Validation',
+                   'data'      => $validator->messages()
+               ]);
+           }
+           
+
+           $user_id = Auth::user()->id;
+
+           $user = new User::find($user_id);
+
+           if(!$user){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Record not found',
+                    'data'      => []
+                ]);
+           }
+
+           $hash = Hash::make($password);
+           
+           if($user->password == $hash){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Your password must not be the same as old password',
+                    'data'      => []
+                ]);
+           }
+
+           $user->password          = $hash;
+           $user->reset_password    = 0;
+
+           $user->save();
+
+           return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data'      => [
+                'id' => $user->id
+            ]
+        ]);
+    }
+
+    public function _enable_reset_password(Request $request){
         //todo check role
 
         $id = (int) $request->input('id') ?? 0;
