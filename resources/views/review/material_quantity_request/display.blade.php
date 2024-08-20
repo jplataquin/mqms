@@ -48,7 +48,7 @@
             <table class="record-table">
                 <tbody>
                     <tr>
-                        <th>ID</th>
+                        <th width="100px">ID</th>
                         <td>{{$material_quantity_request->id}}</td>
                     </tr>
                     <tr>
