@@ -1,7 +1,7 @@
 @extends('layouts.reset_password')
 
 @section('content')
-<div class="container text-align">
+<div class="container text-align mt-5">
 
     <div class="form-container">
         <div class="form-header">
