@@ -84,7 +84,7 @@
         </tbody>
         
     </table>
-    <hr>
+    
     <div>
         @foreach($items as $item)
             @php 
@@ -92,8 +92,7 @@
                 $component_item = $component_item_arr[ $item->component_item_id ];
             @endphp
         
-        <nobreak>
-        <table class="table" border="1" style="margin-bottom:5px">
+        <table class="table" border="1" style="margin-bottom:10px">
             
             <tr>
                 <th style="width:60%;background-color:#d3d3d3" colspan="3">
@@ -146,7 +145,7 @@
             @endforeach
             
         </table>
-        </nobreak>
+
         @endforeach
 
         
