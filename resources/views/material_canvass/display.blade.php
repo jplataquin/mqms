@@ -17,6 +17,7 @@
                     <span>
                         Display
                     </span>		
+                    <i class="ms-2 bi bi-display"></i>
                 </a>
             </li>
         </ul>
