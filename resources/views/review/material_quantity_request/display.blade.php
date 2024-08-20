@@ -36,7 +36,7 @@
             Material Request Review
         </div>
         <div class="folder-form-body">
-            <table class="table">
+            <table class="record-table">
                 <tbody>
                     <tr>
                         <th>ID</th>

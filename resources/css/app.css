@@ -344,6 +344,10 @@ html, body {
   border-top-right-radius: 25px;
 }
 
+/*** Record Table ***/
+.record-table {
+  width: 100%;
+}
 
 /*** Viewports ***/
 
