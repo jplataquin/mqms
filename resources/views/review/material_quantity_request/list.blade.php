@@ -105,8 +105,8 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Project</th>
-                    <th>Section</th>
+                    <th>Project - Section</th>
+                    <th>Contract Item</th>
                     <th>Component</th>
                     <th>User</th>
                     <th>Date</th>
@@ -154,8 +154,8 @@
 
             let row = t.tr({class:'selectable-div'},()=>{
                 t.td(String(item.id).padStart(6,0));
-                t.td(item.project.name);
-                t.td(item.section.name);
+                t.td(item.project.name+' - '+item.section.name);
+                t.td('');
                 t.td(item.component.name);
                 t.td(item.user.name);
                 t.td(
