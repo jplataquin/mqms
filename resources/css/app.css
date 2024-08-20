@@ -361,6 +361,12 @@ html, body {
   padding-right:3px;
 }
 
+.record-table td{
+  width: 100%;
+  padding-left: 3px;
+  padding-right:3px;
+}
+
 /*** Viewports ***/
 
 @media (max-width:320px)  { /* smartphones, iPhone, portrait 480x320 phones */
