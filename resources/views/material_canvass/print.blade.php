@@ -39,10 +39,10 @@
 <page>
     <table class="mb-20">
         <tr>
-            <td style="width:50%;text-align:center">
-                <img src="storage/sys_images/header.png" style="width:400px"/>
+            <td style="width:60%;text-align:center">
+                <img src="storage/sys_images/header.png" style="width:500px"/>
             </td>
-            <td class="text-center" style="width:40%;text-align:center">
+            <td class="text-center" style="width:30%;text-align:center">
                 <h1>Material Canvass</h1>
             
             </td>
