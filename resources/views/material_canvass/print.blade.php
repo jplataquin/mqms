@@ -81,7 +81,7 @@
             </tr>
             <tr>
                 <th>Description</th>
-                <td>
+                <td colspan="3">
                     {{$material_quantity_request->description}}
                 </td>
             </tr>
