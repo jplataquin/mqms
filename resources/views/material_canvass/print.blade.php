@@ -95,13 +95,13 @@
         <table class="table" border="1" style="margin-bottom:10px">
             
             <tr>
-                <th style="width:45%;background-color:#d3d3d3" colspan="3">
+                <th style="background-color:#d3d3d3" colspan="3">
                     Material
                 </th>
-                <th style="width:20%;background-color:#d3d3d3">
+                <th style="background-color:#d3d3d3">
                     Quantity
                 </th>
-                <th style="width:20%;background-color:#d3d3d3">
+                <th style="background-color:#d3d3d3">
                     Budget Price
                 </th>
             </tr>
