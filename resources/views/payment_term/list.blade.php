@@ -78,12 +78,13 @@
 <script type="module">
     import {$q,Template,$el} from '/adarna.js';
 
-    let list            = $q('#list').first();
-    let query           = $q('#query').first();
-    let searchBtn       = $q('#searchBtn').first();
-    let showMoreBtn     = $q('#showMoreBtn').first();
-    let sortSelect      = $q('#sortSelect').first();
-    let createBtn       = $q('#createBtn').first();
+    const list            = $q('#list').first();
+    const query           = $q('#query').first();
+    const searchBtn       = $q('#searchBtn').first();
+    const showMoreBtn     = $q('#showMoreBtn').first();
+    const sortSelect      = $q('#sortSelect').first();
+    const createBtn       = $q('#createBtn').first();
+    
     let page            = 1;
     let order           = 'DESC';
     let orderBy         = 'id';
@@ -183,7 +184,7 @@
     }
 
     createBtn.onclick = ()=>{
-        window.util.showMsg('/master_data/payment_term/create');
+        window.util.navTo('/master_data/payment_term/create');
     }
 
     reinitalize();
