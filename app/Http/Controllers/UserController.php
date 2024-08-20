@@ -170,7 +170,7 @@ class UserController extends Controller
 
            $user_id = Auth::user()->id;
 
-           $user = new User::find($user_id);
+           $user = User::find($user_id);
 
            if(!$user){
                 return response()->json([
