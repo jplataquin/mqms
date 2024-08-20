@@ -357,16 +357,17 @@ html, body {
   border: 1px solid #ccc;
   border-collapse: collapse;
   font-weight: bold;
-  padding-left: 3px;
-  padding-right:3px;
+  padding-left: 10px;
+  padding-right:10px;
 }
 
 .record-table td{
   width: 100%;
+  border: 1px solid #ccc;
   border-collapse: collapse;
   font-weight: bold;
-  padding-left: 3px;
-  padding-right:3px;
+  padding-left: 5px;
+  padding-right:5px;
 }
 
 /*** Viewports ***/
