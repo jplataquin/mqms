@@ -3,19 +3,12 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs">
+<div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="#">
+                <a href="/master_data/material_items">
                     <span>
-                        Master Data
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span>
-                       Material Item
+                       Material Items
                     </span>
                 </a>
             </li>
@@ -23,58 +16,63 @@
                 <a href="#" class="active">
                     <span>
                         Display
-                    </span>		
+                    </span>	
+                    <i class="ms-2 bi bi-display"></i>	
                 </a>
             </li>
         </ul>
     </div>
 
 <hr>
-
-    <div class="row">
-
-        <div class="col-lg-12 mt-3">
-            <div class="form-group">
-                <label>Material Group</label>
-                <select disabled="true" class="form-control" id="materialGroup">
-                    @foreach($materialGroups as $group)
-                        <option value="{{$group->id}}" @if($group->id == $materialItem->material_group_id) selected @endif >{{$group->name}}</option>
-                    @endforeach
-                </select>
-            </div>
+    <div class="form-container">
+        <div class="form-header">
+            Material Item
         </div>
+        <div class="form-body">
+            <div class="row">
+                <div class="col-lg-12 mt-3">
+                    <div class="form-group">
+                        <label>Material Group</label>
+                        <select disabled="true" class="form-control" id="materialGroup">
+                            @foreach($materialGroups as $group)
+                                <option value="{{$group->id}}" @if($group->id == $materialItem->material_group_id) selected @endif >{{$group->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
 
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label>Material Name</label>
-                <input type="text" disabled="true" id="materialName" value="{{$materialItem->name}}" class="form-control"/>
+                <div class="col-12 mt-3">
+                    <div class="form-group">
+                        <label>Material Name</label>
+                        <input type="text" disabled="true" id="materialName" value="{{$materialItem->name}}" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="col-12 mt-3">
+                    <div class="form-group">
+                        <label>Specification / Unit Packaging</label>
+                        <input type="text" disabled="true" id="specificationUnitPackaging" value="{{$materialItem->specification_unit_packaging}}" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="col-12 mt-3">
+                    <div class="form-group">
+                        <label>Brand</label>
+                        <input type="text" disabled="true" id="brandName" value="{{$materialItem->brand}}" class="form-control"/>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label>Specification / Unit Packaging</label>
-                <input type="text" disabled="true" id="specificationUnitPackaging" value="{{$materialItem->specification_unit_packaging}}" class="form-control"/>
-            </div>
-        </div>
-
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label>Brand</label>
-                <input type="text" disabled="true" id="brandName" value="{{$materialItem->brand}}" class="form-control"/>
+            <div class="row mt-5">
+                <div class="col-12 text-end">
+                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                    <button class="btn btn-primary" id="editBtn">Edit</button>
+                    <button class="btn btn-warning d-none" id="updateBtn">Update</button>
+                </div>
             </div>
         </div>
     </div>
 
-   
-
-    <div class="row mt-5">
-        <div class="col-12 text-end">
-            <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
-            <button class="btn btn-primary" id="editBtn">Edit</button>
-            <button class="btn btn-warning d-none" id="updateBtn">Update</button>
-        </div>
-    </div>
 
 </div>
 

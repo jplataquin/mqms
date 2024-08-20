@@ -22,49 +22,56 @@
             </li>
         </ul>
     </div>
-<hr>
+    <hr>
 
-    <div class="row">
-
-        <div class="col-lg-3">
-            <div class="form-group">
-                <label>Material Group</label>
-                <select class="form-control" id="materialGroup">
-                    @foreach($materialGroups as $group)
-                        <option value="{{$group->id}}" >{{$group->name}}</option>
-                    @endforeach
-                </select>
-            </div>
+    <div class="form-container">
+        <div class="form-header">
+            Create Material Item
         </div>
+        <div class="form-body">
+            <div class="row">
+
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label>Material Group</label>
+                        <select class="form-control" id="materialGroup">
+                            @foreach($materialGroups as $group)
+                                <option value="{{$group->id}}" >{{$group->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
 
 
-        <div class="col-lg-3">
-            <div class="form-group">
-                <label>Material Name</label>
-                <input type="text" id="materialName" class="form-control"/>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label>Material Name</label>
+                        <input type="text" id="materialName" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label>Specification / Unit Packaging</label>
+                        <input type="text" id="specificationUnitPackaging" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label>Brand Name</label>
+                        <input type="text" id="brandName" class="form-control"/>
+                    </div>
+                </div>
+
             </div>
-        </div>
 
-        <div class="col-lg-3">
-            <div class="form-group">
-                <label>Specification / Unit Packaging</label>
-                <input type="text" id="specificationUnitPackaging" class="form-control"/>
+            <div class="row mt-5">
+                <div class="col-12 text-end">
+                <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                <button class="btn btn-primary" id="createBtn">Create</button>
+                </div>
             </div>
-        </div>
-
-        <div class="col-lg-3">
-            <div class="form-group">
-                <label>Brand Name</label>
-                <input type="text" id="brandName" class="form-control"/>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="row mt-5">
-        <div class="col-12 text-end">
-        <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
-        <button class="btn btn-primary" id="createBtn">Create</button>
         </div>
     </div>
 

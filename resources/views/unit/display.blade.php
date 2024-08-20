@@ -3,19 +3,12 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs">
+<div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="#">
+                <a href="/master_data/units">
                     <span>
-                       Master Data
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span>
-                       Unit
+                       Units
                     </span>
                 </a>
             </li>
@@ -23,36 +16,42 @@
                 <a href="#" class="active">
                     <span>
                         Display
-                    </span>		
+                    </span>
+                    <i class="ms-2 bi bi-display"></i>
                 </a>
             </li>
         </ul>
     </div>
-<hr>
 
+    <hr>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="form-group">
-                <label>Text</label>
-                <input type="text" disabled="true" id="text" value="{{$unit->text}}" class="form-control"/>
+    <div class="form-container">
+        <div class="form-header">
+            Unit
+        </div>
+        <div class="form-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>Text</label>
+                        <input type="text" disabled="true" id="text" value="{{$unit->text}}" class="form-control"/>
+                    </div>
+                </div>   
+
             </div>
-        </div>   
 
-    </div>
-
-    <div class="row mt-5 mb-3">
-        <div class="col-6 text-start">
-            <button class="btn btn-danger" id="deleteBtn">Delete</button>
+            <div class="row mt-5 mb-3">
+                <div class="col-6 text-start">
+                    <button class="btn btn-danger" id="deleteBtn">Delete</button>
+                </div>
+                <div class="col-6 text-end">
+                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                    <button class="btn btn-primary" id="editBtn">Edit</button>
+                    <button class="btn btn-warning d-none" id="updateBtn">Update</button>
+                </div>
+            </div>
         </div>
-        <div class="col-6 text-end">
-            <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
-            <button class="btn btn-primary" id="editBtn">Edit</button>
-            <button class="btn btn-warning d-none" id="updateBtn">Update</button>
-        </div>
     </div>
-
-   
     
 <script type="module">
     import {$q,$el,Template} from '/adarna.js';
