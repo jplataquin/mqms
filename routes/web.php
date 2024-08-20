@@ -33,7 +33,7 @@ Route::get('/gitpull',function(){
 Route::middleware(['auth'])->group(function(){
 
     Route::get('/reset_password',function(){
-        echo 'TAE';
+        return 'Reset Password';
     });
 });
 
