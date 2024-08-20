@@ -7,7 +7,7 @@
         <ul>
             <li>
                 <a href="#">
-                    <span>User</span>
+                    <span>Users</span>
                 </a>
             </li>
             <li>

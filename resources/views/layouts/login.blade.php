@@ -19,7 +19,8 @@
 </head>
 <body>
     <div id="bar" class="w-100"></div>
-    
-    @yield('content')
+    <div class="pt-5">
+        @yield('content')
+    </div>
 </body>
 </html>
