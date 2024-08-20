@@ -46,7 +46,7 @@
                 <img src="storage/sys_images/header.png" style="width:400px"/>
             </td>
             <td class="text-center" style="width:30%;text-align:center">
-                <h2>Material Canvass</h2>
+                <h3>Material Canvass</h3>
             
             </td>
             <td style="text-align:center;width:10%">
