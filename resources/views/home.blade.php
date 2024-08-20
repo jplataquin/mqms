@@ -10,21 +10,20 @@
                 <div class="card-body text-center">
                     
                     <div class="row">
-                        <div class="text-center col-6 border border-primary p-5 me-5 rounded" style="width:300px">
-                            <h5>Pending</h5>
-                            
-                            <h3>{{$materialQuantityRequestPendCount}}</h3>
-                            
-                            <h5>Material Request</h5>
-                        </div>
-
-                        <div class="text-center col-6 border border-primary p-5 me-5 rounded" style="width:300px">
-                            <h5>Pending</h5>
+                        
+                        <div class="text-center col-6 rounded border border-primary p-5 me-5 rounded" style="width:300px">
+                            <h5>Component</h5>
                             
                             <h3>{{$componentPendCount}}</h3>
                             
-                            <h5>Component</h5>
+                            <h5>Pending</h5>
                         </div>
+                        <div class="text-center col-6 rounded border border-primary p-5 me-5 rounded" style="width:300px">
+                            <h5>Material Request</h5>    
+                            <h3>{{$materialQuantityRequestPendCount}}</h3>
+                            <h5>Pending</h5>    
+                        </div>
+
                     </div>
                 </div>
             </div>
