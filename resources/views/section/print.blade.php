@@ -207,7 +207,7 @@
                             @endif
                         <td></td>
                         <th class="text-right">
-                            {{ number_format($component->quantity) }}
+                            {{ number_format($component->quantity,2) }}
                         </th>
                         <th style="text-align:center">
                             {{ $unit_options[$component->unit_id]->text }}
@@ -294,7 +294,7 @@
 
                             </td>
                             <td class="text-right">
-                                {{ number_format($component_item->quantity) }}
+                                {{ number_format($component_item->quantity,2) }}
                             </td>
                             <td style="text-align:center">
                                 {{$unit_options[$component_item->unit_id]->text}}

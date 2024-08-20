@@ -32,41 +32,45 @@
 <hr>
 
     <div class="folder-form-container">
-    
-        <table class="table">
-            <tbody>
-                <tr>
-                    <th>ID</th>
-                    <td>{{$material_quantity_request->id}}</td>
-                </tr>
-                <tr>
-                    <th>Project</th>
-                    <td>{{$project->name}}</td>
-                </tr>
-                <tr>
-                    <th>Section</th>
-                    <td>{{$section->name}}</td>
-                </tr>
-                <tr>
-                    <th>Component</th>
-                    <td>{{$component->name}}</td>
-                </tr>
-                <tr>
-                    <th>Status</th>
-                    <td>{{$material_quantity_request->status}}</td>
-                </tr>
-                <tr>
-                    <th>Requested By</th>
-                    <td>{{$material_quantity_request->CreatedByUser()->name}}</td>
-                </tr>
-                <tr>
-                    <th>Description</th>
-                    <td>
-                        <textarea disabled="true" class="w-100" id="description">{{$material_quantity_request->description}}</textarea>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="folder-form-tab">
+            Material Request Review
+        </div>
+        <div class="folder-form-body">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>ID</th>
+                        <td>{{$material_quantity_request->id}}</td>
+                    </tr>
+                    <tr>
+                        <th>Project</th>
+                        <td>{{$project->name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Section</th>
+                        <td>{{$section->name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Component</th>
+                        <td>{{$component->name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>{{$material_quantity_request->status}}</td>
+                    </tr>
+                    <tr>
+                        <th>Requested By</th>
+                        <td>{{$material_quantity_request->CreatedByUser()->name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>
+                            <textarea disabled="true" class="w-100" id="description">{{$material_quantity_request->description}}</textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div id="itemContainer"></div>
     <div>
