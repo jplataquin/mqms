@@ -195,7 +195,9 @@ class MaterialCanvassController extends Controller
 
         $payment_term_arr = [];
 
-        foreach($payment_terms as (object) $payment_term){
+        foreach($payment_terms as $payment_term){
+
+            print_r($payment_term);exit;
             $payment_term_arr[ $payment_term->id ] = $payment_term;
         }
 
