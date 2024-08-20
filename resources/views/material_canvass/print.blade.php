@@ -58,8 +58,8 @@
     <table border="1" class="table">
         <tbody>
             <tr>
-                <th>Material Quantity Request ID</th>
-                <td colspan="3">{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
+                <th style="width:10%">Material Request ID</th>
+                <td colspan="3" style="width:90%">{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
             </tr>
             <tr>
                 <th>Project</th>
