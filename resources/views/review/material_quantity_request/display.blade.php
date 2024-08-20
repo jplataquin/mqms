@@ -3,7 +3,7 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs">
+<div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
                 <a href="#">
@@ -13,9 +13,9 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="/review/material_requests">
                     <span>
-                       Material Quantity
+                       Material Requests
                     </span>
                 </a>
             </li>
@@ -23,44 +23,51 @@
                 <a href="#" class="active">
                     <span>
                         Display
-                    </span>		
+                    </span>	
+                    <i class="ms-2 bi bi-display"></i>	
                 </a>
             </li>
         </ul>
     </div>
 <hr>
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>ID</th>
-                <td>{{$material_quantity_request->id}}</td>
-            </tr>
-            <tr>
-                <th>Project</th>
-                <td>{{$project->name}}</td>
-            </tr>
-            <tr>
-                <th>Section</th>
-                <td>{{$section->name}}</td>
-            </tr>
-            <tr>
-                <th>Component</th>
-                <td>{{$component->name}}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{$material_quantity_request->status}}</td>
-            </tr>
-            
-            <tr>
-                <th>Description</th>
-                <td>
-                    <textarea disabled="true" class="w-100" id="description">{{$material_quantity_request->description}}</textarea>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+
+    <div class="folder-form-container">
     
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>ID</th>
+                    <td>{{$material_quantity_request->id}}</td>
+                </tr>
+                <tr>
+                    <th>Project</th>
+                    <td>{{$project->name}}</td>
+                </tr>
+                <tr>
+                    <th>Section</th>
+                    <td>{{$section->name}}</td>
+                </tr>
+                <tr>
+                    <th>Component</th>
+                    <td>{{$component->name}}</td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td>{{$material_quantity_request->status}}</td>
+                </tr>
+                <tr>
+                    <th>Requested By</th>
+                    <td>{{$material_quantity_request->CreatedByUser()->name}}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>
+                        <textarea disabled="true" class="w-100" id="description">{{$material_quantity_request->description}}</textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <div id="itemContainer"></div>
     <div>
         <button class="btn btn-warning w-100 mt-3 d-none" id="addBtn">Add More</button>
