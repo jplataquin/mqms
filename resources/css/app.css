@@ -361,7 +361,8 @@ html, body {
   border-bottom: 1px solid #ccc;
   border-collapse: collapse;
   padding: 5px;
-  font-family: "Special Elite", system-ui;
+  font-family: "Zen Kaku Gothic New", sans-serif;
+  font-weight: 400;
   font-style: normal;
 }
 
