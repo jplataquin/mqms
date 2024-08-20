@@ -796,6 +796,7 @@ class MaterialQuantityRequestController extends Controller
         $section_id         = (int) $request->input('section_id')  ?? 0;
         $contract_item_id   = (int) $request->input('contract_item_id') ?? 0;
         $component_id       = (int) $request->input('component_id')  ?? 0;
+    
         $query              = (int) $request->input('query')    ?? 0;
         $status             = $request->input('status')    ?? '';
         $orderBy            = $request->input('order_by')       ?? 'id';
@@ -806,7 +807,7 @@ class MaterialQuantityRequestController extends Controller
 
         $user_id = Auth::user()->id;
         
-        $materialQuantityRequest = $materialQuantityRequest->where('created_by','=',$user_id);
+        //$materialQuantityRequest = $materialQuantityRequest->where('created_by','=',$user_id);
         
         if($query){
             $materialQuantityRequest = $materialQuantityRequest->where('id','=',$query);
