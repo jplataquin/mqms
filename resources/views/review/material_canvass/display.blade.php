@@ -117,7 +117,7 @@
 
         <datalist id="payment_terms_list">
             @foreach($payment_terms as $payment_term)
-            <option data-value="{{$payment_term['id']}}" value="{{$payment_term['text']}}"/>
+            <option data-value="{{$payment_term->id}}" value="{{$payment_term->text}}"/>
             @endforeach
         </datalist>
 
