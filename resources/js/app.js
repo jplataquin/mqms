@@ -8,12 +8,13 @@ window.ui   = {};
 const t                   = new Template();
 const primaryModalElement = document.getElementById('primary_modal');
 
-window.ui.primaryModal = new Modal(primaryModalElement);
+if(primaryModalElement){
+    window.ui.primaryModal = new Modal(primaryModalElement);
 
-window.ui.primaryModalTitle    = primaryModalElement.querySelector('#primary_modal_title');
-window.ui.primaryModalBody     = primaryModalElement.querySelector('#primary_modal_body');
-window.ui.primaryModalFooter   = primaryModalElement.querySelector('#primary_modal_footer');
-
+    window.ui.primaryModalTitle    = primaryModalElement.querySelector('#primary_modal_title');
+    window.ui.primaryModalBody     = primaryModalElement.querySelector('#primary_modal_body');
+    window.ui.primaryModalFooter   = primaryModalElement.querySelector('#primary_modal_footer');
+}
 /** Feeze UI **/
 /*
 
