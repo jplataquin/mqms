@@ -103,7 +103,7 @@
         <table class="table" border="1" style="margin-bottom:5px">
             
             <tr>
-                <th style="width:60%" colspan="3" class="grey">
+                <th style="width:60%" colspan="3">
                     Material
                 </th>
                 <th style="width:20%">
