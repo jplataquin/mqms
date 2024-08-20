@@ -24,7 +24,7 @@ class UserController extends Controller
            $name        = $request->input('name') ?? '';
            $email       = $request->input('email') ?? '';
            $password    = $request->input('password') ?? '';
-
+           $repassword  = $request->input('repassword') ?? '';
 
            $validator = Validator::make($request->all(),[
                'name' => [
@@ -40,6 +40,10 @@ class UserController extends Controller
                     'required',
                     'min:6',
                     'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'
+               ],
+               'repassword' => [
+                    'required_with:password',
+                    'same:password'
                ]
            ],[
                 'password.regex' => 'The password must contain 1 lowercase AND 1 uppercase AND 1 number AND 1 symbol'

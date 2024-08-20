@@ -50,7 +50,7 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" id="password" class="form-control"/>
+                        <input type="password" id="password" class="form-control" minlength="6"/>
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label>Retype Password</label>
-                        <input type="password" id="repassword" class="form-control"/>
+                        <input type="password" id="repassword" class="form-control" minlength="6"/>
                     </div>
                 </div>
             </div>
@@ -81,6 +81,8 @@
     const cancelBtn              = $q('#cancelBtn').first();
     const name                   = $q('#name').first();
     const email                  = $q('#email').first();
+    const password               = $q("#password").first();
+    const repassword             = $q('#repassword').first();
 
     createBtn.onclick = (e) => {
 
@@ -88,7 +90,9 @@
 
         window.util.$post('/api/user/create',{
             name: name.value,
-            email: email.value
+            email: email.value,
+            password: password.value,
+            repassword: repassword.value
         }).then(reply=>{
 
             

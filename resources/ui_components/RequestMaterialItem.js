@@ -329,7 +329,7 @@ class RequestMaterialItem extends Component{
         // }
 
 
-         //Set state to default
+        //Set state to default
         this.setState('materialBudgetQuantity','');
         this.setState('totalRequeted','');
         this.setState('requestedQuantity','');
