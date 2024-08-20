@@ -22,7 +22,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/gitpull',function(){
     
@@ -39,6 +38,9 @@ Route::middleware(['auth'])->group(function(){
 });
 
 Route::middleware(['auth',CheckForResetPassword::class])->group(function () {
+    
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 
     Route::get('/access_code/create', [App\Http\Controllers\AccessCodeController::class, 'create']);
     Route::get('/access_code/{id}', [App\Http\Controllers\AccessCodeController::class, 'display']);
