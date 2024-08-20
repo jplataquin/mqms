@@ -106,10 +106,10 @@
                 <th style="width:60%" colspan="3" class="grey">
                     Material
                 </th>
-                <th style="width:20%" class="grey">
+                <th style="width:20%">
                     Quantity
                 </th>
-                <th style="width:20%" class="grey">
+                <th style="width:20%">
                     Budget Price
                 </th>
             </tr>
