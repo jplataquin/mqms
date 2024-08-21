@@ -24,7 +24,7 @@
             </ul>
         </div>
         <hr>
-        <table class="table">
+        <table class="record-table-horizontal">
             <tbody>
                 <tr>
                     <th>Material Quantity Request ID</th>

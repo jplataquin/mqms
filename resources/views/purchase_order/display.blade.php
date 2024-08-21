@@ -155,6 +155,12 @@
                         <input type="text" id="sub_total" disabled="true" value="{{$sub_total}}" class="form-control"/>
                     </td>
                 </tr>
+
+                <tr>
+                    <th colspan="2" class="text-center">
+                        (Optional) Discount / Additional Charges
+                    </th>
+                </tr>
                 
                 @php $grand_total = $sub_total @endphp
 
@@ -249,7 +255,6 @@
         
         if(voidBtn && printBtn){
 
-            console.log(voidBtn,printBtn);
             voidBtn.onclick = (e)=>{
                 e.preventDefault();
 
