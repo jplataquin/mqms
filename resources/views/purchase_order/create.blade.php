@@ -27,7 +27,7 @@
         <table class="record-table-horizontal">
             <tbody>
                 <tr>
-                    <th>Material Quantity Request ID</th>
+                    <th width="300px">Material Quantity Request ID</th>
                     <td>{{$material_quantity_request->id}}</td>
                 </tr>
                 <tr>
@@ -84,7 +84,6 @@
             </div>
         </div>
 
-        <hr>
             <div id="item_container"></div>
             
             <div class="d-flex justify-content-end">
