@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\MaterialQuantityRequest;
 use App\Models\MaterialCanvass;
+use App\Models\PurchaseOrder;
+
 
 class MaterialQuantityRequestItem extends Model
 {
@@ -25,5 +27,10 @@ class MaterialQuantityRequestItem extends Model
     public function MaterialCanvass(): HasMany
     {
         return $this->hasMany(MaterialCanvass::class);
+    }
+
+    public function PurchaseOrders(): HasMany
+    {
+        return $this->hasMany(PurchaseOrder::class);
     }
 }

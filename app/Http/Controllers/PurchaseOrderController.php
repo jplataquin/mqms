@@ -153,17 +153,48 @@ class PurchaseOrderController extends Controller
         if($limit > 0){
             $page   = ($page-1) * $limit;
             
-            $result = $materialQuantityRequest->orderBy($orderBy,$order)->skip($page)->take($limit)->with('Project')->with('Section')->with('Component')->with('User')->get();
+            $result = $materialQuantityRequest->orderBy($orderBy,$order)->skip($page)->take($limit)
+            ->with('Project')
+            ->with('Section')
+            ->with('ContractItem')
+            ->with('Component')
+            ->with('User')
+            ->get();
             
         }else{
 
-            $result = $materialQuantityRequest->orderBy($orderBy,$order)->take($limit)->with('Project')->with('Section')->with('Component')->with('User')->get();
+            $result = $materialQuantityRequest->orderBy($orderBy,$order)->take($limit)->with('Project')->with('Section')->with('ContractItem')->with('Component')->with('User')->get();
         }
 
+        $results_to_show = [];
+
+        //Filter out completed material request
+        foreach($result as $mr){
+            
+            $items                  = $mr->Items;
+            $available_item_count   = count($items);
+            
+            foreach($items as $item){
+
+                //Get sum of all po item quantities for the request item
+                $po_quantity = PurchaseOrderItem::where('material_quantity_request_item_id',$item->id)->sum('requested_quantity');
+
+                //Check if all requested quanty has been po'ed.
+                if($po_quantity >= $item->requested_quantity){
+                    $available_item_count = $available_item_count - 1;
+                }
+            }
+
+            //Include only request with remaining po'able items
+            if($available_item_count > 0){
+                $results_to_show[] = $result;
+            }
+        }   
+
         return response()->json([
-            'status' => 1,
-            'message'=>'',
-            'data'=> $result
+            'status'    => 1,
+            'message'   =>'',
+            'data'      => $results_to_show
         ]);
     }
 
