@@ -161,6 +161,10 @@
                         (Optional) Discount / Additional Charges
                     </th>
                 </tr>
+                <tr>
+                    <th class="text-center">Particular</th>
+                    <th class="text-center">Amount</th>
+                </tr>
                 
                 @php $grand_total = $sub_total @endphp
 
