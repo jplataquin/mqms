@@ -238,6 +238,7 @@
     
     if(voidBtn && printBtn){
 
+        console.log(voidBtn,printBtn);
         voidBtn.onclick = (e)=>{
             e.preventDefault();
 
