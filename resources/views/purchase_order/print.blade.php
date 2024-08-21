@@ -31,14 +31,14 @@
         <div>
             @foreach(['Supplier','Site','Accounting','Warehouse'] as $copy)
             <nobreak>
-            <table class="table" border="1" style="width:800px">
+            <table class="table" border="1">
                 <tr>
                     <td colspan="4" class="text-center bold" style="">
                         <img src="storage/sys_images/header.png" style="width:500px"/>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4" class="text-center bold">
+                    <td colspan="4" class="text-center bold" style="width:600px">
                         Purchase Order - {{$copy}} Copy
                     </td>
                 </tr>
