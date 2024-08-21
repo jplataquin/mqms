@@ -135,6 +135,8 @@
         
         data.map(item=>{
 
+            console.log(item);
+            
             let row = t.tr({class:'selectable-div'},()=>{
                 t.td(String(item.id).padStart(6,0));
             
