@@ -205,7 +205,7 @@
     const deleteBtn = $q('#deleteBtn').first();
 
     if(deleteBtn){
-        
+
        deleteBtn.onclick = (e)=>{
             e.preventDefault();
 
@@ -265,6 +265,7 @@
         }
 
         printBtn.onclick = (e)=>{
+            console.log('asdad');
             window.open('/purchase_order/print/{{$purchase_order->id}}','_blank').focus();
         }
     }
