@@ -195,16 +195,17 @@
 
 <script type="module">
     import {$q,Template} from '/adarna.js';
-    let cancelBtn = $q('#cancelBtn').first();
+    const cancelBtn = $q('#cancelBtn').first();
 
     cancelBtn.onclick = ()=>{
         window.util.navTo('/purchase_orders');
     }
 
-    @if($purchase_order->status == 'PEND')
         
-       let deleteBtn = $q('#deleteBtn').first();
+    const deleteBtn = $q('#deleteBtn').first();
 
+    if(deleteBtn){
+        
        deleteBtn.onclick = (e)=>{
             e.preventDefault();
 
@@ -230,12 +231,12 @@
                 window.util.navTo("/purchase_orders");
             });
        }
-    @endif
-
-    @if($purchase_order->status == 'APRV')
+    }
         
-        let voidBtn = $q('#voidBtn').first();
-        let printBtn = $q('#printBtn').first();
+    const voidBtn = $q('#voidBtn').first();
+    const printBtn = $q('#printBtn').first();
+    
+    if(voidBtn && printBtn){
 
         voidBtn.onclick = (e)=>{
             e.preventDefault();
@@ -266,7 +267,7 @@
         printBtn.onclick = (e)=>{
             window.open('/purchase_order/print/{{$purchase_order->id}}','_blank').focus();
         }
-    @endif
+    }
 </script>
 </div>
 @endsection
