@@ -31,7 +31,7 @@
         <div>
             @foreach(['Supplier','Site','Accounting','Warehouse'] as $copy)
             <nobreak>
-            <table class="table" border="1">
+            <table class="table" border="1" style="width:800px">
                 <tr>
                     <td colspan="4" class="text-center bold" style="">
                         <img src="storage/sys_images/header.png" style="width:500px"/>

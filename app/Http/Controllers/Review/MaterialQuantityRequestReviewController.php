@@ -165,9 +165,9 @@ class MaterialQuantityRequestReviewController extends Controller
             ]);
         }
 
-        $materialQuantityRequest = MaterialQuantityRequest::find($id);
+        $material_quantity_request = MaterialQuantityRequest::find($id);
 
-        if(!$materialQuantityRequest){
+        if(!$material_quantity_request){
             return response()->json([
                 'status'    => 0,
                 'message'   => 'No record found',
@@ -175,7 +175,7 @@ class MaterialQuantityRequestReviewController extends Controller
             ]);
         }
 
-        if($materialQuantityRequest->status != 'PEND'){
+        if($material_quantity_request->status != 'PEND'){
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Record is no longer in Pending status',
@@ -183,18 +183,18 @@ class MaterialQuantityRequestReviewController extends Controller
             ]);
         }
 
+
         $user_id = Auth::user()->id;
 
         DB::beginTransaction();
 
         try {
 
-            $mytime = Carbon::now();
 
-            $materialQuantityRequest->status        = 'APRV';
-            $materialQuantityRequest->approved_by   = $user_id;
-            $materialQuantityRequest->approved_at   = $mytime->toDateTimeString();
-            $materialQuantityRequest->save();
+            $material_quantity_request->status        = 'APRV';
+            $material_quantity_request->approved_by   = $user_id;
+            $material_quantity_request->approved_at   = Carbon::now();
+            $material_quantity_request->save();
 
             $affected = DB::table('material_quantity_request_items')
                 ->where('material_quantity_request_id', $id)
@@ -213,7 +213,7 @@ class MaterialQuantityRequestReviewController extends Controller
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Record update failed',
-                'data'      => $e
+                'data'      => $e->getMessage()
             ]);
 
             DB::rollback();
@@ -291,7 +291,7 @@ class MaterialQuantityRequestReviewController extends Controller
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Record update failed',
-                'data'      => $e
+                'data'      => $e->getMessage()
             ]);
 
             DB::rollback();

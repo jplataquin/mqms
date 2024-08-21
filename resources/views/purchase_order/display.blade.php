@@ -185,7 +185,7 @@
             </div>
             <div class="col-6 text-end">
                 @if($purchase_order->status == 'APRV')
-                    <button id="printBtn" class="btn btn-primary">Print</button>
+                    <button id="printBtn" class="btn btn-warning">Print</button>
                 @endif
                 <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
             </div>
