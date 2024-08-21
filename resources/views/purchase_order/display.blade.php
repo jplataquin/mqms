@@ -99,7 +99,6 @@
                 </div>
             </div>
         </div>
-        <hr>
     
         <div id="item_container">
             
@@ -108,7 +107,7 @@
             @foreach($componentItemMaterialsArr as $id => $items)
 
                 <div class="mb-3">
-                    <h3>{{ $componentItemArr[$id]->name }}</h3>
+                    <h4>{{ $componentItemArr[$id]->name }}</h4>
 
             
                     @foreach($items as $item)
