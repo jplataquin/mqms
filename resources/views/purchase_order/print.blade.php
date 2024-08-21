@@ -38,7 +38,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4" class="text-center bold" style="width:600px">
+                    <td colspan="4" class="text-center bold">
                         Purchase Order - {{$copy}} Copy
                     </td>
                 </tr>
@@ -47,9 +47,9 @@
                         <table class="table" style="margin-top:2px; margin-bottom:2px" border="1">
                             <tr>
                                 <td class="text-left bold" style="width:20%">PO#</td>
-                                <td style="width:30%">{{ str_pad($purchase_order->id,6,0,STR_PAD_LEFT) }}</td>
+                                <td style="width:25%">{{ str_pad($purchase_order->id,6,0,STR_PAD_LEFT) }}</td>
                                 <td class="text-left bold"  style="width:20%">Supplier</td>
-                                <td style="width:30%">{{$supplier->name}}</td>
+                                <td style="width:25%">{{$supplier->name}}</td>
                             </tr>
                             <tr>
                                 <td class="text-left bold">Mat. Qty Req #</td>
