@@ -28,7 +28,7 @@
         <table class="record-table-horizontal">
             <tbody>
                 <tr>
-                    <th width="200px">PO Number</th>
+                    <th width="300px">PO Number</th>
                     <td>{{str_pad($purchase_order->id,6,0,STR_PAD_LEFT)}}</td>
                 </tr>
                 <tr>
