@@ -25,10 +25,10 @@
         </div>
         <hr>
 
-        <table class="table">
+        <table class="record-table-horizontal">
             <tbody>
                 <tr>
-                    <th>PO Number</th>
+                    <th width="200px">PO Number</th>
                     <td>{{str_pad($purchase_order->id,6,0,STR_PAD_LEFT)}}</td>
                 </tr>
                 <tr>
