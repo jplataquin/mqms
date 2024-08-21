@@ -156,7 +156,7 @@
                     </td>
                 </tr>
 
-                @if(extras)
+                @if($extras)
                     <tr>
                         <th colspan="2" class="text-center">
                             (Optional) Discount / Additional Charges
