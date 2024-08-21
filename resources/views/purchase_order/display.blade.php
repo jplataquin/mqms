@@ -77,21 +77,28 @@
             </tbody>
         </table>
 
-        <div class="row">
-            <div class="col-6">
-                <div class="form-group">
-                    <label>Supplier</label>
-                    <input type="text" class="form-control" value="{{$supplier->name}}" id="supplier" disabled="true"/>
-                </div>
+        <div class="folder-form-container">
+            <div class="folder-form-tab">
+                Purchase Order
             </div>
-            <div class="col-6">
-                <div class="form-group">
-                    <label>Payment Terms</label>
-                    <input type="text" class="form-control" value="{{$payment_term->text}}" id="payment_term" disabled="true"/>
+
+            <div class="folder-form-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>Supplier</label>
+                            <input type="text" class="form-control" value="{{$supplier->name}}" id="supplier" disabled="true"/>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>Payment Terms</label>
+                            <input type="text" class="form-control" value="{{$payment_term->text}}" id="payment_term" disabled="true"/>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    
         <hr>
     
         <div id="item_container">
