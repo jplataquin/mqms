@@ -185,7 +185,6 @@ class PurchaseOrderController extends Controller
                 }
             }
 
-            $mr->id = $available_item_count;
             //Include only request with remaining po'able items
             if($available_item_count > 0){
                 $results_to_show[] = $mr;
