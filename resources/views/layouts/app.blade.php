@@ -154,7 +154,7 @@
         </div>
    
         <main class="w-100">
-            <div class="mt-3 ms-3 me-3 mb-5" id="main">
+            <div class="m-3" id="main">
                 @yield('content')
             </div>
         </main>
