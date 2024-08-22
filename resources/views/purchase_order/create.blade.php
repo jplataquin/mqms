@@ -24,6 +24,7 @@
             </ul>
         </div>
         <hr>
+        <div class="overflow-auto">
         <table class="record-table-horizontal">
             <tbody>
                 <tr>
@@ -51,6 +52,7 @@
                 </tr>
             </tbody>
         </table>
+        </div>
 
         <div class="folder-form-container">
             <div class="folder-form-tab">
