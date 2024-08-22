@@ -141,13 +141,13 @@
                         <br>
                         __________________________
                         <br>
-                        Approved By
+                        <label class="bold">Approved By</label>
                     </td>
                     <td class="text-center" style="padding-left:30px">
                         <br>
                         __________________________
                         <br>
-                        Received By
+                        <label class="bold">Received By</label>
                     </td>
                 </tr>
             </table>
