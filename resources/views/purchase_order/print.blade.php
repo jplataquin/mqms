@@ -73,7 +73,6 @@
                                 <td class="text-left bold">Project</td>
                                 <td colspan="3">
                                     {{$project->name}}
-                                    {{$section->name}} - {{$component->name}}
                                 </td>
                             </tr>
                         </table>
