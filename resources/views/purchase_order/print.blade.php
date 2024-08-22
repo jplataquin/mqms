@@ -38,7 +38,7 @@
                         <img src="storage/sys_images/header.png" style="width:500px"/>
                     </td>
                     <td class="text-center" valign="middle">
-                        <qrcode value="{{json_encode(['t'=>'MR','id'=>$material_quantity_request->id])}}" ec="H" style="width: 20mm; background-color: white; color: black;"></qrcode>
+                        <qrcode value="{{json_encode(['t'=>'PO','id'=>$purchase_order->id])}}" ec="H" style="width: 20mm; background-color: white; color: black;"></qrcode>
         
                     </td>
                 </tr>
