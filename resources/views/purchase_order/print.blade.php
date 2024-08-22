@@ -43,7 +43,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4" style="padding:3px;text-align:center">
+                    <td colspan="4" style="padding:3px">
                         <table class="table" style="margin:auto" border="1">
                             <tr>
                                 <td class="text-left bold" style="width:15%">PO#</td>
