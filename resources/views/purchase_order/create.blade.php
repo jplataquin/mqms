@@ -271,7 +271,7 @@
             payment_term.innerHTML = '';
 
             payment_term.appendChild(
-                t.option({value:''},'-')
+                t.option({value:''},'Choose')
             );
 
             payment_terms_ids.map(id=>{
@@ -324,16 +324,15 @@
                         calculateSubTotal();
                     }
 
-                    let remainingBalnce = t.input({class:'form-control',value:'',disabled:true});
+                  //  let remainingBalnce = t.input({class:'form-control',value:'',disabled:true});
 
-                    let total_ordered_el =  t.div({class:'col-1'},()=>{
+                    const total_ordered_el =  t.div({class:'col-2'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Ordered')
+                            t.label('Balance')
                             let total_ordered_input = t.input({class:'form-control',value:'',disabled:true});
 
                             updateTotalOrdered(
                                 total_ordered_input,
-                                remainingBalnce,
                                 item.material_item.id,
                                 item.material_quantity_request_item_id,
                                 item.requested_quantity
@@ -368,12 +367,12 @@
                             
                             el.appendChild(total_ordered_el);
                             
-                            t.div({class:'col-1'},(el)=>{
-                                t.div({class:'form-group'},()=>{
-                                    t.label('Balance')
-                                    el.appendChild(remainingBalnce);
-                                });
-                            });
+                            // t.div({class:'col-1'},(el)=>{
+                            //     t.div({class:'form-group'},()=>{
+                            //         t.label('Balance')
+                            //         el.appendChild(remainingBalnce);
+                            //     });
+                            // });
                             
                             t.div({class:'col-1'},(el)=>{
                                 t.div({class:'form-group'},()=>{
@@ -483,13 +482,13 @@
 
         function updateTotalOrdered(
             inputEl,
-            remainingBalanceEl,
+            //remainingBalanceEl,
             material_item_id,
             material_quantity_request_item_id,
             requested_quantity
         ){
             inputEl.value = 'Fetching data...';
-            remainingBalanceEl.value = 'Fetching data...';
+            //remainingBalanceEl.value = 'Fetching data...';
             
             window.util.$get('/api/purchase_order/total_ordered',{
                 material_item_id: material_item_id,
@@ -503,7 +502,7 @@
 
                 inputEl.value = reply.data.total_ordered + ' / ' +requested_quantity;
 
-                remainingBalanceEl.value = requested_quantity - reply.data.total_ordered;
+                //remainingBalanceEl.value = requested_quantity - reply.data.total_ordered;
             });
         }
     </script>
