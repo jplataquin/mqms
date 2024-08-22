@@ -93,7 +93,7 @@
                                             [Generated] 
                                             </td>
                                             <td>
-                                            
+                                             {{$current_time}}
                                             </td>
                                         </tr>
                                     </table>
