@@ -517,7 +517,7 @@ class PurchaseOrderController extends Controller
 
                 return response()->json([
                     'status'    => 0,
-                    'message'   => 'Error: Order request is over budget',
+                    'message'   => 'Order request is over budget',
                     'data'      => []
                 ]);
             }
@@ -758,7 +758,7 @@ class PurchaseOrderController extends Controller
 
             return response()->json([
                 'status'    => 0,
-                'message'   => 'Error: Record not found',
+                'message'   => 'Record not found',
                 'data'      => []
             ]);
         }
@@ -766,7 +766,7 @@ class PurchaseOrderController extends Controller
         if($purchaseOrder->status != 'APRV'){
             return response()->json([
                 'status'    => 0,
-                'message'   => 'Error: Cannot request void, record has wrong status',
+                'message'   => 'Cannot request void, record has wrong status',
                 'data'      => []
             ]);
         }
