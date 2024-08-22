@@ -258,7 +258,7 @@
             }
 
             if(typeof data[supplier_id] == 'undefined'){
-                window.util.showMsg('Supplier not found');
+                window.util.alert('Error','Supplier not found');
                 clearItems();
                 return false;
             }
@@ -326,7 +326,7 @@
 
                     let remainingBalnce = t.input({class:'form-control',value:'',disabled:true});
 
-                    let total_ordered_el =  t.div({class:'col-2'},()=>{
+                    let total_ordered_el =  t.div({class:'col-1'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Total Ordered')
                             let total_ordered_input = t.input({class:'form-control',value:'',disabled:true});
@@ -350,7 +350,7 @@
                             dataPrice: item.price,
                             dataComponentItemId: key
                         },(el)=>{
-                            t.div({class:'col-2'},()=>{
+                            t.div({class:'col-5'},()=>{
                                 t.div({class:'form-group'},()=>{
                                     t.label('Material')
                                     t.input({class:'form-control',disabled:true,value:item.material_item.brand+' '+item.material_item.name+' '+item.material_item.specification_unit_packaging+''.trim()})
@@ -368,14 +368,14 @@
                             
                             el.appendChild(total_ordered_el);
                             
-                            t.div({class:'col-2'},(el)=>{
+                            t.div({class:'col-1'},(el)=>{
                                 t.div({class:'form-group'},()=>{
                                     t.label('Remaining Balance')
                                     el.appendChild(remainingBalnce);
                                 });
                             });
                             
-                            t.div({class:'col-2'},(el)=>{
+                            t.div({class:'col-1'},(el)=>{
                                 t.div({class:'form-group'},()=>{
                                     t.label('Order Quantity')
                                     el.append(order_quantity);
