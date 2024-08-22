@@ -73,21 +73,24 @@
                                 <td colspan="3" style="font-size:12px">
                                     <table>
                                         <tr>
-                                            <td>
+                                            <th>
                                             [Created]
-                                            
+                                            </th>
+                                            <td>
                                             {{$purchase_order->created_at}}
                                             </td>
                                        
-                                            <td>
+                                            <th>
                                             [Approved]
-                                            
+                                            </th>
+                                            <td>
                                             {{$purchase_order->approved_at}}
                                             </td>
-                                            
-                                            <td>
-                                            [Generated] 
 
+                                            <th>
+                                            [Generated] 
+                                            </th>
+                                            <td>
                                              {{$current_datetime}}
                                             </td>
                                         </tr>
