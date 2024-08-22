@@ -127,15 +127,15 @@
            
             <table class="table" style="margin-left:50px; margin-top:40px; margin-bottom:20px">
                 <tr>
-                    <td class="text-center bold" style="padding-right:30px">
+                    <td class="text-center" style="padding-right:30px">
   
                         {{$purchase_order->CreatedByUser()->name}}
                         <br>
                         __________________________
                         <br>
-                        Created By
+                        <label class="bold">Created By</label>
                     </td>
-                    <td class="text-center bold">
+                    <td class="text-center">
                         
                         {{$purchase_order->ApprovedByUser()->name}}
                         <br>
@@ -143,7 +143,8 @@
                         <br>
                         Approved By
                     </td>
-                    <td class="text-center bold" style="padding-left:30px">
+                    <td class="text-center" style="padding-left:30px">
+                        <br>
                         __________________________
                         <br>
                         Received By
