@@ -74,22 +74,25 @@
                                     <table>
                                         <tr>
                                             <th>
-                                            [Created]
+                                                [Created]
                                             </th>
+                                            
                                             <td>
-                                            {{$purchase_order->created_at}}
+                                                {{$purchase_order->created_at}}
                                             </td>
                                        
                                             <th>
-                                            [Approved]
+                                                [Approved]
                                             </th>
+
                                             <td>
                                             {{$purchase_order->approved_at}}
                                             </td>
 
                                             <th>
-                                            [Generated] 
+                                                [Generated] 
                                             </th>
+                                            
                                             <td>
                                              {{$current_datetime}}
                                             </td>
