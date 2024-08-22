@@ -76,7 +76,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="text-center bold" colspan="4">
+                    <th class="text-center bold" colspan="4" style="background-color:#ccc">
                         Items
                     </th>
                 </tr>
