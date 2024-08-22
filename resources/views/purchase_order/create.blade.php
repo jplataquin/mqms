@@ -90,9 +90,9 @@
                 <table class="table w-50 table-border">
                     
                     <tr>
-                        <td>
-                            <input type="text" disabled="true" value="Sub Total" class="form-control"/>
-                        </td>
+                        <th class="text-center">
+                            Sub Total
+                        </th>
                         <td>
                             <input type="text" id="sub_total" disabled="true" value="0" class="form-control"/>
                         </td>
@@ -326,7 +326,7 @@
 
                   //  let remainingBalnce = t.input({class:'form-control',value:'',disabled:true});
 
-                    const total_ordered_el =  t.div({class:'col-2'},()=>{
+                    const total_ordered_el =  t.div({class:'col-1'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Balance')
                             let total_ordered_input = t.input({class:'form-control',value:'',disabled:true});
@@ -381,7 +381,7 @@
                                 });
                             });
                             
-                            t.div({class:'col-2'},(el)=>{
+                            t.div({class:'col-3'},(el)=>{
                                 t.div({class:'form-group'},()=>{
                                     t.label('Total')
                                     el.append(total);
