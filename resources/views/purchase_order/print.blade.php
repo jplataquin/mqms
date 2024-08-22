@@ -67,9 +67,9 @@
                                 <td colspan="3" style="font-size:11px">
                                     
                                     Created: {{$purchase_order->created_at}}
-                                    <br>
+                                     / 
                                     Approved: {{$purchase_order->approved_at}}
-                                    <br>
+                                     / 
                                     Generated: {{$current_datetime}}
                                 </td>
                                 
