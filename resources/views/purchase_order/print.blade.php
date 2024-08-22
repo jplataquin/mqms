@@ -46,10 +46,10 @@
                     <td colspan="4" style="padding:0px">
                         <table class="table" style="margin-top:2px; margin-bottom:2px" border="1">
                             <tr>
-                                <td class="text-left bold" style="width:20%">PO#</td>
+                                <td class="text-left bold" style="width:15%">PO#</td>
                                 <td style="width:30%">{{ str_pad($purchase_order->id,6,0,STR_PAD_LEFT) }}</td>
-                                <td class="text-left bold"  style="width:18%">Supplier</td>
-                                <td style="width:30%">{{$supplier->name}}</td>
+                                <td class="text-left bold"  style="width:15%">Supplier</td>
+                                <td style="width:40%">{{$supplier->name}}</td>
                             </tr>
                             <tr>
                                 <td class="text-left bold">Mat. Req #</td>
