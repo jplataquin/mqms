@@ -328,7 +328,7 @@
 
                     let total_ordered_el =  t.div({class:'col-1'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Total Ordered')
+                            t.label('Ordered')
                             let total_ordered_input = t.input({class:'form-control',value:'',disabled:true});
 
                             updateTotalOrdered(
@@ -370,14 +370,14 @@
                             
                             t.div({class:'col-1'},(el)=>{
                                 t.div({class:'form-group'},()=>{
-                                    t.label('Remaining Balance')
+                                    t.label('Balance')
                                     el.appendChild(remainingBalnce);
                                 });
                             });
                             
                             t.div({class:'col-1'},(el)=>{
                                 t.div({class:'form-group'},()=>{
-                                    t.label('Order Quantity')
+                                    t.label('Quantity')
                                     el.append(order_quantity);
                                 });
                             });
