@@ -61,14 +61,10 @@
                             <tr>
                                 <td class="text-left bold">Date Generated</td>
                                 <td>{{$current_datetime}}</td>
-                                <td class="text-left bold">Contact Person</td>
-                                <td>{{$supplier->primary_contact_person}}</td>
-                            </tr>
-                            <tr>
+                                
                                 <td class="text-left bold">Date Approved</td>
                                 <td>{{$purchase_order->approved_at}}</td>
-                                <td class="text-left bold">Contact No:</td>
-                                <td>{{$supplier->primary_contact_no}}</td>
+                                
                             </tr>
                             <tr>
                                 <td class="text-left bold">Project</td>
