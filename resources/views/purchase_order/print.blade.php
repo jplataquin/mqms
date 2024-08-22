@@ -34,8 +34,12 @@
             <nobreak>
             <table class="table" border="1">
                 <tr>
-                    <td colspan="4" class="text-center bold" style="">
-                        <img src="storage/sys_images/header.png" style="width:500px"/>
+                    <td colspan="3" class="text-center bold" style="">
+                        <img src="storage/sys_images/header.png" style="width:400px"/>
+                    </td>
+                    <td class="text-center">
+                        <qrcode value="{{json_encode(['t'=>'MR','id'=>$material_quantity_request->id])}}" ec="H" style="width: 20mm; background-color: white; color: black;"></qrcode>
+        
                     </td>
                 </tr>
                 <tr>
