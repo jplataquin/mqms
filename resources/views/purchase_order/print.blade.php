@@ -71,7 +71,17 @@
                             <tr>
                                 <td class="text-left bold">Datetime</td>
                                 <td colspan="3" style="font-size:12px">
-                                    [Created] {{$purchase_order->created_at}}
+                                    <table>
+                                        <tr>
+                                            <td>
+                                            [Created]
+                                            </td>
+                                            <td>
+                                            {{$purchase_order->created_at}}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    
                                     <br>
                                     [Approved] {{$purchase_order->approved_at}}
                                     <br>
