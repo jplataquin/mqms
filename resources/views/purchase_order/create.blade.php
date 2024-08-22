@@ -91,10 +91,13 @@
                     
                     <tr>
                         <th class="text-center">
-                            Sub Total
+                            
                         </th>
                         <td>
-                            <input type="text" id="sub_total" disabled="true" value="0" class="form-control"/>
+                            <div class="form-group">
+                                <label>Sub Total</label>
+                                <input type="text" id="sub_total" disabled="true" value="0" class="form-control"/>
+                            </div>
                         </td>
                     </tr>
 
