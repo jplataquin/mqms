@@ -25,7 +25,7 @@
         }
 
         .bg-grey{
-            background-color: #c4c2c2 !important;
+            background-color: #d6d6d6 !important;
         }
         
     </style>
