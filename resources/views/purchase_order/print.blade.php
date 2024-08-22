@@ -80,12 +80,28 @@
                                             {{$purchase_order->created_at}}
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td>
+                                            [Approved]
+                                            </td>
+                                            <td>
+                                            {{$purchase_order->approved_at}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            [Generated] 
+                                            </td>
+                                            <td>
+                                            
+                                            </td>
+                                        </tr>
                                     </table>
                                     
                                     <br>
-                                    [Approved] {{$purchase_order->approved_at}}
+                                     
                                     <br>
-                                    [Generated] {{$current_datetime}}
+                                   
                                 </td>
                                 
                             </tr>
