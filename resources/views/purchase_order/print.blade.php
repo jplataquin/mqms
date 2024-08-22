@@ -64,8 +64,7 @@
                             </tr>
                             <tr>
                                 <td class="text-left bold">Datetime</td>
-                                <td colspan="3" style="font-size:11px">
-                                    
+                                <td colspan="3" style="font-size:12px">
                                     Created: {{$purchase_order->created_at}}
                                     <label class="bold"> / </label>
                                     Approved: {{$purchase_order->approved_at}}
