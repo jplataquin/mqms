@@ -49,7 +49,7 @@
                                 <td class="text-left bold" style="width:15%">PO#</td>
                                 <td style="width:20%">{{ str_pad($purchase_order->id,6,0,STR_PAD_LEFT) }}</td>
                                 <td class="text-left bold"  style="width:15%">Supplier</td>
-                                <td style="width:45%">{{$supplier->name}}</td>
+                                <td style="width:50%">{{$supplier->name}}</td>
                             </tr>
                             <tr>
                                 <td class="text-left bold">Mat. Req #</td>
