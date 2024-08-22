@@ -62,8 +62,8 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label>Supplier</label>
-                            <select id="supplier" class="form-control">
-                                <option value=""> - </option>
+                            <select id="supplier" class="form-control" placeholder="">
+                                <option value="">Choose</option>
                                 @foreach($supplier_options as $supplier)
                                     <option value="{{$supplier->id}}">{{$supplier->name}}</option>
                                 @endforeach
@@ -75,7 +75,7 @@
                         <div class="form-group">
                             <label>Payment Terms</label>
                             <select id="payment_term" class="form-control">
-                                <option value=""> - </option>
+                                <option value="">Choose</option>
                             </select>
                         </div>
                     </div>
