@@ -43,7 +43,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2" class="text-center bold" style="background-color:#ccc">
+                    <td colspan="2" class="bold" style="background-color:#ccc">
                         Purchase Order
                     </td>
 
