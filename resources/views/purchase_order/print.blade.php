@@ -71,35 +71,13 @@
                             <tr>
                                 <td class="text-left bold">Datetime</td>
                                 <td colspan="3" style="font-size:12px">
-                                    <table>
-                                        <tr>
-                                            <th>
-                                                [Created]
-                                            </th>
-                                            
-                                            <td>
-                                                {{$purchase_order->created_at}}
-                                            </td>
-                                       
-                                            <th>
-                                                [Approved]
-                                            </th>
-
-                                            <td>
-                                            {{$purchase_order->approved_at}}
-                                            </td>
-
-                                            <th>
-                                                [Generated] 
-                                            </th>
-                                            
-                                            <td>
-                                             {{$current_datetime}}
-                                            </td>
-                                        </tr>
-                                    </table>
                                     
-                                   
+                                    [Created]
+                                    {{$purchase_order->created_at}}
+                                    [Approved]
+                                    {{$purchase_order->approved_at}}
+                                    [Generated] 
+                                    {{$current_datetime}}
                                 </td>
                                 
                             </tr>
