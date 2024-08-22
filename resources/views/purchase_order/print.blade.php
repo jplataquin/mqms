@@ -63,22 +63,23 @@
                                 <td>{{$payment_term->text}}</td>
                             </tr>
                             <tr>
-                                <td class="text-left bold">Datetime</td>
-                                <td colspan="3" style="font-size:12px">
-                                    [Created] {{$purchase_order->created_at}}
-                                    <label class="bold"> / </label>
-                                    [Approved] {{$purchase_order->approved_at}}
-                                    <label class="bold"> / </label>
-                                    [Generated] {{$current_datetime}}
-                                </td>
-                                
-                            </tr>
-                            <tr>
                                 <td class="text-left bold">Project</td>
                                 <td colspan="3">
                                     {{$project->name}}
                                 </td>
                             </tr>
+                            <tr>
+                                <td class="text-left bold">Datetime</td>
+                                <td colspan="3" style="font-size:12px">
+                                    [Created] {{$purchase_order->created_at}}
+                                    <br>
+                                    [Approved] {{$purchase_order->approved_at}}
+                                    <br>
+                                    [Generated] {{$current_datetime}}
+                                </td>
+                                
+                            </tr>
+                            
                         </table>
                     </td>
                 </tr>
