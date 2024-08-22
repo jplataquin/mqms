@@ -107,8 +107,7 @@
             @foreach($componentItemMaterialsArr as $id => $items)
 
                 <div class="mb-3 border rounded p-3">
-                    <h4>{{ $componentItemArr[$id]->name }}</h4>
-
+                  
             
                     @foreach($items as $item)
                         <div class="row mb-3">
@@ -159,7 +158,7 @@
                 @if($extras)
                     <tr>
                         <th colspan="2" class="text-center">
-                            (Optional) Discount / Additional Charges
+                            Additional Charges / Discounts
                         </th>
                     </tr>
                     <tr>

@@ -100,7 +100,7 @@
 
                     <tr>
                         <th colspan="2" class="text-center">
-                            (Optional) Discount / Additional Charges
+                            Additional Charges / Discounts
                         </th>
                     </tr>
                     <tr>
@@ -109,42 +109,42 @@
                     </tr>
                     <tr class="extra">
                         <td>
-                            <input type="text" class="extra_text form-control"/>
+                            <input type="text" class="extra_text form-control" placeholder="Item"/>
                         </td>
                         <td>
-                            <input type="text" class="extra_val form-control" onkeypress="return window.util.inputNumber(this,event,2,true)"/>
-                        </td>
-                    </tr>
-                    <tr class="extra">
-                        <td>
-                            <input type="text" class="extra_text form-control" />
-                        </td>
-                        <td>
-                            <input type="text" class="extra_val form-control" onkeypress="return window.util.inputNumber(this,event,2,true)"/>
+                            <input type="text" class="extra_val form-control" onkeypress="return window.util.inputNumber(this,event,2,true)" placeholder="0.00"/>
                         </td>
                     </tr>
                     <tr class="extra">
                         <td>
-                            <input type="text" class="extra_text form-control"/>
+                            <input type="text" class="extra_text form-control" placeholder="Item"/>
                         </td>
                         <td>
-                            <input type="text" class="extra_val form-control" onkeypress="return window.util.inputNumber(this,event,2,true)"/>
+                            <input type="text" class="extra_val form-control" onkeypress="return window.util.inputNumber(this,event,2,true)" placeholder="0.00"/>
                         </td>
                     </tr>
                     <tr class="extra">
                         <td>
-                            <input type="text" class="extra_text form-control"/>
+                            <input type="text" class="extra_text form-control" placeholder="Item"/>
                         </td>
                         <td>
-                            <input type="text" class="extra_val form-control" onkeypress="return window.util.inputNumber(this,event,2,true)"/>
+                            <input type="text" class="extra_val form-control" onkeypress="return window.util.inputNumber(this,event,2,true)" placeholder="0.00"/>
+                        </td>
+                    </tr>
+                    <tr class="extra">
+                        <td>
+                            <input type="text" class="extra_text form-control" placeholder="Item"/>
+                        </td>
+                        <td>
+                            <input type="text" class="extra_val form-control" onkeypress="return window.util.inputNumber(this,event,2,true)" placeholder="0.00"/>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <input type="text" value="Grand Total" disabled="true" class="form-control"/>
+                            <input type="text" value="Grand Total" disabled="true" class="form-control" placeholder="0.00"/>
                         </td>
                         <td>
-                            <input type="text" id="grand_total" disabled="true" class="form-control"/>
+                            <input type="text" id="grand_total" disabled="true" class="form-control" placeholder="0.00"/>
                         </td>
                     </tr>
                 </table>
