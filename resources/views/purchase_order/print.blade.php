@@ -65,11 +65,11 @@
                             <tr>
                                 <td class="text-left bold">Datetime</td>
                                 <td colspan="3" style="font-size:12px">
-                                    Created: {{$purchase_order->created_at}}
+                                    [Created] {{$purchase_order->created_at}}
                                     <label class="bold"> / </label>
-                                    Approved: {{$purchase_order->approved_at}}
+                                    [Approved] {{$purchase_order->approved_at}}
                                     <label class="bold"> / </label>
-                                    Generated: {{$current_datetime}}
+                                    [Generated] {{$current_datetime}}
                                 </td>
                                 
                             </tr>
