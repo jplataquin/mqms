@@ -53,7 +53,7 @@
                             </tr>
                             <tr>
                                 <td class="text-left bold">Mat. Req #</td>
-                                <td>{{$material_quantity_request->id}}</td>
+                                <td>{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}</td>
                                 <td class="text-left bold" >Payment Terms</td>
                                 <td>{{$payment_term->text}}</td>
                             </tr>
@@ -71,9 +71,10 @@
                             </tr>
                             <tr>
                                 <td class="text-left bold">Project</td>
-                                <td>{{$project->name}}</td>
-                                <td class="text-left bold">Section / Component </td>
-                                <td>{{$section->name}} - {{$component->name}}</td>
+                                <td colspan="3">
+                                    {{$project->name}}
+                                    {{$section->name}} - {{$component->name}}
+                                </td>
                             </tr>
                         </table>
                     </td>
