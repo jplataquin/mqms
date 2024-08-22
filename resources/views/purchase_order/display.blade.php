@@ -44,6 +44,10 @@
                     <td>{{$section->name}}</td>
                 </tr>
                 <tr>
+                    <th>Contract Item</th>
+                    <td>{{$contract_item->item_code}} {{$contract_item->description}}</td>
+                </tr>
+                <tr>
                     <th>Component</th>
                     <td>{{$component->name}}</td>
                 </tr>
@@ -55,19 +59,28 @@
                     <th>Created By</th>
                     <td>{{$purchase_order->CreatedByUser()->name}} {{$purchase_order->created_at}}</td>
                 </tr>
+                
+                @if($purchase_order->updated_at)
                 <tr>
                     <th>Updated By</th>
                     <td>{{$purchase_order->UpdatedByUser()->name}} {{$purchase_order->updated_at}}</td>
                 </tr>
+                @endif
+
+                @if($purchase_order->approved_at)
                 <tr>
                     <th>Approved By</th>
-                    <td>{{$purchase_order->ApprovedByUser()->name}} {{$purchase_order->approve_at}}</td>
+                    <td>{{$purchase_order->ApprovedByUser()->name}} {{$purchase_order->approved_at}}</td>
                 </tr>
+                @endif
 
+                @if($purchase_order->rejected_at)
                 <tr>
                     <th>Rejected By</th>
                     <td>{{$purchase_order->RejectedByUser()->name}} {{$purchase_order->rejected_at}}</td>
                 </tr>
+                @endif
+                
                 <tr>
                     <th>Description</th>
                     <td>

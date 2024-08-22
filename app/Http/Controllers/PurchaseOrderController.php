@@ -270,6 +270,7 @@ class PurchaseOrderController extends Controller
 
         $project                        = $materialQuantityRequest->Project;
         $section                        = $materialQuantityRequest->Section;
+        $contract_item                  = $materialQuantityRequest->ContractItem;
         $component                      = $materialQuantityRequest->Component;
         $materialQuantityRequestItems   = $materialQuantityRequest->Items()->with('MaterialCanvass')->get();
                     
@@ -357,6 +358,7 @@ class PurchaseOrderController extends Controller
             'material_quantity_request'         => $materialQuantityRequest,
             'project'                           => $project,
             'section'                           => $section,
+            'contract_item'                     => $contract_item,
             'component'                         => $component,
             'materialQuantityRequestItems'      => $materialQuantityRequestItems,
             'component_item_arr'                => $component_item_arr,
