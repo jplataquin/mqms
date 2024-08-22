@@ -128,12 +128,17 @@
             <table class="table" style="margin-left:50px; margin-top:40px; margin-bottom:20px">
                 <tr>
                     <td class="text-center bold" style="padding-right:30px">
-                        TEst<br>
+  
+                        {{$purchase_order->CreatedByUser()->name}}
+                        <br>
                         __________________________
                         <br>
-                        Prepared By
+                        Created By
                     </td>
                     <td class="text-center bold">
+                        
+                        {{$purchase_order->ApprovedByUser()->name}}
+                        <br>
                         __________________________
                         <br>
                         Approved By
