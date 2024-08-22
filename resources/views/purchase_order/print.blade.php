@@ -43,8 +43,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4" class="text-center bold" style="width:100%;background-color:#ccc">
+                    <td colspan="2" class="text-center bold" style="width:100%;background-color:#ccc">
                         Purchase Order - {{$copy}} Copy
+                    </td>
+
+                    <td colspan="2" class="text-center bold" style="width:100%;background-color:#ccc">
+                        {{$copy}} Copy
                     </td>
                 </tr>
                 <tr>
