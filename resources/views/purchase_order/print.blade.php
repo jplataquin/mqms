@@ -63,11 +63,13 @@
                                 <td>{{$payment_term->text}}</td>
                             </tr>
                             <tr>
-                                <td class="text-left bold">Date Generated</td>
-                                <td>{{$current_datetime}}</td>
-                                
-                                <td class="text-left bold">Date Approved</td>
-                                <td>{{$purchase_order->approved_at}}</td>
+                                <td class="text-left bold">Date</td>
+                                <td colspan="3">
+                                    
+                                    Created: {{$purchase_order->created_at}}
+                                    Approved: {{$purchase_order->approved_at}}
+                                    Generated: {{$current_datetime}}
+                                </td>
                                 
                             </tr>
                             <tr>
