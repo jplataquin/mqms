@@ -140,9 +140,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <input type="text" value="Grand Total" disabled="true" class="form-control" placeholder="0.00"/>
-                        </td>
+                        <th class="text-center">
+                            Grand Total
+                        </th>
                         <td>
                             <input type="text" id="grand_total" disabled="true" class="form-control" placeholder="0.00"/>
                         </td>
