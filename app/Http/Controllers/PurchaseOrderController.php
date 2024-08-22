@@ -205,6 +205,7 @@ class PurchaseOrderController extends Controller
 
         $project                = $materialQuantityRequest->Project;
         $section                = $materialQuantityRequest->Section;
+        $contract_item          = $materialQuantityRequest->ContractItem;
         $component              = $materialQuantityRequest->Component;
         
         $componentItems                 = $component->ComponentItems;
@@ -245,12 +246,13 @@ class PurchaseOrderController extends Controller
         $extras = json_decode($purchaseOrder->extras);
 
         return view('purchase_order/display',[
-            'purchase_order'            => $purchaseOrder,
-            'material_quantity_request' => $materialQuantityRequest,
-            'project'                   => $project,
-            'section'                   => $section,
-            'component'                 => $component,
-            'supplier'                  => $supplier,
+            'purchase_order'                => $purchaseOrder,
+            'material_quantity_request'     => $materialQuantityRequest,
+            'project'                       => $project,
+            'section'                       => $section,
+            'contract_item'                 => $contract_item,
+            'component'                     => $component,
+            'supplier'                      => $supplier,
             'payment_term'                  => $paymentTerm,
             'materialQUantityRequestItems'  => $materialQuantityRequestItems,
             'extras'                        => $extras,
