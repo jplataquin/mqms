@@ -292,7 +292,7 @@
 
                 let items = component_items[key];
                 
-                item_container.append(t.h5({class:'mb-3'},component_item_arr[key].name));
+                //item_container.append(t.h5({class:'mb-3'},component_item_arr[key].name));
 
                 items.map(item=>{
 
