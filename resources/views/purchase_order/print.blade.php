@@ -52,19 +52,19 @@
                                 <td style="width:30%">{{$supplier->name}}</td>
                             </tr>
                             <tr>
-                                <td class="text-left bold">Mat. Qty Req #</td>
+                                <td class="text-left bold">Mat. Req #</td>
                                 <td>{{$material_quantity_request->id}}</td>
                                 <td class="text-left bold" >Payment Terms</td>
                                 <td>{{$payment_term->text}}</td>
                             </tr>
                             <tr>
-                                <td class="text-left bold">Date Printed</td>
+                                <td class="text-left bold">Date Generated</td>
                                 <td>{{$current_datetime}}</td>
                                 <td class="text-left bold">Contact Person</td>
                                 <td>{{$supplier->primary_contact_person}}</td>
                             </tr>
                             <tr>
-                                <td class="text-left bold">Date Issued</td>
+                                <td class="text-left bold">Date Approved</td>
                                 <td>{{$purchase_order->approved_at}}</td>
                                 <td class="text-left bold">Contact No:</td>
                                 <td>{{$supplier->primary_contact_no}}</td>
