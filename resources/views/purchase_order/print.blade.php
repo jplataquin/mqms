@@ -24,9 +24,7 @@
             padding: 3px;
         }
 
-        .bg-grey{
-            background-color: #FFFFFF !important;
-        }
+        
         
     </style>
     
@@ -41,7 +39,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4" class="text-center bold bg-grey" style="width:100%">
+                    <td colspan="4" class="text-center bold" style="width:100%;background-color:#ccc">
                         Purchase Order - {{$copy}} Copy
                     </td>
                 </tr>
