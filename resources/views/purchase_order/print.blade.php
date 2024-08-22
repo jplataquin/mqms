@@ -74,8 +74,10 @@
                                     
                                     [Created]
                                     {{$purchase_order->created_at}}
+                                     | 
                                     [Approved]
                                     {{$purchase_order->approved_at}}
+                                     | 
                                     [Generated] 
                                     {{$current_datetime}}
                                 </td>
