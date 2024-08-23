@@ -88,14 +88,14 @@
                 </td>
             </tr>
             <tr>
-                <th style="width:100px">
+                <th style="width:10%">
                     Project
                 </th>
                 <td>
                     {{$project->name}}
                 </td>
             
-                <th style="width:100px">
+                <th style="width:10%">
                     Date & Time Generated
                 </th>
                 <td>
@@ -121,11 +121,13 @@
 
 
         <table border="1">
-            <tr>
+        <!--   
+        <tr>
                 <td colspan="15">
                     
                 </td>
             </tr>
+        -->
             <tr>
                 <th rowspan="2" style="text-align: center;width:5%">Item Code</th>
                 <th style="text-align:center" rowspan="2" class="desc-col-width">Description</th>
