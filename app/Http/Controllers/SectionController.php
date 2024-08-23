@@ -66,13 +66,15 @@ class SectionController extends Controller
         $unit_options = Unit::toOptions();
 
         $current_datetime = Carbon::now();
-
+        $current_user     = Auth::user();
+        
         $html = view('section/print',[
-            'project'          => $project,
-            'section'          => $section,
-            'contract_items'   => $contract_items,
-            'unit_options'     => $unit_options,
-            'current_datetime' => $current_datetime
+            'project'           => $project,
+            'section'           => $section,
+            'contract_items'    => $contract_items,
+            'unit_options'      => $unit_options,
+            'current_user'      => $current_user,
+            'current_datetime'  => $current_datetime
         ])->render();
 
 
