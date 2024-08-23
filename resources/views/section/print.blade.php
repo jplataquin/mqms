@@ -240,7 +240,7 @@
                         <!-- POW/DUPA Amount -->
                         @php 
                             $ref_1_amount                   = $contract_item->ref_1_quantity * $contract_item->ref_1_unit_price;
-                            $grand_total_contract_amount    = $grand_total_ref_1_amount + $ref_1_amount;
+                            $grand_total_ref_1_amount       = $grand_total_ref_1_amount + $ref_1_amount;
                         @endphp
                         P {{ number_format($ref_1_amount,2) }}
                     </th>
