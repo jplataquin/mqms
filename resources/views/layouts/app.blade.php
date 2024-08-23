@@ -186,8 +186,8 @@
     <script type="module">
         import {$q} from '/adarna.js';
 
-        const hamburger_button = $('#hamburger_button').first();
-        const side_bar_container = $('#side-bar-container').first();
+        const hamburger_button = $q'#hamburger_button').first();
+        const side_bar_container = $q('#side-bar-container').first();
         
         hamburger_button.onclick = ()=>{
             side_bar_container.style.display    = 'block';
