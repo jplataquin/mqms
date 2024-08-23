@@ -301,10 +301,10 @@
                         <td></td>
                         <td></td>
 
-                        <th style="text-align:right" class="@if($component_item_quantity_total_per_component[$component->id] > $component->quantity) font-color-danger @endif">
+                        <th style="text-align:right">
                           x  {{ $component_item_quantity_total_per_component[$component->id] }}
                         </th>
-                        <th style="text-align:center" class="@if($component_item_quantity_total_per_component[$component->id] > $component->quantity) font-color-danger @endif">
+                        <th style="text-align:center">
                           y  {{$unit_options[$component->unit_id]->text}}
                         </th>
                         
@@ -327,8 +327,12 @@
                         <td>8</td>
                         <td>9</td>
                         <td>10</td>
-                        <td>{{ $component_item_quantity_total_per_component[$component->id] }}</td>
-                        <td>{{$unit_options[$component->unit_id]->text}}</td>
+                        <td style="text-align:right" class="@if($component_item_quantity_total_per_component[$component->id] > $component->quantity) font-color-danger @endif">
+                            {{ $component_item_quantity_total_per_component[$component->id] }}
+                        </td>
+                        <td style="text-align:center" class="@if($component_item_quantity_total_per_component[$component->id] > $component->quantity) font-color-danger @endif">
+                            {{$unit_options[$component->unit_id]->text}}
+                        </td>
                         <td>13</td>
                         <td>14</td>
                     </tr>
