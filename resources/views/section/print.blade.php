@@ -154,7 +154,7 @@
 
             @php 
                 $grand_total_contract_amount        = 0;
-                grand_total_ref_1_amount            = 0;
+                $grand_total_ref_1_amount           = 0;
                 $grand_total_material_budget_amount = 0;
             @endphp
                 
