@@ -103,13 +103,13 @@
 
         <br>
         <table border="1">
-        <!--   
-        <tr>
-                <td colspan="15">
-                    
+          
+            <tr>
+                <td colspan="15" style="width:100%">
+                    &nbsp;
                 </td>
             </tr>
-        -->
+        
             <tr>
                 <th rowspan="2" style="text-align:center">Item Code</th>
                 <th style="text-align:center" rowspan="2">Description</th>
