@@ -170,6 +170,7 @@
                     $component_items_arr                         = [];
                     $component_item_quantity_total_per_component = [];
 
+                    $component_total_amount_arr                  = [];
 
                     foreach($components as $component){
 
@@ -189,6 +190,13 @@
                             if($component_item->sum_flag && ($component_item->unit_id == $component->unit_id)){
                                 $component_items_total_quantity = $component_items_total_quantity + $component_item->quantity;
                             }
+
+                            if(!isset($component_total_amount_arr[$component->id])){
+                                $component_total_amount_arr[$component->id] = ($component_item->quantity * $component_item->budget_price);
+                            }else{
+                                $component_total_amount_arr[$component->id] = $component_total_amount_arr[$component->id] + ($component_item->quantity * $component_item->budget_price);
+                            }
+
                         }
 
                         $component_item_quantity_total_per_component[$component->id] = $component_items_total_quantity;
@@ -302,7 +310,11 @@
                         </th>
                         
                         <td></td>
-                        <td>x</td>
+                        <td>
+                            <!-- Material Component Total Amount -->
+
+                            P {{ number_format($component_total_amount_arr[$component->id],2) }}
+                        </td>
                     </tr>
                    
                     @foreach($component_items_arr[$component->id] as $component_item)
