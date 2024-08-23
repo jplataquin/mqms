@@ -165,7 +165,7 @@
 
                     $component_total_quantity                    = 0;
 
-                    $component_items_total_amount                = 0;
+                    $contract_item_total_amount                  = 0;
                     $component_items_total_quantity              = 0;
                     $component_items_arr                         = [];
                     $component_item_quantity_total_per_component = [];
@@ -183,14 +183,14 @@
                         //Each component item row
                         foreach($component_items_arr[$component->id] as $component_item){
                            
-                            //Total the amount for each row
-                            $component_items_total_amount = $component_items_total_amount + ($component_item->quantity * $component_item->budget_price);
-                            
                             //Total the quantity for all component item
                             if($component_item->sum_flag && ($component_item->unit_id == $component->unit_id)){
                                 $component_items_total_quantity = $component_items_total_quantity + $component_item->quantity;
                             }
 
+                            //Total the amount for each row
+                            $contract_item_total_amount = $contract_item_total_amount + ($component_item->quantity * $component_item->budget_price);
+                            
                             if( !isset( $component_total_amount_arr[$component->id] )){
                                 $component_total_amount_arr[$component->id] = 0;
                             }
@@ -267,7 +267,7 @@
                     </th>
                     <th></th>
                     <th class="text-right">
-                        P {{ number_format($component_items_total_amount,2) }}
+                        P {{ number_format($contract_item_total_amount,2) }}
                     </th>
                 </tr>
 
