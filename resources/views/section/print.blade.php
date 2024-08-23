@@ -15,14 +15,6 @@
               padding-right:5px;  
             }
 
-            .text-right{
-                text-align: right !important;
-            }
-
-            .text-left{
-                text-align: left !important;
-            }
-            
             .text-center{
                 text-align: center !important;
                 padding-left: auto;
@@ -219,7 +211,7 @@
                         {!! Str::wordWrap($unit_options[$contract_item->unit_id]->text,8,"<br>",false) !!}
                     </th>
                     
-                    <th class="text-right">
+                    <th style="text-align:right">
                         P {{ number_format($contract_item->contract_unit_price,2) }}
                     </th>
                     
@@ -232,7 +224,7 @@
                         P {{ number_format($contract_amount,2) }}
                     </th>
 
-                    <th class="text-right">
+                    <th style="text-align:right">
                         {{ number_format($contract_item->ref_1_quantity,2) }}
                     </th>
                     
@@ -266,7 +258,7 @@
                         @endif
                     </th>
                     <th></th>
-                    <th class="text-right">
+                    <th style="text-align:right">
                         <!-- Material Budget Amount-->
                         @php 
                             $grand_total_material_budget_amount = $grand_total_material_budget_amount + $contract_item_total_amount;
@@ -295,7 +287,7 @@
                                 @endphp
                             @endif
                         <td></td>
-                        <th class="text-right">
+                        <th style="text-align:right">
                             {{ number_format($component->quantity,2) }}
                         </th>
                         <th style="text-align:center">
@@ -387,7 +379,7 @@
                                 @endif
 
                             </td>
-                            <td class="text-right">
+                            <td style="text-align:right">
                                 {{ number_format($component_item->quantity,2) }}
                             </td>
                             <td style="text-align:center">
