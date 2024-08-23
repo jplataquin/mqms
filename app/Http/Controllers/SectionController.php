@@ -83,7 +83,7 @@ class SectionController extends Controller
         try {
             $html2pdf->setDefaultFont("Arial");
             $html2pdf->writeHTML($html);
-            $html2pdf->output('Purchase Order - '.str_pad($section->id,0,6,STR_PAD_LEFT ).'.pdf');
+            $html2pdf->output('Material Budget - '.str_pad($section->id,0,6,STR_PAD_LEFT ).'.pdf');
             $html2pdf->clean();
         
         }catch(Html2PdfException $e) {
