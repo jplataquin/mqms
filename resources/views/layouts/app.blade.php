@@ -38,7 +38,8 @@
             
             <nav id="sidebar" hx-boost="true" class="h-100">
                 <div class="">
-</div>
+                    
+                </div>
                 <div class="text-center mb-3 mt-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#ffffff" class="bi bi-person-circle" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
@@ -190,9 +191,11 @@
         const hamburger_button = $q('#hamburger_button').first();
         const side_bar_container = $q('#side-bar-container').first();
         
-        hamburger_button.onclick = ()=>{
-            side_bar_container.style.display    = 'block';
-            hamburger_button.style.display      = 'none';
+        if(hamburger_button){
+            hamburger_button.onclick = ()=>{
+                side_bar_container.style.display    = 'block';
+                hamburger_button.style.display      = 'none';
+            }
         }
 
         $q('.nav-item > a').apply(el=>{
