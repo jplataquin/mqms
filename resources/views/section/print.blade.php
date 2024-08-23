@@ -316,7 +316,9 @@
                             @endif
                         </td>
                     </tr>
-                   
+                    <tr>
+                        <td colspan="14"></td>
+                    </tr>
                     @foreach($component_items_arr[$component->id] as $component_item)
                         <tr class="@if(!$component_item->sum_flag || ($component_item->unit_id != $component->unit_id) ) bg-excluded-sum-component_item @endif">
                             
