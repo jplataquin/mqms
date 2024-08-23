@@ -302,7 +302,7 @@
                         </th>
                         
                         <td></td>
-                        <td></td>
+                        <td>x</td>
                     </tr>
                    
                     @foreach($component_items_arr[$component->id] as $component_item)
