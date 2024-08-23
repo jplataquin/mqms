@@ -205,13 +205,13 @@
                     
                 @endphp
                 <tr class="bg-contract-item">
-                    <th class="text-left">{{ Str::wordWrap($contract_item->item_code,10,"\n",false) }}</th>
+                    <th  style="text-align:left">{{ Str::wordWrap($contract_item->item_code,10,"\n",false) }}</th>
                     
-                    <th>
+                    <th style="text-align:left">
                         {!! Str::wordWrap($contract_item->description,30,"<br>",false) !!}
                     </th>
                     
-                    <th class="text-right">
+                    <th  style="text-align:right">
                         {!! Str::wordWrap(number_format($contract_item->contract_quantity,2),8,"<br>",false) !!}
                     </th>
                     
@@ -257,7 +257,7 @@
                     
                     <th></th>
                     
-                    <th class="text-right @if($component_total_quantity > $contract_item->contract_quantity) font-color-danger @endif">
+                    <th style="text-align:right" class="@if($component_total_quantity > $contract_item->contract_quantity) font-color-danger @endif">
                         {{ number_format($component_total_quantity,2) }}
                     </th>
                     <th style="text-align:center" class="text-center @if($component_total_quantity > $contract_item->contract_quantity) font-color-danger @endif">
