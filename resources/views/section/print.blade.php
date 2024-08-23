@@ -112,26 +112,26 @@
         -->
             <tr>
                 <th rowspan="2" style="text-align: center;width:5%">Item Code</th>
-                <th style="text-align:center;width:10%" rowspan="2" class="desc-col-width">Description</th>
+                <th style="text-align:center;width:300px" rowspan="2">Description</th>
                 <th style="text-align:center" colspan="4">Contract</th>
                 <th style="text-align:center" colspan="4">POW/DUPA</th>
-                <th style="text-align:center" class="factor-col-width">Factor</th>
+                <th style="text-align:center">Factor</th>
                 <th style="text-align:center" colspan="4">Material Budget</th>
             </tr>
             <tr>
-                <th class="min-col-width" style="text-align:center">QTY</th>
-                <th class="min-col-width" style="text-align:center">UNIT</th>
-                <th class="min-col-width" style="text-align:center">PRICE</th>
-                <th class="min-col-width" style="text-align:center">AMOUNT</th>
-                <th class="min-col-width" style="text-align:center">QTY</th>
-                <th class="min-col-width" style="text-align:center">UNIT</th>
-                <th class="min-col-width" style="text-align:center">RATE</th>
-                <th class="min-col-width" style="text-align:center">AMOUNT</th>
-                <th class="min-col-width" style="text-align:center">QTY / UNIT</th>
-                <th class="min-col-width" style="text-align:center">QTY</th>
-                <th class="min-col-width" style="text-align:center">UNIT</th>
-                <th class="min-col-width" style="text-align:center">COST</th>
-                <th class="min-col-width" style="text-align:center">AMOUNT</th>
+                <th style="text-align:center">QTY</th>
+                <th style="text-align:center">UNIT</th>
+                <th style="text-align:center">PRICE</th>
+                <th style="text-align:center">AMOUNT</th>
+                <th style="text-align:center">QTY</th>
+                <th style="text-align:center">UNIT</th>
+                <th style="text-align:center">RATE</th>
+                <th style="text-align:center">AMOUNT</th>
+                <th style="text-align:center">QTY / UNIT</th>
+                <th style="text-align:center">QTY</th>
+                <th style="text-align:center">UNIT</th>
+                <th style="text-align:center">COST</th>
+                <th style="text-align:center">AMOUNT</th>
             </tr>
 
             @php 
