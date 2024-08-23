@@ -82,10 +82,10 @@
                 <td colspan="15">
                     <table border="1">
                         <tr>
-                            <td colspan="2" style="width:50%">
+                            <td colspan="2" style="width:49%;margin:auto">
                                 <img src="storage/sys_images/header.png" style="width:500px"/>
                             </td>
-                            <td colspan="2" style="width:50%">
+                            <td colspan="2" style="width:49%">
                                 <h4>Material Budget</h4>
                             </td>
                         </tr>
