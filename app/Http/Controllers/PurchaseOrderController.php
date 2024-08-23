@@ -630,7 +630,7 @@ class PurchaseOrderController extends Controller
 
         try {  
 
-            $res = DB::table('purchase_order_items')->where('purchase_order_id', $id)->delete();
+            PurchaseOrderItem::where('purchase_order_id', $id)->delete();
             
             // $purchaseOrder->delete();
             // $record = $purchaseOrder::withTrashed()->find($id);
