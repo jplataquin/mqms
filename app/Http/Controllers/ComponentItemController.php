@@ -327,21 +327,21 @@ class ComponentItemController extends Controller
         }
 
         //Get all previous material quantities and check if they are within budget with regards to the new data.
-        $material_quantities = $component_item->MaterialQuantities;
+        // $material_quantities = $component_item->MaterialQuantities;
 
 
-        foreach($material_quantities as $mq){
+        // foreach($material_quantities as $mq){
 
-            if($quantity < ($mq->equivalent * $mq->quantity)){
+        //     if($quantity < ($mq->equivalent * $mq->quantity)){
                 
-                return response()->json([
-                    'status'    => 0,
-                    'message'   => 'Error: One or more material quantities are not aligned with the new budget',
-                    'data'      => []
-                ]);
+        //         return response()->json([
+        //             'status'    => 0,
+        //             'message'   => 'Error: One or more material quantities are not aligned with the new budget',
+        //             'data'      => []
+        //         ]);
 
-            }
-        }
+        //     }
+        // }
  
          $component_item->name                   = $name;
          $component_item->quantity               = $quantity;
