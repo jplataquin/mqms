@@ -14,6 +14,7 @@ use Spipu\Html2Pdf\Html2Pdf;
 use Spipu\Html2Pdf\Exception\Html2PdfException;
 use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class SectionController extends Controller
 {
@@ -58,15 +59,20 @@ class SectionController extends Controller
     public function print($id){
         
         $section = Section::findOrFail($id);
+        $project = $section->Project;
 
         $contract_items = $section->ContractItems()->with('components')->get();
 
         $unit_options = Unit::toOptions();
 
+        $current_datetime = Carbon::now();
+
         $html = view('section/print',[
+            'project'          => $project,
             'section'          => $section,
             'contract_items'   => $contract_items,
-            'unit_options'     => $unit_options
+            'unit_options'     => $unit_options,
+            'current_datetime' => $current_datetime
         ])->render();
 
 
