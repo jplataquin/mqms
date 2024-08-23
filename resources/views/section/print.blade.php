@@ -192,10 +192,11 @@
                             }
 
                             if( !isset( $component_total_amount_arr[$component->id] )){
-                                $component_total_amount_arr[$component->id] = ($component_item->quantity * $component_item->budget_price);
-                            }else{
-                               // $component_total_amount_arr[$component->id] = $component_total_amount_arr[$component->id] + ($component_item->quantity * $component_item->budget_price);
+                                $component_total_amount_arr[$component->id] = 0;
                             }
+                            
+                            $component_total_amount_arr[$component->id] = $component_total_amount_arr[$component->id] + ($component_item->quantity * $component_item->budget_price);
+                            
 
                         }
 
@@ -315,7 +316,7 @@
                         <td>
                             <!-- Material Component Total Amount -->
 
-                            P {{ number_format(0,2) }}
+                            P {{ number_format($component_total_amount_arr[ $component->id ],2) }}
                         </td>
                     </tr>
                    
