@@ -331,7 +331,7 @@
                             {{$unit_options[$component->unit_id]->text}}
                         </td>
                         <td></td>
-                        <td style="text-right;font-style: italic">
+                        <td style="text-align:right;font-style: italic">
                              <!-- Material Component Total Amount -->
                              @if(isset($component_total_amount_arr[ $component->id ]))
                                 P {{ number_format($component_total_amount_arr[ $component->id ],2) }}
