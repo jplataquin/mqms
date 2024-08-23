@@ -85,7 +85,7 @@
                             <td>
                                 <img src="storage/sys_images/header.png" style="width:500px"/>
                             </td>
-                            <td>
+                            <td style="text-align:center" valign="middle">
                                 <h5>Material Budget</h5>
                             </td>
                         </tr>
