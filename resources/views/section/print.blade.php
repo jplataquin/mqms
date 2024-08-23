@@ -301,7 +301,7 @@
                         <td></td>
                         <td></td>
 
-                        <th class="@if($component_item_quantity_total_per_component[$component->id] > $component->quantity) font-color-danger @endif">
+                        <th style="text-align:right" class="@if($component_item_quantity_total_per_component[$component->id] > $component->quantity) font-color-danger @endif">
                             {{ $component_item_quantity_total_per_component[$component->id] }}
                         </th>
                         <th style="text-align:center" class="@if($component_item_quantity_total_per_component[$component->id] > $component->quantity) font-color-danger @endif">
@@ -337,12 +337,12 @@
                                     {{ $unit_options[$component_item->ref_1_unit_id]->text }}
                                 @endif
                             </td>
-                            <td>
+                            <td style="text-align:right">
                                 @if($component_item->ref_1_unit_price)
                                     P {{ number_format($component_item->ref_1_unit_price,2) }}
                                 @endif
                             </td>
-                            <td>
+                            <td style="text-align:right">
                                 @php
                                     $ref_1_total = (float) $component_item->ref_1_unit_price * (float) $component_item->ref_1_quantity;
                                 @endphp
@@ -351,7 +351,7 @@
                                     P {{ number_format($ref_1_total,2) }}
                                 @endif
                             </td>
-                            <td>
+                            <td style="text-align:center">
                                 @if($component_item->function_type_id == 1)
                                     {{ 
                                         formatFactor(
