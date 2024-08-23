@@ -630,16 +630,16 @@ class PurchaseOrderController extends Controller
 
         try {  
 
-            DB::table('purchase_order_items')->where('purchase_order_id', $id)->delete();
+            $res = DB::table('purchase_order_items')->where('purchase_order_id', $id)->get();
             
-            $purchaseOrder->delete();
-            $record = $purchaseOrder::withTrashed()->find($id);
-            $record->forceDelete();
+            // $purchaseOrder->delete();
+            // $record = $purchaseOrder::withTrashed()->find($id);
+            // $record->forceDelete();
 
             return response()->json([
                 'status' => 1,
                 'message' => 'test '.$id,
-                'data' =>  []
+                'data' =>  [$res]
             ]);
 
             DB::commit();
