@@ -250,12 +250,10 @@
                     <th></th>
                     
                     <th style="text-align:right" class="@if($component_total_quantity > $contract_item->contract_quantity) font-color-danger @endif">
-                        {{ number_format($component_total_quantity,2) }}
+                        x 
                     </th>
                     <th style="text-align:center" class="text-center @if($component_total_quantity > $contract_item->contract_quantity) font-color-danger @endif">
-                        @if(isset($unit_options[$contract_item->unit_id]))
-                            {{$unit_options[$contract_item->unit_id]->text}}
-                        @endif
+                        y
                     </th>
                     <th></th>
                     <th style="text-align:right">
@@ -327,8 +325,14 @@
                         <td>8</td>
                         <td>9</td>
                         <td>10</td>
-                        <td>11</td>
-                        <td>12</td>
+                        <td style="text-align:right">
+                            {{ number_format($component_total_quantity,2) }}
+                        </td>
+                        <td>
+                            @if(isset($unit_options[$contract_item->unit_id]))
+                                {{$unit_options[$contract_item->unit_id]->text}}
+                            @endif
+                        </td>
                         <td>13</td>
                         <td>14</td>
                     </tr>
