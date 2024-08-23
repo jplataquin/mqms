@@ -77,9 +77,10 @@ class SectionController extends Controller
             'current_datetime'  => $current_datetime
         ])->render();
          
+        echo $html;exit;
+
         $html2pdf = new Html2Pdf('L','Legal','en', false, 'UTF-8');
            
-
         try {
             $html2pdf->setDefaultFont("Arial");
             $html2pdf->writeHTML($html);
