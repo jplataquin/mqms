@@ -420,7 +420,7 @@
                 <th></th>
                 <th></th>
                 <th></th>
-                <th>
+                <th style="text-align:right">
                     P {{ number_format($grand_total_ref_1_amount,2) }}
                 </th>
                 <th></th>
