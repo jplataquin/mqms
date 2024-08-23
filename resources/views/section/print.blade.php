@@ -21,17 +21,7 @@
                 padding-right:auto;
             }
 
-            .min-col-width{
-               
-            }
-
-            .desc-col-width{
-                
-            }
-
-            .factor-col-width{
-               
-            }
+            
 
             #main{
                 font-size:9px;
@@ -122,7 +112,7 @@
         -->
             <tr>
                 <th rowspan="2" style="text-align: center;width:5%">Item Code</th>
-                <th style="text-align:center" rowspan="2" class="desc-col-width">Description</th>
+                <th style="text-align:center;width:10%" rowspan="2" class="desc-col-width">Description</th>
                 <th style="text-align:center" colspan="4">Contract</th>
                 <th style="text-align:center" colspan="4">POW/DUPA</th>
                 <th style="text-align:center" class="factor-col-width">Factor</th>
