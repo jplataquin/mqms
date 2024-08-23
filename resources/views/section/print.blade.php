@@ -388,10 +388,10 @@
                             <td style="text-align:center">
                                 {{$unit_options[$component_item->unit_id]->text}}
                             </td>
-                            <td class="text-right">
+                            <td style="text-align:right">
                                 P {{ number_format($component_item->budget_price,2) }}
                             </td>
-                            <td class="text-right">
+                            <td style="text-align:right">
                                 P {{ number_format($component_item->quantity * $component_item->budget_price,2) }}
                             </td>
                         </tr>    
