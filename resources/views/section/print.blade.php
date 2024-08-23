@@ -294,7 +294,7 @@
 
                             </td>
                             <td class="text-right">
-                                {{ number_format( round($component_item->quantity,2) ,2) }}
+                                {{ round($component_item->quantity,3) }}
                             </td>
                             <td style="text-align:center">
                                 {{$unit_options[$component_item->unit_id]->text}}
