@@ -342,7 +342,7 @@
                         <tr class="@if(!$component_item->sum_flag || ($component_item->unit_id != $component->unit_id) ) bg-excluded-sum-component_item @endif">
                             
                             <td>
-                                {{$item_count}} {{$component_item->name}}
+                                {{$item_count}}.) {{$component_item->name}}
 
                                 @php
                                     $item_count++;
