@@ -82,11 +82,8 @@
                 <td colspan="15">
                     <table>
                         <tr>
-                            <td>
+                            <td colspan="2">
                                 <img src="storage/sys_images/header.png" style="width:500px"/>
-                            </td>
-                            <td style="text-align:center" valign="middle">
-                                <h5>Material Budget</h5>
                             </td>
                         </tr>
                         <tr>
@@ -95,6 +92,13 @@
                             </th>
                             <td>
                                 {{$project->name}}
+                            </td>
+                        
+                            <th>
+                                Date & Time Generated
+                            </th>
+                            <td>
+                                {{$current_datetime}}
                             </td>
                         </tr>
                     </table>
