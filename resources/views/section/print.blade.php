@@ -151,6 +151,10 @@
                 <th class="min-col-width" style="text-align:center">COST</th>
                 <th class="min-col-width" style="text-align:center">AMOUNT</th>
             </tr>
+
+            @php 
+                $grand_total_contract_amount = 0;
+            @endphp
                 
             @foreach($contract_items as $contract_item)
                 
@@ -164,7 +168,6 @@
                     $component_items_arr                         = [];
                     $component_item_quantity_total_per_component = [];
 
-                    $grand_total_contract_amount = 0;
 
                     foreach($components as $component){
 
@@ -376,7 +379,7 @@
                 <th></th>
                 <th>
                     <!-- Contract - Amount -->
-                     {{ number_format($grand_total_contract_amount,2) }}
+                    P {{ number_format($grand_total_contract_amount,2) }}
                 </th>
                 <th></th>
                 <th></th>
