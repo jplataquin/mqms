@@ -327,14 +327,8 @@
                         <td>8</td>
                         <td>9</td>
                         <td>10</td>
-                        <td> 
-                            {{ number_format($component_total_quantity,2) }}
-                        </td>
-                        <td>
-                            @if(isset($unit_options[$contract_item->unit_id]))
-                                {{$unit_options[$contract_item->unit_id]->text}}
-                            @endif
-                        </td>
+                        <td>11</td>
+                        <td>12</td>
                         <td>13</td>
                         <td>14</td>
                     </tr>
