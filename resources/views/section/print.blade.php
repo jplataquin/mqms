@@ -207,7 +207,7 @@
                         {!! Str::wordWrap(number_format($contract_item->contract_quantity,2),8,"<br>",false) !!}
                     </th>
                     
-                    <th>
+                    <th style="text-align:center">
                         {!! Str::wordWrap($unit_options[$contract_item->unit_id]->text,8,"<br>",false) !!}
                     </th>
                     
@@ -228,7 +228,7 @@
                         {{ number_format($contract_item->ref_1_quantity,2) }}
                     </th>
                     
-                    <th>
+                    <th style="text-align:center">
                         @if( isset( $unit_options[$contract_item->ref_1_unit_id] ) )
                             {{ $unit_options[$contract_item->ref_1_unit_id]->text }}
                         @endif
@@ -332,7 +332,7 @@
                             <td></td>
                             <td></td>
                             <td>{{$component_item->ref_1_quantity}}</td>
-                            <td>
+                            <td style="text-align:center">
                                 @if(isset($unit_options[$component_item->ref_1_unit_id]))
                                     {{ $unit_options[$component_item->ref_1_unit_id]->text }}
                                 @endif
