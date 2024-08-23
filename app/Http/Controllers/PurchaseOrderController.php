@@ -609,7 +609,7 @@ class PurchaseOrderController extends Controller
 
         $purchaseOrder = PurchaseOrder::find($id);
 
-        if(!$materialCanvass){
+        if(!$purchaseOrder){
 
             return response()->json([
                 'status'    => 0,
