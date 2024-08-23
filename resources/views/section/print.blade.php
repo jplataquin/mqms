@@ -153,7 +153,9 @@
             </tr>
 
             @php 
-                $grand_total_contract_amount = 0;
+                $grand_total_contract_amount        = 0;
+                grand_total_ref_1_amount            = 0;
+                $grand_total_material_budget_amount = 0;
             @endphp
                 
             @foreach($contract_items as $contract_item)
@@ -194,19 +196,24 @@
                 @endphp
                 <tr class="bg-contract-item">
                     <th class="text-left">{{ Str::wordWrap($contract_item->item_code,10,"\n",false) }}</th>
+                    
                     <th>
                         {!! Str::wordWrap($contract_item->description,30,"<br>",false) !!}
                     </th>
+                    
                     <th class="text-right">
                         {!! Str::wordWrap(number_format($contract_item->contract_quantity,2),8,"<br>",false) !!}
                     </th>
+                    
                     <th>
                         {!! Str::wordWrap($unit_options[$contract_item->unit_id]->text,8,"<br>",false) !!}
                     </th>
+                    
                     <th class="text-right">
                         P {{ number_format($contract_item->contract_unit_price,2) }}
                     </th>
-                    <th>
+                    
+                    <th style="text-align:left">
                         <!-- Contract Amount -->
                         @php 
                             $contract_amount                = $contract_item->contract_quantity * $contract_item->contract_unit_price;
@@ -218,25 +225,34 @@
                     <th class="text-right">
                         {{ number_format($contract_item->ref_1_quantity,2) }}
                     </th>
+                    
                     <th>
                         @if( isset( $unit_options[$contract_item->ref_1_unit_id] ) )
                             {{ $unit_options[$contract_item->ref_1_unit_id]->text }}
                         @endif
                     </th>
+                    
                     <th class="text-right">
                         P {{ number_format($contract_item->ref_1_unit_price,2) }}
                     </th>
+                    
                     <th class="text-right">
-                        <!-- Contract - Amount -->
-                        P {{ number_format($contract_item->ref_1_quantity * $contract_item->ref_1_unit_price,2) }}
+                        <!-- POW/DUPA Amount -->
+                        @php 
+                            $ref_1_amount                   = $contract_item->ref_1_quantity * $contract_item->ref_1_unit_price;
+                            $grand_total_contract_amount    = $grand_total_ref_1_amount + $ref_1_amount;
+                        @endphp
+                        P {{ number_format($ref_1_amount,2) }}
                     </th>
+                    
                     <th></th>
+                    
                     <th class="text-right @if($component_total_quantity > $contract_item->contract_quantity) font-color-danger @endif">
                         {{ number_format($component_total_quantity,2) }}
                     </th>
                     <th style="text-align:center" class="text-center @if($component_total_quantity > $contract_item->contract_quantity) font-color-danger @endif">
                         @if(isset($unit_options[$contract_item->unit_id]))
-                        {{$unit_options[$contract_item->unit_id]->text}}
+                            {{$unit_options[$contract_item->unit_id]->text}}
                         @endif
                     </th>
                     <th></th>
@@ -377,18 +393,24 @@
                 <th></th>
                 <th></th>
                 <th></th>
-                <th>
-                    <!-- Contract - Amount -->
+                <th style="text-align:right">
+                    <!-- Contract Amount -->
                     P {{ number_format($grand_total_contract_amount,2) }}
                 </th>
                 <th></th>
                 <th></th>
                 <th></th>
+                <th>
+                    P {{ number_format($grand_total_ref_1_amount,2) }}
+                </th>
                 <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
-
+                <th style="text-align:right">
+                    <!-- Material Budget Amount -->
+                    P {{ number_format($grand_total_material_budget_amount,2) }}
+                </th>
             </tr>
 
         </table>
