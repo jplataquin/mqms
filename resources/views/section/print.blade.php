@@ -213,7 +213,7 @@
                         P {{ number_format($contract_item->contract_unit_price,2) }}
                     </th>
                     
-                    <th style="text-align:left">
+                    <th style="text-align:right">
                         <!-- Contract Amount -->
                         @php 
                             $contract_amount                = $contract_item->contract_quantity * $contract_item->contract_unit_price;
@@ -232,11 +232,11 @@
                         @endif
                     </th>
                     
-                    <th class="text-right">
+                    <th style="text-align:right">
                         P {{ number_format($contract_item->ref_1_unit_price,2) }}
                     </th>
                     
-                    <th class="text-right">
+                    <th style="text-align:right">
                         <!-- POW/DUPA Amount -->
                         @php 
                             $ref_1_amount                   = $contract_item->ref_1_quantity * $contract_item->ref_1_unit_price;
