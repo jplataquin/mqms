@@ -80,7 +80,7 @@
         <table border="1">
             <tr>
                 <td colspan="15">
-                    <table>
+                    <table border="1" style="width:100%">
                         <tr>
                             <td colspan="2">
                                 <img src="storage/sys_images/header.png" style="width:500px"/>
