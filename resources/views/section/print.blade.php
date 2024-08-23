@@ -80,25 +80,25 @@
 
         <table border="1">
             <tr>
-                <td colspan="2" style="width:50%;margin:auto">
+                <td colspan="2" style="text-align:center">
                     <img src="storage/sys_images/header.png" style="width:500px"/>
                 </td>
-                <td colspan="2" style="width:50%;text-align:center" valign="middle">
+                <td colspan="2" style="text-align:center" valign="middle">
                     <h2>Material Budget</h2>
                 </td>
             </tr>
             <tr>
-                <th style="width:5%;text-align:center">
+                <th style="width:10%;text-align:center">
                     Project
                 </th>
-                <td>
+                <td style="width:40%">
                     {{$project->name}}
                 </td>
             
-                <th style="width:5%;text-align:center">
+                <th style="width:10%;text-align:center">
                     Date & Time Generated
                 </th>
-                <td>
+                <td style="width:40%">
                     {{$current_datetime}}
                 </td>
             </tr>
