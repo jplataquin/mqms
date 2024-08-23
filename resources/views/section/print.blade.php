@@ -288,10 +288,10 @@
                             @endif
                         <td></td>
                         <th style="text-align:right">
-                            {{ number_format($component->quantity,2) }}
+                           
                         </th>
                         <th style="text-align:center">
-                            {{ $unit_options[$component->unit_id]->text }}
+                           
                         </th>
                         <td></td>
                         <td></td>
@@ -302,10 +302,10 @@
                         <td></td>
 
                         <th style="text-align:right">
-                          x  {{ $component_item_quantity_total_per_component[$component->id] }}
+                            {{ number_format($component->quantity,2) }}
                         </th>
                         <th style="text-align:center">
-                          y  {{$unit_options[$component->unit_id]->text}}
+                            {{ $unit_options[$component->unit_id]->text }}
                         </th>
                         
                         <td></td>
