@@ -25,7 +25,7 @@
 <body>
     <div id="bar" class="w-100 d-flex justify-content-between">
         <div>
-            <button id="hamburger_button" class="btn btn-secondary">
+            <button id="hamburger_button" class="btn btn-outline-secondary">
                 <i class="bi bi-list"></i>
             </button>
         </div>
@@ -185,6 +185,14 @@
 
     <script type="module">
         import {$q} from '/adarna.js';
+
+        const hamburger_button = $('#hamburger_button').first();
+        const side_bar_container = $('#side-bar-container').first();
+        
+        hamburger_button.onclick = ()=>{
+            side_bar_container.style.display    = 'block';
+            hamburger_button.style.display      = 'none';
+        }
 
         $q('.nav-item > a').apply(el=>{
 
