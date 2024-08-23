@@ -80,10 +80,13 @@
         <table border="1">
             <tr>
                 <td colspan="15">
-                    <table border="1" style="width:100%">
+                    <table border="1">
                         <tr>
-                            <td colspan="4">
+                            <td colspan="2" style="width:50%">
                                 <img src="storage/sys_images/header.png" style="width:500px"/>
+                            </td>
+                            <td colspan="2" style="width:50%">
+                                <h4>Material Budget</h4>
                             </td>
                         </tr>
                         <tr>
