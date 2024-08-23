@@ -327,8 +327,8 @@
                         <td>8</td>
                         <td>9</td>
                         <td>10</td>
-                        <td>11</td>
-                        <td>12</td>
+                        <td>{{ $component_item_quantity_total_per_component[$component->id] }}</td>
+                        <td>{{$unit_options[$component->unit_id]->text}}</td>
                         <td>13</td>
                         <td>14</td>
                     </tr>
