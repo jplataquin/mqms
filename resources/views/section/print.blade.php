@@ -315,7 +315,7 @@
                         <td>
                             <!-- Material Component Total Amount -->
 
-                            P {{ number_format($component_total_amount_arr[$component->id],2) }}
+                            P {{ number_format(0,2) }}
                         </td>
                     </tr>
                    
