@@ -203,7 +203,6 @@
                         $component_item_quantity_total_per_component[$component->id] = $component_items_total_quantity;
                     }  
                     
-                    print_r($component_total_amount_arr);
                 @endphp
                 <tr class="bg-contract-item">
                     <th class="text-left">{{ Str::wordWrap($contract_item->item_code,10,"\n",false) }}</th>
