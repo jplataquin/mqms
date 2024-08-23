@@ -205,10 +205,11 @@ class MaterialQuantityController extends Controller
 
         
   
-        //Check if total entries is not more than component item quantity
+        //Check if total entries is not more than component item quantity but ignore deleted and current row
         $entries = MaterialQuantity::where('component_item_id',$component_item->id)
-        ->where('material_quantity_id','!=',$id)
-        ->where('deleted_at',null)->get();
+        ->where('id','!=',$id) //Ignore current row being updated
+        ->where('deleted_at',null) //Ignore deleted
+        ->get();
   
         $grand_total = 0;
 
