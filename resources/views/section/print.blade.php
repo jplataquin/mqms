@@ -315,8 +315,9 @@
                         <td></td>
                         <td>
                             <!-- Material Component Total Amount -->
-
+                            @if(isset($component_total_amount_arr[ $component->id ]))
                             P {{ number_format($component_total_amount_arr[ $component->id ],2) }}
+                            @endif
                         </td>
                     </tr>
                    
