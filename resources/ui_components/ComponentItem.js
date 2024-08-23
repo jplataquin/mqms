@@ -476,9 +476,9 @@ class ComponentItem extends Component{
 
     functionVariableQuantity(){
 
-        
+
         this.el.variable.onkeypress = (e)=>{
-            return window.util.inputNumber(this.el.variable,e,3,false);
+            return window.util.inputNumber(this.el.variable,e,6,false);
         }
     
         this.el.function_type.onchange = (e) =>{
