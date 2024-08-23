@@ -638,7 +638,7 @@ class PurchaseOrderController extends Controller
 
             return response()->json([
                 'status' => 1,
-                'message' => 'test',
+                'message' => 'test '.$id,
                 'data' => []
             ]);
 
