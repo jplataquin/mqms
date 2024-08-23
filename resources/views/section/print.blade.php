@@ -83,19 +83,19 @@
                 <td colspan="2" style="width:50%;margin:auto">
                     <img src="storage/sys_images/header.png" style="width:500px"/>
                 </td>
-                <td colspan="2" style="width:50%;text-align:center">
+                <td colspan="2" style="width:50%;text-align:center" valign="middle">
                     <h2>Material Budget</h2>
                 </td>
             </tr>
             <tr>
-                <th style="width:200px">
+                <th style="width:100px">
                     Project
                 </th>
                 <td>
                     {{$project->name}}
                 </td>
             
-                <th style="width:200px">
+                <th style="width:100px">
                     Date & Time Generated
                 </th>
                 <td>
