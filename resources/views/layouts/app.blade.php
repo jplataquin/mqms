@@ -23,7 +23,14 @@
     
 </head>
 <body>
-    <div id="bar" class="w-100">
+    <div id="bar" class="w-100 d-flex justify-content-between">
+        <div>
+            <button id="hamburger_button" class="btn btn-secondary">
+                <i class="bi bi-list"></i>
+            </button>
+        </div>
+        <div>
+        </div>
     </div>
     <div class="wrapper d-flex h-100" id="app">
         
