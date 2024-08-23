@@ -194,7 +194,7 @@
                             if( !isset( $component_total_amount_arr[$component->id] )){
                                 $component_total_amount_arr[$component->id] = ($component_item->quantity * $component_item->budget_price);
                             }else{
-                                $component_total_amount_arr[$component->id] = $component_total_amount_arr[$component->id] + ($component_item->quantity * $component_item->budget_price);
+                               // $component_total_amount_arr[$component->id] = $component_total_amount_arr[$component->id] + ($component_item->quantity * $component_item->budget_price);
                             }
 
                         }
