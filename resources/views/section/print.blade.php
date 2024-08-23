@@ -267,6 +267,11 @@
                     </th>
                     <th></th>
                     <th class="text-right">
+                        <!-- Material Budget Amount-->
+                        @php 
+                            $grand_total_material_budget_amount = $grand_total_material_budget_amount + $contract_item_total_amount;
+                        @endphp
+                        
                         P {{ number_format($contract_item_total_amount,2) }}
                     </th>
                 </tr>
