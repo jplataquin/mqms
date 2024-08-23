@@ -164,6 +164,8 @@
                     $component_items_arr                         = [];
                     $component_item_quantity_total_per_component = [];
 
+                    $grand_total_contract_amount = 0;
+
                     foreach($components as $component){
 
                         if($component->sum_flag && ($component->unit_id == $contract_item->unit_id) ){
@@ -202,7 +204,12 @@
                         P {{ number_format($contract_item->contract_unit_price,2) }}
                     </th>
                     <th>
-                        P {{ number_format($contract_item->contract_quantity * $contract_item->contract_unit_price,2) }}
+                        <!-- Contract Amount -->
+                        @php 
+                            $contract_amount                = $contract_item->contract_quantity * $contract_item->contract_unit_price;
+                            $grand_total_contract_amount    = $grand_total_contract_amount + $contract_amount;
+                        @endphp
+                        P {{ number_format($contract_amount,2) }}
                     </th>
 
                     <th class="text-right">
@@ -217,6 +224,7 @@
                         P {{ number_format($contract_item->ref_1_unit_price,2) }}
                     </th>
                     <th class="text-right">
+                        <!-- Contract - Amount -->
                         P {{ number_format($contract_item->ref_1_quantity * $contract_item->ref_1_unit_price,2) }}
                     </th>
                     <th></th>
@@ -358,6 +366,28 @@
                 @endforeach
             @endforeach
             
+            <!-- Footer --> 
+
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>
+                    <!-- Contract - Amount -->
+                     {{ number_format($grand_total_contract_amount,2) }}
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+
+            </tr>
+
         </table>
     </div>
 </page>
