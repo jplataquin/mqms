@@ -631,11 +631,12 @@ class PurchaseOrderController extends Controller
         try {  
 
             DB::table('purchase_order_items')->where('purchase_order_id', $purchaseOrder->id)->delete();
+            
             $purchaseOrder->forceDelete();
 
             return response()->json([
                 'status' => 1,
-                'message' => '',
+                'message' => 'test',
                 'data' => []
             ]);
 
