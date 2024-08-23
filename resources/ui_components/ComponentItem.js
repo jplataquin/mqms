@@ -489,7 +489,7 @@ class ComponentItem extends Component{
             switch(this.el.function_type.value){
                 case '1':
     
-                        this.el.quantity.value = Math.ceil( 
+                        this.el.quantity.value = roundTwoDecimal( 
                             (this._model.component_quantity * this.el.variable.value)  / this._model.component_use_count
                         );
     
@@ -497,7 +497,7 @@ class ComponentItem extends Component{
     
                 case '2':
     
-                        this.el.quantity.value = Math.ceil( 
+                        this.el.quantity.value = roundTwoDecimal( 
                             (this._model.component_quantity  / this.el.variable.value)  / this._model.component_use_count
                         );
     
