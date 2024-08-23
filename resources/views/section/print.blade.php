@@ -88,14 +88,14 @@
                 </td>
             </tr>
             <tr>
-                <th style="width:5%">
+                <th style="width:5%;text-align:center">
                     Project
                 </th>
                 <td>
                     {{$project->name}}
                 </td>
             
-                <th>
+                <th style="width:5%;text-align:center">
                     Date & Time Generated
                 </th>
                 <td>
