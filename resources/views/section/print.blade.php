@@ -79,7 +79,23 @@
         @endphp
         <table border="1">
             <tr>
-                <td colspan="15"></td>
+                <td colspan="15">
+                    <table>
+                        <tr>
+                            <td>
+                                <img src="storage/sys_images/header.png" style="width:500px"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Project
+                            </th>
+                            <td>
+                                {{$project->name}}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
             </tr>
             <tr>
                 <th rowspan="2" style="text-align: center;width:5%">Item Code</th>
