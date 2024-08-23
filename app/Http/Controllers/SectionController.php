@@ -76,7 +76,7 @@ class SectionController extends Controller
             'current_user'      => $current_user,
             'current_datetime'  => $current_datetime
         ])->render();
-
+        echo $html;exit;
         $html2pdf = new Html2Pdf('L','Legal','en', false, 'UTF-8');
            
         try {
