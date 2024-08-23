@@ -327,10 +327,10 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td style="text-align:right" class="@if($component_item_quantity_total_per_component[$component->id] > $component->quantity) font-color-danger @endif">
+                        <td style="text-align:right;font-style: italic" class="@if($component_item_quantity_total_per_component[$component->id] > $component->quantity) font-color-danger @endif">
                             {{ $component_item_quantity_total_per_component[$component->id] }}
                         </td>
-                        <td style="text-align:center" class="@if($component_item_quantity_total_per_component[$component->id] > $component->quantity) font-color-danger @endif">
+                        <td style="text-align:center;font-style: italic" class="@if($component_item_quantity_total_per_component[$component->id] > $component->quantity) font-color-danger @endif">
                             {{$unit_options[$component->unit_id]->text}}
                         </td>
                         <td></td>
