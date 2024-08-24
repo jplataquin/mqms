@@ -445,8 +445,7 @@
             </tr>
 
         </table>
-                                    
-        <page_footer>
-        Page [[page_cu]] of [[page_nb]]
-        </page_footer>
+                     
+            Page [[page_cu]] of [[page_nb]]
+        
 </page>
