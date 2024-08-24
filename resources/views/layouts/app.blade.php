@@ -37,7 +37,7 @@
         <div id="side-bar-container">
             
             <nav id="sidebar" hx-boost="true" class="h-100">
-                <div class="text-center" style="padding-left:2px">
+                <div class="text-center" style="padding-right:2px">
                     <button id="close_nav_menu" class="btn w-100 btn-outline-secondary">
                         <i class="bi bi-arrow-left-square"></i> Close
                     </button>
