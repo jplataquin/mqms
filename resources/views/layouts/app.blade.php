@@ -35,13 +35,13 @@
     <div class="wrapper d-flex h-100" id="app">
         
         <div id="side-bar-container">
-            
+            <div class="text-end">
+                <button id="close_nav_menu" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left-square-fill"></i>
+                </button>
+            </div>
             <nav id="sidebar" hx-boost="true" class="h-100">
-                <div class="text-end">
-                    <button id="close_nav_menu" class="btn btn-outline-secondary">
-                        <i class="bi bi-arrow-left-square-fill"></i>
-                    </button>
-                </div>
+                
                 <div class="text-center mb-3 mt-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#ffffff" class="bi bi-person-circle" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
