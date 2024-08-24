@@ -115,6 +115,7 @@
                         <span style="margin-left:10px;background-color:#ff0000;border:solid 1px #000000">__</span> - Red font indicates that the total is over budget.  
                         <span style="margin-left:10px;background-color:#d3d3d3;border:solid 1px #000000">__</span> - Contract Item.
                      </div>  
+                     <br>
                 </td>
             </tr>
         
