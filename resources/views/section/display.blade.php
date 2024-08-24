@@ -29,7 +29,7 @@
 
     <div class="row">
 
-        <div class="col-lg-12">
+        <div class="col-lg-12 mb-3">
             <table class="record-table-horizontal">
                 <tbody>
                     <tr>

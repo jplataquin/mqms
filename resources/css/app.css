@@ -353,6 +353,7 @@ html, body {
 .record-table-horizontal th {
   font-weight: bold;
   padding: 5px;
+  width: 300px;
 }
 
 .record-table-horizontal td{
