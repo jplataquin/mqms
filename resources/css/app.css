@@ -387,6 +387,11 @@ html, body {
   #hamburger_button{
     display:inline;
   }
+
+  .record-table-horizontal th {
+    font-weight: bold;
+    padding: 5px;
+  }
 }
 
 @media (max-width:481px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ 
@@ -399,6 +404,11 @@ html, body {
   #hamburger_button{
     display:inline;
   }
+
+  .record-table-horizontal th {
+    font-weight: bold;
+    padding: 5px;
+  }
 }
 @media (max-width:641px)  { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ 
   #side-bar-container{
@@ -409,6 +419,11 @@ html, body {
 
   #hamburger_button{
     display:inline;
+  }
+
+  .record-table-horizontal th {
+    font-weight: bold;
+    padding: 5px;
   }
 }
 
