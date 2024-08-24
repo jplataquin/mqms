@@ -201,7 +201,7 @@
             }
         }
 
-        if(close_nav_menue){
+        if(close_nav_menu){
             close_nav_menu.onclick = ()=>{
                 side_bar_container.style.display    = 'none';
                 hamburger_button.style.display      = 'block';
