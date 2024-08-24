@@ -171,7 +171,7 @@
         
         throttle = true;
 
-        setTimout(()=>{
+        setTimeout(()=>{
             
 
             contract_items_container.innerHTML = '';
