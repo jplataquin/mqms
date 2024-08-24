@@ -144,18 +144,43 @@
 
     const t = new Template();
 
+    function escapeRegex(str) {
+        return str.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
+    };
+
     search_filter.onkeyup = (e)=>{
         contract_items_container.innerHTML = '';
 
         let query = search_filter.value;
 
-        var re = new RegExp(query, 'i');
+        var re = new RegExp(escapeRegex(query), 'i');
 
         let result = contract_items_record.filter((item)=>{
             return item.description.match(re) || item.item_code.match(re);
         });
 
-        console.log(result);
+        if(!result){
+            return false;
+        }
+
+        result.map(res=>{
+            contract_item_container.append(
+                t.div({class:'item item-container fade-in',dataId:res.id},()=>{
+                    t.div({class:'item-header'},res.description);
+                    t.div({class:'item-body row'},()=>{
+                        t.div({class:'col-6'},()=>{
+                            t.txt(res.item_code);
+                        });
+
+                        t.div({class:'col-6'},()=>{
+                            if(typeof unit_options[res.unit_id] != 'undefined'){
+                                t.txt(unit_options[res.unit_id].text);
+                            }
+                        });
+                    })
+                });
+            )
+        });
     }
 
     printBtn.onclick = (e)=>{
