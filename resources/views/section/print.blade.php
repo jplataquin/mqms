@@ -109,11 +109,11 @@
                     Color legend: 
                     <br>  
                     <div>
-                        <span style="margin-left:5px;background-color:#add8e6;border:solid 1px #000000">__</span> - A component is excluded from sumation due to incompatible unit or the item was explicitly flagged by user.  
-                        <span style="margin-left:5px;background-color:#fffec8;border:solid 1px #000000">__</span> - An item is excluded from sumation due to incompatible unit or the item was explicitly flagged by user.
+                        <span style="margin-left:10px;background-color:#add8e6;border:solid 1px #000000">__</span> - A component is excluded from sumation due to incompatible unit or the item was explicitly flagged by user.  
+                        <span style="margin-left:10px;background-color:#fffec8;border:solid 1px #000000">__</span> - An item is excluded from sumation due to incompatible unit or the item was explicitly flagged by user.
                     
-                        <span style="margin-left:5px;background-color:#ff0000;border:solid 1px #000000">__</span> - Red font indicates that the total is over budget.  
-                        <span style="margin-left:5px;background-color:#d3d3d3;border:solid 1px #000000">__</span> - Contract Item.
+                        <span style="margin-left:10px;background-color:#ff0000;border:solid 1px #000000">__</span> - Red font indicates that the total is over budget.  
+                        <span style="margin-left:10px;background-color:#d3d3d3;border:solid 1px #000000">__</span> - Contract Item.
                      </div>  
                 </td>
             </tr>
