@@ -152,6 +152,17 @@
         return str.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
     };
 
+    function setupRows(){
+        $q('.item').apply((el)=>{
+
+            el.onclick = (e)=>{
+                window.util.navTo('/project/section/contract_item/'+el.getAttribute('data-id')) ;
+            }
+        });
+    }
+
+    setupRows();
+
     search_filter.onkeyup = (e)=>{
         contract_items_container.innerHTML = '';
 
@@ -189,6 +200,9 @@
 
             contract_items_container.append(row);//append
         });
+
+        
+        setupRows();
     }
 
     printBtn.onclick = (e)=>{
@@ -268,13 +282,7 @@
         window.util.navTo('/project/section/contract_item/create/{{$section->id}}');
     }
 
-    $q('.item').apply((el)=>{
-
-        el.onclick = (e)=>{
-            window.util.navTo('/project/section/contract_item/'+el.getAttribute('data-id')) ;
-        }
-    });
-
+    
 </script>
 </div>
 @endsection
