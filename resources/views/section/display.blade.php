@@ -85,7 +85,17 @@
             </div>
             <div class="folder-form-body">
                 <div class="row">
-                    <div class="col-lg-12 col-sm-12 text-end">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="bi bi-search"></i>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control" id="searchFilter" placeholder="Search Code Item / Description">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 text-end">
                         <button id="createBtn" class="btn btn-warning">Create</button>
                     </div>
                 </div>
