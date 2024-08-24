@@ -134,7 +134,6 @@ html, body {
 
 #sidebar{
   background-color:#343a40;
-  padding-left:3px;
   padding-bottom:40px;
   overflow-y: scroll;
   position:fixed;
