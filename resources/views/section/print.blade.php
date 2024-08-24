@@ -108,7 +108,9 @@
                 <td colspan="15" style="width:100%">
                     Color legend:   
                     <br>
-                    <span style="background-color:#ADD8E6;color:#ADD8E6">_</span> - Component Item excluded from sumation due to incompatible unit or the item was explicitly flagged by user.  
+                    <span style="background-color:#add8e6;color:#add8e6">_</span> - Component is excluded from sumation due to incompatible unit or the item was explicitly flagged by user.  
+
+                    <span style="background-color:#fffec8;color:#fffec8">_</span> - Component is excluded from sumation due to incompatible unit or the item was explicitly flagged by user.  
                 </td>
             </tr>
         
