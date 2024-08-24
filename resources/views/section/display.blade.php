@@ -101,7 +101,7 @@
                 </div>
             </div>
         </div>
-        <div id="contract_items" class="mt-3">
+        <div id="contract_items_container" class="mt-3">
             @foreach($contract_items as $contract_item)
 
                 <div class="item item-container fade-in" data-id="{{$contract_item->id}}">
@@ -127,16 +127,36 @@
 <script type="module">
     import {$q,$el, Template} from '/adarna.js';
 
-    let sectionName                 = $q('#sectionName').first();
-    let editBtn                     = $q('#editBtn').first();
-    let updateBtn                   = $q('#updateBtn').first();
-    let cancelBtn                   = $q('#cancelBtn').first();
-    let deleteBtn                   = $q('#deleteBtn').first();
+    const sectionName                 = $q('#sectionName').first();
+    const search_filter               = $q("#searchFilter").first();
+    const contract_items_container    = $q('#contract_items_container').first();
+    const editBtn                     = $q('#editBtn').first();
+    const updateBtn                   = $q('#updateBtn').first();
+    const cancelBtn                   = $q('#cancelBtn').first();
+    const deleteBtn                   = $q('#deleteBtn').first();
 
-    let createBtn                   = $q('#createBtn').first();
-    let printBtn                    = $q('#printBtn').first();
+    const createBtn                   = $q('#createBtn').first();
+    const printBtn                    = $q('#printBtn').first();
+    
 
-    const unit_options = @json($unit_options);
+    const unit_options             = @json($unit_options);
+    const contract_items_record    = @json($contract_items);
+
+    const t = new Template();
+
+    search_filter.onkeyup = (e)=>{
+        contract_items_container.innerHTML = '';
+
+        let query = search_filter.value;
+
+        var re = new RegExp(query, 'i');
+
+        let result = contract_items_record.filter((item)=>{
+            return item.description.match(re) || item.item_code.match(re);
+        });
+
+        console.log(result);
+    }
 
     printBtn.onclick = (e)=>{
         e.preventDefault();
