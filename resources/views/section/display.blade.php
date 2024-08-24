@@ -164,25 +164,26 @@
         }
 
         result.map(res=>{
-            contract_item_container.append(
-                t.div({class:'item item-container fade-in',dataId:res.id},()=>{
+
+            let row = t.div({class:'item item-container fade-in',dataId:res.id},()=>{
                     
-                    t.div({class:'item-header'},res.description);
+                t.div({class:'item-header'},res.description);
 
-                    t.div({class:'item-body row'},()=>{
-                        t.div({class:'col-6'},()=>{
-                            t.txt(res.item_code);
-                        });
-
-                        t.div({class:'col-6'},()=>{
-
-                            if(typeof unit_options[res.unit_id] != 'undefined'){
-                                t.txt(unit_options[res.unit_id].text);
-                            }
-                        });
+                t.div({class:'item-body row'},()=>{
+                    t.div({class:'col-6'},()=>{
+                        t.txt(res.item_code);
                     });
-                })
-            );//append
+
+                    t.div({class:'col-6'},()=>{
+
+                        if(typeof unit_options[res.unit_id] != 'undefined'){
+                            t.txt(unit_options[res.unit_id].text);
+                        }
+                    });
+                });
+            });
+
+            contract_items_container.append(row);//append
         });
     }
 
