@@ -37,9 +37,9 @@
         <div id="side-bar-container">
             
             <nav id="sidebar" hx-boost="true" class="h-100">
-                <div class="text-end">
+                <div class="text-center">
                     <button id="close_nav_menu" class="btn w-100 btn-outline-secondary">
-                        <i class="bi bi-arrow-left-square"></i>
+                        <i class="bi bi-arrow-left-square"></i> Close
                     </button>
                 </div>
                 <div class="pe-3">
