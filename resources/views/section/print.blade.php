@@ -424,21 +424,21 @@
                 <th></th>
                 <th></th>
                 <th></th>
-                <th>Grand Total</th>
+                <th style="text-align:center">Grand Total</th>
                 <th style="text-align:right">
                     <!-- Contract Amount -->
                     P {{ number_format($grand_total_contract_amount,2) }}
                 </th>
                 <th></th>
                 <th></th>
-                <th>Grand Total</th>
+                <th style="text-align:center">Grand Total</th>
                 <th style="text-align:right" class="@if($grand_total_contract_amount < $grand_total_ref_1_amount) font-color-danger @endif">
                     P {{ number_format($grand_total_ref_1_amount,2) }}
                 </th>
                 <th></th>
                 <th></th>
                 <th></th>
-                <th>Grand Total</th>
+                <th style="text-align:center">Grand Total</th>
                 <th style="text-align:right" class="@if($grand_total_contract_amount < $grand_total_material_budget_amount) font-color-danger @endif">
                     <!-- Material Budget Amount -->
                     P {{ number_format($grand_total_material_budget_amount,2) }}
