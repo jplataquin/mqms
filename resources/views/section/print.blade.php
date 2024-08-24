@@ -419,7 +419,7 @@
             
             <!-- Footer --> 
 
-            <tr class=".bg-contract-item">
+            <tr class="bg-contract-item">
                 <th></th>
                 <th></th>
                 <th></th>
