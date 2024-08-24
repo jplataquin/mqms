@@ -391,6 +391,12 @@ html, body {
   .record-table-horizontal th {
     width: 50%;
   }
+
+  .folder-form-tab{
+    width: 80%;
+    min-width: 80%;
+    max-width: 80%;   
+  }
 }
 
 @media (max-width:481px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ 
@@ -408,6 +414,12 @@ html, body {
    
     width: 50%;
   }
+
+  .folder-form-tab{
+    width: 80%;
+    min-width: 80%;
+    max-width: 80%;   
+  }
 }
 @media (max-width:641px)  { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ 
   #side-bar-container{
@@ -423,6 +435,12 @@ html, body {
   .record-table-horizontal th {
    
     width: 50%;
+  }
+
+  .folder-form-tab{
+    width: 80%;
+    min-width: 80%;
+    max-width: 80%;   
   }
 }
 
