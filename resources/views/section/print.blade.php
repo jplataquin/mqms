@@ -46,7 +46,17 @@
         </style>
     
 <page id="main">
-    
+            
+
+<page_footer>
+        <table class="page_footer">
+            <tr>
+                <td style="width: 100%; text-align: right">
+                    page [[page_cu]]/[[page_nb]]
+                </td>
+            </tr>
+        </table>
+    </page_footer>
         @php
             function formatFactor($factor){
                 
@@ -446,6 +456,5 @@
 
         </table>
                      
-            Page [[page_cu]] of [[page_nb]]
         
 </page>
