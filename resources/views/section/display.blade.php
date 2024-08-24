@@ -109,11 +109,15 @@
                         {{$contract_item->description}}
                     </div>
                         
-                    <div class="item-body">
+                    <div class="item-body row">
+                        <div class="col-6">
                             {{$contract_item->item_code}}
+                        </div>
+                        <div class="col-6">
                             @if(isset($unit_options[ $contract_item->unit_id ]))
                                 {{$contract_item->contract_quantity}} {{ $unit_options[ $contract_item->unit_id ]->text }}
                             @endif
+                        </div>
                     </div>
                         
                 </div>
@@ -177,7 +181,7 @@
                     t.div({class:'col-6'},()=>{
 
                         if(typeof unit_options[res.unit_id] != 'undefined'){
-                            t.txt(unit_options[res.unit_id].text);
+                            t.txt(res.contract_quantity+' '+unit_options[res.unit_id].text);
                         }
                     });
                 });
