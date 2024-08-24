@@ -46,6 +46,7 @@
         </style>
     
 <page>
+    <page_header>
     <div id="main">
         @php
             function formatFactor($factor){
@@ -100,7 +101,7 @@
                 </td>
             </tr>
         </table>
-
+        </page_header>
         <br>
         <table border="1">
           
