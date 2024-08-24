@@ -30,7 +30,7 @@
     <div class="row">
 
         <div class="col-lg-12">
-            <table class="w-100 table">
+            <table class="record-table-horizontal">
                 <tbody>
                     <tr>
                         <th>Project</th>
@@ -95,11 +95,12 @@
             @foreach($contract_items as $contract_item)
 
                 <div class="item item-container fade-in" data-id="{{$contract_item->id}}">
-                    <div class="item-header">{{$contract_item->item_code}}</div>
+                    <div class="item-header">
+                        {{$contract_item->description}}
+                    </div>
                         
                     <div class="item-body">
-                            {{$contract_item->description}}
-
+                            {{$contract_item->item_code}}
                             @if(isset($unit_options[ $contract_item->unit_id ]))
                                 {{$contract_item->contract_quantity}} {{ $unit_options[ $contract_item->unit_id ]->text }}
                             @endif
