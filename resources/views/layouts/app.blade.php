@@ -37,8 +37,10 @@
         <div id="side-bar-container">
             
             <nav id="sidebar" hx-boost="true" class="h-100">
-                <div class="">
-                    
+                <div class="text-end">
+                    <button id="close_nav_menu" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left-square-fill"></i>
+                    </button>
                 </div>
                 <div class="text-center mb-3 mt-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#ffffff" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -188,13 +190,21 @@
     <script type="module">
         import {$q} from '/adarna.js';
 
-        const hamburger_button = $q('#hamburger_button').first();
-        const side_bar_container = $q('#side-bar-container').first();
-        
+        const hamburger_button      = $q('#hamburger_button').first();
+        const side_bar_container    = $q('#side-bar-container').first();
+        const close_nav_menu        = $q('#close_nav_menu').first();
+
         if(hamburger_button){
             hamburger_button.onclick = ()=>{
                 side_bar_container.style.display    = 'block';
                 hamburger_button.style.display      = 'none';
+            }
+        }
+
+        if(close_nav_menue){
+            close_nav_menu.onclick = ()=>{
+                side_bar_container.style.display    = 'none';
+                hamburger_button.style.display      = 'block';
             }
         }
 
