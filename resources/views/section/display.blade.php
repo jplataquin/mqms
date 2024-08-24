@@ -163,46 +163,57 @@
 
     setupRows();
 
+    let throttle = false;
+
     search_filter.onkeyup = (e)=>{
-        contract_items_container.innerHTML = '';
 
-        let query = search_filter.value;
+        if(throttle) return true;
+        
+        throttle = true;
 
-        var re = new RegExp(escapeRegex(query), 'i');
+        setTimout(()=>{
+            
 
-        let result = contract_items_record.filter((item)=>{
-            return item.description.match(re) || item.item_code.match(re);
-        });
+            contract_items_container.innerHTML = '';
 
-        if(!result){
-            return false;
-        }
+            let query = search_filter.value;
 
-        result.map(res=>{
+            var re = new RegExp(escapeRegex(query), 'i');
 
-            let row = t.div({class:'item item-container fade-in',dataId:res.id},()=>{
-                    
-                t.div({class:'item-header'},res.description);
-
-                t.div({class:'item-body row'},()=>{
-                    t.div({class:'col-6'},()=>{
-                        t.txt(res.item_code);
-                    });
-
-                    t.div({class:'col-6'},()=>{
-
-                        if(typeof unit_options[res.unit_id] != 'undefined'){
-                            t.txt(res.contract_quantity+' '+unit_options[res.unit_id].text);
-                        }
-                    });
-                });
+            let result = contract_items_record.filter((item)=>{
+                return item.description.match(re) || item.item_code.match(re);
             });
 
-            contract_items_container.append(row);//append
-        });
+            if(!result){
+                return false;
+            }
 
-        
-        setupRows();
+            result.map(res=>{
+
+                let row = t.div({class:'item item-container fade-in',dataId:res.id},()=>{
+                        
+                    t.div({class:'item-header'},res.description);
+
+                    t.div({class:'item-body row'},()=>{
+                        t.div({class:'col-6'},()=>{
+                            t.txt(res.item_code);
+                        });
+
+                        t.div({class:'col-6'},()=>{
+
+                            if(typeof unit_options[res.unit_id] != 'undefined'){
+                                t.txt(res.contract_quantity+' '+unit_options[res.unit_id].text);
+                            }
+                        });
+                    });
+                });
+
+                contract_items_container.append(row);//append
+            });
+            setupRows();
+
+            throttle = false;
+        },500);
     }
 
     printBtn.onclick = (e)=>{
