@@ -389,8 +389,7 @@ html, body {
   }
 
   .record-table-horizontal th {
-    font-weight: bold;
-    padding: 5px;
+    width: 50%;
   }
 }
 
@@ -406,8 +405,8 @@ html, body {
   }
 
   .record-table-horizontal th {
-    font-weight: bold;
-    padding: 5px;
+   
+    width: 50%;
   }
 }
 @media (max-width:641px)  { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ 
@@ -422,8 +421,8 @@ html, body {
   }
 
   .record-table-horizontal th {
-    font-weight: bold;
-    padding: 5px;
+   
+    width: 50%;
   }
 }
 
