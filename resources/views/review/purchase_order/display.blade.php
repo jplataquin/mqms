@@ -62,11 +62,11 @@
         </tbody>
     </table>
 
-    <div class="form-container">
-        <div class="form-header">
+    <div class="folder-form-container">
+        <div class="folder-form-tab">
             Review Purchase Order
         </div>
-        <div lass="form-body">
+        <div class="folder-form-body">
             <div class="row">
                 <div class="col-6">
                     <div class="form-group">
@@ -83,7 +83,7 @@
             </div>
         </div>
     </div>
-    
+
         <hr>
         <div id="item_container">
             
