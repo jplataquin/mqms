@@ -98,8 +98,8 @@
 
             <div class="row">
                 <div class="col-12 canvass-container" id="canvass_{{$item->id}}">
-                    <div class="text-center bg-divider">
-                        <h5>Canvass Items</h5>
+                    <div class="folder-form-container">
+                        <div class="folder-form-tab">Canvass Items</div>
                     </div>
                 </div>
                 <div class="text-center mt-3">
