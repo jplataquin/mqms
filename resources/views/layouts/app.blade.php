@@ -272,7 +272,7 @@
             
             if(xhr.status == 403){  
                 document.location.href = '/login';
-                return false;
+            
             }
 
             if (xhr.status == 500 || xhr.status == 404) {
