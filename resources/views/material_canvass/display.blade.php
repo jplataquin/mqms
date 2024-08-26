@@ -97,7 +97,9 @@
             </div>
 
             <div class="row">
-                <div class="col-12 canvass-container" id="canvass_{{$item->id}}"></div>
+                <div class="col-12 canvass-container" id="canvass_{{$item->id}}">
+                    <h5>Canvass Items</h5>
+                </div>
                 <div class="text-center mt-3">
                     <button data-id="{{$item->id}}" class="add-canvass-btn btn btn-primary w-100">Add Canvass</button>
                 </div>
