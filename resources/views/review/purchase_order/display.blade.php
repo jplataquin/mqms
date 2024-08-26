@@ -91,7 +91,8 @@
 
             @foreach($componentItemMaterialsArr as $id => $items)
 
-                <div class="mb-3">
+                <div class="mb-3 border rounded p-3">
+               
                 <h5>{{ $componentItemArr[$id]->name }}</h5>
 
                 
