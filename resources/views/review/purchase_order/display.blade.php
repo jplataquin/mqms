@@ -92,7 +92,7 @@
             @foreach($componentItemMaterialsArr as $id => $items)
 
                 <div class="mb-3">
-                <h3>{{ $componentItemArr[$id]->name }}</h3>
+                <h6>{{ $componentItemArr[$id]->name }}</h6>
 
                 
                 @foreach($items as $item)
