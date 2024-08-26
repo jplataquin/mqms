@@ -121,7 +121,7 @@
                                         }
                                     }
                                 @endphp
-                                <input type="text" class="form-control bg-danger  @if($item->quantity > $remaining_quantity) bg-danger @endif" disabled="true" value="{{$item->quantity}}"/>
+                                <input type="text" class="form-control border-danger  @if($item->quantity > $remaining_quantity) bg-danger @endif" disabled="true" value="{{$item->quantity}}"/>
                             </div>
                         </div>
                         <div class="col-2">
