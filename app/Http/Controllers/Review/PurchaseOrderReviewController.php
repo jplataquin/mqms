@@ -102,6 +102,7 @@ class PurchaseOrderReviewController extends Controller
         $project                = $materialQuantityRequest->Project;
         $section                = $materialQuantityRequest->Section;
         $component              = $materialQuantityRequest->Component;
+        $material_reqeust_items = $materialQuantityRequest->Items;
         
         $componentItems         = $component->ComponentItems;
         $paymentTerm            = $purchaseOrder->PaymentTerm;
@@ -111,6 +112,18 @@ class PurchaseOrderReviewController extends Controller
         $material_item_id_arr                = [];
         $componentItemMaterialsArr      = [];
         $componentItemArr               = [];
+
+        //Arrange requested quantity value for easy access
+        $requested_quantity_arr = [];
+
+        foreach($material_reqeust_items as $mr_item){
+            
+            if( !isset($requested_quantity_arr[$mr_item->component_item_id]) ){
+                $requested_quantity_arr[$mr_item->component_item_id] = [];
+            }
+
+            $requested_quantity_arr[$mr_item->component_item_id][$mr_item->material_item_id] = $mr_item->requested_quantity;
+        }
 
         //Arrange items into component item
         foreach($items as $item){
@@ -124,6 +137,7 @@ class PurchaseOrderReviewController extends Controller
 
             $componentItemMaterialsArr[$item->component_item_id][] = $item;
         }
+        
         
         //Arrange component items
         foreach($componentItems as $componentItem){
@@ -143,6 +157,7 @@ class PurchaseOrderReviewController extends Controller
         return view('review/purchase_order/display',[
             'purchase_order'            => $purchaseOrder,
             'material_quantity_request' => $materialQuantityRequest,
+            'requested_quantity_arr'    => $requested_quantity_arr,
             'project'                   => $project,
             'section'                   => $section,
             'component'                 => $component,

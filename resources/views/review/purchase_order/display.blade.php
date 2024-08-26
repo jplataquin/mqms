@@ -105,7 +105,16 @@
                         <div class="col-2">
                             <div class="form-group">
                                 <label>Order Quantity</label>
-                                <input type="text" class="form-control" disabled="true" value="{{$item->quantity}}"/>
+                                @php 
+                                    $requested_quantity = 0;
+
+                                    if(isset($requested_quantity_arr[$id])){
+                                        if( isset($requested_quantity_arr[$id][$item->material_item_id]) ){
+                                            $requested_quantity = $requested_quantity_arr[$id][$item->material_item_id];
+                                        }
+                                    }
+                                @endphp
+                                <input type="text" class="form-control" disabled="true" value="{{$item->quantity}} / {{$requsted_quantity}}"/>
                             </div>
                         </div>
                         <div class="col-2">

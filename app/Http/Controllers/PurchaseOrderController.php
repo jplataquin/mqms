@@ -300,9 +300,9 @@ class PurchaseOrderController extends Controller
         }
 
 
-        $purchase_options                   = [];
-        $supplier_options              = [];
-        $payment_terms_options   =       [];
+        $purchase_options               = [];
+        $supplier_options               = [];
+        $payment_terms_options          = [];
 
         foreach($materialQuantityRequestItems as $item){
 
