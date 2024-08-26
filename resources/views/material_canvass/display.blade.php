@@ -79,25 +79,25 @@
                     $component_item = $component_item_arr[ $item->component_item_id ];
                     $material_item = $material_item_arr[$item->material_item_id];
                 @endphp
-                <div class="col-6">
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label>Material</label>
                         <input type="text" class="form-control" disabled="true" value="{{$material_item->brand}} {{$material_item->name}} {{$material_item->specification_unit_packaging}}"/>
                     </div>
                 </div>
 
-                <div class="col-3">
+                <div class="col-lg-3">
                     <label>Quantity</label>
                     <input type="text" class="form-control" disabled="true" value="{{ $item->requested_quantity }}"/>
                 </div>
-                <div class="col-3">
+                <div class="col-lg-3">
                     <label>Budget Price</label>
                     <input type="text" class="form-control" disabled="true" value="P {{ number_format($component_item->budget_price,2) }}"/>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-12 canvass-container" >
+                <div class="col-lg-12 canvass-container" >
                     <div class="folder-form-container">
                         <div class="folder-form-tab">Canvass Items</div>
                         <div class="folder-form-body" >
