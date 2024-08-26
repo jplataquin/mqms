@@ -266,9 +266,21 @@
         });
 
 
+        //Detect htmx erros
+        htmx.on("htmx:beforeOnLoad", function (event) {
+            const xhr = event.detail.
+            
+            if(xhr.status == 403){  
+                event.stopPropagation();
+                document.location.href = '/login';
+                return false;
+            }
 
-        htmx.on('htmx:afterRequest',(e)=>{
-            console.log(e);
+            if (xhr.status == 500 || xhr.status == 404) {
+                event.stopPropagation() // Tell htmx not to process these requests
+                window.util.alert('Error','Something went wrong ('+xhr.status+')');
+                return false;
+            }
         });
     </script>
 </body>
