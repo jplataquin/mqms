@@ -100,6 +100,7 @@
                 <div class="col-12 canvass-container" id="canvass_{{$item->id}}">
                     <div class="folder-form-container">
                         <div class="folder-form-tab">Canvass Items</div>
+                        <div class="folder-form-body">&nbsp;</div>
                     </div>
                 </div>
                 <div class="text-center mt-3">
