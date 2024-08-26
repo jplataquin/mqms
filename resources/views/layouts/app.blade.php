@@ -267,7 +267,7 @@
 
 
 
-        htmx.on('htmx:afterRequest'(e)=>{
+        htmx.on('htmx:afterRequest',(e)=>{
             console.log(e);
         });
     </script>
