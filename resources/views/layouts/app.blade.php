@@ -269,12 +269,9 @@
         //Detect htmx erros
         htmx.on("htmx:beforeOnLoad", function (event) {
             const xhr = event.detail;
-            
-            console.log(xhr.pathInfo.responsePath);
-            console.log(xhr.status);
-            
-            if(xhr.status == 403){  
-                console.log('here');
+        
+            if(xhr.pathInfo.responsePath == '/login'){  
+               
                 event.stopPropagation() // Tell htmx not to process these requests
                 document.location.href = '/login';
                 return false;
