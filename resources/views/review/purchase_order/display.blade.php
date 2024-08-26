@@ -30,7 +30,7 @@
                 <td>{{ str_pad($purchase_order->id,6,0,STR_PAD_LEFT) }}</td>
             </tr>
             <tr>
-                <th>Material Quantity Request ID</th>
+                <th>Material Request ID</th>
                 <td>{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}</td>
             </tr>
             <tr>
@@ -92,7 +92,7 @@
             @foreach($componentItemMaterialsArr as $id => $items)
 
                 <div class="mb-3">
-                <h6>{{ $componentItemArr[$id]->name }}</h6>
+                <h5>{{ $componentItemArr[$id]->name }}</h5>
 
                 
                 @foreach($items as $item)
