@@ -62,21 +62,28 @@
         </tbody>
     </table>
 
-
-        <div class="row">
-            <div class="col-6">
-                <div class="form-group">
-                    <label>Supplier</label>
-                    <input type="text" class="form-control" value="{{$supplier->name}}" id="supplier" disabled="true"/>
+    <div class="form-container">
+        <div class="form-header">
+            Review Purchase Order
+        </div>
+        <div lass="form-body">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Supplier</label>
+                        <input type="text" class="form-control" value="{{$supplier->name}}" id="supplier" disabled="true"/>
+                    </div>
                 </div>
-            </div>
-            <div class="col-6">
-                <div class="form-group">
-                    <label>Payment Terms</label>
-                    <input type="text" class="form-control" value="{{$payment_term->text}}" id="payment_term" disabled="true"/>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Payment Terms</label>
+                        <input type="text" class="form-control" value="{{$payment_term->text}}" id="payment_term" disabled="true"/>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+    
         <hr>
         <div id="item_container">
             
