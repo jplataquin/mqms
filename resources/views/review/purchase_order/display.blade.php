@@ -114,7 +114,7 @@
                                         }
                                     }
                                 @endphp
-                                <input type="text" class="form-control" disabled="true" value="{{$item->quantity}} / {{$requsted_quantity}}"/>
+                                <input type="text" class="form-control" disabled="true" value="{{$item->quantity}} / {{$requested_quantity}}"/>
                             </div>
                         </div>
                         <div class="col-2">
