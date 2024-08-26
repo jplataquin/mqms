@@ -271,7 +271,6 @@
             const xhr = event.detail;
             
             if(xhr.status == 403){  
-                event.stopPropagation();
                 document.location.href = '/login';
                 return false;
             }
