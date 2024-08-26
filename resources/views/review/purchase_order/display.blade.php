@@ -122,6 +122,9 @@
                                     }
                                 @endphp
                                 <input type="text" class="form-control is-invalid  @if($item->quantity > $remaining_quantity) bg-danger @endif" disabled="true" value="{{$item->quantity}}"/>
+                                <div class="invalid-feedback">
+                                    Order quantity is more than the available quantity
+                                </div>
                             </div>
                         </div>
                         <div class="col-2">
