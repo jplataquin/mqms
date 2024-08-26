@@ -267,7 +267,7 @@
 
 
         //Detect htmx erros
-        htmx.on("htmx:beforeOnLoad", function (event) {
+        htmx.on("htmx:afterOnLoad", function (event) {
             const xhr = event.detail;
             
             console.log(xhr);
