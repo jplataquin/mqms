@@ -270,9 +270,13 @@
         htmx.on("htmx:beforeOnLoad", function (event) {
             const xhr = event.detail;
             
-            if(xhr.status == 403){  
-                document.location.href = '/login';
+            console.log(xhr.status);
             
+            if(xhr.status == 403){  
+                console.log('here');
+                event.stopPropagation() // Tell htmx not to process these requests
+                document.location.href = '/login';
+                return false;
             }
 
             if (xhr.status == 500 || xhr.status == 404) {
