@@ -50,7 +50,7 @@ class CanvassItem extends Component{
                 
                 if(!this._model.approvalFlag){
                     
-                    t.div({class:'col-1'},()=>{
+                    t.div({class:'col-lg-1'},()=>{
                     
                         t.div({class:'form-group'},(el)=>{
                             t.label('Status');
@@ -61,7 +61,7 @@ class CanvassItem extends Component{
                     });
                 }
 
-                t.div({class:'col-3'},()=>{
+                t.div({class:'col-lg-3'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label('Supplier');
 
@@ -71,7 +71,7 @@ class CanvassItem extends Component{
                 });
                 
 
-                t.div({class:'col-3'},()=>{
+                t.div({class:'col-lg-3'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label('Payment Terms');
 
@@ -80,7 +80,7 @@ class CanvassItem extends Component{
                     });
                 });
 
-                t.div({class:'col-2'},()=>{
+                t.div({class:'col-lg-2'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label('Price');
 
@@ -88,7 +88,7 @@ class CanvassItem extends Component{
 
                     });
                 });
-                t.div({class:'col-2'},()=>{
+                t.div({class:'col-lg-2'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label('Total');
                         this.el.total = t.input({class:'form-control',disabled:true});
@@ -103,7 +103,7 @@ class CanvassItem extends Component{
 
                 if(this._model.approvalFlag && this._model.status == 'PEND'){
 
-                    t.div({class:'col-1'},()=>{
+                    t.div({class:'col-lg-1'},()=>{
                         t.div({class:'form-group'},(el)=>{
                             t.label('&nbsp;');
 
@@ -112,7 +112,7 @@ class CanvassItem extends Component{
                         });
                     });
 
-                    t.div({class:'col-1'},()=>{
+                    t.div({class:'col-lg-1'},()=>{
                         t.div({class:'form-group'},(el)=>{
                             t.label('&nbsp;');
 
@@ -123,7 +123,7 @@ class CanvassItem extends Component{
 
                 }else if(!this._model.approvalFlag && (this._model.status == 'PEND' || this._model.status == '')){
 
-                    t.div({class:'col-1'},()=>{
+                    t.div({class:'col-lg-1'},()=>{
                         t.div({class:'form-group'},(el)=>{
                             t.label('&nbsp;');
 
@@ -134,7 +134,7 @@ class CanvassItem extends Component{
                     
                 }else if(this._model.status == 'APRV'){
                     
-                    t.div({class:'col-1'},()=>{
+                    t.div({class:'col-lg-1'},()=>{
                         t.div({class:'form-group'},(el)=>{
                             t.label('&nbsp;');
 
@@ -145,7 +145,7 @@ class CanvassItem extends Component{
 
                 }else if(this._model.status == 'DPRV' || this._model.status == 'VOID'){
                     
-                    t.div({class:'col-1'},()=>{
+                    t.div({class:'col-lg-1'},()=>{
                         t.div({class:'form-group'},(el)=>{
                             t.label('&nbsp;');
 
