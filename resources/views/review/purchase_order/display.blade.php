@@ -68,13 +68,13 @@
         </div>
         <div class="folder-form-body">
             <div class="row">
-                <div class="col-6">
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label>Supplier</label>
                         <input type="text" class="form-control" value="{{$supplier->name}}" id="supplier" disabled="true"/>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label>Payment Terms</label>
                         <input type="text" class="form-control" value="{{$payment_term->text}}" id="payment_term" disabled="true"/>
@@ -153,7 +153,7 @@
         </div>
         
         <div class="d-flex justify-content-end">
-            <table class="table w-50 table-border">
+            <table class="table w-auto table-border">
                 <tr>
                     <td>
                         <input type="text" disabled="true" value="Sub Total" class="form-control"/>
