@@ -97,7 +97,7 @@
                 
                 @foreach($items as $item)
                     <div class="row mb-3">
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="form-group">
                                 <label>Material Item</label>
                                 <input type="text" class="form-control" disabled="true" value="{{ $materialItemArr[ $item->material_item_id]->brand }} {{ $materialItemArr[ $item->material_item_id]->name }} {{ $materialItemArr[ $item->material_item_id]->specification_unit_packaging }}"/>
@@ -111,7 +111,7 @@
                         </div>
                         <div class="col-2">
                             <div class="form-group">
-                                <label>Order Quantity / Remaining</label>
+                                <label>Order Quantity </label>
                                 @php 
                                     $remaining_quantity = 0;
 
@@ -121,7 +121,14 @@
                                         }
                                     }
                                 @endphp
-                                <input type="text" class="form-control" disabled="true" value="{{$item->quantity}} / {{$remaining_quantity}}"/>
+                                <input type="text" class="form-control bg-danger  @if($item->quantity > $remaining_quantity) bg-danger @endif" disabled="true" value="{{$item->quantity}}"/>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label>Available Quantity</label>
+                                
+                                <input type="text" class="form-control" disabled="true" value="{{$remaining_quantity}}"/>
                             </div>
                         </div>
                         <div class="col-2">
