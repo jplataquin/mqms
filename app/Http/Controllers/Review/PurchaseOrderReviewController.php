@@ -122,7 +122,7 @@ class PurchaseOrderReviewController extends Controller
                 $remaining_quantity_arr[$mr_item->component_item_id] = [];
             }
 
-            $total_poed = PurchaseOrderItem::where('compoinent_item_id',$mr_item->component_item_id)
+            $total_poed = PurchaseOrderItem::where('component_item_id',$mr_item->component_item_id)
             ->where('material_item_id',$mr_item->material_item_id)
             ->where('status','APRV')
             ->sum('quantity');
