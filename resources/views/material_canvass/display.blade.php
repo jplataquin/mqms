@@ -32,7 +32,7 @@
             <table class="record-table-horizontal mb-3">
                 <tbody>
                     <tr>
-                        <th width="230px">Material Quantity Request ID</th>
+                        <th width="230px">Material Request ID</th>
                         <td>{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
                     </tr>
                     <tr>
@@ -50,18 +50,6 @@
                     <tr>
                         <th>Status</th>
                         <td>{{$material_quantity_request->status}}</td>
-                    </tr>
-                    <tr>
-                        <th>Created By</th>
-                        <td>{{$material_quantity_request->CreatedByUser()->name}} {{$material_quantity_request->created_at}}</td>
-                    </tr>
-                    <tr>
-                        <th>Updated By</th>
-                        <td>{{$material_quantity_request->UpdatedByUser()->name}} {{$material_quantity_request->updated_at}}</td>
-                    </tr>
-                    <tr>
-                        <th>Approved By</th>
-                        <td>{{$material_quantity_request->ApprovedByUser()->name}} {{$material_quantity_request->approve_at}}</td>
                     </tr>
                     <tr>
                         <th>Description</th>
