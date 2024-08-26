@@ -104,17 +104,17 @@
                         </div>
                         <div class="col-2">
                             <div class="form-group">
-                                <label>Order Quantity</label>
+                                <label>Order Quantity / Remaining</label>
                                 @php 
-                                    $requested_quantity = 0;
+                                    $remaining_quantity = 0;
 
-                                    if(isset($requested_quantity_arr[$id])){
-                                        if( isset($requested_quantity_arr[$id][$item->material_item_id]) ){
-                                            $requested_quantity = $requested_quantity_arr[$id][$item->material_item_id];
+                                    if(isset($remaining_quantity_arr[$id])){
+                                        if( isset($remaining_quantity_arr[$id][$item->material_item_id]) ){
+                                            $remaining_quantity = $remaining_quantity_arr[$id][$item->material_item_id];
                                         }
                                     }
                                 @endphp
-                                <input type="text" class="form-control" disabled="true" value="{{$item->quantity}} / {{$requested_quantity}}"/>
+                                <input type="text" class="form-control" disabled="true" value="{{$item->quantity}} / {{$remaining_quantity}}"/>
                             </div>
                         </div>
                         <div class="col-2">

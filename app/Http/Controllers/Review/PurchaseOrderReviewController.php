@@ -113,16 +113,21 @@ class PurchaseOrderReviewController extends Controller
         $componentItemMaterialsArr      = [];
         $componentItemArr               = [];
 
-        //Arrange requested quantity value for easy access
-        $requested_quantity_arr = [];
+        //Arrange remaining quantity value for easy access
+        $remaining_quantity_arr = [];
 
         foreach($material_reqeust_items as $mr_item){
             
-            if( !isset($requested_quantity_arr[$mr_item->component_item_id]) ){
-                $requested_quantity_arr[$mr_item->component_item_id] = [];
+            if( !isset($remaining_quantity_arr[$mr_item->component_item_id]) ){
+                $remaining_quantity_arr[$mr_item->component_item_id] = [];
             }
 
-            $requested_quantity_arr[$mr_item->component_item_id][$mr_item->material_item_id] = $mr_item->requested_quantity;
+            $total_poed = PurchaseOrderItem::where('compoinent_item_id',$mr_item->component_item_id)
+            ->where('material_item_id',$mr_item->material_item_id)
+            ->where('status','APRV')
+            ->sum('quantity');
+
+            $remaining_quantity_arr[$mr_item->component_item_id][$mr_item->material_item_id] = $mr_item->requested_quantity - $total_poed;
         }
 
         //Arrange items into component item
@@ -157,7 +162,7 @@ class PurchaseOrderReviewController extends Controller
         return view('review/purchase_order/display',[
             'purchase_order'            => $purchaseOrder,
             'material_quantity_request' => $materialQuantityRequest,
-            'requested_quantity_arr'    => $requested_quantity_arr,
+            'remaining_quantity_arr'    => $remaining_quantity_arr,
             'project'                   => $project,
             'section'                   => $section,
             'component'                 => $component,
