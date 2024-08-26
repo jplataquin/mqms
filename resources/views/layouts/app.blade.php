@@ -268,7 +268,7 @@
 
         //Detect htmx erros
         htmx.on("htmx:beforeOnLoad", function (event) {
-            const xhr = event.detail.
+            const xhr = event.detail;
             
             if(xhr.status == 403){  
                 event.stopPropagation();
