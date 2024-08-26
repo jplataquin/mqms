@@ -270,7 +270,7 @@
         htmx.on("htmx:beforeOnLoad", function (event) {
             const xhr = event.detail;
             
-            console.log(xhr.status);
+            console.log(xhr);
             
             if(xhr.status == 403){  
                 console.log('here');
