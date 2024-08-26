@@ -270,7 +270,7 @@
         htmx.on("htmx:beforeOnLoad", function (event) {
             const xhr = event.detail;
             
-            console.log(event);
+            console.log(xhr.pathInfo.responsePath);
             console.log(xhr.status);
             
             if(xhr.status == 403){  
