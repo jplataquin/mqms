@@ -73,6 +73,10 @@ html, body {
  
 }
 
+.bg-divider{
+  background-color: #ccc;
+}
+
 #bar{
   background-color: #282727;
   height:40px;
