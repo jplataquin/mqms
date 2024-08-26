@@ -3,41 +3,35 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs">
+<div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="#">
+                <a href="/review/purchase_orders">
                     <span>
                        Review
                     </span>
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <span>
-                       Purchase Order
-                    </span>
-                </a>
-            </li>
-            <li>
                 <a href="#" class="active">
                     <span>
-                        Display
-                    </span>		
+                       Purchase Orders
+                    </span>
+                    <i class="ms-2 bi bi-display"></i>
                 </a>
             </li>
         </ul>
     </div>
 <hr>
-    <table class="table">
+    <table class="record-table-horizontal">
         <tbody>
             <tr>
                 <th>PO Number</th>
-                <td>{{$purchase_order->id}}</td>
+                <td>{{ str_pad($purchase_order->id,6,0,STR_PAD_LEFT) }}</td>
             </tr>
             <tr>
                 <th>Material Quantity Request ID</th>
-                <td>{{$material_quantity_request->id}}</td>
+                <td>{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}</td>
             </tr>
             <tr>
                 <th>Project</th>
@@ -56,8 +50,8 @@
                 <td>{{$purchase_order->status}}</td>
             </tr>
             <tr>
-                <th>Date Created</th>
-                <td>{{$purchase_order->created_at}}</td>
+                <th>Created By</th>
+                <td>{{$purchase_order->createdByUser()->name}} {{$purchase_order->created_at}}</td>
             </tr>
             <tr>
                 <th>Description</th>
@@ -67,6 +61,7 @@
             </tr>
         </tbody>
     </table>
+
 
         <div class="row">
             <div class="col-6">
@@ -138,7 +133,17 @@
                         <input type="text" id="sub_total" disabled="true" value="{{$sub_total}}" class="form-control"/>
                     </td>
                 </tr>
-                
+
+                <tr>
+                    <th colspan="2" class="text-center">
+                        Additional Charges / Discounts
+                    </th>
+                </tr>
+                <tr>
+                    <th class="text-center">Particular</th>
+                    <th class="text-center">Amount</th>
+                </tr>
+
                 @php $grand_total = $sub_total @endphp
 
                 @foreach($extras as $extra)

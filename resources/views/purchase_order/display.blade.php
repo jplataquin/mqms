@@ -168,17 +168,15 @@
                     </td>
                 </tr>
 
-                @if($extras)
-                    <tr>
-                        <th colspan="2" class="text-center">
-                            Additional Charges / Discounts
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="text-center">Particular</th>
-                        <th class="text-center">Amount</th>
-                    </tr>
-                @endif
+                <tr>
+                    <th colspan="2" class="text-center">
+                        Additional Charges / Discounts
+                    </th>
+                </tr>
+                <tr>
+                    <th class="text-center">Particular</th>
+                    <th class="text-center">Amount</th>
+                </tr>
 
                 @php $grand_total = $sub_total @endphp
 

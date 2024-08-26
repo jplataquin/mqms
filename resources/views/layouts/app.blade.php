@@ -269,7 +269,8 @@
         //Detect htmx erros
         htmx.on("htmx:beforeOnLoad", function (event) {
             const xhr = event.detail;
-        
+            
+            //Catch logout scenario
             if(xhr.pathInfo.responsePath == '/login'){  
                
                 event.stopPropagation() // Tell htmx not to process these requests
