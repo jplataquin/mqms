@@ -344,7 +344,7 @@
                 break;
             case '4': //As equivalent factor
 
-                component_item_equivalent.value = ( parseFloat(component_item_variable.value) *  parseFloat(component_item_quantity) ) * parseInt('{{$component->use_count}}'); 
+                component_item_equivalent.value = ( parseFloat(component_item_variable.value) *  parseFloat(component_item_quantity.value) ) * parseInt('{{$component->use_count}}'); 
                 
                 return true;
                 
