@@ -609,6 +609,10 @@ class ComponentItem extends Component{
         this.el.ref_1_unit_id.disabled      = !newVal;
         this.el.ref_1_unit_price.disabled   = !newVal;
 
+        if(this.el.function_type.value == 4){
+            this.el.quantity.disabled = !newVal;
+        }
+
         //Editable (true)
         if(newVal){
 
