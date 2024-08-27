@@ -151,9 +151,9 @@
                         <label>Function Type</label>
                         <select id="component_item_function_type" class="form-control">
                             <option value="3">As Direct</option>
-                            <option value="4">As Equivalent Factor <<</option>
-                            <option value="1">As Result Factor >></option>
-                            <option value="2">As Result Divisor >></option>
+                            <option value="4">As Equivalent Factor</option>
+                            <option value="1">As Result Factor</option>
+                            <option value="2">As Result Divisor</option>
                         </select>
                     </div>
                 </div>
@@ -279,6 +279,10 @@
         return window.util.inputNumber(component_item_variable,e,6,false);
     }
 
+    component_item_quantity.onkeypress = (e)=>{
+        return window.util.inputNumber(component_item_quantity,e,2,false);
+    }
+
     component_item_function_type.onchange = (e) =>{
         
         switch(component_item_function_type.value){
@@ -300,8 +304,7 @@
         }
         
         
-        component_item_variable.value = '';
-        component_item_quantity.value = '';
+        component_item_variable.onkeyup();
     }
 
     component_item_variable.onkeyup = (e)=>{
@@ -327,11 +330,6 @@
 
                     component_item_quantity.value = component_item_variable.value;
                     
-                break;
-
-            case '4': //Left hand factor
-
-
                 break;
 
 

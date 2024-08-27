@@ -480,8 +480,30 @@ class ComponentItem extends Component{
         this.el.variable.onkeypress = (e)=>{
             return window.util.inputNumber(this.el.variable,e,6,false);
         }
+
+        this.el.quantity.onkeypress = (e)=>{
+            return window.util.inputNumber(this.el.quantity,e,2,false);
+        }
     
         this.el.function_type.onchange = (e) =>{
+            switch(this.el.function_type.value){
+                case '1': //Right hand factor
+                case '2': //Right hand divior
+                case '3': //Direct
+    
+                        this.el.variable.disabled = false;
+                        this.el.quantity.disabled = true;
+    
+                    break;
+    
+                case '4': //Left hand factor
+    
+                        this.el.variable.disabled = false;
+                        this.el.quantity.disabled = false;
+                    break;
+    
+            }
+
             this.el.variable.onkeyup();   
         }
     
