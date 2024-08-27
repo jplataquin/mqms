@@ -148,8 +148,8 @@ class ComponentItem extends Component{
 
                t.tbody({class:'mb-3 p-3'},()=>{
                     t.tr(()=>{
-                        t.th({colspan:6},'Name');
-                        t.th({colspan:1},'Sum Flag');
+                        t.th({colspan:5},'Name');
+                        t.th({colspan:2},'Sum Flag');
                     });
 
                     t.tr(()=>{
