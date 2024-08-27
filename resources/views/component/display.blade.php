@@ -287,7 +287,7 @@
         switch(component_item_function_type.value){
             case '1':
 
-                    component_item_quantity.value = Math.ceil( 
+                    component_item_quantity.value = window.util.roundTwoDecimal(
                         (parseFloat('{{$component->quantity}}') * component_item_variable.value)  / parseInt('{{$component->use_count}}')
                     );
 
@@ -295,7 +295,7 @@
 
             case '2':
 
-                    component_item_quantity.value = Math.ceil( 
+                    component_item_quantity.value = window.util.roundTwoDecimal( 
                         (parseFloat('{{$component->quantity}}') / component_item_variable.value)  / parseInt('{{$component->use_count}}')
                     );
 
