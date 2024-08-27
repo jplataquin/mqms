@@ -481,7 +481,7 @@ class ComponentItem extends Component{
             this.setState('ref_1_quantity',this.el.ref_1_quantity.value);
             this.setState('ref_1_unit_id',this.el.ref_1_unit_id.value);
             this.setState('ref_1_unit_price',this.el.ref_1_unit_price.value);
-
+            
             this.updateMaterialList();
 
             signal.broadcast('set-component-status','PEND');
@@ -684,6 +684,8 @@ class ComponentItem extends Component{
             this.setState('ref_1_unit_id',reply.data.ref_1_unit_id);
             this.setState('ref_1_unit_price',reply.data.ref_1_unit_price);
             
+
+
             this.el.name.value                  = reply.data.name;
             this.el.budget_price.value          = reply.data.budget_price;
             this.el.quantity.value              = reply.data.quantity;
@@ -694,14 +696,15 @@ class ComponentItem extends Component{
             this.el.ref_1_unit_id.value         = reply.data.ref_1_unit_id;
             this.el.ref_1_unit_price.value      = reply.data.ref_1_unit_price;
             
+            
             if(reply.data.sum_flag){
                 this.el.sum_flag.checked = true;
             }else{
                 this.el.sum_flag.checked = false;
             }
 
-            this.calculateTotalAmount();
-
+            this.updateComponentItemValues();
+            
             this.updateMaterialList();
    
         });
