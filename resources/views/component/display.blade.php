@@ -475,6 +475,7 @@
                 component_id:'{{$component->id}}',
                 component_quantity: parseFloat('{{$component->quantity}}'),
                 component_use_count: parseFloat('{{$component->use_count}}'),
+                component_unit_text: '{{$unit_options[$component->unit_id]->text}}',
                 materialItemOptions: materialItemOptions,
                 unitOptions: @json($unit_options)
             });

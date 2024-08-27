@@ -37,6 +37,7 @@ class ComponentItem extends Component{
             component_id:null,
             component_quantity:0,
             component_use_count:1,
+            component_unit_text:'',
             materialItemOptions:[],
             unitOptions:[]
         }
@@ -227,10 +228,6 @@ class ComponentItem extends Component{
                             
                         });
 
-
-                        
-
-                        
 
                     });
 
@@ -504,8 +501,8 @@ class ComponentItem extends Component{
     
         this.el.function_type.onchange = (e) =>{
             switch(this.el.function_type.value){
-                case '1': //Right hand factor
-                case '2': //Right hand divior
+                case '1': //As factor
+                case '2': //As Divior
                 case '3': //Direct
     
                         this.el.variable.disabled = false;
@@ -513,7 +510,7 @@ class ComponentItem extends Component{
     
                     break;
     
-                case '4': //Left hand factor
+                case '4': //As Equivalent
     
                         this.el.variable.disabled = false;
                         this.el.quantity.disabled = false;
@@ -525,41 +522,66 @@ class ComponentItem extends Component{
         }
     
         this.el.variable.onkeyup = (e)=>{
-            
-            let val = 0;
-
-            switch(this.el.function_type.value){
-                case '1':
-    
-                        val = window.util.roundTwoDecimal( 
-                            (this._model.component_quantity * this.el.variable.value)  / this._model.component_use_count
-                        );
-    
-                    break;
-    
-                case '2':
-    
-                        val = window.util.roundTwoDecimal( 
-                            (this._model.component_quantity  / this.el.variable.value)  / this._model.component_use_count
-                        );
-    
-                    break;
-    
-                case '3':
-    
-                        val = this.el.variable.value;
-                        
-                    break;
-            }
-            
-            if(isFinite(val)){
-                this.el.quantity.value = val;
-            }else{
-                this.el.quantity.value = 0;
-            }
-
-            this.calculateTotalAmount();
+            updateComponentItemValues();
         }
+
+        this.el.quantity.onkeyup = (e)=>{
+            updateComponentItemValues();
+        }
+    }
+
+
+    updateComponentItemValues(){
+        
+        let val = 0;
+
+        switch(this.el.function_type.value){
+            case '1': //As Factor
+
+                    val = window.util.roundTwoDecimal(
+                        (parseFloat(this._model.component_quantity) * this.el.variable.value)  / parseInt(this._model.component_use_count)
+                    );
+
+                break;
+
+            case '2': //As Divisor
+
+                    val = window.util.roundTwoDecimal( 
+                        (parseFloat(this._model.component_quantity) / this.el.variable.value)  / parseInt(this._model.component_use_count)
+                    );
+
+                break;
+
+            case '3': //Direct
+
+                    val = this.el.variable.value;
+                    
+                break;
+            case '4': //As Equivalent
+
+                
+                val = ( parseFloat(this.el.variable.value) *  parseFloat(this.el.quantity.value) ) * parseInt(this._model.component_use_count); 
+                
+                if(isFinite(val)){
+                    this.el.equivalent.value = val+' '+this._model.component_unit_text;
+                }else{
+                    this.el.equivalent.value = '';
+                }
+                
+                this.calculateTotalAmount();
+                
+                return true; //exit the function
+                
+                break;
+        }
+
+        if(isFinite(val)){
+            this.el.quantity.value = val;
+        }else{
+            this.el.quantity.value = 0;
+        }
+
+        this.calculateTotalAmount();
     }
 
     onStateChange_grand_total(newVal){
