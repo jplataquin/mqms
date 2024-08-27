@@ -522,11 +522,11 @@ class ComponentItem extends Component{
         }
     
         this.el.variable.onkeyup = (e)=>{
-            updateComponentItemValues();
+            this.updateComponentItemValues();
         }
 
         this.el.quantity.onkeyup = (e)=>{
-            updateComponentItemValues();
+            this.updateComponentItemValues();
         }
     }
 
