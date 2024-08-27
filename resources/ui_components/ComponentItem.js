@@ -234,13 +234,9 @@ class ComponentItem extends Component{
 
                     });
 
-                    t.tr(()=>{
-                        t.th({colspan:5});
-                        t.th({colspan:1},'Total Amount');
-                    });
 
                     t.tr(()=>{
-                        t.td({colspan:5},'');
+                        t.th({colspan:5,class:'text-end'},'Total Amount');
                         t.td({colspan:1},()=>{
                             this.el.total_amount = t.input({class:'form-control',disabled:true});
                         });
