@@ -151,9 +151,9 @@
                         <label>Function Type</label>
                         <select id="component_item_function_type" class="form-control">
                             <option value="3">As Direct</option>
-                            <option value="4">As Left Hand Factor</option>
-                            <option value="1">As Right Hand Factor</option>
-                            <option value="2">As Right Hand Divisor</option>
+                            <option value="4">As Equivalent Factor <<</option>
+                            <option value="1">As Result Factor >></option>
+                            <option value="2">As Result Divisor >></option>
                         </select>
                     </div>
                 </div>
@@ -293,7 +293,7 @@
 
             case '4': //Left hand factor
 
-                    component_item_variable.disabled = true;
+                    component_item_variable.disabled = false;
                     component_item_quantity.disabled = false;
                 break;
 
