@@ -74,7 +74,7 @@ html, body {
 }
 
 .bg-divider{
-  background-color: #ccc;
+  background-color: #ccc !important;
 }
 
 #bar{
