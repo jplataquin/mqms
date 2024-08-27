@@ -261,13 +261,14 @@
     const component_sum_flag    = $q('#component_sum_flag').first();
     const component_unit        = $q('#component_unit').first();
 
-    const component_item_name          = $q('#component_item_name').first();
-    const component_item_budget_price  = $q('#component_item_budget_price').first();
-    const component_item_unit          = $q('#component_item_unit').first();
-    const component_item_quantity      = $q('#component_item_quantity').first();
-    const component_item_function_type = $q('#component_item_function_type').first();
-    const component_item_variable      = $q('#component_item_variable').first();
-    const component_item_sum_flag      = $q('#component_item_sum_flag').first();
+    const component_item_name               = $q('#component_item_name').first();
+    const component_item_budget_price       = $q('#component_item_budget_price').first();
+    const component_item_unit               = $q('#component_item_unit').first();
+    const component_item_quantity           = $q('#component_item_quantity').first();
+    const component_item_equivalent         = $q('#component_item_equivalent').first();
+    const component_item_function_type      = $q('#component_item_function_type').first();
+    const component_item_variable           = $q('#component_item_variable').first();
+    const component_item_sum_flag           = $q('#component_item_sum_flag').first();
 
     const component_item_ref_1_quantity     = $q('#component_item_ref_1_quantity').first();
     const component_item_ref_1_unit         = $q('#component_item_ref_1_unit').first();
@@ -298,9 +299,9 @@
             case '2': //Right hand divior
             case '3': //Direct
 
-                    component_item_variable.disabled = false;
-                    component_item_quantity.disabled = true;
-
+                    component_item_variable.disabled    = false;
+                    component_item_quantity.disabled    = true;
+                    component_item_equivalent.value     = '';
                 break;
 
             case '4': //Left hand factor
@@ -341,8 +342,13 @@
                     val = component_item_variable.value;
                     
                 break;
+            case '4': //As equivalent factor
 
-            
+                component_item_equivalent.value = ( parseFloat(component_item_variable.value) *  parseFloat(component_item_quantity) ) * parseInt('{{$component->use_count}}'); 
+                
+                return true;
+                
+                break;
         }
 
         if(isFinite(val)){
