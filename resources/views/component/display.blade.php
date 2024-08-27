@@ -143,7 +143,7 @@
                     </div>
                 </div>
                 
-                <div class="col-lg-1">
+                <div class="col-lg-2 ">
                     <div class="form-group">
                         <label>Sum Flag</label>
                         <div class="form-switch text-center">
@@ -160,9 +160,9 @@
                         <label>Function Type</label>
                         <select id="component_item_function_type" class="form-control">
                             <option value="3">As Direct</option>
-                            <option value="4">As Equivalent Factor</option>
-                            <option value="1">As Result Factor</option>
-                            <option value="2">As Result Divisor</option>
+                            <option value="4">As Equivalent</option>
+                            <option value="1">As Factor</option>
+                            <option value="2">As Divisor</option>
                         </select>
                     </div>
                 </div>

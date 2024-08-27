@@ -148,13 +148,21 @@ class ComponentItem extends Component{
 
                t.tbody({class:'mb-3 p-3'},()=>{
                     t.tr(()=>{
-                        t.th({colspan:7},'Name');
+                        t.th({colspan:6},'Name');
+                        t.th({colspan:1},'Sum Flag');
                     });
 
                     t.tr(()=>{
-                        t.td({colspan:7},()=>{
+                        t.td({colspan:6},()=>{
                             this.el.name = t.input({class:'form-control',type:'text', placeholder:'Item',disabled:true,value:'Loading...'}); 
                         });
+
+                        t.td({},()=>{
+                            t.div({class:'form-switch text-center'},()=>{                  
+                                this.el.sum_flag = t.input({class:'form-check-input',value:1,type:'checkbox', disabled:true});
+                            });
+                        });
+                        
                     })
 
                     t.tr(()=>{
@@ -164,7 +172,6 @@ class ComponentItem extends Component{
                         t.th('Unit');
                         t.th('Budget Price');
                         t.th('Total Amount');
-                        t.th('Sum Flag');
                     })
                     
                     t.tr(()=>{
@@ -172,9 +179,11 @@ class ComponentItem extends Component{
                         t.td({class:''},(el)=>{
                             
                             this.el.function_type = t.select({class:'form-control',disabled:true},()=>{
+                                t.option({value:3},'As Direct');
+                                t.option({value:4},'As Equivalent');
                                 t.option({value:1},'As Factor');
                                 t.option({value:2},'As Divisor');
-                                t.option({value:3},'As Direct');
+                                
                             });
 
                         });
@@ -217,11 +226,7 @@ class ComponentItem extends Component{
                             this.el.total_amount = t.input({class:'form-control',disabled:true});
                         });
 
-                        t.td({},()=>{
-                            t.div({class:'form-switch text-center'},()=>{                  
-                                this.el.sum_flag = t.input({class:'form-check-input',value:1,type:'checkbox', disabled:true});
-                            });
-                        });
+                        
 
                     });
 
@@ -540,7 +545,7 @@ class ComponentItem extends Component{
             }else{
                 this.el.quantity.value = 0;
             }
-            
+
             this.calculateTotalAmount();
         }
     }
