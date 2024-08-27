@@ -1,13 +1,13 @@
 import {Template,Component,Signal} from '/adarna.js';
 
 //D.R.Y. coding helpers
-function roundTwoDecimal(num) {
-    num = parseFloat(num);
-    return Math.round((num + Number.EPSILON) * 100) / 100;
-}
+// function roundTwoDecimal(num) {
+//     num = parseFloat(num);
+//     return Math.round((num + Number.EPSILON) * 100) / 100;
+// }
 
 function calculateTotalEquivalent(a,b){
-    return roundTwoDecimal(parseFloat(a) * parseFloat(b));
+    return window.util.roundTwoDecimal(parseFloat(a) * parseFloat(b));
 }
 
 
@@ -337,7 +337,7 @@ class ComponentItem extends Component{
         }
         
         this.el.equivalent.onkeyup = ()=>{
-            this.el.material_quantity.value = roundTwoDecimal(this.el.quantity.value / this.el.equivalent.value);
+            this.el.material_quantity.value = window.util.roundTwoDecimal(this.el.quantity.value / this.el.equivalent.value);
             this.el.total.value = calculateTotalEquivalent( this.el.material_quantity.value, this.el.equivalent.value);
            
         }
@@ -490,7 +490,7 @@ class ComponentItem extends Component{
             switch(this.el.function_type.value){
                 case '1':
     
-                        this.el.quantity.value = roundTwoDecimal( 
+                        this.el.quantity.value = window.util.roundTwoDecimal( 
                             (this._model.component_quantity * this.el.variable.value)  / this._model.component_use_count
                         );
     
@@ -498,7 +498,7 @@ class ComponentItem extends Component{
     
                 case '2':
     
-                        this.el.quantity.value = roundTwoDecimal( 
+                        this.el.quantity.value = window.util.roundTwoDecimal( 
                             (this._model.component_quantity  / this.el.variable.value)  / this._model.component_use_count
                         );
     
@@ -680,7 +680,7 @@ class ComponentItem extends Component{
         
         const materialItem = t.tr((row)=>{
                     t.td(this.materialRegistry[data.material_item_id]);
-                    t.td(''+roundTwoDecimal(data.quantity));
+                    t.td(''+window.util.roundTwoDecimal(data.quantity));
                     t.td(''+data.equivalent);
                     t.td(''+calculateTotalEquivalent(data.quantity,data.equivalent));
                     t.td({class:'text-center'},()=>{
@@ -753,7 +753,7 @@ class ComponentItem extends Component{
 
         const t = new Template();
 
-        const quantityInput     = t.input({class:'form-control',value:roundTwoDecimal(entry.quantity)});
+        const quantityInput     = t.input({class:'form-control',value: window.util.roundTwoDecimal(entry.quantity)});
         const equivalentInput   = t.input({class:'form-control',value:entry.equivalent});
         const totalInput        = t.input({ class:'form-control', disabled:true});
 

@@ -40,7 +40,7 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <table class="w-100 table">
+            <table class="record-table-horizontal">
                 <tr>
                     <th>Project</th>
                     <td>{{$project->name}}</td>
@@ -150,9 +150,10 @@
                     <div class="form-group">
                         <label>Function Type</label>
                         <select id="component_item_function_type" class="form-control">
-                            <option value="1">As Factor</option>
-                            <option value="2">As Divisor</option>
                             <option value="3">As Direct</option>
+                            <option value="4">As Left Hand Factor</option>
+                            <option value="1">As Right Hand Factor</option>
+                            <option value="2">As Right Hand Divisor</option>
                         </select>
                     </div>
                 </div>
@@ -279,13 +280,34 @@
     }
 
     component_item_function_type.onchange = (e) =>{
-       component_item_variable.onkeyup();    
+        
+        switch(component_item_function_type.value){
+            case '1': //Right hand factor
+            case '2': //Right hand divior
+            case '3': //Direct
+
+                    component_item_variable.disabled = false;
+                    component_item_quantity.disabled = true;
+
+                break;
+
+            case '4': //Left hand factor
+
+                    component_item_variable.disabled = true;
+                    component_item_quantity.disabled = false;
+                break;
+
+        }
+        
+        
+        component_item_variable.value = '';
+        component_item_quantity.value = '';
     }
 
     component_item_variable.onkeyup = (e)=>{
         
         switch(component_item_function_type.value){
-            case '1':
+            case '1': //Right hand factor
 
                     component_item_quantity.value = window.util.roundTwoDecimal(
                         (parseFloat('{{$component->quantity}}') * component_item_variable.value)  / parseInt('{{$component->use_count}}')
@@ -293,7 +315,7 @@
 
                 break;
 
-            case '2':
+            case '2': //Right hand divior
 
                     component_item_quantity.value = window.util.roundTwoDecimal( 
                         (parseFloat('{{$component->quantity}}') / component_item_variable.value)  / parseInt('{{$component->use_count}}')
@@ -301,11 +323,18 @@
 
                 break;
 
-            case '3':
+            case '3': //Direct
 
                     component_item_quantity.value = component_item_variable.value;
                     
                 break;
+
+            case '4': //Left hand factor
+
+
+                break;
+
+
         }
         
     }
