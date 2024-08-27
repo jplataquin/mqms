@@ -146,7 +146,7 @@
             
             <div class="row mt-3">
                 
-                <div class="col-lg-5">
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label>Function Type</label>
                         <select id="component_item_function_type" class="form-control">
@@ -170,7 +170,7 @@
                         <input id="component_item_quantity" type="text" class="form-control" disabled="true"/>
                     </div>
                 </div>
-                <div class="col-lg-1">
+                <div class="col-lg-2">
                     <div class="form-group">
                         <label>Total Equivalent</label>
                         <input id="component_item_equivalent" type="text" class="form-control" disabled="true"/>
