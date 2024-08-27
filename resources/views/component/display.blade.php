@@ -136,10 +136,19 @@
         </div>
         <div class="folder-form-body">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-11">
                     <div class="form-group">
                         <label>Name</label>
                         <input id="component_item_name" type="text" class="form-control"/>
+                    </div>
+                </div>
+                
+                <div class="col-lg-1">
+                    <div class="form-group">
+                        <label>Sum Flag</label>
+                        <div class="form-switch text-center">
+                            <input type="checkbox" class="form-check-input" id="component_item_sum_flag" value="1" checked/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -189,18 +198,10 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-1">
+                <div class="col-lg-2">
                     <div class="form-group">
                         <label>Price / Unit</label>
                         <input id="component_item_budget_price" type="text" class="form-control"/>
-                    </div>
-                </div>
-                <div class="col-lg-1">
-                    <div class="form-group">
-                        <label>Sum Flag</label>
-                        <div class="form-switch text-center">
-                            <input type="checkbox" class="form-check-input" id="component_item_sum_flag" value="1" checked/>
-                        </div>
                     </div>
                 </div>
             </div>
