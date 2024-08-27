@@ -428,6 +428,8 @@ class ComponentItem extends Component{
             }else{
                 this.el.sum_flag.checked = false;
             }
+
+            this.updateComponentItemValues();
         }
 
         this.el.updateComponentButton.onclick = (e)=>{
