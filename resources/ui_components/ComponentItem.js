@@ -239,7 +239,7 @@ class ComponentItem extends Component{
                         });
                     })
 
-                    t.tr(()=>{
+                    t.tr({class:'bg-divider'},()=>{
                         t.th({colspan:2},'POW/DUPA Quantity');
                         t.th({colspan:2},'POW/DUPA Unit');
                         t.th({colspan:4},'POW/DUPA Unit Price');

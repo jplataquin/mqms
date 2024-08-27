@@ -48,14 +48,15 @@
 <page id="main">
             
 
-<page_footer>
+    <page_footer>
+        <br>
         <table class="page_footer">
             <tr>
-                <td style="width: 50%;">
+                <td style="width: 50%;font-size:12px;">
                     <strong>Material Budget:</strong> {{$project->name}} - {{$section->name}} - {{$current_datetime}}
                 </td>
-                <td style="width: 50%; text-align: right">
-                    page [[page_cu]]/[[page_nb]]
+                <td style="width: 50%; text-align: right;font-size:12px">
+                    [[page_cu]] / [[page_nb]]
                 </td>
             </tr>
         </table>
