@@ -169,9 +169,9 @@ class ComponentItem extends Component{
                         t.th('Function Type');
                         t.th('Variable');
                         t.th('Quantity');
+                        t.th('Equivalent');
                         t.th('Unit');
                         t.th('Budget Price');
-                        t.th('Total Amount');
                     })
                     
                     t.tr(()=>{
@@ -201,6 +201,12 @@ class ComponentItem extends Component{
                         });
 
                         t.td({class:''},(el)=>{
+                            
+                            this.el.equivalent = t.input({class:'form-control', type:'text', placeholder:'Equivalent',disabled:true,value:'Loading...'});
+
+                        });
+
+                        t.td({class:''},(el)=>{
 
                             this.el.unit = t.select({class:'form-control',disabled:true},()=>{
                                 for(let i in this._model.unitOptions){
@@ -222,13 +228,17 @@ class ComponentItem extends Component{
                         });
 
 
-                        t.td({},()=>{
-                            this.el.total_amount = t.input({class:'form-control',disabled:true});
-                        });
+                        
 
                         
 
                     });
+
+                    t.tr(()=>{
+                        t.td({colspan:6,class:'text-end'},()=>{
+                            this.el.total_amount = t.input({class:'form-control',disabled:true});
+                        });
+                    })
 
                     t.tr(()=>{
                         t.th({colspan:2},'POW/DUPA Quantity');
