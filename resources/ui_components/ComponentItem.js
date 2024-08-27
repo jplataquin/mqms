@@ -235,7 +235,13 @@ class ComponentItem extends Component{
                     });
 
                     t.tr(()=>{
-                        t.td({colspan:6,class:'text-end'},()=>{
+                        t.th({colspan:5});
+                        t.th({colspan:1},'Total Amount');
+                    });
+
+                    t.tr(()=>{
+                        t.td({colspan:5},'');
+                        t.td({colspan:1},()=>{
                             this.el.total_amount = t.input({class:'form-control',disabled:true});
                         });
                     })
