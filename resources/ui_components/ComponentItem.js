@@ -509,10 +509,12 @@ class ComponentItem extends Component{
     
         this.el.variable.onkeyup = (e)=>{
             
+            let val = 0;
+
             switch(this.el.function_type.value){
                 case '1':
     
-                        this.el.quantity.value = window.util.roundTwoDecimal( 
+                        val = window.util.roundTwoDecimal( 
                             (this._model.component_quantity * this.el.variable.value)  / this._model.component_use_count
                         );
     
@@ -520,7 +522,7 @@ class ComponentItem extends Component{
     
                 case '2':
     
-                        this.el.quantity.value = window.util.roundTwoDecimal( 
+                        val = window.util.roundTwoDecimal( 
                             (this._model.component_quantity  / this.el.variable.value)  / this._model.component_use_count
                         );
     
@@ -528,9 +530,15 @@ class ComponentItem extends Component{
     
                 case '3':
     
-                        this.el.quantity.value = this.el.variable.value;
+                        val = this.el.variable.value;
                         
                     break;
+            }
+            
+            if(isFinite(val)){
+                this.el.quantity.value = val;
+            }else{
+                this.el.quantity.value = 0;
             }
             
             this.calculateTotalAmount();

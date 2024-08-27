@@ -172,6 +172,13 @@
                 </div>
                 <div class="col-lg-2">
                     <div class="form-group">
+                        <label>Total Equivalent</label>
+                        <input id="component_item_equivalent" type="text" class="form-control" disabled="true"/>
+                    </div>
+                </div>
+                
+                <div class="col-lg-1">
+                    <div class="form-group">
                         <label>Unit</label>
                         <select id="component_item_unit" class="form-control">
                             @foreach($unit_options as $opt)
@@ -188,7 +195,7 @@
                         <input id="component_item_budget_price" type="text" class="form-control"/>
                     </div>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-1">
                     <div class="form-group">
                         <label>Sum Flag</label>
                         <div class="form-switch text-center">
@@ -309,10 +316,12 @@
 
     component_item_variable.onkeyup = (e)=>{
         
+        let val = 0;
+
         switch(component_item_function_type.value){
             case '1': //Right hand factor
 
-                    component_item_quantity.value = window.util.roundTwoDecimal(
+                    val = window.util.roundTwoDecimal(
                         (parseFloat('{{$component->quantity}}') * component_item_variable.value)  / parseInt('{{$component->use_count}}')
                     );
 
@@ -320,7 +329,7 @@
 
             case '2': //Right hand divior
 
-                    component_item_quantity.value = window.util.roundTwoDecimal( 
+                    val = window.util.roundTwoDecimal( 
                         (parseFloat('{{$component->quantity}}') / component_item_variable.value)  / parseInt('{{$component->use_count}}')
                     );
 
@@ -328,12 +337,19 @@
 
             case '3': //Direct
 
-                    component_item_quantity.value = component_item_variable.value;
+                    val = component_item_variable.value;
                     
                 break;
 
-
+            
         }
+
+        if(isFinite(val)){
+            component_item_quantity.value = val;
+        }else{
+            component_item_quantity.value = 0;
+        }
+        
         
     }
 
