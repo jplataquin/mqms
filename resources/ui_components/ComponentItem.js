@@ -240,9 +240,9 @@ class ComponentItem extends Component{
                     })
 
                     t.tr({class:'bg-divider'},()=>{
-                        t.th({colspan:2},'POW/DUPA Quantity');
-                        t.th({colspan:2},'POW/DUPA Unit');
-                        t.th({colspan:4},'POW/DUPA Unit Price');
+                        t.th({class:'text-center bg-divider', colspan:2},'POW/DUPA Quantity');
+                        t.th({class:'text-center bg-divider', colspan:2},'POW/DUPA Unit');
+                        t.th({class:'text-center bg-divider', colspan:4},'POW/DUPA Unit Price');
                     });
 
                     t.tr(()=>{
