@@ -489,7 +489,7 @@ window.util.navReload = function(){
     },1000);
 }
 
-window.util.roundTwoDecimal(num) {
+window.util.roundTwoDecimal = function(num){
     num = parseFloat(num);
     return Math.round((num + Number.EPSILON) * 100) / 100;
 }
