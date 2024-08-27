@@ -316,8 +316,7 @@
         component_item_variable.onkeyup();
     }
 
-    component_item_variable.onkeyup = (e)=>{
-        
+    function updateComponentItemValues(){
         let val = 0;
 
         switch(component_item_function_type.value){
@@ -347,8 +346,12 @@
                 
                 val = ( parseFloat(component_item_variable.value) *  parseFloat(component_item_quantity.value) ) * parseInt('{{$component->use_count}}'); 
                 
-                component_item_equivalent.value = val+' {{ $unit_options[$component->unit_id]->text }}';
-                 
+                if(isFinite(val)){
+                    component_item_equivalent.value = val+' {{ $unit_options[$component->unit_id]->text }}';
+                }else{
+                    component_item_equivalent.value = '';
+                }
+                
                 return true;
                 
                 break;
@@ -360,7 +363,15 @@
             component_item_quantity.value = 0;
         }
         
-        
+    }
+
+
+    component_item_variable.onkeyup = (e)=>{   
+        updateComponentItemValues();
+    }
+
+    component_item_quantity.onkeyup = (e)=>{   
+        updateComponentItemValues();
     }
 
     component_quantity.onkeypress = (e)=>{
