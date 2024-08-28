@@ -178,7 +178,7 @@
         el.onclick = (e)=>{
             e.preventDefault();
 
-            let container = el.parentElement.parentElement.querySelector('.canvass-container');
+            let container = $q( '#canvass_'+el.getAttribute('data-id') ).first();
            
             $el.append(
                 CanvassItem({
