@@ -189,6 +189,7 @@
                            
                             //Total the quantity for all component item
                             if($component_item->sum_flag && ($component_item->unit_id == $component->unit_id)){
+                                echo $component_item->deleted_at;
                                 $component_items_total_quantity = $component_items_total_quantity + $component_item->quantity;
                             }
 
@@ -207,7 +208,6 @@
                         $component_item_quantity_total_per_component[$component->id] = $component_items_total_quantity;
                     }  
                     
-                    print_r($component_item_quantity_total_per_component);
                 @endphp
                 <tr class="bg-contract-item">
                     <th  style="text-align:left">{{ Str::wordWrap($contract_item->item_code,10,"\n",false) }}</th>
