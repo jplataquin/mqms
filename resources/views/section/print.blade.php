@@ -402,9 +402,17 @@
                                     /
                                     {{$unit_options[$component->unit_id]->text}}   
                                     
-                                    <draw style="width:12px;height:12px">
-  <path d="M6 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L12.293 7.5H6.5A.5.5 0 0 0 6 8m-2.5 7a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5"/>
-                                </draw>
+                                    <draw style="margin: auto; width:150mm; height:100mm; background: #000000; border: solid 0.5mm #777777;">
+        <path style="fill:#AAAA00; stroke:#0000AA; stroke-width:1mm" d="M20mm,10mm H130mm A10mm,10mm 0,0,0 140mm,20mm V80mm A10mm,10mm 0,0,0 130mm,90mm H20mm A10mm,10mm 0,0,0 10mm,80mm V20mm A10mm,10mm 0,0,0 20mm,10mm">
+        <path style="fill:#770000; stroke:#AA0033; stroke-width:0.5mm" d="M 20mm,40mm a16mm,8mm 0,0,0 16mm,8mm" />
+        <path style="fill:#770000; stroke:#00AA33; stroke-width:0.5mm" d="M 20mm,40mm l16mm,8mm" />
+        <path style="fill:#770000; stroke:#AA0033; stroke-width:0.5mm" d="M 40mm,40mm a16mm,8mm 0,0,1 16mm,8mm" />
+        <path style="fill:#770000; stroke:#00AA33; stroke-width:0.5mm" d="M 40mm,40mm l16mm,8mm" />
+        <path style="fill:#770000; stroke:#AA0033; stroke-width:0.5mm" d="M 80mm,40mm a16mm,8mm 0,1,0 16mm,8mm" />
+        <path style="fill:#770000; stroke:#00AA33; stroke-width:0.5mm" d="M 80mm,40mm l16mm,8mm" />
+        <path style="fill:#770000; stroke:#AA0033; stroke-width:0.5mm" d="M100mm,40mm a16mm,8mm 0,1,1 16mm,8mm" />
+        <path style="fill:#770000; stroke:#00AA33; stroke-width:0.5mm" d="M100mm,40mm l16mm,8mm" />
+    </draw>
                                 @endif
                                 
                                 @if($component_item->function_type_id == 2)
@@ -420,9 +428,17 @@
                                     {{$unit_options[$component->unit_id]->text}}    
                                     
 
-                                    <draw style="width:12px;height:12px">
-  <path d="M6 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L12.293 7.5H6.5A.5.5 0 0 0 6 8m-2.5 7a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5"/>
-                                </draw>
+                                    <draw style="margin: auto; width:150mm; height:100mm; background: #000000; border: solid 0.5mm #777777;">
+        <path style="fill:#AAAA00; stroke:#0000AA; stroke-width:1mm" d="M20mm,10mm H130mm A10mm,10mm 0,0,0 140mm,20mm V80mm A10mm,10mm 0,0,0 130mm,90mm H20mm A10mm,10mm 0,0,0 10mm,80mm V20mm A10mm,10mm 0,0,0 20mm,10mm">
+        <path style="fill:#770000; stroke:#AA0033; stroke-width:0.5mm" d="M 20mm,40mm a16mm,8mm 0,0,0 16mm,8mm" />
+        <path style="fill:#770000; stroke:#00AA33; stroke-width:0.5mm" d="M 20mm,40mm l16mm,8mm" />
+        <path style="fill:#770000; stroke:#AA0033; stroke-width:0.5mm" d="M 40mm,40mm a16mm,8mm 0,0,1 16mm,8mm" />
+        <path style="fill:#770000; stroke:#00AA33; stroke-width:0.5mm" d="M 40mm,40mm l16mm,8mm" />
+        <path style="fill:#770000; stroke:#AA0033; stroke-width:0.5mm" d="M 80mm,40mm a16mm,8mm 0,1,0 16mm,8mm" />
+        <path style="fill:#770000; stroke:#00AA33; stroke-width:0.5mm" d="M 80mm,40mm l16mm,8mm" />
+        <path style="fill:#770000; stroke:#AA0033; stroke-width:0.5mm" d="M100mm,40mm a16mm,8mm 0,1,1 16mm,8mm" />
+        <path style="fill:#770000; stroke:#00AA33; stroke-width:0.5mm" d="M100mm,40mm l16mm,8mm" />
+    </draw>
                                 @endif
 
 
