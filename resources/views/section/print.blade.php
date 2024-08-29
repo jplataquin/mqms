@@ -178,12 +178,7 @@
                     foreach($components as $component){
 
                         
-                        //Correction
-                        if($component->use_count <= 0){
-                            $component->use_count = 1;
-                        }
-                        echo $component->use_count;
-                        
+
                         $component_items_total_quantity = 0;
                     
                         if($component->sum_flag && ($component->unit_id == $contract_item->unit_id) ){
@@ -299,9 +294,6 @@
                         $first      = true;
                         $item_count = 1;
 
-                        if($component->use_count <= 0){
-                            $component->use_count = 1;
-                        }
                     @endphp
                     <tr class="@if(!$component->sum_flag || ($component->unit_id != $contract_item->unit_id)) bg-excluded-sum-component @endif">
                             @if($first)
@@ -446,7 +438,7 @@
                                     {{$unit_options[$component_item->unit_id]->text}}
                                     /
                                     {{$unit_options[$component->unit_id]->text}}    
-
+                                    {{ $component_item->use_count}}
                                 @endif
                             </td>
                             <td style="text-align:right">
