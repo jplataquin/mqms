@@ -177,7 +177,7 @@
 
                     foreach($components as $component){
 
-                        $component_items_total_quantity              = 0;
+                        $component_items_total_quantity = 0;
                     
                         if($component->sum_flag && ($component->unit_id == $contract_item->unit_id) ){
                             $component_total_quantity = $component_total_quantity + $component->quantity;
@@ -190,7 +190,7 @@
                            
                             //Total the quantity for all component item
                             if($component_item->sum_flag && ($component_item->unit_id == $component->unit_id)){
-                               // echo $component_item->id.' - '.$component_item->quantity." HERE <br>";
+                               
                                 $component_items_total_quantity = $component_items_total_quantity + $component_item->quantity;
                             }
 
