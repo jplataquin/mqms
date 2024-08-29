@@ -430,7 +430,7 @@
 
                                     {{ 
                                         number_format(
-                                            ($component_item->function_variable * $component_item->use_count),
+                                            ($component_item->function_variable * $component->use_count),
                                             2
                                         ) 
                                     }}  
@@ -438,7 +438,7 @@
                                     {{$unit_options[$component_item->unit_id]->text}}
                                     /
                                     {{$unit_options[$component->unit_id]->text}}    
-                                    {{ $component_item->use_count}}
+                                    
                                 @endif
                             </td>
                             <td style="text-align:right">
