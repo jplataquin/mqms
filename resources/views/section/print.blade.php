@@ -192,7 +192,7 @@
                             
                             //Total the quantity for all component item
                             if($component_item->sum_flag && $component_item->function_type_id == 4){ //As Equivalent function type
-                                $component_items_total_quantity = $component_items_total_quantity + ($component_item->quantity * $component_item->function_variable * $component_item->use_count);
+                                $component_items_total_quantity = $component_items_total_quantity + ($component_item->quantity * $component_item->function_variable * $component->use_count);
                             
                             }else if($component_item->sum_flag && ($component_item->unit_id == $component->unit_id)){
                                
