@@ -136,7 +136,7 @@
         </div>
         <div class="folder-form-body">
             <div class="row">
-                <div class="col-lg-11">
+                <div class="col-lg-10">
                     <div class="form-group">
                         <label>Name</label>
                         <input id="component_item_name" type="text" class="form-control"/>
