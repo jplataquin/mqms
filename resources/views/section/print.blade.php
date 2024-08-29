@@ -189,7 +189,7 @@
                            
                             //Total the quantity for all component item
                             if($component_item->sum_flag && ($component_item->unit_id == $component->unit_id)){
-                                echo $component_item->deleted_at.' HERE';
+                                echo $component_item->id.' - '.$component_item->quantity." HERE <br>";
                                 $component_items_total_quantity = $component_items_total_quantity + $component_item->quantity;
                             }
 
