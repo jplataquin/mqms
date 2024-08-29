@@ -177,6 +177,12 @@
 
                     foreach($components as $component){
 
+                        
+                        //Correction
+                        if($component->use_count <= 0){
+                            $component->use_count = 1;
+                        }
+                        
                         $component_items_total_quantity = 0;
                     
                         if($component->sum_flag && ($component->unit_id == $contract_item->unit_id) ){
@@ -187,7 +193,7 @@
                         
                         //Each component item row
                         foreach($component_items_arr[$component->id] as $component_item){
-                           
+                            
                             //Total the quantity for all component item
                             if($component_item->sum_flag && ($component_item->unit_id == $component->unit_id)){
                                
@@ -289,8 +295,12 @@
                 @foreach($components as $component)
                     
                     @php
-                        $first = true;
+                        $first      = true;
                         $item_count = 1;
+
+                        if($component->use_count <= 0){
+                            $component->use_count = 1;
+                        }
                     @endphp
                     <tr class="@if(!$component->sum_flag || ($component->unit_id != $contract_item->unit_id)) bg-excluded-sum-component @endif">
                             @if($first)
@@ -427,7 +437,7 @@
 
                                     {{ 
                                         number_format(
-                                            ($component_item->function_variable),
+                                            ($component_item->function_variable * $component_item->use_count),
                                             2
                                         ) 
                                     }}  
