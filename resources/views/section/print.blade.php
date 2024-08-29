@@ -192,6 +192,9 @@
                             if($component_item->sum_flag && ($component_item->unit_id == $component->unit_id)){
                                
                                 $component_items_total_quantity = $component_items_total_quantity + $component_item->quantity;
+                            
+                            }else if($component_item->sum_flag && $component_item->function_type_id == 4){ //As Equivalent function type
+                                $component_items_total_quantity = $component_items_total_quantity + ($component_item->quantity * $component_item->function_variable * $component_item->use_count);
                             }
 
                             //Total the amount for each row
@@ -397,7 +400,9 @@
                                     }} 
                                     {{$unit_options[$component_item->unit_id]->text}}
                                     /
-                                    {{$unit_options[$component->unit_id]->text}}     
+                                    {{$unit_options[$component->unit_id]->text}}   
+                                    
+                                    &#187;
                                 @endif
                                 
                                 @if($component_item->function_type_id == 2)
@@ -410,9 +415,27 @@
                                     }} 
                                     {{$unit_options[$component_item->unit_id]->text}}
                                     /
-                                    {{$unit_options[$component->unit_id]->text}}     
+                                    {{$unit_options[$component->unit_id]->text}}    
+                                    
+                                    &#187;
                                 @endif
 
+
+                                @if($component_item->function_type_id == 4)
+                                    &#171;
+
+                                    {{ 
+                                        number_format(
+                                            ($component_item->function_variable * $component_item->use_count),
+                                            2
+                                        ) 
+                                    }}  
+
+                                    {{$unit_options[$component_item->unit_id]->text}}
+                                    /
+                                    {{$unit_options[$component->unit_id]->text}}    
+
+                                @endif
                             </td>
                             <td style="text-align:right">
                                 {{ number_format($component_item->quantity,2) }}
