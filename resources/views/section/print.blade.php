@@ -427,7 +427,7 @@
 
                                     {{ 
                                         number_format(
-                                            ($component_item->function_variable * $component_item->use_count),
+                                            ($component_item->function_variable),
                                             2
                                         ) 
                                     }}  
