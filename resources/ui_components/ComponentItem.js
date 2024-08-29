@@ -709,6 +709,11 @@ class ComponentItem extends Component{
                 this.el.sum_flag.checked = false;
             }
 
+            //Not "As Equivalent"
+            if(reply.data.function_type_id != 4){
+                this.el.equivalent.value = '';
+            }
+
             this.updateComponentItemValues();
             
             this.updateMaterialList();
