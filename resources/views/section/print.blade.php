@@ -402,7 +402,7 @@
                                     /
                                     {{$unit_options[$component->unit_id]->text}}   
                                     
-                                    <strong>-></strong>
+                                    <strong> > </strong>
                                 @endif
                                 
                                 @if($component_item->function_type_id == 2)
@@ -418,12 +418,12 @@
                                     {{$unit_options[$component->unit_id]->text}}    
                                     
 
-                                    <strong>-></strong>
+                                    <strong> > </strong>
                                 @endif
 
 
                                 @if($component_item->function_type_id == 4)
-                                <strong><-</strong>
+                                <strong> < </strong>
 
                                     {{ 
                                         number_format(
