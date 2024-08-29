@@ -182,6 +182,7 @@
                         if($component->use_count <= 0){
                             $component->use_count = 1;
                         }
+                        echo $component->use_count;
                         
                         $component_items_total_quantity = 0;
                     
