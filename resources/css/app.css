@@ -74,7 +74,7 @@ html, body {
 }
 
 .bg-divider{
-  background-color: #ccc !important;
+  background-color: #cccccc !important;
 }
 
 #bar{
@@ -376,6 +376,7 @@ html, body {
 
 
 #hamburger_button{
+  margin-top:2px;
   display:none;
 }
 
