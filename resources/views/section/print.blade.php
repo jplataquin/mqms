@@ -402,7 +402,7 @@
                                     /
                                     {{$unit_options[$component->unit_id]->text}}   
                                     
-                                    &#xbb;
+                                    &raquo;
                                 @endif
                                 
                                 @if($component_item->function_type_id == 2)
@@ -417,7 +417,7 @@
                                     /
                                     {{$unit_options[$component->unit_id]->text}}    
                                     
-                                    &#xbb;
+                                    &raquo;
 
                                 @endif
 
