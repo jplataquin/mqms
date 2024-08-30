@@ -38,6 +38,7 @@ class ComponentReviewController extends Controller
         $orderBy    = $request->input('order_by')       ?? 'id';
         $order      = $request->input('order')          ?? 'DESC';
         $query      = $request->input('query')          ?? '';
+        $project_id = $requst->input('project_id')      ?? 0;
         $result     = [];
 
         $component = new Component();
@@ -53,6 +54,10 @@ class ComponentReviewController extends Controller
             $component = $component->where('components.name','LIKE','%'.$query.'%');
         }
 
+        if($project_id){
+            $component = $component->where('project_id','=',$project_id);
+        }
+        
         if($limit > 0){
             $page   = ($page-1) * $limit;
             
