@@ -1,7 +1,6 @@
 
 <style>    
     table, th, td {
-        border: 1px solid black;
         border-collapse: collapse;
         font-size:11px;
     } 
@@ -47,10 +46,10 @@
         <div style="padding-bottom:20px">  
             <table style="font-size:11px">
                 <tr>
-                    <td>
+                    <td style="width:50%">
                         {{$current_datetime}}
                     </td>
-                    <td style="text-align:right">
+                    <td style="text-align:right;width:50%">
                         [[page_cu]] / [[page_nb]]         
                     </td>
                 </tr>
@@ -59,7 +58,7 @@
         </div>
     </page_footer>
 
-    <table class="mb-20">
+    <table class="mb-20" border="1">
         <tr>
             <td style="width:60%;text-align:center">
                 <img src="storage/sys_images/header.png" style="width:400px"/>
@@ -74,7 +73,7 @@
         </tr>
     </table>
 
-    <table class="table">
+    <table class="table" border="1">
         <tbody>
             <tr>
                 <th style="width:20%">Material Request ID</th>
