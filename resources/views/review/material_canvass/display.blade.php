@@ -208,8 +208,7 @@
 
     @endforeach
 
-    cancelBtn.onclick = (e)=>{
-        
+    cancelBtn.onclick = (e)=>{    
         window.util.navTo('/review/material_canvass');
     }
 </script>

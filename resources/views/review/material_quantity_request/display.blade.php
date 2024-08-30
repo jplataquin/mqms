@@ -69,6 +69,12 @@
                     </tr>
                 </tbody>
             </table>
+
+            <div class="row mt-3">
+                <div class="col-12 text-end">
+                    <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+                </div>
+            </div>
         </div>
     </div>
     <div id="itemContainer"></div>
@@ -82,7 +88,6 @@
             @endif
         </div>
         <div class="col-6 text-end">
-            <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
 
             @if($material_quantity_request->status == 'PEND')
                 <button class="btn btn-warning" id="approveBtn">Approve</button>
