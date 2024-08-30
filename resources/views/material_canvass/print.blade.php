@@ -43,7 +43,7 @@
 
 
     <page_footer>
-        <div style="font-size:11px;text-align:right">  
+        <div style="font-size:11px;text-align:right;padding-bootom:10px">  
             [[page_cu]] / [[page_nb]]
         </div>
     </page_footer>
