@@ -71,6 +71,11 @@
         </tbody>
     </table>
 
+    <div class="row mt-5">
+        <div class="col-12 text-end">
+            <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+        </div>
+    </div>
     <div>
         @foreach($items as $item)
 
@@ -134,11 +139,7 @@
         </datalist>
 
 
-        <div class="row mt-5">
-            <div class="col-12 text-end">
-                <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
-            </div>
-        </div>
+        
     </div>
 </div>
 
