@@ -88,8 +88,14 @@
     <div>
         @foreach($items as $item)
             @php 
-                $material_item = $material_item_arr[$item->material_item_id]; 
-                $component_item = $component_item_arr[ $item->component_item_id ];
+                $material_item      = $material_item_arr[$item->material_item_id]; 
+                $component_item     = $component_item_arr[ $item->component_item_id ];
+                $material_canvass   = $item->MaterialCanvass;
+
+                if(!$material_canvass){
+                    $continue;
+                }
+
             @endphp
         
         <nobreak>
@@ -126,22 +132,22 @@
                 <th style="width:20%;text-align:center">Total</th>
             </tr>             
             
-            @foreach($item->MaterialCanvass as $mcItem)
+            @foreach($material_canvass as $mc_item)
                 <tr>
                     <td>
-                        {{$mcItem->status}}
+                        {{$mc_item->status}}
                     </td>
                     <td>
-                        {{ $supplier_arr[ $mcItem->supplier_id ]->name }}
+                        {{ $supplier_arr[ $mc_item->supplier_id ]->name }}
                     </td>
                     <td>
-                        {{ $payment_term_arr[ $mcItem->payment_term_id ]->text }}
+                        {{ $payment_term_arr[ $mc_item->payment_term_id ]->text }}
                     </td>
                     <td style="text-align:center">
-                        P {{ number_format($mcItem->price,2) }}
+                        P {{ number_format($mc_item->price,2) }}
                     </td>
                     <td style="text-align:center">
-                        P {{ number_format($item->requested_quantity * $mcItem->price,2) }}
+                        P {{ number_format($item->requested_quantity * $mc_item->price,2) }}
                     </td>
                 </tr>
             @endforeach

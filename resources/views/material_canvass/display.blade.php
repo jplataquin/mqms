@@ -102,8 +102,11 @@
                         <div class="folder-form-tab">Canvass Items</div>
                         <div class="folder-form-body" >
                             <div id="canvass_{{$item->id}}"></div>
-                            <div class="text-center mt-3">
-                                <button data-id="{{$item->id}}" class="add-canvass-btn btn btn-primary w-100">Add Canvass</button>
+                            <div class="text-end mt-3">
+                                <button data-id="{{$item->id}}" class="add-canvass-btn btn btn-primary">
+                                    <i class="ms-2 bi bi-file-earmark-plus"></i>
+                                    Canvass
+                                </button>
                             </div>
                         </div>
                     </div>
