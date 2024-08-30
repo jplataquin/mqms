@@ -6,24 +6,17 @@
 <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="/review/material_canvass">
+                <a href="#">
                     <span>
                        Review
                     </span>
                 </a>
             </li>
             <li>
-                <a href="/review/material_canvass">
+                <a href="#" class="active">
                     <span>
                        Material Canvass
                     </span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="active">
-                    <span>
-                        List
-                    </span>		
                     <i class="ms-2 bi bi-list-ul"></i>
                 </a>
             </li>
@@ -321,7 +314,7 @@
         });
     }
 
-
+    reinitalize();
     showData();
 </script>
 </div>
