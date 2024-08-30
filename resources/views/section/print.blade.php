@@ -436,9 +436,9 @@
                                         ) 
                                     }}  
 
-                                    {{$unit_options[$component_item->unit_id]->text}}
+                                    {{$unit_options[$component->unit_id]->text}}
                                     /
-                                    {{$unit_options[$component->unit_id]->text}}    
+                                    {{$unit_options[$component_item->unit_id]->text}}
                                     
                                 @endif
                             </td>
