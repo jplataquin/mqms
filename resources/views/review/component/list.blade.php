@@ -31,7 +31,7 @@
 <hr>
     <div class="folder-form-container">
         <div class="folder-form-tab">
-            Material Canvass Review
+             Review Components
         </div>
         <div class="folder-form-body">
             <div class="row">
