@@ -23,7 +23,7 @@
         </ul>
     </div>
 <hr>
-    <table class="record-table-horizontal mb-3">
+    <table class="record-table-horizontal">
         <tbody>
             <tr>
                 <th>Material Request ID</th>
@@ -71,12 +71,13 @@
         </tbody>
     </table>
 
-    <div class="row mt-5">
+    <div class="row">
         <div class="col-12 text-end">
             <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
         </div>
     </div>
-    <div>
+    <hr>
+    <div class="mt-3">
         @foreach($items as $item)
 
         <div class="form-container mb-3">
