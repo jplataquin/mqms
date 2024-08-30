@@ -157,15 +157,17 @@
     import CanvassItem from '/ui_components/CanvassItem.js';
     
     const cancelBtn         = $q('#cancelBtn').first();
-    const supplierList      = $q('#supplier_list > option[data-value="{{$mcItem->supplier_id}}"]').first();
-    const paymentTermsList  = $q('#payment_terms_list > option[data-value="{{$mcItem->payment_term_id}}"]').first();
+    let supplierList        = null; //$q('#supplier_list > option[data-value="{{$mcItem->supplier_id}}"]').first();
+    let paymentTermsList    = null; //$q('#payment_terms_list > option[data-value="{{$mcItem->payment_term_id}}"]').first();
                 
     @foreach($items as $item)
 
         @foreach($item->MaterialCanvass as $mcItem)
             
             //(()=>{
-                
+                supplierList        = $q('#supplier_list > option[data-value="{{$mcItem->supplier_id}}"]').first();
+                paymentTermsList    = $q('#payment_terms_list > option[data-value="{{$mcItem->payment_term_id}}"]').first();
+    
                 @if($mcItem->status == 'PEND')
                     
                     $el.append( CanvassItem({
