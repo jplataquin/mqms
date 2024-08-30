@@ -6,34 +6,27 @@
 <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="#">
+                <a href="/review/material_canvass">
                     <span>
                        Review
                     </span>
                 </a>
             </li>
             <li>
-                <a href="/review/material_canvass">
+                <a href="#" class="active">
                     <span>
                        Material Canvass
                     </span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="active">
-                    <span>
-                        Display
-                    </span>		
-                    <i class="ms-2 bi bi-display"></i>
+                    <i class="ms-2 bi bi-file-earmark-plus"></i>
                 </a>
             </li>
         </ul>
     </div>
 <hr>
-    <table class="table">
+    <table class="record-table-horizontal">
         <tbody>
             <tr>
-                <th>Material Quantity Request ID</th>
+                <th>Material Request ID</th>
                 <td>{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
             </tr>
             <tr>
@@ -45,21 +38,25 @@
                 <td>{{$section->name}}</td>
             </tr>
             <tr>
-                <th>Component</th>
-                <td>{{$component->name}}</td>
+                <th>Contract Item</th>
+                <td>{{$contract_item->item_code}} {{$contract_item->description}}</td>
             </tr>
             <tr>
-                <th>Status</th>
-                <td>{{$material_quantity_request->status}}</td>
+                <th>Component</th>
+                <td>{{$component->name}}</td>
             </tr>
             <tr>
                 <th>Created By</th>
                 <td>{{$material_quantity_request->CreatedByUser()->name}} {{$material_quantity_request->created_at}}</td>
             </tr>
+
+            @if($material_quantity_request->updated_at)
             <tr>
                 <th>Updated By</th>
                 <td>{{$material_quantity_request->UpdatedByUser()->name}} {{$material_quantity_request->updated_at}}</td>
             </tr>
+            @endif
+
             <tr>
                 <th>Approved By</th>
                 <td>{{$material_quantity_request->ApprovedByUser()->name}} {{$material_quantity_request->approved_at}}</td>

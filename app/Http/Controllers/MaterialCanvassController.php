@@ -104,6 +104,7 @@ class MaterialCanvassController extends Controller
 
         $project                = $materialQuantityRequest->Project;
         $section                = $materialQuantityRequest->Section;
+        $contract_item          = $materialQuantityRequest->ContractItem;
         $component              = $materialQuantityRequest->Component;
         $items                  = $materialQuantityRequest->Items()->with('MaterialCanvass')->get();
        
@@ -147,7 +148,8 @@ class MaterialCanvassController extends Controller
             'component_item_arr'        => $component_item_arr,
             'material_item_arr'         => $material_item_arr,
             'suppliers'                 => $suppliers,
-            'payment_terms'             => $payment_terms
+            'payment_terms'             => $payment_terms,
+            'contract_item'             => $contract_item
         ]);
     }
 
