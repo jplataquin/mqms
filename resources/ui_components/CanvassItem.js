@@ -181,16 +181,23 @@ class CanvassItem extends Component{
           
         this.el.deleteBtn.onclick = ()=>{
 
-            
-            if(this._model.status == 'APRV'){
-                return false;
-            }
+            window.util.confirm('Are you sure you want to delete this canvass?',res=>{
 
-            if(this._model.status == 'PEND'){
-                return this.httpDeleteRequest();
-            }
+                if(!res) return false;
 
-            $el.remove(dom);
+                if(this._model.status == 'APRV'){
+                    return false;
+                }
+    
+                if(this._model.status == 'PEND'){
+                    return this.httpDeleteRequest();
+                }
+    
+                $el.remove(dom);
+    
+
+            });
+
             
         }
 
