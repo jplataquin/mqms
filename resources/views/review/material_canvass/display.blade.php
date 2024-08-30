@@ -71,7 +71,7 @@
         </tbody>
     </table>
 
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-12 text-end">
             <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
         </div>
