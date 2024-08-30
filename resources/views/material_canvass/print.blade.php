@@ -43,17 +43,9 @@
 
 
     <page_footer>
-        <br>
-        <table class="page_footer">
-            <tr>
-                <td style="width: 50%;font-size:12px;">
-                    
-                </td>
-                <td style="width: 50%; text-align: right;font-size:12px">
-                    [[page_cu]] / [[page_nb]]
-                </td>
-            </tr>
-        </table>
+        <div style="font-size:11px;text-align:right">  
+            [[page_cu]] / [[page_nb]]
+        </div>
     </page_footer>
 
     <table class="mb-20">
