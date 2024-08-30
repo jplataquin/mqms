@@ -79,7 +79,7 @@
                 {{ $component_item_arr[ $item->component_item_id ]->name }}
             </div>
             <div class="form-body">
-                <div class="border border-primary p-3 mb-3">
+                
                     <div class="row mb-5">
                         @php 
                             $material_item = $material_item_arr[$item->material_item_id];
@@ -115,7 +115,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                
             </div>
         </div>   
         @endforeach
