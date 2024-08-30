@@ -109,7 +109,7 @@
         <nobreak>
             <div></div>
 
-            <table class="table" border="1" style="margin-bottom:10px">
+            <table class="table" border="1" style="margin-bottom:10px;font-size:11px">
                 
                 <tr>
                     <th style="background-color:#d3d3d3" colspan="3">
