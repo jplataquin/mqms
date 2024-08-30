@@ -125,7 +125,7 @@ window.util.confirm = (msg,callback) => {
     window.ui.primaryModalBody.innerHTML     = '';
     window.ui.primaryModalFooter.innerHTML   = '';
 
-    window.ui.primaryModalTitle.innerText = 'Prompt';
+    window.ui.primaryModalTitle.innerText = 'Confirm';
     window.ui.primaryModalBody.innerText = msg;
 
     let no  = t.button({class:'btn btn-danger me-3'},'No');
