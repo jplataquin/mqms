@@ -105,8 +105,10 @@
                 <div class="folder-form-tab">
                     Canvass Items
                 </div>
-                <div class="row">
-                    <div class="col-12 canvass-container" id="canvass_{{$item->id}}"></div>
+                <div class="folder-form-body">
+                    <div class="row">
+                        <div class="col-12 canvass-container" id="canvass_{{$item->id}}"></div>
+                    </div>
                 </div>
             </div>
         </div>   
