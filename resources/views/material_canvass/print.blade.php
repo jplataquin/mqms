@@ -118,7 +118,7 @@
                     <th style="background-color:#d3d3d3;text-align:center; width:20%">
                         Quantity
                     </th>
-                    <th style="background-color:#d3d3d3;text-align:center">
+                    <th style="background-color:#d3d3d3;text-align:center; width:30%">
                         Budget Price
                     </th>
                 </tr>
