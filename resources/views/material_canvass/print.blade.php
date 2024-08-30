@@ -74,7 +74,7 @@
                 <td>{{$project->name}}</td>
                 
                 <th>Section</th>
-                <td{{$section->name}}</td>
+                <td>{{$section->name}}</td>
             </tr>
             <tr>
                 <th>Contract Item</th>
