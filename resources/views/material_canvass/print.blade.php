@@ -147,7 +147,7 @@
                             {{$mc_item->status}}
                         </td>
                         <td>
-                            {{  Str::wordWrap($supplier_arr[ $mc_item->supplier_id ]->name,10,"\n",false) }}
+                            {{  Str::wordWrap($supplier_arr[ $mc_item->supplier_id ]->name,5) }}
                         </td>
                         <td>
                             {{ $payment_term_arr[ $mc_item->payment_term_id ]->text }}
