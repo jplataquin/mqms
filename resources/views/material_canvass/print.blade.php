@@ -44,8 +44,18 @@
 
 
     <page_footer>
-        <div style="font-size:11px;text-align:right;padding-bottom:20px">  
-            [[page_cu]] / [[page_nb]]
+        <div style="padding-bottom:20px">  
+            <table style="font-size:11px">
+                <tr>
+                    <td>
+                        {{$current_datetime}}
+                    </td>
+                    <td style="text-align:right">
+                        [[page_cu]] / [[page_nb]]         
+                    </td>
+                <tr>
+            </table>
+           
         </div>
     </page_footer>
 
