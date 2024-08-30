@@ -56,19 +56,19 @@ class ComponentReviewController extends Controller
             $component = $component->where('components.name','LIKE','%'.$query.'%');
         }
 
-        if($project_id){
+        // if($project_id){
             
-            $component = $component->where('project_id','=',$project_id);
+        //     $component = $component->where('project_id','=',$project_id);
 
-            if($section_id){
-                $component = $component->where('section_id','=',$section_id);
+        //     if($section_id){
+        //         $component = $component->where('section_id','=',$section_id);
 
-                if($component_id){
-                    $component = $component->where('component_id','=',$component_id);
+        //         if($component_id){
+        //             $component = $component->where('component_id','=',$component_id);
 
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
 
 
         if($limit > 0){
