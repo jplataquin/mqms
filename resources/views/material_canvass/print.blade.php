@@ -146,8 +146,28 @@
                 
                 @foreach($material_canvass as $mc_item)
                     <tr>
-                        <td>
-                            {{$mc_item->status}}
+                        <td style="text-align:center">
+                            @php 
+                                switch($mc_item->status){
+                                    case 'APRV':
+
+                                        $color = "#008000";
+                                        break;
+
+                                    case 'DPRV':
+                                        
+                                        $color = '#ff0000';
+                                        
+                                        break;
+                                    default:
+
+                                        $color = '#ffff00';
+                                
+                                }
+                            @endphp
+                            <strong style="color:{{$status_color}}">
+                                {{$mc_item->status}}
+                            </strong>
                         </td>
                         <td>
                             {{  Str::wordWrap($supplier_arr[ $mc_item->supplier_id ]->name,5) }}
