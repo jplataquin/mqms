@@ -17,7 +17,7 @@
                     <span>
                        Material Canvass
                     </span>
-                    <i class="ms-2 bi bi-file-earmark-plus"></i>
+                    <i class="ms-2 bi bi-display"></i>
                 </a>
             </li>
         </ul>
@@ -73,6 +73,7 @@
 
     <div>
     @foreach($items as $item)
+    
         <div class="border border-primary p-3 mb-3">
             <div class="row mb-5">
                <h5>  {{ $component_item_arr[ $item->component_item_id ]->name }}</h5>
@@ -100,8 +101,13 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-12 canvass-container" id="canvass_{{$item->id}}"></div>
+            <div class="folder-form-container">
+                <div class="folder-form-tab">
+                    Canvass Items
+                </div>
+                <div class="row">
+                    <div class="col-12 canvass-container" id="canvass_{{$item->id}}"></div>
+                </div>
             </div>
         </div>   
         @endforeach
