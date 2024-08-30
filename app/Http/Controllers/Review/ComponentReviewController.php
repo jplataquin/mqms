@@ -21,7 +21,12 @@ class ComponentReviewController extends Controller
 
     public function list(){
 
-        return view('review/component/list');
+        $projects = Project::orderBy('name','ASC')->where('status','=','ACTV')->get();
+
+        
+        return view('review/component/list',[
+            'projects' => $projects
+        ]);
     }
 
     public function _list(Request $request){
