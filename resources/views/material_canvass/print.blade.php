@@ -81,7 +81,7 @@
             </tr>
             <tr>
                 <th>Contract Item</th>
-                <td>{{$contract_item->description}}</td>
+                <td>{{$contract_item->item_code}} {{$contract_item->description}}</td>
 
                 <th>Component</th>
                 <td>{{$component->name}}</td>
