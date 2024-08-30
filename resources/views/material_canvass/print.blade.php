@@ -69,7 +69,7 @@
             <tr>
                 <th style="width:20%">Material Request ID</th>
                 <td>{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
-                <th style="width:20%">Date Generated</th>
+                <th style="width:10%">Date Generated</th>
                 <td>{{ $current_datetime }}</td>
             </tr>
             <tr>
