@@ -161,7 +161,7 @@
                                         break;
                                     default:
 
-                                        $status_color = '#ffff00';
+                                        $status_color = '#8b8000';
                                 
                                 }
                             @endphp
