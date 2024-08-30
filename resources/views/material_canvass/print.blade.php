@@ -68,13 +68,15 @@
         <tbody>
             <tr>
                 <th style="width:20%">Material Request ID</th>
-                <td style="width:80%" colspan="3">{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
+                <td>{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
+                <th style="width:20%">Date Generated</th>
+                <td>{{ $current_datetime }}</td>
             </tr>
             <tr>
                 <th>Project</th>
                 <td>{{$project->name}}</td>
                 
-                <th style="width:20%">Section</th>
+                <th>Section</th>
                 <td>{{$section->name}}</td>
             </tr>
             <tr>
