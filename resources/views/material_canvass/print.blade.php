@@ -112,10 +112,10 @@
             <table class="table" border="1" style="margin-bottom:10px;font-size:11px">
                 
                 <tr>
-                    <th style="background-color:#d3d3d3" colspan="3">
+                    <th style="background-color:#d3d3d3; width:50%" colspan="3">
                         Material
                     </th>
-                    <th style="background-color:#d3d3d3;text-align:center">
+                    <th style="background-color:#d3d3d3;text-align:center; width:20%">
                         Quantity
                     </th>
                     <th style="background-color:#d3d3d3;text-align:center">
