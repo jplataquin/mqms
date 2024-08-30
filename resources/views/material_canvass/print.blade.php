@@ -53,7 +53,7 @@
                     <td style="text-align:right">
                         [[page_cu]] / [[page_nb]]         
                     </td>
-                <tr>
+                </tr>
             </table>
            
         </div>
