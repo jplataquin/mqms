@@ -151,17 +151,17 @@
                                 switch($mc_item->status){
                                     case 'APRV':
 
-                                        $color = "#008000";
+                                        $status_color = "#008000";
                                         break;
 
                                     case 'DPRV':
                                         
-                                        $color = '#ff0000';
+                                        $status_color = '#ff0000';
                                         
                                         break;
                                     default:
 
-                                        $color = '#ffff00';
+                                        $status_color = '#ffff00';
                                 
                                 }
                             @endphp
