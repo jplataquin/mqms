@@ -33,14 +33,11 @@ class ComponentReviewController extends Controller
 
         //todo check role
 
-        $page            = (int) $request->input('page')     ?? 1;
-        $limit           = (int) $request->input('limit')    ?? 10;
-        $project_id      = (int) $request->input('project_id')  ?? 0;
-        $section_id      = (int) $request->input('section_id')  ?? 0;
-        $component_id    = (int) $request->input('component_id')  ?? 0;
-        $query           = (int) $request->input('query')    ?? 0;
-        $orderBy         = $request->input('order_by')       ?? 'id';
-        $order           = $request->input('order')          ?? 'DESC';
+        $page       = (int) $request->input('page')     ?? 1;
+        $limit      = (int) $request->input('limit')    ?? 0;
+        $orderBy    = $request->input('order_by')       ?? 'id';
+        $order      = $request->input('order')          ?? 'DESC';
+        $query      = $request->input('query')          ?? '';
         $result     = [];
 
         $component = new Component();
@@ -55,21 +52,6 @@ class ComponentReviewController extends Controller
         if($query != ''){
             $component = $component->where('components.name','LIKE','%'.$query.'%');
         }
-
-        // if($project_id){
-            
-        //     $component = $component->where('project_id','=',$project_id);
-
-        //     if($section_id){
-        //         $component = $component->where('section_id','=',$section_id);
-
-        //         if($component_id){
-        //             $component = $component->where('component_id','=',$component_id);
-
-        //         }
-        //     }
-        // }
-
 
         if($limit > 0){
             $page   = ($page-1) * $limit;
