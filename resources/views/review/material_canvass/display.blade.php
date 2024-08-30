@@ -157,8 +157,8 @@
     import CanvassItem from '/ui_components/CanvassItem.js';
     
     const cancelBtn         = $q('#cancelBtn').first();
-    let supplierList        = null; //$q('#supplier_list > option[data-value="{{$mcItem->supplier_id}}"]').first();
-    let paymentTermsList    = null; //$q('#payment_terms_list > option[data-value="{{$mcItem->payment_term_id}}"]').first();
+    let supplierList        = null;
+    let paymentTermsList    = null;
                 
     @foreach($items as $item)
 
