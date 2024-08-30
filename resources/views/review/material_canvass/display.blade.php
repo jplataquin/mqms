@@ -159,11 +159,18 @@
     const cancelBtn         = $q('#cancelBtn').first();
     let supplierList        = null;
     let paymentTermsList    = null;
+    let container           = null;
                 
     @foreach($items as $item)
 
+    
+        container = $q('#canvass_{{$item->id}}').first();
+        
+        //This is to prevent duplication of render
+        container.innerHTML = '';
+        
         @foreach($item->MaterialCanvass as $mcItem)
-            console.log('tae');
+
             //(()=>{
                 supplierList        = $q('#supplier_list > option[data-value="{{$mcItem->supplier_id}}"]').first();
                 paymentTermsList    = $q('#payment_terms_list > option[data-value="{{$mcItem->payment_term_id}}"]').first();
@@ -183,7 +190,7 @@
                         status:'{{$mcItem->status}}',
                         price:'{{$mcItem->price}}',
                         approvalFlag: true
-                    }) ).to($q('#canvass_{{$item->id}}').first());
+                    }) ).to(container);
                     
                 @else
 
@@ -200,7 +207,7 @@
                         status:'{{$mcItem->status}}',
                         price:'{{$mcItem->price}}',
                         approvalFlag: false
-                    })).to($q('#canvass_{{$item->id}}').first());
+                    })).to(container);
                     
 
                 @endif
