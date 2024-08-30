@@ -183,6 +183,8 @@ class CanvassItem extends Component{
 
             window.util.confirm('Are you sure you want to delete this canvass?',res=>{
 
+                console.log(res);
+                
                 if(!res) return false;
 
                 if(this._model.status == 'APRV'){
