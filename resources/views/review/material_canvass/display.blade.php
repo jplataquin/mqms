@@ -23,7 +23,7 @@
         </ul>
     </div>
 <hr>
-    <table class="record-table-horizontal">
+    <table class="record-table-horizontal mb-3">
         <tbody>
             <tr>
                 <th>Material Request ID</th>
@@ -74,7 +74,7 @@
     <div>
         @foreach($items as $item)
 
-        <div class="form-container">
+        <div class="form-container mb-3">
             <div class="form-header">
                 {{ $component_item_arr[ $item->component_item_id ]->name }}
             </div>
