@@ -181,10 +181,8 @@ class CanvassItem extends Component{
           
         this.el.deleteBtn.onclick = ()=>{
 
-            window.util.confirm('Are you sure you want to delete this canvass?',res=>{
+            window.util.confirm('Are you sure you want to delete this canvass item?',res=>{
 
-                console.log(res);
-                
                 if(!res) return false;
 
                 if(this._model.status == 'APRV'){
@@ -221,9 +219,14 @@ class CanvassItem extends Component{
 
         this.el.voidBtn.onclick = ()=>{
 
-            if(this._model.status == 'APRV' && confirm('Are you sure you want to "VOID" this canvass?')){
-                return this.httpVoidRequest();
-            }
+            window.util.confirm('Are you sure you want to void this canvass item?',res=>{
+
+                if(!res) return false;
+
+                if(this._model.status == 'APRV'){
+                    return this.httpVoidRequest();
+                }
+            })
         }
 
         this.el.price.onblur = (e)=>{
