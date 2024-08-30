@@ -47,7 +47,7 @@
             <table style="font-size:11px">
                 <tr>
                     <td style="width:50%">
-                        <strong>Material Canvass:</strong> >{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}} - {{$current_datetime}}
+                        <strong>Material Canvass:</strong> {{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}} - {{$current_datetime}}
                     </td>
                     <td style="text-align:right;width:50%">
                         [[page_cu]] / [[page_nb]]         
