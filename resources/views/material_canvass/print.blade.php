@@ -40,6 +40,22 @@
 </style>
 
 <page>
+
+
+    <page_footer>
+        <br>
+        <table class="page_footer">
+            <tr>
+                <td style="width: 50%;font-size:12px;">
+                    
+                </td>
+                <td style="width: 50%; text-align: right;font-size:12px">
+                    [[page_cu]] / [[page_nb]]
+                </td>
+            </tr>
+        </table>
+    </page_footer>
+
     <table class="mb-20">
         <tr>
             <td style="width:60%;text-align:center">
@@ -100,59 +116,60 @@
         
         <nobreak>
             <div></div>
-        <table class="table" border="1" style="margin-bottom:10px">
-            
-            <tr>
-                <th style="background-color:#d3d3d3" colspan="3">
-                    Material
-                </th>
-                <th style="background-color:#d3d3d3;text-align:center">
-                    Quantity
-                </th>
-                <th style="background-color:#d3d3d3;text-align:center">
-                    Budget Price
-                </th>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    {{$material_item->brand}} {{$material_item->name}} {{$material_item->specification_unit_packaging}}
-                </td>
-                <td style="text-align:center">
-                    {{ $item->requested_quantity }}
-                </td>
-                <td style="text-align:center">
-                    P {{ number_format($component_item->budget_price,2) }}
-                </td>
-            </tr>
-            <tr>
-                <th style="width:10%;text-align:center">Status</th>
-                <th style="width:30%;text-align:center">Supplier</th>
-                <th style="width:20%;text-align:center">Payment Terms</th>
-                <th style="width:20%;text-align:center">Price</th>
-                <th style="width:20%;text-align:center">Total</th>
-            </tr>             
-            
-            @foreach($material_canvass as $mc_item)
+
+            <table class="table" border="1" style="margin-bottom:10px">
+                
                 <tr>
-                    <td>
-                        {{$mc_item->status}}
-                    </td>
-                    <td>
-                        {{ $supplier_arr[ $mc_item->supplier_id ]->name }}
-                    </td>
-                    <td>
-                        {{ $payment_term_arr[ $mc_item->payment_term_id ]->text }}
+                    <th style="background-color:#d3d3d3" colspan="3">
+                        Material
+                    </th>
+                    <th style="background-color:#d3d3d3;text-align:center">
+                        Quantity
+                    </th>
+                    <th style="background-color:#d3d3d3;text-align:center">
+                        Budget Price
+                    </th>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        {{$material_item->brand}} {{$material_item->name}} {{$material_item->specification_unit_packaging}}
                     </td>
                     <td style="text-align:center">
-                        P {{ number_format($mc_item->price,2) }}
+                        {{ $item->requested_quantity }}
                     </td>
                     <td style="text-align:center">
-                        P {{ number_format($item->requested_quantity * $mc_item->price,2) }}
+                        P {{ number_format($component_item->budget_price,2) }}
                     </td>
                 </tr>
-            @endforeach
-            
-        </table>
+                <tr>
+                    <th style="width:10%;text-align:center">Status</th>
+                    <th style="width:30%;text-align:center">Supplier</th>
+                    <th style="width:20%;text-align:center">Payment Terms</th>
+                    <th style="width:20%;text-align:center">Price</th>
+                    <th style="width:20%;text-align:center">Total</th>
+                </tr>             
+                
+                @foreach($material_canvass as $mc_item)
+                    <tr>
+                        <td>
+                            {{$mc_item->status}}
+                        </td>
+                        <td>
+                            {{ $supplier_arr[ $mc_item->supplier_id ]->name }}
+                        </td>
+                        <td>
+                            {{ $payment_term_arr[ $mc_item->payment_term_id ]->text }}
+                        </td>
+                        <td style="text-align:center">
+                            P {{ number_format($mc_item->price,2) }}
+                        </td>
+                        <td style="text-align:center">
+                            P {{ number_format($item->requested_quantity * $mc_item->price,2) }}
+                        </td>
+                    </tr>
+                @endforeach
+                
+            </table>
         </nobreak>
         @endforeach
 

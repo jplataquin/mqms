@@ -104,8 +104,8 @@
                             <div id="canvass_{{$item->id}}"></div>
                             <div class="text-end mt-3">
                                 <button data-id="{{$item->id}}" class="add-canvass-btn btn btn-primary">
-                                    <i class="ms-2 bi bi-file-earmark-plus"></i>
-                                    Canvass
+                                    <i class="bi bi-plus-circle"></i>
+                                    Add
                                 </button>
                             </div>
                         </div>
@@ -222,7 +222,7 @@
         if(!validateFlag) return false;
 
         if(!itemData.length){
-            window.util.showMsg('Error: No data to submit');
+            window.util.alert('Error','No data to submit');
             return false;
         }
 
@@ -251,7 +251,7 @@
     }
 
     printBtn.onclick = (e)=>{
-        document.location.href = '/material_canvass/print/{{$material_quantity_request->id}}';
+        window.open('/material_canvass/print/{{$material_quantity_request->id}}','_blank');
     }
 </script>
 </div>
