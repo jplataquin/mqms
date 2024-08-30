@@ -134,11 +134,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <th style="text-align:center">Status</th>
-                    <th style="text-align:center">Supplier</th>
-                    <th style="text-align:center">Payment Terms</th>
-                    <th style="text-align:center">Price</th>
-                    <th style="text-align:center">Total</th>
+                    <th style="background-color:#cccccc;text-align:center">Status</th>
+                    <th style="background-color:#cccccc;text-align:center">Supplier</th>
+                    <th style="background-color:#cccccc;text-align:center">Payment Terms</th>
+                    <th style="background-color:#cccccc;text-align:center">Price</th>
+                    <th style="background-color:#cccccc;text-align:center">Total</th>
                 </tr>             
                 
                 @foreach($material_canvass as $mc_item)
