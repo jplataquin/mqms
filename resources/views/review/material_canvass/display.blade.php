@@ -162,7 +162,7 @@
 
         @foreach($item->MaterialCanvass as $mcItem)
             
-            (()=>{
+            //(()=>{
                 let supplierList = $q('#supplier_list > option[data-value="{{$mcItem->supplier_id}}"]').first();
                 let paymentTermsList = $q('#payment_terms_list > option[data-value="{{$mcItem->payment_term_id}}"]').first();
                 
@@ -202,7 +202,7 @@
                     
 
                 @endif
-            })();
+            //})();
         @endforeach
 
 
