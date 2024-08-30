@@ -23,57 +23,65 @@
         </ul>
     </div>
 <hr>
-    <table class="record-table-horizontal">
-        <tbody>
-            <tr>
-                <th>Material Request ID</th>
-                <td>{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
-            </tr>
-            <tr>
-                <th>Project</th>
-                <td>{{$project->name}}</td>
-            </tr>
-            <tr>
-                <th>Section</th>
-                <td>{{$section->name}}</td>
-            </tr>
-            <tr>
-                <th>Contract Item</th>
-                <td>{{$contract_item->item_code}} {{$contract_item->description}}</td>
-            </tr>
-            <tr>
-                <th>Component</th>
-                <td>{{$component->name}}</td>
-            </tr>
-            <tr>
-                <th>Created By</th>
-                <td>{{$material_quantity_request->CreatedByUser()->name}} {{$material_quantity_request->created_at}}</td>
-            </tr>
 
-            @if($material_quantity_request->updated_at)
-            <tr>
-                <th>Updated By</th>
-                <td>{{$material_quantity_request->UpdatedByUser()->name}} {{$material_quantity_request->updated_at}}</td>
-            </tr>
-            @endif
+    <div class="folder-form-container">
+        <div class="folder-form-tab">
+            Review Material Canvass
+        </div>
+        <div class="folder-form-body">
+            <table class="record-table-horizontal">
+                <tbody>
+                    <tr>
+                        <th>Material Request ID</th>
+                        <td>{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
+                    </tr>
+                    <tr>
+                        <th>Project</th>
+                        <td>{{$project->name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Section</th>
+                        <td>{{$section->name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Contract Item</th>
+                        <td>{{$contract_item->item_code}} {{$contract_item->description}}</td>
+                    </tr>
+                    <tr>
+                        <th>Component</th>
+                        <td>{{$component->name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Created By</th>
+                        <td>{{$material_quantity_request->CreatedByUser()->name}} {{$material_quantity_request->created_at}}</td>
+                    </tr>
 
-            <tr>
-                <th>Approved By</th>
-                <td>{{$material_quantity_request->ApprovedByUser()->name}} {{$material_quantity_request->approved_at}}</td>
-            </tr>
-            
-            <tr>
-                <th>Description</th>
-                <td>
-                    <textarea disabled="true" class="w-100" id="description">{{$material_quantity_request->description}}</textarea>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                    @if($material_quantity_request->updated_at)
+                    <tr>
+                        <th>Updated By</th>
+                        <td>{{$material_quantity_request->UpdatedByUser()->name}} {{$material_quantity_request->updated_at}}</td>
+                    </tr>
+                    @endif
 
-    <div class="row mt-3">
-        <div class="col-12 text-end">
-            <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+                    <tr>
+                        <th>Approved By</th>
+                        <td>{{$material_quantity_request->ApprovedByUser()->name}} {{$material_quantity_request->approved_at}}</td>
+                    </tr>
+                    
+                    <tr>
+                        <th>Description</th>
+                        <td>
+                            <textarea disabled="true" class="w-100" id="description">{{$material_quantity_request->description}}</textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="row mt-3">
+                <div class="col-12 text-end">
+                    <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+                </div>
+            </div>
         </div>
     </div>
     <hr>
@@ -202,7 +210,7 @@
 
     cancelBtn.onclick = (e)=>{
         
-        window.util.navTo('/home');
+        window.util.navTo('/review/material_canvass');
     }
 </script>
 </div>
