@@ -116,6 +116,42 @@ window.util.prompt = (msg,callback) => {
     window.ui.primaryModal.show();
 }
 
+
+window.util.confirm = (msg,callback) => {
+
+    window.ui.primaryModal.hide();
+
+    window.ui.primaryModalTitle.innerHTML    = '';
+    window.ui.primaryModalBody.innerHTML     = '';
+    window.ui.primaryModalFooter.innerHTML   = '';
+
+    window.ui.primaryModalTitle.innerText = 'Prompt';
+    window.ui.primaryModalBody.innerText = msg;
+
+    let no  = t.button({class:'btn btn-danger me-3'},'No');
+    let yes = t.button({class:'btn btn-success'},'Yes');
+
+    yes.onclick = (e)=>{
+        callback(e,true);
+        window.ui.primaryModal.hide();
+    }
+
+    no.onclick = (e)=>{
+        callback(e,false);
+        window.ui.primaryModal.hide();
+    }
+
+    let footer = t.div({class:'text-end'},(el)=>{
+        el.appendChild(no);
+        el.appendChild(yes);
+    });
+
+    window.ui.primaryModalFooter.appendChild(footer);
+
+    window.ui.primaryModal.show();
+}
+
+
 window.util.showMsg = (reply) => {
     
     let message = '';
