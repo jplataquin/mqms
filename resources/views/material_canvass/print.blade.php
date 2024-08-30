@@ -3,10 +3,11 @@
     table, th, td {
         border: 1px solid black;
         border-collapse: collapse;
+        font-size:11px;
     } 
 
     table{
-        width: 100%;
+        
     }
 
     th,td{
