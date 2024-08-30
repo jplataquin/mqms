@@ -66,15 +66,15 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Material Request ID</th>
-                <td colspan="3">{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
+                <th style="width:20%">Material Request ID</th>
+                <td style="width:80%" colspan="3">{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
             </tr>
             <tr>
-                <th style="width:20%">Project</th>
-                <td style="width:30%">{{$project->name}}</td>
+                <th>Project</th>
+                <td>{{$project->name}}</td>
                 
-                <th style="width:20%">Section</th>
-                <td style="width:30%">{{$section->name}}</td>
+                <th>Section</th>
+                <td{{$section->name}}</td>
             </tr>
             <tr>
                 <th>Contract Item</th>
