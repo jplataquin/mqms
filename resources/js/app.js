@@ -132,12 +132,12 @@ window.util.confirm = (msg,callback) => {
     let yes = t.button({class:'btn btn-success'},'Yes');
 
     yes.onclick = (e)=>{
-        callback(e,true);
+        callback(true,e);
         window.ui.primaryModal.hide();
     }
 
     no.onclick = (e)=>{
-        callback(e,false);
+        callback(false,e);
         window.ui.primaryModal.hide();
     }
 
