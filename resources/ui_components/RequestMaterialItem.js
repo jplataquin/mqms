@@ -119,7 +119,7 @@ class RequestMaterialItem extends Component{
 
                 t.div({class:'row mt-3'},()=>{
                     
-                    t.div({class:'col-4'},()=>{
+                    t.div({class:'col-lg-2'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Budget');
                             this.el.materialBudgetQuantity = t.input({
@@ -131,7 +131,7 @@ class RequestMaterialItem extends Component{
                         });              
                     });
 
-                    t.div({class:'col-4'},()=>{
+                    t.div({class:'col-lg-2'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Approved');
                             this.el.prevApprovedQuantity = t.input({
@@ -144,7 +144,7 @@ class RequestMaterialItem extends Component{
                     });
 
 
-                    t.div({class:'col-4'},()=>{
+                    t.div({class:'col-lg-2'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Remaining');
                             this.el.quantityRemaining = t.input({
@@ -156,11 +156,7 @@ class RequestMaterialItem extends Component{
                         });                
                     });
 
-                });//div row
-
-
-                t.div({class:'row mt-3'},()=>{
-                    t.div({class:'col-6'},()=>{
+                    t.div({class:'col-lg-4'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Request Quantity');
                            
@@ -178,7 +174,7 @@ class RequestMaterialItem extends Component{
                         });
                     });
 
-                    t.div({class:'col-6'},()=>{
+                    t.div({class:'col-2'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Balance Quantity');
                            
@@ -359,7 +355,10 @@ class RequestMaterialItem extends Component{
             }
 
             this.el.prevApprovedQuantity.value = reply.data.total_approved_quantity;
-            this.el.quantityRemaining.value    = parseFloat(this.el.materialBudgetQuantity.value) - parseFloat(reply.data.total_approved_quantity);
+
+            let balance = parseFloat(this.el.materialBudgetQuantity.value) - parseFloat(reply.data.total_approved_quantity);
+
+            this.el.quantityRemaining.value    = window.util.roundUp(balance,2);
 
         });
     }

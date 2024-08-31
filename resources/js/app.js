@@ -529,3 +529,18 @@ window.util.roundTwoDecimal = function(num){
     num = parseFloat(num);
     return Math.round((num + Number.EPSILON) * 100) / 100;
 }
+
+
+window.util.roundUp = function(num,decimal){
+    num = parseFloat(num);
+    
+    let v = '1';
+
+    for(let i = 1; i <= decimal; i++){
+        v = v+'0';
+    }
+
+    v = parseInt(v);
+
+    return Math.round((num + Number.EPSILON) * v) / v;
+}
