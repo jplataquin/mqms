@@ -354,7 +354,7 @@ class RequestMaterialItem extends Component{
             this.el.quantityRemaining.value    = window.util.roundUp(balance,2);
 
             if(balance < 0){
-                this.el.quantityRemaining.addClass('invalid');
+                this.el.quantityRemaining.addClass('is-invalid');
             }
 
         });
@@ -376,7 +376,7 @@ class RequestMaterialItem extends Component{
 
         }else{
 
-            window.util.alert('Error','Please wait wait for the approved quantity to finish calculation');
+            window.util.alert('Error','Please wait for the approved quantity to finish calculation');
             
             this.el.requestedQuantity.value = 0; 
             this.el.requestedQuantity.blur();
