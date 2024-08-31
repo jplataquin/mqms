@@ -112,7 +112,8 @@
                 $component_item     = $component_item_arr[ $item->component_item_id ];
                 $material_canvass   = $item->MaterialCanvass;
 
-                if(count($material_canvass)){
+                //Skip render if not canvass item is available
+                if(!count($material_canvass)){
                     continue;
                 }
 
