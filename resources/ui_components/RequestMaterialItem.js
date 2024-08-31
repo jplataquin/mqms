@@ -317,13 +317,6 @@ class RequestMaterialItem extends Component{
             );
         };
 
-       // let component_item = this._model.componentItemList[ component_item_id ];
-
-        
-        // if(component_item){
-        //     this.setState('unit', this._model.unitOptions[component_item.unit_id].text );
-        // }
-
 
         //Set state to default
         this.setState('materialBudgetQuantity','');
@@ -359,6 +352,10 @@ class RequestMaterialItem extends Component{
             let balance = parseFloat(this.el.materialBudgetQuantity.value) - parseFloat(reply.data.total_approved_quantity);
 
             this.el.quantityRemaining.value    = window.util.roundUp(balance,2);
+
+            if(balance < 0){
+                this.el.quantityRemaining.addClass('invalid');
+            }
 
         });
     }
