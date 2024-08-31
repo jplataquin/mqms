@@ -123,15 +123,18 @@
             <div></div>
 
             <table class="table" border="1" style="margin-bottom:10px;font-size:11px">
-                
                 <tr>
-                    <th style="background-color:#cccccc; width:50%" colspan="3">
+                    <td colspan="3" style="width:100%">
+                    </td>
+                </tr>
+                <tr>
+                    <th style="background-color:#cccccc;" colspan="3">
                         Material
                     </th>
-                    <th style="background-color:#cccccc;text-align:center; width:20%">
+                    <th style="background-color:#cccccc;text-align:center;">
                         Quantity
                     </th>
-                    <th style="background-color:#cccccc;text-align:center; width:20%">
+                    <th style="background-color:#cccccc;text-align:center;">
                         Budget Price
                     </th>
                 </tr>
