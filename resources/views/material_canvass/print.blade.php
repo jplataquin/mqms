@@ -124,7 +124,7 @@
 
             <table class="table" border="1" style="margin-bottom:10px;font-size:11px">
                 <tr>
-                    <td colspan="3" style="width:100%">
+                    <td colspan="5" style="width:100%">
                     </td>
                 </tr>
                 <tr>
