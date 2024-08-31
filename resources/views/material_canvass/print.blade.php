@@ -113,7 +113,7 @@
                 $material_canvass   = $item->MaterialCanvass;
 
                 if(count($material_canvass)){
-                    $continue;
+                    continue;
                 }
 
             @endphp
