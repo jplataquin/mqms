@@ -128,7 +128,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th style="" colspan="3">
+                    <th style="text-align:center" colspan="3">
                         Material
                     </th>
                     <th style="text-align:center;">
