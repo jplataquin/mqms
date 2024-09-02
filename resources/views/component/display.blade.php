@@ -312,11 +312,11 @@
                 
 
                 if(form_pos >= item_pos){
-                    console.log(item_pos);
+                    console.log(item);
                 }
             });
 
-        }, 1000);
+        }, 2000);
     });
 
     component_item_variable.onkeypress = (e)=>{
