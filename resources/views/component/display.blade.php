@@ -292,6 +292,7 @@
             if (!entry.isIntersecting) {
                 component_controls.style.display = 'none';
             }else{
+                console.log(component_controls.style.display);
                 //component_controls.style.display = 'inline';
             }
         }
