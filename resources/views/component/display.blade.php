@@ -306,6 +306,7 @@
                 component_controls.style.display = 'none';
             }else{
                 component_controls.style.display = '';
+                item_sticky_container.classList.add('d-none');
             }
         }
     });
@@ -341,7 +342,7 @@
                 }
             });
 
-    },1000));
+    },2000));
 
     component_item_variable.onkeypress = (e)=>{
         return window.util.inputNumber(component_item_variable,e,6,false);
