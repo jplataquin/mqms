@@ -302,7 +302,7 @@
     window.addEventListener("scroll", (event) => {
         setTimeout(() => {
             
-            $q('.itm').all().map(item=>{
+            $q('.itm').getAll().map(item=>{
                 console.log(item.offsetTop);
             });
 
