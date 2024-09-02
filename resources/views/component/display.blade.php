@@ -342,7 +342,7 @@
                 }
             });
 
-    },2000));
+    },1000));
 
     component_item_variable.onkeypress = (e)=>{
         return window.util.inputNumber(component_item_variable,e,6,false);
