@@ -38,8 +38,12 @@
     </div>
 <hr>
 
-    <div class="row">
-        <div class="col-lg-12">
+    <div class="form-container" style="position:sticky;top:45px;background-color:#ffffff;z-index:9999">
+        <div class="form-header">
+            Component
+        </div>
+        <div class="form-body">
+            
             <table class="record-table-horizontal">
                 <tr>
                     <th>Project</th>
@@ -54,15 +58,9 @@
                     <td>{{$contract_item->item_code}} - {{$contract_item->description}}</td>
                 </tr>
                    
-            </table>    
-        </div>
-    </div>
+            </table> 
+            <hr>   
 
-    <div class="form-container">
-        <div class="form-header">
-            Component
-        </div>
-        <div class="form-body">
             <div class="row mb-3">
                 <div class="col-lg-6">
                     <div class="form-group">
