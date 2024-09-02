@@ -284,7 +284,7 @@
         status.innerHTML = value;
     });
 
-    const observer = new IntersectionObserver(()=>{
+    const observer = new IntersectionObserver((entries)=>{
         for (let entry of entries) {
 
             // Check if the element is intersecting the viewport
