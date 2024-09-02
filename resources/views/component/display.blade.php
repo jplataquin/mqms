@@ -239,7 +239,7 @@
             </div>
         </div>
     </div>
-    <div id="component_item_list" class="row mt-3"></div>
+    <div id="component_item_list" class="mt-3"></div>
 </div>
 
 <script type="module">
@@ -320,8 +320,13 @@
         let val = 0;
 
         switch(component_item_function_type.value){
-            case '1': //Right hand factor
+            case '1': 
 
+                    //Component * Variable
+                    //--------------------
+                    //use count
+                    
+                    
                     val = window.util.roundTwoDecimal(
                         (parseFloat('{{$component->quantity}}') * component_item_variable.value)  / parseInt('{{$component->use_count}}')
                     );
@@ -500,7 +505,7 @@
         let answer = prompt('Are you sure you want to delete this component? \n If so please type "{{$component->name}}"');
 
         if(answer != "{{$component->name}}"){
-            window.util.showMsg('Invalid answer');
+            window.util.alert('Error','Invalid answer');
             return false;
         }
 
