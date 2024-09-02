@@ -309,9 +309,10 @@
                 
                 let item_pos = item.getBoundingClientRect().top + document.documentElement.scrollTop;
                 let form_pos = component_form.getBoundingClientRect().top + document.documentElement.scrollTop +  component_form.offsetHeight;
-                console.log(form_pos, item_pos);
+                
 
-                if((component_form.offsetTop + component_form.offsetHeight) > item.offsetTop){
+                if(form_pos >= item_pos){
+                    console.log(item_pos);
                 }
             });
 
