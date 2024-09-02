@@ -38,29 +38,31 @@
     </div>
 <hr>
 
+        <table class="record-table-horizontal">
+            <tr>
+                <th>Project</th>
+                <td>{{$project->name}}</td>
+            </tr>
+            <tr>
+                <th>Section</th>
+                <td>{{$section->name}}</td>
+            </tr>
+            <tr>
+                <th>Contract Item</th>
+                <td>{{$contract_item->item_code}} - {{$contract_item->description}}</td>
+            </tr>
+                
+        </table> 
+        <hr>   
+
+
     <div class="form-container" style="position:sticky;top:45px;background-color:#ffffff;z-index:9999">
         <div class="form-header">
             Component
         </div>
         <div class="form-body">
             
-            <table class="record-table-horizontal">
-                <tr>
-                    <th>Project</th>
-                    <td>{{$project->name}}</td>
-                </tr>
-                <tr>
-                    <th>Section</th>
-                    <td>{{$section->name}}</td>
-                </tr>
-                <tr>
-                    <th>Contract Item</th>
-                    <td>{{$contract_item->item_code}} - {{$contract_item->description}}</td>
-                </tr>
-                   
-            </table> 
-            <hr>   
-
+          
             <div class="row mb-3">
                 <div class="col-lg-6">
                     <div class="form-group">
