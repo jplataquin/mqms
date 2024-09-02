@@ -301,9 +301,22 @@
 
     sticky_observer.observe(sticky_trigger);
 
-    window.addEventListener("scroll", (event) => {
-        setTimeout(() => {
-            
+    const throttle = (fn, delay) => {   
+        // Capture the current time   
+        let time = Date.now();    
+        // Here's our logic   
+        return () => {     
+            if((time + delay - Date.now()) <= 0) {       
+                // Run the function we've passed to our throttler,       
+                // and reset the `time` variable (so we can check again).       
+                fn();       
+                time = Date.now();     
+            }   
+        } 
+    };
+
+    window.addEventListener("scroll", throttle((event) => {
+        
             $q('.itm').items().map(item=>{
                 
                 
@@ -316,8 +329,7 @@
                 }
             });
 
-        }, 2000);
-    });
+    },1000));
 
     component_item_variable.onkeypress = (e)=>{
         return window.util.inputNumber(component_item_variable,e,6,false);
