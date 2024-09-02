@@ -80,7 +80,7 @@ class ComponentItem extends Component{
 
                             t.tr(()=>{
                             
-                                t.th({style:{width:'40%'},class:'bg-divider'},()=>{
+                                t.th({style:{width:'40%'}},()=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('Material');
                                         t.el(this.el.materialItemSelect);
@@ -88,7 +88,7 @@ class ComponentItem extends Component{
                                 });
                                 
 
-                                t.th({class:'bg-divider'},()=>{
+                                t.th(()=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('Quantity');
                                         this.el.material_quantity = t.input({class:'form-control', type:'text'});
@@ -96,20 +96,20 @@ class ComponentItem extends Component{
                                 });
 
                                 
-                                t.th({class:'bg-divider'},()=>{
+                                t.th(()=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('Equivalent / Unit');
                                         this.el.equivalent = t.input({class:'form-control', type:'text'});
                                     });
                                 });
 
-                                t.th({class:'bg-divider'},()=>{
+                                t.th(()=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('Total');
                                         this.el.total = t.input({class:'form-control', type:'number',disabled:true});
                                     });
                                 });
-                                t.th({style:{width:'10%'},class:'bg-divider'},()=>{
+                                t.th({style:{width:'10%'}},()=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('&nbsp');
                                         this.el.addBtn = t.button({class:'btn btn-warning w-100'},'Add');
@@ -121,33 +121,36 @@ class ComponentItem extends Component{
                         
                     });//table
 
-                    t.table(()=>{
-
-                        t.thead(()=>{
-                            t.th('Material');
-                            t.th('Quantity');
-                            t.th('Equivalent / Unit');
-                            t.th('Total');
-                        });
-
-                        this.el.materialList = t.tbody();
-
-                        t.tfoot(()=>{
-                            t.tr(()=>{
-                                t.td();
-                                t.td();
-                                t.th('Grand Total');
-                                this.el.grandTotal = t.td(()=>{
-                                    t.txt('0');
-                                });
-                                t.td();
-                            });
-                        });
-                    })//table
+                    
 
                 });//body
                 
             });//container
+
+
+            t.table(()=>{
+
+                t.thead(()=>{
+                    t.th('Material');
+                    t.th('Quantity');
+                    t.th('Equivalent / Unit');
+                    t.th('Total');
+                });
+
+                this.el.materialList = t.tbody();
+
+                t.tfoot(()=>{
+                    t.tr(()=>{
+                        t.td();
+                        t.td();
+                        t.th('Grand Total');
+                        this.el.grandTotal = t.td(()=>{
+                            t.txt('0');
+                        });
+                        t.td();
+                    });
+                });
+            })//table
         });
 
 
