@@ -101,17 +101,16 @@
         @endphp
         @foreach($componentItems as $item)
 
-        <div class="mb-5">
+        <div class="form-container">
+            <div class="form-title">
+                {{$i}}.) {{$item->name}}
+            </div>
                 <table border="1" class="table">
+                    
                     <tr>
-                        <th class="" colspan="4" style="background-color:#add8e6">
-                            {{$i}}.) {{$item->name}}
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="text-center">Budget Price</th>
                         <th class="text-center">Factor</th>
-                        <th class="text-center">ceil( Quantity )</th>
+                        <th class="text-center">Quantity</th>
+                        <th class="text-center">Budget Price</th>
                         <th class="text-center">Total Amount</th>
                     </tr>
                     <tr>

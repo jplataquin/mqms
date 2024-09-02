@@ -78,7 +78,7 @@ class ComponentItem extends Component{
 
                             t.tr(()=>{
                             
-                                t.th({style:{width:'40%'}},()=>{
+                                t.th({style:{width:'40%'},class:'bg-divider'},()=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('Material');
                                         t.el(this.el.materialItemSelect);
@@ -86,7 +86,7 @@ class ComponentItem extends Component{
                                 });
                                 
 
-                                t.th(()=>{
+                                t.th({class:'bg-divider'},()=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('Quantity');
                                         this.el.material_quantity = t.input({class:'form-control', type:'text'});
@@ -94,20 +94,20 @@ class ComponentItem extends Component{
                                 });
 
                                 
-                                t.th(()=>{
+                                t.th({class:'bg-divider'},()=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('Equivalent / Unit');
                                         this.el.equivalent = t.input({class:'form-control', type:'text'});
                                     });
                                 });
 
-                                t.th(()=>{
+                                t.th({class:'bg-divider'},()=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('Total');
                                         this.el.total = t.input({class:'form-control', type:'number',disabled:true});
                                     });
                                 });
-                                t.th({style:{width:'10%'}},()=>{
+                                t.th({style:{width:'10%'},,class:'bg-divider'},()=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('&nbsp');
                                         this.el.addBtn = t.button({class:'btn btn-warning w-100'},'Add');
@@ -240,9 +240,9 @@ class ComponentItem extends Component{
                     })
 
                     t.tr({class:'bg-divider'},()=>{
-                        t.th({class:'text-center bg-divider', colspan:2},'POW/DUPA Quantity');
-                        t.th({class:'text-center bg-divider', colspan:2},'POW/DUPA Unit');
-                        t.th({class:'text-center bg-divider', colspan:4},'POW/DUPA Unit Price');
+                        t.th({class:'text-center', colspan:2},'POW/DUPA Quantity');
+                        t.th({class:'text-center', colspan:2},'POW/DUPA Unit');
+                        t.th({class:'text-center', colspan:4},'POW/DUPA Unit Price');
                     });
 
                     t.tr(()=>{
