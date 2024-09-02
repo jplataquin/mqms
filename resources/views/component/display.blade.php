@@ -114,7 +114,7 @@
             </div>
 
 
-            <div class="row">
+            <div class="row" id="component_controls">
                 <div class="col-lg-6">
                     <button class="btn btn-danger" id="deleteBtn">Delete</button>
                 </div>
@@ -261,6 +261,7 @@
     const component_sum_flag    = $q('#component_sum_flag').first();
     const component_unit        = $q('#component_unit').first();
     const sticky_trigger        = $q('#sticky_trigger').first();
+    const component_controls    = $q('#component_controls').first();
 
     const component_item_name               = $q('#component_item_name').first();
     const component_item_budget_price       = $q('#component_item_budget_price').first();
@@ -289,11 +290,9 @@
 
             // Check if the element is intersecting the viewport
             if (!entry.isIntersecting) {
-                
-                console.log('not visible');
-                
+                component_controls.style.display = 'none';
             }else{
-                console.log('visible');
+                component_controls.style.display = 'block';
             }
         }
     });
