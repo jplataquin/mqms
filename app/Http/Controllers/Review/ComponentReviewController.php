@@ -33,13 +33,15 @@ class ComponentReviewController extends Controller
 
         //todo check role
 
-        $page       = (int) $request->input('page')     ?? 1;
-        $limit      = (int) $request->input('limit')    ?? 0;
-        $orderBy    = $request->input('order_by')       ?? 'id';
-        $order      = $request->input('order')          ?? 'DESC';
-        $query      = $request->input('query')          ?? '';
-        $project_id = $request->input('project_id')      ?? 0;
-        $result     = [];
+        $page               = (int) $request->input('page')                     ?? 1;
+        $limit              = (int) $request->input('limit')                    ?? 0;
+        $orderBy            = $request->input('order_by')                       ?? 'id';
+        $order              = $request->input('order')                          ?? 'DESC';
+        $query              = $request->input('query')                          ?? '';
+        $project_id         = (int) $request->input('project_id')               ?? 0;
+        $section_id         = (int) $request->input('section_id')               ?? 0;
+        $contract_item_id   = (int) $request->input('contract_item_id')         ?? 0;
+        $result             = [];
 
         $component = new Component();
 
@@ -56,7 +58,17 @@ class ComponentReviewController extends Controller
 
         if($project_id){
             $component = $component->where('project_id','=',$project_id);
+
+            if($section_id){
+                $component = $component->where('section_id','=',$section_id);
+
+                if($contrac_item_id){
+                    $component = $component->where('contract_item_id','=',$contract_item_id);
+                }
+            }
         }
+
+        
 
         if($limit > 0){
             $page   = ($page-1) * $limit;
