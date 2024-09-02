@@ -185,22 +185,15 @@ class ComponentItem extends Component{
             });
         });
 
-        return t.div({class:'form-container'},(el)=>{
+        return t.div({class:'form-container mb-5'},(el)=>{
             
-            t.div({class:'form-title'});
+            t.div({class:'form-title'},'&nbsp;');
             t.div({class:'form-body'},()=>{
 
                 this.el.item = t.table({class:'selectable-div fade-in table border'},()=>{
                     
-                    t.thead(()=>{
-                        t.tr(()=>{
-                            t.th({class:'bg-primary p-1',colspan:7});
-                        });
-                    
-                        
-                    })
 
-                t.tbody({class:'mb-3 p-3'},()=>{
+                    t.tbody({class:'mb-3 p-3'},()=>{
                         t.tr(()=>{
                             t.th({colspan:4},'Name');
                             t.th({colspan:2},'Sum Flag');
@@ -333,14 +326,14 @@ class ComponentItem extends Component{
                     });//tbody
 
 
-                });//tbody
+                });//table
 
                 t.div((el)=>{
                     el.append(this.el.materialMenu);
                 });
 
             });//form-body
-            
+
         });//form-container
     }
 
