@@ -56,7 +56,7 @@
         <hr>   
 
 
-    <div class="form-container" style="position:sticky;top:45px;background-color:#ffffff;z-index:9999">
+    <div class="form-container" id="component_form" style="position:sticky;top:45px;background-color:#ffffff;z-index:9999">
         <div class="form-header">
             Component
         </div>
@@ -262,6 +262,8 @@
     const component_unit        = $q('#component_unit').first();
     const sticky_trigger        = $q('#sticky_trigger').first();
     const component_controls    = $q('#component_controls').first();
+    const component_form        = $q('#component_form').first();
+
 
     const component_item_name               = $q('#component_item_name').first();
     const component_item_budget_price       = $q('#component_item_budget_price').first();
@@ -303,7 +305,7 @@
         setTimeout(() => {
             
             $q('.itm').items().map(item=>{
-                console.log(item.offsetTop);
+                console.log( (component_form.offsetTop + component_form.offsetHeight)+' '+item.offsetTop);
             });
 
         }, 1000);
