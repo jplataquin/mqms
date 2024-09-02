@@ -39,7 +39,8 @@ class ComponentItem extends Component{
             component_use_count:1,
             component_unit_text:'',
             materialItemOptions:[],
-            unitOptions:[]
+            unitOptions:[],
+            sticky_el:null
         }
     }
 
@@ -445,7 +446,22 @@ class ComponentItem extends Component{
            this.httpUpdate();
         }
 
+        //this.el.item
 
+
+        const sticky_observer = new IntersectionObserver((entries)=>{
+            for (let entry of entries) {
+    
+                if (entry.isIntersecting) {
+                   console.log('intersect');
+                }
+            }
+        },{
+            root: this._model.sticky_el,
+            threshold: 0.3
+        });
+    
+        sticky_observer.observe(this.el.item);
     }
 
     calculateTotalAmount(){

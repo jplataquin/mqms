@@ -285,7 +285,7 @@
         status.innerHTML = value;
     });
 
-    const observer = new IntersectionObserver((entries)=>{
+    const sticky_observer = new IntersectionObserver((entries)=>{
         for (let entry of entries) {
 
             // Check if the element is intersecting the viewport
@@ -297,7 +297,7 @@
         }
     });
 
-    observer.observe(sticky_trigger);
+    sticky_observer.observe(sticky_trigger);
 
     component_item_variable.onkeypress = (e)=>{
         return window.util.inputNumber(component_item_variable,e,6,false);
@@ -550,7 +550,8 @@
                 component_quantity: parseFloat('{{$component->quantity}}'),
                 component_use_count: parseFloat('{{$component->use_count}}'),
                 materialItemOptions: materialItemOptions,
-                unitOptions: @json($unit_options)
+                unitOptions: @json($unit_options),
+                sticky_el:component_controls
             })
         );
 
