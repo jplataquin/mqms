@@ -148,46 +148,6 @@ class ComponentItem extends Component{
 
 
 
-        
-        t.tr(()=>{
-            t.th({class:'text-center', colspan:2},'POW/DUPA Quantity');
-            t.th({class:'text-center', colspan:2},'POW/DUPA Unit');
-            t.th({class:'text-center', colspan:4},'POW/DUPA Unit Price');
-        });
-
-        t.tr(()=>{
-            
-            t.td({colspan:2},()=>{
-                this.el.ref_1_quantity = t.input({class:'form-control',disabled:true});
-            });
-
-            t.td({colspan:2},()=>{
-
-                this.el.ref_1_unit_id = t.select({class:'form-control',disabled:true},()=>{
-                    
-                    t.option({value:''},' - ');
-
-                    for(let i in this._model.unitOptions){
-
-                        if(this._model.unitOptions[i].deleted){
-                            t.option({value:i,disabled:true},this._model.unitOptions[i].text+' [Deleted]');
-                        }else{
-                            t.option({value:i}, this._model.unitOptions[i].text );
-                        }
-                       
-                    }
-                });
-
-            });
-
-            t.td({colspan:4},()=>{
-                this.el.ref_1_unit_price = t.input({class:'form-control',disabled:true});
-            });
-        });
-
-
-
-
         return t.div({class:'form-container mb-5'},(el)=>{
             
             t.div({class:'form-header'},' ');
@@ -288,7 +248,44 @@ class ComponentItem extends Component{
                             t.td({colspan:1},()=>{
                                 this.el.total_amount = t.input({class:'form-control',disabled:true});
                             });
-                        })
+                        });
+
+
+                        t.tr(()=>{
+                            t.th({class:'text-center', colspan:2},'POW/DUPA Quantity');
+                            t.th({class:'text-center', colspan:2},'POW/DUPA Unit');
+                            t.th({class:'text-center', colspan:4},'POW/DUPA Unit Price');
+                        });
+                
+                        t.tr(()=>{
+                            
+                            t.td({colspan:2},()=>{
+                                this.el.ref_1_quantity = t.input({class:'form-control',disabled:true});
+                            });
+                
+                            t.td({colspan:2},()=>{
+                
+                                this.el.ref_1_unit_id = t.select({class:'form-control',disabled:true},()=>{
+                                    
+                                    t.option({value:''},' - ');
+                
+                                    for(let i in this._model.unitOptions){
+                
+                                        if(this._model.unitOptions[i].deleted){
+                                            t.option({value:i,disabled:true},this._model.unitOptions[i].text+' [Deleted]');
+                                        }else{
+                                            t.option({value:i}, this._model.unitOptions[i].text );
+                                        }
+                                       
+                                    }
+                                });
+                
+                            });
+                
+                            t.td({colspan:4},()=>{
+                                this.el.ref_1_unit_price = t.input({class:'form-control',disabled:true});
+                            });
+                        });
         
                     
         
