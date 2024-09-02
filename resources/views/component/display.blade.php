@@ -301,7 +301,11 @@
 
     window.addEventListener("scroll", (event) => {
         setTimeout(() => {
-          console.log('scrolling');
+            
+            $q('.itm').all().map(item=>{
+                console.log(item);
+            });
+
         }, 1000);
     });
 

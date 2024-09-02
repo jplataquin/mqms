@@ -77,7 +77,7 @@ class ComponentItem extends Component{
 
                     t.div({class:'row'},()=>{
 
-                        t.div({class:'col-lg-6'},()=>{
+                        t.div({class:'col-lg-6 itm'},()=>{
                             t.div({class:'form-group'},()=>{
                                 t.label('Material');
                                 t.el(this.el.materialItemSelect);
