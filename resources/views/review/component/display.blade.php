@@ -77,7 +77,7 @@
                     </tbody>
                 </table>
 
-                <div class="row mb-5">
+                <div class="row mt-3">
                     <div class="col-lg-6">
                     @if($component->status == 'PEND')
                         <button class="btn btn-danger" id="rejectBtn">Reject</button>
