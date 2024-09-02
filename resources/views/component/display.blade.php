@@ -47,7 +47,7 @@
                 <th>Section</th>
                 <td>{{$section->name}}</td>
             </tr>
-            <tr>
+            <tr id="sticky_trigger">
                 <th>Contract Item</th>
                 <td>{{$contract_item->item_code}} - {{$contract_item->description}}</td>
             </tr>
@@ -260,6 +260,7 @@
     const use_count             = $q('#use_count').first();
     const component_sum_flag    = $q('#component_sum_flag').first();
     const component_unit        = $q('#component_unit').first();
+    const sticky_trigger        = $q('#sticky_trigger').first();
 
     const component_item_name               = $q('#component_item_name').first();
     const component_item_budget_price       = $q('#component_item_budget_price').first();
@@ -283,6 +284,21 @@
         status.innerHTML = value;
     });
 
+    const observer = new IntersectionObserver(()=>{
+        for (let entry of entries) {
+
+            // Check if the element is intersecting the viewport
+            if (!entry.isIntersecting) {
+                
+                console.log('not visible');
+                
+            }else{
+                console.log('visible');
+            }
+        }
+    });
+
+    observer.observe(sticky_trigger);
 
     component_item_variable.onkeypress = (e)=>{
         return window.util.inputNumber(component_item_variable,e,6,false);
