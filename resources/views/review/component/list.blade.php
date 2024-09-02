@@ -177,7 +177,7 @@
             order: order,
             project_id: projectSelect.value,
             section_id: sectionSelect.value,
-            component_id: componentSelect.value,
+            contract_item_id: contractItemSelect.value,
             limit: 10
         }).then(reply=>{
             
@@ -251,7 +251,7 @@
         e.preventDefault();
 
         sectionSelect.innerHTML = '';
-        componentSelect.innerHTML = '';
+        contractItemSelect.innerHTML = '';
 
         window.util.blockUI();
 
@@ -289,7 +289,7 @@
 
         e.preventDefault();
 
-        componentSelect.innerHTML = '';
+        contractItemSelect.innerHTML = '';
 
         window.util.blockUI();
 
