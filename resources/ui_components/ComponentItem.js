@@ -187,10 +187,11 @@ class ComponentItem extends Component{
 
         return t.div({class:'form-container mb-5'},(el)=>{
             
-            t.div({class:'form-header'},'');
+            t.div({class:'form-header'},'test ');
+
             t.div({class:'form-body'},()=>{
 
-                this.el.item = t.table({class:'selectable-div fade-in table border'},()=>{
+                this.el.item = t.table({class:'table'},()=>{
                     
 
                     t.tbody({class:'mb-3 p-3'},()=>{
