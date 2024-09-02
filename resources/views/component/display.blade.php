@@ -292,7 +292,7 @@
             if (!entry.isIntersecting) {
                 component_controls.style.display = 'none';
             }else{
-                component_controls.style.display = 'block';
+                component_controls.style.display = 'inline';
             }
         }
     });
