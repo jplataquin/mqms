@@ -307,7 +307,9 @@
             $q('.itm').items().map(item=>{
                 
                 
-                console.log(item.offsetTop);
+                let item_pos = item.getBoundingClientRect().top + document.documentElement.scrollTop;
+                let form_pos = component_form.getBoundingClientRect().top + document.documentElement.scrollTop;
+                console.log(form_pos, item_pos);
 
                 if((component_form.offsetTop + component_form.offsetHeight) > item.offsetTop){
                 }
