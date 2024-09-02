@@ -77,7 +77,7 @@ class ComponentItem extends Component{
 
                     t.div({class:'row'},()=>{
 
-                        t.div({class:'col-lg-6 itm'},()=>{
+                        t.div({class:'col-lg-6'},()=>{
                             t.div({class:'form-group'},()=>{
                                 t.label('Material');
                                 t.el(this.el.materialItemSelect);
@@ -165,7 +165,7 @@ class ComponentItem extends Component{
         
                         t.tr(()=>{
                             t.td({colspan:4},()=>{
-                                this.el.name = t.input({class:'form-control',type:'text', placeholder:'Item',disabled:true,value:'Loading...'}); 
+                                this.el.name = t.input({class:'form-control itm',type:'text', placeholder:'Item',disabled:true,value:'Loading...'}); 
                             });
         
                             t.td({colspan:2},()=>{
