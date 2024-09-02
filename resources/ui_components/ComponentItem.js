@@ -107,7 +107,7 @@ class ComponentItem extends Component{
                                         this.el.total = t.input({class:'form-control', type:'number',disabled:true});
                                     });
                                 });
-                                t.th({style:{width:'10%'},,class:'bg-divider'},()=>{
+                                t.th({style:{width:'10%'},class:'bg-divider'},()=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('&nbsp');
                                         this.el.addBtn = t.button({class:'btn btn-warning w-100'},'Add');
