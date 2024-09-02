@@ -299,6 +299,12 @@
 
     sticky_observer.observe(sticky_trigger);
 
+    document.body.addEventListener("scroll", (event) => {
+        setTimeout(() => {
+          console.log('scrolling');
+        }, 1000);
+    });
+
     component_item_variable.onkeypress = (e)=>{
         return window.util.inputNumber(component_item_variable,e,6,false);
     }
@@ -550,8 +556,7 @@
                 component_quantity: parseFloat('{{$component->quantity}}'),
                 component_use_count: parseFloat('{{$component->use_count}}'),
                 materialItemOptions: materialItemOptions,
-                unitOptions: @json($unit_options),
-                sticky_el:component_controls
+                unitOptions: @json($unit_options)
             })
         );
 
