@@ -3,79 +3,80 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs">
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="#">
+                <a href="/review/components">
                     <span>
                        Review
                     </span>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="#" class="active">
                     <span>
                        Component
                     </span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="active">
-                    <span>
-                        Display
-                    </span>		
+                    <i class="ms-2 bi bi-display"></i>
                 </a>
             </li>
         </ul>
     </div>
-<hr>
-        <div>
-            <table class="table border">
-                <tbody>
-                    <tr>
-                        <th>Project / Section</th>
-                        <td>
-                            {{$project->name}} - ( {{$section->name}} )
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Component ID</th>
-                        <td>{{str_pad($component->id,6,0,STR_PAD_LEFT)}}</td>
-                    </tr>
-                    <tr>
-                        <th>Component</th>
-                        <td>{{$component->name}}</td>
-                    </tr>
-                    <tr>
-                        <th>Description</th>
-                        <td>{{$component->description}}</td>
-                    </tr>
-                    <tr>
-                        <th>Status</th>
-                        <td>{{$component->status}}</td>
-                    </tr>
-                    <tr>
-                        <th>Quantity / Unit</th>
-                        <td>{{$component->quantity}} {{$unit_options[$component->unit_id]->text}}</td>
-                    </tr>
-                    <tr>
-                        <th>Use Count</th>
-                        <td>{{$component->use_count}}</td>
-                    </tr>
-                    <tr>
-                        <th>Created By</th>
-                        <td>{{$component->createdByUser()->name}} {{$component->created_at}}</td>
-                    </tr>
-                    <tr>
-                        <th>Updated By</th>
-                        <td>{{$component->updatedByUser()->name}} {{$component->updated_at}}</td>
-                    </tr>
-                    <tr>
-                        <th>Hash</th>
-                        <td>{{$hash}}</td>
-                    </tr>
-                </tbody>
-            </table>
+    <hr>
+        <div class="folder-form-container">
+            <div class="folder-form-tab">
+                Review Component
+            </div>
+            <div class="folder-form-body">
+                <table class="table-record-horizontal">
+                    <tbody>
+                        <tr>
+                            <th>Project</th>
+                            <td>
+                                {{$project->name}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Section</th>
+                            <td>{{$section->name}}</td>
+                        </tr>
+                        <tr>
+                            <th>Component</th>
+                            <td>{{$component->name}}</td>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <td>{{$component->description}}</td>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td>{{$component->status}}</td>
+                        </tr>
+                        <tr>
+                            <th>Quantity / Unit</th>
+                            <td>{{$component->quantity}} {{$unit_options[$component->unit_id]->text}}</td>
+                        </tr>
+                        <tr>
+                            <th>Use Count</th>
+                            <td>{{$component->use_count}}</td>
+                        </tr>
+                        <tr>
+                            <th>Created By</th>
+                            <td>{{$component->createdByUser()->name}} {{$component->created_at}}</td>
+                        </tr>
+                        @if($component->updated_at)
+                        <tr>
+                            <th>Updated By</th>
+                            <td>{{$component->updatedByUser()->name}} {{$component->updated_at}}</td>
+                        </tr>
+                        @endif
+                        <tr>
+                            <th>Hash</th>
+                            <td>{{$hash}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         
         <div class="row mb-5">
