@@ -305,7 +305,10 @@
         setTimeout(() => {
             
             $q('.itm').items().map(item=>{
-                console.log( (component_form.offsetTop + component_form.offsetHeight)+' '+item.offsetTop);
+                
+                if((component_form.offsetTop + component_form.offsetHeight) > item.offsetTop){
+                    console.log(item);
+                }
             });
 
         }, 1000);
