@@ -28,7 +28,7 @@
                 Review Component
             </div>
             <div class="folder-form-body">
-                <table class="table-record-horizontal">
+                <table class="record-table-horizontal">
                     <tbody>
                         <tr>
                             <th>Project</th>
