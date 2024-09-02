@@ -167,7 +167,7 @@
     }
 
     function showData(){
-        console.log('hello');
+        
         window.util.blockUI();
 
         window.util.$get('/api/review/component/list',{
@@ -314,7 +314,7 @@
             reply.data.forEach((item)=>{
 
                 contractItemSelect.append(
-                    t.option({value:item.id},item.name)
+                    t.option({value:item.id},item.item_code+' '+item.description)
                 );
 
             });
@@ -323,7 +323,7 @@
         });
         }
 
-    
+    reinitalize();
     showData();
 </script>
 </div>
