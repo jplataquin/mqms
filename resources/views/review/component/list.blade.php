@@ -102,7 +102,7 @@
                         Project
                     </th>
                     <th>
-                        Section
+                        Contract Item
                     </th>
                     <th>
                         Component
@@ -151,8 +151,8 @@
         data.map(item=>{
 
             let row = t.tr({class:'selectable-div'},()=>{
-                t.td(item.project_name);
-                t.td(item.section_name);
+                t.td(item.project_name+' ('+item.section_name+')');
+                t.td(item.contract_item);
                 t.td(item.name);
             });
 

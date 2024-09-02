@@ -50,7 +50,13 @@ class ComponentReviewController extends Controller
         $component = $component
         ->join('sections', 'sections.id', '=', 'components.section_id')
         ->join('projects', 'projects.id', '=', 'sections.project_id')
-        ->select('components.*', 'projects.name AS project_name', 'sections.name AS section_name');
+        ->join('contract_items','contract_items.id','=','components.contract_item_id')
+        ->select(
+            'components.*', 
+            'projects.name AS project_name', 
+            'sections.name AS section_name',
+            'CONCAT(contract_items.item_code," ",contract_items.description) AS contract_item'
+        );
         
         if($query != ''){
             $component = $component->where('components.name','LIKE','%'.$query.'%');
