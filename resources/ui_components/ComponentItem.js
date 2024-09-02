@@ -74,61 +74,55 @@ class ComponentItem extends Component{
                 t.div({class:'folder-form-tab'},'Material Quantity');
                 
                 t.div({class:'folder-form-body'},()=>{
-                    t.table({class:'table border'},()=>{
-                       
-                        t.thead(()=>{
 
-                            t.tr(()=>{
-                            
-                                t.th({style:{width:'40%'}},()=>{
-                                    t.div({class:'form-group'},()=>{
-                                        t.label('Material');
-                                        t.el(this.el.materialItemSelect);
-                                    });
-                                });
-                                
+                    t.div({class:'row'},()=>{
 
-                                t.th(()=>{
-                                    t.div({class:'form-group'},()=>{
-                                        t.label('Quantity');
-                                        this.el.material_quantity = t.input({class:'form-control', type:'text'});
-                                    });
-                                });
-
-                                
-                                t.th(()=>{
-                                    t.div({class:'form-group'},()=>{
-                                        t.label('Equivalent / Unit');
-                                        this.el.equivalent = t.input({class:'form-control', type:'text'});
-                                    });
-                                });
-
-                                t.th(()=>{
-                                    t.div({class:'form-group'},()=>{
-                                        t.label('Total');
-                                        this.el.total = t.input({class:'form-control', type:'number',disabled:true});
-                                    });
-                                });
-                                t.th({style:{width:'10%'}},()=>{
-                                    t.div({class:'form-group'},()=>{
-                                        t.label('&nbsp');
-                                        this.el.addBtn = t.button({class:'btn btn-warning w-100'},'Add');
-                                    })
-                                });
+                        t.div({class:'col-lg-6'},()=>{
+                            t.div({class:'form-group'},()=>{
+                                t.label('Material');
+                                t.el(this.el.materialItemSelect);
                             });
                         });
-    
+                    
+                        t.div({class:'col-lg-1'},()=>{             
+                            t.div({class:'form-group'},()=>{
+                                t.label('Quantity');
+                                this.el.material_quantity = t.input({class:'form-control', type:'text'});
+                            });
+                        });                           
+
+                        t.div({class:'col-lg-2'},()=>{
+                            t.div({class:'form-group'},()=>{
+                                t.label('Equivalent / Unit');
+                                this.el.equivalent = t.input({class:'form-control', type:'text'});
+                            });
+                        });
                         
-                    });//table
+                        
+                        t.div({class:'col-lg-2'},()=>{
+
+                            t.div({class:'form-group'},()=>{
+                                t.label('Total');
+                                this.el.total = t.input({class:'form-control', type:'number',disabled:true});
+                            });
+                        });
 
                     
+                        t.div({class:'col-lg-1'},()=>{
+                            t.div({class:'form-group'},()=>{
+                                t.label('&nbsp');
+                                this.el.addBtn = t.button({class:'btn btn-warning w-100'},'Add');
+                            });
+                        });
+ 
+                    });//row
 
                 });//body
                 
             });//container
 
 
-            t.table(()=>{
+            t.table({class:'table'},()=>{
 
                 t.thead(()=>{
                     t.th('Material');
