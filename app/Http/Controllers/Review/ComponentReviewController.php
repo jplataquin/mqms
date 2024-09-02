@@ -53,7 +53,8 @@ class ComponentReviewController extends Controller
         ->join('projects', 'projects.id', '=', 'sections.project_id')
         ->join('contract_items','contract_items.id','=','components.contract_item_id')
         ->select(
-            'components.*', 
+            'components.*',
+            'project.id AS project_id',
             'projects.name AS project_name', 
             'sections.name AS section_name',
             DB::raw('CONCAT(contract_items.item_code," ",contract_items.description) AS contract_item')
@@ -64,7 +65,7 @@ class ComponentReviewController extends Controller
         }
 
         if($project_id){
-            $component = $component->where('components.project_id','=',$project_id);
+            $component = $component->where('project_id','=',$project_id);
 
             if($section_id){
                 $component = $component->where('components.section_id','=',$section_id);
