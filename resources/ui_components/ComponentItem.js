@@ -185,150 +185,153 @@ class ComponentItem extends Component{
             });
         });
 
+
+        this.el.item = t.table({class:'table'},()=>{
+                    
+
+            t.tbody(()=>{
+                t.tr(()=>{
+                    t.th({colspan:4},'Name');
+                    t.th({colspan:2},'Sum Flag');
+                });
+
+                t.tr(()=>{
+                    t.td({colspan:4},()=>{
+                        this.el.name = t.input({class:'form-control',type:'text', placeholder:'Item',disabled:true,value:'Loading...'}); 
+                    });
+
+                    t.td({colspan:2},()=>{
+                        t.div({class:'form-switch text-center'},()=>{                  
+                            this.el.sum_flag = t.input({class:'form-check-input',value:1,type:'checkbox', disabled:true});
+                        });
+                    });
+                    
+                });
+
+
+                t.tr(()=>{
+                    t.th('Function Type');
+                    t.th('Variable');
+                    t.th('Quantity');
+                    t.th('Equivalent');
+                    t.th('Unit');
+                    t.th('Budget Price');
+                })
+                
+                t.tr(()=>{
+                    
+                    t.td({class:''},(el)=>{
+                        
+                        this.el.function_type = t.select({class:'form-control',disabled:true},()=>{
+                            t.option({value:3},'As Direct');
+                            t.option({value:4},'As Equivalent');
+                            t.option({value:1},'As Factor');
+                            t.option({value:2},'As Divisor');
+                            
+                        });
+
+                    });
+
+                    t.td({class:''},(el)=>{
+                        
+                        this.el.variable = t.input({class:'form-control', type:'text', placeholder:'Variable',disabled:true,value:'Loading...'});
+
+                    });
+                
+                    t.td({class:''},(el)=>{
+                        
+                        this.el.quantity = t.input({class:'form-control', type:'text', placeholder:'Quantity',disabled:true,value:'Loading...'});
+
+                    });
+
+                    t.td({class:''},(el)=>{
+                        
+                        this.el.equivalent = t.input({class:'form-control', type:'text', placeholder:'Equivalent',disabled:true,value:'Loading...'});
+
+                    });
+
+                    t.td({class:''},(el)=>{
+
+                        this.el.unit = t.select({class:'form-control',disabled:true},()=>{
+                            for(let i in this._model.unitOptions){
+
+                                if(this._model.unitOptions[i].deleted){
+                                    t.option({value:i,disabled:true},this._model.unitOptions[i].text+' [Deleted]');
+                                }else{
+                                    t.option({value:i}, this._model.unitOptions[i].text );
+                                }
+                            }
+                        });
+    
+                    });
+
+                    t.td({class:''},(el)=>{
+                        
+                        this.el.budget_price = t.input({class:'form-control', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
+                        
+                    });
+
+
+                });
+
+
+                t.tr(()=>{
+                    t.th({colspan:5,class:'text-end'},'Total Amount');
+                    t.td({colspan:1},()=>{
+                        this.el.total_amount = t.input({class:'form-control',disabled:true});
+                    });
+                })
+
+            
+
+                t.tr(()=>{
+                    t.td({colspan:7, class:'text-end'},(el)=>{
+                        
+                        this.el.deleteComponentButton = t.button({class:'btn btn-danger me-3',style:{
+                            display: (()=>{
+                                if(this._state.editable == true) return 'none';
+                                if(this._state.editable == false) return 'inline';
+                            })()
+                        }},'Delete');
+
+                        this.el.editComponentButton = t.button({class:'btn btn-primary',style:{
+                            display: (()=>{
+                                if(this._state.editable == true) return 'none';
+                                if(this._state.editable == false) return 'inline';
+                            })()
+                        }},'Edit');
+
+                        this.el.cancelEditComponentButton = t.button({class:'btn btn-primary me-3',style:{
+                            display: (()=>{
+                                if(this._state.editable == true) return 'inline';
+                                if(this._state.editable == false) return 'none';
+                            })()
+                        }},'Cancel');
+
+                        this.el.updateComponentButton = t.button({class:'btn btn-warning',style:{
+                            display: (()=>{
+                                if(this._state.editable == true) return 'inline';
+                                if(this._state.editable == false) return 'none';
+                            })()
+                        }},'Update');
+                        
+                    });
+                });
+
+
+            });//tbody
+
+
+        });//table
+
+
         return t.div({class:'form-container mb-5'},(el)=>{
             
-            t.div({class:'form-header'},'test ');
+            t.div({class:'form-header'},'test');
 
             t.div({class:'form-body'},()=>{
 
-                this.el.item = t.table({class:'table'},()=>{
-                    
-
-                    t.tbody(()=>{
-                        t.tr(()=>{
-                            t.th({colspan:4},'Name');
-                            t.th({colspan:2},'Sum Flag');
-                        });
-
-                        t.tr(()=>{
-                            t.td({colspan:4},()=>{
-                                this.el.name = t.input({class:'form-control',type:'text', placeholder:'Item',disabled:true,value:'Loading...'}); 
-                            });
-
-                            t.td({colspan:2},()=>{
-                                t.div({class:'form-switch text-center'},()=>{                  
-                                    this.el.sum_flag = t.input({class:'form-check-input',value:1,type:'checkbox', disabled:true});
-                                });
-                            });
-                            
-                        });
-
-
-                        t.tr(()=>{
-                            t.th('Function Type');
-                            t.th('Variable');
-                            t.th('Quantity');
-                            t.th('Equivalent');
-                            t.th('Unit');
-                            t.th('Budget Price');
-                        })
-                        
-                        t.tr(()=>{
-                            
-                            t.td({class:''},(el)=>{
-                                
-                                this.el.function_type = t.select({class:'form-control',disabled:true},()=>{
-                                    t.option({value:3},'As Direct');
-                                    t.option({value:4},'As Equivalent');
-                                    t.option({value:1},'As Factor');
-                                    t.option({value:2},'As Divisor');
-                                    
-                                });
-
-                            });
-
-                            t.td({class:''},(el)=>{
-                                
-                                this.el.variable = t.input({class:'form-control', type:'text', placeholder:'Variable',disabled:true,value:'Loading...'});
-
-                            });
-                        
-                            t.td({class:''},(el)=>{
-                                
-                                this.el.quantity = t.input({class:'form-control', type:'text', placeholder:'Quantity',disabled:true,value:'Loading...'});
-
-                            });
-
-                            t.td({class:''},(el)=>{
-                                
-                                this.el.equivalent = t.input({class:'form-control', type:'text', placeholder:'Equivalent',disabled:true,value:'Loading...'});
-
-                            });
-
-                            t.td({class:''},(el)=>{
-
-                                this.el.unit = t.select({class:'form-control',disabled:true},()=>{
-                                    for(let i in this._model.unitOptions){
-
-                                        if(this._model.unitOptions[i].deleted){
-                                            t.option({value:i,disabled:true},this._model.unitOptions[i].text+' [Deleted]');
-                                        }else{
-                                            t.option({value:i}, this._model.unitOptions[i].text );
-                                        }
-                                    }
-                                });
-            
-                            });
-
-                            t.td({class:''},(el)=>{
-                                
-                                this.el.budget_price = t.input({class:'form-control', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
-                                
-                            });
-
-
-                        });
-
-
-                        t.tr(()=>{
-                            t.th({colspan:5,class:'text-end'},'Total Amount');
-                            t.td({colspan:1},()=>{
-                                this.el.total_amount = t.input({class:'form-control',disabled:true});
-                            });
-                        })
-
-                    
-
-                        t.tr(()=>{
-                            t.td({colspan:7, class:'text-end'},(el)=>{
-                                
-                                this.el.deleteComponentButton = t.button({class:'btn btn-danger me-3',style:{
-                                    display: (()=>{
-                                        if(this._state.editable == true) return 'none';
-                                        if(this._state.editable == false) return 'inline';
-                                    })()
-                                }},'Delete');
-
-                                this.el.editComponentButton = t.button({class:'btn btn-primary',style:{
-                                    display: (()=>{
-                                        if(this._state.editable == true) return 'none';
-                                        if(this._state.editable == false) return 'inline';
-                                    })()
-                                }},'Edit');
-
-                                this.el.cancelEditComponentButton = t.button({class:'btn btn-primary me-3',style:{
-                                    display: (()=>{
-                                        if(this._state.editable == true) return 'inline';
-                                        if(this._state.editable == false) return 'none';
-                                    })()
-                                }},'Cancel');
-
-                                this.el.updateComponentButton = t.button({class:'btn btn-warning',style:{
-                                    display: (()=>{
-                                        if(this._state.editable == true) return 'inline';
-                                        if(this._state.editable == false) return 'none';
-                                    })()
-                                }},'Update');
-                                
-                            });
-                        });
-
-
-                    });//tbody
-
-
-                });//table
-
+               
                 t.div((el)=>{
                     el.append(this.el.materialMenu);
                 });
