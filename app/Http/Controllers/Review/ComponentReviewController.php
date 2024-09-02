@@ -64,13 +64,13 @@ class ComponentReviewController extends Controller
         }
 
         if($project_id){
-            $component = $component->where('project_id','=',$project_id);
+            $component = $component->where('components.project_id','=',$project_id);
 
             if($section_id){
-                $component = $component->where('section_id','=',$section_id);
+                $component = $component->where('components.section_id','=',$section_id);
 
                 if($contract_item_id){
-                    $component = $component->where('contract_item_id','=',$contract_item_id);
+                    $component = $component->where('components.contract_item_id','=',$contract_item_id);
                 }
             }
         }
