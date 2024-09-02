@@ -299,7 +299,7 @@
 
     sticky_observer.observe(sticky_trigger);
 
-    document.body.addEventListener("scroll", (event) => {
+    window.addEventListener("scroll", (event) => {
         setTimeout(() => {
           console.log('scrolling');
         }, 1000);
