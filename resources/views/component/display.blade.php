@@ -303,7 +303,7 @@
         setTimeout(() => {
             
             $q('.itm').all().map(item=>{
-                console.log(item);
+                console.log(item.offsetTop);
             });
 
         }, 1000);
