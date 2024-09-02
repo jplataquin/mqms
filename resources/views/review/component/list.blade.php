@@ -73,8 +73,8 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <label>Component</label>
-                            <select class="form-control" id="componentSelect">
+                            <label>Contract Item</label>
+                            <select class="form-control" id="contractItemSelect">
                             </select>
                         </div>
                     </div>
@@ -125,11 +125,11 @@
 <script type="module">
     import {$q,Template,$el} from '/adarna.js';
 
-    const list            = $q('#list').first();
-    const query           = $q('#query').first();
-    const projectSelect   = $q('#projectSelect').first();
-    const sectionSelect   = $q('#sectionSelect').first();
-    const componentSelect = $q('#componentSelect').first();
+    const list                  = $q('#list').first();
+    const query                 = $q('#query').first();
+    const projectSelect         = $q('#projectSelect').first();
+    const sectionSelect         = $q('#sectionSelect').first();
+    const contractItemSelect    = $q('#contractItemSelect').first();
  
     const searchBtn       = $q('#searchBtn').first();
     const showMoreBtn     = $q('#showMoreBtn').first();
@@ -293,7 +293,7 @@
 
         window.util.blockUI();
 
-        window.util.$get('/api/component/list',{
+        window.util.$get('/api/contract_item/list',{
             section_id: sectionSelect.value,
             orderBy:'name',
             order:'ASC'
@@ -308,13 +308,13 @@
                 return false;
             }
 
-            componentSelect.append(
+            contractItemSelect.append(
                 t.option({value:''},' - ')
             );
 
             reply.data.forEach((item)=>{
 
-                componentSelect.append(
+                contractItemSelect.append(
                     t.option({value:item.id},item.name)
                 );
 
@@ -325,7 +325,6 @@
         }
 
     
-    reinitalize();
     showData();
 </script>
 </div>
