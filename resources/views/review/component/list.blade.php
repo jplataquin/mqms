@@ -3,7 +3,7 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs">
+    <div class="breadcrumbs">
         <ul>
             <li>
                 <a href="#">
@@ -28,7 +28,7 @@
             </li>
         </ul>
     </div>
-<hr>
+    <hr>
     <div class="folder-form-container">
         <div class="folder-form-tab">
              Review Components
@@ -120,7 +120,6 @@
         </div>
     </div>
 
-</div>
 
 <script type="module">
     import {$q,Template,$el} from '/adarna.js';
