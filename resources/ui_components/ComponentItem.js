@@ -194,7 +194,7 @@ class ComponentItem extends Component{
                 this.el.item = t.table({class:'table'},()=>{
                     
 
-                    t.tbody({class:'mb-3 p-3'},()=>{
+                    t.tbody(()=>{
                         t.tr(()=>{
                             t.th({colspan:4},'Name');
                             t.th({colspan:2},'Sum Flag');
