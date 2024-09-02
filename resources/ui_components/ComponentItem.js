@@ -60,7 +60,6 @@ class ComponentItem extends Component{
 
         this._model.materialItemOptions.map(item=>{
             
-            
             let option = t.option({value:item.id},item.brand+' '+item.name + ' '+item.specification_unit_packaging+''.trim());
             
             this.el.materialItemSelect.t.append(option);
@@ -70,10 +69,13 @@ class ComponentItem extends Component{
 
         this.el.materialMenu = t.div(()=>{
     
-            t.div({class:'row'},()=>{
+            t.div({class:'folder-form-container'},()=>{
 
-                t.div({class:'col-lg-12'},()=>{
+                t.div({class:'folder-form-tab'},'Material Quantity');
+                
+                t.div({class:'folder-form-body'},()=>{
                     t.table({class:'table border'},()=>{
+                       
                         t.thead(()=>{
 
                             t.tr(()=>{
@@ -116,6 +118,18 @@ class ComponentItem extends Component{
                             });
                         });
     
+                        
+                    });//table
+
+                    t.table(()=>{
+
+                        t.thead(()=>{
+                            t.th('Material');
+                            t.th('Quantity');
+                            t.th('Equivalent / Unit');
+                            t.th('Total');
+                        });
+
                         this.el.materialList = t.tbody();
 
                         t.tfoot(()=>{
@@ -129,10 +143,11 @@ class ComponentItem extends Component{
                                 t.td();
                             });
                         });
-                    });
-                });
+                    })//table
+
+                });//body
                 
-            });
+            });//container
         });
 
 
@@ -320,10 +335,8 @@ class ComponentItem extends Component{
 
                 t.tfoot({},()=>{
                     t.tr({},()=>{
-                        t.td({colspan:7},()=>{
-                            t.div({class:'row'},(el)=>{
-                                el.append(this.el.materialMenu);
-                            });
+                        t.td({colspan:7},(el)=>{
+                            el.append(this.el.materialMenu);    
                         });
                     })
                 });
