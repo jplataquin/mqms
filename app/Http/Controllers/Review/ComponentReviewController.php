@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 
@@ -55,7 +56,7 @@ class ComponentReviewController extends Controller
             'components.*', 
             'projects.name AS project_name', 
             'sections.name AS section_name',
-            'CONCAT(contract_items.item_code," ",contract_items.description) AS contract_item'
+            DB::raw('CONCAT(contract_items.item_code," ",contract_items.description) AS contract_item')
         );
         
         if($query != ''){
