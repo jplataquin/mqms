@@ -168,7 +168,7 @@
     }
 
     function showData(){
-
+        console.log('hello');
         window.util.blockUI();
 
         window.util.$get('/api/review/component/list',{
