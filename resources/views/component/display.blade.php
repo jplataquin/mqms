@@ -113,6 +113,15 @@
                 </div>
             </div>
 
+            <div class="d-none form-container" id="item_sticky_container">
+                <div class="form-header">Item</div>
+                <div class="form-body">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="item_sticky_input" class="form-control" disabled="true"/>
+                    </div>
+                </div>
+            </div>
 
             <div class="row" id="component_controls">
                 <div class="col-lg-6">
@@ -263,6 +272,8 @@
     const sticky_trigger        = $q('#sticky_trigger').first();
     const component_controls    = $q('#component_controls').first();
     const component_form        = $q('#component_form').first();
+    const item_sticky_container = $q('#item_sticky_container').first();
+    const item_sticky_input     = $q('#item_sticky_input').first();
 
 
     const component_item_name               = $q('#component_item_name').first();
@@ -325,7 +336,8 @@
                 
 
                 if(form_pos >= item_pos){
-                    console.log(item);
+                    item_sticky_input.value = item.value;
+                    item_sticky_container.classList.remove('d-none');
                 }
             });
 
