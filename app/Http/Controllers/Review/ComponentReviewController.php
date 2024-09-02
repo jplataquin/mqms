@@ -62,9 +62,9 @@ class ComponentReviewController extends Controller
             if($section_id){
                 $component = $component->where('section_id','=',$section_id);
 
-                // if($contrac_item_id){
-                //     $component = $component->where('contract_item_id','=',$contract_item_id);
-                // }
+                if($contrac_item_id){
+                    $component = $component->where('contract_item_id','=',$contract_item_id);
+                }
             }
         }
 
