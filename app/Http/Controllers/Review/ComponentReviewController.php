@@ -54,7 +54,7 @@ class ComponentReviewController extends Controller
         ->join('contract_items','contract_items.id','=','components.contract_item_id')
         ->select(
             'components.*',
-            'project.id AS project_id',
+            'projects.id AS project_id',
             'projects.name AS project_name', 
             'sections.name AS section_name',
             DB::raw('CONCAT(contract_items.item_code," ",contract_items.description) AS contract_item')
