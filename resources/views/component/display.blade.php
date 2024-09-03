@@ -117,12 +117,14 @@
                 <div class="form-header">Item</div>
                 <div class="form-body">
                     <div class="row">
+                        
                         <div class="col-lg-8">
                             <div class="form-group">
                                 <label>Name</label>
                                 <input type="text" id="item_name" class="form-control" disabled="true"/>
                             </div>
                         <div>
+
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label>Sum Flag</label>
@@ -169,6 +171,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
