@@ -126,7 +126,7 @@
                         </div>
 
                         <div class="col-lg-4">
-                            <div class="form-group">
+                            <div class="form-switch text-center">
                                 <label>Sum Flag</label>
                                 <input type="checkbox" id="item_sum_flag" class="form-form-check-input" disabled="true"/>
                             </div>
@@ -397,7 +397,7 @@
                     let budget_price    = parent.querySelector('.budget_price');
                     
                     item_name.value             = name.value;
-                    item_sum_flag.value         = sum_flag.value;
+                    item_sum_flag.checked       = sum_flag.checked;
                     item_function_type.value    = function_type.options[function_type.selectedIndex].innerText;
                     item_variable.value         = variable.value;
                     item_quantity.value         = quantity.value;
