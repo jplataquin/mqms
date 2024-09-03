@@ -126,9 +126,12 @@
                         </div>
 
                         <div class="col-lg-4">
-                            <div class="form-switch text-center">
+                            <div class="form-group">
                                 <label>Sum Flag</label>
-                                <input type="checkbox" id="item_sum_flag" class="form-check-input" disabled="true"/>
+                            
+                                <div class="form-switch text-center">
+                                    <input type="checkbox" id="item_sum_flag" class="form-check-input" disabled="true"/>
+                                </div>
                             </div>
                         </div>
 
