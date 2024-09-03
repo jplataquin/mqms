@@ -128,7 +128,7 @@
                         <div class="col-lg-4">
                             <div class="form-switch text-center">
                                 <label>Sum Flag</label>
-                                <input type="checkbox" id="item_sum_flag" class="form-form-check-input" disabled="true"/>
+                                <input type="checkbox" id="item_sum_flag" class="form-check-input" disabled="true"/>
                             </div>
                         </div>
 
