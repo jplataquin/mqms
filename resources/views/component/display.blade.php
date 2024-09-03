@@ -123,7 +123,7 @@
                                 <label>Name</label>
                                 <input type="text" id="item_name" class="form-control" disabled="true"/>
                             </div>
-                        <div>
+                        </div>
 
                         <div class="col-lg-4">
                             <div class="form-group">
@@ -131,6 +131,7 @@
                                 <input type="checkbox" id="item_sum_flag" class="form-form-check-input" disabled="true"/>
                             </div>
                         </div>
+
                     </div>
 
                     <div class="row">
