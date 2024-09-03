@@ -382,15 +382,15 @@
                 if(form_pos >= item_pos){
 
                     let parent = item.parentElement;
-                    console.log(parent);
-                    let name            = parent.getElementByClassName('name')[0];
-                    let sum_flag        = parent.getElementByClassName('sum_flag')[0];
-                    let function_type   = parent.getElementByClassName('function_type')[0];
-                    let variable        = parent.getElementByClassName('varable')[0];
-                    let quantity        = parent.getElementByClassName('quantity')[0];
-                    let equivalent      = parent.getElementByClassName('equivalent')[0];
-                    let unit            = parent.getElementByClassName('unit')[0];
-                    let budget_price    = parent.getElementByClassName('budget_price')[0];
+                  
+                    let name            = parent.querySelector('.name');
+                    let sum_flag        = parent.querySelector('.sum_flag');
+                    let function_type   = parent.querySelector('.function_type');
+                    let variable        = parent.querySelector('.varable');
+                    let quantity        = parent.querySelector('.quantity');
+                    let equivalent      = parent.querySelector('.equivalent');
+                    let unit            = parent.querySelector('.unit');
+                    let budget_price    = parent.querySelector('.budget_price');
                     
                     item_name.value             = name.value;
                     item_sum_flag.value         = sum_flag.value;
