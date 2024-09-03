@@ -377,6 +377,7 @@
     sticky_observer.observe(component_sticky_trigger);
 
     let sticky_display_trigger = false;
+    let past_untrigger = null;
 
     window.addEventListener("scroll", window.util.throttle((event) => {
 
@@ -389,9 +390,10 @@
                     let form_pos = component_form.getBoundingClientRect().top + document.documentElement.scrollTop +  component_form.offsetHeight;
 
 
-                    if(form_pos >= item_pos){
+                    if(form_pos >= item_pos && past_untrigger != item){
                         item_sticky_container.classList.add('d-none');
                         sticky_display_trigger = true;
+                        past_untrigger = item;
                     }
                 });
 
