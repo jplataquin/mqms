@@ -379,17 +379,7 @@
 
     window.addEventListener("scroll", window.util.throttle((event) => {
 
-            $q('.component_item_sticky_untrigger').items().map(item=>{
-
-                   
-                let item_pos = item.getBoundingClientRect().top + document.documentElement.scrollTop;
-                let form_pos = component_form.getBoundingClientRect().top + document.documentElement.scrollTop +  component_form.offsetHeight;
-                
-
-                if(form_pos >= item_pos){
-                    item_sticky_container.classList.add('d-none');
-                }
-            });
+            
 
             $q('.component_item_sticky_trigger').items().map(item=>{
                 
@@ -422,6 +412,18 @@
                     
                     
                     item_sticky_container.classList.remove('d-none');
+                }
+            });
+
+            $q('.component_item_sticky_untrigger').items().map(item=>{
+
+                   
+                let item_pos = item.getBoundingClientRect().top + document.documentElement.scrollTop;
+                let form_pos = component_form.getBoundingClientRect().top + document.documentElement.scrollTop +  component_form.offsetHeight;
+
+
+                if(form_pos >= item_pos){
+                    item_sticky_container.classList.add('d-none');
                 }
             });
 
