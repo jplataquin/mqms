@@ -158,7 +158,7 @@ class ComponentItem extends Component{
                     
 
                     t.tbody(()=>{
-                        t.tr(()=>{
+                        t.tr({class:'component_item_sticky_trigger'},()=>{
                             t.th({colspan:4},'Name');
                             t.th({colspan:2},'Sum Flag');
                         });
@@ -243,7 +243,7 @@ class ComponentItem extends Component{
                         });
         
         
-                        t.tr({class:'component_item_sticky_trigger'},()=>{
+                        t.tr(()=>{
                             t.th({colspan:5,class:'text-end'},'Total Amount');
                             t.td({colspan:1},()=>{
                                 this.el.total_amount = t.input({class:'form-control',disabled:true});

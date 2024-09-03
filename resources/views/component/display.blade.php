@@ -376,25 +376,44 @@
 
     sticky_observer.observe(component_sticky_trigger);
 
+    
+    // $q('.component_item_sticky_untrigger').items().map(item=>{
+
+                    
+    //     let o = new IntersectionObserver((entries)=>{
+    //         for (let entry of entries) {
+
+    //             // Check if the element is intersecting the viewport
+    //             if (!entry.isIntersecting) {
+    //                 component_form.style.display = 'none';
+    //             }else{
+    //                 component_controls.style.display = '';
+    //                 item_sticky_container.classList.add('d-none');
+    //             }
+    //         }
+    //     });
+
+    //     o.observe(item);
+    // });
     // let sticky_display_trigger = false;
-    let past_untrigger = null;
+    //let past_untrigger = null;
 
     window.addEventListener("scroll", window.util.throttle((event) => {
 
 
             // if(sticky_display_trigger == false){
-                $q('.component_item_sticky_untrigger').items().map(item=>{
+                // $q('.component_item_sticky_untrigger').items().map(item=>{
 
                     
-                    let item_pos = item.getBoundingClientRect().top + document.documentElement.scrollTop;
-                    let form_pos = component_form.getBoundingClientRect().top + document.documentElement.scrollTop +  component_form.offsetHeight;
+                //     let item_pos = item.getBoundingClientRect().top + document.documentElement.scrollTop;
+                //     let form_pos = component_form.getBoundingClientRect().top + document.documentElement.scrollTop +  component_form.offsetHeight;
 
 
-                    if(form_pos >= item_pos && past_untrigger != item){
-                        item_sticky_container.classList.add('d-none');
-                        past_untrigger = item;
-                    }
-                });
+                //     if(form_pos >= item_pos && past_untrigger != item){
+                //         item_sticky_container.classList.add('d-none');
+                //         past_untrigger = item;
+                //     }
+                // });
 
             // }else{
 
