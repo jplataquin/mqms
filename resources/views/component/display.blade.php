@@ -47,7 +47,7 @@
                 <th>Section</th>
                 <td>{{$section->name}}</td>
             </tr>
-            <tr>
+            <tr id="component_sticky_trigger">
                 <th>Contract Item</th>
                 <td>{{$contract_item->item_code}} - {{$contract_item->description}}</td>
             </tr>
@@ -322,7 +322,7 @@
     const use_count                 = $q('#use_count').first();
     const component_sum_flag        = $q('#component_sum_flag').first();
     const component_unit            = $q('#component_unit').first();
-    //const component_sticky_trigger  = $q('#component_sticky_trigger').first();
+    const component_sticky_trigger  = $q('#component_sticky_trigger').first();
     const component_controls        = $q('#component_controls').first();
     const component_form            = $q('#component_form').first();
 
@@ -371,7 +371,7 @@
         }
     });
 
-    sticky_observer.observe(component_form);
+    sticky_observer.observe(component_sticky_trigger);
 
 
     window.addEventListener("scroll", window.util.throttle((event) => {
