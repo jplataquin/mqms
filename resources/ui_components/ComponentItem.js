@@ -165,12 +165,12 @@ class ComponentItem extends Component{
         
                         t.tr(()=>{
                             t.td({colspan:4},()=>{
-                                this.el.name = t.input({class:'form-control itm',type:'text', placeholder:'Item',disabled:true,value:'Loading...'}); 
+                                this.el.name = t.input({class:'form-control name',type:'text', placeholder:'Item',disabled:true,value:'Loading...'}); 
                             });
         
                             t.td({colspan:2},()=>{
                                 t.div({class:'form-switch text-center'},()=>{                  
-                                    this.el.sum_flag = t.input({class:'form-check-input',value:1,type:'checkbox', disabled:true});
+                                    this.el.sum_flag = t.input({class:'form-check-input sum_flag',value:1,type:'checkbox', disabled:true});
                                 });
                             });
                             
@@ -190,7 +190,7 @@ class ComponentItem extends Component{
                             
                             t.td({class:''},(el)=>{
                                 
-                                this.el.function_type = t.select({class:'form-control',disabled:true},()=>{
+                                this.el.function_type = t.select({class:'form-control function_type',disabled:true},()=>{
                                     t.option({value:3},'As Direct');
                                     t.option({value:4},'As Equivalent');
                                     t.option({value:1},'As Factor');
@@ -202,25 +202,25 @@ class ComponentItem extends Component{
         
                             t.td({class:''},(el)=>{
                                 
-                                this.el.variable = t.input({class:'form-control', type:'text', placeholder:'Variable',disabled:true,value:'Loading...'});
+                                this.el.variable = t.input({class:'form-control variable', type:'text', placeholder:'Variable',disabled:true,value:'Loading...'});
         
                             });
                         
                             t.td({class:''},(el)=>{
                                 
-                                this.el.quantity = t.input({class:'form-control', type:'text', placeholder:'Quantity',disabled:true,value:'Loading...'});
+                                this.el.quantity = t.input({class:'form-control quantity', type:'text', placeholder:'Quantity',disabled:true,value:'Loading...'});
         
                             });
         
                             t.td({class:''},(el)=>{
                                 
-                                this.el.component_item_equivalent = t.input({class:'form-control', type:'text', placeholder:'Equivalent',disabled:true,value:'Loading...'});
+                                this.el.component_item_equivalent = t.input({class:'form-control equivalent', type:'text', placeholder:'Equivalent',disabled:true,value:'Loading...'});
         
                             });
         
                             t.td({class:''},(el)=>{
         
-                                this.el.unit = t.select({class:'form-control',disabled:true},()=>{
+                                this.el.unit = t.select({class:'form-control unit',disabled:true},()=>{
                                     for(let i in this._model.unitOptions){
         
                                         if(this._model.unitOptions[i].deleted){
@@ -235,7 +235,7 @@ class ComponentItem extends Component{
         
                             t.td({class:''},(el)=>{
                                 
-                                this.el.budget_price = t.input({class:'form-control', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
+                                this.el.budget_price = t.input({class:'form-control budget_price', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
                                 
                             });
         
@@ -243,7 +243,7 @@ class ComponentItem extends Component{
                         });
         
         
-                        t.tr(()=>{
+                        t.tr({class:'component_item_sticky_trigger'},()=>{
                             t.th({colspan:5,class:'text-end'},'Total Amount');
                             t.td({colspan:1},()=>{
                                 this.el.total_amount = t.input({class:'form-control',disabled:true});

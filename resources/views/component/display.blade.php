@@ -116,9 +116,58 @@
             <div class="d-none form-container" id="item_sticky_container">
                 <div class="form-header">Item</div>
                 <div class="form-body">
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" id="item_sticky_input" class="form-control" disabled="true"/>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" id="item_name" class="form-control" disabled="true"/>
+                            </div>
+                        <div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Sum Flag</label>
+                                <input type="checkbox" id="item_sum_flag" class="form-form-check-input" disabled="true"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label>Function Type</label>
+                                <input type="text" disabled="true" id="item_function_type" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label>Variable</label>
+                                <input type="text" disabled="true" id="item_variable" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label>Quantity</label>
+                                <input type="text" disabled="true" id="item_quantity" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label>Equivalent</label>
+                                <input type="text" disabled="true" id="item_equivalent" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label>Unit</label>
+                                <input type="text" disabled="true" id="item_unit" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label>Budget Price</label>
+                                <input type="text" disabled="true" id="item_budget_price" class="form-control"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -255,26 +304,33 @@
     import {Template,$q,$el,State,Signal} from '/adarna.js';
     import ComponentItemEl from '/ui_components/ComponentItem.js';
 
-    const materialItemOptions   = @json($materialItems);
-    const component             = $q('#component').first();
-    const component_item_list   = $q('#component_item_list').first();
-    const editBtn               = $q('#editBtn').first();
-    const cancelBtn             = $q('#cancelBtn').first();
-    const updateBtn             = $q('#updateBtn').first();
-    const createBtn             = $q('#createBtn').first();
-    const deleteBtn             = $q('#deleteBtn').first();
-    const printBtn              = $q('#printBtn').first();
-    const status                = $q('#status').first();
-    const component_quantity    = $q('#component_quantity').first();
-    const use_count             = $q('#use_count').first();
-    const component_sum_flag    = $q('#component_sum_flag').first();
-    const component_unit        = $q('#component_unit').first();
-    const sticky_trigger        = $q('#sticky_trigger').first();
-    const component_controls    = $q('#component_controls').first();
-    const component_form        = $q('#component_form').first();
-    const item_sticky_container = $q('#item_sticky_container').first();
-    const item_sticky_input     = $q('#item_sticky_input').first();
+    const materialItemOptions       = @json($materialItems);
+    const component                 = $q('#component').first();
+    const component_item_list       = $q('#component_item_list').first();
+    const editBtn                   = $q('#editBtn').first();
+    const cancelBtn                 = $q('#cancelBtn').first();
+    const updateBtn                 = $q('#updateBtn').first();
+    const createBtn                 = $q('#createBtn').first();
+    const deleteBtn                 = $q('#deleteBtn').first();
+    const printBtn                  = $q('#printBtn').first();
+    const status                    = $q('#status').first();
+    const component_quantity        = $q('#component_quantity').first();
+    const use_count                 = $q('#use_count').first();
+    const component_sum_flag        = $q('#component_sum_flag').first();
+    const component_unit            = $q('#component_unit').first();
+    const component_sticky_trigger  = $q('#component_sticky_trigger').first();
+    const component_controls        = $q('#component_controls').first();
+    const component_form            = $q('#component_form').first();
 
+    const item_sticky_container = $q('#item_sticky_container').first();
+    const item_name             = $q('#item_name').first();
+    const item_sum_flag         = $q('#item_sum_flag').first();
+    const item_function_type    = $q('#item_function_type').first();
+    const item_variable         = $q('#item_variable').first();
+    const item_quantity         = $q('#item_quantity').first();
+    const item_equivalent       = $q('#item_equivalent').first();
+    const item_unit             = $q('#item_unit').first();
+    const item_budget_price     = $q('#item_budget_price').first();
 
     const component_item_name               = $q('#component_item_name').first();
     const component_item_budget_price       = $q('#component_item_budget_price').first();
@@ -311,25 +367,12 @@
         }
     });
 
-    sticky_observer.observe(sticky_trigger);
+    sticky_observer.observe(component_sticky_trigger);
 
-    const throttle = (fn, delay) => {   
-        // Capture the current time   
-        let time = Date.now();    
-        // Here's our logic   
-        return () => {     
-            if((time + delay - Date.now()) <= 0) {       
-                // Run the function we've passed to our throttler,       
-                // and reset the `time` variable (so we can check again).       
-                fn();       
-                time = Date.now();     
-            }   
-        } 
-    };
 
-    window.addEventListener("scroll", throttle((event) => {
+    window.addEventListener("scroll", window.util.throttle((event) => {
         
-            $q('.itm').items().map(item=>{
+            $q('.component_item_sticky_trigger').items().map(item=>{
                 
                 
                 let item_pos = item.getBoundingClientRect().top + document.documentElement.scrollTop;
@@ -337,7 +380,27 @@
                 
 
                 if(form_pos >= item_pos){
-                    item_sticky_input.value = item.value;
+
+                    let parent = item.parentElement;
+                    let name            = parent.getElementByClassName('name')[0];
+                    let sum_flag        = parent.getElementByClassName('sum_flag')[0];
+                    let function_type   = parent.getElementByClassName('function_type')[0];
+                    let variable        = parent.getElementByClassName('varable')[0];
+                    let quantity        = parent.getElementByClassName('quantity')[0];
+                    let equivalent      = parent.getElementByClassName('equivalent')[0];
+                    let unit            = parent.getElementByClassName('unit')[0];
+                    let budget_price    = parent.getElementByClassName('budget_price')[0];
+                    
+                    item_name.value             = name.value;
+                    item_sum_flag.value         = sum_flag.value;
+                    item_function_type.value    = function_type.querySelector('option [selected="true"]').innerText;
+                    item_variable.value         = variable.value;
+                    item_quantity.value         = quantity.value;
+                    item_equivalent.value       = equivalent.value;
+                    item_unit.value             = unit.value;
+                    item_budget_price.value     = budget_price.value;
+                    
+                    
                     item_sticky_container.classList.remove('d-none');
                 }
             });
