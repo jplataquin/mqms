@@ -214,7 +214,7 @@ class ComponentItem extends Component{
         
                             t.td({class:''},(el)=>{
                                 
-                                this.el.equivalent_result = t.input({class:'form-control', type:'text', placeholder:'Equivalent',disabled:true,value:'Loading...'});
+                                this.el.component_item_equivalent = t.input({class:'form-control', type:'text', placeholder:'Equivalent',disabled:true,value:'Loading...'});
         
                             });
         
@@ -572,10 +572,12 @@ class ComponentItem extends Component{
                 
                 val = ( parseFloat(this.el.variable.value) *  parseFloat(this.el.quantity.value) ) * parseInt(this._model.component_use_count); 
                 
+                val = window.util.roundUp(val,2);
+
                 if(isFinite(val)){
-                    this.el.equivalent_result.value = val+' '+this._model.component_unit_text;
+                    this.el.component_item_equivalent.value = val+' '+this._model.component_unit_text;
                 }else{
-                    this.el.equivalent_result.value = '';
+                    this.el.component_item_equivalent.value = '';
                 }
                 
                 this.calculateTotalAmount();
@@ -585,7 +587,10 @@ class ComponentItem extends Component{
                 break;
         }
 
+        
         if(isFinite(val)){
+
+            val = window.util.roundUp(val,2);
             this.el.quantity.value = val;
         }else{
             this.el.quantity.value = 0;
@@ -719,7 +724,7 @@ class ComponentItem extends Component{
 
             //Not "As Equivalent"
             if(reply.data.function_type_id != 4){
-                this.el.equivalent_result.value = '';
+                this.el.component_item_equivalent.value = '';
             }
 
             this.updateComponentItemValues();
