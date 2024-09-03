@@ -382,6 +382,7 @@
                 if(form_pos >= item_pos){
 
                     let parent = item.parentElement;
+                    conole.log(parent);
                     let name            = parent.getElementByClassName('name')[0];
                     let sum_flag        = parent.getElementByClassName('sum_flag')[0];
                     let function_type   = parent.getElementByClassName('function_type')[0];
