@@ -376,13 +376,13 @@
 
     sticky_observer.observe(component_sticky_trigger);
 
-    let sticky_display_trigger = false;
+    // let sticky_display_trigger = false;
     let past_untrigger = null;
 
     window.addEventListener("scroll", window.util.throttle((event) => {
 
 
-            if(sticky_display_trigger == false){
+            // if(sticky_display_trigger == false){
                 $q('.component_item_sticky_untrigger').items().map(item=>{
 
                     
@@ -392,12 +392,11 @@
 
                     if(form_pos >= item_pos && past_untrigger != item){
                         item_sticky_container.classList.add('d-none');
-                        sticky_display_trigger = true;
                         past_untrigger = item;
                     }
                 });
 
-            }else{
+            // }else{
 
 
                 $q('.component_item_sticky_trigger').items().map(item=>{
@@ -432,11 +431,10 @@
                         
                         item_sticky_container.classList.remove('d-none');
 
-                        sticky_display_trigger = false;
                     }
                 });
 
-            }//if else
+          //  }//if else
 
 
     },300));
