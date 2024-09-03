@@ -394,7 +394,7 @@
                     
                     item_name.value             = name.value;
                     item_sum_flag.value         = sum_flag.value;
-                    item_function_type.value    = function_type.querySelector('option [selected="true"]').innerText;
+                    item_function_type.value    = function_type.options[function_type.selectedIndex].innerText;
                     item_variable.value         = variable.value;
                     item_quantity.value         = quantity.value;
                     item_equivalent.value       = equivalent.value;
