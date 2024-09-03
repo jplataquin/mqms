@@ -386,7 +386,7 @@
                     let name            = parent.querySelector('.name');
                     let sum_flag        = parent.querySelector('.sum_flag');
                     let function_type   = parent.querySelector('.function_type');
-                    let variable        = parent.querySelector('.varable');
+                    let variable        = parent.querySelector('.variable');
                     let quantity        = parent.querySelector('.quantity');
                     let equivalent      = parent.querySelector('.equivalent');
                     let unit            = parent.querySelector('.unit');
