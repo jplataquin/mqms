@@ -376,60 +376,65 @@
 
     sticky_observer.observe(component_sticky_trigger);
 
+    let sticky_display_trigger = false;
 
     window.addEventListener("scroll", window.util.throttle((event) => {
 
-            
-            $q('.component_item_sticky_untrigger').items().map(item=>{
 
-                   
-                let item_pos = item.getBoundingClientRect().top + document.documentElement.scrollTop;
-                let form_pos = component_form.getBoundingClientRect().top + document.documentElement.scrollTop +  component_form.offsetHeight;
-
-
-                if(form_pos >= item_pos){
-                    item_sticky_container.classList.add('d-none');
-                }
-            });
-
-
-            $q('.component_item_sticky_trigger').items().map(item=>{
-                
-                
-                let item_pos = item.getBoundingClientRect().top + document.documentElement.scrollTop;
-                let form_pos = component_form.getBoundingClientRect().top + document.documentElement.scrollTop +  component_form.offsetHeight;
-                
-
-                if(form_pos >= item_pos){
-
-                    let parent = item.parentElement;
-                  
-                    let name            = parent.querySelector('.name');
-                    let sum_flag        = parent.querySelector('.sum_flag');
-                    let function_type   = parent.querySelector('.function_type');
-                    let variable        = parent.querySelector('.variable');
-                    let quantity        = parent.querySelector('.quantity');
-                    let equivalent      = parent.querySelector('.equivalent');
-                    let unit            = parent.querySelector('.unit');
-                    let budget_price    = parent.querySelector('.budget_price');
-                    
-                    item_name.value             = name.value;
-                    item_sum_flag.checked       = sum_flag.checked;
-                    item_function_type.value    = function_type.options[function_type.selectedIndex].innerText;
-                    item_variable.value         = variable.value;
-                    item_quantity.value         = quantity.value;
-                    item_equivalent.value       = equivalent.value;
-                    item_unit.value             = unit.value;
-                    item_budget_price.value     = budget_price.value;
-                    
-                    
-                    item_sticky_container.classList.remove('d-none');
-
+            if(sticky_display_trigger == false){
+                $q('.component_item_sticky_untrigger').items().map(item=>{
 
                     
+                    let item_pos = item.getBoundingClientRect().top + document.documentElement.scrollTop;
+                    let form_pos = component_form.getBoundingClientRect().top + document.documentElement.scrollTop +  component_form.offsetHeight;
+
+
+                    if(form_pos >= item_pos){
+                        item_sticky_container.classList.add('d-none');
+                        sticky_display_trigger = true;
+                    }
+                });
+
+            }else{
+
+
+                $q('.component_item_sticky_trigger').items().map(item=>{
                     
-                }
-            });
+                    
+                    let item_pos = item.getBoundingClientRect().top + document.documentElement.scrollTop;
+                    let form_pos = component_form.getBoundingClientRect().top + document.documentElement.scrollTop +  component_form.offsetHeight;
+                    
+
+                    if(form_pos >= item_pos){
+
+                        let parent = item.parentElement;
+                    
+                        let name            = parent.querySelector('.name');
+                        let sum_flag        = parent.querySelector('.sum_flag');
+                        let function_type   = parent.querySelector('.function_type');
+                        let variable        = parent.querySelector('.variable');
+                        let quantity        = parent.querySelector('.quantity');
+                        let equivalent      = parent.querySelector('.equivalent');
+                        let unit            = parent.querySelector('.unit');
+                        let budget_price    = parent.querySelector('.budget_price');
+                        
+                        item_name.value             = name.value;
+                        item_sum_flag.checked       = sum_flag.checked;
+                        item_function_type.value    = function_type.options[function_type.selectedIndex].innerText;
+                        item_variable.value         = variable.value;
+                        item_quantity.value         = quantity.value;
+                        item_equivalent.value       = equivalent.value;
+                        item_unit.value             = unit.value;
+                        item_budget_price.value     = budget_price.value;
+                        
+                        
+                        item_sticky_container.classList.remove('d-none');
+
+                        sticky_display_trigger = false;
+                    }
+                });
+
+            }//if else
 
 
     },300));
