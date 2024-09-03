@@ -150,7 +150,7 @@ class ComponentItem extends Component{
 
         return t.div({class:'form-container mb-5'},(el)=>{
             
-            t.div({class:'form-header'},'Item');
+            t.div({class:'form-header component_item_sticky_untrigger'},'Item');
 
             t.div({class:'form-body'},()=>{
 
