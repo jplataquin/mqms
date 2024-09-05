@@ -112,7 +112,7 @@
                         </div>
                         <div class="col-lg-2">
                             <div class="form-group">
-                                <label>Available Quantity</label>
+                                <label>Current Available</label>
                                 @php 
                                     $remaining_quantity = 0;
 
@@ -162,7 +162,7 @@
                         <input type="text" disabled="true" value="Sub Total" class="form-control"/>
                     </td>
                     <td>
-                        <input type="text" id="sub_total" disabled="true" value="{{$sub_total}}" class="form-control"/>
+                        <input type="text" id="sub_total" disabled="true" value="{{ number_format($sub_total,2) }}" class="form-control"/>
                     </td>
                 </tr>
 
@@ -186,7 +186,7 @@
                         <input type="text" disabled="true" value="{{$extra->text}}" class="extra_text form-control"/>
                     </td>
                     <td>
-                        <input type="text" disabled="true" value="{{$extra->value}}" class="extra_val form-control" />
+                        <input type="text" disabled="true" value="{{ number_format($extra->value,2) }}" class="extra_val form-control" />
                     </td>
                 </tr>
 
