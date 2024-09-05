@@ -112,7 +112,7 @@
                         </div>
                         <div class="col-lg-2">
                             <div class="form-group">
-                                <label>Order Quantity </label>
+                                <label>Available Quantity</label>
                                 @php 
                                     $remaining_quantity = 0;
 
@@ -124,6 +124,13 @@
                                         }
                                     }
                                 @endphp
+                                <input type="text" class="form-control" disabled="true" value="{{$remaining_quantity}}"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label>Order Quantity </label>
+                               
                                 <input type="text" class="form-control @if($item->quantity > $remaining_quantity) is-invalid @endif" disabled="true" value="{{$item->quantity}}"/>
                                 @if($item->quantity > $remaining_quantity &&  $purchase_order->status == 'PEND')
                                 <div class="invalid-feedback">
@@ -132,13 +139,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label>Available Quantity</label>
-                                
-                                <input type="text" class="form-control" disabled="true" value="{{$remaining_quantity}}"/>
-                            </div>
-                        </div>
+                       
                         <div class="col-lg-2">
                             <div class="form-group">
                                 <label>Total</label>
