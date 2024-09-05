@@ -125,7 +125,7 @@
                                     }
                                 @endphp
                                 <input type="text" class="form-control @if($item->quantity > $remaining_quantity) is-invalid @endif" disabled="true" value="{{$item->quantity}}"/>
-                                @if($item->quantity > $remaining_quantity && purchase_order->status == 'PEND')
+                                @if($item->quantity > $remaining_quantity &&  $purchase_order->status == 'PEND')
                                 <div class="invalid-feedback">
                                     Order quantity is more than the available quantity
                                 </div>
