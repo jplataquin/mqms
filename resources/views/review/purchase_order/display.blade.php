@@ -119,6 +119,8 @@
                                     if(isset($remaining_quantity_arr[$id])){
                                         if( isset($remaining_quantity_arr[$id][$item->material_item_id]) ){
                                             $remaining_quantity = $remaining_quantity_arr[$id][$item->material_item_id];
+
+                                            echo $remaining_quantity_arr[$id][$item->material_item_id];
                                         }
                                     }
                                 @endphp
