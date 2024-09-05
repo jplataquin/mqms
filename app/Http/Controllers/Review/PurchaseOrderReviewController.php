@@ -123,7 +123,7 @@ class PurchaseOrderReviewController extends Controller
             }
 
             $total_poed = PurchaseOrderItem::where('component_item_id',$mr_item->component_item_id)
-            ->where('material_quantity_request_id',$mr_item->id)
+            ->where('material_quantity_request_item_id',$mr_item->id)
             ->where('material_item_id',$mr_item->material_item_id)
             ->where('status','APRV')
             ->sum('quantity');
