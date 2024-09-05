@@ -120,6 +120,7 @@
                                         if( isset($remaining_quantity_arr[$id][$item->material_item_id]) ){
                                             $remaining_quantity = $remaining_quantity_arr[$id][$item->material_item_id];
 
+                                            echo $item->material_item_id.' '.$id.' '.$remaining_quantity;
                                         }
                                     }
                                 @endphp
