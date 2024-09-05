@@ -120,12 +120,12 @@
                                         if( isset($remaining_quantity_arr[$id][$item->material_item_id]) ){
                                             $remaining_quantity = $remaining_quantity_arr[$id][$item->material_item_id];
 
-                                            echo $item->material_item_id.' '.$id.' '.$remaining_quantity;
+                                            //echo $item->material_item_id.' '.$id.' '.$remaining_quantity;
                                         }
                                     }
                                 @endphp
                                 <input type="text" class="form-control @if($item->quantity > $remaining_quantity) is-invalid @endif" disabled="true" value="{{$item->quantity}}"/>
-                                @if($item->quantity > $remaining_quantity)
+                                @if($item->quantity > $remaining_quantity && purchase_order->status == 'PEND')
                                 <div class="invalid-feedback">
                                     Order quantity is more than the available quantity
                                 </div>
