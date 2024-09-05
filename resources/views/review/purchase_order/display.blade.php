@@ -264,7 +264,7 @@
                     return false;
                 }
 
-                window.util.showMsg('/review/purchase_orders');
+                window.util.navTo('/review/purchase_orders');
             });
         }
 
@@ -323,27 +323,30 @@
        approveBtn.onclick = (e)=>{
             e.preventDefault();
 
-            if(!confirm('Are you sure you want to APPROVE this PO?')){
-
-                return false;
-            }
-
-            window.util.blockUI();
-
-            window.util.$post('/api/review/purchase_order/approve',{
-                id: '{{$purchase_order->id}}'
-            }).then(reply=>{
-
-                window.util.unblockUI();
-
-                if(reply.status <= 0){
-
-                    window.util.showMsg(reply);
+            window.util.confirm('Are you sure you want to APPROVE this PO?',(answer)=>{
+                
+                if(!answer){
                     return false;
                 }
 
-                window.util.navTo("/review/purchase_orders");
+                window.util.blockUI();
+
+                window.util.$post('/api/review/purchase_order/approve',{
+                    id: '{{$purchase_order->id}}'
+                }).then(reply=>{
+
+                    window.util.unblockUI();
+
+                    if(reply.status <= 0){
+
+                        window.util.showMsg(reply);
+                        return false;
+                    }
+
+                    window.util.navTo("/review/purchase_orders");
+                });
             });
+
        }
     @endif
 </script>
