@@ -128,7 +128,7 @@ class PurchaseOrderReviewController extends Controller
             ->where('status','APRV')
             ->sum('quantity');
             
-            echo $mr_item->component_item_id.' '.$mr_item->material_item_id.' '.$mr_item->requested_quantity.'  '.$total_poed.'<br>';
+            echo $mr_item->id.' '.$mr_item->component_item_id.' '.$mr_item->material_item_id.' '.$mr_item->requested_quantity.'  '.$total_poed.'<br>';
             $remaining_quantity_arr[$mr_item->component_item_id][$mr_item->material_item_id] = $mr_item->requested_quantity - $total_poed;
         }
 
