@@ -2,89 +2,90 @@
 
 @section('content')
 <div id="content">
-<div class="container">
-<div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
-        <ul>
-            <li>
-                <a href="/review/purchase_orders">
-                    <span>
-                       Review
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="active">
-                    <span>
-                       Purchase Orders
-                    </span>
-                    <i class="ms-2 bi bi-display"></i>
-                </a>
-            </li>
-        </ul>
-    </div>
-<hr>
-    <table class="record-table-horizontal">
-        <tbody>
-            <tr>
-                <th>PO Number</th>
-                <td>{{ str_pad($purchase_order->id,6,0,STR_PAD_LEFT) }}</td>
-            </tr>
-            <tr>
-                <th>Material Request ID</th>
-                <td>{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}</td>
-            </tr>
-            <tr>
-                <th>Project</th>
-                <td>{{$project->name}}</td>
-            </tr>
-            <tr>
-                <th>Section</th>
-                <td>{{$section->name}}</td>
-            </tr>
-            <tr>
-                <th>Component</th>
-                <td>{{$component->name}}</td>
-            </tr>
-            <tr>
-                <th>PO Status</th>
-                <td>{{$purchase_order->status}}</td>
-            </tr>
-            <tr>
-                <th>Created By</th>
-                <td>{{$purchase_order->createdByUser()->name}} {{$purchase_order->created_at}}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>
-                    <textarea disabled="true" class="w-100" id="description">{{$material_quantity_request->description}}</textarea>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="folder-form-container">
-        <div class="folder-form-tab">
-            Review Purchase Order
+    <div class="container">
+        <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
+            <ul>
+                <li>
+                    <a href="/review/purchase_orders">
+                        <span>
+                        Review
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="active">
+                        <span>
+                        Purchase Orders
+                        </span>
+                        <i class="ms-2 bi bi-display"></i>
+                    </a>
+                </li>
+            </ul>
         </div>
-        <div class="folder-form-body">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label>Supplier</label>
-                        <input type="text" class="form-control" value="{{$supplier->name}}" id="supplier" disabled="true"/>
+        
+        <hr>
+
+        <table class="record-table-horizontal">
+            <tbody>
+                <tr>
+                    <th>PO Number</th>
+                    <td>{{ str_pad($purchase_order->id,6,0,STR_PAD_LEFT) }}</td>
+                </tr>
+                <tr>
+                    <th>Material Request ID</th>
+                    <td>{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}</td>
+                </tr>
+                <tr>
+                    <th>Project</th>
+                    <td>{{$project->name}}</td>
+                </tr>
+                <tr>
+                    <th>Section</th>
+                    <td>{{$section->name}}</td>
+                </tr>
+                <tr>
+                    <th>Component</th>
+                    <td>{{$component->name}}</td>
+                </tr>
+                <tr>
+                    <th>PO Status</th>
+                    <td>{{$purchase_order->status}}</td>
+                </tr>
+                <tr>
+                    <th>Created By</th>
+                    <td>{{$purchase_order->createdByUser()->name}} {{$purchase_order->created_at}}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>
+                        <textarea disabled="true" class="w-100" id="description">{{$material_quantity_request->description}}</textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="folder-form-container">
+            <div class="folder-form-tab">
+                Review Purchase Order
+            </div>
+            <div class="folder-form-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Supplier</label>
+                            <input type="text" class="form-control" value="{{$supplier->name}}" id="supplier" disabled="true"/>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label>Payment Terms</label>
-                        <input type="text" class="form-control" value="{{$payment_term->text}}" id="payment_term" disabled="true"/>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Payment Terms</label>
+                            <input type="text" class="form-control" value="{{$payment_term->text}}" id="payment_term" disabled="true"/>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-        <hr>
         <div id="item_container">
             
             @php $sub_total = 0; @endphp
@@ -93,10 +94,10 @@
 
                 <div class="mb-3 border rounded p-3">
                
-                <h5>{{ $componentItemArr[$id]->name }}</h5>
+                    <h5>{{ $componentItemArr[$id]->name }}</h5>
 
                 
-                @foreach($items as $item)
+                    @foreach($items as $item)
                     <div class="row mb-3">
                         <div class="col-lg-4">
                             <div class="form-group">
@@ -148,8 +149,8 @@
                         </div>
                     </div>
 
-                    @php $sub_total = $sub_total + ($item->quantity * $item->price); @endphp
-                @endforeach
+                        @php $sub_total = $sub_total + ($item->quantity * $item->price); @endphp
+                    @endforeach
                 </div>
                 
             @endforeach
@@ -229,109 +230,50 @@
             </div>
         </div>
     </div>
-</div>
-
-<script type="module">
-    import {$q} from '/adarna.js';
     
-    let cancelBtn = $q('#cancelBtn').first();
 
-    cancelBtn.onclick = ()=>{
-        window.util.navTo('/review/purchase_order');
-    }
-
-    @if($purchase_order->status == 'REVO')
-        let approveVoidBtn = $q('#approveVoidBtn').first();
-
-        approveVoidBtn.onclick = ()=>{
-
-            if(!confirm('Are you sure you want to VOID this PO?')){
-                return false;
-            }
-
-
-            window.util.blockUI();
-
-            window.util.$post('/api/review/purchase_order/void',{
-                id: '{{$purchase_order->id}}'
-            }).then(reply=>{
-
-                window.util.unblockUI();
-
-                if(reply.status <= 0){
-
-                    window.util.showMsg(reply);
-                    return false;
-                }
-
-                window.util.navTo('/review/purchase_orders');
-            });
-        }
-
-        rejectVoidBtn.onclick = ()=>{
-
-            window.util.blockUI();
-
-            window.util.$post('/api/review/purchase_order/reject_void',{
-                id: '{{$purchase_order->id}}'
-            }).then(reply=>{
-
-                window.util.unblockUI();
-
-                if(reply.status <= 0){
-
-                    window.util.showMsg(reply);
-                    return false;
-                }
-
-                window.util.navTo("/review/purchase_orders");
-            });
-        }
-    @endif
-
-    @if($purchase_order->status == 'PEND')
+    <script type="module">
+        import {$q} from '/adarna.js';
         
-       let rejectBtn = $q('#rejectBtn').first();
-       let approveBtn   = $q('#approveBtn').first();
+        let cancelBtn = $q('#cancelBtn').first();
 
-       rejectBtn.onclick = (e)=>{
-            e.preventDefault();
+        cancelBtn.onclick = ()=>{
+            window.util.navTo('/review/purchase_order');
+        }
 
-            if(!confirm('Are you sure you want to REJECT this PO?')){
+        @if($purchase_order->status == 'REVO')
+            let approveVoidBtn = $q('#approveVoidBtn').first();
 
-                return false;
-            }
+            approveVoidBtn.onclick = ()=>{
 
-            window.util.blockUI();
-
-            window.util.$post('/api/review/purchase_order/reject',{
-                id: '{{$purchase_order->id}}'
-            }).then(reply=>{
-
-                window.util.unblockUI();
-
-                if(reply.status <= 0){
-
-                    window.util.showMsg(reply);
+                if(!confirm('Are you sure you want to VOID this PO?')){
                     return false;
                 }
 
-                window.util.navTo("/review/purchase_orders");
-            });
-       }
-
-       approveBtn.onclick = (e)=>{
-            e.preventDefault();
-
-            window.util.confirm('Are you sure you want to APPROVE this PO?',(answer)=>{
-                
-                if(!answer){
-                    return false;
-                }
 
                 window.util.blockUI();
 
-                window.util.$post('/api/review/purchase_order/approve',{
+                window.util.$post('/api/review/purchase_order/void',{
+                    id: '{{$purchase_order->id}}'
+                }).then(reply=>{
+
+                    window.util.unblockUI();
+
+                    if(reply.status <= 0){
+
+                        window.util.showMsg(reply);
+                        return false;
+                    }
+
+                    window.util.navTo('/review/purchase_orders');
+                });
+            }
+
+            rejectVoidBtn.onclick = ()=>{
+
+                window.util.blockUI();
+
+                window.util.$post('/api/review/purchase_order/reject_void',{
                     id: '{{$purchase_order->id}}'
                 }).then(reply=>{
 
@@ -345,10 +287,69 @@
 
                     window.util.navTo("/review/purchase_orders");
                 });
-            });
+            }
+        @endif
 
-       }
-    @endif
-</script>
-    </div>
+        @if($purchase_order->status == 'PEND')
+            
+        let rejectBtn = $q('#rejectBtn').first();
+        let approveBtn   = $q('#approveBtn').first();
+
+        rejectBtn.onclick = (e)=>{
+                e.preventDefault();
+
+                if(!confirm('Are you sure you want to REJECT this PO?')){
+
+                    return false;
+                }
+
+                window.util.blockUI();
+
+                window.util.$post('/api/review/purchase_order/reject',{
+                    id: '{{$purchase_order->id}}'
+                }).then(reply=>{
+
+                    window.util.unblockUI();
+
+                    if(reply.status <= 0){
+
+                        window.util.showMsg(reply);
+                        return false;
+                    }
+
+                    window.util.navTo("/review/purchase_orders");
+                });
+        }
+
+        approveBtn.onclick = (e)=>{
+                e.preventDefault();
+
+                window.util.confirm('Are you sure you want to APPROVE this PO?',(answer)=>{
+                    
+                    if(!answer){
+                        return false;
+                    }
+
+                    window.util.blockUI();
+
+                    window.util.$post('/api/review/purchase_order/approve',{
+                        id: '{{$purchase_order->id}}'
+                    }).then(reply=>{
+
+                        window.util.unblockUI();
+
+                        if(reply.status <= 0){
+
+                            window.util.showMsg(reply);
+                            return false;
+                        }
+
+                        window.util.navTo("/review/purchase_orders");
+                    });
+                });
+
+        }
+        @endif
+    </script>
+</div>
 @endsection
