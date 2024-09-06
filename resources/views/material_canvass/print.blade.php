@@ -119,7 +119,6 @@
 
             @endphp
         
-            <div></div>
 
             <table class="table" border="1" style="margin-bottom:10px;font-size:11px">
                 <tr>
