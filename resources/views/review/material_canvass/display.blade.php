@@ -130,8 +130,7 @@
                         </div>
                     </div>
                     
-                    <div class="canvass-container" id="canvass_{{$item->id}}">
-                    </div>
+                    <div class="canvass-container" id="canvass_{{$item->id}}"></div>
                 
             </div>
         </div>   
@@ -156,10 +155,12 @@
 </div>
 
 <script type="module">
-    import {$q,$el} from '/adarna.js';
+    import {$q,$el,Template} from '/adarna.js';
     import CanvassItem from '/ui_components/CanvassItem.js';
     
     const cancelBtn         = $q('#cancelBtn').first();
+    const t                 = new Template();
+
     let supplierList        = null;
     let paymentTermsList    = null;
     let container           = null;
@@ -180,20 +181,26 @@
     
                 @if($mcItem->status == 'PEND')
                     
-                    $el.append( CanvassItem({
-                        id:'{{$mcItem->id}}',
-                        material_quantity_request_item_id:'{{$item->id}}',
-                        supplier_list:'supplier_list',
-                        payment_terms_list:'payment_terms_list',
-                        quantity:'{{$item->requested_quantity}}',
-                        supplier_id: '{{$mcItem->supplier_id}}',
-                        supplier_text: supplierList.getAttribute('value'),
-                        payment_term_id: '{{$item->payment_term_id}}',
-                        payment_term_text: paymentTermsList.getAttribute('value'),
-                        status:'{{$mcItem->status}}',
-                        price:'{{$mcItem->price}}',
-                        approvalFlag: true
-                    }) ).to(container);
+                    $el.append( 
+
+                        t.div({class:'border border-secondary rounded'},()=>{
+                            CanvassItem({
+                                id:'{{$mcItem->id}}',
+                                material_quantity_request_item_id:'{{$item->id}}',
+                                supplier_list:'supplier_list',
+                                payment_terms_list:'payment_terms_list',
+                                quantity:'{{$item->requested_quantity}}',
+                                supplier_id: '{{$mcItem->supplier_id}}',
+                                supplier_text: supplierList.getAttribute('value'),
+                                payment_term_id: '{{$item->payment_term_id}}',
+                                payment_term_text: paymentTermsList.getAttribute('value'),
+                                status:'{{$mcItem->status}}',
+                                price:'{{$mcItem->price}}',
+                                approvalFlag: true
+                            }) 
+                        })
+            
+                    ).to(container);
                     
                 @else
 
