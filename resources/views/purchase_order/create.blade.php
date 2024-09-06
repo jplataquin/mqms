@@ -28,7 +28,7 @@
         <table class="record-table-horizontal">
             <tbody>
                 <tr>
-                    <th width="300px">Material Quantity Request ID</th>
+                    <th width="300px">Material Request ID</th>
                     <td>{{$material_quantity_request->id}}</td>
                 </tr>
                 <tr>
@@ -372,12 +372,6 @@
                             
                             el.appendChild(total_ordered_el);
                             
-                            // t.div({class:'col-1'},(el)=>{
-                            //     t.div({class:'form-group'},()=>{
-                            //         t.label('Balance')
-                            //         el.appendChild(remainingBalnce);
-                            //     });
-                            // });
                             
                             t.div({class:'col-1'},(el)=>{
                                 t.div({class:'form-group'},()=>{
@@ -487,13 +481,11 @@
 
         function updateTotalOrdered(
             inputEl,
-            //remainingBalanceEl,
             material_item_id,
             material_quantity_request_item_id,
             requested_quantity
         ){
             inputEl.value = 'Fetching data...';
-            //remainingBalanceEl.value = 'Fetching data...';
             
             window.util.$get('/api/purchase_order/total_ordered',{
                 material_item_id: material_item_id,
@@ -505,9 +497,8 @@
                     return false;
                 }
 
-                inputEl.value = reply.data.total_ordered + ' / ' +requested_quantity;
+                inputEl.value = (requested_quantity - reply.data.total_ordered);
 
-                //remainingBalanceEl.value = requested_quantity - reply.data.total_ordered;
             });
         }
     </script>
