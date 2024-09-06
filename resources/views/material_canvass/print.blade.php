@@ -104,7 +104,7 @@
         </tbody>
         
     </table>
-    
+    <br>
     <div>
         @foreach($items as $item)
             @php 
