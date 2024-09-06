@@ -29,7 +29,7 @@
     </style>
     
     <page>
-        <div>
+        
             @foreach(['Supplier','Site','Accounting','Warehouse'] as $copy)
             <nobreak>
             <table class="table" border="1">
@@ -161,5 +161,5 @@
             </table>
             </nobreak>
             @endforeach
-        </div>
+        
     </page>
