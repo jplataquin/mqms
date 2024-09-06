@@ -207,7 +207,7 @@
                 @else
 
                     $el.append( 
-                        t.div({class:'border border-secondary rounded'},(el)=>{
+                        t.div({class:'border border-secondary rounded p-3 mb-3'},(el)=>{
                             el.append(
                                 CanvassItem({
                                     id:'{{$mcItem->id}}',
