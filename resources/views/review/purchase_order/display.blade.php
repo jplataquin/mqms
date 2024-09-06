@@ -207,7 +207,7 @@
         </div>
 
         <div class="row mt-5">
-            <div class="col-6  text-start">
+            <div class="col-sm-6 col-lg-6  text-start">
                 
                 @if($purchase_order->status == 'PEND')
                     <button id="rejectBtn" class="btn btn-danger">Reject</button>
@@ -217,7 +217,7 @@
                     <button id="approveVoidBtn" class="btn btn-danger">Approve Void</button>
                 @endif
             </div>
-            <div class="col-6 text-end">
+            <div class="col-sm-6 col-lg-6 text-end">
 
                 @if($purchase_order->status == 'PEND')
                     <button id="approveBtn" class="btn btn-primary">Approve</button>
