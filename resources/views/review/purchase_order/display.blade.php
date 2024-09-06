@@ -108,7 +108,7 @@
                         <div class="col-lg-2">
                             <div class="form-group">
                                 <label>Price</label>
-                                <input type="text" class="form-control" disabled="true" value="{{$item->price}}"/>
+                                <input type="text" class="form-control" disabled="true" value="{{ number_format($item->price,2) }}"/>
                             </div>
                         </div>
                         <div class="col-lg-2">
@@ -125,7 +125,7 @@
                                         }
                                     }
                                 @endphp
-                                <input type="text" class="form-control" disabled="true" value="{{$remaining_quantity}}"/>
+                                <input type="text" class="form-control" disabled="true" value="{{ number_format($remaining_quantity, 2) }}"/>
                             </div>
                         </div>
                         <div class="col-lg-2">
@@ -207,7 +207,7 @@
         </div>
 
         <div class="row mt-5">
-            <div class="col-lg-6 col-sm-6 text-start">
+            <div class="col-sm-6 col-lg-6  text-start">
                 
                 @if($purchase_order->status == 'PEND')
                     <button id="rejectBtn" class="btn btn-danger">Reject</button>
@@ -217,7 +217,7 @@
                     <button id="approveVoidBtn" class="btn btn-danger">Approve Void</button>
                 @endif
             </div>
-            <div class="col-lg-6 col-sm-6 text-end">
+            <div class="col-sm-6 col-lg-6 text-end">
 
                 @if($purchase_order->status == 'PEND')
                     <button id="approveBtn" class="btn btn-primary">Approve</button>
