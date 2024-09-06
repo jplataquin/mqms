@@ -90,7 +90,7 @@
             </tr>
             <tr>
                 <th>Contract Item</th>
-                <td>{{ Str::wordWrap($contract_item->item_code.' '.$contract_item->description, 50, "\n", false) }}</td>
+                <td>{{ Str::wordWrap($contract_item->item_code.' '.$contract_item->description, 50, "<br>", false) }}</td>
 
                 <th>Component</th>
                 <td>{{$component->name}}</td>
