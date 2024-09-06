@@ -211,7 +211,8 @@ class MaterialCanvassController extends Controller
             $supplier_arr[$supplier->id] = $supplier;
         }
 
-        $html = view('material_canvass/print',[
+        //$html = 
+        return view('material_canvass/print',[
             'material_quantity_request' => $materialQuantityRequest,
             'project'                   => $project,
             'section'                   => $section,
