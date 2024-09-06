@@ -105,7 +105,7 @@
         
     </table>
     <br>
-    <div>
+    
         @foreach($items as $item)
             @php 
                 $material_item      = $material_item_arr[$item->material_item_id]; 
@@ -205,6 +205,5 @@
 
         
 
-    </div>
 
 </page>
