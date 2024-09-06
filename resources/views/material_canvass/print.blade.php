@@ -39,7 +39,7 @@
 
 </style>
 
-<page>
+<page style="padding-bottom:20px">
 
 
     <page_footer>
