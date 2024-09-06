@@ -133,7 +133,7 @@
                             <div class="col-2">
                                 <div class="form-group">
                                     <label>Price</label>
-                                    <input type="text" class="form-control" disabled="true" value="{{$item->price}}"/>
+                                    <input type="text" class="form-control" disabled="true" value="{{ number_format($item->price,2) }}"/>
                                 </div>
                             </div>
                             <div class="col-2">
@@ -145,7 +145,7 @@
                             <div class="col-2">
                                 <div class="form-group">
                                     <label>Total</label>
-                                    <input type="text" class="form-control" disabled="true" value="{{$item->quantity * $item->price}}"/>
+                                    <input type="text" class="form-control" disabled="true" value="{{ number_format( $item->quantity * $item->price ) }}"/>
                                 </div>
                             </div>
                         </div>
@@ -164,7 +164,7 @@
                         <input type="text" disabled="true" value="Sub Total" class="form-control"/>
                     </td>
                     <td>
-                        <input type="text" id="sub_total" disabled="true" value="{{$sub_total}}" class="form-control"/>
+                        <input type="text" id="sub_total" disabled="true" value="{{ number_format($sub_total, 2) }}" class="form-control"/>
                     </td>
                 </tr>
 
@@ -186,7 +186,7 @@
                             <input type="text" disabled="true" value="{{$extra->text}}" class="extra_text form-control"/>
                         </td>
                         <td>
-                            <input type="number" disabled="true" value="{{$extra->value}}" class="extra_val form-control" />
+                            <input type="number" disabled="true" value="{{ number_format($extra->value,2) }}" class="extra_val form-control" />
                         </td>
                     </tr>
 
@@ -199,7 +199,7 @@
                         <input type="text" disabled="true" value="Grand Total" class="extra_text form-control"/>
                     </td>
                     <td>
-                        <input type="number" disabled="true" value="{{$grand_total}}" class="extra_val form-control" />
+                        <input type="number" disabled="true" value="{{ number_format($grand_total,2) }}" class="extra_val form-control" />
                     </td>
                 </tr>
             </table>
