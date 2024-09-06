@@ -43,7 +43,7 @@
 
 
     <page_footer>
-        <div style="padding-bottom:20px;maring-top:5px">  
+        <div style="maring-top:20px">  
             <table style="font-size:11px">
                 <tr>
                     <td style="width:50%">
