@@ -25,7 +25,7 @@
     <hr>
     <div class="folder-form-container mb-5">
         <div class="folder-form-tab">
-            Material Quantity Request
+            Material Request
         </div>
         <div class="folder-form-body">
             <div class="row mb-3">
@@ -118,8 +118,8 @@
            
         </div>
         <div class="col-6 text-end">
-            
-             <button class="btn-warning btn me-3" id="printBtn">Print</button>
+            <button class="btn-warning btn me-3" id="showPOBtn">PO List</button>
+            <button class="btn-warning btn me-3" id="printBtn">Print</button>
             <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
 
             @if($material_quantity_request->status == 'PEND')
