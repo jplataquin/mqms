@@ -6,16 +6,16 @@
 <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="#">
+                <a href="/material_canvass">
                     <span>
-                        Material Canvass
+                        Request
                     </span>
                 </a>
             </li>
             <li>
                 <a href="#" class="active">
                     <span>
-                        Display
+                        Material Canvass
                     </span>		
                     <i class="ms-2 bi bi-display"></i>
                 </a>
@@ -44,12 +44,12 @@
                         <td>{{$section->name}}</td>
                     </tr>
                     <tr>
-                        <th>Component</th>
-                        <td>{{$component->name}}</td>
+                        <th>Contract Item</th>
+                        <td></td>
                     </tr>
                     <tr>
-                        <th>Status</th>
-                        <td>{{$material_quantity_request->status}}</td>
+                        <th>Component</th>
+                        <td>{{$component->name}}</td>
                     </tr>
                     <tr>
                         <th>Description</th>

@@ -223,7 +223,7 @@ class MaterialCanvassController extends Controller
             'supplier_arr'              => $supplier_arr,
             'payment_term_arr'          => $payment_term_arr,
             'current_datetime'          => Carbon::now()
-        ])->render();
+        ]);exit;
 
         $html2pdf = new Html2Pdf('P','A4','en', false, 'UTF-8', [5, 5, 10, 0]);
            
