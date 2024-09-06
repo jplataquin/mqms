@@ -169,6 +169,11 @@
                                         $status_color = '#ff0000';
                                         
                                         break;
+                                    case 'VOID':
+                                        
+                                        $status_color = '#000000';
+                                        
+                                        break;
                                     default:
 
                                         $status_color = '#ffbf00';
