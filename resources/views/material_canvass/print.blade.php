@@ -119,7 +119,6 @@
 
             @endphp
         
-            <nobreak>
             <table class="table" border="1" style="margin-bottom:10px;font-size:11px">
                 <tr>
                     <td colspan="5" style="width:100%;background-color:#cccccc;">
@@ -196,7 +195,7 @@
                 @endforeach
                 
             </table>
-            <nobreak>
+
         @endforeach
 
         
