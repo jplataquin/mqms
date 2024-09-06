@@ -43,7 +43,7 @@
 
 
     <page_footer>
-        <div style="">  
+        <div style="margin-top:10px">  
             <table style="font-size:11px">
                 <tr>
                     <td style="width:50%">
@@ -105,7 +105,7 @@
         
     </table>
     <br>
-    
+
         @foreach($items as $item)
             @php 
                 $material_item      = $material_item_arr[$item->material_item_id]; 
