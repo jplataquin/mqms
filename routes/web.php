@@ -22,9 +22,9 @@ Route::get('/', function () {
 
 //Auth::routes();
 // Authentication Routes...
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login');
-Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('login', [Auth\Http\Controllers\LoginController::class,'showLoginForm'])->name('login');
+Route::post('login', [Auth\Http\Controllers\LoginController::class,'login']);
+Route::post('logout', [Auth\Http\Controllers\LoginController::class,'logout'])->name('logout');
 
 // Registration Routes...
 // Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
