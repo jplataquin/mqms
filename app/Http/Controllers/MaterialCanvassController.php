@@ -226,7 +226,7 @@ class MaterialCanvassController extends Controller
         ]);
         
 
-        $html2pdf = new Html2Pdf('P','A4','en', false, 'UTF-8', [5, 5, 10, 5]);
+        $html2pdf = new Html2Pdf('P','A4','en', false, 'UTF-8', [5, 5, 5, 5]);
            
 
         try {
