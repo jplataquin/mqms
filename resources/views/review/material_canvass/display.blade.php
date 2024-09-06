@@ -125,9 +125,12 @@
                         </div>
                         <div class="folder-form-body">
                             <div class="row">
-                                <div class="col-12 canvass-container" id="canvass_{{$item->id}}"></div>
+                                <div class="col-12"></div>
                             </div>
                         </div>
+                    </div>
+                    
+                    <div class="canvass-container" id="canvass_{{$item->id}}">
                     </div>
                 
             </div>

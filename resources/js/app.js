@@ -119,36 +119,42 @@ window.util.prompt = (msg,callback) => {
 
 window.util.confirm = (msg,callback) => {
 
-    window.ui.primaryModal.hide();
+    return new Promise((resolve,reject)=>{
 
-    window.ui.primaryModalTitle.innerHTML    = '';
-    window.ui.primaryModalBody.innerHTML     = '';
-    window.ui.primaryModalFooter.innerHTML   = '';
-
-    window.ui.primaryModalTitle.innerText = 'Confirm';
-    window.ui.primaryModalBody.innerText = msg;
-
-    let no  = t.button({class:'btn btn-danger me-3'},'No');
-    let yes = t.button({class:'btn btn-success'},'Yes');
-
-    yes.onclick = (e)=>{
-        callback(true,e);
         window.ui.primaryModal.hide();
-    }
 
-    no.onclick = (e)=>{
-        callback(false,e);
-        window.ui.primaryModal.hide();
-    }
-
-    let footer = t.div({class:'text-end'},(el)=>{
-        el.appendChild(no);
-        el.appendChild(yes);
+        window.ui.primaryModalTitle.innerHTML    = '';
+        window.ui.primaryModalBody.innerHTML     = '';
+        window.ui.primaryModalFooter.innerHTML   = '';
+    
+        window.ui.primaryModalTitle.innerText = 'Confirm';
+        window.ui.primaryModalBody.innerText = msg;
+    
+        let no  = t.button({class:'btn btn-danger me-3'},'No');
+        let yes = t.button({class:'btn btn-success'},'Yes');
+    
+        yes.onclick = (e)=>{
+            callback(true,e);
+            resolve(true);
+            window.ui.primaryModal.hide();
+        }
+    
+        no.onclick = (e)=>{
+            callback(false,e);
+            resolve(false);
+            window.ui.primaryModal.hide();
+        }
+    
+        let footer = t.div({class:'text-end'},(el)=>{
+            el.appendChild(no);
+            el.appendChild(yes);
+        });
+    
+        window.ui.primaryModalFooter.appendChild(footer);
+    
+        window.ui.primaryModal.show();
     });
-
-    window.ui.primaryModalFooter.appendChild(footer);
-
-    window.ui.primaryModal.show();
+   
 }
 
 
