@@ -136,19 +136,19 @@ class PurchaseOrderController extends Controller
             $materialQuantityRequest = $materialQuantityRequest->where('id','=',$query);
         }
 
-        if($project_id){
+        // if($project_id){
             
-            $materialQuantityRequest = $materialQuantityRequest->where('project_id','=',$project_id);
+        //     $materialQuantityRequest = $materialQuantityRequest->where('project_id','=',$project_id);
 
-            if($section_id){
-                $materialQuantityRequest = $materialQuantityRequest->where('section_id','=',$section_id);
+        //     if($section_id){
+        //         $materialQuantityRequest = $materialQuantityRequest->where('section_id','=',$section_id);
 
-                if($component_id){
-                    $materialQuantityRequest = $materialQuantityRequest->where('component_id','=',$component_id);
+        //         if($component_id){
+        //             $materialQuantityRequest = $materialQuantityRequest->where('component_id','=',$component_id);
 
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
 
         if($limit > 0){
             $page   = ($page-1) * $limit;
@@ -163,7 +163,12 @@ class PurchaseOrderController extends Controller
             
         }else{
 
-            $result = $materialQuantityRequest->orderBy($orderBy,$order)->take($limit)->with('Project')->with('Section')->with('ContractItem')->with('Component')->with('User')->get();
+            $result = $materialQuantityRequest->orderBy($orderBy,$order)->take($limit)
+            ->with('Project')
+            ->with('Section')
+            ->with('ContractItem')
+            ->with('Component')
+            ->with('User')->get();
         }
 
         $results_to_show = [];
