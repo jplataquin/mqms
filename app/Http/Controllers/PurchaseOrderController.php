@@ -183,7 +183,7 @@ class PurchaseOrderController extends Controller
 
                 //Get sum of all po item quantities for the request item
                 $po_quantity = PurchaseOrderItem::where('material_quantity_request_item_id',$item->id)
-                where('status','!=','VOID')->sum('quantity');
+                ->where('status','!=','VOID')->sum('quantity');
 
                 //Check if all requested quanty has been po'ed.
                 if($po_quantity >= $item->requested_quantity){
