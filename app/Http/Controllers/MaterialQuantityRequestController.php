@@ -807,7 +807,7 @@ class MaterialQuantityRequestController extends Controller
 
         $user_id = Auth::user()->id;
         
-        $materialQuantityRequest = $materialQuantityRequest->where('created_by','=',$user_id);
+       // $materialQuantityRequest = $materialQuantityRequest->where('created_by','=',$user_id);
         
         if($query){
             $materialQuantityRequest = $materialQuantityRequest->where('id','=',$query);
