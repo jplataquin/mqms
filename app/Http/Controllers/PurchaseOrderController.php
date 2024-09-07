@@ -124,13 +124,13 @@ class PurchaseOrderController extends Controller
         $materialQuantityRequest = $materialQuantityRequest->where('status','=','APRV');
         
         
-        // $materialQuantityRequest = $materialQuantityRequest->whereIn('id',  function($query)
-        // {
-        //     $query->select('material_canvass.material_quantity_request_id')
-        //           ->from('material_canvass')
-        //           ->where('material_canvass.status', '=', 'APRV')
-        //           ->where('material_canvass.deleted_at','=',null);
-        // });
+        $materialQuantityRequest = $materialQuantityRequest->whereIn('id',  function($query)
+        {
+            $query->select('material_canvass.material_quantity_request_id')
+                  ->from('material_canvass')
+                  ->where('material_canvass.status', '=', 'APRV')
+                  ->where('material_canvass.deleted_at','=',null);
+        });
 
         if($query){
             $materialQuantityRequest = $materialQuantityRequest->where('id','=',$query);
