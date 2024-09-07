@@ -124,31 +124,31 @@ class PurchaseOrderController extends Controller
         $materialQuantityRequest = $materialQuantityRequest->where('status','=','APRV');
         
         
-        $materialQuantityRequest = $materialQuantityRequest->whereIn('id',  function($query)
-        {
-            $query->select('material_canvass.material_quantity_request_id')
-                  ->from('material_canvass')
-                  ->where('material_canvass.status', '=', 'APRV')
-                  ->where('material_canvass.deleted_at','=',null);
-        });
+        // $materialQuantityRequest = $materialQuantityRequest->whereIn('id',  function($query)
+        // {
+        //     $query->select('material_canvass.material_quantity_request_id')
+        //           ->from('material_canvass')
+        //           ->where('material_canvass.status', '=', 'APRV')
+        //           ->where('material_canvass.deleted_at','=',null);
+        // });
 
         if($query){
             $materialQuantityRequest = $materialQuantityRequest->where('id','=',$query);
         }
 
-        // if($project_id){
+        if($project_id){
             
-        //     $materialQuantityRequest = $materialQuantityRequest->where('project_id','=',$project_id);
+            $materialQuantityRequest = $materialQuantityRequest->where('project_id','=',$project_id);
 
-        //     if($section_id){
-        //         $materialQuantityRequest = $materialQuantityRequest->where('section_id','=',$section_id);
+            if($section_id){
+                $materialQuantityRequest = $materialQuantityRequest->where('section_id','=',$section_id);
 
-        //         if($component_id){
-        //             $materialQuantityRequest = $materialQuantityRequest->where('component_id','=',$component_id);
+                if($component_id){
+                    $materialQuantityRequest = $materialQuantityRequest->where('component_id','=',$component_id);
 
-        //         }
-        //     }
-        // }
+                }
+            }
+        }
 
         if($limit > 0){
             $page   = ($page-1) * $limit;
