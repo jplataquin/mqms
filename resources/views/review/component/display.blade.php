@@ -309,11 +309,11 @@
                         <table border="1" class="table w-100">
                                 
 
-                                <tr class="bg-divider">
-                                    <th style="width:40%" class="text-center">Material</th>
-                                    <th style="width:20%" class="text-center">Equivalent</th>
-                                    <th style="width:20%" class="text-center">Quantity</th>
-                                    <th style="width:20%" class="text-center">Total</th>
+                                <tr>
+                                    <th style="width:40%" class="text-center bg-divider">Material</th>
+                                    <th style="width:20%" class="text-center bg-divider">Equivalent</th>
+                                    <th style="width:20%" class="text-center bg-divider">Quantity</th>
+                                    <th style="width:20%" class="text-center bg-divider">Total</th>
                                 </tr>
                                 
                                 @foreach($component_item->materialQuantities as $mq)
