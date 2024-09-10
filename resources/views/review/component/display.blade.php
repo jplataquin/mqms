@@ -27,6 +27,18 @@
             <div class="folder-form-tab">
                 Review Component
             </div>
+            <div class="folder-form-body">
+                
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Contract Item</label>
+                            <input type="text" class="form-control" disabled="true" value="{{$contract_item->item_code}} {{$contract_item->description}}"/>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
         </div>
         
         
