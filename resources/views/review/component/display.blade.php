@@ -145,6 +145,22 @@
                     </div>
                 </div>
 
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Component</label>
+                            <input type="text" class="form-control" disabled="true" value="{{$component->name}}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Status</label>
+                            <input type="text" class="form-control" disabled="true" value="{{$component->status}}"/>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-lg-6">
