@@ -274,7 +274,7 @@
                                                 ,6)
                                             ); 
                                         
-                                        $factor .= ' '.unit_options[$component_item->unit_id]->text;
+                                        $factor .= ' '.$unit_options[$component_item->unit_id]->text;
                                         
                                         $factor .= ' / ';
                                         
