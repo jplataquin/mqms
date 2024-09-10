@@ -98,6 +98,22 @@
                         </div>
                     </div>
                 </div>
+
+
+                <div class="row">
+                    <div class="col-lg-6">
+                    @if($component->status == 'PEND')
+                        <button class="btn btn-danger" id="rejectBtn">Reject</button>
+                    @endif
+                    </div>
+                    <div class="col-lg-6 text-end">
+                    @if($component->status == 'PEND')
+                        <button class="btn btn-primary" id="approveBtn">Approve</button>
+                    @endif
+                        <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                    </div>
+                </div>
+                
             </div>
         </div>
         
