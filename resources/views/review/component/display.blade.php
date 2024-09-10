@@ -1,6 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    .bg-excluded-sum-component_item{
+        background-color: #fffec8;
+    }
+
+    .bg-excluded-sum-component{
+        background-color: #ADD8E6;
+    }
+</style>
 <div id="content">
 <div class="container">
     <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
@@ -218,92 +227,110 @@
         @endphp
         @foreach($component_items as $component_item)
             <div class="form-container mb-3">
+
+                @php 
+                    $component_item_exlude_sum = '';
+
+                    if($component_item->unit_id != $component->unit_id){
+                        $component_item_exlude_sum = 'bg-excluded-sum-component_item';
+                    }
+                @endphp
                 <div class="form-header text-start ps-3">
                     {{$i}}.) {{$component_item->name}}
                 </div>
                 <div class="form-body">
-                    <table border="1" class="table">
-                        
-                        <tr>
-                            <th class="text-center">Factor</th>
-                            <th class="text-center">Quantity</th>
-                            <th class="text-center">Cost</th>
-                            <th class="text-center">Amount</th>
-                        </tr>
-                        <tr>
-                            <td class="text-center">
 
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Factor</label>
+                                @php
 
-                                @if($component_item->function_type_id == 1)
-                                    {{ 
-                                        formatFactor(
+                                    $factor = '';
+
+                                    if($component_item->function_type_id == 1){
+                                        
+                                        $factor = formatFactor(
                                             number_format(
                                                 round( ($component_item->function_variable  / $component->use_count), 6 )
                                             ,6)
-                                        )
-                                    }} 
-                                    {{$unit_options[$component_item->unit_id]->text}}
-                                    /
-                                    {{$unit_options[$component->unit_id]->text}}   
+                                        );
+                                        
+                                        $factor .= ' '.$unit_options[$component_item->unit_id]->text;
+
+                                        $factor .= ' / ';
+
+                                        $factor .= $unit_options[$component->unit_id]->text;   
+                                        
+                                        $factor .= ' > ';
+
+                                    }
                                     
-                                    <strong> > </strong>
-                                @endif
-                                
-                                @if($component_item->function_type_id == 2)
-                                    {{ 
-                                        formatFactor(
-                                            number_format(
-                                                round( (1 / $component_item->function_variable) / $component->use_count,6)
-                                            ,6)
-                                        ) 
-                                    }} 
-                                    {{$unit_options[$component_item->unit_id]->text}}
-                                    /
-                                    {{$unit_options[$component->unit_id]->text}}    
+                                    if($component_item->function_type_id == 2){
+                                        
+                                        $factor = formatFactor(
+                                                number_format(
+                                                    round( (1 / $component_item->function_variable) / $component->use_count,6)
+                                                ,6)
+                                            ); 
+                                        
+                                        $factor .= ' '.unit_options[$component_item->unit_id]->text;
+                                        
+                                        $factor .= ' / ';
+                                        
+                                        $factor .= $unit_options[$component->unit_id]->text;    
+                                        
+
+                                        $factor .=  ' >';
+                                    }
+
+
+                                    if($component_item->function_type_id == 4){
                                     
+                                        $factor = '< '; 
 
-                                    <strong> > </strong>
-                                @endif
-
-
-                                @if($component_item->function_type_id == 4)
-                                <strong> < </strong>
-
-                                    {{ 
-                                        number_format(
+                                        
+                                        $factor .= number_format(
                                             ($component_item->function_variable * $component->use_count),
                                             2
-                                        ) 
-                                    }}  
+                                        );
+                                        
 
-                                    {{$unit_options[$component->unit_id]->text}}
-                                    /
-                                    {{$unit_options[$component_item->unit_id]->text}}
-                                    
-                                @endif
+                                        $factor .= ' '.$unit_options[$component->unit_id]->text;
+                                        
+                                        $factor .= ' / ';
+
+                                        $factor .= $unit_options[$component_item->unit_id]->text;
+                                    }
 
 
-                              
-                            </td>
-                            
-                            
-                            <td class="text-center">
-                                {{$component_item->quantity}} {{$unit_options[$component_item->unit_id]->text}}
-                            </td>
-
-                            <td class="text-center">
-                                Php {{ number_format($component_item->budget_price,2) }}
-                            </td>
-                            
-                            <td class="text-center">
-                                @php
                                     $grand_total = $grand_total + ($component_item->budget_price * $component_item->quantity);
+                                
                                 @endphp
 
-                                Php {{ number_format($component_item->budget_price * $component_item->quantity,2) }}
-                            </td>
-                        </tr>
-                    </table>
+
+                                <input type="text" disabled="true" value="{{$factor}}" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Quantity</label>
+                                <input type="text" disabled="true" value="{{$component_item->quantity}} {{$unit_options[$component_item->unit_id]->text}}" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Cost</label>
+                                <input type="text" disabled="true" value="Php {{ number_format($component_item->budget_price,2) }}" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Amount</label>
+                                <input type="text" disabled="true" value="Php {{ number_format($component_item->budget_price * $component_item->quantity,2) }}" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="overflow-auto">
                         <table border="1" class="table w-100">
