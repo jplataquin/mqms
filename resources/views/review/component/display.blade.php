@@ -185,7 +185,7 @@
             $grand_total = 0;
         @endphp
         @foreach($componentItems as $item)
-            <div class="form-container">
+            <div class="form-container mb-3">
                 <div class="form-header text-start p-3">
                     {{$i}}.) {{$item->name}}
                 </div>
