@@ -300,7 +300,7 @@
                                     $grand_total = $grand_total + ($component_item->budget_price * $component_item->quantity);
                                 @endphp
 
-                                Php {{ number_format($component_item->budget_price * $coponent_item->quantity,2) }}
+                                Php {{ number_format($component_item->budget_price * $component_item->quantity,2) }}
                             </td>
                         </tr>
                     </table>
