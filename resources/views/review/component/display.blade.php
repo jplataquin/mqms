@@ -195,13 +195,10 @@
                         <tr>
                             <th class="text-center">Factor</th>
                             <th class="text-center">Quantity</th>
-                            <th class="text-center">Budget Price</th>
-                            <th class="text-center">Total Amount</th>
+                            <th class="text-center">Cost</th>
+                            <th class="text-center">Amount</th>
                         </tr>
                         <tr>
-                            <td class="text-center">
-                                Php {{ number_format($item->budget_price,2) }}
-                            </td>
                             <td class="text-center">
 
                                 @if($item->function_type_id == 1)
@@ -211,19 +208,27 @@
                                 @else
                                     N/A
                                 @endif
-                                
+
                                 <br>
                                 _________
                                 <br>
                                 {{$component->use_count}} Use(s)
                             </td>
+                            
+                            
                             <td class="text-center">
                                 {{$item->quantity}} {{$unit_options[$item->unit_id]->text}}
                             </td>
+
+                            <td class="text-center">
+                                Php {{ number_format($item->budget_price,2) }}
+                            </td>
+                            
                             <td class="text-center">
                                 @php
                                     $grand_total = $grand_total + ($item->budget_price * $item->quantity);
                                 @endphp
+
                                 Php {{ number_format($item->budget_price * $item->quantity,2) }}
                             </td>
                         </tr>
