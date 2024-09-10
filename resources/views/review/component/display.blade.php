@@ -218,7 +218,7 @@
         @endphp
         @foreach($component_items as $component_item)
             <div class="form-container mb-3">
-                <div class="form-header text-start p-3">
+                <div class="form-header text-start ps-3">
                     {{$i}}.) {{$component_item->name}}
                 </div>
                 <div class="form-body">
