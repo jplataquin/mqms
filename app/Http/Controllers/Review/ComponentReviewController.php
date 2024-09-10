@@ -99,8 +99,10 @@ class ComponentReviewController extends Controller
 
         $component = Component::findOrFail($id);
 
-        $section         = $component->section;
-        $project         = $section->project;
+        $section         = $component->Section;
+        $contract_item   = $component->ContractItem;
+        $project         = $section->Project;
+    
         $componentItems  = $component->componentItems()->orderBy('id','ASC')->withCount('materialQuantities')->get();
 
         
@@ -119,6 +121,7 @@ class ComponentReviewController extends Controller
         return view('review/component/display',[
             'project'           => $project,
             'section'           => $section,
+            'contract_item'     => $contract_item,
             'component'         => $component,
             'componentItems'    => $componentItems,
             'materialItems'     => $materialItems,
