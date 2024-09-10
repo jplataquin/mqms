@@ -69,7 +69,7 @@
                         <div class="form-container">
                             <div class="form-header">Contract</div>
                             <div class="form-body">
-                                <div class="row">
+                                <div class="row mb-3">
                                     
                                     <div class="col-lg-4">
                                         <div class="form-group">
@@ -102,6 +102,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -109,7 +110,7 @@
                         <div class="form-container">
                             <div class="form-header">POW/DUPA</div>
                             <div class="form-body">
-                                <div class="row">
+                                <div class="row mb-3">
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Quantity</label>
@@ -129,6 +130,16 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Amount</label>
+                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($contract_item->ref_unit_price * $contract_item->ref_quantity,2) }}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
