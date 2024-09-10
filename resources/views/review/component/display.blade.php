@@ -314,7 +314,7 @@
                                 <th style="width:20%" class="text-center">Total</th>
                             </tr>
                             
-                            @foreach($item->materialQuantities as $mq)
+                            @foreach($component_item->materialQuantities as $mq)
                             <tr>
                                 <td>
                                     {{$materialItems[$mq->material_item_id]->name }} 
@@ -322,13 +322,13 @@
                                     {{$materialItems[$mq->material_item_id]->brand }} 
                                 </td>
                                 <td class="text-center">
-                                    {{$mq->equivalent}} {{$item->unit}}
+                                    {{$mq->equivalent}} {{$component_item->unit}}
                                 </td>
                                 <td class="text-center">
                                     {{$mq->quantity}}
                                 </td>
                                 <td class="text-center">
-                                    {{$mq->equivalent * $mq->quantity}} {{$item->unit}}
+                                    {{$mq->equivalent * $mq->quantity}} {{$component_item->unit}}
                                 </td>
                             </tr>
                             @endforeach
