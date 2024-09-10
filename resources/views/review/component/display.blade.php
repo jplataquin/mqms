@@ -64,8 +64,9 @@
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
-                    <div class="col-lg-6">\
+                    <div class="col-lg-6">
                         <div class="form-container">
                             <div class="form-header">POW/DUPA</div>
                             <div class="form-body">
