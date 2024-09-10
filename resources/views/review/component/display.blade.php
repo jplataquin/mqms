@@ -304,36 +304,39 @@
                             </td>
                         </tr>
                     </table>
-                    <table border="1" class="table">
-                            
 
-                            <tr>
-                                <th style="width:40%" class="text-center">Material</th>
-                                <th style="width:20%" class="text-center">Equivalent</th>
-                                <th style="width:20%" class="text-center">Quantity</th>
-                                <th style="width:20%" class="text-center">Total</th>
-                            </tr>
-                            
-                            @foreach($component_item->materialQuantities as $mq)
-                            <tr>
-                                <td>
-                                    {{$materialItems[$mq->material_item_id]->name }} 
-                                    {{$materialItems[$mq->material_item_id]->specification_unit_packaging }} 
-                                    {{$materialItems[$mq->material_item_id]->brand }} 
-                                </td>
-                                <td class="text-center">
-                                    {{$mq->equivalent}} {{$component_item->unit}}
-                                </td>
-                                <td class="text-center">
-                                    {{$mq->quantity}}
-                                </td>
-                                <td class="text-center">
-                                    {{$mq->equivalent * $mq->quantity}} {{$component_item->unit}}
-                                </td>
-                            </tr>
-                            @endforeach
+                    <div class="overflow-auto">
+                        <table border="1" class="table w-100">
+                                
 
-                    </table>
+                                <tr>
+                                    <th style="width:40%" class="text-center">Material</th>
+                                    <th style="width:20%" class="text-center">Equivalent</th>
+                                    <th style="width:20%" class="text-center">Quantity</th>
+                                    <th style="width:20%" class="text-center">Total</th>
+                                </tr>
+                                
+                                @foreach($component_item->materialQuantities as $mq)
+                                <tr>
+                                    <td>
+                                        {{$materialItems[$mq->material_item_id]->name }} 
+                                        {{$materialItems[$mq->material_item_id]->specification_unit_packaging }} 
+                                        {{$materialItems[$mq->material_item_id]->brand }} 
+                                    </td>
+                                    <td class="text-center">
+                                        {{$mq->equivalent}} {{$component_item->unit}}
+                                    </td>
+                                    <td class="text-center">
+                                        {{$mq->quantity}}
+                                    </td>
+                                    <td class="text-center">
+                                        {{$mq->equivalent * $mq->quantity}} {{$component_item->unit}}
+                                    </td>
+                                </tr>
+                                @endforeach
+
+                        </table>
+                    </div>
                 </div>
             </div>
         @php $i++ @endphp
