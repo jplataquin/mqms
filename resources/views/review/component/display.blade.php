@@ -204,6 +204,17 @@
         @php 
             $i = 1;
             $grand_total = 0;
+
+            function formatFactor($factor){
+                
+                $factor_arr = explode('.',$factor);
+                
+                if($factor_arr[1] == '000000'){
+                    return $factor_arr[0].'.00';
+                }
+                
+                return $factor_arr[0].'.'.rtrim($factor_arr[1],'0');
+            }
         @endphp
         @foreach($component_items as $component_item)
             <div class="form-container mb-3">
