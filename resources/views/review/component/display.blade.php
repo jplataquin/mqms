@@ -71,6 +71,31 @@
                         </div>
                     </div>
                     <div class="col-lg-6">
+                        <div class="form-container">
+                            <div class="form-header">POW/DUPA</div>
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Quantity</label>
+                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($contract_item->ref_1_quantity,2) }}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Unit</label>
+                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($contract_item->ref_1_unit_id,2) }}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Price</label>
+                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($contract_item->ref_1_unit_price,2) }}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
