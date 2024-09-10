@@ -33,7 +33,7 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label>Contract Item</label>
-                            <input type="text" disabled="true" value="{{$contract_item->item_code}} {{$contract_item->description}}"/>
+                            <input type="text" class="form-control" disabled="true" value="{{$contract_item->item_code}} {{$contract_item->description}}"/>
                         </div>
                     </div>
                 </div>
