@@ -113,7 +113,7 @@ class ComponentReviewController extends Controller
             $materialItems[ $mi->id ] = $mi;
         }
         
-        $hash = generateComponentHash($project,$section,$component,$componentItems,$materialItems);
+        //$hash = generateComponentHash($project,$section,$component,$componentItems,$materialItems);
 
         $unit_options  = Unit::toOptions();
 
@@ -125,7 +125,7 @@ class ComponentReviewController extends Controller
             'component'         => $component,
             'component_items'    => $component_items,
             'materialItems'     => $materialItems,
-            'hash'              => $hash,
+            'hash'              => '',
             'unit_options'      => $unit_options
         ]);
     }
