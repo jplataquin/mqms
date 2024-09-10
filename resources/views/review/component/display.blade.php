@@ -309,7 +309,7 @@
                         <table border="1" class="table w-100">
                                 
 
-                                <tr>
+                                <tr class="bg-divider">
                                     <th style="width:40%" class="text-center">Material</th>
                                     <th style="width:20%" class="text-center">Equivalent</th>
                                     <th style="width:20%" class="text-center">Quantity</th>
