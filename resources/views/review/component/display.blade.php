@@ -205,10 +205,10 @@
             $i = 1;
             $grand_total = 0;
         @endphp
-        @foreach($componentItems as $item)
+        @foreach($component_items as $component_item)
             <div class="form-container mb-3">
                 <div class="form-header text-start p-3">
-                    {{$i}}.) {{$item->name}}
+                    {{$i}}.) {{$componet_item->name}}
                 </div>
                 <div class="form-body">
                     <table border="1" class="table">
@@ -222,35 +222,74 @@
                         <tr>
                             <td class="text-center">
 
-                                @if($item->function_type_id == 1)
-                                {{$item->function_variable}} {{ $unit_options[ $item->unit_id ]->text }} / {{$unit_options[$component->unit_id]->text}}
-                                @elseif($item->function_type_id == 2)
-                                1 {{$unit_options[$component->unit_id]->text}} / {{$item->function_variable}} {{ $unit_options[ $item->unit_id ]->text }}
-                                @else
-                                    N/A
+
+                                @if($component_item->function_type_id == 1)
+                                    {{ 
+                                        formatFactor(
+                                            number_format(
+                                                round( ($component_item->function_variable  / $component->use_count), 6 )
+                                            ,6)
+                                        )
+                                    }} 
+                                    {{$unit_options[$component_item->unit_id]->text}}
+                                    /
+                                    {{$unit_options[$component->unit_id]->text}}   
+                                    
+                                    <strong> > </strong>
+                                @endif
+                                
+                                @if($component_item->function_type_id == 2)
+                                    {{ 
+                                        formatFactor(
+                                            number_format(
+                                                round( (1 / $component_item->function_variable) / $component->use_count,6)
+                                            ,6)
+                                        ) 
+                                    }} 
+                                    {{$unit_options[$component_item->unit_id]->text}}
+                                    /
+                                    {{$unit_options[$component->unit_id]->text}}    
+                                    
+
+                                    <strong> > </strong>
                                 @endif
 
-                                <br>
-                                _________
-                                <br>
-                                {{$component->use_count}} Use(s)
+
+                                @if($component_item->function_type_id == 4)
+                                <strong> < </strong>
+
+                                    {{ 
+                                        number_format(
+                                            ($component_item->function_variable * $component->use_count),
+                                            2
+                                        ) 
+                                    }}  
+
+                                    {{$unit_options[$component->unit_id]->text}}
+                                    /
+                                    {{$unit_options[$component_item->unit_id]->text}}
+                                    
+                                @endif
+
+
+                              
                             </td>
                             
                             
                             <td class="text-center">
-                                {{$item->quantity}} {{$unit_options[$item->unit_id]->text}}
+                                {{$component_item->quantity}} {{$unit_options[$component_item->unit_id]->text}}
                             </td>
 
                             <td class="text-center">
-                                Php {{ number_format($item->budget_price,2) }}
+                                Php {{ number_format($component_item->budget_price,2) }}
                             </td>
                             
                             <td class="text-center">
                                 @php
-                                    $grand_total = $grand_total + ($item->budget_price * $item->quantity);
+                                    $grand_total = $grand_total + ($component_item->budget_price * $component_item->quantity);
                                 @endphp
 
-                                Php {{ number_format($item->budget_price * $item->quantity,2) }}
+                                Php {{ number_format($component_item->budget_price * $coponent_item->quantity,2) }}
                             </td>
                         </tr>
                     </table>

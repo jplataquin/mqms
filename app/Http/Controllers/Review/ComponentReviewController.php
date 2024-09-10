@@ -99,11 +99,11 @@ class ComponentReviewController extends Controller
 
         $component = Component::findOrFail($id);
 
-        $section         = $component->Section;
-        $contract_item   = $component->ContractItem;
-        $project         = $section->Project;
+        $section          = $component->Section;
+        $contract_item    = $component->ContractItem;
+        $project          = $section->Project;
     
-        $componentItems  = $component->componentItems()->orderBy('id','ASC')->withCount('materialQuantities')->get();
+        $component_items  = $component->componentItems()->orderBy('id','ASC')->withCount('materialQuantities')->get();
 
         
         $materialItems   = [];
@@ -123,7 +123,7 @@ class ComponentReviewController extends Controller
             'section'           => $section,
             'contract_item'     => $contract_item,
             'component'         => $component,
-            'componentItems'    => $componentItems,
+            'component_items'    => $component_items,
             'materialItems'     => $materialItems,
             'hash'              => $hash,
             'unit_options'      => $unit_options
