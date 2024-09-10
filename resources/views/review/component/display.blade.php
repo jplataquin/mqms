@@ -28,55 +28,15 @@
                 Review Component
             </div>
             <div class="folder-form-body">
-                <table class="record-table-horizontal">
-                    <tbody>
-                        <tr>
-                            <th>Project</th>
-                            <td>
-                                {{$project->name}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Section</th>
-                            <td>{{$section->name}}</td>
-                        </tr>
-                        <tr>
-                            <th>Component</th>
-                            <td>{{$component->name}}</td>
-                        </tr>
-                        <tr>
-                            <th>Description</th>
-                            <td>{{$component->description}}</td>
-                        </tr>
-                        <tr>
-                            <th>Status</th>
-                            <td>{{$component->status}}</td>
-                        </tr>
-                        <tr>
-                            <th>Quantity / Unit</th>
-                            <td>{{$component->quantity}} {{$unit_options[$component->unit_id]->text}}</td>
-                        </tr>
-                        <tr>
-                            <th>Use Count</th>
-                            <td>{{$component->use_count}}</td>
-                        </tr>
-                        <tr>
-                            <th>Created By</th>
-                            <td>{{$component->createdByUser()->name}} {{$component->created_at}}</td>
-                        </tr>
-                        @if($component->updated_at)
-                        <tr>
-                            <th>Updated By</th>
-                            <td>{{$component->updatedByUser()->name}} {{$component->updated_at}}</td>
-                        </tr>
-                        @endif
-                        <tr>
-                            <th>Hash</th>
-                            <td>{{$hash}}</td>
-                        </tr>
-                    </tbody>
-                </table>
 
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Contract Item</label>
+                            <input type="text" disabled="true" value="{{$contract_item->item_code}} {{$contract_item->description}}"/>
+                        </div>
+                    </div>
+                </div>
                 <div class="row mt-3">
                     <div class="col-lg-6">
                     @if($component->status == 'PEND')
