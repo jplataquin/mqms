@@ -23,6 +23,32 @@
         </ul>
     </div>
     <hr>
+        <table class="table-record-horizontal">
+            <tr>
+                <th>
+                    Project
+                </th>
+                <td>
+                    {{$project->name}}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Section
+                </th>
+                <td>
+                    {{$section->name}}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Created By
+                </th>
+                <td>
+                    {{$component->CreatedByUser()->name}} {{$component->created_at}}
+                </td>
+            </tr>
+        </table>
         <div class="folder-form-container">
             <div class="folder-form-tab">
                 Review Component
@@ -113,7 +139,7 @@
                         <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
                     </div>
                 </div>
-                
+
             </div>
         </div>
         
