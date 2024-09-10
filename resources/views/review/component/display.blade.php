@@ -98,7 +98,7 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>Amount</label>
-                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($contract_item->contract_unit_price * $contract,2) }}"/>
+                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($contract_item->contract_unit_price * $contract_item->contract_quantity,2) }}"/>
                                         </div>
                                     </div>
                                 </div>
