@@ -81,7 +81,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Unit</label>
-                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($contract_item->unit_id,2) }}"/>
+                                            <input type="text" class="form-control" disabled="true" value="{{ $unit_options[$contract_item->unit_id]->text }}"/>
                                         </div>
                                     </div>
 
