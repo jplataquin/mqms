@@ -162,6 +162,27 @@
                     </div>
                 </div>
 
+                <div class="row mb-3">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label>Quantity</label>
+                            <input type="text" class="form-control" disabled="true" value=""/>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label>Unit</label>
+                            <input type="text" class="form-control" disabled="true" value="@if(isset($unit_options[$contract_item->unit_id])) {{$unit_options[$contract_item->unit_id]->text}} @endif"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input type="text" class="form-control" disabled="true" value=""/>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-lg-6">
                     @if($component->status == 'PEND')
