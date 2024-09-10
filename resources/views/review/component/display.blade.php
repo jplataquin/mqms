@@ -81,7 +81,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Unit</label>
-                                            <input type="text" class="form-control" disabled="true" value="{{ $unit_options[$contract_item->unit_id]->text }}"/>
+                                            <input type="text" class="form-control" disabled="true" value="{{ @if(isset($unit_options[$contract_item->unit_id])) $unit_options[$contract_item->unit_id]->text @endif }}"/>
                                         </div>
                                     </div>
 
@@ -110,7 +110,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Unit</label>
-                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($contract_item->ref_1_unit_id,2) }}"/>
+                                            <input type="text" class="form-control" disabled="true" value="{{ @if(isset($unit_options[$contract_item->ref_1_unit_id])) $unit_options[$contract_item->ref_1_unit_id]->text @endif }}"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
