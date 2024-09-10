@@ -23,7 +23,7 @@
         </ul>
     </div>
     <hr>
-        <table class="table-record-horizontal">
+        <table class="record-table-horizontal">
             <tr>
                 <th>
                     Project
