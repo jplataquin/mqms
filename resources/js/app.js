@@ -119,10 +119,10 @@ window.util.prompt = (msg,callback) => {
 
 window.util.confirm = (msg,callback) => {
 
-    return new Promise((resolve,reject)=>{
+    let promise = new Promise((resolve,reject)=>{
 
         const t = new Template();
-        
+
         window.ui.primaryModal.hide();
 
         window.ui.primaryModalTitle.innerHTML    = '';
@@ -157,6 +157,7 @@ window.util.confirm = (msg,callback) => {
         window.ui.primaryModal.show();
     });
    
+    return promise;
 }
 
 
