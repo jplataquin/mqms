@@ -175,7 +175,7 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label>Quantity</label>
-                            <input type="text" class="form-control" disabled="true" value="{{ number_format( $component_arr[$component->id]->total_quantity,2)  }}"/>
+                            <input type="text" class="form-control" disabled="true" value="{{ number_format( $component->quantity,2)  }}"/>
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -463,7 +463,7 @@
     }
 
     @endif
-    
+
     cancelBtn.onclick = (e)=>{
         e.preventDefault();
         window.util.navTo('/review/components/');
