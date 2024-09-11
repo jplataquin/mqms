@@ -240,7 +240,7 @@
                 </div>
                 <div class="form-body">
 
-                    <div class="row mb-3">
+                    <div class="row mb-3 {{$component_item_exlude_sum}}">
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Factor</label>
@@ -371,7 +371,7 @@
                                     <th colspan="3" class="text-end">
                                         Grand Total
                                     </th>
-                                    <td class="@if($grand_total > $component_item->quantity) text-danger @endif text-center text-danger">
+                                    <td class="@if($grand_total > $component_item->quantity) text-danger @endif text-center">
                                         {{$grand_total}} {{ $unit_options[ $component_item->unit_id ]->text }}
                                     </td>
                                 </tr>
