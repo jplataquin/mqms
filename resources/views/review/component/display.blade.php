@@ -208,7 +208,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Unit</label>
-                                        <input type="text" disabled="true" class="form-control" value="{{ @if(isset($unit_options[$component->unit_id])) $unit_options[$component->unit_id]->text @endif }}"/>
+                                        <input type="text" disabled="true" class="form-control" value="@if(isset($unit_options[$component->unit_id])) {{$unit_options[$component->unit_id]->text}} @endif"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
