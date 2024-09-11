@@ -193,6 +193,24 @@
                 </div>
 
                 <div class="row">
+                    <div class="form-container">
+                        <div class="form-header">
+                            Items
+                        </div>
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>Quantity</label>
+                                        <input type="text" disabled="true" class="form-control" value="{{ number_format($component_arr[$component->id]->total_quantity,2) }}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="col-lg-6">
                     @if($component->status == 'PEND')
                         <button class="btn btn-danger" id="rejectBtn">Reject</button>
