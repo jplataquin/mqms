@@ -130,7 +130,8 @@ class ComponentReviewController extends Controller
             
             $contract_item_arr[$con_item->id] = [
                 'data'              => $con_item,
-                'total_quantity'    => 0
+                'total_quantity'    => 0,
+                'total_amount'      => 0
             ];
 
 
@@ -167,6 +168,8 @@ class ComponentReviewController extends Controller
                 if($comp->unit_id == $con_item->unit_id){
                     $contract_item_arr[$con_item->id]['total_quantity'] = $contract_item_arr[$con_item->id]['total_quantity'] + $comp->quantity;
                 } 
+
+                $contract_item_arr[$con_item->id]['total_amount'] = $contract_item_arr[$con_item->id]['total_amount'] + $component_items_total_amount;
             }//foreach
 
             $contract_item_arr[$con_item->id] = (object) $contract_item_arr[$con_item->id];

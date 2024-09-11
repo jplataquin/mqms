@@ -175,8 +175,8 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label>Price</label>
-                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($contract_item->ref_1_unit_price,2) }}"/>
+                                            <label>Amount</label>
+                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($contract_item_arr[$contract_item->id]->total_amount,2) }}"/>
                                         </div>
                                     </div>
                                 </div>
