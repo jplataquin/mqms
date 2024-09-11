@@ -240,7 +240,7 @@
                 </div>
                 <div class="form-body">
 
-                    <div class="row mb-5 {{$component_item_exlude_sum}}">
+                    <div class="row mb-3 pb-3 {{$component_item_exlude_sum}}">
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Factor</label>
