@@ -83,7 +83,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Quantity</label>
-                                            <input type="text" class="form-control" disabled="true" value="{{  }}"/>
+                                            <input type="text" class="form-control" disabled="true" value=""/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
