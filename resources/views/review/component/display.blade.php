@@ -71,11 +71,31 @@
                                 Contract Item
                             </div>
                             <div class="form-body">
-                                <div class="row">
+                                <div class="row mb-3">
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>Contract Item</label>
                                             <input type="text" class="form-control" disabled="true" value="{{$contract_item->item_code}} {{$contract_item->description}}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Quantity</label>
+                                            <input type="text" class="form-control" disabled="true" value="{{  }}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Unit</label>
+                                            <input type="text" class="form-control" disabled="true" value="@if(isset($unit_options[$contract_item->ref_1_unit_id])) {{$unit_options[$contract_item->ref_1_unit_id]->text}} @endif"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Price</label>
+                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($contract_item->ref_1_unit_price,2) }}"/>
                                         </div>
                                     </div>
                                 </div>
