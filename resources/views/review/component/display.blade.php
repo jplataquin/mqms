@@ -83,7 +83,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Quantity</label>
-                                            <input type="text" class="form-control" disabled="true" value=""/>
+                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($contract_item_arr[$contract_item->id]->total_quantity,2) }}"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
