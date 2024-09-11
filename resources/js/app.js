@@ -121,6 +121,8 @@ window.util.confirm = (msg,callback) => {
 
     return new Promise((resolve,reject)=>{
 
+        const t = new Template();
+        
         window.ui.primaryModal.hide();
 
         window.ui.primaryModalTitle.innerHTML    = '';
