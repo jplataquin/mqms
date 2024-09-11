@@ -179,10 +179,16 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Status</label>
                                             <input type="text" class="form-control" disabled="true" value="{{$component->status}}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Use Count</label>
+                                            <input type="text" class="form-control" disabled="true" value="{{$component->use_count}}"/>
                                         </div>
                                     </div>
                                 </div>
