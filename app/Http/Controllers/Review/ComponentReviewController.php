@@ -46,7 +46,7 @@ class ComponentReviewController extends Controller
 
         $component = new Component();
 
-        $component = $component->where('components.status','=','PEND');
+        //$component = $component->where('components.status','=','PEND');
 
         $component = $component
         ->join('sections', 'sections.id', '=', 'components.section_id')
