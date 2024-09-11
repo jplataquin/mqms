@@ -348,13 +348,13 @@
                                         {{$materialItems[$mq->material_item_id]->brand }} 
                                     </td>
                                     <td class="text-center">
-                                        {{$mq->equivalent}} {{$component_item->unit}}
+                                        {{$mq->equivalent}} {{ $unit_options[ $component_item->unit_id ]->text }}
                                     </td>
                                     <td class="text-center">
                                         {{$mq->quantity}}
                                     </td>
                                     <td class="text-center">
-                                        {{$mq->equivalent * $mq->quantity}} {{$component_item->unit}}
+                                        {{$mq->equivalent * $mq->quantity}} {{ $unit_options[ $component_item->unit_id ]->text }}
                                     </td>
                                 </tr>
                                 @endforeach
