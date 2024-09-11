@@ -140,7 +140,8 @@ class ComponentReviewController extends Controller
     
                 $component_items                    = $comp->ComponentItems;
                 $component_items_total_quantity     = 0;
-    
+                $component_items_total_amount       = 0;
+
                 foreach($component_items as $comp_item){
     
                      //Total the quantity for all component item
@@ -153,12 +154,14 @@ class ComponentReviewController extends Controller
                         $component_items_total_quantity = $component_items_total_quantity + $comp_item->quantity;
                     
                     }
-                        
+                    
+                    $component_items_total_amount = $component_items_total_amount + ($comp_item->quantity * $comp_item->budget_price);
                 }//foreach
     
                 $components_arr[$comp->id] = (object) [
                     'data'              => $comp_item,
-                    'total_quantity'    => $component_items_total_quantity
+                    'total_quantity'    => $component_items_total_quantity,
+                    'total_amount'      => $component_items_total_amount
                 ];
                     
                 if($comp->unit_id == $con_item->unit_id){
