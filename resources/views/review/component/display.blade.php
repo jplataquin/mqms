@@ -231,7 +231,9 @@
                 @php 
                     $component_item_exlude_sum = '';
 
-                    if($component_item->unit_id != $component->unit_id){
+                    //If sum fag is explicity false
+                    //If component Item does not have the same unit as the component and component item function type is not "equivalent"
+                    if(!$component_item->sum_flag || ($component_item->unit_id != $component->unit_id && $component_item->function_type_id != 4) ){
                         $component_item_exlude_sum = 'bg-excluded-sum-component_item';
                     }
                 @endphp
