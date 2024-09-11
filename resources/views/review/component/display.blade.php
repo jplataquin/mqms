@@ -87,21 +87,15 @@
                                             <div class="form-body">
                                                 <div class="row mb-3">
                                                     
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label>Quantity</label>
-                                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($contract_item->contract_quantity,2) }}"/>
+                                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($contract_item->contract_quantity,2) }} @if(isset($unit_options[$contract_item->unit_id])) {{$unit_options[$contract_item->unit_id]->text}} @endif"/>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-lg-4">
-                                                        <div class="form-group">
-                                                            <label>Unit</label>
-                                                            <input type="text" class="form-control" disabled="true" value="@if(isset($unit_options[$contract_item->unit_id])) {{$unit_options[$contract_item->unit_id]->text}} @endif"/>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label>Price</label>
                                                             <input type="text" class="form-control" disabled="true" value="{{ number_format($contract_item->contract_unit_price,2) }}"/>
