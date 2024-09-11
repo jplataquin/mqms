@@ -203,22 +203,10 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>Quantity</label>
-                                            <input type="text" class="form-control" disabled="true" value="{{ number_format( $component->quantity,2)  }}"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label>Unit</label>
-                                            <input type="text" class="form-control" disabled="true" value="@if(isset($unit_options[$contract_item->unit_id])) {{$unit_options[$contract_item->unit_id]->text}} @endif"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label>Amount</label>
-                                            <input type="text" class="form-control" disabled="true" value=""/>
+                                            <input type="text" class="form-control" disabled="true" value="{{ number_format( $component->quantity,2)  }} @if(isset($unit_options[$contract_item->unit_id])) {{$unit_options[$contract_item->unit_id]->text}} @endif"/>
                                         </div>
                                     </div>
                                 </div>
@@ -238,19 +226,13 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Quantity</label>
-                                            <input type="text" disabled="true" class="form-control @if($component_arr[$component->id]->total_quantity > $component->quantity) text-danger @endif" value="{{ number_format($component_arr[$component->id]->total_quantity,2) }}"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label>Unit</label>
-                                            <input type="text" disabled="true" class="form-control" value="@if(isset($unit_options[$component->unit_id])) {{$unit_options[$component->unit_id]->text}} @endif"/>
+                                            <input type="text" disabled="true" class="form-control @if($component_arr[$component->id]->total_quantity > $component->quantity) text-danger @endif" value="{{ number_format($component_arr[$component->id]->total_quantity,2) }} @if(isset($unit_options[$component->unit_id])) {{$unit_options[$component->unit_id]->text}} @endif"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Amount</label>
-                                            <input type="text" disabled="true" class="form-control" value="{{ number_format($component_arr[$component->id]->total_amount,2) }}"/>
+                                            <input type="text" disabled="true" class="form-control" value="P {{ number_format($component_arr[$component->id]->total_amount,2) }}"/>
                                         </div>
                                     </div>
                                 </div>
