@@ -153,41 +153,50 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="row mb-3">
+                
+                <div class="row">
                     <div class="col-lg-12">
-                        <div class="form-group">
-                            <label>Component</label>
-                            <input type="text" class="form-control" disabled="true" value="{{$component->name}}"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-lg-12">
-                        <div class="form-group">
-                            <label>Status</label>
-                            <input type="text" class="form-control" disabled="true" value="{{$component->status}}"/>
-                        </div>
-                    </div>
-                </div>
+                        <div class="form-container">
+                            <div class="form-header">Component</div>
+                            <div class="form-body">
+                                <div class="row mb-3">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Component</label>
+                                            <input type="text" class="form-control" disabled="true" value="{{$component->name}}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Status</label>
+                                            <input type="text" class="form-control" disabled="true" value="{{$component->status}}"/>
+                                        </div>
+                                    </div>
+                                </div>
 
-                <div class="row mb-3">
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label>Quantity</label>
-                            <input type="text" class="form-control" disabled="true" value="{{ number_format( $component->quantity,2)  }}"/>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label>Unit</label>
-                            <input type="text" class="form-control" disabled="true" value="@if(isset($unit_options[$contract_item->unit_id])) {{$unit_options[$contract_item->unit_id]->text}} @endif"/>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label>Amount</label>
-                            <input type="text" class="form-control" disabled="true" value=""/>
+                                <div class="row mb-3">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Quantity</label>
+                                            <input type="text" class="form-control" disabled="true" value="{{ number_format( $component->quantity,2)  }}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Unit</label>
+                                            <input type="text" class="form-control" disabled="true" value="@if(isset($unit_options[$contract_item->unit_id])) {{$unit_options[$contract_item->unit_id]->text}} @endif"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Amount</label>
+                                            <input type="text" class="form-control" disabled="true" value=""/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
