@@ -123,7 +123,7 @@ window.util.confirm = (msg,callback) => {
         callback = function(a){ return a;};
     }
 
-    return (new Promise((resolve,reject)=>{
+    let promise = new Promise((resolve,reject)=>{
 
         const t = new Template();
 
@@ -159,8 +159,9 @@ window.util.confirm = (msg,callback) => {
         window.ui.primaryModalFooter.appendChild(footer);
     
         window.ui.primaryModal.show();
-    }))();
+    });
    
+    return promise;
 }
 
 
