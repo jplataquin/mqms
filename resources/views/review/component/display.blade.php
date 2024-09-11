@@ -175,7 +175,7 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label>Quantity</label>
-                            <input type="text" class="form-control" disabled="true" value=""/>
+                            <input type="text" class="form-control" disabled="true" value="{{ number_format( $component_arr[$component->id]->total_quantity,2)  }}"/>
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -233,6 +233,7 @@
 
                     //If sum fag is explicity false
                     //If component Item does not have the same unit as the component and component item function type is not "equivalent"
+                    
                     if(!$component_item->sum_flag || ($component_item->unit_id != $component->unit_id && $component_item->function_type_id != 4) ){
                         $component_item_exlude_sum = 'bg-excluded-sum-component_item';
                     }

@@ -117,16 +117,72 @@ class ComponentReviewController extends Controller
 
         $unit_options  = Unit::toOptions();
 
+        $contract_items = $section->ContractItems;
+
+        $contract_item_arr  = [];
+        $components_arr     = [];
+    
+        $contract_total_amount  = 0;
+        $ref_1_total_amount     = 0;
+        $material_total_amount  = 0;
+        
+        foreach($contract_items as $con_item){
+            
+            $contract_item_arr[$con_item->id] = [
+                'data'              => $con_item,
+                'total_quantity'    => 0
+            ];
+
+
+            $components         = $con_item->Components;
+    
+            foreach($component as $comp){
+    
+                $component_items                    = $comp->ComponentItems;
+                $component_items_total_quantity     = 0;
+    
+                foreach($component_items as $comp_item){
+    
+                     //Total the quantity for all component item
+                    if($comp_item->sum_flag && $comp_item->function_type_id == 4){ //As Equivalent function type
+                        
+                        $component_items_total_quantity = $component_items_total_quantity + ($comp_item->quantity * $comp_item->function_variable * $comp->use_count);
+                    
+                    }else if($comp_item->sum_flag && ($comp_item->unit_id == $comp->unit_id)){
+                       
+                        $component_items_total_quantity = $component_items_total_quantity + $comp_item->quantity;
+                    
+                    }
+                        
+                }//foreach
+    
+                $components_arr[$comp->id] = (object) [
+                    'data'              => $comp_item,
+                    'total_quantity'    => $component_items_total_quantity
+                ]
+                    
+                if($comp->unit_id == $con_item->unit_id){
+                    $contract_item_arr[$con_item->id]['total_quantity'] = $contract_item_arr[$con_item->id]['total_quantity'] + $comp->quantity;
+                } 
+            }//foreach
+
+            $contract_item_arr[$con_item->id] = (object) $contract_item_arr[$con_item->id];
+
+        }//foreach
+
+       
 
         return view('review/component/display',[
             'project'           => $project,
             'section'           => $section,
             'contract_item'     => $contract_item,
             'component'         => $component,
-            'component_items'    => $component_items,
+            'component_items'   => $component_items,
             'materialItems'     => $materialItems,
             'hash'              => '',
-            'unit_options'      => $unit_options
+            'unit_options'      => $unit_options,
+            'contract_item_arr' => $contract_item_arr,
+            'component_arr'     => $components_arr
         ]);
     }
 
