@@ -205,6 +205,18 @@
                                         <input type="text" disabled="true" class="form-control" value="{{ number_format($component_arr[$component->id]->total_quantity,2) }}"/>
                                     </div>
                                 </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>Unit</label>
+                                        <input type="text" disabled="true" class="form-control" value="{{ @if(isset($unit_options[$component->unit_id])) $unit_options[$component->unit_id]->text @endif }}"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>Quantity</label>
+                                        <input type="text" disabled="true" class="form-control" value="{{ number_format($component_arr[$component->id]->total_quantity,2) }}"/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
