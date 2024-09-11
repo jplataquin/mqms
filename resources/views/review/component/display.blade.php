@@ -139,7 +139,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <label>Amount</label>
-                                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($contract_item->ref_unit_price * $contract_item->ref_quantity,2) }}"/>
+                                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($contract_item->ref_1_unit_price * $contract_item->ref_1_quantity,2) }}"/>
                                                         </div>
                                                     </div>
                                                 </div>
