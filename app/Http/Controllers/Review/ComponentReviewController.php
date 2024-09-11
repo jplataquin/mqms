@@ -180,7 +180,7 @@ class ComponentReviewController extends Controller
             'section'           => $section,
             'contract_item'     => $contract_item,
             'component'         => $component,
-            'component_items'   => $component_items,
+            'component_items'   => $component->ComponentItems,
             'materialItems'     => $materialItems,
             'hash'              => '',
             'unit_options'      => $unit_options,
