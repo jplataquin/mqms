@@ -212,7 +212,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Quantity</label>
-                                            <input type="text" disabled="true" class="form-control text-danger" value="{{ number_format($component_arr[$component->id]->total_quantity,2) }}"/>
+                                            <input type="text" disabled="true" class="form-control @if($component_arr[$component->id]->total_quantity > $component->quantity) text-danger @endif" value="{{ number_format($component_arr[$component->id]->total_quantity,2) }}"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
