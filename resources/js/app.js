@@ -119,6 +119,10 @@ window.util.prompt = (msg,callback) => {
 
 window.util.confirm = (msg,callback) => {
 
+    if(!callback){
+        callback = function(a){ return a;};
+    }
+
     let promise = new Promise((resolve,reject)=>{
 
         const t = new Template();
