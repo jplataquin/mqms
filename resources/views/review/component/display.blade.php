@@ -264,9 +264,7 @@
                                         
                                         $factor .= ' > ';
 
-                                    }
-                                    
-                                    if($component_item->function_type_id == 2){
+                                    }else if($component_item->function_type_id == 2){
                                         
                                         $factor = formatFactor(
                                                 number_format(
@@ -282,10 +280,7 @@
                                         
 
                                         $factor .=  ' >';
-                                    }
-
-
-                                    if($component_item->function_type_id == 4){
+                                    }else if($component_item->function_type_id == 4){
                                     
                                         $factor = '< '; 
 
@@ -301,6 +296,8 @@
                                         $factor .= ' / ';
 
                                         $factor .= $unit_options[$component_item->unit_id]->text;
+                                    }else{
+                                        $factor = $component_item->function_variable;
                                     }
 
 
