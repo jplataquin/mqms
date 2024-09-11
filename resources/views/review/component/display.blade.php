@@ -385,10 +385,12 @@
     let rejectBtn       = $q('#rejectBtn').first();
     let cancelBtn       = $q('#cancelBtn').first();
 
-    approveBtn.onclick = (e)=>{
+    approveBtn.onclick = async (e)=>{
         e.preventDefault();
 
-        if(!confirm('Are you sure you want to Approve this?')){
+        let answer = await window.util.confirm('Are you sure you want to APPROVE this component?');
+        
+        if(!answer){
             return false;
         }
 
