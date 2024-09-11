@@ -371,7 +371,7 @@
                                     <th colspan="3" class="text-end">
                                         Grand Total
                                     </th>
-                                    <td class="@if($grand_total > $component_item->quantity) text-danger @endif">
+                                    <td class="@if($grand_total > $component_item->quantity) text-danger @endif text-center text-danger">
                                         {{$grand_total}} {{ $unit_options[ $component_item->unit_id ]->text }}
                                     </td>
                                 </tr>
