@@ -134,9 +134,9 @@ class ComponentReviewController extends Controller
             ];
 
 
-            $components         = $con_item->Components;
+            $components = $con_item->Components;
     
-            foreach($component as $comp){
+            foreach($components as $comp){
     
                 $component_items                    = $comp->ComponentItems;
                 $component_items_total_quantity     = 0;
