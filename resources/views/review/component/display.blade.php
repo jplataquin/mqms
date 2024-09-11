@@ -405,6 +405,8 @@
     let rejectBtn       = $q('#rejectBtn').first();
     let cancelBtn       = $q('#cancelBtn').first();
 
+    @if($component->status == 'PEND')
+
     approveBtn.onclick = async (e)=>{
         e.preventDefault();
 
@@ -459,6 +461,9 @@
 
         });
     }
+
+    @endif
+    
     cancelBtn.onclick = (e)=>{
         e.preventDefault();
         window.util.navTo('/review/components/');
