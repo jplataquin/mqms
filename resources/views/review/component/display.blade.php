@@ -175,12 +175,12 @@
                                                     <option value="{{$comp->data->id}}" @if($comp->data->id == $component->id) selected @endif>
                                                         {{$comp->data->name}}
 
-                                                        @if($comp->data->id == $component->id)
+                                                        @if($comp->data->id != $component->id)
                                                             ({{$comp->data->status}})
 
                                                             {{ number_format($comp->data->quantity,2) }} {{ $unit_options[$comp->data->unit_id]->text }}
 
-                                                            
+
                                                         @endif
                                                     </option>
                                                 @endforeach
