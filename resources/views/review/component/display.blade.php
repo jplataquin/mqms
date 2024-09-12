@@ -172,7 +172,7 @@
                                             <label>Component</label>
                                             <select class="form-control" id="component">
                                                 @foreach($component_arr as $comp)
-                                                    <option value="{{$comp->id}}" @if($comp->id == $component->id) selected @endif>{{$comp->name}}</option>
+                                                    <option value="{{$comp->data->id}}" @if($comp->data->id == $component->id) selected @endif>{{$comp->data->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
