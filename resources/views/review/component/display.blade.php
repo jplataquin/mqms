@@ -76,7 +76,13 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>Item Code & Description</label>
-                                            <input type="text" class="form-control" disabled="true" value="{{$contract_item->item_code}} {{$contract_item->description}}"/>
+                                            <select class="form-control">
+                                                @foreach($contract_item_arr as $con_item)
+
+                                                    <option value="{{$con_item->id}}" @if($con_item->id == $contract_item->id) selected @endif>{{$con_item->item_code}} {{$con_item->description}}</option>
+
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
