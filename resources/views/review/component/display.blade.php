@@ -170,7 +170,7 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>Component</label>
-                                            <select class="form-control" id="component">
+                                            <select class="form-control @if(!$comp->data->sum_flag || $comp->data->unit_id != $contract_item->contract_unit_id) bg-excluded-sum-component @endif" id="component">
                                                 @foreach($component_arr as $comp)
 
                                                     @if($comp->contract_item_id == $contract_item->id)
