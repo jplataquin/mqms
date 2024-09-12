@@ -458,68 +458,75 @@
 <script type="module">
     import {$q} from '/adarna.js';
 
-    let approveBtn      = $q('#approveBtn').first();
-    let rejectBtn       = $q('#rejectBtn').first();
-    let cancelBtn       = $q('#cancelBtn').first();
+    const approveBtn      = $q('#approveBtn').first();
+    const rejectBtn       = $q('#rejectBtn').first();
+    const cancelBtn       = $q('#cancelBtn').first();
+    const contract_item   = $q('#contract_item').first();
+    const component       = $q('#component').first();
 
     @if($component->status == 'PEND')
 
-    approveBtn.onclick = async (e)=>{
-        e.preventDefault();
+        approveBtn.onclick = async (e)=>{
+            e.preventDefault();
 
-        let answer = await window.util.confirm('Are you sure you want to APPROVE this component?');
-        
-        if(!answer){
-            return false;
-        }
-
-        window.util.blockUI();
-
-        window.util.$post('/api/review/component/approve',{
-            id: '{{$component->id}}'
-        }).then(reply=>{
-
-            window.util.unblockUI();
-
-            if(reply.status <= 0 ){
-                window.util.showMsg(reply);
-                return false;
-            };
-
-
-            window.util.navTo('/review/components/');
-
-        });
-    }
-    
-    rejectBtn.onclick = (e)=>{
-        e.preventDefault();
-        
-        if(!confirm('Are you sure you want to Reject this?')){
-            return false;
-        }
-
-        window.util.blockUI();
-
-        window.util.$post('/api/review/component/reject',{
-            id: '{{$component->id}}'
-        }).then(reply=>{
-
+            let answer = await window.util.confirm('Are you sure you want to APPROVE this component?');
             
-            window.util.unblockUI();
-
-            if(reply.status <= 0 ){
-                window.util.showMsg(reply);
+            if(!answer){
                 return false;
-            };
+            }
+
+            window.util.blockUI();
+
+            window.util.$post('/api/review/component/approve',{
+                id: '{{$component->id}}'
+            }).then(reply=>{
+
+                window.util.unblockUI();
+
+                if(reply.status <= 0 ){
+                    window.util.showMsg(reply);
+                    return false;
+                };
 
 
-            window.util.navTo('/review/components/');
+                window.util.navTo('/review/components/');
 
-        });
-    }
+            });
+        }
+        
+        rejectBtn.onclick = (e)=>{
+            e.preventDefault();
+            
+            if(!confirm('Are you sure you want to Reject this?')){
+                return false;
+            }
+
+            window.util.blockUI();
+
+            window.util.$post('/api/review/component/reject',{
+                id: '{{$component->id}}'
+            }).then(reply=>{
+
+                
+                window.util.unblockUI();
+
+                if(reply.status <= 0 ){
+                    window.util.showMsg(reply);
+                    return false;
+                };
+
+
+                window.util.navTo('/review/components/');
+
+            });
+        }
 
     @endif
+
+    component.onchange = ()=>{
+
+        window.util.navTo('/review/component/'+component.value);
+    }
 
     cancelBtn.onclick = (e)=>{
         e.preventDefault();
