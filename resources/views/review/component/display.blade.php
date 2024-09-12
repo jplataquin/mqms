@@ -525,7 +525,7 @@
 
     component.onchange = ()=>{
 
-        window.util.navTo('/review/component/'+component.value);
+        window.util.navTo('/review/component/'+contract_item.value+'/'+component.value);
     }
 
     cancelBtn.onclick = (e)=>{

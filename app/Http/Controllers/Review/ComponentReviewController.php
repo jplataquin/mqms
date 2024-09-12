@@ -57,6 +57,7 @@ class ComponentReviewController extends Controller
             'projects.id AS project_id',
             'projects.name AS project_name', 
             'sections.name AS section_name',
+            'contract_items.id AS contract_item_id',
             DB::raw('CONCAT(contract_items.item_code," ",contract_items.description) AS contract_item')
         );
         
@@ -95,12 +96,19 @@ class ComponentReviewController extends Controller
         ]);
     }
 
-    public function display($id){
+    public function display($contract_item_id, $component_id){
 
-        $component = Component::findOrFail($id);
+        $contract_item_id = (int) $contract_item_id;
+        $component_id     = (int) $component_id;
+
+        $contract_item  = ContractItem::findOrFail($contract_item_id);
+        $component      = Component::findOrFail($component_id);
+        
+        if($component->contract_item_id != $contract_item->id){
+            return abort(404);
+        }
 
         $section          = $component->Section;
-        $contract_item    = $component->ContractItem;
         $project          = $section->Project;
     
         $component_items  = $component->componentItems()->orderBy('id','ASC')->withCount('materialQuantities')->get();

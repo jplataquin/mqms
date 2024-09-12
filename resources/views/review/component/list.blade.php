@@ -151,7 +151,7 @@
             });
 
             row.onclick = ()=>{
-                document.location.href = '/review/component/'+item.id;
+                document.location.href = '/review/component/'+contract_item_id+'/'+item.id;
             };
 
             $el.append(row).to(list);
