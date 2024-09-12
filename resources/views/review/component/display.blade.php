@@ -76,7 +76,7 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>Item Code & Description</label>
-                                            <select class="form-control">
+                                            <select id="contract_item" class="form-control">
                                                 @foreach($contract_item_arr as $con_item)
 
                                                     <option value="{{$con_item->data->id}}" @if($con_item->data->id == $contract_item->id) selected @endif>{{$con_item->data->item_code}} {{$con_item->data->description}}</option>
@@ -170,7 +170,11 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>Component</label>
-                                            <input type="text" class="form-control" disabled="true" value="{{$component->name}}"/>
+                                            <select class="form-control" id="component">
+                                                @foreach($component_arr as $comp)
+                                                    <option value="{{$comp->id}}" @if($comp->id == $component->id) selected @endif>{{$comp->name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
