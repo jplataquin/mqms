@@ -172,19 +172,22 @@
                                             <label>Component</label>
                                             <select class="form-control" id="component">
                                                 @foreach($component_arr as $comp)
-                                                    <option value="{{$comp->data->id}}" @if($comp->data->id == $component->id) selected @endif>
-                                                        {{$comp->data->name}}
 
-                                                        @if($comp->data->id != $component->id)
-                                                            »
-                                                            {{ $comp->data->status }}
-                                                            -
-                                                            {{ number_format($comp->total_quantity,2) }} {{ $unit_options[$comp->data->unit_id]->text }}
-                                                            - 
-                                                            P {{ number_format($comp->total_amount,2) }}
+                                                    @if($comp->contract_item_id == $contract_item->id)
+                                                        <option value="{{$comp->data->id}}" @if($comp->data->id == $component->id) selected @endif>
+                                                            {{$comp->data->name}}
 
-                                                        @endif
-                                                    </option>
+                                                            @if($comp->data->id != $component->id)
+                                                                »
+                                                                {{ $comp->data->status }}
+                                                                -
+                                                                {{ number_format($comp->total_quantity,2) }} {{ $unit_options[$comp->data->unit_id]->text }}
+                                                                - 
+                                                                P {{ number_format($comp->total_amount,2) }}
+
+                                                            @endif
+                                                        </option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>

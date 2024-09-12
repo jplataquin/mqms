@@ -170,6 +170,7 @@ class ComponentReviewController extends Controller
                 }//foreach
     
                 $components_arr[$comp->id] = (object) [
+                    'contract_item_id'  => $con_item->id,
                     'data'              => $comp,
                     'total_quantity'    => $component_items_total_quantity,
                     'total_amount'      => $component_items_total_amount
