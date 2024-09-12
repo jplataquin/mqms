@@ -174,11 +174,11 @@
                                                 @foreach($component_arr as $comp)
 
                                                     @if($comp->contract_item_id == $contract_item->id)
-                                                        <option class="@if($comp->data->sum_flag) bg-excluded-sum-component @endif" value="{{$comp->data->id}}" @if($comp->data->id == $component->id) selected @endif>
+                                                        <option class="@if(!$comp->data->sum_flag) bg-excluded-sum-component @endif" value="{{$comp->data->id}}" @if($comp->data->id == $component->id) selected @endif>
                                                             {{$comp->data->name}}
 
                                                             @if($comp->data->id != $component->id)
-                                                                »
+                                                                » {{$comp->data->sum_flag}}
                                                                 {{ $comp->data->status }}
                                                                 -
                                                                 {{ number_format($comp->total_quantity,2) }} {{ $unit_options[$comp->data->unit_id]->text }}
