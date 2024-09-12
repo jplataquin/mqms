@@ -371,7 +371,6 @@
                                     }
 
 
-                                    $grand_total = $grand_total + ($component_item->budget_price * $component_item->quantity);
                                 
                                 @endphp
 
