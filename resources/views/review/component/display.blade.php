@@ -176,10 +176,12 @@
                                                         {{$comp->data->name}}
 
                                                         @if($comp->data->id != $component->id)
-                                                            ({{$comp->data->status}})
-
-                                                            {{ number_format($comp->data->quantity,2) }} {{ $unit_options[$comp->data->unit_id]->text }}
-
+                                                            
+                                                            ({{ $comp->data->status }})
+                                                            -
+                                                            {{ number_format($comp->total_quantity,2) }} {{ $unit_options[$comp->data->unit_id]->text }}
+                                                            - 
+                                                            P {{ number_format($comp->total_amount,2) }}
 
                                                         @endif
                                                     </option>
