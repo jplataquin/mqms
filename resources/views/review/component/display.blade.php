@@ -279,8 +279,7 @@
         
         @php 
             $i = 1;
-            $grand_total = 0;
-
+            
             function formatFactor($factor){
                 
                 $factor_arr = explode('.',$factor);
@@ -292,6 +291,7 @@
                 return $factor_arr[0].'.'.rtrim($factor_arr[1],'0');
             }
         @endphp
+
         @foreach($component_items as $component_item)
             <div class="form-container mb-3">
 
@@ -453,16 +453,7 @@
         @php $i++ @endphp
         @endforeach
     
-        <table class="table bordered">
-            <tr>
-                <th class="text-center" style="background-color:#add8e6">
-                    <h5>Grand Total</h5>
-                </th>
-                <th class="text-center">
-                    <h5>Php {{number_format($grand_total,2)}}</h5>
-                </th>
-            </tr>
-        </table>
+       
 </div>
 
 <script type="module">
