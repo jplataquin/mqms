@@ -177,9 +177,7 @@
 
                                                         @if($comp->data->id != $component->id)
                                                             
-                                                            @php
-                                                                print_r($comp->data);
-                                                            @endphp
+                                                            ({{ $comp->data->status }})
                                                             -
                                                             {{ number_format($comp->total_quantity,2) }} {{ $unit_options[$comp->data->unit_id]->text }}
                                                             - 
