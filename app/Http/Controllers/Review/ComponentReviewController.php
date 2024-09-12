@@ -105,6 +105,7 @@ class ComponentReviewController extends Controller
         $contract_item  = ContractItem::findOrFail($contract_item_id);
         $component      = Component::findOrFail($component_id);
         
+        echo $component->contract_item_id.' - '.$contract_item->id;exit;
         // if($component->contract_item_id != $contract_item->id){
         //     return abort(404);
         // }
