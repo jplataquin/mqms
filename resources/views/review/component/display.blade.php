@@ -230,7 +230,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Total Material Quantity</label>
-                                            <input type="text" class="form-control @if($contract_item_arr[$contract_item->id]->total_quantity > $contract_item->contract_quantity) text-danger @endif" disabled="true" value="{{ number_format($contract_item_arr[$contract_item->id]->total_quantity,2) }} @if(isset($unit_options[$contract_item->contract_unit_id])) {{$unit_options[$contract_item->contrac_unit_id]->text}} @endif"/>
+                                            <input type="text" class="form-control @if($contract_item_arr[$contract_item->id]->total_quantity > $contract_item->contract_quantity) text-danger @endif" disabled="true" value="{{ number_format($contract_item_arr[$contract_item->id]->total_quantity,2) }} @if(isset($unit_options[$contract_item->contract_unit_id])) {{$unit_options[$contract_item->contract_unit_id]->text}} @endif"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
