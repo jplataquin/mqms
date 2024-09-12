@@ -177,6 +177,7 @@ class ComponentReviewController extends Controller
         }//foreach
 
        
+        $contract_amount = $contract_item->contract_unit_price * $contract_item->contract_quantity;
 
         return view('review/component/display',[
             'project'           => $project,
@@ -187,6 +188,7 @@ class ComponentReviewController extends Controller
             'materialItems'     => $materialItems,
             'hash'              => '',
             'unit_options'      => $unit_options,
+            'contract_amount'   => $contract_amount,
             'contract_item_arr' => $contract_item_arr,
             'component_arr'     => $components_arr
         ]);

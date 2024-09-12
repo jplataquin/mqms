@@ -108,7 +108,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <label>Amount</label>
-                                                            <input type="text" class="form-control" disabled="true" value="P {{ number_format($contract_item->contract_unit_price * $contract_item->contract_quantity,2) }}"/>
+                                                            <input type="text" class="form-control" disabled="true" value="P {{ number_format($contract_amount,2) }}"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -214,7 +214,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Total Material Amount</label>
-                                            <input type="text" class="form-control" disabled="true" value="P {{ number_format($contract_item_arr[$contract_item->id]->total_amount,2) }}"/>
+                                            <input type="text" class="form-control @if($contract_item_arr[$contract_item->id]->total_amount > $contract_amount) text-danger @endif" disabled="true" value="P {{ number_format($contract_item_arr[$contract_item->id]->total_amount,2) }}"/>
                                         </div>
                                     </div>
                                 </div>
