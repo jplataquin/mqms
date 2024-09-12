@@ -174,7 +174,7 @@
                                                 @foreach($component_arr as $comp)
 
                                                     @if($comp->contract_item_id == $contract_item->id)
-                                                        <option value="{{$comp->data->id}}" @if($comp->data->id == $component->id) selected @endif>
+                                                        <option class="bg-primary" value="{{$comp->data->id}}" @if($comp->data->id == $component->id) selected @endif>
                                                             {{$comp->data->name}}
 
                                                             @if($comp->data->id != $component->id)
