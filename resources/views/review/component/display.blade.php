@@ -75,7 +75,7 @@
                                 <div class="row mb-3">
                                     <div class="col-lg-12">
                                         <div class="form-group">
-                                            <label>Contract Item</label>
+                                            <label>Item Code & Description</label>
                                             <input type="text" class="form-control" disabled="true" value="{{$contract_item->item_code}} {{$contract_item->description}}"/>
                                         </div>
                                     </div>
@@ -207,13 +207,13 @@
                                 <div class="row mb-3">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>Total Component Quantity</label>
+                                            <label>Total Material Quantity</label>
                                             <input type="text" class="form-control @if($contract_item_arr[$contract_item->id]->total_quantity > $contract_item->contract_quantity) text-danger @endif" disabled="true" value="{{ number_format($contract_item_arr[$contract_item->id]->total_quantity,2) }} @if(isset($unit_options[$contract_item->ref_1_unit_id])) {{$unit_options[$contract_item->ref_1_unit_id]->text}} @endif"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>Total Component Amount</label>
+                                            <label>Total Material Amount</label>
                                             <input type="text" class="form-control" disabled="true" value="P {{ number_format($contract_item_arr[$contract_item->id]->total_amount,2) }}"/>
                                         </div>
                                     </div>
