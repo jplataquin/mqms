@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Section;
 use App\Models\Component;
+use App\Models\ContractItem;
 use App\Models\MaterialItem;
 use App\Models\Unit;
 use Illuminate\Support\Facades\Auth;
