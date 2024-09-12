@@ -79,7 +79,7 @@
                                             <select class="form-control">
                                                 @foreach($contract_item_arr as $con_item)
 
-                                                    <option value="{{$con_item->id}}" @if($con_item->id == $contract_item->id) selected @endif>{{$con_item->item_code}} {{$con_item->description}}</option>
+                                                    <option value="{{$con_item->data->id}}" @if($con_item->data->id == $contract_item->id) selected @endif>{{$con_item->data->item_code}} {{$con_item->data->description}}</option>
 
                                                 @endforeach
                                             </select>
