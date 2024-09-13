@@ -150,6 +150,11 @@ class ComponentReviewController extends Controller
         
         foreach($contract_items as $con_item){
             
+            $components = $con_item->Components;
+
+            if(!$components) continue;
+
+            
             $contract_item_arr[$con_item->id] = [
                 'data'              => $con_item,
                 'total_quantity'    => 0,
@@ -157,9 +162,6 @@ class ComponentReviewController extends Controller
             ];
 
 
-            $components = $con_item->Components;
-
-            if(!$components) continue;
     
             foreach($components as $comp){
     
