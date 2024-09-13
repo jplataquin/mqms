@@ -200,6 +200,7 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>Component</label>
+                                            <div class="input-group">
                                             <select class="form-control @if(!$component->sum_flag || $component->unit_id != $contract_item->contract_unit_id) bg-excluded-sum-component @endif" id="component">
                                                 @foreach($component_arr as $comp)
 
@@ -220,6 +221,8 @@
                                                     @endif
                                                 @endforeach
                                             </select>
+                                            <span class="input-group-text" id="basic-addon2">@example.com</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
