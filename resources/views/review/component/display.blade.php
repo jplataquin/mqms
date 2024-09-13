@@ -221,7 +221,7 @@
                                                     @endif
                                                 @endforeach
                                             </select>
-                                            <span class="input-group-text" id="basic-addon2" onclick="document.querySelector('#component').click();"><i class="bi bi-search"></i></span>
+                                            <span class="input-group-text" id="basic-addon2" onclick="document.querySelector('#component').focus();"><i class="bi bi-search"></i></span>
                                             </div>
                                         </div>
                                     </div>
