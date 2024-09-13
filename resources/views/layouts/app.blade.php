@@ -265,6 +265,9 @@
             }
         });
 
+        htmx.on("htmx:responseError", function () {
+                 console.error("omfg");
+        })
 
         //Detect htmx erros
         htmx.on("htmx:beforeOnLoad", function (event) {
@@ -279,8 +282,8 @@
             }
 
             console.log(xhr.status);
-            
-            if (xhr.status == 500 || xhr.status == 404) {
+
+            if (xhr.status == 500) {
                 event.stopPropagation() // Tell htmx not to process these requests
                 window.util.alert('Error','Something went wrong ('+xhr.status+')');
                 return false;
