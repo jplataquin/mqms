@@ -201,27 +201,28 @@
                                         <div class="form-group">
                                             <label>Component</label>
                                             <div class="input-group">
-                                            <select class="form-control @if(!$component->sum_flag || $component->unit_id != $contract_item->contract_unit_id) bg-excluded-sum-component @endif" id="component">
-                                                @foreach($component_arr as $comp)
+                                                <span class="input-group-text" id="basic-addon2" onclick="document.querySelector('#component').focus();"><i class="bi bi-list"></i></span>
+                                            
+                                                <select class="form-control @if(!$component->sum_flag || $component->unit_id != $contract_item->contract_unit_id) bg-excluded-sum-component @endif" id="component">
+                                                    @foreach($component_arr as $comp)
 
-                                                    @if($comp->contract_item_id == $contract_item->id)
-                                                        <option class="@if(!$comp->data->sum_flag || $comp->data->unit_id != $contract_item->contract_unit_id) bg-excluded-sum-component @endif" value="{{$comp->data->id}}" @if($comp->data->id == $component->id) selected @endif>
-                                                            {{$comp->data->name}}
+                                                        @if($comp->contract_item_id == $contract_item->id)
+                                                            <option class="@if(!$comp->data->sum_flag || $comp->data->unit_id != $contract_item->contract_unit_id) bg-excluded-sum-component @endif" value="{{$comp->data->id}}" @if($comp->data->id == $component->id) selected @endif>
+                                                                {{$comp->data->name}}
 
-                                                            @if($comp->data->id != $component->id)
-                                                                »
-                                                                {{ $comp->data->status }}
-                                                                -
-                                                                {{ number_format($comp->total_quantity,2) }} {{ $unit_options[$comp->data->unit_id]->text }}
-                                                                - 
-                                                                P {{ number_format($comp->total_amount,2) }}
+                                                                @if($comp->data->id != $component->id)
+                                                                    »
+                                                                    {{ $comp->data->status }}
+                                                                    -
+                                                                    {{ number_format($comp->total_quantity,2) }} {{ $unit_options[$comp->data->unit_id]->text }}
+                                                                    - 
+                                                                    P {{ number_format($comp->total_amount,2) }}
 
-                                                            @endif
-                                                        </option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                            <span class="input-group-text" id="basic-addon2" onclick="document.querySelector('#component').focus();"><i class="bi bi-list"></i></span>
+                                                                @endif
+                                                            </option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
