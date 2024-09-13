@@ -158,6 +158,8 @@ class ComponentReviewController extends Controller
 
 
             $components = $con_item->Components;
+
+            if(!$components) continue;
     
             foreach($components as $comp){
     
