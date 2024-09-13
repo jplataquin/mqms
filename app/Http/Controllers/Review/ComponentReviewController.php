@@ -97,7 +97,7 @@ class ComponentReviewController extends Controller
         ]);
     }
 
-    public function display($contract_item_id, $component_id){
+    public function display($contract_item_id, $component_id = null){
 
         $contract_item_id = (int) $contract_item_id;
         $component_id     = (int) $component_id;
@@ -105,7 +105,7 @@ class ComponentReviewController extends Controller
         $contract_item  = ContractItem::findOrFail($contract_item_id);
 
         if($component_id){
-            
+
             $component  = Component::findOrFail($component_id);
             
             if($component->contract_item_id != $contract_item->id){
