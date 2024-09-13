@@ -274,6 +274,12 @@
                 window.util.alert('Error','Page not found (404)');
                 return false;
             }
+
+            if (xhr.status == 500) {
+                event.stopPropagation() // Tell htmx not to process these requests
+                window.util.alert('Error','Something went wrong ('+xhr.status+')');
+                return false;
+            }
         });
 
         //Detect htmx erros
@@ -289,11 +295,7 @@
             }
 
           
-            if (xhr.status == 500) {
-                event.stopPropagation() // Tell htmx not to process these requests
-                window.util.alert('Error','Something went wrong ('+xhr.status+')');
-                return false;
-            }
+            
         });
     </script>
 </body>
