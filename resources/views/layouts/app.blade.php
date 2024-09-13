@@ -265,9 +265,9 @@
             }
         });
 
-        htmx.on("htmx:responseError", function () {
-                 console.error("omfg");
-        })
+        htmx.on("htmx:responseError", function (event) {
+                 console.error("omfg",event);
+        });
 
         //Detect htmx erros
         htmx.on("htmx:beforeOnLoad", function (event) {
