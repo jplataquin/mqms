@@ -116,7 +116,7 @@ class ComponentReviewController extends Controller
             
             $component = Component::where('contract_item_id',$contract_item_id)->first();
 
-            echo $component;exit;
+            echo $contract_item_id;exit;
             if(!$component){
                 return abort(404);
             }
