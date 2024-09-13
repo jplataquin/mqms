@@ -76,13 +76,18 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>Item Code & Description</label>
-                                            <select id="contract_item" class="form-control">
-                                                @foreach($contract_item_arr as $con_item)
 
-                                                    <option value="{{$con_item->data->id}}" @if($con_item->data->id == $contract_item->id) selected @endif>{{$con_item->data->item_code}} {{$con_item->data->description}}</option>
+                                            <div class="input-group">
+                                                <span class="input-group-text" id="basic-addon2" onclick="document.querySelector('#contract_item').focus();"><i class="bi bi-list"></i></span>
+                                           
+                                                <select id="contract_item" class="form-control">
+                                                    @foreach($contract_item_arr as $con_item)
 
-                                                @endforeach
-                                            </select>
+                                                        <option value="{{$con_item->data->id}}" @if($con_item->data->id == $contract_item->id) selected @endif>{{$con_item->data->item_code}} {{$con_item->data->description}}</option>
+
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -548,6 +553,11 @@
     component.onchange = ()=>{
 
         window.util.navTo('/review/component/'+contract_item.value+'/'+component.value);
+    }
+
+    contract_item.onchange = ()=>{
+
+        window.util.navTo('/review/component/'+contract_item.value);
     }
 
     cancelBtn.onclick = (e)=>{
