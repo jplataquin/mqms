@@ -269,6 +269,7 @@
 
             const xhr = event.detail;
             
+            console.log(xhr.status);
             if (xhr.status == 404) {
                 event.stopPropagation(); // Tell htmx not to process these requests
                 window.util.alert('Error','Page not found (404)');
