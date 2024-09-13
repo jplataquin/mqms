@@ -152,9 +152,8 @@ class ComponentReviewController extends Controller
             
             $components = $con_item->Components;
 
-            echo count($components);
-
-            if(!$components) continue;
+            //Skip contract items with no maintained components
+            if(!count($components)) continue;
 
 
             $contract_item_arr[$con_item->id] = [
