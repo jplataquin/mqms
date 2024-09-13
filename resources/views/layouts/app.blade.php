@@ -267,9 +267,8 @@
 
         htmx.on("htmx:responseError", function (event) {
 
-            const xhr = event.detail;
+            let xhr = event.detail.xhr;
             
-            console.log(event.detail.xhr);
             if (xhr.status == 404) {
                 event.stopPropagation(); // Tell htmx not to process these requests
                 window.util.alert('Error','Page not found (404)');
