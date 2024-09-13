@@ -152,9 +152,11 @@ class ComponentReviewController extends Controller
             
             $components = $con_item->Components;
 
+            echo count($components);
+
             if(!$components) continue;
 
-            
+
             $contract_item_arr[$con_item->id] = [
                 'data'              => $con_item,
                 'total_quantity'    => 0,
