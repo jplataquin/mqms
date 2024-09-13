@@ -477,9 +477,18 @@
         approveBtn.onclick = async (e)=>{
             e.preventDefault();
 
-            let answer = await window.util.confirm('Are you sure you want to APPROVE this component?');
+            if( $q('.text-danger').items().length ){
+                
+                let answer1 = prompt('Warning there are quantities that are over the limit, type "ok" to proceed.');
+
+                if(answer1 != 'ok'){
+                    return false;
+                }
+            }
+
+            let answer2 = await window.util.confirm('Are you sure you want to APPROVE this component?');
             
-            if(!answer){
+            if(!answer2){
                 return false;
             }
 
