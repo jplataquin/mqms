@@ -270,7 +270,7 @@
             const xhr = event.detail;
             
             if (xhr.status == 404) {
-                event.stopPropagation() // Tell htmx not to process these requests
+                event.stopPropagation(); // Tell htmx not to process these requests
                 window.util.alert('Error','Page not found (404)');
                 return false;
             }
@@ -283,7 +283,7 @@
             //Catch logout scenario
             if(xhr.pathInfo.responsePath == '/login'){  
                
-                event.stopPropagation() // Tell htmx not to process these requests
+                event.stopPropagation(); // Tell htmx not to process these requests
                 document.location.href = '/login';
                 return false;
             }
