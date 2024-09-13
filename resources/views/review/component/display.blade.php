@@ -497,18 +497,19 @@
                 };
 
 
-                window.util.navTo('/review/components/');
+                window.util.navReload();
 
             });
         }
         
-        rejectBtn.onclick = (e)=>{
+        rejectBtn.onclick = async (e)=>{
             e.preventDefault();
             
-            if(!confirm('Are you sure you want to Reject this?')){
+            let answer = await window.util.confirm('Are you sure you want to REJECT this component?');
+            
+            if(!answer){
                 return false;
             }
-
             window.util.blockUI();
 
             window.util.$post('/api/review/component/reject',{
@@ -524,7 +525,7 @@
                 };
 
 
-                window.util.navTo('/review/components/');
+                window.util.navReload();
 
             });
         }
