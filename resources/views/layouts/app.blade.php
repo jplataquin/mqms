@@ -278,6 +278,8 @@
                 return false;
             }
 
+            console.log(xhr.status);
+            
             if (xhr.status == 500 || xhr.status == 404) {
                 event.stopPropagation() // Tell htmx not to process these requests
                 window.util.alert('Error','Something went wrong ('+xhr.status+')');
