@@ -117,7 +117,7 @@ class ComponentReviewController extends Controller
             $component = Component::where('contract_item_id',$contract_item->id)->first();
 
             if(!$component){
-                return 'asdadada';//abort(404);
+                return $component;//abort(404);
             }
         }
 
