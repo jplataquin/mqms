@@ -114,7 +114,7 @@ class ComponentReviewController extends Controller
 
         }else{
             
-            $component = Component::where('contract_item_id',$contract_item->id)->row();
+            $component = Component::where('contract_item_id',$contract_item_id)->first();
 
             if(!$component){
                 return abort(404);
