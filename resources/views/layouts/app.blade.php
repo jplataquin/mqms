@@ -226,7 +226,7 @@
 
                 if(href != '#'){
                     
-                    document.util.navTo(href);
+                    window.util.navTo(href);
                     
                     if(window.innerWidth <= 641){
                         closeNavBar();
