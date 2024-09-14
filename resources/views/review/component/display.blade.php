@@ -298,14 +298,14 @@
                 <div class="row">
                     <div class="col-lg-12 text-end">
                     @if($component->status == 'PEND')
-                        <button class="btn btn-danger me-3" id="rejectBtn">Reject</button>
+                        <button class="btn btn-danger" id="rejectBtn">Reject</button>
                     @endif
                     @if($component->status == 'PEND')
-                        <button class="btn btn-primary me-3" id="approveBtn">Approve</button>
+                        <button class="btn btn-primary" id="approveBtn">Approve</button>
                     @endif
 
                     @if($component->status == 'APRV')
-                        <button class="btn btn-primary me-3" id="approveBtn">Approve</button>
+                        <button class="btn btn-primary" id="revertBtn">Revert</button>
                     @endif
                         <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
                     </div>
