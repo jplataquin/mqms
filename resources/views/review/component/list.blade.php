@@ -193,7 +193,16 @@
             
         });
     }
+
+    
+
+    function runFilter(){
+        showMoreBtn.style.display = 'block';
+        reinitalize();
+        showData();
+    }
    
+
     searchBtn.onclick = ()=>{
         showMoreBtn.style.display = 'block';
         reinitalize();
@@ -275,6 +284,9 @@
 
             });
 
+
+            runFilter();
+
         });
     }
 
@@ -314,8 +326,15 @@
             });
 
             window.util.unblockUI();
+
+            
+            runFilter();
         });
-        }
+    }
+
+    contractItemSelect.onchange =()=>{
+        runFilter();
+    }
 
     reinitalize();
     showData();
