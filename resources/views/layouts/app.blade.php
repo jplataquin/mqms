@@ -301,8 +301,10 @@
 
         window.document.onkeyup = (e)=>{
 
-            if(e.shiftKey && !e.ctrlKey && window.util.quickNav){
+            if(e.shiftKey && !e.ctrlKey){
 
+                console.log(e.keyCode);
+                
                 if(window.util.quickNav){
                     let ans = prompt('Nav to: '+window.util.quickNav);
                     console.log(window.util.quickNav+'/'+ans);
