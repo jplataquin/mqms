@@ -151,7 +151,7 @@ class ComponentReviewController extends Controller
         foreach($contract_items as $con_item){
             
             
-            $contract_total_amount = $contract_total_amount + ($con_item->contract_quanitity * $con_item->contract_unit_price);
+            $contract_total_amount = $contract_total_amount + ($con_item->contract_quantity * $con_item->contract_unit_price);
             
             $components = $con_item->Components;
 
