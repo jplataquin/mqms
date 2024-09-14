@@ -177,10 +177,10 @@
         let approveBtn  = $q('#approveBtn').first();
         let rejectBtn = $q('#rejectBtn').first();
 
-        approveBtn.onclick = (e)=>{
+        approveBtn.onclick = async (e)=>{
             e.preventDefault();
 
-            if(!confirm('Are you sure you want to APPROVE this?')){
+            if(! await window.util.confirm('Are you sure you want to APPROVE this record?')){
                 return false;
             }
 
