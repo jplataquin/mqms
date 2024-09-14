@@ -294,7 +294,7 @@
                 return false;
             }
 
-            window.util.quickNav = null;
+            //window.util.quickNav = null;
             
         });
 
@@ -303,7 +303,6 @@
 
             if(e.shiftKey && !e.ctrlKey && e.keyCode == 70){
 
-                console.log(window.util.quickNav);
                 
                 if(window.util.quickNav){
                     let ans = prompt('Nav to: '+window.util.quickNav);
