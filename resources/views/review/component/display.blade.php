@@ -354,7 +354,20 @@
                     <div class="row mb-3 pb-3 {{$component_item_exlude_sum}}">
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label>Factor</label>
+                                <label>
+                                    Factor
+                                    (
+                                    @if($component_item->function_type_id == 1)
+                                        Factor
+                                    @elseif($component_item->function_type_id == 2)
+                                        Divisor
+                                    @elseif($component_item->function_type_id == 3)
+                                        Direct
+                                    @elseif($component_item->function_type_id == 4)
+                                        Equivalent
+                                    @endif
+                                    )
+                                </label>
                                 @php
 
                                     $factor = '';
