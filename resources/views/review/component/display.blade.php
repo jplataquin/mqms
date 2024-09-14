@@ -1,15 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<style>
-    .bg-excluded-sum-component_item{
-        background-color: #fffec8 !important;
-    }
 
-    .bg-excluded-sum-component{
-        background-color: #ADD8E6 !important;
-    }
-</style>
 <div id="content">
 <div class="container">
     <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">

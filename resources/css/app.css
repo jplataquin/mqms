@@ -380,6 +380,16 @@ html, body {
   display:none;
 }
 
+
+/*** Special ***/
+.bg-excluded-sum-component_item{
+  background-color: #fffec8 !important;
+}
+
+.bg-excluded-sum-component{
+  background-color: #ADD8E6 !important;
+}
+
 /*** Viewports ***/
 
 @media (max-width:320px)  { /* smartphones, iPhone, portrait 480x320 phones */
