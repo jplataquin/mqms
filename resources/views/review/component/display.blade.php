@@ -63,7 +63,7 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <div class="form-folder">
+                                    <div class="form-container">
                                         <div class="form-header">Grand Total</div>
                                         <div class="form-body">
                                             <div class="row mb-3">
