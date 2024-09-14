@@ -328,7 +328,7 @@
         });
     }
     
-    conponentSelect.onchange = ()=>{
+    componentSelect.onchange = ()=>{
         runFilter();
     }
 
