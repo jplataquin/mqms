@@ -39,60 +39,55 @@
             </div>
             <div class="folder-form-body">
                 
+                            
                 <div class="row mb-3">
                     <div class="col-lg-12">
-                        <div class="form-container">
-                            <div class="form-header">
-                                Budget
-                            </div>
-                            <div class="form-body">
-                                <div class="row mb-3">
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <label>Project</label>
-                                            <input type="text" disabled="true" class="form-control" value="{{$project->name}}"/>
-                                        </div>
+                        <div class="form-group">
+                            <label>Project</label>
+                            <input type="text" disabled="true" class="form-control" value="{{$project->name}}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Section</label>
+                            <input type="text" disabled="true" class="form-control" value="{{$section->name}}"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                    <div class="form-container">
+                        <div class="form-header">Grand Total</div>
+                        <div class="form-body">
+                            <div class="row mb-3">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>Contract</label>
+                                        <input type="text" disabled="true" class="form-control" value="P {{ number_format($contract_grand_total_amount,2) }}"/>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <label>Section</label>
-                                            <input type="text" disabled="true" class="form-control" value="{{$section->name}}"/>
-                                        </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>DUPA/POW</label>
+                                        <input type="text" disabled="true" class="form-control" value="P {{ number_format($ref_1_grand_total_amount,2) }}"/>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <div class="form-container">
-                                        <div class="form-header">Grand Total</div>
-                                        <div class="form-body">
-                                            <div class="row mb-3">
-                                                <div class="col-lg-4">
-                                                    <div class="form-group">
-                                                        <label>Contract</label>
-                                                        <input type="text" disabled="true" class="form-control" value="P {{ number_format($contract_grand_total_amount,2) }}"/>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <div class="form-group">
-                                                        <label>DUPA/POW</label>
-                                                        <input type="text" disabled="true" class="form-control" value="P {{ number_format($ref_1_grand_total_amount,2) }}"/>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <div class="form-group">
-                                                        <label>Material Budget</label>
-                                                        <input type="text" disabled="true" class="form-control" value="P {{ number_format($budget_grand_total_amount,2) }}"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>Material Budget</label>
+                                        <input type="text" disabled="true" class="form-control" value="P {{ number_format($budget_grand_total_amount,2) }}"/>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+</div>
                 </div>
+                            
+                      
                 
                 <div class="row mb-3">
                     <div class="col-lg-12">
