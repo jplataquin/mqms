@@ -69,19 +69,19 @@
                                             <div class="row mb-3">
                                                 <div class="col-lg-4">
                                                     <div class="form-group">
-                                                        <label>Total Contract Amount</label>
+                                                        <label>Contract</label>
                                                         <input type="text" disabled="true" class="form-control" value="P {{ number_format($contract_grand_total_amount,2) }}"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <div class="form-group">
-                                                        <label>Total DUPA/POW Amount</label>
-                                                        <input type="text" disabled="true" class="form-control" value="P {{ number_format($ref_1_grandtotal_amount,2) }}"/>
+                                                        <label>DUPA/POW</label>
+                                                        <input type="text" disabled="true" class="form-control" value="P {{ number_format($ref_1_grand_total_amount,2) }}"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <div class="form-group">
-                                                        <label>Total Material Budget Amount</label>
+                                                        <label>Material Budget</label>
                                                         <input type="text" disabled="true" class="form-control" value="P {{ number_format($budget_grand_total_amount,2) }}"/>
                                                     </div>
                                                 </div>
