@@ -154,7 +154,8 @@ class ComponentReviewController extends Controller
         foreach($contract_items as $con_item){
             
             
-            $contract_grand_total_amount = $contract_grand_total_amount + ($con_item->contract_quantity * $con_item->contract_unit_price);
+            $contract_grand_total_amount    = $contract_grand_total_amount + ($con_item->contract_quantity * $con_item->contract_unit_price);
+            $ref_1_grand_total_amount       = $ref_1_grand_total_amount + ($con_item->ref_1_quantity * $con_item->ref_1_unit_price);
             
             $components = $con_item->Components;
 
@@ -203,6 +204,7 @@ class ComponentReviewController extends Controller
                 } 
 
                 $contract_item_arr[$con_item->id]['total_amount'] = $contract_item_arr[$con_item->id]['total_amount'] + $component_items_total_amount;
+            
             }//foreach
 
             $contract_item_arr[$con_item->id] = (object) $contract_item_arr[$con_item->id];
