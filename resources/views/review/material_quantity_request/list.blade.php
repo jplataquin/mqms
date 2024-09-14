@@ -207,7 +207,13 @@
             
         });
     }
-   
+    
+    function runFilter(){
+        showMoreBtn.style.display = 'block';
+        reinitalize();
+        showData();
+    }
+
     searchBtn.onclick = ()=>{
         showMoreBtn.style.display = 'block';
         reinitalize();
@@ -219,7 +225,6 @@
     }
 
     sortSelect.onchange = ()=>{
-        reinitalize();
 
         let select = parseInt(sortSelect.value);
 
@@ -234,7 +239,7 @@
             break;
         }
 
-        showData();
+        runFilter();
     }
 
     cancelBtn.onclick = ()=>{
@@ -279,6 +284,8 @@
             });
 
             window.util.unblockUI();
+
+            runFilter();
         });
     }
 
@@ -316,11 +323,16 @@
 
             });
 
+            runFilter();
+
         });
     }
     
-    reinitalize();
-    showData();
+    conponentSelect.onchange = ()=>{
+        runFilter();
+    }
+
+    runFilter();
 </script>
 </div>
 @endsection
