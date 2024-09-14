@@ -225,7 +225,13 @@
                 let href = el.getAttribute('href');
 
                 if(href != '#'){
-                    document.location.href = href; 
+                    
+                    document.util.navTo(href);
+                    
+                    if(window.innerWidth <= 641){
+                        closeNavBar();
+                    }
+
                     return false;    
                 }
 
