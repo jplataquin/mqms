@@ -303,6 +303,10 @@
                     @if($component->status == 'PEND')
                         <button class="btn btn-primary me-3" id="approveBtn">Approve</button>
                     @endif
+
+                    @if($component->status == 'APRV')
+                        <button class="btn btn-primary me-3" id="approveBtn">Approve</button>
+                    @endif
                         <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
                     </div>
                 </div>

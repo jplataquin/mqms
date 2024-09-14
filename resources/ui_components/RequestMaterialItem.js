@@ -387,6 +387,7 @@ class RequestMaterialItem extends Component{
         if(!isNaN(this.el.quantityRemaining.value)){
            
             setTimeout(()=>{
+                console.log(newVal);
                 this.el.balanceQuantity.value = parseFloat(this.el.quantityRemaining.value) - parseFloat(newVal);
             },500);
             
