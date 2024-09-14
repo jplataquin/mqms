@@ -215,12 +215,12 @@
                 <div class="row mb-3">
                     <div class="col-lg-12">
                         <div class="form-container">
-                            <div class="form-header">Component</div>
+                            <div class="form-header @if(!$component->sum_flag || $component->unit_id != $contract_item->contract_unit_id) bg-excluded-sum-component @endif">Component</div>
                             <div class="form-body">
                                 <div class="row mb-3">
                                     <div class="col-lg-12">
-                                        <div class="form-group @if(!$component->sum_flag || $component->unit_id != $contract_item->contract_unit_id) bg-excluded-sum-component @endif">
-                                            <label>Component</label>
+                                        <div class="form-group">
+                                            <label>Name</label>
                                             <div class="input-group">
                                                 <span class="input-group-text" id="basic-addon2" onclick="document.querySelector('#component').focus();"><i class="bi bi-list"></i></span>
                                             
