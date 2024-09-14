@@ -202,8 +202,12 @@ class ComponentReviewController extends Controller
                 if($comp->unit_id == $con_item->unit_id){
                     $contract_item_arr[$con_item->id]['total_quantity'] = $contract_item_arr[$con_item->id]['total_quantity'] + $comp->quantity;
                 } 
-
+                
+                //Contract item row level
                 $contract_item_arr[$con_item->id]['total_amount'] = $contract_item_arr[$con_item->id]['total_amount'] + $component_items_total_amount;
+                
+                //Grand total level
+                $budget_grand_total_amount = $budget_grand_total_amount + $component_items_total_amount;
             
             }//foreach
 
