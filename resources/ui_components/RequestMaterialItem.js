@@ -388,8 +388,7 @@ class RequestMaterialItem extends Component{
            
             setTimeout(()=>{
                 
-                console.log(this.el.quantityRemaining.value, newVal);
-                this.el.balanceQuantity.value =  parseFloat(this.el.quantityRemaining.value) - parseFloat(newVal);
+                this.el.balanceQuantity.value = window.util.roundUp( parseFloat(this.el.quantityRemaining.value) - parseFloat(newVal), 2);
             },500);
             
         }else{
