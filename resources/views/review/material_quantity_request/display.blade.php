@@ -204,10 +204,10 @@
             });
         }
 
-        rejectBtn.onclick = (e)=>{
+        rejectBtn.onclick = async (e)=>{
             e.preventDefault();
 
-            if(!confirm('Are you sure you want to REJECT this?')){
+            if(! await window.util.confirm('Are you sure you want to REJECT this?')){
                 return false;
             }
 
