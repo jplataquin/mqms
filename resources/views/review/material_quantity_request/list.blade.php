@@ -13,17 +13,11 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="#" class="active">
                     <span>
                        Material Request
                     </span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="active">
-                    <span>
-                        List
-                    </span>
+                    
                     <i class="ms-2 bi bi-list-ul"></i>		
                 </a>
             </li>
@@ -42,7 +36,7 @@
                             <label>Sort By</label>
                             <select class="form-control" id="sortSelect">
                                 <option value="1" selected>Latest Entry</option>
-                                <option value="2"></option>
+                                <option value="2">Oldest Entry</option>
                             </select>
                         </div>
                     </div>
