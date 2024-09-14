@@ -39,7 +39,7 @@
                 <tbody>
                     <tr>
                         <th width="150px">ID</th>
-                        <td>{{$material_quantity_request->id}}</td>
+                        <td>{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}</td>
                     </tr>
                     <tr>
                         <th>Project</th>
@@ -81,7 +81,7 @@
     <div>
         <button class="btn btn-warning w-100 mt-3 d-none" id="addBtn">Add More</button>
     </div>
-    <div class="row mt-5">
+    <div class="row mt-5" style="position:sticky">
         <div class="col-lg-12 text-end">
             @if($material_quantity_request->status == 'PEND')
                 <button class="btn btn-danger" id="rejectBtn">Reject</button>
@@ -111,7 +111,7 @@
     const material_options          = @json($material_options);
 
     window.util.quickNav = '/review/material_quantity_request';
-    
+
     request_items.map(request_item => {
 
         count++;
