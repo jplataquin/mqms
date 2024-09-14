@@ -303,7 +303,8 @@
 
             if(e.shiftKey && !e.ctrlKey && e.keyCode == 70){
 
-
+                console.log(window.util.quickNav);
+                
                 if(window.util.quickNav){
                     let ans = prompt('Nav to: '+window.util.quickNav);
                     console.log(window.util.quickNav+'/'+ans);
