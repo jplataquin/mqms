@@ -244,6 +244,7 @@
                     el.classList.add('inactive-nav-item');
                 }
 
+                console.log(screen.width);
             }
         });
 
