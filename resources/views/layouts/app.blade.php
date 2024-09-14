@@ -244,7 +244,6 @@
                     el.classList.add('inactive-nav-item');
                 }
 
-                console.log(screen.width);
             }
         });
 
@@ -259,6 +258,9 @@
 
                 el.parentElement.classList.add('selected-nav-item');
 
+                
+                console.log(screen.width);
+                
                 setTimeout(()=>{
                     window.scrollTo(0,0);
                 },1000);
