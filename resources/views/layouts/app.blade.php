@@ -226,12 +226,6 @@
 
                 if(href != '#'){
                     
-                    window.util.navTo(href);
-                    
-                    if(window.innerWidth <= 641){
-                        closeNavBar();
-                    }
-
                     return false;    
                 }
 
@@ -269,9 +263,9 @@
                 el.parentElement.classList.add('selected-nav-item');
 
                 
-                if(window.innerWidth <= 641){
-                    closeNavBar();
-                }
+                // if(window.innerWidth <= 641){
+                //     closeNavBar();
+                // }
 
                 setTimeout(()=>{
                     window.scrollTo(0,0);
@@ -310,6 +304,10 @@
             }
 
             window.util.quickNav = null;
+
+            if(window.innerWidth <= 641){
+                closeNavBar();
+            }
             
         });
 
