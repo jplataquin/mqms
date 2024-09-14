@@ -195,6 +195,11 @@
         const hamburger_button      = $q('#hamburger_button').first();
         const side_bar_container    = $q('#side-bar-container').first();
         const close_nav_menu        = $q('#close_nav_menu').first();
+        
+        function closeNavBar(){
+            side_bar_container.style.display    = 'none';
+            hamburger_button.style.display      = 'block';
+        }
 
         if(hamburger_button){
             hamburger_button.onclick = ()=>{
@@ -205,8 +210,7 @@
 
         if(close_nav_menu){
             close_nav_menu.onclick = ()=>{
-                side_bar_container.style.display    = 'none';
-                hamburger_button.style.display      = 'block';
+                closeNavBar();
             }
         }
 
@@ -259,8 +263,10 @@
                 el.parentElement.classList.add('selected-nav-item');
 
                 
-                console.log(screen.width);
-                
+                if(window.innerWidth <= 641){
+                    closeNavBar();
+                }
+
                 setTimeout(()=>{
                     window.scrollTo(0,0);
                 },1000);
