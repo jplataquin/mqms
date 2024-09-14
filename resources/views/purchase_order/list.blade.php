@@ -132,16 +132,21 @@
 <script type="module">
     import {$q,Template,$el} from '/adarna.js';
 
-    let list            = $q('#list').first();
-    let query           = $q('#query').first();
-    let searchBtn       = $q('#searchBtn').first();
-    let createBtn       = $q('#createBtn').first();
-    let showMoreBtn     = $q('#showMoreBtn').first();
-    let sortSelect      = $q('#sortSelect').first();
-    let projectSelect   = $q('#projectSelect').first();
-    let sectionSelect   = $q('#sectionSelect').first();
-    let componentSelect = $q('#componentSelect').first();
-    let statusSelect    = $q('#statusSelect').first();
+    const list            = $q('#list').first();
+    const query           = $q('#query').first();
+    const searchBtn       = $q('#searchBtn').first();
+    const createBtn       = $q('#createBtn').first();
+    const showMoreBtn     = $q('#showMoreBtn').first();
+    const sortSelect      = $q('#sortSelect').first();
+    const projectSelect   = $q('#projectSelect').first();
+    const sectionSelect   = $q('#sectionSelect').first();
+    const componentSelect = $q('#componentSelect').first();
+    const statusSelect    = $q('#statusSelect').first();
+
+    window.util.quickNav = {
+        title:'Purchase Order',
+        url:'/purchase_order'
+    };
 
     let page            = 1;
     let order           = 'DESC';

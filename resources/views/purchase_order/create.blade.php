@@ -178,6 +178,11 @@
         let payment_terms_options   = @json($payment_terms_options);
         let component_item_arr      = @json($component_item_arr);
 
+        window.util.quickNav = {
+            title:'Purchase Order',
+            url:'/purchase_order'
+        };
+        
         const t = new Template();
 
         function clearItems(){

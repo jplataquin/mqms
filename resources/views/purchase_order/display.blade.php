@@ -228,21 +228,26 @@
 
     <script type="module">
         import {$q,Template} from '/adarna.js';
+
         const cancelBtn = $q('#cancelBtn').first();
+        const deleteBtn = $q('#deleteBtn').first();
+        
+        window.util.quickNav = {
+            title:'Purchase Order',
+            url:'/purchase_order'
+        };
 
         cancelBtn.onclick = ()=>{
             window.util.navTo('/purchase_orders');
         }
-
             
-        const deleteBtn = $q('#deleteBtn').first();
-
+        
         if(deleteBtn){
 
-        deleteBtn.onclick = (e)=>{
+            deleteBtn.onclick = async (e)=>{
                 e.preventDefault();
 
-                if(!confirm('Are you sure you want to delete this PO?')){
+                if(! await window.util.confirm('Are you sure you want to delete this PO?')){
 
                     return false;
                 }
@@ -263,7 +268,7 @@
 
                     window.util.navTo("/purchase_orders");
                 });
-        }
+            }   
         }
             
         const voidBtn = $q('#voidBtn').first();

@@ -133,7 +133,7 @@ html, body {
 
 /*** Sidebar ***/
 #side-bar-container{
-  width:200px;
+  width:250px;
 }
 
 #sidebar{
@@ -141,6 +141,7 @@ html, body {
   padding-bottom:40px;
   overflow-y: scroll;
   position:fixed;
+  width:220px;
 }
 
 .nav-item{
