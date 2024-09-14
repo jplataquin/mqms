@@ -305,6 +305,7 @@
 
                 if(window.util.quickNav){
                     let ans = prompt('Nav to: '+window.util.quickNav);
+                    console.log(window.util.quickNav+'/'+ans);
                     window.util.navTo(window.util.quickNav+'/'+ans);
                     return true;
                 }
