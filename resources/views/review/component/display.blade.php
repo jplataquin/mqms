@@ -358,13 +358,13 @@
                                     Factor
                                     (
                                     @if($component_item->function_type_id == 1)
-                                        Factor
+                                        As Factor
                                     @elseif($component_item->function_type_id == 2)
-                                        Divisor
+                                        As Divisor
                                     @elseif($component_item->function_type_id == 3)
-                                        Direct
+                                        As Direct
                                     @elseif($component_item->function_type_id == 4)
-                                        Equivalent
+                                        As Equivalent
                                     @endif
                                     )
                                 </label>
