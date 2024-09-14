@@ -141,7 +141,7 @@
     let order           = 'DESC';
     let orderBy         = 'id';
     
-    window.util.quickNav = '/review/material_quantity_requests';
+    window.util.quickNav = '/review/material_quantity_request';
             
     const t = new Template();
     
