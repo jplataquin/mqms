@@ -232,7 +232,7 @@
                                             <div class="input-group">
                                                 <span class="input-group-text" id="basic-addon2" onclick="document.querySelector('#component').focus();"><i class="bi bi-list"></i></span>
                                             
-                                                <select class="form-control @if(!$component->sum_flag || $component->unit_id != $contract_item->contract_unit_id) bg-excluded-sum-component @endif" id="component">
+                                                <select class="form-control bg-excluded-sum-component" id="component">
                                                     @foreach($component_arr as $comp)
 
                                                         @if($comp->contract_item_id == $contract_item->id)
