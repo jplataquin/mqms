@@ -301,7 +301,7 @@
 
         window.document.onkeyup = (e)=>{
 
-            if(e.shiftKey && !e.ctrlKey){
+            if(e.shiftKey && !e.ctrlKey && window.util.quickNav){
 
                 if(window.util.quickNav){
                     let ans = prompt('Nav to: '+window.util.quickNav);
