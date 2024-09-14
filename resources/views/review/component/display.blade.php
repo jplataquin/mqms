@@ -228,17 +228,20 @@
                                                     @foreach($component_arr as $comp)
 
                                                         @if($comp->contract_item_id == $contract_item->id)
-                                                            <option class="@if(!$comp->data->sum_flag || $comp->data->unit_id != $contract_item->contract_unit_id) bg-excluded-sum-component @endif" value="{{$comp->data->id}}" @if($comp->data->id == $component->id) selected @endif>
+                                                            <option class="" value="{{$comp->data->id}}" @if($comp->data->id == $component->id) selected @endif>
                                                                 {{$comp->data->name}}
 
                                                                 @if($comp->data->id != $component->id)
                                                                     »
                                                                     {{ $comp->data->status }}
-                                                                    -
+                                                                    »
                                                                     {{ number_format($comp->total_quantity,2) }} {{ $unit_options[$comp->data->unit_id]->text }}
-                                                                    - 
+                                                                    » 
                                                                     P {{ number_format($comp->total_amount,2) }}
-
+                                                                    
+                                                                    @if(!$comp->data->sum_flag || $comp->data->unit_id != $contract_item->contract_unit_id)
+                                                                    » Excluded
+                                                                    @endif
                                                                 @endif
                                                             </option>
                                                         @endif
