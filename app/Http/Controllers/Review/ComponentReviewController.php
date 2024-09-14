@@ -144,14 +144,17 @@ class ComponentReviewController extends Controller
         $contract_item_arr  = [];
         $components_arr     = [];
     
-        $contract_total_amount  = 0;
+        $contract_grand_total_amount    = 0;
+        $ref_1_grand_total_amount       = 0;
+        $budget_grand_total_amount      = 0;
+
         $ref_1_total_amount     = 0;
         $material_total_amount  = 0;
         
         foreach($contract_items as $con_item){
             
             
-            $contract_total_amount = $contract_total_amount + ($con_item->contract_quantity * $con_item->contract_unit_price);
+            $contract_grand_total_amount = $contract_grand_total_amount + ($con_item->contract_quantity * $con_item->contract_unit_price);
             
             $components = $con_item->Components;
 
@@ -221,7 +224,9 @@ class ComponentReviewController extends Controller
             'contract_amount'       => $contract_amount,
             'contract_item_arr'     => $contract_item_arr,
             'component_arr'         => $components_arr,
-            'contract_total_amount' => $contract_total_amount
+            'contract_grand_total_amount'   => $contract_grand_total_amount,
+            'ref_1_grand_total_amount'      => $ref_1_grand_total_amount,
+            'budget_grand_total_amount'     => $budget_grand_total_amount,
         ]);
     }
 
