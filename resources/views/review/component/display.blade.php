@@ -296,14 +296,12 @@
 
 
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-12 text-end">
                     @if($component->status == 'PEND')
-                        <button class="btn btn-danger" id="rejectBtn">Reject</button>
+                        <button class="btn btn-danger me-3" id="rejectBtn">Reject</button>
                     @endif
-                    </div>
-                    <div class="col-lg-6 text-end">
                     @if($component->status == 'PEND')
-                        <button class="btn btn-primary" id="approveBtn">Approve</button>
+                        <button class="btn btn-primary me-3" id="approveBtn">Approve</button>
                     @endif
                         <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
                     </div>
