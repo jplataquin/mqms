@@ -294,7 +294,7 @@
                 return false;
             }
 
-            //window.util.quickNav = null;
+            window.util.quickNav = null;
             
         });
 

@@ -110,6 +110,8 @@
     const component_item_options    = @json($componentItem_options);
     const material_options          = @json($material_options);
 
+    window.util.quickNav = '/review/material_quantity_request';
+    
     request_items.map(request_item => {
 
         count++;
