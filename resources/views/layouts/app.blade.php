@@ -294,7 +294,7 @@
                 return false;
             }
 
-          
+            window.util.quickNav = null;
             
         });
 
@@ -303,7 +303,12 @@
 
             if(e.shiftKey && !e.ctrlKey){
 
-                prompt('test');
+                if(window.util.quickNav){
+                    let ans = prompt('Nav to: '+window.util.quickNav);
+                    window.util.navTo(window.util.quickNav+'/'+ans);
+                    return true;
+                }
+                
             }
         }
     </script>

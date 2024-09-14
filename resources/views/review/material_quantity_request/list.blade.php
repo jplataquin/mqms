@@ -141,6 +141,8 @@
     let order           = 'DESC';
     let orderBy         = 'id';
     
+    window.util.quickNav = '/review/material_quantity_requests';
+            
     const t = new Template();
     
     function reinitalize(){
