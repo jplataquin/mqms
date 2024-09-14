@@ -150,6 +150,9 @@ class ComponentReviewController extends Controller
         
         foreach($contract_items as $con_item){
             
+            
+            $contract_total_amount = $contract_total_amount + ($con_item->contract_quanitity * $con_item->budget_price);
+            
             $components = $con_item->Components;
 
             //Skip contract items with no maintained components
@@ -161,7 +164,6 @@ class ComponentReviewController extends Controller
                 'total_quantity'    => 0,
                 'total_amount'      => 0
             ];
-
 
     
             foreach($components as $comp){
@@ -208,17 +210,18 @@ class ComponentReviewController extends Controller
         $contract_amount = $contract_item->contract_unit_price * $contract_item->contract_quantity;
 
         return view('review/component/display',[
-            'project'           => $project,
-            'section'           => $section,
-            'contract_item'     => $contract_item,
-            'component'         => $component,
-            'component_items'   => $component->ComponentItems,
-            'materialItems'     => $materialItems,
-            'hash'              => '',
-            'unit_options'      => $unit_options,
-            'contract_amount'   => $contract_amount,
-            'contract_item_arr' => $contract_item_arr,
-            'component_arr'     => $components_arr
+            'project'               => $project,
+            'section'               => $section,
+            'contract_item'         => $contract_item,
+            'component'             => $component,
+            'component_items'       => $component->ComponentItems,
+            'materialItems'         => $materialItems,
+            'hash'                  => '',
+            'unit_options'          => $unit_options,
+            'contract_amount'       => $contract_amount,
+            'contract_item_arr'     => $contract_item_arr,
+            'component_arr'         => $components_arr,
+            'contract_total_amount' => $contract_total_amount
         ]);
     }
 

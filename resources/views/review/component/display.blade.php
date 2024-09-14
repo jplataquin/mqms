@@ -32,38 +32,48 @@
         </ul>
     </div>
     <hr>
-        <table class="record-table-horizontal">
-            <tr>
-                <th>
-                    Project
-                </th>
-                <td>
-                    {{$project->name}}
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    Section
-                </th>
-                <td>
-                    {{$section->name}}
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    Created By
-                </th>
-                <td>
-                    {{$component->CreatedByUser()->name}} {{$component->created_at}}
-                </td>
-            </tr>
-        </table>
+       
         <div class="folder-form-container">
             <div class="folder-form-tab">
                 Review
             </div>
             <div class="folder-form-body">
                 
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        <div class="form-container">
+                            <div class="form-header">
+                                Budget
+                            </div>
+                            <div class="form-body">
+                                <div class="row mb-3">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Project</label>
+                                            <input type="text" disabled="true" class="form-control" value="{{$project->name}}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Section</label>
+                                            <input type="text" disabled="true" class="form-control" value="{{$section->name}}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Total Contract Amount</label>
+                                            <input type="text" disabled="true" class="form-control" value="P {{ number_format($contract_total_amount,2) }}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 
                 <div class="row mb-3">
                     <div class="col-lg-12">
