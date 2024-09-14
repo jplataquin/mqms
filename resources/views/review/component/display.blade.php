@@ -304,8 +304,10 @@
                         <button class="btn btn-primary" id="approveBtn">Approve</button>
                     @endif
 
+                    <button class="btn btn-warning" id="printBtn">Print</button>
+
                     @if($component->status == 'APRV')
-                        <button class="btn btn-primary" id="revertBtn">Revert</button>
+                        <button class="btn btn-warning" id="revertBtn">Revert</button>
                     @endif
                         <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
                     </div>
@@ -514,6 +516,11 @@
     const cancelBtn       = $q('#cancelBtn').first();
     const contract_item   = $q('#contract_item').first();
     const component       = $q('#component').first();
+    const printBtn        = $q('#printBtn').first();
+
+    printBtn.onclick = ()=>{
+        window.open('/project/section/print/{{$section->id}}','_blank').focus();
+    }
 
     @if($component->status == 'PEND')
 
