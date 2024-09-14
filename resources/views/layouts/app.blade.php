@@ -297,6 +297,15 @@
           
             
         });
+
+
+        window.document.onkeyup = (e)=>{
+
+            if(e.shiftKey && e.ctrlKey){
+
+                prompt('test');
+            }
+        }
     </script>
 </body>
 </html>
