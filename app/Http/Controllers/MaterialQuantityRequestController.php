@@ -595,7 +595,7 @@ class MaterialQuantityRequestController extends Controller
             ]);
         }
 
-        echo $materialQuantityRequest->Project->name;
+        echo $materialQuantityRequest->Project->name;exit;
         if($materialQuantityRequest->Project()->status != 'ACTV'){
             return response()->json([
                 'status'    => 0,
