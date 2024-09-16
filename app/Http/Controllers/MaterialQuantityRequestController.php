@@ -595,8 +595,7 @@ class MaterialQuantityRequestController extends Controller
             ]);
         }
 
-        echo $materialQuantityRequest->Project->status;exit;
-        if($materialQuantityRequest->Project()->status != 'ACTV'){
+        if($materialQuantityRequest->Project->status != 'ACTV'){
             return response()->json([
                 'status'    => 0,
                 'message'   => 'This record can no longer be updated, because the project status is not active',
@@ -604,7 +603,7 @@ class MaterialQuantityRequestController extends Controller
             ]);
         }
 
-        if($materialQuantityRequest->Component()->status != 'APRV'){
+        if($materialQuantityRequest->Component->status != 'APRV'){
             return response()->json([
                 'status'    => 0,
                 'message'   => 'This record can no longer be updated, because the component status is not approved',
