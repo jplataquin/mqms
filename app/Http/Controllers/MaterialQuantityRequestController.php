@@ -666,7 +666,7 @@ class MaterialQuantityRequestController extends Controller
 
                 return response()->json([
                     'status'    => 0,
-                    'message'   => 'Error: Double entry with the same component item and material Item',
+                    'message'   => 'Double entry with the same component item and material Item',
                     'data'      => []
                 ]);
 
@@ -697,8 +697,11 @@ class MaterialQuantityRequestController extends Controller
 
                 return response()->json([
                     'status'    => 0,
-                    'message'   => 'Error: Material is out of budget',
-                    'data'      => []
+                    'message'   => 'Material is out of budget',
+                    'data'      => [
+                        'remaining' => $remaining,
+                        'request' =>  $item['requested_quantity']
+                    ]
                 ]);
 
             }
