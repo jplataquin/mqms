@@ -109,6 +109,14 @@ class MaterialCanvassReviewController extends Controller
         $contract_item          = $materialQuantityRequest->ContractItem;
         $component              = $materialQuantityRequest->Component;
       
+        if($project->status != 'APRV'){
+            return abort(404);
+        }
+
+        if($component->status != 'APRV'){
+            return abort(404);
+        }
+
         $items                  = $materialQuantityRequest->Items()->with('MaterialCanvass')->get();
         
         $component_item_id      = [];
