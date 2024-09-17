@@ -94,17 +94,12 @@
              
         </div>
         <div class="row mt-5">
-            <div class="col-lg-8">
+            <div class="col-lg-12 text-end">
                 
-            </div>
-
-            <div class="col-lg-4 text-end">
-                <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+                <button id="createBtn" class="btn btn-warning">Create</button>
                 <button id="searchBtn" class="btn btn-primary">Search</button>
+                <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
                 
-                <div class="mt-3">
-                    <button id="createBtn" class="btn btn-warning">Create</button>
-                </div>
             </div>
 
         </div>
@@ -163,7 +158,7 @@
         title:'Material Request',
         url:'/material_quantity_request'
     };
-    
+
     function reinitalize(){
         page = 1;
         $el.clear(list);   

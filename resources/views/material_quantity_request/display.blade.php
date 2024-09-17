@@ -29,13 +29,13 @@
         </div>
         <div class="folder-form-body">
             <div class="row mb-3">
-                <div class="col-6">
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label>Project</label>
                         <input type="text" value="{{$project->name}}" class="form-control" disabled="true"/>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label>Section</label>
                         <input type="text" value="{{$section->name}}" class="form-control" disabled="true"/>
@@ -45,13 +45,13 @@
             <div class="row mb-3">
 
             
-                <div class="col-6">
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label>Contract Item</label>
                         <input type="text" value="{{$contract_item->item_code}} - {{$contract_item->description}}" class="form-control" disabled="true"/>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label>Component</label>
                         <input type="text" value="{{$component->name}}" class="form-control" disabled="true"/>
@@ -61,7 +61,7 @@
 
             
             <div class="row mb-3">
-                <div class="col-12">
+                <div class="col-lg-12">
                     <div class="form-group">
                         <label>ID No.</label>
                         <input type="text" value="{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}" class="form-control" disabled="true"/>
@@ -70,7 +70,7 @@
             </div>
 
             <div class="row mb-3">
-                <div class="col-12">
+                <div class="col-lg-12">
                     <div class="form-group">
                         <label>Status</label>
                         <input type="text" value="{{$material_quantity_request->status}}" class="form-control" disabled="true"/>
@@ -80,7 +80,7 @@
 
             
             <div class="row mb-3">
-                <div class="col-12">
+                <div class="col-lg-12">
                     <div class="form-group">
                         <label>Date Created</label>
                         <input type="text" value="{{ $material_quantity_request->created_at }}" class="form-control" disabled="true"/>
