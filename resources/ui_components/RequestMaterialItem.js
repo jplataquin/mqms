@@ -51,7 +51,7 @@ class RequestMaterialItem extends Component{
 
             t.div ({class:'form-body'},()=>{
 
-                this.el.deleteRow = t.div({class:'row',style:{
+                this.el.deleteRow = t.div({class:'row mb-3',style:{
                     display: (this._model.editable) ? 'inline' : 'none'
                 }},()=>{
                     t.div({class:'col-lg-12 text-end'},()=>{
@@ -61,7 +61,7 @@ class RequestMaterialItem extends Component{
                     });
                 });
 
-                t.div({class:'row'},()=>{
+                t.div({class:'row mb-3'},()=>{
                     t.div({class:'col-lg-12'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Component Item');
@@ -92,7 +92,7 @@ class RequestMaterialItem extends Component{
 
                 })//div row
 
-                t.div({class:'row mt-3'},()=>{
+                t.div({class:'row mb-3'},()=>{
                     t.div({class:'col-lg-12'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Material');
@@ -117,7 +117,7 @@ class RequestMaterialItem extends Component{
                 })//div row
 
 
-                t.div({class:'row mt-3'},()=>{
+                t.div({class:'row mb-3'},()=>{
                     
                     t.div({class:'col-lg-3'},()=>{
                         t.div({class:'form-group'},()=>{
