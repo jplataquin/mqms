@@ -17,7 +17,7 @@ class RequestMaterialItem extends Component{
             componentItemId         :'',
             materialItemId          :'',
             unit                    :'',
-            prevApprovedQuantity    :'',
+            //prevApprovedQuantity    :'',
             materialBudgetQuantity  :'',
             requestedQuantity       :'',
             componentItemList       :{},
@@ -139,10 +139,7 @@ class RequestMaterialItem extends Component{
                             this.el.prevApprovedQuantity = t.input({
                                 type:'text',
                                 disabled:true,
-                                class:'form-control text-center',
-                                value:new Intl.NumberFormat().format(
-                                    this._model.prevApprovedQuantity
-                                )
+                                class:'form-control text-center'
                             });
                         })                
                     });
@@ -274,7 +271,7 @@ class RequestMaterialItem extends Component{
 
         dom.handler.updateApprovedQuantity = ()=>{
             this.el.prevApprovedQuantity.value = 'Calculating...';
-            this.getApprovedQuantity(this._state.componentItemId, this._state.materialItemId,false);
+            this.calculate_quantities(this._state.componentItemId, this._state.materialItemId,false);
         }
 
         
@@ -294,15 +291,7 @@ class RequestMaterialItem extends Component{
           
         this.el.requestedQuantity.classList.remove('is-invalid');
         
-        console.log( this._model.materialBudgetQuantity,this._model.prevApprovedQuantity,this._model.requestedQuantity);
-        
-        if(
-            !this._model.editable &&
-            this._model.materialBudgetQuantity > this._model.prevApprovedQuantity &&
-            (this._model.materialBudgetQuantity - this._model.prevApprovedQuantity) < this._model.requestedQuantity
-        ){
-            this.el.requestedQuantity.classList.add('is-invalid');
-        }
+
     }   
 
     get_total_po_quantity(){
@@ -399,7 +388,7 @@ class RequestMaterialItem extends Component{
      
     }
 
-    getApprovedQuantity(component_item_id,material_item_id){
+    calculate_quantities(component_item_id,material_item_id){
         
         this.el.quantityRemaining.classList.remove('is-invalid');
         this.el.quantityRemaining.value = 'Calculating...';
@@ -417,13 +406,26 @@ class RequestMaterialItem extends Component{
 
             this.el.prevApprovedQuantity.value = reply.data.total_approved_quantity;
 
-            let balance = parseFloat(this.el.materialBudgetQuantity.value) - parseFloat(reply.data.total_approved_quantity);
-
+            let budget                         = window.util.parseNumber(this.el.materialBudgetQuantity.value);
+            let approved                       = window.util.parseNumber(reply.data.total_approved_quantity);
+            let balance                        = budget - approved;
+            let request                        = window.util.parseNumber(this.el.requestedQuantity.value);
             this.el.quantityRemaining.value    = window.util.roundUp(balance,2);
 
+            //If balance is negative
             if(balance < 0){
                 this.el.quantityRemaining.addClass('is-invalid');
             }
+
+            //Highlight over budget of request in review 
+            if(
+                !this._model.editable &&
+                budget > approved &&
+                balance < request
+            ){
+                this.el.requestedQuantity.classList.add('is-invalid');
+            }
+    
 
             this.get_total_po_quantity();
         });
@@ -433,9 +435,9 @@ class RequestMaterialItem extends Component{
         
         if(!isNaN(this.el.prevApprovedQuantity.value)){
 
-            let remaining = parseFloat(this.el.materialBudgetQuantity.value) - parseFloat(this.el.prevApprovedQuantity.value);
+            let remaining = window.util.parseNumber(this.el.materialBudgetQuantity.value) - window.util.parseNumber(this.el.prevApprovedQuantity.value);
             
-            if( parseFloat(this.el.requestedQuantity.value) > remaining ){
+            if( window.util.parseNumber(this.el.requestedQuantity.value) > remaining ){
             
                 window.util.alert('Error','Requested quantity is out of budget');
             
@@ -508,7 +510,7 @@ class RequestMaterialItem extends Component{
         this.setState('requestedQuantity','');
         this.setState('prevApprovedQuantity','');
         
-        this.getApprovedQuantity(this._state.componentItemId, material_id);
+        this.calculate_quantities(this._state.componentItemId, material_id);
 
     }
 
