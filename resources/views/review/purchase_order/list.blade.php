@@ -131,6 +131,11 @@
     let order           = 'DESC';
     let orderBy         = 'id';
     
+    window.util.quickNav = {
+        title:'Review Purchase Order',
+        url: '/review/purchase_order'
+    };
+
     const t = new Template();
     
     function reinitalize(){

@@ -135,7 +135,10 @@
     let order           = 'DESC';
     let orderBy         = 'id';
     
-    window.util.quickNav = '/review/material_quantity_request';
+    window.util.quickNav = {
+        title:'Review Material Request',
+        url: '/review/material_quantity_request'
+    };
             
     const t = new Template();
     

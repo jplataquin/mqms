@@ -207,7 +207,7 @@
         </div>
 
         <div class="row mt-5">
-            <div class="col-sm-6 col-lg-6  text-start">
+            <div class="col-lg-12 text-end shadow bg-white rounded footer-action-menu p-2">
                 
                 @if($purchase_order->status == 'PEND')
                     <button id="rejectBtn" class="btn btn-danger">Reject</button>
@@ -216,8 +216,6 @@
                 @if($purchase_order->status == 'REVO')
                     <button id="approveVoidBtn" class="btn btn-danger">Approve Void</button>
                 @endif
-            </div>
-            <div class="col-sm-6 col-lg-6 text-end">
 
                 @if($purchase_order->status == 'PEND')
                     <button id="approveBtn" class="btn btn-primary">Approve</button>
@@ -240,6 +238,11 @@
         cancelBtn.onclick = ()=>{
             window.util.navTo('/review/purchase_order');
         }
+
+        window.util.quickNav = {
+            title:'Review Purchase Order',
+            url: '/review/purchase_order'
+        };
 
         @if($purchase_order->status == 'REVO')
             let approveVoidBtn = $q('#approveVoidBtn').first();
