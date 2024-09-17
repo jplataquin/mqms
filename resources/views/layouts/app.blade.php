@@ -339,9 +339,9 @@
                         prompt_msg = title+"\n";
                     }
 
-                    promt_msg += 'Nav to: '+url;
+                    prompt_msg += 'Nav to: '+url;
 
-                    let ans = prompt(promt_msg);
+                    let ans = prompt(prompt_msg);
                     
                     window.util.navTo(url+'/'+ans);
                     return true;
