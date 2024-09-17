@@ -3,7 +3,7 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs" hx-boost="true" >
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
                 <a href="/material_quantity_requests">

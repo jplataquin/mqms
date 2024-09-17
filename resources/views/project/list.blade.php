@@ -3,12 +3,19 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs">
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
+            <li>
+                <a href="/projects">
+                    <span>
+                       Projects
+                    </span>
+                </a>
+            </li>
             <li>
                 <a href="#" class="active">
                     <span>
-                       Projects
+                       List
                     </span>
                     <i class="ms-2 bi bi-list-ul"></i>
                 </a>
@@ -70,16 +77,21 @@
 <script type="module">
     import {$q,Template,$el} from '/adarna.js';
 
-    let list            = $q('#list').first();
-    let query           = $q('#query').first();
-    let searchBtn       = $q('#searchBtn').first();
-    let showMoreBtn     = $q('#showMoreBtn').first();
-    let sortSelect      = $q('#sortSelect').first();
-    let createBtn       = $q('#createBtn').first();
+    const list            = $q('#list').first();
+    const query           = $q('#query').first();
+    const searchBtn       = $q('#searchBtn').first();
+    const showMoreBtn     = $q('#showMoreBtn').first();
+    const sortSelect      = $q('#sortSelect').first();
+    const createBtn       = $q('#createBtn').first();
+    
     let page            = 1;
     let order           = 'DESC';
     let orderBy         = 'id';
     
+    window.util.quickNav = {
+        title:'Project',
+        url:'/project'
+    };
     const t = new Template();
     
     function reinitalize(){

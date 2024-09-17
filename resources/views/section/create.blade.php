@@ -3,27 +3,21 @@
 @section('content')
 <div id="content">
 <div class="container">
-    <div class="breadcrumbs">
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="#">
+                <a href="/project/{{$project->id}}">
                     <span>
                        Project
                     </span>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="#" class="active">
                     <span>
                        Section
                     </span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="active">
-                    <span>
-                        Create
-                    </span>		
+                    <i class="ms-2 bi bi-file-earmark-plus"></i>
                 </a>
             </li>
         </ul>
@@ -34,14 +28,14 @@
 
         <div class="col-lg-6">
             <div class="form-group">
-                <label>For Project</label>
+                <label>Project</label>
                 <input type="text" value="{{$project->name}}" disabled="true" class="form-control"/>
             </div>
         </div>
 
         <div class="col-lg-6">
             <div class="form-group">
-                <label>Section Name</label>
+                <label>Section</label>
                 <input type="text" id="sectionName" class="form-control"/>
             </div>
         </div>

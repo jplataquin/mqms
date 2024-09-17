@@ -4,10 +4,10 @@
 <div id="content">
 <div class="container">
 
-    <div class="breadcrumbs">
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="#">
+                <a href="/access_codes">
                     <span>
                         Access Code
                     </span>
@@ -17,7 +17,8 @@
                 <a href="#" class="active">
                     <span>
                         Create
-                    </span>		
+                    </span>
+                    <i class="ms-2 bi bi-file-earmark-plus"></i>		
                 </a>
             </li>
         </ul>

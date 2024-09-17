@@ -3,17 +3,10 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs">
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="#">
-                    <span>
-                        Master Data
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
+                <a href="/master_data/payment_terms">
                     <span>
                        Payment Term
                     </span>
@@ -23,7 +16,8 @@
                 <a href="#" class="active">
                     <span>
                         Display
-                    </span>		
+                    </span>
+                    <i class="ms-2 bi bi-display"></i>
                 </a>
             </li>
         </ul>

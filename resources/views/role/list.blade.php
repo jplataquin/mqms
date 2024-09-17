@@ -3,19 +3,27 @@
 @section('content')
 <div id="content">
 <div class="container">
-    <div class="breadcrumbs" hx-boost="true">
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
+            <li>
+                <a href="/roles">
+                    <span>
+                       Roles
+                    </span>                    
+                </a>
+            </li>
             <li>
                 <a href="#" class="active">
                     <span>
-                       Roles
+                       List
                     </span>                    
                     <i class="ms-2 bi bi-list-ul"></i>
                 </a>
             </li>
         </ul>
     </div>
-<hr>
+    <hr>
+    
     <div class="folder-form-container">
         <div class="folder-form-tab">
             Roles

@@ -6,7 +6,7 @@
     <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="#">
+                <a href="/review/components">
                     <span>
                        Review
                     </span>

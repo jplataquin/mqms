@@ -8,13 +8,6 @@
         <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
             <ul>
                 <li>
-                    <a href="/project/{{$project->id}}">
-                        <span>
-                            Project
-                        </span>
-                    </a>
-                </li>
-                <li>
                     <a href="/project/section/{{$section->id}}">
                         <span>
                         Section

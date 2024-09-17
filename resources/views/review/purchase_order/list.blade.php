@@ -3,10 +3,10 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="#">
+                <a href="/review/purchase_orders">
                     <span>
                        Review
                     </span>
@@ -22,7 +22,7 @@
             </li>
         </ul>
     </div>
-<hr>
+    <hr>
     <div class="folder-form-container">
         <div class="folder-form-tab">
             Review Purchase Orders

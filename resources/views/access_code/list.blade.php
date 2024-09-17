@@ -3,20 +3,19 @@
 @section('content')
 <div id="content">
 <div class="container">
-    <div class="breadcrumbs" hx-boost="true">
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="/dashboard">
+                <a href="/access_codes">
                     <span>Dashboard</span>
                 </a>
             </li>
             <li>
                 <a href="#" class="active">
                     <span>
-                        Access Code
+                        List
                     </span>
 
-                    
                     <i class="ms-2 bi bi-list-ul"></i>
                 </a>
             </li>

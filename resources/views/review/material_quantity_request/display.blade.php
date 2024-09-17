@@ -3,19 +3,19 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="#">
+                <a href="/review/material_quantity_requests">
                     <span>
                        Review
                     </span>
                 </a>
             </li>
             <li>
-                <a href="/review/material_requests" class="active">
+                <a href="#" class="active">
                     <span>
-                       Material Requests
+                       Material Request
                     </span>
                     
                     <i class="ms-2 bi bi-display"></i>	

@@ -3,8 +3,27 @@
 @section('content')
 <div id="content">
 <div class="container">
-<h5>Access Code » Create</h5>
-<hr>
+
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
+        <ul>
+            <li>
+                <a href="/roles">
+                    <span>
+                       Roles
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <span>
+                        Create
+                    </span>	
+                    <i class="ms-2 bi bi-file-earmark-plus"></i>	
+                </a>
+            </li>
+        </ul>
+    </div>
+    <hr>
 
     <div class="row">
 

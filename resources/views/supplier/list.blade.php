@@ -4,12 +4,19 @@
 
 <div id="content">
     <div class="container">
-        <div class="breadcrumbs" hx-boost="true">
+        <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
             <ul>
+                <li>
+                    <a href="/master_data/suppliers">
+                        <span>
+                        Suppliers
+                        </span>
+                    </a>
+                </li>
                 <li>
                     <a href="#" class="active">
                         <span>
-                        Suppliers
+                        List
                         </span>
                         <i class="ms-2 bi bi-list-ul"></i>
                     </a>

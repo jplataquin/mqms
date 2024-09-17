@@ -3,10 +3,10 @@
 @section('content')
 <div id="content">
 <div class="container">
-    <div class="breadcrumbs" hx-boost="true">
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="/master_data/material/items" hx-select="#content" hx-target="#main">
+                <a href="/master_data/material/items">
                     <span>
                         Material Items
                     </span>

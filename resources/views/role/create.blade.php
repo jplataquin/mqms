@@ -3,18 +3,17 @@
 @section('content')
 <div id="content">
 <div class="container">
-    <div class="breadcrumbs" hx-boost="true">
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
                 <a href="/roles">
                     <span>
                        Roles
-                    </span>                    
-                    
+                    </span>                                 
                 </a>
             </li>
             <li>
-                <a href="#" class="active" >
+                <a href="#" class="active">
                     <span>
                         Create
                     </span>

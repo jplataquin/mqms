@@ -3,10 +3,10 @@
 @section('content')
 <div id="content">
 <div class="container">
-    <div class="breadcrumbs">
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="#">
+                <a href="/projects">
                     <span>
                        Project
                     </span>
@@ -16,7 +16,8 @@
                 <a href="#" class="active">
                     <span>
                         Create
-                    </span>		
+                    </span>	
+                    <i class="ms-2 bi bi-file-earmark-plus"></i>	
                 </a>
             </li>
         </ul>
@@ -56,11 +57,17 @@
 <script type="module">
     import {$q} from '/adarna.js';
 
-    let createBtn              = $q('#createBtn').first();
-    let cancelBtn              = $q('#cancelBtn').first();
-    let projectName            = $q('#projectName').first();
-    let status                 = $q('#status').first();
+    const createBtn              = $q('#createBtn').first();
+    const cancelBtn              = $q('#cancelBtn').first();
+    const projectName            = $q('#projectName').first();
+    const status                 = $q('#status').first();
 
+    window.util.quickNav = {
+        title:'Project',
+        url:'/project'
+    };
+    
+    
     createBtn.onclick = (e) => {
 
         window.util.blockUI();

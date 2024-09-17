@@ -3,39 +3,27 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs">
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="#">
-                    <span>
-                        Project
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
+                <a href="/project/section/{{$section->id}}">
                     <span>
                     Section
                     </span>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="#" class="active">
                     <span>
                     Contract Item
                     </span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="active">
-                    <span>
-                        List
-                    </span>		
+                    <i class="ms-2 bi bi-list-ul"></i>
                 </a>
             </li>
         </ul>
     </div>
 <hr>
+
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group">

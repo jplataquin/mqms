@@ -6,7 +6,7 @@
     <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="#">
+                <a href="/master_data/material_items">
                     <span>
                        Material Items
                     </span>
@@ -16,12 +16,13 @@
                 <a href="#" class="active">
                     <span>
                         List
-                    </span>		
+                    </span>
+                    <i class="ms-2 bi bi-list-ul"></i>		
                 </a>
             </li>
         </ul>
     </div>
-<hr>
+    <hr>
 
     <div class="folder-form-container">
         <div class="folder-form-tab">

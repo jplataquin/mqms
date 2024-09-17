@@ -3,10 +3,10 @@
 @section('content')
 <div id="content">
     <div class="container">
-    <div class="breadcrumbs" hx-boost="true">
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="/master_data/material/groups" hx-select="#content" hx-target="#main">
+                <a href="/master_data/material/groups">
                     <span>
                        Material Groups
                     </span>
@@ -15,7 +15,7 @@
             <li>
                 <a href="#" class="active">
                     <span>
-                        List
+                        Display
                     </span>		
                     <i class="ms-2 bi bi-display"></i>
                 </a>

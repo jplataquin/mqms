@@ -4,13 +4,18 @@
 
 <div id="content">
 <div class="container">
-    <div class="breadcrumbs">
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="#" class="active">
+                <a href="/access_codes">
                     <span>
                         Access Code
                     </span>		
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span>Display</span>
                     <i class="ms-2 bi bi-display"></i>
                 </a>
             </li>

@@ -3,22 +3,9 @@
 @section('content')
 <div id="content">
 <div class="container">
-    <div class="breadcrumbs" hx-boost="true">
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
-            <li>
-                <a href="/project/{{$project->id}}">
-                    <span>
-                        Project
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="/project/section/{{$section->id}}">
-                    <span>
-                       Section
-                    </span>
-                </a>
-            </li>
+            
             <li>
                 <a href="/project/section/contract_item/{{$component->contract_item_id}}">
                     <span>
@@ -357,6 +344,11 @@
     const signalR = new Signal();
     const signalB = new Signal();
 
+    window.util.quickNav = {
+        tile: 'Component',
+        url: '/project/section/contract_item/component'
+    };
+    
     signalR.receiver('set-component-status',(value)=>{
         status.innerHTML = value;
     });

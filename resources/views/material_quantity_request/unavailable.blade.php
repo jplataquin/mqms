@@ -4,19 +4,12 @@
 <div id="content">
 <div class="container">
 
-<div class="breadcrumbs">
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="#">
+                <a href="/material_quantity_requests">
                     <span>
-                        Request
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span>
-                       Material Quantity
+                       Material Request
                     </span>
                 </a>
             </li>

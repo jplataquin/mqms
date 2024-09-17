@@ -3,10 +3,10 @@
 @section('content')
 <div id="content">
 <div class="container">
-<div class="breadcrumbs">
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="#">
+                <a href="/material_canvass">
                     <span>
                         Material Canvass
                     </span>
@@ -16,7 +16,8 @@
                 <a href="#" class="active">
                     <span>
                         List
-                    </span>		
+                    </span>	
+                    <i class="ms-2 bi bi-list-ul"></i>	
                 </a>
             </li>
         </ul>
@@ -108,17 +109,18 @@
 <script type="module">
     import {$q,Template,$el,$util} from '/adarna.js';
 
-    let list            = $q('#list').first();
-    let query           = $q('#query').first();
-    let projectSelect   = $q('#projectSelect').first();
-    let sectionSelect   = $q('#sectionSelect').first();
-    let componentSelect = $q('#componentSelect').first();
+    const list            = $q('#list').first();
+    const query           = $q('#query').first();
+    const projectSelect   = $q('#projectSelect').first();
+    const sectionSelect   = $q('#sectionSelect').first();
+    const componentSelect = $q('#componentSelect').first();
  
-    let searchBtn       = $q('#searchBtn').first();
-    let showMoreBtn     = $q('#showMoreBtn').first();
-    let sortSelect      = $q('#sortSelect').first();
-    let cancelBtn       = $q('#cancelBtn').first();
-    let createBtn       = $q('#createBtn').first();
+    const searchBtn       = $q('#searchBtn').first();
+    const showMoreBtn     = $q('#showMoreBtn').first();
+    const sortSelect      = $q('#sortSelect').first();
+    const cancelBtn       = $q('#cancelBtn').first();
+    const createBtn       = $q('#createBtn').first();
+    
     let page            = 1;
     let order           = 'DESC';
     let orderBy         = 'id';

@@ -7,7 +7,7 @@
         <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="/purchase_orders">
                         <span>
                             Purchase Orders
                         </span>
