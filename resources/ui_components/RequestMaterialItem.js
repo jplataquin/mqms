@@ -177,7 +177,7 @@ class RequestMaterialItem extends Component{
 
                 t.div({class:'row mb-3'},()=>{
                     
-                    t.div({class:'col-lg-6'},()=>{
+                    t.div({class:'col-lg-12'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Request');
                            
@@ -195,6 +195,7 @@ class RequestMaterialItem extends Component{
                         });//div form-group
                     });//div col
 
+                    /**
                     t.div({class:'col-lg-6'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Balance');
@@ -209,6 +210,7 @@ class RequestMaterialItem extends Component{
                         });//div
 
                     });//div col
+                    **/
 
                 });//div row
 
@@ -324,7 +326,7 @@ class RequestMaterialItem extends Component{
 
             prev_approved = isNaN(prev_approved) ? 0 : prev_approved;
             total_budget  = isNaN(total_budget) ? 0 : total_budget;
-            
+
             if(reply.data.total > prev_approved || reply.data.total > total_budget){
                 this.el.already_po.classList.add('is-invalid');
             }
@@ -357,7 +359,7 @@ class RequestMaterialItem extends Component{
         this.el.materialBudgetQuantity.value    = '';
         this.el.prevApprovedQuantity.value      = '';
         this.el.requestedQuantity.value         = '';
-        this.el.balanceQuantity.value           = '';
+        //this.el.balanceQuantity.value           = '';
         this.el.quantityRemaining.value         = '';
         this.el.already_po.value                = '';
 
@@ -441,7 +443,8 @@ class RequestMaterialItem extends Component{
         }
 
         
-
+        /** Parang d na need */
+        /*
         if(!isNaN(this.el.quantityRemaining.value)){
            
             setTimeout(()=>{
@@ -459,7 +462,7 @@ class RequestMaterialItem extends Component{
             
         }else{
             this.el.balanceQuantity.value = '';
-        }
+        }*/
         
     }
 
@@ -476,7 +479,7 @@ class RequestMaterialItem extends Component{
             this.el.materialBudgetQuantity.value    = '';
             this.el.prevApprovedQuantity.value      = '';
             this.el.requestedQuantity.value         = '';
-            this.el.balanceQuantity.value           = '';
+            //this.el.balanceQuantity.value           = '';
             this.el.already_po.value                = '';
 
             this.setState('materialBudgetQuantity','');
@@ -489,7 +492,7 @@ class RequestMaterialItem extends Component{
         this.el.materialBudgetQuantity.value    = material.quantity; 
         this.el.requestedQuantity.value         = '';
         this.el.prevApprovedQuantity.value      = '';
-        this.el.balanceQuantity.value           = '';
+        //this.el.balanceQuantity.value           = '';
         this.el.already_po.value                = '';
         
         this.setState('materialBudgetQuantity',material.quantity);
