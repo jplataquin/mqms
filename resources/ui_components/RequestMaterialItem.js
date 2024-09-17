@@ -121,7 +121,7 @@ class RequestMaterialItem extends Component{
                     
                     t.div({class:'col-lg-3'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Budget');
+                            t.label('Total Budget');
                             this.el.materialBudgetQuantity = t.input({
                                 type:'text',
                                 disabled:true,
@@ -271,7 +271,7 @@ class RequestMaterialItem extends Component{
         }
 
         dom.handler.updateApprovedQuantity = ()=>{
-            this.el.prevApprovedQuantity.value = 'fetching data...';
+            this.el.prevApprovedQuantity.value = 'Calculating...';
             this.getApprovedQuantity(this._state.componentItemId, this._state.materialItemId,false);
         }
 
@@ -291,11 +291,12 @@ class RequestMaterialItem extends Component{
         this.el.requestedQuantity.onkeyup();
           
 
-        this.get_total_po_quantity();
 
     }
 
     get_total_po_quantity(){
+
+        this.el.already_po.classList.remove('is-invalid');
 
         //Ignore if no id
         if(!this._model.id) {
@@ -314,7 +315,19 @@ class RequestMaterialItem extends Component{
                 return false;
             }
 
+
             this.el.already_po.value =  new Intl.NumberFormat().format(reply.data.total);
+
+            //If empty string then 0
+            let prev_approved   = this.el.prevApprovedQuantity.value || 0;
+            let total_budget    = this.el.materialBudgetQuantity.value || 0;
+
+            prev_approved = isNaN(prev_approved) ? 0 : prev_approved;
+            total_budget  = isNaN(total_budget) ? 0 : total_budget;
+            
+            if(reply.data.total > prev_approved || reply.data.total > total_budget){
+                this.el.already_po.classList.add('is-invalid');
+            }
         });
     }
 
@@ -347,7 +360,7 @@ class RequestMaterialItem extends Component{
         this.el.balanceQuantity.value           = '';
         this.el.quantityRemaining.value         = '';
         this.el.already_po.value                = '';
-        
+
         this.el.materialSelect.append(
             this.t.option({
                 value: ''
@@ -377,6 +390,7 @@ class RequestMaterialItem extends Component{
 
     getApprovedQuantity(component_item_id,material_item_id){
         
+        this.el.quantityRemaining.classList.remove('is-invalid');
         this.el.quantityRemaining.value = 'Calculating...';
 
         window.util.$get('/api/material_quantity_request/total_approved_quantity',{
@@ -400,6 +414,7 @@ class RequestMaterialItem extends Component{
                 this.el.quantityRemaining.addClass('is-invalid');
             }
 
+            this.get_total_po_quantity();
         });
     }
 
@@ -483,7 +498,6 @@ class RequestMaterialItem extends Component{
         
         this.getApprovedQuantity(this._state.componentItemId, material_id);
 
-        this.get_total_po_quantity();
     }
 }
 
