@@ -119,7 +119,7 @@
             componentItemId     : request_item.component_item_id,
             materialItemId      : request_item.material_item_id,
             totalRequested      : '',
-            requestedQuantity   : request_item.requested_quantity,
+            requestedQuantity   : '19000000',//request_item.requested_quantity,
             editable            : false,
             unitOptions         : unit_options
         });
