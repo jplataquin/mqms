@@ -99,7 +99,7 @@ class MaterialCanvassController extends Controller
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($id);
 
         if($materialQuantityRequest->status != 'APRV'){
-            return show404();
+            return abort(404);
         }
 
         $project                = $materialQuantityRequest->Project;
@@ -158,7 +158,7 @@ class MaterialCanvassController extends Controller
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($id);
 
         if($materialQuantityRequest->status != 'APRV'){
-            return show404();
+            return abort(404);
         }
 
         $project                = $materialQuantityRequest->Project;
