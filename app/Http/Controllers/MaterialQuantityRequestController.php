@@ -10,6 +10,7 @@ use App\Models\Component;
 use App\Models\MaterialQuantityRequest;
 use App\Models\MaterialQuantityRequestItem;
 use App\Models\MaterialQuantity;
+use App\Models\PurchaseOrderItem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
