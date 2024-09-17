@@ -292,9 +292,16 @@ class RequestMaterialItem extends Component{
         this._state.requestedQuantity           = this._model.requestedQuantity;
         this.el.requestedQuantity.onkeyup();
           
-
-
-    }
+        this.el.requestedQuantity.classList.remove('is-invalid');
+        
+        if(
+            !this._model.editable &&
+            this._model.materialBudgetQuantity > this._model.prevApprovedQuantity &&
+            (this._model.materialBudgetQuantity - this._model.prevApprovedQuantity) < this._model.requestedQuantity
+        ){
+            this.el.requestedQuantity.classList.add('is-invalid');
+        }
+    }   
 
     get_total_po_quantity(){
 
@@ -502,6 +509,8 @@ class RequestMaterialItem extends Component{
         this.getApprovedQuantity(this._state.componentItemId, material_id);
 
     }
+
+
 }
 
 
