@@ -88,7 +88,7 @@
     <div class="mt-3">
         @foreach($items as $item)
 
-        <div class="form-container mb-3">
+        <div class="form-container mb-5">
             <div class="form-header">
                &nbsp;
             </div>
