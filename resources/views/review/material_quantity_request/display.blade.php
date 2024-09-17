@@ -81,8 +81,8 @@
     <div>
         <button class="btn btn-warning w-100 mt-3 d-none" id="addBtn">Add More</button>
     </div>
-    <div class="row mt-5" style="position:sticky">
-        <div class="col-lg-12 text-end">
+    <div class="row mt-5">
+        <div class="col-lg-12 text-end shadow bg-white rounded footer-action-menu p-2">
             @if($material_quantity_request->status == 'PEND')
                 <button class="btn btn-danger" id="rejectBtn">Reject</button>
             @endif
