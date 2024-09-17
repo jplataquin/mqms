@@ -114,7 +114,7 @@
 
 
     <div class="row mt-5 mb-3">
-        <div class="col-lg-12">
+        <div class="col-lg-12 text-end">
            
             <button class="btn-primary btn" id="showPOBtn">PO List</button>
             <button class="btn-warning btn" id="printBtn">Print</button>
@@ -151,7 +151,7 @@
         url:'/material_quantity_request'
     };
     
-    
+
     printBtn.onclick = (e)=>{
         window.open('/material_quantity_request/print/{{$material_quantity_request->id}}','_blank').focus();
     }
