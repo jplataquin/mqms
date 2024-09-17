@@ -294,6 +294,8 @@ class RequestMaterialItem extends Component{
           
         this.el.requestedQuantity.classList.remove('is-invalid');
         
+        console.log( this._model.materialBudgetQuantity,this._model.prevApprovedQuantity,this._model.requestedQuantity);
+        
         if(
             !this._model.editable &&
             this._model.materialBudgetQuantity > this._model.prevApprovedQuantity &&
