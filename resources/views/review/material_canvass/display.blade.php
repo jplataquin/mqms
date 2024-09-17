@@ -90,7 +90,7 @@
 
         <div class="form-container mb-3">
             <div class="form-header">
-                {{ $component_item_arr[ $item->component_item_id ]->name }}
+               &nbsp;
             </div>
             <div class="form-body">
                 
@@ -169,7 +169,7 @@
         title:'Review Material Canvass',
         url: '/review/material_canvass'
     };
-    
+
     @foreach($items as $item)
 
     
