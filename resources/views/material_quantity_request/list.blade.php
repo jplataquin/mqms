@@ -159,6 +159,11 @@
 
     const t = new Template();
 
+    window.util.quickNav = {
+        title:'Material Request',
+        url:'/material_quantity_request'
+    };
+    
     function reinitalize(){
         page = 1;
         $el.clear(list);   

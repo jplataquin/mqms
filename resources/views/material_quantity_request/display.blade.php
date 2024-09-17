@@ -114,12 +114,10 @@
 
 
     <div class="row mt-5 mb-3">
-        <div class="col-6">
+        <div class="col-lg-12">
            
-        </div>
-        <div class="col-6 text-end">
-            <button class="btn-warning btn me-3" id="showPOBtn">PO List</button>
-            <button class="btn-warning btn me-3" id="printBtn">Print</button>
+            <button class="btn-primary btn" id="showPOBtn">PO List</button>
+            <button class="btn-warning btn" id="printBtn">Print</button>
             <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
 
             @if($material_quantity_request->status == 'PEND')
@@ -147,6 +145,12 @@
     const unit_options              = @json($unit_options);
     const component_item_options    = @json($component_item_options);
     const material_options          = @json($material_options);
+    
+    window.util.quickNav = {
+        title:'Material Request',
+        url:'/material_quantity_request'
+    };
+    
     
     printBtn.onclick = (e)=>{
         window.open('/material_quantity_request/print/{{$material_quantity_request->id}}','_blank').focus();

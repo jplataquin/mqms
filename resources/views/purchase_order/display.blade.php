@@ -206,7 +206,7 @@
         </div>
 
         <div class="row mt-5">
-            <div class="col-6 text-start">
+            <div class="col-lg-12">
             
                 @if($purchase_order->status == 'PEND')
                     <button id="deleteBtn" class="btn btn-danger">Delete</button>
@@ -215,8 +215,7 @@
                 @if($purchase_order->status == 'APRV')
                     <button id="voidBtn" class="btn btn-danger">Request Void</button>
                 @endif
-            </div>
-            <div class="col-6 text-end">
+           
                 @if($purchase_order->status == 'APRV')
                     <button id="printBtn" class="btn btn-warning">Print</button>
                 @endif
@@ -276,10 +275,10 @@
         
         if(voidBtn && printBtn){
 
-            voidBtn.onclick = (e)=>{
+            voidBtn.onclick = async (e)=>{
                 e.preventDefault();
 
-                if(!confirm('Are you sure you want to request VOID this PO?')){
+                if(! await window.util.confirm('Are you sure you want to request VOID this PO?')){
 
                     return false;
                 }
@@ -303,7 +302,6 @@
             }
 
             printBtn.onclick = (e)=>{
-                console.log('asdad');
                 window.open('/purchase_order/print/{{$purchase_order->id}}','_blank').focus();
             }
         }
