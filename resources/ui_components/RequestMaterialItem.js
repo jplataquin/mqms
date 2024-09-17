@@ -155,8 +155,7 @@ class RequestMaterialItem extends Component{
                                 type:'text',
                                 disabled:true,
                                 class:'form-control text-center',
-                                value:'',
-                                placeholder:'Calculating...'
+                                value:''
                             });
                         });                
                     });//div col
@@ -169,8 +168,7 @@ class RequestMaterialItem extends Component{
                                 type:'text',
                                 disabled:true,
                                 class:'form-control text-center',
-                                value:'',
-                                placeholder:'Calculating...'
+                                value:''
                             });
                         });              
                     });//div col
@@ -305,6 +303,8 @@ class RequestMaterialItem extends Component{
             return false;
         }
 
+        this.el.already_po.value = 'Calculating...';
+
         window.util.$get('/api/material_quantity_request/total_po_quantity',{
             material_quantity_request_item_id: this._model.id
         }).then(reply=>{
@@ -373,6 +373,8 @@ class RequestMaterialItem extends Component{
     }
 
     getApprovedQuantity(component_item_id,material_item_id){
+        
+        this.el.quantityRemaining.value = 'Calculating...';
         
         window.util.$get('/api/material_quantity_request/total_approved_quantity',{
             material_quantity_request_item_id: this._model.id,
