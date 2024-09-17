@@ -303,8 +303,9 @@
                 return false;
             }
 
-            console.log(detail.xhr.status);
-            window.util.quickNav = null;
+            if(detail.xhr.status != 404 && detail.xhr.status != 500){
+                window.util.quickNav = null;
+            }
 
             if(window.innerWidth <= 641){
                 closeNavBar();
