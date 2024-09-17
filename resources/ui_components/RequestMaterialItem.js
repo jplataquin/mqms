@@ -452,6 +452,8 @@ class RequestMaterialItem extends Component{
             this.el.materialBudgetQuantity.value    = '';
             this.el.prevApprovedQuantity.value      = '';
             this.el.requestedQuantity.value         = '';
+            this.el.balanceQuantity.value           = '';
+            this.el.already_po.value                = '';
 
             this.setState('materialBudgetQuantity','');
             this.setState('prevApprovedQuantity','');
@@ -464,12 +466,15 @@ class RequestMaterialItem extends Component{
         this.el.requestedQuantity.value         = '';
         this.el.prevApprovedQuantity.value      = '';
         this.el.balanceQuantity.value           = '';
+        this.el.already_po.value                = '';
         
         this.setState('materialBudgetQuantity',material.quantity);
         this.setState('requestedQuantity','');
         this.setState('prevApprovedQuantity','');
         
         this.getApprovedQuantity(this._state.componentItemId, material_id,true);
+
+        this.get_total_po_quantity();
     }
 }
 
