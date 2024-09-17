@@ -345,6 +345,9 @@ class RequestMaterialItem extends Component{
         this.el.prevApprovedQuantity.value      = '';
         this.el.requestedQuantity.value         = '';
         this.el.balanceQuantity.value           = '';
+        this.el.quantityRemaining.value         = '';
+        this.el.already_po.value                = '';
+        
         this.el.materialSelect.append(
             this.t.option({
                 value: ''
@@ -375,7 +378,7 @@ class RequestMaterialItem extends Component{
     getApprovedQuantity(component_item_id,material_item_id){
         
         this.el.quantityRemaining.value = 'Calculating...';
-        
+
         window.util.$get('/api/material_quantity_request/total_approved_quantity',{
             material_quantity_request_item_id: this._model.id,
             component_item_id:component_item_id,
