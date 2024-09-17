@@ -903,7 +903,7 @@ class MaterialQuantityRequestController extends Controller
         return $this->_get_total_po_quantity($material_quantity_request_item_id);
     }
 
-    public function _get_total_po_quantity($material_quantity_request_item_id, $material_quantity_id){
+    public function _get_total_po_quantity($material_quantity_request_item_id){
         
         
         $material_quantity_request_item = MaterialQuantityRequestItem::find($material_quantity_request_item_id);
