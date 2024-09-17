@@ -107,6 +107,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/material_quantity_request/update', [App\Http\Controllers\MaterialQuantityRequestController::class, '_update']);
     Route::get('/material_quantity_request/list', [App\Http\Controllers\MaterialQuantityRequestController::class, '_list']);
     Route::get('/material_quantity_request/total_approved_quantity', [App\Http\Controllers\MaterialQuantityRequestController::class, '_total_approved_quantity']);
+    Route::get('/material_quantity_request/total_po_quantity', [App\Http\Controllers\MaterialQuantityRequestController::class, 'get_total_po_quantity']);
     
 
     Route::get('/review/material_quantity_request/list', [App\Http\Controllers\Review\MaterialQuantityRequestReviewController::class, '_list']);

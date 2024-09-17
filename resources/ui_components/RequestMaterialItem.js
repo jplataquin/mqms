@@ -126,19 +126,23 @@ class RequestMaterialItem extends Component{
                                 type:'text',
                                 disabled:true,
                                 class:'form-control text-center',
-                                value:this._model.materialBudgetQuantity
+                                value: new Intl.NumberFormat().format(
+                                    this._model.materialBudgetQuantity
+                                )
                             });
                         });              
                     });
 
                     t.div({class:'col-lg-2'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Approved');
+                            t.label('Approved Request');
                             this.el.prevApprovedQuantity = t.input({
                                 type:'text',
                                 disabled:true,
                                 class:'form-control text-center',
-                                value:this._model.prevApprovedQuantity
+                                value:new Intl.NumberFormat().format(
+                                    this._model.prevApprovedQuantity
+                                )
                             });
                         })                
                     });
@@ -151,14 +155,33 @@ class RequestMaterialItem extends Component{
                                 type:'text',
                                 disabled:true,
                                 class:'form-control text-center',
-                                value:''
+                                value:'',
+                                placeholder:'Calculating...'
                             });
                         });                
-                    });
+                    });//div col
 
-                    t.div({class:'col-lg-4'},()=>{
+
+                    t.div({class:'col-lg-2'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Request Quantity');
+                            t.label('Already PO');
+                            this.el.already_po = t.input({
+                                type:'text',
+                                disabled:true,
+                                class:'form-control text-center',
+                                value:'',
+                                placeholder:'Calculating...'
+                            });
+                        });              
+                    });//div col
+                  
+                });//div row
+
+                t.div({class:'row mb-3'},()=>{
+                    
+                    t.div({class:'col-lg-6'},()=>{
+                        t.div({class:'form-group'},()=>{
+                            t.label('Request');
                            
                             this.el.requestedQuantity = t.input({
                                 type:'text',
@@ -171,12 +194,12 @@ class RequestMaterialItem extends Component{
                             }else{
                                 this.el.requestedQuantity.disabled = true;
                             }
-                        });
-                    });
+                        });//div form-group
+                    });//div col
 
-                    t.div({class:'col-lg-2'},()=>{
+                    t.div({class:'col-lg-6'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Balance Quantity');
+                            t.label('Balance');
                            
                             this.el.balanceQuantity = t.input({
                                 type:'text',
@@ -185,9 +208,11 @@ class RequestMaterialItem extends Component{
                                 disabled:true
                             });
 
-                        });
-                    });
-                });
+                        });//div
+
+                    });//div col
+
+                });//div row
 
             });//div
 
@@ -268,8 +293,23 @@ class RequestMaterialItem extends Component{
         this.el.requestedQuantity.onkeyup();
           
 
-        
+        this.get_total_po_quantity();
 
+    }
+
+    get_total_po_quantity(){
+
+        window.util.$get('/api/material_quantity_request/total_po_quantity',{
+            material_quantity_request_item_id: this._model.id
+        }).then(reply=>{
+
+            if(!reply.status){
+                window.util.showMsg(reply);
+                return false;
+            }
+
+            this.el.already_po.value =  new Intl.NumberFormat().format(reply.data.total);
+        });
     }
 
     onStateChange_editable(flag){
@@ -388,11 +428,13 @@ class RequestMaterialItem extends Component{
            
             setTimeout(()=>{
                 
-                this.el.balanceQuantity.value = window.util.roundUp( parseFloat(this.el.quantityRemaining.value) - parseFloat(newVal), 2);
+                let balance_quantity            = window.util.roundUp( parseFloat(this.el.quantityRemaining.value) - parseFloat(newVal), 2);
+                this.el.balanceQuantity.value   = new Intl.NumberFormat().format(balance_quantity);
+            
             },500);
             
         }else{
-            this.el.balanceQuantity.value = 'Calculating...';
+            this.el.balanceQuantity.value = '';
         }
         
     }

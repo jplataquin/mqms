@@ -319,4 +319,6 @@ class MaterialQuantityController extends Controller
             'data'      => []
         ]);
     }
+
+   
 }

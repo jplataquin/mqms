@@ -893,4 +893,43 @@ class MaterialQuantityRequestController extends Controller
         
         return $total_approved_quantity;
     }
+
+
+    public function get_total_po_quantity(Request $request){
+        
+        $material_quantity_request_item_id  = (int) $request->input('material_quantity_request_item_id') ?? 0;
+        
+
+        return $this->_get_total_po_quantity($material_quantity_request_item_id);
+    }
+
+    public function _get_total_po_quantity($material_quantity_request_item_id, $material_quantity_id){
+        
+        
+        $material_quantity_request_item = MaterialQuantityRequestItem::find($material_quantity_request_item_id);
+
+
+        if(!$material_quantity_request_item){
+            return [
+                'status' => 0,
+                'message' => 'Record not found',
+                'data' => [] 
+            ];
+        }
+
+ 
+        $total = PurchaseOrderItem::where('material_item_id',$material_quantity_request_item->material_item_id)
+        ->where('material_quantity_request_item_id',$material_quantity_request_item->id)
+        ->where('status','!=','REJC')
+        ->where('status','!=','VOID')
+        ->sum('quantity');
+
+        return [
+            'status' => 1,
+            'message' => '',
+            'data' => [
+                'total' => $total
+            ]
+        ];
+    }
 }
