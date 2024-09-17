@@ -300,7 +300,10 @@ class RequestMaterialItem extends Component{
     get_total_po_quantity(){
 
         //Ignore if no id
-        if(!this._model.id) return false;
+        if(!this._model.id) {
+            this.el.already_po.value = 0;
+            return false;
+        }
 
         window.util.$get('/api/material_quantity_request/total_po_quantity',{
             material_quantity_request_item_id: this._model.id
