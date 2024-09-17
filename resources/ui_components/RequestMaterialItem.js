@@ -231,7 +231,9 @@ class RequestMaterialItem extends Component{
         }
 
         this.el.requestedQuantity.onkeyup = ()=>{
-            this.setState('requestedQuantity',this.el.requestedQuantity.value,true);
+            if(this._state.editable){
+                this.setState('requestedQuantity',this.el.requestedQuantity.value,true);
+            }
         }
 
         this.el.requestedQuantity.onkeypress = (e)=>{
@@ -407,7 +409,7 @@ class RequestMaterialItem extends Component{
             this.el.prevApprovedQuantity.value = reply.data.total_approved_quantity;
 
             let budget                         = window.util.parseNumber(this.el.materialBudgetQuantity.value);
-            let approved                       = window.util.parseNumber(reply.data.total_approved_quantity);
+            let approved                       = reply.data.total_approved_quantity;
             let balance                        = budget - approved;
             let request                        = window.util.parseNumber(this.el.requestedQuantity.value);
             this.el.quantityRemaining.value    = window.util.roundUp(balance,2);
@@ -419,7 +421,7 @@ class RequestMaterialItem extends Component{
 
             //Highlight over budget of request in review 
             if(
-                !this._model.editable &&
+                !this._state.editable &&
                 budget > approved &&
                 balance < request
             ){
