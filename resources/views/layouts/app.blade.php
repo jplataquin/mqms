@@ -303,6 +303,7 @@
                 return false;
             }
 
+            console.log(xhr);
             window.util.quickNav = null;
 
             if(window.innerWidth <= 641){
