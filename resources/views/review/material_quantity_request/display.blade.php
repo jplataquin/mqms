@@ -13,17 +13,11 @@
                 </a>
             </li>
             <li>
-                <a href="/review/material_requests">
+                <a href="/review/material_requests" class="active">
                     <span>
                        Material Requests
                     </span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="active">
-                    <span>
-                        Display
-                    </span>	
+                    
                     <i class="ms-2 bi bi-display"></i>	
                 </a>
             </li>
@@ -70,11 +64,6 @@
                 </tbody>
             </table>
 
-            <div class="row mt-3">
-                <div class="col-12 text-end">
-                    <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
-                </div>
-            </div>
         </div>
     </div>
     <div id="itemContainer"></div>
@@ -90,6 +79,9 @@
             @if($material_quantity_request->status == 'PEND')
                 <button class="btn btn-warning" id="approveBtn">Approve</button>
             @endif
+
+            <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+            
         </div>
     </div>
 

@@ -134,6 +134,7 @@ html, body {
 /*** Sidebar ***/
 #side-bar-container{
   width:250px;
+  z-index:800;
 }
 
 #sidebar{
