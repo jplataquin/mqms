@@ -119,7 +119,7 @@ class RequestMaterialItem extends Component{
 
                 t.div({class:'row mt-3'},()=>{
                     
-                    t.div({class:'col-lg-2'},()=>{
+                    t.div({class:'col-lg-3'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Budget');
                             this.el.materialBudgetQuantity = t.input({
@@ -133,7 +133,7 @@ class RequestMaterialItem extends Component{
                         });              
                     });
 
-                    t.div({class:'col-lg-2'},()=>{
+                    t.div({class:'col-lg-3'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Approved Request');
                             this.el.prevApprovedQuantity = t.input({
@@ -148,7 +148,7 @@ class RequestMaterialItem extends Component{
                     });
 
 
-                    t.div({class:'col-lg-2'},()=>{
+                    t.div({class:'col-lg-3'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Remaining');
                             this.el.quantityRemaining = t.input({
@@ -162,7 +162,7 @@ class RequestMaterialItem extends Component{
                     });//div col
 
 
-                    t.div({class:'col-lg-2'},()=>{
+                    t.div({class:'col-lg-3'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Already PO');
                             this.el.already_po = t.input({
