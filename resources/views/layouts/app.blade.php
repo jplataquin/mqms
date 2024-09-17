@@ -330,7 +330,7 @@
                     }
 
                     if(!url){
-                        return false;
+                        return true;
                     }
 
                     let prompt_msg = '';
@@ -343,7 +343,10 @@
 
                     let ans = prompt(prompt_msg);
                     
-                    window.util.navTo(url+'/'+ans);
+                    if(ans){
+                        window.util.navTo(url+'/'+ans);
+                    }
+                    
                     return true;
                 }
                 
