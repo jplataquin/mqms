@@ -327,7 +327,7 @@ class RequestMaterialItem extends Component{
             prev_approved = isNaN(prev_approved) ? 0 : prev_approved;
             total_budget  = isNaN(total_budget) ? 0 : total_budget;
 
-            if(reply.data.total > prev_approved || reply.data.total > total_budget){
+            if(reply.data.total > total_budget){
                 this.el.already_po.classList.add('is-invalid');
             }
         });
