@@ -301,7 +301,7 @@ class RequestMaterialItem extends Component{
 
         //Ignore if no id
         if(!this._model.id) {
-            this.el.already_po.value = 0;
+            this.el.already_po.value = '';
             return false;
         }
 
@@ -434,7 +434,7 @@ class RequestMaterialItem extends Component{
                 }else{
                     this.el.balanceQuantity.value = '';
                 }
-                
+
             },500);
             
         }else{
