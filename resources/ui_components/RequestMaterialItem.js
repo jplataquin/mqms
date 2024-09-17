@@ -426,6 +426,8 @@ class RequestMaterialItem extends Component{
            
             setTimeout(()=>{
                 
+                console.log(this.el.quantityRemaining.valueAsNumber, newVal);
+                
                 let balance_quantity            = window.util.roundUp( this.el.quantityRemaining.valueAsNumber - parseFloat(newVal), 2);
                 
                 this.el.balanceQuantity.value   = new Intl.NumberFormat().format(balance_quantity);
