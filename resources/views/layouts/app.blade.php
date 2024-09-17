@@ -267,9 +267,9 @@
                 //     closeNavBar();
                 // }
 
-                setTimeout(()=>{
-                    window.scrollTo(0,0);
-                },1000);
+                // setTimeout(()=>{
+                //     window.scrollTo(0,0);
+                // },1000);
                 
             }
         });
@@ -318,9 +318,32 @@
 
                 
                 if(window.util.quickNav){
-                    let ans = prompt('Nav to: '+window.util.quickNav);
-                    console.log(window.util.quickNav+'/'+ans);
-                    window.util.navTo(window.util.quickNav+'/'+ans);
+
+                    let url = '';
+                    let title = '';
+
+                    if(typeof window.util.quickNav == 'object'){
+                        url     = window.util.quickNav.url.trim() ?? '';
+                        title   = window.util.quickNav.title.trim() ?? '';
+                    }else{
+                        url = window.util.quickNav.trim();
+                    }
+
+                    if(!url){
+                        return false;
+                    }
+
+                    let prompt_msg = '';
+
+                    if(title){
+                        prompt_msg = title+"\n";
+                    }
+
+                    promt_msg += 'Nav to: '+url;
+
+                    let ans = prompt(promt_msg);
+                    
+                    window.util.navTo(url+'/'+ans);
                     return true;
                 }
                 
