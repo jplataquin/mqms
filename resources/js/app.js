@@ -540,7 +540,7 @@ window.util.navReload = function(){
 
 
 window.util.parseNumber = function(str){
-    str = str.trim();
+    str = str+''.trim();
     str = str.replace(/,/g, '');
     str = parseFloat(str);
 
