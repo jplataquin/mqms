@@ -372,21 +372,13 @@ class RequestMaterialItem extends Component{
      
     }
 
-    getApprovedQuantity(component_item_id,material_item_id,blockUI){
-        
-        if(blockUI){
-            window.util.blockUI();
-        }
+    getApprovedQuantity(component_item_id,material_item_id){
         
         window.util.$get('/api/material_quantity_request/total_approved_quantity',{
             material_quantity_request_item_id: this._model.id,
             component_item_id:component_item_id,
             material_item_id: material_item_id
         }).then(reply=>{
-
-            if(blockUI){
-                window.util.unblockUI();
-            }
 
             if(reply.status <= 0){
                 window.util.showMsg(reply.message);
@@ -478,7 +470,7 @@ class RequestMaterialItem extends Component{
         this.setState('requestedQuantity','');
         this.setState('prevApprovedQuantity','');
         
-        this.getApprovedQuantity(this._state.componentItemId, material_id,true);
+        this.getApprovedQuantity(this._state.componentItemId, material_id);
 
         this.get_total_po_quantity();
     }
