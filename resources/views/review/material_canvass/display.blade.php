@@ -164,7 +164,12 @@
     let supplierList        = null;
     let paymentTermsList    = null;
     let container           = null;
-                
+    
+    window.util.quickNav = {
+        title:'Review Material Canvass',
+        url: '/review/material_canvass'
+    };
+    
     @foreach($items as $item)
 
     
