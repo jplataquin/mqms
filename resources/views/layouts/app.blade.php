@@ -293,17 +293,17 @@
 
         //Detect htmx erros
         htmx.on("htmx:beforeOnLoad", function (event) {
-            const xhr = event.detail;
+            let detail = event.detail;
             
             //Catch logout scenario
-            if(xhr.pathInfo.responsePath == '/login'){  
+            if(detail.pathInfo.responsePath == '/login'){  
                
                 event.stopPropagation(); // Tell htmx not to process these requests
                 document.location.href = '/login';
                 return false;
             }
 
-            console.log(xhr);
+            console.log(detail.xhr.status);
             window.util.quickNav = null;
 
             if(window.innerWidth <= 641){
