@@ -114,7 +114,7 @@
 
 
     <div class="row mt-5 mb-3">
-        <div class="col-lg-12 text-end shadow bg-white rounded footer-action-menu p-3">
+        <div class="col-lg-12 text-end shadow bg-white rounded footer-action-menu p-2">
            
             <button class="btn-primary btn" id="showPOBtn">PO List</button>
             <button class="btn-warning btn" id="printBtn">Print</button>
