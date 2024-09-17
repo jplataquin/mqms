@@ -114,7 +114,13 @@ class MaterialCanvassReviewController extends Controller
         $component_item_id      = [];
 
         //Arrange IDs for easy query
-        foreach($items as $item){
+        foreach($items as $k => $item){
+            
+            if(!count($item->MaterialCanvass)){
+                $items->forget($k);
+                continue;
+            }
+
             $component_item_id[]    = $item->component_item_id; 
             $material_quantity_id[] = $item->material_quantity_id;
             $material_item_id[]     = $item->material_item_id;

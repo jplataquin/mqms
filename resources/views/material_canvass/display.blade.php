@@ -72,52 +72,48 @@
     
     <div class="mt-5">
         @foreach($items as $item)
+        <div class="border border-primary p-3 mb-3">
+            <div class="row mb-5">
+               <h5>  {{ $component_item_arr[ $item->component_item_id ]->name }}</h5>
+                @php 
+                    $component_item = $component_item_arr[ $item->component_item_id ];
+                    $material_item = $material_item_arr[$item->material_item_id];
+                @endphp
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Material</label>
+                        <input type="text" class="form-control" disabled="true" value="{{$material_item->brand}} {{$material_item->name}} {{$material_item->specification_unit_packaging}}"/>
+                    </div>
+                </div>
 
-            @if(count($payment_terms))
-                <div class="border border-primary p-3 mb-3">
-                    <div class="row mb-5">
-                    <h5>  {{ $component_item_arr[ $item->component_item_id ]->name }}</h5>
-                        @php 
-                            $component_item = $component_item_arr[ $item->component_item_id ];
-                            $material_item = $material_item_arr[$item->material_item_id];
-                        @endphp
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>Material</label>
-                                <input type="text" class="form-control" disabled="true" value="{{$material_item->brand}} {{$material_item->name}} {{$material_item->specification_unit_packaging}}"/>
+                <div class="col-lg-3">
+                    <label>Quantity</label>
+                    <input type="text" class="form-control" disabled="true" value="{{ $item->requested_quantity }}"/>
+                </div>
+                <div class="col-lg-3">
+                    <label>Budget Price</label>
+                    <input type="text" class="form-control" disabled="true" value="P {{ number_format($component_item->budget_price,2) }}"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 canvass-container" >
+                    <div class="folder-form-container">
+                        <div class="folder-form-tab">Canvass Items</div>
+                        <div class="folder-form-body" >
+                            <div id="canvass_{{$item->id}}"></div>
+                            <div class="text-end mt-3">
+                                <button data-id="{{$item->id}}" class="add-canvass-btn btn btn-primary">
+                                    <i class="bi bi-plus-circle"></i>
+                                    Add
+                                </button>
                             </div>
                         </div>
-
-                        <div class="col-lg-3">
-                            <label>Quantity</label>
-                            <input type="text" class="form-control" disabled="true" value="{{ $item->requested_quantity }}"/>
-                        </div>
-                        <div class="col-lg-3">
-                            <label>Budget Price</label>
-                            <input type="text" class="form-control" disabled="true" value="P {{ number_format($component_item->budget_price,2) }}"/>
-                        </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-lg-12 canvass-container" >
-                            <div class="folder-form-container">
-                                <div class="folder-form-tab">Canvass Items</div>
-                                <div class="folder-form-body" >
-                                    <div id="canvass_{{$item->id}}"></div>
-                                    <div class="text-end mt-3">
-                                        <button data-id="{{$item->id}}" class="add-canvass-btn btn btn-primary">
-                                            <i class="bi bi-plus-circle"></i>
-                                            Add
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>   
-            @endif
-            
+                </div>
+                
+            </div>
+        </div>   
         @endforeach
 
         <datalist id="supplier_list">
