@@ -114,20 +114,27 @@
 <script type="module">
     import {$q,Template,$el,$util} from '/adarna.js';
 
-    let list            = $q('#list').first();
-    let query           = $q('#query').first();
-    let projectSelect   = $q('#projectSelect').first();
-    let sectionSelect   = $q('#sectionSelect').first();
-    let componentSelect = $q('#componentSelect').first();
+    const list            = $q('#list').first();
+    const query           = $q('#query').first();
+    const projectSelect   = $q('#projectSelect').first();
+    const sectionSelect   = $q('#sectionSelect').first();
+    const componentSelect = $q('#componentSelect').first();
  
-    let searchBtn       = $q('#searchBtn').first();
-    let showMoreBtn     = $q('#showMoreBtn').first();
-    let sortSelect      = $q('#sortSelect').first();
-    let cancelBtn       = $q('#cancelBtn').first();
-    let createBtn       = $q('#createBtn').first();
+    const searchBtn       = $q('#searchBtn').first();
+    const showMoreBtn     = $q('#showMoreBtn').first();
+    const sortSelect      = $q('#sortSelect').first();
+    const cancelBtn       = $q('#cancelBtn').first();
+    const createBtn       = $q('#createBtn').first();
+    
     let page            = 1;
     let order           = 'DESC';
     let orderBy         = 'id';
+
+
+    window.util.quickNav = {
+        title:'Review Material Canvass',
+        url: '/review/material_canvass'
+    };
 
     const t = new Template();
 
