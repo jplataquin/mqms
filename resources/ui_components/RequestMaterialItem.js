@@ -164,7 +164,7 @@ class RequestMaterialItem extends Component{
 
                     t.div({class:'col-lg-3'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Already PO');
+                            t.label("Already PO'd");
                             this.el.already_po = t.input({
                                 type:'text',
                                 disabled:true,
