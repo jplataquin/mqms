@@ -54,7 +54,7 @@ class RequestMaterialItem extends Component{
                 this.el.deleteRow = t.div({class:'row',style:{
                     display: (this._model.editable) ? 'inline' : 'none'
                 }},()=>{
-                    t.div({class:'col-12 text-end'},()=>{
+                    t.div({class:'col-lg-12 text-end'},()=>{
                         this.el.deleteBtn = t.a({href:'#'},()=>{
                             t.i({class:'bi bi-x-circle'});
                         });
@@ -62,7 +62,7 @@ class RequestMaterialItem extends Component{
                 });
 
                 t.div({class:'row'},()=>{
-                    t.div({class:'col-12'},()=>{
+                    t.div({class:'col-lg-12'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Component Item');
                             
@@ -93,7 +93,7 @@ class RequestMaterialItem extends Component{
                 })//div row
 
                 t.div({class:'row mt-3'},()=>{
-                    t.div({class:'col-12'},()=>{
+                    t.div({class:'col-lg-12'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Material');
                             
@@ -174,7 +174,7 @@ class RequestMaterialItem extends Component{
                         });
                     });
 
-                    t.div({class:'col-2'},()=>{
+                    t.div({class:'col-lg-2'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Balance Quantity');
                            
