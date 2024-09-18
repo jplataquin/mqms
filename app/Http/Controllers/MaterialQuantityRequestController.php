@@ -652,12 +652,26 @@ class MaterialQuantityRequestController extends Controller
             ]);
         }
 
+
+        //Prepare existing items for checking of deleted items later
+        $existing_items = $materialQuantityRequest->Items;
+        $existing_items_arr = [];
+
+        foreach($existing_items $ex_item){
+            $existing_items_arr[] = $ex_item->id;
+        }
+
+        //Extra validation for dobule entry, deleted ites and po quantity validation
         $doubleEntry = [];
+        $items_arr   = [];
 
         foreach($items as $item){
 
             $item['component_item_id']      = (int) $item['component_item_id'];
             $item['material_item_id']       = (int) $item['material_item_id'];
+            $item['id']                     = (int) $item['id']; 
+
+            $items_arr[] = $item['id'];
 
 
             //check for double entry
@@ -673,6 +687,76 @@ class MaterialQuantityRequestController extends Controller
 
             }else{
                 $doubleEntry[] = $check;
+            }
+        }
+
+        //TODO this requires testing
+        //Validate deleted items
+        foreach($existing_items_arr as $ex_id){
+
+            //if existing entry is not in input and not in deleted haystack
+            if(!in_array($ex_id,$items_arr) && !in_array($ex_id,$delete_items)){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Unaccounted deleted entry',
+                    'data'      => []
+                ]);
+            }
+        }
+
+        //PO quantity validation for input
+        foreach($items as $item){
+            $item['id']                    = (int) $item['id'];
+            $item['requested_quantity']    = (float) $item['requested_quantity'];
+
+            if(!$item['id']) continue;
+
+            $po_result = $this->_get_total_po_quantity($item['id']);
+
+            if($po_result['status'] <= 0){
+                
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'PO quantity error',
+                    'data'      => $po_result
+                ]);
+            }
+
+            if($item['requested_quantity'] < $po_result['data']['total']){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => "An item entry quantity cannot be lower than what was already been PO'd",
+                    'data'      => [
+                        'item_id'               => $item['id'],
+                        'requested_quantity'    => $item['requested_quantity'],
+                        'po_quantity'           => $po_result['data']['total'] 
+                    ]
+                ]);
+            }
+        }
+
+        //PO quantity validation for deleted items
+        foreach($delete_items as $del_item_id){
+
+            $del_item_id = (int) $del_item_id;
+
+            $po_result = $this->_get_total_po_quantity($del_item_id);
+
+            if($po_result['status'] <= 0){
+                
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'PO quantity error',
+                    'data'      => $po_result
+                ]);
+            }
+
+            if($po_result['data']['total'] > 0){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => "An item entry cannot be deleted because it has a maintained PO quantity",
+                    'data'      => []
+                ]);
             }
         }
 
@@ -901,7 +985,9 @@ class MaterialQuantityRequestController extends Controller
         $material_quantity_request_item_id  = (int) $request->input('material_quantity_request_item_id') ?? 0;
         
 
-        return $this->_get_total_po_quantity($material_quantity_request_item_id);
+        $result = $this->_get_total_po_quantity($material_quantity_request_item_id);
+
+        return response()->json($result);
     }
 
     public function _get_total_po_quantity($material_quantity_request_item_id){
@@ -932,5 +1018,67 @@ class MaterialQuantityRequestController extends Controller
                 'total' => $total
             ]
         ];
+    }
+
+    public function _revert_to_pending(Request $request){
+
+        $id = (int) $request->input('id') ?? 0;
+
+        $material_quantity_request = MaterialQuantityRequest::find($id);
+
+        if(!$material_quantity_request){
+            return [
+                'status'    => 0,
+                'message'   => 'Record not found',
+                'data'      => []
+            ];
+        }
+
+        if($material_quantity_request->status != 'APRV'){
+            return [
+                'status'    => 0,
+                'message'   => 'Material Request is not in Approved status',
+                'data'      => []
+            ];
+        }
+
+        $user_id    = Auth::user()->id;
+
+        DB::beginTransaction();
+
+        try {  
+
+            DB::table('material_quantity_request_items')
+            ->where('material_quantity_request_id',$id)
+            ->update([
+                'status' => 'PEND'
+            ]);
+
+            $material_quantity_request->status      = 'PEND';
+            $material_quantity_request->updated_by  = $user_id
+            $material_quantity_request->save();
+
+            DB::commit();
+
+            return response()->json([
+                'status'    => 1,
+                'message'   => '',
+                'data'      => []
+            ]);
+
+        }catch(\Exception $e){
+
+            return response()->json([
+                'status'    => 0,
+                'message'   => $e->getMessage(),
+                'data'      => []
+            ]);
+
+            DB::rollback();
+
+            return false;
+            
+         }
+
     }
 }

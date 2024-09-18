@@ -8,7 +8,7 @@
             <li>
                 <a href="/material_quantity_requests">
                     <span>
-                       Material Request
+                       Material Requests
                     </span>
                 </a>
             </li>

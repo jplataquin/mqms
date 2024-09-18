@@ -115,15 +115,21 @@
 
     <div class="row mt-5 mb-3">
         <div class="col-lg-12 text-end shadow bg-white rounded footer-action-menu p-2">
-           
+
             <button class="btn-primary btn" id="showPOBtn">PO List</button>
             <button class="btn-warning btn" id="printBtn">Print</button>
-            <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
-
+            
             @if($material_quantity_request->status == 'PEND')
                 <button class="btn btn-primary" id="editBtn">Edit</button>
                 <button class="btn btn-warning d-none" id="updateBtn">Update</button>
             @endif
+            
+            @if($material_quantity_request->status == 'APRV')
+                <button class="btn btn-danger" id="revertPendBtn">Revert to Pending</button>
+            @endif
+
+            <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+
         </div>
     </div>
 
@@ -138,6 +144,8 @@
     const cancelBtn     = $q('#cancelBtn').first();
     const description   = $q('#description').first();
     const printBtn      = $q('#printBtn').first();
+    const revertPendBtn = $q('#revertPendBtn').first();
+      
     let count         = 0;
     let deleteItems   = [];
     
@@ -151,6 +159,28 @@
         url:'/material_quantity_request'
     };
     
+    revertPendBtn.onclick = async (e)=>{
+        
+        if(! await window.util.confirm('Are you sure you want to rever this request to PENDING status?')){
+            return false;
+        }
+
+        window.util.blockUI();
+
+        window.util.$post('/api/material_quantity_request/revert_to_pending',{
+            id:'{{$material_quantity_request->id}}'
+        }).then(reply=>{
+            
+            window.util.unblockUI();
+
+            if(reply.status <= 0){
+                window.util.showMsg(reply);
+                return false;
+            }
+
+            window.util.navReload();
+        });
+    }
 
     printBtn.onclick = (e)=>{
         window.open('/material_quantity_request/print/{{$material_quantity_request->id}}','_blank').focus();
@@ -173,14 +203,14 @@
             unitOptions            : unit_options
         });
 
-        itemForm.handler.deleteCallback((dom)=>{
+        itemForm.handler.deleteCallback(async (dom)=>{
             
             if(count == 1){
                 alert('At least one item must remain');
                 return false;
             }
 
-            if(confirm('Are you sure you want to delete this item?')){
+            if(await window.util.confirm('Are you sure you want to delete this item?')){
                 deleteItems.push(dom.handler.getValues().id);
                 $el.remove(dom);
             }
@@ -201,7 +231,7 @@
         e.preventDefault();
 
         if(count >= 6){
-            alert('Maximum of 6 items per request');
+            window.util.alert('Error','Maximum of 6 items per request');
             return false;
         }
 
@@ -211,14 +241,14 @@
             materialList:       @json($material_options)
         });
 
-        item.handler.deleteCallback((dom)=>{
+        item.handler.deleteCallback(async (dom)=>{
                 
             if(count == 1){
                 alert('At least one item must remain');
                 return false;
             }
 
-            if(confirm('Are you sure you want to delete this item?')){
+            if(await window.util.confirm('Are you sure you want to delete this item?')){
                 $el.remove(dom);
                 setTimeout(()=>{
                     setIndexNumber();
