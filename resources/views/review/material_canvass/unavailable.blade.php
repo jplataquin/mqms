@@ -25,13 +25,13 @@
     </div>
     <hr>
 
-    <table class="table-record-horizontal">
+    <table class="record-table-horizontal">
         <tbody>
             
             <tr>
                 <th>Project ID</th>
                 <td>
-                    {{ str_pad($project->name,0,6,STR_PAD_LEFT) }}
+                    {{ str_pad($project->id,0,6,STR_PAD_LEFT) }}
                 </td>
             </tr>
             <tr>
