@@ -100,21 +100,21 @@ class MaterialCanvassReviewController extends Controller
         
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($id);
 
-        if($materialQuantityRequest->status != 'APRV'){
-            return abort(404);
-        }
 
         $project                = $materialQuantityRequest->Project;
         $section                = $materialQuantityRequest->Section;
         $contract_item          = $materialQuantityRequest->ContractItem;
         $component              = $materialQuantityRequest->Component;
       
-        if($project->status != 'APRV'){
-            return abort(404);
-        }
-
-        if($component->status != 'APRV'){
-            return abort(404);
+        if($project->status != 'APRV' || $component->status != 'APRV' $materialQuantityRequest->status != 'APRV'){
+            return view('review/material_canvass/unavailable',[
+                'project'           => $project,
+                'section'           => $section,
+                'contract_item'     => $contract_item,
+                'component'         => $component,
+                'material_request'  => $materialQuantityRequest,
+                'message'           => 'Record Unmaintained'
+            ]);
         }
 
         $items                  = $materialQuantityRequest->Items()->with('MaterialCanvass')->get();
