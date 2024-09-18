@@ -91,26 +91,30 @@ window.util.prompt = (msg,callback) => {
     window.ui.primaryModalFooter.innerHTML   = '';
 
     window.ui.primaryModalTitle.innerText = 'Prompt';
-    window.ui.primaryModalBody.innerText = msg;
 
-    let no  = t.button({class:'btn btn-danger me-3'},'No');
-    let yes = t.button({class:'btn btn-success'},'Yes');
+    let input   = t.input({class:'form-control',type:'text'});
+    let ok      = t.button({class:'btn btn-primary'},'Submit');
+    let cancel  = t.button({class:'btn btn-secondary'},'Cancel');
 
-    yes.onclick = (e)=>{
-        callback(e,true);
+    ok.onclick = (e)=>{
+        callback(input.value,e);
         window.ui.primaryModal.hide();
     }
 
-    no.onclick = (e)=>{
-        callback(e,false);
+    cancel.onclick = (e)=>{
         window.ui.primaryModal.hide();
     }
 
     let footer = t.div({class:'text-end'},(el)=>{
-        el.appendChild(no);
-        el.appendChild(yes);
+        el.appendChild(cancel);
+        el.appendChild(ok);
     });
 
+    window.ui.primaryModalBody.appendChild(t.div({class:'form-group'},(el)=>{
+        t.label(msg);
+        el.append(input);
+    }));
+    
     window.ui.primaryModalFooter.appendChild(footer);
 
     window.ui.primaryModal.show();
