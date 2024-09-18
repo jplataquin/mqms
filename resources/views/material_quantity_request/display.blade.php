@@ -159,28 +159,32 @@
         url:'/material_quantity_request'
     };
     
-    revertPendBtn.onclick = async (e)=>{
-        
-        if(! await window.util.confirm('Are you sure you want to rever this request to PENDING status?')){
-            return false;
-        }
-
-        window.util.blockUI();
-
-        window.util.$post('/api/material_quantity_request/revert_to_pending',{
-            id:'{{$material_quantity_request->id}}'
-        }).then(reply=>{
+    if(revertPendBtn){
+       
+        revertPendBtn.onclick = async (e)=>{
             
-            window.util.unblockUI();
-
-            if(reply.status <= 0){
-                window.util.showMsg(reply);
+            if(! await window.util.confirm('Are you sure you want to rever this request to PENDING status?')){
                 return false;
             }
 
-            window.util.navReload();
-        });
-    }
+            window.util.blockUI();
+
+            window.util.$post('/api/material_quantity_request/revert_to_pending',{
+                id:'{{$material_quantity_request->id}}'
+            }).then(reply=>{
+                
+                window.util.unblockUI();
+
+                if(reply.status <= 0){
+                    window.util.showMsg(reply);
+                    return false;
+                }
+
+                window.util.navReload();
+            });
+        }
+
+    }//if
 
     printBtn.onclick = (e)=>{
         window.open('/material_quantity_request/print/{{$material_quantity_request->id}}','_blank').focus();
