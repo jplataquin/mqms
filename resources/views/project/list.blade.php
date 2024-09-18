@@ -105,7 +105,7 @@
 
                         t.div({class:'col-lg-6'},()=>{
 
-                            t.span( item.id+''.padStart(6,'0') );
+                            t.span( String(item.id).padStart(6,'0') );
 
                         });//div col
 
