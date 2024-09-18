@@ -118,17 +118,6 @@
                             <input type="text" class="form-control" disabled="true" value="P {{ number_format($component_item->budget_price,2) }}"/>
                         </div>
                     </div>
-
-                    <div class="folder-form-container">
-                        <div class="folder-form-tab">
-                            Canvass Items
-                        </div>
-                        <div class="folder-form-body">
-                            <div class="row">
-                                <div class="col-12"></div>
-                            </div>
-                        </div>
-                    </div>
                     
                     <div class="canvass-container" id="canvass_{{$item->id}}"></div>
                 
