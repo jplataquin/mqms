@@ -30,7 +30,13 @@
         </div>
         <div class="folder-form-body">
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Query</label>
+                        <input type="text" id="query" class="form-control"/>
+                    </div>
+                </div>
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label>Sort By</label>
                         <select class="form-control" id="sortSelect">
@@ -41,25 +47,12 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label>Query</label>
-                        <input type="text" id="query" class="form-control"/>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 mb-3 text-end">
+                       <button id="createBtn" class="btn btn-warning">Create</button>
+                       <button id="searchBtn" class="btn btn-primary">Search</button> 
                 </div>
-                <div class="col-lg-2">
-                    <div class="form-group">
-                        <label>&nbsp;</label>
-                        <button id="searchBtn" class="btn w-100 btn-primary">Search</button>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="form-group">
-                        <label>&nbsp;</label>
-                        <button id="createBtn" class="btn w-100 btn-warning">Create</button>
-                    </div>
-                </div>
-                
             </div>
         </div>
     </div>
@@ -92,6 +85,7 @@
         title:'Project',
         url:'/project'
     };
+    
     const t = new Template();
     
     function reinitalize(){
@@ -104,9 +98,27 @@
         data.map(item=>{
 
             let row = t.div({class:'item-container fade-in'},()=>{
+
                 t.div({class:'item-header'},item.name);
-                t.div({class:'item-body'});
-            });
+                t.div({class:'item-body'},()=>{
+                    t.div({class:'row'},()=>{
+
+                        t.div({class:'col-lg-6'},()=>{
+
+                            t.span( item.id+''.padStart(6,0) );
+
+                        });//div col
+
+                        t.div({class:'col-lg-6'},()=>{
+
+                            t.span( item.status );
+
+                        });//div col
+
+                    });//div row
+                });//div
+            
+            });//div
 
             row.onclick = ()=>{
                 window.util.navTo('/project/'+item.id);
@@ -149,11 +161,22 @@
             
         });
     }
-   
-    searchBtn.onclick = ()=>{
+    
+    function runQuery(){
         showMoreBtn.style.display = 'block';
         reinitalize();
         showData();
+    }
+
+    query.onkeypress = (e)=>{
+        if (e.key === "Enter") {
+            runQuery();
+        }
+    }
+
+
+    searchBtn.onclick = ()=>{
+        runQuery();
     }
 
     showMoreBtn.onclick = ()=>{
@@ -161,7 +184,6 @@
     }
 
     sortSelect.onchange = ()=>{
-        reinitalize();
 
         let select = parseInt(sortSelect.value);
 
@@ -184,7 +206,7 @@
             break;
         }
 
-        showData();
+        runQuery();
     }
 
     createBtn.onclick = ()=>{
