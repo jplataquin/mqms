@@ -84,40 +84,47 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 window.util.prompt = (msg,callback) => {
 
-    window.ui.primaryModal.hide();
+    let promise = new Promise((resolve,reject)=>{
 
-    window.ui.primaryModalTitle.innerHTML    = '';
-    window.ui.primaryModalBody.innerHTML     = '';
-    window.ui.primaryModalFooter.innerHTML   = '';
-
-    window.ui.primaryModalTitle.innerText = 'Prompt';
-
-    let input   = t.input({class:'form-control',type:'text'});
-    let ok      = t.button({class:'btn btn-primary'},'Submit');
-    let cancel  = t.button({class:'btn btn-secondary'},'Cancel');
-
-    ok.onclick = (e)=>{
-        callback(input.value,e);
+    
         window.ui.primaryModal.hide();
-    }
 
-    cancel.onclick = (e)=>{
-        window.ui.primaryModal.hide();
-    }
+        window.ui.primaryModalTitle.innerHTML    = '';
+        window.ui.primaryModalBody.innerHTML     = '';
+        window.ui.primaryModalFooter.innerHTML   = '';
 
-    let footer = t.div({class:'text-end'},(el)=>{
-        el.appendChild(cancel);
-        el.appendChild(ok);
+        window.ui.primaryModalTitle.innerText = 'Prompt';
+
+        let input   = t.input({class:'form-control',type:'text'});
+        let ok      = t.button({class:'btn btn-primary'},'Submit');
+        let cancel  = t.button({class:'btn btn-secondary'},'Cancel');
+
+        ok.onclick = ()=>{
+            resolve(input.value);
+            window.ui.primaryModal.hide();
+        }
+
+        cancel.onclick = ()=>{
+            resolve('');
+            window.ui.primaryModal.hide();
+        }
+
+        let footer = t.div({class:'text-end'},(el)=>{
+            el.appendChild(cancel);
+            el.appendChild(ok);
+        });
+
+        window.ui.primaryModalBody.appendChild(t.div({class:'form-group'},(el)=>{
+            t.label(msg);
+            el.append(input);
+        }));
+        
+        window.ui.primaryModalFooter.appendChild(footer);
+
+        window.ui.primaryModal.show();
     });
 
-    window.ui.primaryModalBody.appendChild(t.div({class:'form-group'},(el)=>{
-        t.label(msg);
-        el.append(input);
-    }));
-    
-    window.ui.primaryModalFooter.appendChild(footer);
-
-    window.ui.primaryModal.show();
+    return promise;
 }
 
 
