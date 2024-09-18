@@ -84,10 +84,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 window.util.prompt = (msg,callback) => {
 
+    if(!callback){
+        callback = function(a){ return a;};
+    }
+
     let promise = new Promise((resolve,reject)=>{
 
         let t = new Template();
-        
+
         window.ui.primaryModal.hide();
 
         window.ui.primaryModalTitle.innerHTML    = '';
