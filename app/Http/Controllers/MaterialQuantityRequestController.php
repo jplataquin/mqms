@@ -1056,7 +1056,7 @@ class MaterialQuantityRequestController extends Controller
             ]);
 
             $material_quantity_request->status      = 'PEND';
-            $material_quantity_request->updated_by  = $user_id
+            $material_quantity_request->updated_by  = $user_id;
             $material_quantity_request->save();
 
             DB::commit();
