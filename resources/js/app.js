@@ -110,8 +110,9 @@ window.util.prompt = (msg,callback) => {
         }
 
         let footer = t.div({class:'text-end'},(el)=>{
-            el.appendChild(cancel);
             el.appendChild(ok);
+            el.appendChild(cancel);
+            
         });
 
         window.ui.primaryModalBody.appendChild(t.div({class:'form-group'},(el)=>{
