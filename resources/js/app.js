@@ -86,7 +86,8 @@ window.util.prompt = (msg,callback) => {
 
     let promise = new Promise((resolve,reject)=>{
 
-    
+        let t = new Template();
+        
         window.ui.primaryModal.hide();
 
         window.ui.primaryModalTitle.innerHTML    = '';

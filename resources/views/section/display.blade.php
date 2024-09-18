@@ -235,8 +235,7 @@
     deleteBtn.onclick = async ()=>{
 
         let answer = await window.util.prompt('Are you sure you want to delete this Section? \n If so please type "{{$section->name}}"');
-        alert(answer);
-        return false;
+       
         if(answer != "{{$section->name}}"){
             window.util.alert('Error','Invalid answer');
             return false;
