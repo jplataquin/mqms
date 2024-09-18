@@ -101,11 +101,13 @@ window.util.prompt = (msg,callback) => {
 
         ok.onclick = ()=>{
             resolve(input.value);
+            callback(input.value);
             window.ui.primaryModal.hide();
         }
 
         cancel.onclick = ()=>{
             resolve('');
+            callback('');
             window.ui.primaryModal.hide();
         }
 
