@@ -106,7 +106,7 @@ class MaterialCanvassReviewController extends Controller
         $contract_item          = $materialQuantityRequest->ContractItem;
         $component              = $materialQuantityRequest->Component;
       
-        if($project->status != 'APRV' || $component->status != 'APRV' || $materialQuantityRequest->status != 'APRV'){
+        if($project->status != 'ACTV' || $component->status != 'APRV' || $materialQuantityRequest->status != 'APRV'){
             return view('review/material_canvass/unavailable',[
                 'project'           => $project,
                 'section'           => $section,
