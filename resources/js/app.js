@@ -96,7 +96,7 @@ window.util.prompt = (msg,callback) => {
         window.ui.primaryModalTitle.innerText = 'Prompt';
 
         let input   = t.input({class:'form-control',type:'text'});
-        let ok      = t.button({class:'btn btn-primary'},'Submit');
+        let ok      = t.button({class:'btn btn-primary me-3'},'Submit');
         let cancel  = t.button({class:'btn btn-secondary'},'Cancel');
 
         ok.onclick = ()=>{
