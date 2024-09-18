@@ -654,10 +654,10 @@ class MaterialQuantityRequestController extends Controller
 
 
         //Prepare existing items for checking of deleted items later
-        $existing_items = $materialQuantityRequest->Items;
+        $existing_items     = $materialQuantityRequest->Items;
         $existing_items_arr = [];
 
-        foreach($existing_items $ex_item){
+        foreach($existing_items as $ex_item){
             $existing_items_arr[] = $ex_item->id;
         }
 
@@ -722,6 +722,7 @@ class MaterialQuantityRequestController extends Controller
                 ]);
             }
 
+            //Check if new requsted quantity is less than the maintained PO quantity
             if($item['requested_quantity'] < $po_result['data']['total']){
                 return response()->json([
                     'status'    => 0,
