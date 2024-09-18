@@ -29,7 +29,7 @@
             Projects
         </div>
         <div class="folder-form-body">
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label>Query</label>
