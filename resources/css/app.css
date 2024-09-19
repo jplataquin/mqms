@@ -394,7 +394,7 @@ html, body {
 
 
 /*** Popup modal ***/
-#pop_up_modal{
+.pop_up_modal{
   position:fixed;
   background-color: #ffffff;
   bottom:0px;
@@ -407,12 +407,12 @@ html, body {
   border-top-right-radius: 20px;
 }
 
-#pop_up_modal_header{
+.pop_up_modal_header{
   min-height: 50px;
   background-color: #a1b2b7;
 }
 
-#pop_up_modal_body{
+.pop_up_modal_body{
   padding: 10px;
 }
 
