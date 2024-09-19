@@ -396,7 +396,7 @@ html, body {
 /*** Popup modal ***/
 .pop_up_modal{
   position:fixed;
-  background-color: #ffffff;
+  background-color: #d3dce6;
   bottom:0px;
   left:0px;
   min-height:84%;
@@ -441,10 +441,6 @@ html, body {
     max-width: 80%;   
   }
 
-  .pop_up_modal{
-    width:100%;
-    left:0px;
-  }
 }
 
 @media (max-width:481px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ 
@@ -469,10 +465,6 @@ html, body {
     max-width: 80%;   
   }
 
-  .pop_up_modal{
-    width:100%;
-    left:0px;
-  }
 }
 
 /** Foooter ***/
@@ -507,6 +499,28 @@ html, body {
   }
 }
 
-@media (max-width:961px)  { /* tablet, landscape iPad, lo-res laptops ands desktops */ }
+@media (max-width:961px)  { /* tablet, landscape iPad, lo-res laptops ands desktops */ 
+
+  #side-bar-container{
+    display: none;
+    position:absolute;
+    z-index:3;
+  }
+
+  #hamburger_button{
+    display:inline;
+  }
+
+  .record-table-horizontal th {
+   
+    width: 50%;
+  }
+
+  .folder-form-tab{
+    width: 80%;
+    min-width: 80%;
+    max-width: 80%;   
+  }
+}
 @media (max-width:1025px) { /* big landscape tablets, laptops, and desktops */ }
 @media (max-width:1281px) { /* hi-res laptops and desktops */ }
