@@ -398,9 +398,10 @@ html, body {
   position:fixed;
   background-color: #ffffff;
   bottom:0px;
+  left:0px;
   min-height:84%;
   overflow-y:auto;
-  width:85%;
+  width:100%;
   margin:auto;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
