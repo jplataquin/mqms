@@ -427,11 +427,6 @@ html, body {
   background-color: #d3dce6;
 }
 
-.pop_up_modal_body{
-  padding: 10px;
-}
-
-
 .pop_up_modal.pop_up_modal_open {
   transition: 0.5s;
   height:85%;

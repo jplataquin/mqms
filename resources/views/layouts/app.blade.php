@@ -184,8 +184,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="pop_up_modal_body">
-                        asdasd
+                    <div class="pop_up_modal_body p-3">
                     </div>
                 </div>
                 
