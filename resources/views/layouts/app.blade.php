@@ -171,10 +171,12 @@
                 <div id="main">
                     @yield('content')
                 </div>
-            </div>
-            <div id="pop_up_modal">
-                <div id="pop_up_modal_header"></div>
-                <div id="pop_up_modal_body"></div>
+
+                
+                <div id="pop_up_modal">
+                    <div id="pop_up_modal_header"></div>
+                    <div id="pop_up_modal_body"></div>
+                </div>
             </div>
         </main>
 
