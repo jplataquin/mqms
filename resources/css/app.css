@@ -398,13 +398,14 @@ html, body {
   position:fixed;
   background-color: #ffffff;
   bottom:0px;
-  min-height:85%;
+  min-height:84%;
   overflow-y:auto;
   width:85%;
   margin:auto;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
+
 
 .pop_up_modal_header{
   min-height: 50px;
@@ -440,6 +441,7 @@ html, body {
 
   .pop_up_modal{
     width:100%;
+    left:0px;
   }
 }
 
@@ -467,6 +469,7 @@ html, body {
 
   .pop_up_modal{
     width:100%;
+    left:0px;
   }
 }
 
