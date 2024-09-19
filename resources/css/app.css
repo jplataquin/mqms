@@ -400,7 +400,7 @@ html, body {
   bottom:0px;
   min-height:85%;
   overflow-y:auto;
-  width:100%;
+  width:85%;
   margin:auto;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
@@ -437,6 +437,10 @@ html, body {
     min-width: 80%;
     max-width: 80%;   
   }
+
+  .pop_up_modal{
+    width:100%;
+  }
 }
 
 @media (max-width:481px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ 
@@ -459,6 +463,10 @@ html, body {
     width: 80%;
     min-width: 80%;
     max-width: 80%;   
+  }
+
+  .pop_up_modal{
+    width:100%;
   }
 }
 
