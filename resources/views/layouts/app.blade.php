@@ -174,10 +174,16 @@
                 
                 <div class="pop_up_modal_background"></div>
                 <div class="pop_up_modal">
-                    <div class="pop_up_modal_header d-flex justify-content-between">
-                        <div>a</div>
-                        <div>b</div>
-                        <div>c</div>
+                    <div class="pop_up_modal_header d-flex justify-content-between align-items-stretch">
+                        <div>
+
+                        </div>
+                        <div>
+                            <h6>Title</h6>
+                        </div>
+                        <div>
+                            <a><i class="bi bi-x-circle"></i></a>
+                        </div>
                     </div>
                     <div class="pop_up_modal_body">
                         asdasd
