@@ -176,14 +176,11 @@
                 <div class="pop_up_modal">
                     <div class="pop_up_modal_header pe-3 ps-3 d-flex justify-content-between align-items-stretch">
                         <div class="p-2">
-
-                        </div>
-                        <div class="p-2">
                             <h5>Title</h5>
                         </div>
                         <div class="p-2">
-                            <button type="button" class="btn btn-outline-secondary">
-                                <i class="bi bi-x-circle"></i>
+                            <button type="button" onclick="window.util.popUpModal.close()" class="btn btn-outline-secondary">
+                                <i class="bi bi-x-lg"></i>
                             </button>
                         </div>
                     </div>
