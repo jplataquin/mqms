@@ -88,13 +88,20 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 
 window.util.popUpModal = {
+    isOpen: false,
     open:()=>{
         window.ui.popUpModalBackground.classList.add('pop_up_modal_open');
         window.ui.popUpModal.classList.add('pop_up_modal_open');
+        this.isOpen = true;
     },
     close:()=>{
         window.ui.popUpModalBackground.classList.remove('pop_up_modal_open');
         window.ui.popUpModal.classList.remove('pop_up_modal_open');
+        this.isOpen = false;
+    },
+    contents:(elem)=>{
+        window.ui.popUpModalBody.innerHTML = '';
+        window.ui.popUpModalBody.appendChild(elem);
     }
 }
 
