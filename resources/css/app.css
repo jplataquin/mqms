@@ -396,7 +396,7 @@ html, body {
 /*** Popup modal ***/
 .pop_up_modal{
   position:fixed;
-  background-color: #d3dce6;
+  background-color: #ffffff;
   bottom:0px;
   left:0px;
   min-height:84%;
@@ -411,7 +411,7 @@ html, body {
 
 .pop_up_modal_header{
   min-height: 50px;
-  background-color: #a1b2b7;
+  background-color: #d3dce6;
 }
 
 .pop_up_modal_body{
