@@ -18,7 +18,7 @@ if(primaryModalElement){
 
 window.ui.popUpModalBackground = document.querySelector('.pop_up_modal_background');
 window.ui.popUpModal           = document.querySelector('.pop_up_modal');
-window.ui.popUpModalBody       = document.querySelector('.pop_up_body');
+window.ui.popUpModalBody       = document.querySelector('.pop_up_modal_body');
 
 
 /** Feeze UI **/
@@ -99,11 +99,11 @@ window.util.popUpModal = {
         window.ui.popUpModal.classList.remove('pop_up_modal_open');
         this.isOpen = false;
     },
-    contents:function(elem){
+    content:function(elem){
         window.ui.popUpModalBody.innerHTML = '';
         window.ui.popUpModalBody.appendChild(elem);
     }
-}
+};
 
 window.util.prompt = (msg,callback) => {
 
@@ -156,7 +156,7 @@ window.util.prompt = (msg,callback) => {
     });
 
     return promise;
-}
+};
 
 
 window.util.confirm = (msg,callback) => {
@@ -204,7 +204,7 @@ window.util.confirm = (msg,callback) => {
     });
    
     return promise;
-}
+};
 
 
 window.util.showMsg = (reply) => {
@@ -282,7 +282,7 @@ window.util.showMsg = (reply) => {
     }
 
     window.util.alert(title,message);
-}
+};
 
 
 window.util.alert = ($title,$message,$footer) => {
@@ -368,7 +368,7 @@ window.util.$get = async (url,data,headers) => {
             }
         }
     });
-}
+};
 
 window.util.$post = async (url,data,headers) => {
 
