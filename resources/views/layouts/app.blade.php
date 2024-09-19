@@ -170,6 +170,9 @@
             <div class="m-3" id="main">
                 @yield('content')
             </div>
+
+            
+            <div id="pop_up_modal"></div>
         </main>
 
     </div>
@@ -190,9 +193,6 @@
     </div>
 
 
-    <div id="pop_up_modal">
-    
-    </div>
 
     <script type="module">
         import {$q} from '/adarna.js';

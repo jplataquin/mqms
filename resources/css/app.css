@@ -392,6 +392,17 @@ html, body {
   background-color: #ADD8E6 !important;
 }
 
+
+/*** Popup modal ***/
+#pop_up_modal{
+  position:fixed;
+  background-color: red;
+  bottom:0px;
+  min-height:80%;
+  overflow-y:auto;
+  width:100%;
+}
+
 /*** Viewports ***/
 
 @media (max-width:320px)  { /* smartphones, iPhone, portrait 480x320 phones */
