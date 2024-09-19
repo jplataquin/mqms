@@ -86,7 +86,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 })();
 
-
+/** Pop up modal */
 window.util.popUpModal = {
     isOpen: false,
     open:function(){
@@ -98,12 +98,17 @@ window.util.popUpModal = {
         window.ui.popUpModalBackground.classList.remove('pop_up_modal_open');
         window.ui.popUpModal.classList.remove('pop_up_modal_open');
         this.isOpen = false;
+        window.ui.popUpModalBody.innerHTML = '';
     },
     content:function(elem){
         window.ui.popUpModalBody.innerHTML = '';
         window.ui.popUpModalBody.appendChild(elem);
     }
 };
+
+window.ui.popUpModalBackground.onclick = ()=>{
+    window.util.popUpModal.close();
+}
 
 window.util.prompt = (msg,callback) => {
 
