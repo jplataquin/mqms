@@ -396,21 +396,20 @@ html, body {
 /*** Popup modal ***/
 #pop_up_modal{
   position:fixed;
-  background-color: red;
+  background-color: #ffffff;
   bottom:0px;
   left:0px;
   min-height:90%;
   overflow-y:auto;
-  width:100%;
+  width:95%;
+  margin:auto;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
 
 #pop_up_modal_header{
   min-height: 50px;
-  background-color: blue;
-  border-top-left-radius: 25px;
-  border-top-right-radius: 25px;
+  background-color: #a1b2b7;
 }
 
 #pop_up_modal_body{
