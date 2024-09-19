@@ -100,8 +100,9 @@ window.util.popUpModal = {
         this.isOpen = false;
         window.ui.popUpModalBody.innerHTML = '';
     },
-    content:function(elem){
-        window.ui.popUpModalBody.innerHTML = '';
+    content:function(title,elem){
+        window.ui.popUpModalBody.innerHTML  = '';
+        window.ui.popUpModalTitle.innerHTML = title;
         window.ui.popUpModalBody.appendChild(elem);
     }
 };

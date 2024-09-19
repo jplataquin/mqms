@@ -174,7 +174,11 @@
                 
                 <div class="pop_up_modal_background"></div>
                 <div class="pop_up_modal">
-                    <div class="pop_up_modal_header"></div>
+                    <div class="pop_up_modal_header d-flex justify-content-between">
+                        <div>a</div>
+                        <div>b</div>
+                        <div>c</div>
+                    </div>
                     <div class="pop_up_modal_body">
                         asdasd
                     </div>
