@@ -433,8 +433,12 @@ html, body {
 
 
 .pop_up_modal.pop_up_modal_open {
-  transition: 2s;
+  transition: 0.5s;
   height:85%;
+}
+
+.pop_up_modal_background .pop_up_modal_open {
+  display:block;
 }
 
 /*** Viewports ***/
