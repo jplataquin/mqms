@@ -124,6 +124,93 @@
 
 </div>   
 
+<template id="create_contract_item_template">
+    <div>
+        <div class="row mb-3">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label>Item Code</label>
+                    <input type="text" id="item_code" class="form-control"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" id="description" class="form-control"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>Contract Quantity</label>
+                    <input type="text" id="contract_quantity" class="form-control"/>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>Contract Unit</label>
+                    <select class="form-control" id="unit">
+                        @foreach($unit_options as $unit)
+                        <option value="{{$unit->id}}" 
+                            @if($unit->deleted) disabled @endif
+                        >{{$unit->text}} @if($unit->deleted) [Deleted] @endif</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>Contract Unit Price (PHP)</label>
+                    <input type="text" id="contract_unit_price" class="form-control"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>POW/DUPA Quantity</label>
+                    <input type="text" id="ref_1_quantity" class="form-control"/>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>POW/DUPA Unit</label>
+                    <select class="form-control" id="ref_1_unit">
+                        <option value=""> - </option>
+                        @foreach($unit_options as $unit)
+                            <option value="{{$unit->id}}" @if($unit->deleted) disabled @endif> {{$unit->text}} @if($unit->deleted) [Deleted] @endif </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>POW/DUPA Unit Price (PHP)</label>
+                    <input type="text" id="ref_1_unit_price" class="form-control"/>
+                </div>
+            </div>
+            
+        </div>
+    
+
+        <div class="row">
+            <div class="col-12 text-end">
+                <button class="btn btn-primary" id="contract_item_createBtn">Create</button>
+            </div>
+        </div>
+    </div>
+</template>
+
 <script type="module">
     import {$q,$el, Template} from '/adarna.js';
 
