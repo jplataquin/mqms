@@ -171,7 +171,8 @@
                 <div id="main">
                     @yield('content')
                 </div>
-
+                
+                <div class="pop_up_modal_background"></div>
                 <div class="pop_up_modal">
                     <div class="pop_up_modal_header"></div>
                     <div class="pop_up_modal_body">

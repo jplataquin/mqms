@@ -394,6 +394,17 @@ html, body {
 
 
 /*** Popup modal ***/
+.pop_up_modal_background{
+  background-color: #282727;
+  opacity: 30%;
+  position:absolute;
+  width:100%;
+  height:100%;
+  top:0px;
+  left:0px;
+  z-index:799;
+}
+
 .pop_up_modal{
   position:fixed;
   background-color: #ffffff;
