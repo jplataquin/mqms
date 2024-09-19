@@ -189,6 +189,11 @@
         </div>
     </div>
 
+
+    <div id="pop_up_modal">
+    
+    </div>
+
     <script type="module">
         import {$q} from '/adarna.js';
 
