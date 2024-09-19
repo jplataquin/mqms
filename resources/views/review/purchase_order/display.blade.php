@@ -236,7 +236,7 @@
         let cancelBtn = $q('#cancelBtn').first();
 
         cancelBtn.onclick = ()=>{
-            window.util.navTo('/review/purchase_order');
+            window.util.navTo('/review/purchase_orders');
         }
 
         window.util.quickNav = {
