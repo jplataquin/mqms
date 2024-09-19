@@ -15,6 +15,12 @@ if(primaryModalElement){
     window.ui.primaryModalBody     = primaryModalElement.querySelector('#primary_modal_body');
     window.ui.primaryModalFooter   = primaryModalElement.querySelector('#primary_modal_footer');
 }
+
+window.ui.popUpModalBackground = document.querySelector('#pop_up_modal_background');
+window.ui.popUpModal           = document.querySelector('#pop_up_modal');
+window.ui.popUpModal           = document.querySelector('#pop_up_body');
+
+
 /** Feeze UI **/
 /*
 
@@ -81,6 +87,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 })();
 
 
+window.util.popUpModal = {
+    open:()=>{
+        window.ui.popUpModalBackground.classList.add('pop_up_modal_open');
+        window.ui.popUpModal.classList.add('pop_up_modal_open');
+    },
+    close:()=>{
+        window.ui.popUpModalBackground.classList.remove('pop_up_modal_open');
+        window.ui.popUpModal.classList.remove('pop_up_modal_open');
+    }
+}
 
 window.util.prompt = (msg,callback) => {
 
