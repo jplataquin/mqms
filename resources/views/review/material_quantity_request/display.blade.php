@@ -92,6 +92,7 @@
     <div class="pop_up_modal_header"></div>
     <div class="pop_up_modal_body"></div>
 </div>
+
 <script type="module">
     import {$q,$el} from '/adarna.js';
     import RequestMaterialItem from '/ui_components/RequestMaterialItem.js';
