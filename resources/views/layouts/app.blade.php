@@ -172,7 +172,12 @@
                     @yield('content')
                 </div>
 
-                
+                <div class="pop_up_modal">
+                    <div class="pop_up_modal_header"></div>
+                    <div class="pop_up_modal_body">
+                        asdasd
+                    </div>
+                </div>
                 
             </div>
         </main>
