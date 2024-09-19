@@ -182,7 +182,9 @@
                             <h5>Title</h5>
                         </div>
                         <div class="p-2">
-                            <a><i class="bi bi-x-circle"></i></a>
+                            <button type="button" class="btn btn-outline-secondary">
+                                <i class="bi bi-x-circle"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="pop_up_modal_body">
