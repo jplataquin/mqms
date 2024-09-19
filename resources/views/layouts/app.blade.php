@@ -174,14 +174,14 @@
                 
                 <div class="pop_up_modal_background"></div>
                 <div class="pop_up_modal">
-                    <div class="pop_up_modal_header d-flex justify-content-between align-items-stretch">
-                        <div>
+                    <div class="pop_up_modal_header pe-3 ps-3 d-flex justify-content-between align-items-stretch">
+                        <div class="p-2">
 
                         </div>
-                        <div>
-                            <h6>Title</h6>
+                        <div class="p-2">
+                            <h5>Title</h5>
                         </div>
-                        <div>
+                        <div class="p-2">
                             <a><i class="bi bi-x-circle"></i></a>
                         </div>
                     </div>
