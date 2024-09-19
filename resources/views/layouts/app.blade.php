@@ -167,12 +167,15 @@
         </div>
    
         <main class="w-100">
-            <div class="m-3" id="main">
-                @yield('content')
+            <div class="m-3">
+                <div id="main">
+                    @yield('content')
+                </div>
+                <div id="pop_up_modal">
+                    <div id="pop_up_modal_header"></div>
+                    <div id="pop_up_modal_body"></div>
+                </div>
             </div>
-
-            
-            <div id="pop_up_modal"></div>
         </main>
 
     </div>

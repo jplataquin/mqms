@@ -398,9 +398,22 @@ html, body {
   position:fixed;
   background-color: red;
   bottom:0px;
-  min-height:80%;
+  min-height:90%;
   overflow-y:auto;
   width:100%;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+}
+
+#pop_up_modal_header{
+  min-height: 30px;
+  background-color: blue;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+}
+
+#pop_up_modal_body{
+  padding: 10px;
 }
 
 /*** Viewports ***/
