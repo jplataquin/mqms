@@ -176,7 +176,7 @@
                 <div class="pop_up_modal">
                     <div class="pop_up_modal_header pe-3 ps-3 d-flex justify-content-between align-items-stretch">
                         <div class="p-2">
-                            <h5>Title</h5>
+                            <h5 class="pop_up_modal_title"></h5>
                         </div>
                         <div class="p-2">
                             <button type="button" onclick="window.util.popUpModal.close()" class="btn btn-outline-secondary">

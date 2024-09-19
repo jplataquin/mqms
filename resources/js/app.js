@@ -19,7 +19,7 @@ if(primaryModalElement){
 window.ui.popUpModalBackground = document.querySelector('.pop_up_modal_background');
 window.ui.popUpModal           = document.querySelector('.pop_up_modal');
 window.ui.popUpModalBody       = document.querySelector('.pop_up_modal_body');
-
+window.ui.popUpModalTitle      = document.querySelector('.pop_up_modal_title');
 
 /** Feeze UI **/
 /*
