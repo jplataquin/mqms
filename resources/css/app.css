@@ -394,6 +394,7 @@ html, body {
 
 
 /*** Popup modal ***/
+
 .pop_up_modal_background{
   background-color: #282727;
   opacity: 30%;
@@ -402,7 +403,8 @@ html, body {
   height:100%;
   top:0px;
   left:0px;
-  z-index:799;
+  z-index:800;
+  display: none;
 }
 
 .pop_up_modal{
@@ -410,7 +412,7 @@ html, body {
   background-color: #ffffff;
   bottom:0px;
   left:0px;
-  min-height:84%;
+  height:0px;
   overflow-y:auto;
   width:100%;
   margin:auto;
@@ -427,6 +429,12 @@ html, body {
 
 .pop_up_modal_body{
   padding: 10px;
+}
+
+
+.pop_up_modal.pop_up_modal_open {
+  transition: 2s;
+  height:85%;
 }
 
 /*** Viewports ***/
