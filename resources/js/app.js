@@ -16,9 +16,9 @@ if(primaryModalElement){
     window.ui.primaryModalFooter   = primaryModalElement.querySelector('#primary_modal_footer');
 }
 
-window.ui.popUpModalBackground = document.querySelector('#pop_up_modal_background');
-window.ui.popUpModal           = document.querySelector('#pop_up_modal');
-window.ui.popUpModal           = document.querySelector('#pop_up_body');
+window.ui.popUpModalBackground = document.querySelector('.pop_up_modal_background');
+window.ui.popUpModal           = document.querySelector('.pop_up_modal');
+window.ui.popUpModal           = document.querySelector('.pop_up_body');
 
 
 /** Feeze UI **/
