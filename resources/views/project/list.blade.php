@@ -78,8 +78,6 @@
     const sortSelect      = $q('#sortSelect').first();
     const createBtn       = $q('#createBtn').first();
     
-    const create_project_form = CreateProjectForm();
-
     let page            = 1;
     let order           = 'DESC';
     let orderBy         = 'id';
