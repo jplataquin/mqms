@@ -96,7 +96,7 @@
                                             <div class="input-group">
                                                 <span class="input-group-text" id="basic-addon2" onclick="document.querySelector('#contract_item').focus();"><i class="bi bi-list"></i></span>
                                            
-                                                <select id="contract_item" class="form-control">
+                                                <select id="contract_item" class="form-select">
                                                     @foreach($contract_item_arr as $con_item)
 
                                                         <option value="{{$con_item->data->id}}" @if($con_item->data->id == $contract_item->id) selected @endif>{{$con_item->data->item_code}} {{$con_item->data->description}}</option>
@@ -224,7 +224,7 @@
                                             <div class="input-group">
                                                 <span class="input-group-text" id="basic-addon2" onclick="document.querySelector('#component').focus();"><i class="bi bi-list"></i></span>
                                             
-                                                <select class="form-control" id="component">
+                                                <select class="form-select" id="component">
                                                     @foreach($component_arr as $comp)
 
                                                         @if($comp->contract_item_id == $contract_item->id)
