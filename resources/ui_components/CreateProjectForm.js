@@ -29,7 +29,7 @@ class CreateProjectForm extends Component{
             t.div({class:'row'},()=>{
                 t.div({class:'col-lg-12 text-end'},()=>{
                     this.el.btn_create = t.button({class:'btn btn-primary'},'Create');
-                    this.el.btn_cancel = t.buttin({class:'btn btn-seconary'},'Cancel');
+                    this.el.btn_cancel = t.button({class:'btn btn-seconary'},'Cancel');
                 });
             });//div row
         });//div
