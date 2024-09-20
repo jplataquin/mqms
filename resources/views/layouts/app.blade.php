@@ -172,7 +172,7 @@
                     @yield('content')
                 </div>
                 
-                <div class="drawer_background"></div>
+                <div class="drawer_modal_background"></div>
                 <div class="drawer_modal">
                     <div class="drawer_modal_header pe-3 ps-3 d-flex justify-content-between align-items-stretch">
                         <div class="p-2">
