@@ -393,9 +393,9 @@ html, body {
 }
 
 
-/*** Popup modal ***/
+/*** Drawer modal ***/
 
-.pop_up_modal_background{
+.drawer_modal_background{
   background-color: #282727;
   opacity: 30%;
   position:absolute;
@@ -407,7 +407,7 @@ html, body {
   display: none;
 }
 
-.pop_up_modal{
+.drawer_modal{
   position:fixed;
   background-color: #ffffff;
   bottom:0px;
@@ -422,17 +422,17 @@ html, body {
 }
 
 
-.pop_up_modal_header{
+.drawer_modal_header{
   min-height: 50px;
   background-color: #d3dce6;
 }
 
-.pop_up_modal.pop_up_modal_open {
+.drawer_modal.drawer_modal_open {
   transition: 0.5s;
   height:85%;
 }
 
-.pop_up_modal_background.pop_up_modal_open {
+.drawer_modal_background.drawer_modal_open {
   display:block;
 }
 

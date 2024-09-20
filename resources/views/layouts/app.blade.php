@@ -172,19 +172,19 @@
                     @yield('content')
                 </div>
                 
-                <div class="pop_up_modal_background"></div>
-                <div class="pop_up_modal">
-                    <div class="pop_up_modal_header pe-3 ps-3 d-flex justify-content-between align-items-stretch">
+                <div class="drawer_background"></div>
+                <div class="drawer_modal">
+                    <div class="drawer_modal_header pe-3 ps-3 d-flex justify-content-between align-items-stretch">
                         <div class="p-2">
-                            <h5 class="pop_up_modal_title"></h5>
+                            <h5 class="drawer_modal_title"></h5>
                         </div>
                         <div class="p-2">
-                            <button type="button" onclick="window.util.popUpModal.close()" class="btn btn-outline-secondary">
+                            <button type="button" onclick="window.util.drawerModal.close()" class="btn btn-outline-secondary">
                                 <i class="bi bi-x-lg"></i>
                             </button>
                         </div>
                     </div>
-                    <div class="pop_up_modal_body p-3">
+                    <div class="drawer_modal_body p-3">
                     </div>
                 </div>
                 

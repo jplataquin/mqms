@@ -70,7 +70,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Material Budget</label>
-                                        <input type="text" disabled="true" class="form-control @if($budget_grand_total_amount > $contract_grand_total_amount) text-danger @endif" value="P {{ number_format($budget_grand_total_amount,2) }}"/>
+                                        <input type="text" disabled="true" class="form-control @if($budget_grand_total_amount > $contract_grand_total_amount) is-invalid @endif" value="P {{ number_format($budget_grand_total_amount,2) }}"/>
                                     </div>
                                 </div>
                             </div>
@@ -189,13 +189,13 @@
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label>Total Quantity</label>
-                                                            <input type="text" class="form-control @if($contract_item_arr[$contract_item->id]->total_quantity > $contract_item->contract_quantity) text-danger @endif" disabled="true" value="{{ number_format($contract_item_arr[$contract_item->id]->total_quantity,2) }} @if(isset($unit_options[$contract_item->unit_id])) {{$unit_options[$contract_item->unit_id]->text}} @endif"/>
+                                                            <input type="text" class="form-control @if($contract_item_arr[$contract_item->id]->total_quantity > $contract_item->contract_quantity) is-invalid @endif" disabled="true" value="{{ number_format($contract_item_arr[$contract_item->id]->total_quantity,2) }} @if(isset($unit_options[$contract_item->unit_id])) {{$unit_options[$contract_item->unit_id]->text}} @endif"/>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label>Total Amount</label>
-                                                            <input type="text" class="form-control @if($contract_item_arr[$contract_item->id]->total_amount > $contract_amount) text-danger @endif" disabled="true" value="P {{ number_format($contract_item_arr[$contract_item->id]->total_amount,2) }}"/>
+                                                            <input type="text" class="form-control @if($contract_item_arr[$contract_item->id]->total_amount > $contract_amount) is-invalid @endif" disabled="true" value="P {{ number_format($contract_item_arr[$contract_item->id]->total_amount,2) }}"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -279,7 +279,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Total Item Quantity</label>
-                                            <input type="text" disabled="true" class="form-control @if($component_arr[$component->id]->total_quantity > $component->quantity) text-danger @endif" value="{{ number_format($component_arr[$component->id]->total_quantity,2) }} @if(isset($unit_options[$component->unit_id])) {{$unit_options[$component->unit_id]->text}} @endif"/>
+                                            <input type="text" disabled="true" class="form-control @if($component_arr[$component->id]->total_quantity > $component->quantity) is-invalid @endif" value="{{ number_format($component_arr[$component->id]->total_quantity,2) }} @if(isset($unit_options[$component->unit_id])) {{$unit_options[$component->unit_id]->text}} @endif"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -476,7 +476,7 @@
                                     <th colspan="3" class="text-end">
                                         Grand Total
                                     </th>
-                                    <td class="@if($grand_total > $component_item->quantity) text-danger @endif text-center">
+                                    <td class="@if($grand_total > $component_item->quantity) is-invalid @endif text-center">
                                         {{$grand_total}} {{ $unit_options[ $component_item->unit_id ]->text }}
                                     </td>
                                 </tr>
@@ -527,7 +527,7 @@
         approveBtn.onclick = async (e)=>{
             e.preventDefault();
 
-            if( $q('.text-danger').items().length ){
+            if( $q('.is-invalid').items().length ){
                 
                 let answer1 = prompt('Warning there are quantities that are over the limit, type "ok" to proceed.');
 

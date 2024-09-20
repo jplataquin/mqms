@@ -16,10 +16,10 @@ if(primaryModalElement){
     window.ui.primaryModalFooter   = primaryModalElement.querySelector('#primary_modal_footer');
 }
 
-window.ui.popUpModalBackground = document.querySelector('.pop_up_modal_background');
-window.ui.popUpModal           = document.querySelector('.pop_up_modal');
-window.ui.popUpModalBody       = document.querySelector('.pop_up_modal_body');
-window.ui.popUpModalTitle      = document.querySelector('.pop_up_modal_title');
+window.ui.drawerModalBackground = document.querySelector('.drawer_modal_background');
+window.ui.drawerModal           = document.querySelector('.drawer_modal');
+window.ui.drawerModalBody       = document.querySelector('.drawer_modal_body');
+window.ui.drawerModalTitle      = document.querySelector('.drawer_modal_title');
 
 /** Feeze UI **/
 /*
@@ -86,29 +86,32 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 })();
 
-/** Pop up modal */
-window.util.popUpModal = {
+/** Drawer Modal */
+window.util.drawerModal = {
     isOpen: false,
     open:function(){
-        window.ui.popUpModalBackground.classList.add('pop_up_modal_open');
-        window.ui.popUpModal.classList.add('pop_up_modal_open');
+        window.ui.drawerModalBackground.classList.add('drawer_modal_open');
+        window.ui.drawerModal.classList.add('drawer_modal_open');
         this.isOpen = true;
+        return this;
     },
     close:function(){
-        window.ui.popUpModalBackground.classList.remove('pop_up_modal_open');
-        window.ui.popUpModal.classList.remove('pop_up_modal_open');
+        window.ui.drawerModalBackground.classList.remove('drawer_modal_open');
+        window.ui.drawerModal.classList.remove('drawer_modal_open');
         this.isOpen = false;
-        window.ui.popUpModalBody.innerHTML = '';
+        window.ui.drawerModalBody.innerHTML = '';
+        return this;
     },
     content:function(title,elem){
-        window.ui.popUpModalBody.innerHTML  = '';
-        window.ui.popUpModalTitle.innerHTML = title;
-        window.ui.popUpModalBody.appendChild(elem);
+        window.ui.drawerModalBody.innerHTML  = '';
+        window.ui.drawerModalTitle.innerHTML = title;
+        window.ui.drawerModalBody.appendChild(elem);
+        return this;
     }
 };
 
-window.ui.popUpModalBackground.onclick = ()=>{
-    window.util.popUpModal.close();
+window.ui.drawerModalBackground.onclick = ()=>{
+    window.util.drawerModal.close();
 }
 
 window.util.prompt = (msg,callback) => {

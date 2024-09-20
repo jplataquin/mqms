@@ -69,6 +69,7 @@
 
 <script type="module">
     import {$q,Template,$el} from '/adarna.js';
+    import {CreateProjectForm} from '/ui_components/CreateProjectForm.js'
 
     const list            = $q('#list').first();
     const query           = $q('#query').first();
@@ -77,6 +78,8 @@
     const sortSelect      = $q('#sortSelect').first();
     const createBtn       = $q('#createBtn').first();
     
+    const create_project_form = CreateProjectForm();
+
     let page            = 1;
     let order           = 'DESC';
     let orderBy         = 'id';
@@ -210,7 +213,7 @@
     }
 
     createBtn.onclick = ()=>{
-        window.util.navTo('/project/create');
+        window.util.drawerModal.content('Create Project',CreateProjectForm()).open();
     }
 
     reinitalize();
