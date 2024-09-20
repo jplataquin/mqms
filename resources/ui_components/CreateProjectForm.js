@@ -6,7 +6,7 @@ class CreateProjectForm extends Component{
     view(){
         const t= new Template();
 
-        t.div(()=>{
+        return t.div(()=>{
             t.div({class:'row'},()=>{
                 t.div({class:'col-lg-6'},()=>{
                     t.div({class:'form-group'},()=>{
