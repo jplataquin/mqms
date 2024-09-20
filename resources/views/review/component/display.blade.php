@@ -295,23 +295,6 @@
                 </div>
 
 
-                <div class="row">
-                    <div class="col-lg-12 text-end">
-                    @if($component->status == 'PEND')
-                        <button class="btn btn-danger" id="rejectBtn">Reject</button>
-                    @endif
-                    @if($component->status == 'PEND')
-                        <button class="btn btn-primary" id="approveBtn">Approve</button>
-                    @endif
-
-                    <button class="btn btn-warning" id="printBtn">Print</button>
-
-                    @if($component->status == 'APRV')
-                        <button class="btn btn-warning" id="revertBtn">Revert</button>
-                    @endif
-                        <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
-                    </div>
-                </div>
 
             </div>
         </div>
@@ -505,6 +488,23 @@
         @php $i++ @endphp
         @endforeach
     
+        <div class="row mt-5">
+            <div class="col-lg-12 text-end shadow bg-white rounded footer-action-menu p-2">
+                @if($component->status == 'PEND')
+                    <button class="btn btn-danger" id="rejectBtn">Reject</button>
+                @endif
+                @if($component->status == 'PEND')
+                    <button class="btn btn-primary" id="approveBtn">Approve</button>
+                @endif
+
+                <button class="btn btn-warning" id="printBtn">Print</button>
+
+                @if($component->status == 'APRV')
+                    <button class="btn btn-warning" id="revertBtn">Revert</button>
+                @endif
+                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+            </div>
+        </div>
        
 </div>
 
