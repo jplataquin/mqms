@@ -7,8 +7,8 @@ class CreateProjectForm extends Component{
         const t= new Template();
 
         return t.div(()=>{
-            t.div({class:'row'},()=>{
-                t.div({class:'col-lg-6'},()=>{
+            t.div({class:'row mb-3'},()=>{
+                t.div({class:'col-lg-6 mb-3'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label('Project Name');
                         this.el.project_name = t.input({class:'form-control'});
@@ -26,10 +26,10 @@ class CreateProjectForm extends Component{
                 });//div col
             });//div row
 
-            t.div({class:'row'},()=>{
+            t.div({class:'row mb-3'},()=>{
                 t.div({class:'col-lg-12 text-end'},()=>{
                     this.el.btn_create = t.button({class:'btn btn-primary'},'Create');
-                    this.el.btn_cancel = t.button({class:'btn btn-seconary'},'Cancel');
+                    this.el.btn_cancel = t.button({class:'btn btn-secondary'},'Cancel');
                 });
             });//div row
         });//div
