@@ -124,7 +124,7 @@
 
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <label>Price</label>
+                                                            <label>Unit Price</label>
                                                             <input type="text" class="form-control" disabled="true" value="P {{ number_format($contract_item->contract_unit_price,2) }}"/>
                                                         </div>
                                                     </div>
@@ -156,7 +156,7 @@
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <label>Price</label>
+                                                            <label>Unit Price</label>
                                                             <input type="text" class="form-control" disabled="true" value="P {{ number_format($contract_item->ref_1_unit_price,2) }}"/>
                                                         </div>
                                                     </div>
