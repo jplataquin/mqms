@@ -268,7 +268,7 @@
                                 <div class="row mb-3">
                                     <div class="col-lg-12">
                                         <div class="form-group">
-                                            <label>Quantity</label>
+                                            <label>Budget Quantity</label>
                                             <input type="text" class="form-control" disabled="true" value="{{ number_format( $component->quantity,2)  }} @if(isset($unit_options[$component->unit_id])) {{$unit_options[$component->unit_id]->text}} @endif"/>
                                         </div>
                                     </div>
@@ -277,13 +277,13 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>Total Item Quantity</label>
+                                            <label>Total Quantity</label>
                                             <input type="text" disabled="true" class="form-control @if($component_arr[$component->id]->total_quantity > $component->quantity) is-invalid @endif" value="{{ number_format($component_arr[$component->id]->total_quantity,2) }} @if(isset($unit_options[$component->unit_id])) {{$unit_options[$component->unit_id]->text}} @endif"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>Total Item Amount</label>
+                                            <label>Total Amount</label>
                                             <input type="text" disabled="true" class="form-control" value="P {{ number_format($component_arr[$component->id]->total_amount,2) }}"/>
                                         </div>
                                     </div>
