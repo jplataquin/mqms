@@ -108,7 +108,7 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">    
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4 mb-3">
                                         <div class="form-container">
                                             <div class="form-header">Contract</div>
                                             <div class="form-body">
@@ -134,7 +134,7 @@
                                                 <div class="row mb-3">
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
-                                                            <label>Amount</label>
+                                                            <label>Total Amount</label>
                                                             <input type="text" class="form-control" disabled="true" value="P {{ number_format($contract_amount,2) }}"/>
                                                         </div>
                                                     </div>
@@ -143,7 +143,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4 mb-3">
                                         <div class="form-container">
                                             <div class="form-header">POW/DUPA</div>
                                             <div class="form-body">
@@ -165,7 +165,7 @@
                                                 <div class="row mb-3">
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
-                                                            <label>Amount</label>
+                                                            <label>Total Amount</label>
                                                             <input type="text" class="form-control" disabled="true" value="P {{ number_format($contract_item->ref_1_unit_price * $contract_item->ref_1_quantity,2) }}"/>
                                                         </div>
                                                     </div>
@@ -175,7 +175,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4 mb-3">
                                         <div class="form-container">
                                             <div class="form-header">
                                                 Material Budget
