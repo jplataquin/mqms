@@ -268,10 +268,10 @@ class ComponentReviewController extends Controller
             ]);
         }
 
-        if($component->status != 'PEND'){
+        if($component->status != 'PEND' || $component->status == 'REJC'){
             return response()->json([
                 'status' => 0,
-                'message'=>'Error: Status for this record is no longer pending',
+                'message'=>'Cannot approve this record, it has status '.$component->status,
                 'data'=> []
             ]);
         }
@@ -320,15 +320,15 @@ class ComponentReviewController extends Controller
         if(!$component){
             return response()->json([
                 'status' => 0,
-                'message'=>'Error: Record not found',
+                'message'=>'Record not found',
                 'data'=> []
             ]);
         }
 
-        if($component->status != 'PEND'){
+        if($component->status != 'PEND' || $component->status == 'APRV'){
             return response()->json([
                 'status' => 0,
-                'message'=>'Error: Status for this record is no longer pending',
+                'message'=>'Cannot reject this record, it has status '.$component->status,
                 'data'=> []
             ]);
         }
@@ -337,8 +337,62 @@ class ComponentReviewController extends Controller
         $user_id = Auth::user()->id;
 
         $component->status      = 'REJC';
-        $component->approved_by = $user_id;
-        $component->approved_at = Carbon::now();
+        $component->rejected_by = $user_id;
+        $component->rejected_at = Carbon::now();
+        
+        $component->save();
+
+        return response()->json([
+            'status' => 1,
+            'message'=>'',
+            'data'=> []
+        ]);
+    }
+
+    public function _review_to_pending(Request $request){
+
+        $id = (int) $request->input('id') ?? 0;
+
+        $validator = Validator::make($request->all(),[
+            'id' => [
+                'required',
+                'integer'
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Failed Validation',
+                'data'      => $validator->messages()
+            ]);
+        }
+
+        
+        $component = Component::find($id);
+
+        if(!$component){
+            return response()->json([
+                'status' => 0,
+                'message'=>'Record not found',
+                'data'=> []
+            ]);
+        }
+
+        if($component->status == 'PEND'){
+            return response()->json([
+                'status' => 0,
+                'message'=>'The status for this record is already pending',
+                'data'=> []
+            ]);
+        }
+
+        
+        $user_id = Auth::user()->id;
+
+        $component->status      = 'PEND';
+        $component->updated_by  = $user_id;
+        $component->updated_at  = Carbon::now();
         
         $component->save();
 

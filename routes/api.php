@@ -127,7 +127,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::get('/review/component/list', [App\Http\Controllers\Review\ComponentReviewController::class, '_list']);
     Route::post('/review/component/approve', [App\Http\Controllers\Review\ComponentReviewController::class, '_approve']);
-    Route::get('/review/component/reject', [App\Http\Controllers\Review\ComponentReviewController::class, '_reject']);
+    Route::post('/review/component/reject', [App\Http\Controllers\Review\ComponentReviewController::class, '_reject']);
+    Route::post('/review/component/revert_to_pending', [App\Http\Controllers\Review\ComponentReviewController::class, '_revert_to_pending']);
     
 
     Route::get('/material_canvass/list', [App\Http\Controllers\MaterialCanvassController::class, '_list']);
