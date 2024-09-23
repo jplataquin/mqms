@@ -51,7 +51,8 @@ class CreateProjectForm extends Component{
                     window.util.showMsg(reply);
                     return false;
                 };
-    
+                
+                window.util.drawerModal.close();
                 window.util.navReload();
     
             
