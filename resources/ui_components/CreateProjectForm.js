@@ -39,11 +39,30 @@ class CreateProjectForm extends Component{
 
         this.el.btn_submit.onclick = ()=>{
             window.util.blockUI();
+
+            window.util.$post('/api/project/create',{
+                name: this.el.project_name.value,
+                status: this.el.project_status.value
+            }).then(reply=>{
+                
+                window.util.unblockUI();
+                
+                if(reply.status <= 0 ){
+                    window.util.showMsg(reply);
+                    return false;
+                };
+    
+                window.util.navReload();
+    
+            
+            });
         }
 
         this.el.btn_cancel.onclick = ()=>{
             window.util.drawerModal.close();
         }
+
+    
     }
 }
 
