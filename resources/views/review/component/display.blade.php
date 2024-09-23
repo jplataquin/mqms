@@ -524,6 +524,37 @@
         window.open('/project/section/print/{{$section->id}}','_blank').focus();
     }
 
+    if(revertPendBtn){
+        revertPendBtn.onclick = async ()=>{
+
+            let answer = await window.util.confirm('Are you sure you want to revert this component to PENDING status?');
+
+            if(!answer){
+                return false;
+            }
+
+            window.util.blockUI();
+
+            window.util.$post('/api/review/component/revert_to_pending',{
+                id: '{{$component->id}}'
+            }).then(reply=>{
+
+                
+                window.util.unblockUI();
+
+                if(reply.status <= 0 ){
+                    window.util.showMsg(reply);
+                    return false;
+                };
+
+
+                window.util.navReload();
+
+            });
+        }
+
+    }
+
     @if($component->status == 'PEND')
 
         approveBtn.onclick = async (e)=>{
@@ -592,34 +623,7 @@
             });
         }
 
-        revertPendBtn.onclick = async ()=>{
-
-            let answer = await window.util.confirm('Are you sure you want to revert this component to PENDING status?');
-            
-            if(!answer){
-                return false;
-            }
-            
-            window.util.blockUI();
-
-            window.util.$post('/api/review/component/revert_to_pending',{
-                id: '{{$component->id}}'
-            }).then(reply=>{
-
-                
-                window.util.unblockUI();
-
-                if(reply.status <= 0 ){
-                    window.util.showMsg(reply);
-                    return false;
-                };
-
-
-                window.util.navReload();
-
-            });
-        }
-
+       
     @endif
 
     component.onchange = ()=>{
