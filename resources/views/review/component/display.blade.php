@@ -33,21 +33,74 @@
                 
                             
                 <div class="row mb-3">
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <div class="form-group">
                             <label>Project</label>
                             <input type="text" disabled="true" class="form-control" value="{{$project->name}}"/>
                         </div>
                     </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <div class="form-group">
                             <label>Section</label>
                             <input type="text" disabled="true" class="form-control" value="{{$section->name}}"/>
                         </div>
                     </div>
                 </div>
+
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Item Code & Description</label>
+
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon2" onclick="document.querySelector('#contract_item').focus();"><i class="bi bi-list"></i></span>
+                            
+                                <select id="contract_item" class="form-select">
+                                    @foreach($contract_item_arr as $con_item)
+
+                                        <option value="{{$con_item->data->id}}" @if($con_item->data->id == $contract_item->id) selected @endif>{{$con_item->data->item_code}} {{$con_item->data->description}}</option>
+
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Component Name</label>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon2" onclick="document.querySelector('#component').focus();"><i class="bi bi-list"></i></span>
+                                
+                                    <select class="form-select" id="component">
+                                        @foreach($component_arr as $comp)
+
+                                            @if($comp->contract_item_id == $contract_item->id)
+                                                <option class="" value="{{$comp->data->id}}" @if($comp->data->id == $component->id) selected @endif>
+                                                    {{$comp->data->name}}
+
+                                                    @if($comp->data->id != $component->id)
+                                                        »
+                                                        {{ $comp->data->status }}
+                                                        »
+                                                        {{ number_format($comp->total_quantity,2) }} {{ $unit_options[$comp->data->unit_id]->text }}
+                                                        » 
+                                                        P {{ number_format($comp->total_amount,2) }}
+                                                        
+                                                        @if(!$comp->data->sum_flag || $comp->data->unit_id != $contract_item->contract_unit_id)
+                                                        » Excluded
+                                                        @endif
+                                                    @endif
+                                                </option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 <div class="row mb-3">
                     <div class="col-lg-12">
@@ -88,25 +141,7 @@
                                 Contract Item
                             </div>
                             <div class="form-body">
-                                <div class="row mb-3">
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <label>Item Code & Description</label>
-
-                                            <div class="input-group">
-                                                <span class="input-group-text" id="basic-addon2" onclick="document.querySelector('#contract_item').focus();"><i class="bi bi-list"></i></span>
-                                           
-                                                <select id="contract_item" class="form-select">
-                                                    @foreach($contract_item_arr as $con_item)
-
-                                                        <option value="{{$con_item->data->id}}" @if($con_item->data->id == $contract_item->id) selected @endif>{{$con_item->data->item_code}} {{$con_item->data->description}}</option>
-
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                                 <div class="row mb-3">    
                                     <div class="col-lg-4 mb-3">
                                         <div class="form-container">
@@ -216,40 +251,7 @@
                         <div class="form-container">
                             <div class="form-header @if(!$component->sum_flag || $component->unit_id != $contract_item->unit_id) bg-excluded-sum-component @endif">Component</div>
                             <div class="form-body">
-                                <div class="row mb-3">
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <label>Name</label>
-                                            <div class="input-group">
-                                                <span class="input-group-text" id="basic-addon2" onclick="document.querySelector('#component').focus();"><i class="bi bi-list"></i></span>
-                                            
-                                                <select class="form-select" id="component">
-                                                    @foreach($component_arr as $comp)
-
-                                                        @if($comp->contract_item_id == $contract_item->id)
-                                                            <option class="" value="{{$comp->data->id}}" @if($comp->data->id == $component->id) selected @endif>
-                                                                {{$comp->data->name}}
-
-                                                                @if($comp->data->id != $component->id)
-                                                                    »
-                                                                    {{ $comp->data->status }}
-                                                                    »
-                                                                    {{ number_format($comp->total_quantity,2) }} {{ $unit_options[$comp->data->unit_id]->text }}
-                                                                    » 
-                                                                    P {{ number_format($comp->total_amount,2) }}
-                                                                    
-                                                                    @if(!$comp->data->sum_flag || $comp->data->unit_id != $contract_item->contract_unit_id)
-                                                                    » Excluded
-                                                                    @endif
-                                                                @endif
-                                                            </option>
-                                                        @endif
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                                 <div class="row mb-3">
                                     <div class="col-lg-6">
                                         <div class="form-group">
