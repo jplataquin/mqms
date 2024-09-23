@@ -92,7 +92,7 @@
                     <button class="btn btn-outline-primary" id="reviewLinkBtn">
                         Review Link
                         <i class="bi bi-box-arrow-up-right"></i>
-                    <button>
+                    </button>
                 </div>
             </div>
         </div>
@@ -170,7 +170,7 @@
     };
 
     reviewLinkBtn.onclick = ()=>{
-        navigator.clipboard.writeText('{{ url("/review/material_quantity_request/".$material_quantity_request->id); }}');
+        window.util.copyToClipboard('{{ url("/review/material_quantity_request/".$material_quantity_request->id); }}');
         alert('Review Link for Material Request:{{$material_quantity_request->id}} copied!');
     }
     
