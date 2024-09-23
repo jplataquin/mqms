@@ -89,7 +89,7 @@
                                                         » 
                                                         P {{ number_format($comp->total_amount,2) }}
                                                         
-                                                        @if(!$comp->data->sum_flag || $comp->data->unit_id != $contract_item->contract_unit_id)
+                                                        @if(!$comp->data->sum_flag || $comp->data->unit_id != $contract_item->unit_id)
                                                         » Excluded
                                                         @endif
                                                     @endif
