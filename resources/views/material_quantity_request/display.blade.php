@@ -87,6 +87,14 @@
                     </div>
                 </div>
             </div>
+            <div class="row mb-3">
+                <div class="col-lg-12 text-end">
+                    <button class="btn btn-outline-primary" id="reviewLinkBtn">
+                        Review Link
+                        <i class="bi bi-box-arrow-up-right"></i>
+                    <button>
+                </div>
+            </div>
         </div>
     </div>
     
@@ -145,6 +153,8 @@
     const description   = $q('#description').first();
     const printBtn      = $q('#printBtn').first();
     const revertPendBtn = $q('#revertPendBtn').first();
+    const reviewLinkBtn = $q('#reviewLinkBtn').first();
+
       
     let count         = 0;
     let deleteItems   = [];
@@ -158,6 +168,11 @@
         title:'Material Request',
         url:'/material_quantity_request'
     };
+
+    reviewLinkBtn.onclick = ()=>{
+        navigator.clipboard.writeText('{{ url("/review/material_quantity_request/".$material_quantity_request->id); }}');
+        alert('Review Link for Material Request:{{$material_quantity_request->id}} copied!');
+    }
     
     if(revertPendBtn){
        
