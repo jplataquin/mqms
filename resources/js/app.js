@@ -89,28 +89,35 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 window.util.copyToClipboard = async function(textToCopy) {
     // Navigator clipboard api needs a secure context (https)
-    if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(textToCopy);
-    } else {
-        // Use the 'out of viewport hidden text area' trick
-        const textArea = document.createElement("textarea");
-        textArea.value = textToCopy;
-            
-        // Move textarea out of the viewport so it's not visible
-        textArea.style.position = "none";
-        //textArea.style.left = "-999999px";
-            
-        document.body.prepend(textArea);
-        textArea.select();
+    return new Promise(async (resolve,reject)=>{
 
-        try {
-            document.execCommand('copy');
-        } catch (error) {
-            console.error(error);
-        } finally {
-            textArea.remove();
-        }
-    }
+        if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(textToCopy);
+            resolve(true);
+
+        } else {
+            // Use the 'out of viewport hidden text area' trick
+            const textArea = document.createElement("textarea");
+            textArea.value = textToCopy;
+                
+            // Move textarea out of the viewport so it's not visible
+            textArea.style.position = "none";
+                
+            document.body.prepend(textArea);
+            textArea.select();
+
+            try {
+                document.execCommand('copy');
+            } catch (error) {
+                console.error(error);
+                resolve(false);
+            } finally {
+                textArea.remove();
+                resolve(true);
+            }
+        } 
+
+    });
 }
 
 

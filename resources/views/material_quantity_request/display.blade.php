@@ -169,9 +169,13 @@
         url:'/material_quantity_request'
     };
 
-    reviewLinkBtn.onclick = ()=>{
-        window.util.copyToClipboard('{{ url("/review/material_quantity_request/".$material_quantity_request->id); }}');
-        alert('Review Link for Material Request:{{$material_quantity_request->id}} copied!');
+    reviewLinkBtn.onclick = async ()=>{
+        let test = await window.util.copyToClipboard('{{ url("/review/material_quantity_request/".$material_quantity_request->id); }}');
+        if(test){
+            alert('Review Link for Material Request:{{$material_quantity_request->id}} copied!');
+        }else{
+            alert('Failed to copy');
+        }
     }
     
     if(revertPendBtn){
