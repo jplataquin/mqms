@@ -349,7 +349,7 @@ class ComponentReviewController extends Controller
         ]);
     }
 
-    public function _review_to_pending(Request $request){
+    public function _revert_to_pending(Request $request){
 
         $id = (int) $request->input('id') ?? 0;
 
