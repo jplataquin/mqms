@@ -67,7 +67,7 @@
                 
                     <button class="btn btn-outline-primary" id="reviewLinkBtn">
                         Review Link
-                        <i class="bi bi-box-arrow-up-right"></i>
+                        <i class="bi bi-copy"></i>
                     </button>
 
                     <button class="btn btn-warning" id="printBtn">Print</button>
@@ -137,8 +137,9 @@
 
         <div class="row mt-5">
             <div class="col-12 text-end">
-                <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
                 <button id="submitBtn" class="btn btn-primary">Submit</button>
+                <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+                
             </div>
         </div>
     </div>

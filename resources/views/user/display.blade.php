@@ -80,13 +80,13 @@
             </div>
 
             <div class="row mt-5">
-                <div class="col-6">
-                    <button class="btn btn-warning" id="resetBtn">Reset Password</button>
-                </div>
                 <div class="col-6 text-end">
-                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                    <button class="btn btn-warning" id="resetBtn">Reset Password</button>
+                
                     <button class="btn btn-primary" id="editBtn">Edit</button>
                     <button class="btn btn-warning d-none" id="updateBtn">Update</button>
+                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                   
                 </div>
             </div>
         </div>

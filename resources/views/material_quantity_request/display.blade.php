@@ -93,7 +93,7 @@
                 <div class="col-lg-12 text-end">
                     <button class="btn btn-outline-primary" id="reviewLinkBtn">
                         Review Link
-                        <i class="bi bi-box-arrow-up-right"></i>
+                        <i class="bi bi-copy"></i>
                     </button>
                 </div>
             </div>
