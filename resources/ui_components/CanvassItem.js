@@ -204,14 +204,14 @@ class CanvassItem extends Component{
         
         this.el.approveBtn.onclick = async ()=>{
 
-            if(this._model.status == 'PEND' && await confirm('Are you sure you want to "APPROVE" this canvass?')){
+            if(this._model.status == 'PEND' && await window.util.confirm('Are you sure you want to "APPROVE" this canvass?')){
                 return this.httpApproveRequest();
             }
         }
 
         this.el.disapproveBtn.onclick = async ()=>{
 
-            if(this._model.status == 'PEND' && await confirm('Are you sure you want to "DISAPPROVE" this canvass?')){
+            if(this._model.status == 'PEND' && await window.util.confirm('Are you sure you want to "DISAPPROVE" this canvass?')){
                 return this.httpDisapproveRequest();
             }
         }
