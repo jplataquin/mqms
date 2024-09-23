@@ -223,7 +223,7 @@ window.util.confirm = (msg,callback) => {
         window.ui.primaryModalBody.innerText = msg;
     
         let no  = t.button({class:'btn btn-danger me-3'},'No');
-        let yes = t.button({class:'btn btn-success'},'Yes');
+        let yes = t.button({class:'btn btn-primary'},'Yes');
     
         yes.onclick = (e)=>{
             callback(true,e);
