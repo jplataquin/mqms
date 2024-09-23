@@ -64,6 +64,12 @@
             
             <div class="row">
                 <div class="col-12 text-end">
+                
+                    <button class="btn btn-outline-primary" id="reviewLinkBtn">
+                        Review Link
+                        <i class="bi bi-box-arrow-up-right"></i>
+                    </button>
+
                     <button class="btn btn-warning" id="printBtn">Print</button>
                 </div>
             </div>
@@ -142,10 +148,20 @@
     import {$q,$el} from '/adarna.js';
     import CanvassItem from '/ui_components/CanvassItem.js';
     
-    let addCanvassBtn = $q('.add-canvass-btn');
-    let submitBtn     = $q('#submitBtn').first();
-    let cancelBtn     = $q('#cancelBtn').first();
-    let printBtn      = $q('#printBtn').first();
+    const addCanvassBtn = $q('.add-canvass-btn');
+    const submitBtn     = $q('#submitBtn').first();
+    const cancelBtn     = $q('#cancelBtn').first();
+    const printBtn      = $q('#printBtn').first();
+    const reviewPendBtn = $q('#reviewPendBtn').first();
+
+    reviewLinkBtn.onclick = async ()=>{
+        let test = await window.util.copyToClipboard('{{ url("/review/material_canvass/".$material_quantity_request->id); }}');
+        if(test){
+            alert('Review Link for "Material Canvass: {{$material_quantity_request->id}}" copied!');
+        }else{
+            alert('Failed to copy');
+        }
+    }
 
     @foreach($items as $item)
 

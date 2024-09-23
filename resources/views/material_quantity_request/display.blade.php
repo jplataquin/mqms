@@ -87,6 +87,8 @@
                     </div>
                 </div>
             </div>
+
+            @if($material_quantity_request->status == 'PEND')
             <div class="row mb-3">
                 <div class="col-lg-12 text-end">
                     <button class="btn btn-outline-primary" id="reviewLinkBtn">
@@ -95,6 +97,7 @@
                     </button>
                 </div>
             </div>
+            @endif
         </div>
     </div>
     
@@ -169,12 +172,14 @@
         url:'/material_quantity_request'
     };
 
-    reviewLinkBtn.onclick = async ()=>{
-        let test = await window.util.copyToClipboard('{{ url("/review/material_quantity_request/".$material_quantity_request->id); }}');
-        if(test){
-            alert('Review Link for "Material Request: {{$material_quantity_request->id}}" copied!');
-        }else{
-            alert('Failed to copy');
+    if(reviewLinkBtn){
+        reviewLinkBtn.onclick = async ()=>{
+            let test = await window.util.copyToClipboard('{{ url("/review/material_quantity_request/".$material_quantity_request->id); }}');
+            if(test){
+                alert('Review Link for "Material Request: {{$material_quantity_request->id}}" copied!');
+            }else{
+                alert('Failed to copy');
+            }
         }
     }
     
