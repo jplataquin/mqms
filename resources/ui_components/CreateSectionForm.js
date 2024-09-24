@@ -8,7 +8,7 @@ class CreateProjectForm extends Component{
 
         return t.div(()=>{
 
-            t.div({class:'row'},()=>{
+            t.div({class:'row mb-3'},()=>{
                 t.div({class:'col-lg-12'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label('Section Name');
@@ -18,7 +18,7 @@ class CreateProjectForm extends Component{
             });//div row
 
 
-            t.div({class:'row'},()=>{
+            t.div({class:'row mb-3'},()=>{
                 t.div({class:'col-lg-12 text-end'},()=>{
                     this.el.btn_create = t.button({class:'btn btn-primary'},'Create');
                     this.el.btn_cancel = t.button({class:'btn btn-secondary'},'Cancel');
