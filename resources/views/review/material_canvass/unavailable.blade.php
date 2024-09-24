@@ -119,7 +119,7 @@
         <h1>Unavailable</h1>
         <h5>*** {{$message}} ***</h5>
         <br>
-        <a href="/material_quantity_request/select/create">Click here to return to previous page</a>
+        <a href="/review/material_canvass">Click here to return to list</a>
     </div>
 
     </div>
