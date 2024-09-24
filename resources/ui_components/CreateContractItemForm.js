@@ -136,6 +136,8 @@ class CreateContractItemForm extends Component{
 
         const t = new Template();
 
+        console.log(this._model.unit_options);
+        
         this._model.unit_options.map((item)=>{
             this.el.contract_unit.append(
                 t.option({value:item.value},item.text)
