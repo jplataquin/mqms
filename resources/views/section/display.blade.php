@@ -213,7 +213,7 @@
  
 <script type="module">
     import {$q,$el, Template} from '/adarna.js';
-    import CreateContractItemForm from '/ui_component/CreateContractItemForm.js';
+    import CreateContractItemForm from '/ui_components/CreateContractItemForm.js';
 
     const sectionName                 = $q('#sectionName').first();
     const search_filter               = $q("#searchFilter").first();
@@ -373,7 +373,7 @@
 
 
     createBtn.onclick = ()=>{
-        
+
         let create_contract_item_form = CreateContractItemForm({
             section_id:'{{$section->id}}',
             unit_options:[]
