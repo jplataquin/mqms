@@ -138,5 +138,5 @@ class CreateContractItemForm extends Component{
 
 
 export default (data)=>{
-    return (new CreateProjectForm(data));
+    return (new CreateContractItemForm(data));
 }
