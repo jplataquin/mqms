@@ -136,14 +136,42 @@ class CreateContractItemForm extends Component{
 
         const t = new Template();
 
+        this.el.contract_unit.append(
+            t.option({value:''},' - ')
+        );
+
+        this.el.ref_1_unit.append(
+            t.option({value:''},' - ')
+        );
+    
     
         for(let key in this._model.unit_options){
 
             let item = this._model.unit_options[key];
 
+            let contract_unit_option = t.option({value:item.id},item.text);
+
+            if(item.deleted){
+                contract_unit_option.innerHTML = item.text+ ' [Deleted]';
+                contract_unit_option.disabled = true;
+            }
+
             this.el.contract_unit.append(
-                t.option({value:item.id},item.text)
+                contract_unit_option
             );
+
+
+            let ref_1_unit_option = t.option({value:item.id},item.text);
+
+            if(item.deleted){
+                contract_unit_option.innerHTML = item.text+ ' [Deleted]';
+                contract_unit_option.disabled = true;
+            }
+
+            this.el.ref_1_unit.append(
+                contract_unit_option
+            );
+
         };
     }
 }
