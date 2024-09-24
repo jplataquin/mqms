@@ -89,7 +89,7 @@
                 </tr>
 
                 <tr>
-                    <th colspan="2">
+                    <th colspan="2" class="text-end">
                         <button class="btn btn-outline-primary" id="reviewLinkBtn">
                             Review Link
                             <i class="bi bi-copy"></i>
