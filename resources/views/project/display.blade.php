@@ -102,7 +102,6 @@
 
     const project_name                 = $q('#project_name').first();
     const status                      = $q('#status').first();
-   // let searchBtn                   = $q('#searchBtn').first();
     const editBtn                     = $q('#editBtn').first();
     const updateBtn                   = $q('#updateBtn').first();
     const cancelBtn                   = $q('#cancelBtn').first();
