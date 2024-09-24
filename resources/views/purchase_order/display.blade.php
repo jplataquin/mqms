@@ -87,6 +87,15 @@
                         <textarea disabled="true" class="w-100" id="description">{{$material_quantity_request->description}}</textarea>
                     </td>
                 </tr>
+
+                <tr>
+                    <th colspan="2">
+                        <button class="btn btn-outline-primary" id="reviewLinkBtn">
+                            Review Link
+                            <i class="bi bi-copy"></i>
+                        </button>
+                    </th>
+                </tr>
             </tbody>
         </table>
 
