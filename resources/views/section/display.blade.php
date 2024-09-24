@@ -376,7 +376,7 @@
 
         let create_contract_item_form = CreateContractItemForm({
             section_id:'{{$section->id}}',
-            unit_options: @json($unit_options);
+            unit_options: @json($unit_options)
         });
 
         window.util.drawerModal.content('Create Contract Item',create_contract_item_form).open();
