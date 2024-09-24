@@ -379,7 +379,7 @@
             unit_options:[]
         });
 
-        window.util.drawerModal.content('Create Contract Item',create_contract_item_form);
+        window.util.drawerModal.content('Create Contract Item',create_contract_item_form).open();
         //window.util.navTo('/project/section/contract_item/create/{{$section->id}}');
     }
 
