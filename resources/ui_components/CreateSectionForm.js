@@ -26,7 +26,7 @@ class CreateProjectForm extends Component{
 
             t.div({class:'row mb-3'},()=>{
                 t.div({class:'col-lg-12 text-end'},()=>{
-                    this.el.btn_create = t.button({class:'btn btn-primary me-3'},'Create');
+                    this.el.btn_submit = t.button({class:'btn btn-primary me-3'},'Submit');
                     this.el.btn_cancel = t.button({class:'btn btn-secondary'},'Cancel');
                 });//div col
             });//div row
@@ -42,12 +42,12 @@ class CreateProjectForm extends Component{
         }
 
         
-        this.el.btn_create.onclick = ()=>{
+        this.el.btn_submit.onclick = ()=>{
             
             window.util.blockUI();
 
             window.util.$post('/api/section/create',{
-                name: section_name.value,
+                name: this.el.section_name.value,
                 project_id: this._model.project_id
             }).then(reply=>{
     

@@ -11,7 +11,7 @@ class CreateProjectForm extends Component{
                 t.div({class:'col-lg-6 mb-3'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label('Project Name');
-                        this.el.project_name = t.input({class:'form-control'});
+                        this.el.project_name = t.input({class:'form-control',type:'text'});
                     });//div
                 });//div col
 
