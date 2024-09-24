@@ -32,8 +32,11 @@
                     <td>{{str_pad($purchase_order->id,6,0,STR_PAD_LEFT)}}</td>
                 </tr>
                 <tr>
-                    <th>Material Quantity Request ID</th>
-                    <td>{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
+                    <th>Material Request ID</th>
+                    <td>
+                        <a href="/material_quantity_request/{{$material_quantity_request->id}}">
+                            {{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
+                        </a>
                 </tr>
                 <tr>
                     <th>Project</th>
