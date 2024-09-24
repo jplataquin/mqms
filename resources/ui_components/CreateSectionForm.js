@@ -59,6 +59,7 @@ class CreateProjectForm extends Component{
                     return false;
                 }
                 
+                window.util.drawerModal.close();
                 window.util.navReload();
             });
         }

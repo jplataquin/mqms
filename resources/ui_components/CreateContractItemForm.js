@@ -138,6 +138,8 @@ class CreateContractItemForm extends Component{
 
     
         for(let item in this._model.unit_options){
+
+            console.log(item);
             this.el.contract_unit.append(
                 t.option({value:item.id},item.text)
             );
