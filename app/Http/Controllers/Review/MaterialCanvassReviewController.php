@@ -96,6 +96,28 @@ class MaterialCanvassReviewController extends Controller
         ]);
     }
     
+
+    public function _test_unavailable($id){
+
+        $materialQuantityRequest = MaterialQuantityRequest::findOrFail($id);
+
+        
+        $project                = $materialQuantityRequest->Project;
+        $section                = $materialQuantityRequest->Section;
+        $contract_item          = $materialQuantityRequest->ContractItem;
+        $component              = $materialQuantityRequest->Component;
+      
+        return view('review/material_canvass/unavailable',[
+            'project'           => $project,
+            'section'           => $section,
+            'contract_item'     => $contract_item,
+            'component'         => $component,
+            'material_request'  => $materialQuantityRequest,
+            'message'           => 'Record Unmaintained'
+        ]);
+        
+    }
+
     public function display($id){
         
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($id);
