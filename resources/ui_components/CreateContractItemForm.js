@@ -149,27 +149,19 @@ class CreateContractItemForm extends Component{
 
             let item = this._model.unit_options[key];
 
-            let contract_unit_option = t.option({value:item.id},item.text);
+            //Skip if deleted
+            if(item.deleted) continue;
 
-            if(true){
-                contract_unit_option.innerHTML = item.text+ ' [Deleted]';
-                contract_unit_option.disabled = true;
-            }
+            let contract_unit_option    = t.option({value:item.id},item.text);
+            let ref_1_unit_option       = t.option({value:item.id},item.text);
+
 
             this.el.contract_unit.append(
                 contract_unit_option
             );
 
-
-            let ref_1_unit_option = t.option({value:item.id},item.text);
-
-            if(item.deleted){
-                contract_unit_option.innerHTML = item.text+ ' [Deleted]';
-                contract_unit_option.disabled = true;
-            }
-
             this.el.ref_1_unit.append(
-                contract_unit_option
+                ref_1_unit_option
             );
 
         };
