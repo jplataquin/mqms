@@ -141,7 +141,7 @@ class CreateContractItemForm extends Component{
             this.el.contract_unit.append(
                 t.option({value:item.id},item.text)
             );
-        });
+        };
     }
 }
 
