@@ -160,7 +160,7 @@
             project_id:'{{$project->id}}'
         });
 
-        window.util.drawerModal.content('Create Project',create_section_form).open();
+        window.util.drawerModal.content('Create Section',create_section_form).open();
     }
 
     cancelBtn.onclick = (e)=>{

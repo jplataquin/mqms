@@ -3,6 +3,12 @@ import {Template,Component} from '/adarna.js';
 
 class CreateProjectForm extends Component{
 
+    model(){
+        return {
+            project_id:''
+        };
+    }
+    
     view(){
         const t= new Template();
 
