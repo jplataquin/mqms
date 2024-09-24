@@ -115,7 +115,7 @@ Route::middleware(['auth',CheckForResetPassword::class])->group(function () {
    
     Route::get('/review/material_canvass', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, 'list']);
     Route::get('/review/material_canvass/{id}', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, 'display']);
-    Route::get('/review/material_canvass/test_unavailable/{id}', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, '_test_unavaiable']);
+    Route::get('/review/material_canvass/test_unavailable/{id}', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, '_test_unavaialable']);
     
  
     Route::get('/review/purchase_order/{id}', [App\Http\Controllers\Review\PurchaseOrderReviewController::class, 'display']);
