@@ -50,9 +50,9 @@
             </tr>
             
             <tr>
-                <td colspan="2">
+                <th colspan="2">
                     <hr>
-                </td>
+                </th>
             </tr>
 
             <tr>
@@ -69,9 +69,9 @@
             </tr>
 
             <tr>
-                <td colspan="2">
+                <th colspan="2">
                     <hr>
-                </td>
+                </th>
             </tr>
 
             <tr>
