@@ -151,7 +151,7 @@ class CreateContractItemForm extends Component{
 
             let contract_unit_option = t.option({value:item.id},item.text);
 
-            if(item.deleted){
+            if(true){
                 contract_unit_option.innerHTML = item.text+ ' [Deleted]';
                 contract_unit_option.disabled = true;
             }
