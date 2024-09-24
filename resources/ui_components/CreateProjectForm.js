@@ -62,8 +62,6 @@ class CreateProjectForm extends Component{
         this.el.btn_cancel.onclick = ()=>{
             window.util.drawerModal.close();
         }
-
-    
     }
 }
 

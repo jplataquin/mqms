@@ -79,17 +79,9 @@
         </div>
         <div class="folder-form-body">
             <div class="row mb-3">
-                <div class="col-lg-8">
-                    <div class="form-group">
-                        <label>Name</label> 
-                        <input type="text" class="form-control" id="section_name"/>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label>&nbsp;</label>
-                        <button id="createBtn" class="btn w-100 btn-warning">Create</button>
-                    </div>
+                <div class="col-lg-12 text-end">
+                    <button id="createBtn" class="btn btn-warning">Create</button>
+                    >
                 </div>
             </div>
         </div>
@@ -107,6 +99,7 @@
 
 <script type="module">
     import {$q,$el,Template} from '/adarna.js';
+    import CreateSectionForm from '/ui_components/CreateSectionForm.js';
 
     const project_name                 = $q('#project_name').first();
     const status                      = $q('#status').first();
@@ -117,10 +110,8 @@
     const deleteBtn                   = $q('#deleteBtn').first();
     const list                        = $q('#list').first();
     const showMoreBtn                 = $q('#showMoreBtn').first();
-
-
-    const section_name                = $q('#section_name').first();
     const createBtn                   = $q('#createBtn').first();
+    const section_name                = $q('#section_name').first();
     
     window.util.quickNav = {
         title:'Project',
@@ -165,32 +156,19 @@
         });
     }
 
+    createBtn.onclick = ()=>{
+        
+        let create_section_form = CreateSectionForm({
+            project_id:'{{$project->id}}'
+        });
+
+        window.util.drawerModal.content('Create Project',create_section_form).open();
+    }
 
     cancelBtn.onclick = (e)=>{
         window.util.navTo('/projects');
     }
 
-    createBtn.onclick = (e)=>{
-
-        window.util.blockUI();
-
-        window.util.$post('/api/section/create',{
-            name: section_name.value,
-            project_id: '{{$project->id}}'
-        }).then(reply=>{
-
-            window.util.unblockUI();
-
-            if(reply.status <= 0){
-
-                window.util.showMsg(reply);
-                return false;
-            }
-
-            reinitalize();
-            showData();
-        });
-    }
 
     deleteBtn.onclick = (e)=>{
 
