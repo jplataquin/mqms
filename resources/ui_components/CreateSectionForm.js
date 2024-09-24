@@ -8,7 +8,7 @@ class CreateProjectForm extends Component{
             project_id:''
         };
     }
-    
+
     view(){
         const t= new Template();
 
@@ -26,7 +26,7 @@ class CreateProjectForm extends Component{
 
             t.div({class:'row mb-3'},()=>{
                 t.div({class:'col-lg-12 text-end'},()=>{
-                    this.el.btn_create = t.button({class:'btn btn-primary'},'Create');
+                    this.el.btn_create = t.button({class:'btn btn-primary me-3'},'Create');
                     this.el.btn_cancel = t.button({class:'btn btn-secondary'},'Cancel');
                 });//div col
             });//div row
