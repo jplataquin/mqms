@@ -31,7 +31,7 @@
             <tr>
                 <th>Project ID</th>
                 <td>
-                    <a href="/project/{{$project->id}}">{{ str_pad($project->id,0,6,STR_PAD_LEFT) }}</a>
+                    <a href="/project/{{$project->id}}">{{ str_pad($project->id,6,0,STR_PAD_LEFT) }}</a>
                 </td>
             </tr>
             <tr>
