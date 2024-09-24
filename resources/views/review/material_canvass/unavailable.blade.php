@@ -77,7 +77,7 @@
             <tr>
                 <th>Component ID</th>
                 <td>
-                    <a href="project/section/contract_item/component/{{$component->id}}">{{ str_pad($component->id,6,0,STR_PAD_LEFT) }}</a>
+                    <a href="reivew/component/{{$component->id}}">{{ str_pad($component->id,6,0,STR_PAD_LEFT) }}</a>
                 </td>
             </tr>
             <tr>
