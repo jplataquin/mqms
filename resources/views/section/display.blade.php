@@ -210,9 +210,10 @@
         </div>
     </div>
 </template>
-
+ 
 <script type="module">
     import {$q,$el, Template} from '/adarna.js';
+    import CreateContractItemForm from '/ui_component/CreateContractItemForm.js';
 
     const sectionName                 = $q('#sectionName').first();
     const search_filter               = $q("#searchFilter").first();
@@ -372,8 +373,14 @@
 
 
     createBtn.onclick = ()=>{
+        
+        let create_contract_item_form = CreateContractItemForm({
+            section_id:'{{$section->id}}',
+            unit_options:[]
+        });
 
-        window.util.navTo('/project/section/contract_item/create/{{$section->id}}');
+        window.util.drawerModal.content('Create Contract Item',create_contract_item_form);
+        //window.util.navTo('/project/section/contract_item/create/{{$section->id}}');
     }
 
     
