@@ -77,7 +77,7 @@
             <tr>
                 <th>Component ID</th>
                 <td>
-                    <a href="reivew/component/{{$component->id}}">{{ str_pad($component->id,6,0,STR_PAD_LEFT) }}</a>
+                    <a href="/reivew/component/{{$component->id}}">{{ str_pad($component->id,6,0,STR_PAD_LEFT) }}</a>
                 </td>
             </tr>
             <tr>
@@ -103,7 +103,7 @@
             <tr>
                 <th>Material Request ID</th>
                 <td>
-                    <a href="/review/material_quantity_request/{{$material_request->id}}">{{ str_pad($material_request->id,6,0,STR_PAD_LEFT) }}</a>
+                    <a href="/review/material_quantity_request/{{$material_request->id}}" >{{ str_pad($material_request->id,6,0,STR_PAD_LEFT) }}</a>
                 </td>
             </tr>
             <tr>
