@@ -45,7 +45,7 @@ class SectionController extends Controller
         return view('section/display',[
             'section'          => $section,
             'project'          => $project,
-            'contract_items'       => $contract_items,
+            'contract_items'   => $contract_items,
             'unit_options'     => $unit_options
         ]);
     }

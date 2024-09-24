@@ -133,6 +133,14 @@ class CreateContractItemForm extends Component{
         this.el.btn_cancel.onclick = ()=>{
             window.util.drawerModal.close();
         }
+
+        const t = new Template();
+
+        this._model.unit_options.each((item)=>{
+            this.el.contract_unit.append(
+                t.option({value:item.value},item.text)
+            );
+        });
     }
 }
 
