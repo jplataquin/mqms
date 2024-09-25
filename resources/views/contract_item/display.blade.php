@@ -139,13 +139,12 @@
             
 
             <div class="row mb-3">
-                <div class="col-6 text-start">
-                    <button class="btn btn-danger" id="deleteBtn">Delete</button>
-                </div>
                 <div class="col-6 text-end">
-                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                    <button class="btn btn-danger" id="deleteBtn">Delete</button>
                     <button class="btn btn-primary" id="editBtn">Edit</button>
                     <button class="btn btn-warning d-none" id="updateBtn">Update</button>
+                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                  
                 </div>
             </div>
         </div>
