@@ -12,6 +12,7 @@ class CreateContractItemForm extends Component{
     view(){
         const t= new Template();
 
+        
         return t.div(()=>{
             
             t.div({class:'row mb-3'},()=>{
@@ -151,7 +152,7 @@ class CreateContractItemForm extends Component{
             contract_quantity           : this.el.contract_quantity.value,
             contract_unit_price         : this.el.contract_unit_price.value,
             unit_id                     : this.el.contract_unit.value,
-            
+
             ref_1_quantity              : this.el.ref_1_quantity.value,
             ref_1_unit_price            : this.el.ref_1_unit_price.value,
             ref_1_unit_id               : this.el.ref_1_unit.value
