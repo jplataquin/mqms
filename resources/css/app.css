@@ -422,7 +422,7 @@ html, body {
 }
 
 .drawer_modal_body{
-  height:100%;
+  height:85%;
   overflow-y: auto;
 }
 
