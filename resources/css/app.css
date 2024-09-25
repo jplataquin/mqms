@@ -422,7 +422,7 @@ html, body {
 }
 
 .drawer_modal_body{
-  height:100vh;
+  height:90vh;
   overflow-y: auto;
 }
 
@@ -434,7 +434,7 @@ html, body {
 
 .drawer_modal.drawer_modal_open {
   transition: 0.5s;
-  height:85%;
+  height:85vh;
 }
 
 .drawer_modal_background.drawer_modal_open {
