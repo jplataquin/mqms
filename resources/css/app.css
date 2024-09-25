@@ -422,7 +422,7 @@ html, body {
 }
 
 .drawer_modal_body{
-  height:85%;
+  height:100vh;
   overflow-y: auto;
 }
 
@@ -464,9 +464,6 @@ html, body {
     max-width: 80%;   
   }
 
-  .drawer_modal_body{
-    height:70%;
-  }
 }
 
 @media (max-width:481px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ 
