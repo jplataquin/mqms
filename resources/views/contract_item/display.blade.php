@@ -139,7 +139,7 @@
             
 
             <div class="row mb-3">
-                <div class="col-6 text-end">
+                <div class="col-lg-12 text-end">
                     <button class="btn btn-danger" id="deleteBtn">Delete</button>
                     <button class="btn btn-primary" id="editBtn">Edit</button>
                     <button class="btn btn-warning d-none" id="updateBtn">Update</button>
