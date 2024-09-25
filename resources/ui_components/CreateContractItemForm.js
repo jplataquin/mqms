@@ -12,7 +12,7 @@ class CreateContractItemForm extends Component{
     view(){
         const t= new Template();
 
-        
+
         return t.div(()=>{
             
             t.div({class:'row mb-3'},()=>{
@@ -175,19 +175,19 @@ class CreateContractItemForm extends Component{
     setupNumbersOnlyInput(){
 
         this.el.contract_quantity.onkeypress = (e)=>{
-            return window.util.inputNumber(contract_quantity,e,2,false);
+            return window.util.inputNumber(this.el.contract_quantity,e,2,false);
         }
 
         this.el.contract_unit_price.onkeypress = (e)=>{
-            return window.util.inputNumber(contract_unit_price,e,2,false);
+            return window.util.inputNumber(this.el.contract_unit_price,e,2,false);
         }
 
         this.el.ref_1_quantity.onkeypress = (e)=>{
-            return window.util.inputNumber(ref_1_quantity,e,2,false);
+            return window.util.inputNumber(this.el.ref_1_quantity,e,2,false);
         }
 
         this.el.ref_1_unit_price.onkeypress = (e)=>{
-            return window.util.inputNumber(ref_1_unit_price,e,2,false);
+            return window.util.inputNumber(this.el.ref_1_unit_price,e,2,false);
         }
         
 
