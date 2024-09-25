@@ -464,6 +464,10 @@ html, body {
     max-width: 80%;   
   }
 
+  .drawer_modal_body{
+    height:80vh;
+  }
+
 }
 
 @media (max-width:481px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ 
@@ -519,6 +523,10 @@ html, body {
     width: 80%;
     min-width: 80%;
     max-width: 80%;   
+  }
+
+  .drawer_modal_body{
+    height:50vh;
   }
 }
 
