@@ -328,9 +328,9 @@
 
     
 
-    deleteBtn.onclick = (e)=>{
+    deleteBtn.onclick = async (e)=>{
 
-        let answer = prompt("Are you sure you want to delete this contract item? \n Type \"{{$contract_item->item_code}}\" to continue");
+        let answer = await window.util.prompt("Are you sure you want to delete this contract item? \n Type \"{{$contract_item->item_code}}\" to continue");
 
         if(answer != '{{$contract_item->item_code}}'){
             return false;
