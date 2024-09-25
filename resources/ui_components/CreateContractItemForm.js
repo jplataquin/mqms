@@ -20,7 +20,7 @@ class CreateContractItemForm extends Component{
                 t.div({class:'col-lg-12 mb-3'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label('Item Code');
-                        this.el.item_name = t.input({class:'form-control',type:'text'});
+                        this.el.item_code = t.input({class:'form-control',type:'text'});
                     });//div
                 });//div col
 
