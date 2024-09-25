@@ -419,7 +419,6 @@ html, body {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   z-index:800;
-  padding-bottom:30px;
 }
 
 .drawer_modal_body{
@@ -436,6 +435,7 @@ html, body {
 .drawer_modal.drawer_modal_open {
   transition: 0.5s;
   height:85vh;
+  padding-bottom:30px;
 }
 
 .drawer_modal_background.drawer_modal_open {
