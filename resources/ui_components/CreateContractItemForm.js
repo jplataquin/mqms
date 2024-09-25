@@ -134,6 +134,66 @@ class CreateContractItemForm extends Component{
             window.util.drawerModal.close();
         }
 
+        this.setupUnits();
+
+        this.setupNumbersOnlyInput();
+    }
+
+    submit(){
+
+        window.util.blockUI();
+
+        window.util.$post('/api/contract_item/create',{
+            section_id                  : this._model.section_id,
+            item_code                   : this.el.item_code.value,
+            description                 : this.el.description.value,
+            
+            contract_quantity           : this.el.contract_quantity.value,
+            contract_unit_price         : this.el.contract_unit_price.value,
+            unit_id                     : this.el.contract_unit.value,
+            
+            ref_1_quantity              : this.el.ref_1_quantity.value,
+            ref_1_unit_price            : this.el.ref_1_unit_price.value,
+            ref_1_unit_id               : this.el.ref_1_unit.value
+            
+        }).then(reply=>{
+            
+            window.util.unblockUI();
+
+            if(reply.status <= 0 ){
+                window.util.showMsg(reply);
+                return false;
+            };
+            
+            window.util.drawerModal.close();
+            window.util.navReload();
+        
+        });
+    }
+
+    setupNumbersOnlyInput(){
+
+        this.el.contract_quantity.onkeypress = (e)=>{
+            return window.util.inputNumber(contract_quantity,e,2,false);
+        }
+
+        this.el.contract_unit_price.onkeypress = (e)=>{
+            return window.util.inputNumber(contract_unit_price,e,2,false);
+        }
+
+        this.el.ref_1_quantity.onkeypress = (e)=>{
+            return window.util.inputNumber(ref_1_quantity,e,2,false);
+        }
+
+        this.el.ref_1_unit_price.onkeypress = (e)=>{
+            return window.util.inputNumber(ref_1_unit_price,e,2,false);
+        }
+        
+
+    }
+
+    setupUnits(){
+
         const t = new Template();
 
         this.el.contract_unit.append(
@@ -144,7 +204,7 @@ class CreateContractItemForm extends Component{
             t.option({value:''},' - ')
         );
     
-    
+
         for(let key in this._model.unit_options){
 
             let item = this._model.unit_options[key];
