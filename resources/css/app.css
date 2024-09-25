@@ -419,10 +419,11 @@ html, body {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   z-index:800;
+  padding-bottom:30px;
 }
 
 .drawer_modal_body{
-  height:90vh;
+  height:100%;
   overflow-y: auto;
 }
 
@@ -464,9 +465,6 @@ html, body {
     max-width: 80%;   
   }
 
-  .drawer_modal_body{
-    height:80vh;
-  }
 
 }
 
@@ -525,9 +523,6 @@ html, body {
     max-width: 80%;   
   }
 
-  .drawer_modal_body{
-    height:50vh;
-  }
 }
 
 @media (max-width:961px)  { /* tablet, landscape iPad, lo-res laptops ands desktops */ 
