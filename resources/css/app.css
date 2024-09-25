@@ -421,6 +421,11 @@ html, body {
   z-index:800;
 }
 
+.drawer_modal_body{
+  height:100%;
+  overflow-y: auto;
+}
+
 
 .drawer_modal_header{
   min-height: 50px;
