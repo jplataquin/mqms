@@ -52,7 +52,7 @@ class CreateComponentForm extends Component{
                         t.label('Sum Flag');
                         t.input({class:'form-control',type:'text'});
                         t.div({class:'form-switch text-center'},()=>{
-                            this.el.sum_flag = t.input({class:'checkbox', class:'form-check-input', value:1, checked:true});
+                            this.el.sum_flag = t.input({type:'checkbox', class:'form-check-input', value:1, checked:true});
                         });
                     });
                 });//div col
