@@ -50,7 +50,6 @@ class CreateComponentForm extends Component{
                 t.div({class:'col-lg-3'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label('Sum Flag');
-                        t.input({class:'form-control',type:'text'});
                         t.div({class:'form-switch text-center'},()=>{
                             this.el.sum_flag = t.input({type:'checkbox', class:'form-check-input', value:1, checked:true});
                         });
