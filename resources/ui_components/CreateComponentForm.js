@@ -51,7 +51,7 @@ class CreateComponentForm extends Component{
                     t.div({class:'form-group'},()=>{
                         t.label('Sum Flag');
                         t.input({class:'form-control',type:'text'});
-                        t.div({class:'form-switc text-center'},()=>{
+                        t.div({class:'form-switch text-center'},()=>{
                             this.el.sum_flag = t.input({class:'checkbox', class:'form-check-input', value:1, checked:true});
                         });
                     });
@@ -73,6 +73,10 @@ class CreateComponentForm extends Component{
 
         this.el.quantity.onkeypress = (e) =>{
             return window.util.inputNumber(this.el.quantity,e,2,false);
+        }
+
+        this.el.use_count.onkeypress = (e) =>{
+            return window.util.inputNumber(this.el.use_count,e,2,false);
         }
 
         this.el.submit_btn.onclick = ()=>{
