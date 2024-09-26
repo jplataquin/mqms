@@ -158,51 +158,8 @@
             </div>
             <div class="folder-form-body">
                 <div class="row mb-3">
-                    <div class="col-lg-4 col-sm-12">
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" class="form-control" id="component_name" />
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-sm-12">
-                        <div class="form-group">
-                            <label>Quantity</label>
-                            <input type="text" class="form-control" id="component_quantity" />
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-sm-12">
-                        <div class="form-group">
-                            <label>Unit</label>
-                            <select class="form-control" id="component_unit">
-                                @foreach($unit_options as $unit)
-                                    <option value="{{$unit->id}}" @if($unit->deleted) disabled @endif>{{$unit->text}} @if($unit->deleted) [Deleted] @endif</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-1 col-sm-12">
-                        <div class="form-group">
-                            <label>Use Count</label>
-                            <input type="text" class="form-control" value="1" id="component_use_count" />
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-1">
-                        <div class="form-group">
-                            <label>Sum Flag</label>
-                            <div class="form-switch text-center">
-                                <input type="checkbox" class="form-check-input" id="component_sum_flag" value="1" checked/>
-                            </div>
-                        </div>
-                    </div>
-
-                    
-                    <div class="col-lg-2 col-sm-12">
-                        <div class="form-group">
-                            <label>&nbsp;</label>
-                            <button id="createComponentBtn" class="btn btn-warning w-100">Create</button>
-                        </div>
+                    <div class="col-lg-12">
+                        <button id="createComponentBtn" class="btn btn-warning">Create</button>
                     </div>
                 </div>
             </div>
@@ -228,6 +185,7 @@
 </div>  
 <script type="module">
     import {$q,$el,Template} from '/adarna.js';
+    import CreateComponentForm from '/ui_components';
 
     const editBtn                     = $q('#editBtn').first();
     const updateBtn                   = $q('#updateBtn').first();
@@ -243,11 +201,6 @@
     const ref_1_unit                  = $q('#ref_1_unit').first();
     const unit                        = $q('#unit').first();
     
-    const component_name              = $q('#component_name').first();
-    const component_unit              = $q('#component_unit').first();
-    const quantity                    = $q('#component_quantity').first();
-    const component_use_count         = $q('#component_use_count').first();
-    const component_sum_flag          = $q('#component_sum_flag').first();
     const createComponentBtn          = $q('#createComponentBtn').first();
     
     const component_list              = $q('#component_list').first();
@@ -273,9 +226,6 @@
         return window.util.inputNumber(ref_1_unit_price,e,2,false);
     }
 
-    quantity.onkeypress = (e) =>{
-        return window.util.inputNumber(quantity,e,2,false);
-    }
 
     editBtn.onclick = (e)=>{
         e.preventDefault();
@@ -395,38 +345,25 @@
     }
 
 
-    createComponentBtn.onclick = ()=>{
-
-            window.util.blockUI();
-
-            window.util.$post('/api/component/create',{
-                section_id          : '{{$section->id}}',
-                contract_item_id    : '{{$contract_item->id}}',
-                name                : component_name.value,
-                quantity            : component_quantity.value,
-                use_count           : component_use_count.value,
-                unit_id             : component_unit.value,
-                sum_flag            : (component_sum_flag.checked == true) ? 1 : 0
-            }).then(reply=>{
-
-                window.util.unblockUI();
-
-                if(reply.status <= 0){
-                    window.util.showMsg(reply);
-                    return false;
-                }
-
-                $el.append(Component(reply.data.id)).to(component_list);
-            });
-
-    }
-
     $q('.item').apply((el)=>{
 
         el.onclick = (e)=>{
             window.util.navTo('/project/section/contract_item/component/'+el.getAttribute('data-id'));
         }
     });
+
+
+    createComponentBtn.onclick = ()=>{
+
+        window.util.drawerModal.content('Create Component',CreateComponentForm({
+            section_id: '{{$section->id}}',
+            contract_item_id:'{{$contract_item->id}}',
+            unit_options: unit_options,
+            callback: (id)=>{
+                Component(id).to(component_list);
+            }
+        })).open();
+    }
 
 </script>
 </div>
