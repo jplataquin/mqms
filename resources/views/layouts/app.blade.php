@@ -246,6 +246,12 @@
             }
         }
 
+        if(side_bar_mobile_background){
+            side_bar_mobile_background.onclick = ()=>{
+                closeNavBar();
+            }
+        }
+
         $q('.nav-item > a').apply(el=>{
 
             el.state = 0;
