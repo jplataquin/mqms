@@ -163,7 +163,7 @@
                         </li>
                     </u>
                 </div>
-                <div class="side-bar-mobile-background"></div>
+                <div id="side-bar-mobile-background"></div>
             </nav>
         </div>
    
