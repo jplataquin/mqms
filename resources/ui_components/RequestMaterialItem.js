@@ -169,7 +169,7 @@ class RequestMaterialItem extends Component{
                            
                             this.el.requestedQuantity = t.input({
                                 type:'text',
-                                class:'form-control',
+                                class:'form-control text-center',
                                 value:this._model.requestedQuantity
                             });
 
