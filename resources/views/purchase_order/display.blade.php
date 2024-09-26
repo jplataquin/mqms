@@ -94,7 +94,7 @@
             </tbody>
         </table>
         
-        <div class="w-100 text-end">
+        <div class="w-100 text-end mt-3">
             <button class="btn btn-outline-primary" id="reviewLinkBtn">
                 Review Link
                 <i class="bi bi-copy"></i>
