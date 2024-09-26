@@ -219,12 +219,14 @@
         const side_bar_container            = $q('#side-bar-container').first();
         const close_nav_menu                = $q('#close_nav_menu').first();
         const side_bar_mobile_background    = $q('#side-bar-mobile-background').first();
+        const body                          = $q('body').first();
 
         function closeNavBar(){
             side_bar_container.style.display    = 'none';
             hamburger_button.style.display      = 'block';
             side_bar_mobile_background.classList.remove('show');
             side_bar_mobile_background.classList.add('hide');
+            body.classList.add('overflow-hidden');
         }
 
         if(hamburger_button){
@@ -234,6 +236,7 @@
 
                 side_bar_mobile_background.classList.remove('hide');
                 side_bar_mobile_background.classList.add('show');
+                body.classList.remove('overflow-hidden');
             }
         }
 
