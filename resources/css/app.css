@@ -471,7 +471,6 @@ html, body {
   #side-bar-container{
     display: none;
     position:absolute;
-    z-index:3;
   }
 
   #hamburger_button{
@@ -580,6 +579,14 @@ html, body {
     width: 80%;
     min-width: 80%;
     max-width: 80%;   
+  }
+
+  #side-bar-mobile-background.show{
+    display:block;
+  }
+
+  #side-bar-mobile-background.hide{
+    display:none;
   }
 }
 @media (max-width:1025px) { /* big landscape tablets, laptops, and desktops */ }
