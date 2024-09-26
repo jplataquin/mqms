@@ -163,6 +163,7 @@
                         </li>
                     </u>
                 </div>
+                <div class="side-bar-mobile-background"></div>
             </nav>
         </div>
    
@@ -213,19 +214,23 @@
     <script type="module">
         import {$q} from '/adarna.js';
 
-        const hamburger_button      = $q('#hamburger_button').first();
-        const side_bar_container    = $q('#side-bar-container').first();
-        const close_nav_menu        = $q('#close_nav_menu').first();
-        
+        const hamburger_button              = $q('#hamburger_button').first();
+        const side_bar_container            = $q('#side-bar-container').first();
+        const close_nav_menu                = $q('#close_nav_menu').first();
+        const side_bar_mobile_background    = $q('#side-bar-mobile-background').first();
+
         function closeNavBar(){
             side_bar_container.style.display    = 'none';
             hamburger_button.style.display      = 'block';
+            side_bar_mobile_background.classList.add('hide');
         }
 
         if(hamburger_button){
             hamburger_button.onclick = ()=>{
                 side_bar_container.style.display    = 'block';
                 hamburger_button.style.display      = 'none';
+
+                side_bar_mobile_background.classList.add('show');
             }
         }
 

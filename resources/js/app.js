@@ -122,31 +122,34 @@ window.util.copyToClipboard = async function(textToCopy) {
 
 
 /** Drawer Modal */
-window.util.drawerModal = {
-    isOpen: false,
-    open:function(){
-        window.ui.drawerModalBackground.classList.add('drawer_modal_open');
-        window.ui.drawerModal.classList.add('drawer_modal_open');
-        this.isOpen = true;
-        return this;
-    },
-    close:function(){
-        window.ui.drawerModalBackground.classList.remove('drawer_modal_open');
-        window.ui.drawerModal.classList.remove('drawer_modal_open');
-        this.isOpen = false;
-        window.ui.drawerModalBody.innerHTML = '';
-        return this;
-    },
-    content:function(title,elem){
-        window.ui.drawerModalBody.innerHTML  = '';
-        window.ui.drawerModalTitle.innerHTML = title;
-        window.ui.drawerModalBody.appendChild(elem);
-        return this;
-    }
-};
+if(window.ui.drawerModalBackground && window.ui.drawerModal && window.ui.drawerModalBody && window.ui.drawerModalTitle ){
 
-window.ui.drawerModalBackground.onclick = ()=>{
-    window.util.drawerModal.close();
+    window.util.drawerModal = {
+        isOpen: false,
+        open:function(){
+            window.ui.drawerModalBackground.classList.add('drawer_modal_open');
+            window.ui.drawerModal.classList.add('drawer_modal_open');
+            this.isOpen = true;
+            return this;
+        },
+        close:function(){
+            window.ui.drawerModalBackground.classList.remove('drawer_modal_open');
+            window.ui.drawerModal.classList.remove('drawer_modal_open');
+            this.isOpen = false;
+            window.ui.drawerModalBody.innerHTML = '';
+            return this;
+        },
+        content:function(title,elem){
+            window.ui.drawerModalBody.innerHTML  = '';
+            window.ui.drawerModalTitle.innerHTML = title;
+            window.ui.drawerModalBody.appendChild(elem);
+            return this;
+        }
+    };
+
+    window.ui.drawerModalBackground.onclick = ()=>{
+        window.util.drawerModal.close();
+    }
 }
 
 window.util.prompt = (msg,callback) => {

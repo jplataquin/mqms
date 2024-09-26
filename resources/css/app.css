@@ -137,6 +137,18 @@ html, body {
   z-index:800;
 }
 
+#side-bar-mobile-background{
+  background-color: #282727;
+  opacity: 30%;
+  position:absolute;
+  width:100%;
+  height:100%;
+  top:0px;
+  left:0px;
+  z-index:800;
+  display: none;
+}
+
 #sidebar{
   background-color:#343a40;
   padding-bottom:40px;
@@ -442,6 +454,17 @@ html, body {
   display:block;
 }
 
+
+/** Foooter ***/
+
+.footer-action-menu{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background-color:#ffffff;
+}
+
+
 /*** Viewports ***/
 
 @media (max-width:320px)  { /* smartphones, iPhone, portrait 480x320 phones */
@@ -465,7 +488,13 @@ html, body {
     max-width: 80%;   
   }
 
+  #side-bar-mobile-background.show{
+    display:block;
+  }
 
+  #side-bar-mobile-background.hide{
+    display:none;
+  }
 }
 
 @media (max-width:481px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ 
@@ -490,16 +519,17 @@ html, body {
     max-width: 80%;   
   }
 
+  #side-bar-mobile-background.show{
+    display:block;
+  }
+
+  #side-bar-mobile-background.hide{
+    display:none;
+  }
+
+
 }
 
-/** Foooter ***/
-
-.footer-action-menu{
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  background-color:#ffffff;
-}
 
 @media (max-width:641px)  { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ 
   #side-bar-container{
@@ -523,6 +553,13 @@ html, body {
     max-width: 80%;   
   }
 
+  #side-bar-mobile-background.show{
+    display:block;
+  }
+
+  #side-bar-mobile-background.hide{
+    display:none;
+  }
 }
 
 @media (max-width:961px)  { /* tablet, landscape iPad, lo-res laptops ands desktops */ 
