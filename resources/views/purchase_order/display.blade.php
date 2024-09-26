@@ -240,13 +240,26 @@
     <script type="module">
         import {$q,Template} from '/adarna.js';
 
-        const cancelBtn = $q('#cancelBtn').first();
-        const deleteBtn = $q('#deleteBtn').first();
+        const cancelBtn     = $q('#cancelBtn').first();
+        const deleteBtn     = $q('#deleteBtn').first();
+        const reviewLinkBtn = $q('#reviewLinkBtn').first();
+
         
         window.util.quickNav = {
             title:'Purchase Order',
             url:'/purchase_order'
         };
+
+        if(reviewLinkBtn){
+            reviewLinkBtn.onclick = async ()=>{
+                let test = await window.util.copyToClipboard('{{ url("/review/purchase_order/".$purchase_order->id); }}');
+                if(test){
+                    alert('Review Link for "Purchase Order: {{$purchase_order->id}}" copied!');
+                }else{
+                    alert('Failed to copy');
+                }
+            }
+        }
 
         cancelBtn.onclick = ()=>{
             window.util.navTo('/purchase_orders');
