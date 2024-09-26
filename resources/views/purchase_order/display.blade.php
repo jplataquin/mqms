@@ -91,16 +91,15 @@
                     </td>
                 </tr>
 
-                <tr>
-                    <th colspan="2" class="text-end">
-                        <button class="btn btn-outline-primary" id="reviewLinkBtn">
-                            Review Link
-                            <i class="bi bi-copy"></i>
-                        </button>
-                    </th>
-                </tr>
             </tbody>
         </table>
+        
+        <div class="w-100 text-end">
+            <button class="btn btn-outline-primary" id="reviewLinkBtn">
+                Review Link
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
 
         <div class="folder-form-container">
             <div class="folder-form-tab">
