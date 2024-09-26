@@ -60,7 +60,7 @@ class CreateComponentForm extends Component{
 
             t.div({class:'row mb-3'},()=>{
                 t.div({class:'col-lg-12 text-end'},()=>{
-                    this.el.submit_btn   = t.div({class:'btn btn-primary'},'Submit');
+                    this.el.submit_btn   = t.div({class:'btn btn-primary me-3'},'Submit');
                     this.el.cancel_btn  = t.div({class:'btn btn-secondary'},'Cancel');
                 });
             });//div row
