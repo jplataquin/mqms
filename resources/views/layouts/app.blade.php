@@ -32,6 +32,8 @@
         <div>
         </div>
     </div>
+    <div id="side-bar-mobile-background"></div>
+
     <div class="wrapper d-flex h-100" id="app">
         
         <div id="side-bar-container">
@@ -209,7 +211,6 @@
     </div>
 
     
-    <div id="side-bar-mobile-background"></div>
 
     <script type="module">
         import {$q} from '/adarna.js';
