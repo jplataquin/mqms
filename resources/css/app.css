@@ -145,7 +145,7 @@ html, body {
   height:100%;
   top:0px;
   left:0px;
-  z-index:800;
+  z-index:799;
   display: none;
 }
 
@@ -535,7 +535,6 @@ html, body {
   #side-bar-container{
     display: none;
     position:absolute;
-    z-index:3;
   }
 
   #hamburger_button{
