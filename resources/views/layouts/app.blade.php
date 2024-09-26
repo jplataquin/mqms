@@ -227,6 +227,7 @@
             side_bar_mobile_background.classList.remove('show');
             side_bar_mobile_background.classList.add('hide');
             body.classList.remove('overflow-hidden');
+            side_bar_mobile_background.style.height = '100%';
         }
 
         if(hamburger_button){
@@ -234,6 +235,7 @@
                 side_bar_container.style.display    = 'block';
                 hamburger_button.style.display      = 'none';
 
+                side_bar_mobile_background.style.height = body.offsetHeight+'px';
                 side_bar_mobile_background.classList.remove('hide');
                 side_bar_mobile_background.classList.add('show');
                 body.classList.add('overflow-hidden');
