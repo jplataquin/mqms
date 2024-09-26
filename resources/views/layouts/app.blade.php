@@ -163,7 +163,6 @@
                         </li>
                     </u>
                 </div>
-                <div id="side-bar-mobile-background"></div>
             </nav>
         </div>
    
@@ -209,7 +208,8 @@
         </div>
     </div>
 
-
+    
+    <div id="side-bar-mobile-background"></div>
 
     <script type="module">
         import {$q} from '/adarna.js';
@@ -230,7 +230,7 @@
             hamburger_button.onclick = ()=>{
                 side_bar_container.style.display    = 'block';
                 hamburger_button.style.display      = 'none';
-                
+
                 side_bar_mobile_background.classList.remove('hide');
                 side_bar_mobile_background.classList.add('show');
             }
