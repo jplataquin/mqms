@@ -158,7 +158,7 @@
             </div>
             <div class="folder-form-body">
                 <div class="row mb-3">
-                    <div class="col-lg-12">
+                    <div class="col-lg-12 text-end">
                         <button id="createComponentBtn" class="btn btn-warning">Create</button>
                     </div>
                 </div>
