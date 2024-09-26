@@ -222,6 +222,7 @@
         function closeNavBar(){
             side_bar_container.style.display    = 'none';
             hamburger_button.style.display      = 'block';
+            side_bar_mobile_background.classList.remove('show');
             side_bar_mobile_background.classList.add('hide');
         }
 
@@ -229,7 +230,8 @@
             hamburger_button.onclick = ()=>{
                 side_bar_container.style.display    = 'block';
                 hamburger_button.style.display      = 'none';
-
+                
+                side_bar_mobile_background.classList.remove('hide');
                 side_bar_mobile_background.classList.add('show');
             }
         }
