@@ -15,7 +15,7 @@
                 <li>
                     <a href="#" class="active">
                         <span>
-                            Display
+                            My Profile
                         </span>	
                         <i class="ms-2 bi bi-display"></i>	
                     </a>
@@ -25,7 +25,7 @@
         <hr>
 
         <div class="form-container">
-            <div class="form-title">
+            <div class="form-header">
                 Details
             </div>
             <div class="form-body mb-3">
