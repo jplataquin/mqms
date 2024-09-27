@@ -240,7 +240,10 @@
                 side_bar_container.style.display    = 'block';
                 hamburger_button.style.display      = 'none';
 
-                side_bar_mobile_background.style.height = body.offsetHeight+'px';
+                if(screen.height < body.offsetHeight){
+                    side_bar_mobile_background.style.height = body.offsetHeight+'px';
+                }
+                
                 side_bar_mobile_background.classList.remove('hide');
                 side_bar_mobile_background.classList.add('show');
                 body.classList.add('overflow-hidden');
