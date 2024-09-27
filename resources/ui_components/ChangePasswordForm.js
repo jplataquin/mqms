@@ -74,7 +74,7 @@ class ChangePasswordForm extends Component{
 
             window.util.drawerModal.close();
     
-            window.util.alert('Password Change Successful');
+            window.util.alert('Password Change','Successful!');
     
         });
     }
