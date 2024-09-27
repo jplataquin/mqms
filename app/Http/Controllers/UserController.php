@@ -100,6 +100,18 @@ class UserController extends Controller
         ]);
     }
 
+    public function me(){
+
+        $user = Auth::user();
+
+        $roles = $user->Roles;
+
+        return view('user/profile',[
+            'user'  => $user,
+            'roles' => $roles
+        ]);
+    }
+
     public function list(){
 
         return view('user/list');

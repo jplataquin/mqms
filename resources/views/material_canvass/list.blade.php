@@ -125,6 +125,11 @@
     let order           = 'DESC';
     let orderBy         = 'id';
 
+    window.util.quickNav = {
+        title:'Material Canvass',
+        url: '/material_canvass'
+    };
+    
     const t = new Template();
 
     function reinitalize(){

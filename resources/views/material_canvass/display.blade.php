@@ -155,6 +155,11 @@
     const printBtn      = $q('#printBtn').first();
     const reviewPendBtn = $q('#reviewPendBtn').first();
 
+    window.util.quickNav = {
+        title:'Material Canvass',
+        url: '/material_canvass'
+    };
+    
     reviewLinkBtn.onclick = async ()=>{
         let test = await window.util.copyToClipboard('{{ url("/review/material_canvass/".$material_quantity_request->id); }}');
         if(test){

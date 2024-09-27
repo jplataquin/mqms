@@ -464,6 +464,11 @@ html, body {
   background-color:#ffffff;
 }
 
+/*** Utitlities ***/
+
+.c-pointer{
+  cursor: pointer !important;
+}
 
 /*** Viewports ***/
 

@@ -45,7 +45,7 @@
                     </button>
                 </div>
                 <div class="pe-3">
-                    <div class="text-center mb-3 mt-3">
+                    <div class="text-center mb-3 mt-3 c_pointer" id="my_profile">
                         <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#ffffff" class="bi bi-person-circle" viewBox="0 0 16 16">
                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                             <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
@@ -220,6 +220,11 @@
         const close_nav_menu                = $q('#close_nav_menu').first();
         const side_bar_mobile_background    = $q('#side-bar-mobile-background').first();
         const body                          = $q('body').first();
+        const my_profile                    = $q('#my_profile').first();
+
+        my_profile.onclick = ()=>{
+            window.util.navTo('/me');
+        }
 
         function closeNavBar(){
             side_bar_container.style.display    = 'none';
