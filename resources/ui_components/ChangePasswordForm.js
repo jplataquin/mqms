@@ -56,10 +56,26 @@ class ChangePasswordForm extends Component{
     }
 
     submit(){
+
         window.util.blockUI();
 
         window.util.$post('/api/profile/change_password',{
+            current_password: this.el.current_password.value,
+            new_password    : this.el.new_password.value,
+            retype_password : this.el.retype_password.value
+        }).then((reply)=>{
 
+            window.util.unblockUI();
+
+            if(reply.status <= 0){
+                window.util.showMsg(reply);
+                return false;
+            }
+
+            window.util.drawerModal.close();
+    
+            window.util.alert('Password Change Successful');
+    
         });
     }
 }

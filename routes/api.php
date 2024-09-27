@@ -37,14 +37,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
 
     Route::get('/user/list', [App\Http\Controllers\UserController::class, '_list']);
+    Route::get('/user/roles/{id}', [App\Http\Controllers\UserController::class, '_roles']);
     Route::post('/user/create', [App\Http\Controllers\UserController::class, '_create']);
     Route::post('/user/update', [App\Http\Controllers\UserController::class, '_update']);
     Route::post('/user/enable_reset_password', [App\Http\Controllers\UserController::class, '_enable_reset_password']);
     Route::post('/user/reset_password', [App\Http\Controllers\UserController::class, '_reset_password']);
-    Route::get('/user/roles/{id}', [App\Http\Controllers\UserController::class, '_roles']);
     Route::post('/user/role/add', [App\Http\Controllers\UserController::class, '_add_role']);
     Route::post('/user/role/remove', [App\Http\Controllers\UserController::class, '_remove_role']);
-
+    Route::post('/user/change_password', [App\Http\Controllers\UserController::class, 'user_change_password']);
     
     Route::get('/project/list', [App\Http\Controllers\ProjectController::class, '_list']);
     Route::post('/project/create', [App\Http\Controllers\ProjectController::class, '_create']);

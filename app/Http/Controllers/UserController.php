@@ -49,7 +49,7 @@ class UserController extends Controller
                     'same:password'
                ]
            ],[
-                'password.regex' => 'The password must contain 1 lowercase AND 1 uppercase AND 1 number AND 1 symbol'
+                'password.regex' => 'The password must contain at least one lowercase, one uppercase, one number, and one symbol'
            ]);
    
            if ($validator->fails()) {
@@ -110,6 +110,51 @@ class UserController extends Controller
             'user'  => $user,
             'roles' => $roles
         ]);
+    }
+
+    public function user_change_password(Request $request){
+        
+        $current_password   = $request->input('current_password');
+        $new_password       = $request->input('new_password');
+        $retype_password    = $request->input('retype_password');
+
+        $validator = Validator::make($request->all(),[
+            'current_password' => [
+                'required',
+                'max:255'
+            ],
+            'new_password' => [
+                'required',
+                'max:255',
+                'min:6',
+                 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'
+            ],
+            'retype_password' => [
+                 'required',
+                 'min:6',
+                 'same:new_password'
+            ]  
+        ],[
+             'new_password.regex' => 'The password must contain at least one lowercase, one uppercase, one number, and one symbol'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => $validator->messages()
+            ]);
+        }
+
+        $user = Auth::user();
+        $hidden_attributes = $user->setVisible(['password'])->toArray();
+
+        return response()->json([
+            'status'    => 1,
+            'message'   => 'Failed Validation',
+            'data'      =>  $hidden_attributes 
+        ]);
+        
     }
 
     public function list(){

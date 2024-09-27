@@ -213,6 +213,7 @@ class RequestMaterialItem extends Component{
 
         this.el.materialSelect.onchange = ()=>{
             this.setState('materialItemId',this.el.materialSelect.value,true);
+
         }
 
         this.el.requestedQuantity.onkeyup = ()=>{
@@ -278,8 +279,18 @@ class RequestMaterialItem extends Component{
           
         this.el.requestedQuantity.classList.remove('is-invalid');
         
-
+        this.validate();
     }   
+
+    validate(){
+        
+        //Check if selected material is deleted
+        let selected_material_deleted = this.el.materialSelect.options[this.el.materialSelect.selectedIndex].disabled;
+
+        if(selected_material_deleted){
+            this.el.materialSelect.classList.add('is-invalid');
+        }
+    }
 
     get_total_po_quantity(){
 
@@ -359,7 +370,7 @@ class RequestMaterialItem extends Component{
 
             let item = this._model.materialList[ component_item_id ][key];
 
-            let option =    this.t.option({
+            let option = this.t.option({
                 value: item.value
             },item.text);
 
