@@ -359,11 +359,16 @@ class RequestMaterialItem extends Component{
 
             let item = this._model.materialList[ component_item_id ][key];
 
-            this.el.materialSelect.append(
-                this.t.option({
-                    value: item.value
-                },item.text)
-            );
+            let option =    this.t.option({
+                value: item.value
+            },item.text);
+
+            if(item.deleted_at != ''){
+                option.innerHTML = item.text+' [Deleted]';
+                option.disabled = true;
+            }
+
+            this.el.materialSelect.append(option);
         };
 
 
