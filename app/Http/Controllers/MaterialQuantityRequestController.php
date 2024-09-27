@@ -437,7 +437,7 @@ class MaterialQuantityRequestController extends Controller
                 'text'          => trim($row->name.' '.$row->specification_unit_packaging.' '.$row->brand),
                 'equivalent'    => $row->equivalent,
                 'quantity'      => $row->quantity,
-                'deleted_flag'  => $row
+                'deleted_flag'  => ($row->deleted_at) ? true : false
             ];
         }
 
