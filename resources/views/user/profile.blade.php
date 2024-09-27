@@ -24,12 +24,12 @@
         </div>
         <hr>
 
-        <div class="form-container">
+        <div class="form-container mb-3">
             <div class="form-header">
                 Details
             </div>
-            <div class="form-body mb-3">
-                <div class="row">
+            <div class="form-body">
+                <div class="row mb-3">
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label>Name</label>
@@ -37,7 +37,7 @@
                         </div>
                     </div>
                 </div> 
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label>E-mail</label>
@@ -45,7 +45,7 @@
                         </div>
                     </div>
                 </div> 
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label>Status</label>
