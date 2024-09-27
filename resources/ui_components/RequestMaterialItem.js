@@ -363,7 +363,7 @@ class RequestMaterialItem extends Component{
                 value: item.value
             },item.text);
 
-            console.log(item.deleted_at);
+            console.log(item);
             if(item.deleted_at != ''){
                 option.innerHTML = item.text+' [Deleted]';
                 option.disabled = true;
