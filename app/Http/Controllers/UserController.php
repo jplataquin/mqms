@@ -68,7 +68,7 @@ class UserController extends Controller
            $user->name              = $name;
            $user->email             = $email;
            $user->status            = 'ACTV';
-           $user->password          = Hash::make($password);;
+           $user->password          = Hash::make($password);
            $user->created_by        = $user_id;
            $user->reset_password    = 1;
 
@@ -148,12 +148,25 @@ class UserController extends Controller
 
         $user = Auth::user();
 
-        $user = $user->makeVisible(['password'])->toObject();
+        $user_data = (object) $user->makeVisible(['password'])->toArray();
+
+        $current_password = Hash::make($current_password);
+
+        if($current_password != $user_data->password){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Current password is incorrect',
+                'data'      => []
+            ]);
+        }
+
+        $user->password = Hash::make($new_password);
+        $user->save();
 
         return response()->json([
             'status'    => 1,
-            'message'   => 'Failed Validation',
-            'data'      =>  $hidden_attributes 
+            'message'   => '',
+            'data'      =>  [] 
         ]);
         
     }
