@@ -59,7 +59,7 @@ class ChangePasswordForm extends Component{
 
         window.util.blockUI();
 
-        window.util.$post('/api/profile/change_password',{
+        window.util.$post('/api/user/change_password',{
             current_password: this.el.current_password.value,
             new_password    : this.el.new_password.value,
             retype_password : this.el.retype_password.value
