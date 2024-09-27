@@ -521,7 +521,7 @@ class MaterialQuantityRequestController extends Controller
             ];
         }
 
-        exit;
+       // exit;
         
         $unit_options = Unit::toOptions();
 
