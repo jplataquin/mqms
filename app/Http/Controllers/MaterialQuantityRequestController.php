@@ -493,7 +493,7 @@ class MaterialQuantityRequestController extends Controller
         }
        // print_r($request_item_arr);
         $material_item_result = DB::table('material_quantities')
-        ->where('material_quanttities.deleted_at',null)
+        ->where('material_quantities.deleted_at',null)
         ->whereIn('component_item_id',$component_item_ids)
         ->whereIn('material_quantities.material_item_id',$request_item_ids)
         ->join('material_items','material_quantities.material_item_id','=','material_items.id')
