@@ -491,7 +491,7 @@ class MaterialQuantityRequestController extends Controller
             $request_item_arr[$materialQuantityRequest->id.'-'.$rq->component_item_id.'-'.$rq->material_item_id] = $rq;
             $request_item_ids[] = $rq->material_item_id;
         }
-        print_r($request_item_arr);exit;
+        print_r($request_item_arr);
         $material_item_result = DB::table('material_quantities')
         ->whereIn('component_item_id',$component_item_ids)
         ->whereIn('material_quantities.material_item_id',$request_item_ids)
@@ -505,6 +505,7 @@ class MaterialQuantityRequestController extends Controller
             if(!isset($material_options[$row->component_item_id])){
                 $item_options[$row->component_item_id] = [];
             }
+            echo $materialQuantityRequest->id.'-'.$row->component_item_id.'-'.$row->material_item_id.'<br>';
 
             $item_options[$row->component_item_id][$row->id] = (object) [
                 'value'                     => $row->material_item_id,
@@ -519,7 +520,7 @@ class MaterialQuantityRequestController extends Controller
             ];
         }
 
-
+        exit;
         
         $unit_options = Unit::toOptions();
 
