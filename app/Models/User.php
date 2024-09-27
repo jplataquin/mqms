@@ -49,8 +49,6 @@ class User extends Authenticatable
         return $this->hasMany(UserRole::class);
     }
 
-    public function 
-
     public function statusOptions(){
         return [
             'ACTV' => 'Active',
