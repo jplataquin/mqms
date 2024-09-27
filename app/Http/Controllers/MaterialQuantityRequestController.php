@@ -417,7 +417,7 @@ class MaterialQuantityRequestController extends Controller
             'material_items.specification_unit_packaging AS specification_unit_packaging',
             'material_items.brand AS brand',
             'material_quantities.quantity AS quantity',
-            'material_quantities.deleted_flag AS deleted_flag'
+            'material_quantities.deleted_at AS deleted_at'
         )
         ->get();
 
