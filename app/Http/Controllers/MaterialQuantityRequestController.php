@@ -417,7 +417,7 @@ class MaterialQuantityRequestController extends Controller
             'material_quantities.quantity AS quantity',
             'material_quantities.equivalent AS equivalent',
             'material_quantities.deleted_at AS deleted_at',
-            'material_items.id AS id',
+            'material_quantities.id AS id',
             'material_items.name AS name',
             'material_items.specification_unit_packaging AS specification_unit_packaging',
             'material_items.brand AS brand'
