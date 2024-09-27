@@ -156,7 +156,7 @@ class UserController extends Controller
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Current password is incorrect',
-                'data'      => []
+                'data'      => [$user_data->password,$current_password]
             ]);
         }
 
