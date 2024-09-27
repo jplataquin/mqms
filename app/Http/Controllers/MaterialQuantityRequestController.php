@@ -491,12 +491,23 @@ class MaterialQuantityRequestController extends Controller
             $request_item_arr[$materialQuantityRequest->id.'-'.$rq->component_item_id.'-'.$rq->material_item_id] = $rq;
             $request_item_ids[] = $rq->material_item_id;
         }
-       // print_r($request_item_arr);
+
+        //Get material_quantities that are not deleted
         $material_item_result = DB::table('material_quantities')
         ->where('material_quantities.deleted_at',null)
         ->whereIn('component_item_id',$component_item_ids)
         ->whereIn('material_quantities.material_item_id',$request_item_ids)
         ->join('material_items','material_quantities.material_item_id','=','material_items.id')
+        ->select(
+            'material_quantities.material_item_id AS material_item_id',
+            'material_quantities.component_item_id AS component_item_id',
+            'material_quantities.quantity AS quantity',
+            'material_quantities.equivalent AS equivalent',
+            'material_quantities.deleted_at AS deleted_at',
+            'material_items.name AS name',
+            'material_items.specification_unit_packaging AS specification_unit_packaging',
+            'material_items.brand AS brand'
+        )
         ->get();
 
         $item_options = [];
@@ -506,9 +517,8 @@ class MaterialQuantityRequestController extends Controller
             if(!isset($material_options[$row->component_item_id])){
                 $item_options[$row->component_item_id] = [];
             }
-//echo $materialQuantityRequest->id.'-'.$row->component_item_id.'-'.$row->material_item_id.'<br>';
 
-            $item_options[$row->component_item_id][$row->id] = (object) [
+            $item_options[$row->component_item_id][$row->material_item_id] = (object) [
                 'value'                     => $row->material_item_id,
                 'text'                      => trim($row->name.' '.$row->specification_unit_packaging.' '.$row->brand),
                 'equivalent'                => $row->equivalent,
