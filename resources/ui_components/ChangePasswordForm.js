@@ -37,7 +37,7 @@ class ChangePasswordForm extends Component{
             t.div({class:'row mb-3'},()=>{
                 t.div({class:'col-lg-12 text-end'},()=>{
                     this.el.submit_btn = t.button({class:'btn btn-primary'},'Submit');
-                    this.el.cancel_btn = t.buttin({class:'btn btn-secondary'},'Cancel');
+                    this.el.cancel_btn = t.button({class:'btn btn-secondary'},'Cancel');
                 });//div col
             });//row
 
