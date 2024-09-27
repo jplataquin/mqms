@@ -63,7 +63,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-lg-12 text-end">
-                        <button class="btn btn-warning">Change Password</button>
+                        <button id="change_password_btn" class="btn btn-warning">Change Password</button>
                     </div>
                 </div> 
             </div>
@@ -71,6 +71,15 @@
 
     </div>
     <script type="module">
+        import {$q} from '/adarna.js';
+        import ChangePasswordForm from '/ui_components/ChangePasswordForm.js';
+
+        const change_password_btn = $q('#change_password_btn').first();
+
+        change_password_btn.onclick = ()=>{
+            window.util.drawerModal('Change Password',ChangePasswordForm()).open();
+        }
+        
     </script>
 </div>
 @endsection
