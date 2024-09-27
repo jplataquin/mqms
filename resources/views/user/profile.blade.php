@@ -41,7 +41,7 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label>E-mail</label>
-                            <input type="text" class="form-control" id="name" value="{{$user->email}}" disabled="true"/>
+                            <input type="text" class="form-control" id="email" value="{{$user->email}}" disabled="true"/>
                         </div>
                     </div>
                 </div> 
@@ -49,8 +49,21 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label>Status</label>
-                            <input type="text" class="form-control" id="name" value="{{$user->status}}" disabled="true"/>
+                            <input type="text" class="form-control" id="status" value="{{$user->status}}" disabled="true"/>
                         </div>
+                    </div>
+                </div> 
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Created At</label>
+                            <input type="text" class="form-control" id="created_at" value="{{$user->created_at}}" disabled="true"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-12 text-end">
+                        <button class="btn btn-warning">Change Password</button>
                     </div>
                 </div> 
             </div>
