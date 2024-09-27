@@ -148,7 +148,7 @@ class UserController extends Controller
 
         $user = Auth::user();
 
-        $hidden_attributes = $user->makeVisible(['password'])->toArray();
+        $user = $user->makeVisible(['password'])->toObject();
 
         return response()->json([
             'status'    => 1,
