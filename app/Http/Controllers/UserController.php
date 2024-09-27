@@ -151,7 +151,7 @@ class UserController extends Controller
         $user_data = (object) $user->makeVisible(['password'])->toArray();
 
 
-        if(Hash::check($current_password, $user->password)){
+        if(!Hash::check($current_password, $user->password)){
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Current password is incorrect',
