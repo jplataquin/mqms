@@ -77,9 +77,9 @@
         const change_password_btn = $q('#change_password_btn').first();
 
         change_password_btn.onclick = ()=>{
-            window.util.drawerModal('Change Password',ChangePasswordForm()).open();
+            window.util.drawerModal.content('Change Password',ChangePasswordForm()).open();
         }
-        
+
     </script>
 </div>
 @endsection
