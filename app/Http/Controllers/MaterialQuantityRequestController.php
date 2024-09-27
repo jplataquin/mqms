@@ -413,11 +413,12 @@ class MaterialQuantityRequestController extends Controller
         ->join('material_items','material_quantities.material_item_id','=','material_items.id')
         ->select(
             'material_quantities.material_item_id AS material_item_id',
+            'material_quantities.component_item_id AS component_item_id',
+            'material_quantities.quantity AS quantity',
+            'material_quantities.deleted_at AS deleted_at',
             'material_items.name AS name',
             'material_items.specification_unit_packaging AS specification_unit_packaging',
-            'material_items.brand AS brand',
-            'material_quantities.quantity AS quantity',
-            'material_quantities.deleted_at AS deleted_at'
+            'material_items.brand AS brand'
         )
         ->get();
 
