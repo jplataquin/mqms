@@ -56,8 +56,11 @@ class ChangePasswordForm extends Component{
     }
 
     submit(){
+        window.util.blockUI();
 
+        window.util.$post('/api/profile/change_password',{
 
+        });
     }
 }
 
