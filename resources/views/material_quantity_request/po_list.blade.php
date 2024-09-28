@@ -106,7 +106,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 text-center">
+            <div class="col-lg-3">
                 <h4>Deleted ({{count($deleted)}})</h4>
                 <div class="list-group">
                     @foreach($deleted as $del_po)
