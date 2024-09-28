@@ -189,7 +189,7 @@
                     <th class="text-center">Amount</th>
                 </tr>
 
-                @php $grand_total = $sub_total @endphp
+                @php $grand_total = $sub_total; @endphp
 
                 @foreach($extras as $extra)
                     <tr class="extra">
@@ -217,7 +217,7 @@
         </div>
 
         <div class="row mt-5">
-            <div class="col-lg-12">
+            <div class="col-lg-12 text-end">
             
                 @if($purchase_order->status == 'PEND')
                     <button id="deleteBtn" class="btn btn-danger">Delete</button>
