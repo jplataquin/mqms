@@ -74,7 +74,9 @@
         
         <div class="row mb-3">
             <div class="col-lg-12">
+                <hr>
                 <h3>Total PO: {{$total_count}}</h3>
+                <hr>
             </div>
         </div>
         <div class="row mb-3" hx-boost="true" hx-select="#content" hx-target="#main">
