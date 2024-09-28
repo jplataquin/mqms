@@ -1118,7 +1118,33 @@ class MaterialQuantityRequestController extends Controller
         $contract_item      = $material_request->ContractItem;
         $component          = $material_request->Component;
 
-        $po_list = PurchaseOrder::where('material_quantity_request_id',$material_request->id)->get();
+        $po_list = PurchaseOrder::where('material_quantity_request_id',$material_request->id)
+        ->orderBy('created_at','desc')
+        ->get();
+
+        $pending  = [];
+        $approved = [];
+        $rejected = [];
+        $deleted  = [];
+
+        foreach($po_list as $po){
+
+            if($po->deleted_at != null){
+                
+                $deleted[] = $po;
+
+            }else if($po->status == 'PEND'){
+
+                $pending[] = $po;
+
+            }else if($po->status == 'APRV'){
+                $approved[] = $po;
+
+            }else if($po->status == 'REJC'){
+                
+                $rejected[] = $po;
+            }
+        }
 
         return view('material_quantity_request/po_list',[
             'project'           => $project,
@@ -1126,7 +1152,11 @@ class MaterialQuantityRequestController extends Controller
             'contract_item'     => $contract_item,
             'component'         => $component,
             'material_request'  => $material_request,
-            'po_list'           => $po_list
+            'pending'           => $pending,
+            'approved'          => $approved,
+            'rejected'          => $rejected,
+            'deleted'           => $deleted,
+            'total_count'       => count($po_list)
         ]);
     }
 }
