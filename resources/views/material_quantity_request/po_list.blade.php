@@ -86,9 +86,9 @@
 
             <div class="col-lg-3 text-center">
                 <h4>Approved ({{count($approved)}})</h4>
-                <ul>
+                <ul class="list-group">
                     @foreach($approved as $aprv_po)
-                        <li>
+                        <li class="list-group-item">
                             <a href="/purchase_order/{{$aprv_po->id}}">{{str_pad($aprv_po->id,6,0,STR_PAD_LEFT)}}</a>
                         </li>
                     @endforeach
