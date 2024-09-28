@@ -72,6 +72,11 @@
             </div>
         </div>
         
+        <div class="row mb-3">
+            <div class="col-lg-12">
+                <h3>Total PO: {{$total_count}}</h3>
+            </div>
+        </div>
         <div class="row mb-3" hx-boost="true" hx-select="#content" hx-target="#main">
             <div class="col-lg-3">
                 <h4>Pending ({{count($pending)}})</h4>
