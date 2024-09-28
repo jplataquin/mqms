@@ -6,9 +6,9 @@
         <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
             <ul>
                 <li>
-                    <a href="/material_quantity_requests">
+                    <a href="/material_quantity_request/{{$material_request->id}}">
                         <span>
-                        Material Requests
+                        Material Request
                         </span>
                     </a>
                 </li>
@@ -75,7 +75,7 @@
         <div class="row mb-3">
             <div class="col-lg-12">
                 <hr>
-                <h3>Total PO: {{$total_count}}</h3>
+                <h3>Total PO Count: {{$total_count}}</h3>
                 <hr>
             </div>
         </div>
