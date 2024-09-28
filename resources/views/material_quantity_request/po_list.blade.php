@@ -84,15 +84,15 @@
                 </ul>
             </div>
 
-            <div class="col-lg-3 text-center">
+            <div class="col-lg-3">
                 <h4>Approved ({{count($approved)}})</h4>
-                <ul class="list-group">
+                <div class="list-group">
                     @foreach($approved as $aprv_po)
-                        <li class="list-group-item">
-                            <a href="/purchase_order/{{$aprv_po->id}}">{{str_pad($aprv_po->id,6,0,STR_PAD_LEFT)}}</a>
-                        </li>
+                       
+                        <a class="list-group-item list-group-item-action" href="/purchase_order/{{$aprv_po->id}}">{{str_pad($aprv_po->id,6,0,STR_PAD_LEFT)}}</a>
+                       
                     @endforeach
-                </ul>
+                </div>
             </div>
 
             <div class="col-lg-3 text-center">
