@@ -210,7 +210,7 @@
                         <input type="text" disabled="true" value="Grand Total" class="extra_text form-control"/>
                     </td>
                     <td>
-                        <input type="number" disabled="true" value="{{ number_format($grand_total,2) }}" class="extra_val form-control" />
+                        <input type="text" disabled="true" value="{{ number_format($grand_total,2) }}" class="extra_val form-control" />
                     </td>
                 </tr>
             </table>
