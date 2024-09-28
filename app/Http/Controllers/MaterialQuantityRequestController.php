@@ -1107,7 +1107,7 @@ class MaterialQuantityRequestController extends Controller
     }
 
 
-    po_list($id){
+    public function po_list($id){
 
         $id = (int) $id;
         
