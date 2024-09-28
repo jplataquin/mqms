@@ -80,7 +80,7 @@
             </div>
         </div>
         <div class="row mb-3" hx-boost="true" hx-select="#content" hx-target="#main">
-            <div class="col-lg-3">
+            <div class="col-lg-3 mb-3">
                 <h4>Pending ({{count($pending)}})</h4>
                 <div class="list-group">
                     @foreach($pending as $pend_po)
@@ -91,7 +91,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 mb-3">
                 <h4>Approved ({{count($approved)}})</h4>
                 <div class="list-group">
                     @foreach($approved as $aprv_po)
@@ -102,7 +102,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 mb-3">
                 <h4>Rejected ({{count($rejected)}})</h4>
                 <div class="list-group">
                     @foreach($rejected as $rejc_po)
@@ -113,7 +113,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 mb-3">
                 <h4>Deleted ({{count($deleted)}})</h4>
                 <div class="list-group">
                     @foreach($deleted as $del_po)
