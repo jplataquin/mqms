@@ -76,9 +76,9 @@
             <div class="col-lg-3 text-center">
                 <h4>Pending</h4>
                 <ul>
-                    @foreach($pending as $po)
+                    @foreach($pending as $pend_po)
                         <li>
-                            <a href="/purchase_order/{{$po->id}}">{{str_pad($po->id,6,0,STR_PAD_LEFT)}}</a>
+                            <a href="/purchase_order/{{$pend_po->id}}">{{str_pad($pend_po->id,6,0,STR_PAD_LEFT)}}</a>
                         </li>
                     @endforeach
                 </ul>
@@ -87,9 +87,9 @@
             <div class="col-lg-3 text-center">
                 <h4>Approved</h4>
                 <ul>
-                    @foreach($approved as $po)
+                    @foreach($approved as $aprv_po)
                         <li>
-                            <a href="/purchase_order/{{$po->id}}">{{str_pad($po->id,6,0,STR_PAD_LEFT)}}</a>
+                            <a href="/purchase_order/{{$aprv_po->id}}">{{str_pad($aprv_po->id,6,0,STR_PAD_LEFT)}}</a>
                         </li>
                     @endforeach
                 </ul>
@@ -98,9 +98,9 @@
             <div class="col-lg-3 text-center">
                 <h4>Rejected</h4>
                 <ul>
-                    @foreach($rejected as $po)
+                    @foreach($rejected as $rejc_po)
                         <li>
-                            <a href="/purchase_order/{{$po->id}}">{{str_pad($po->id,6,0,STR_PAD_LEFT)}}</a>
+                            <a href="/purchase_order/{{$rejc_po->id}}">{{str_pad($rejc_po->id,6,0,STR_PAD_LEFT)}}</a>
                         </li>
                     @endforeach
                 </ul>
@@ -109,9 +109,9 @@
             <div class="col-lg-3 text-center">
                 <h4>Deleted</h4>
                 <ul>
-                    @foreach($approved as $po)
+                    @foreach($deleted as $del_po)
                         <li>
-                            <a href="/purchase_order/{{$po->id}}">{{str_pad($po->id,6,0,STR_PAD_LEFT)}}</a>
+                            <a href="/purchase_order/{{$del_po->id}}">{{str_pad($del_po->id,6,0,STR_PAD_LEFT)}}</a>
                         </li>
                     @endforeach
                 </ul>
