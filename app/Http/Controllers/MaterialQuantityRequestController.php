@@ -1118,7 +1118,7 @@ class MaterialQuantityRequestController extends Controller
         $contract_item      = $material_request->ContractItem;
         $component          = $material_request->Component;
 
-        $po_list = PurhcaseOrder::where('material_quantity_request_id',$material_request->id)->get();
+        $po_list = PurchaseOrder::where('material_quantity_request_id',$material_request->id)->get();
 
         return view('material_quantity_request/po_list',[
             'project'           => $project,
