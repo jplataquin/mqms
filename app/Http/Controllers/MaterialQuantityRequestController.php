@@ -1105,4 +1105,27 @@ class MaterialQuantityRequestController extends Controller
          }
 
     }
+
+
+    po_list($id){
+
+        $id = (int) $id;
+        
+        $material_request   = MaterialQuantityRequest::findOrFail($id);
+        $project            = $material_request->Project;
+        $section            = $material_request->Section;
+        $contract_item      = $material_request->ContractItem;
+        $component          = $material_request->Component;
+
+        $po_list = PurhcaseOrder::where('material_quantity_request_id',$material_request->id)->get();
+
+        return view('material_quantity_request/po_list',[
+            'project'           => $project,
+            'section'           => $section,
+            'contract_item'     => $contract_item,
+            'component'         => $component,
+            'material_request'  => $material_request,
+            'po_list'           => $po_list
+        ]);
+    }
 }

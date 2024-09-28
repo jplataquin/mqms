@@ -127,7 +127,7 @@
     <div class="row mt-5 mb-3">
         <div class="col-lg-12 text-end shadow bg-white rounded footer-action-menu p-2">
 
-            <button class="btn-primary btn" id="showPOBtn">PO List</button>
+            <button class="btn-primary btn" id="showPoListBtn">PO List</button>
             <button class="btn-warning btn" id="printBtn">Print</button>
             
             @if($material_quantity_request->status == 'PEND')
@@ -157,6 +157,7 @@
     const printBtn      = $q('#printBtn').first();
     const revertPendBtn = $q('#revertPendBtn').first();
     const reviewLinkBtn = $q('#reviewLinkBtn').first();
+    const showPoListBtn = $q('#showPoListBtn').first();
 
       
     let count         = 0;
@@ -210,9 +211,13 @@
 
     }//if
 
+    showPoListBtn.onclick = ()=>{
+        window.util.navTo('/material_quantity_request/po_list/{{$material_quantity_request->id}}');
+    };
+
     printBtn.onclick = (e)=>{
         window.open('/material_quantity_request/print/{{$material_quantity_request->id}}','_blank').focus();
-    }
+    };
 
     request_items.map(request_item => {
 

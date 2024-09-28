@@ -109,7 +109,9 @@ Route::middleware(['auth',CheckForResetPassword::class])->group(function () {
     Route::get('/material_quantity_request/print/{id}', [App\Http\Controllers\MaterialQuantityRequestController::class, 'print']);
     Route::get('/material_quantity_requests', [App\Http\Controllers\MaterialQuantityRequestController::class, 'list']);
     Route::get('/material_quantity_request/select/create', [App\Http\Controllers\MaterialQuantityRequestController::class, 'selectCreate']);
+    Route::get('/material_quantity_request/po_list/{id}', [App\Http\Controllers\MaterialQuantityRequestController::class, 'po_list']);
    
+
     Route::get('/review/material_quantity_request/{id}', [App\Http\Controllers\Review\MaterialQuantityRequestReviewController::class, 'display']);
     Route::get('/review/material_quantity_requests', [App\Http\Controllers\Review\MaterialQuantityRequestReviewController::class, 'list']);
    
