@@ -21,9 +21,9 @@ class MaterialQuantityReportController extends Controller
 {
     public function parameters(){
 
-        $projects = Project::where('deleted_at','!=',null)->get();
+        $projects = Project::where('deleted_at',null)->get();
 
-        $material_groups = MaterialGroup::where('deleted_at','!=',null)->get();
+        $material_groups = MaterialGroup::where('deleted_at',null)->get();
 
         return view('report/material_quantity/parameters',[
             'projects'      => $projects,
