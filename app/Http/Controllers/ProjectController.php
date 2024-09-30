@@ -171,6 +171,8 @@ class ProjectController extends Controller
 
         $project = new Project();
 
+        $project = $project->where('deleted_at','!=',null);
+
         if($query != ''){
             $project = $project->where('name','LIKE','%'.$query.'%');
         }

@@ -129,7 +129,7 @@ class CreateComponentForm extends Component{
             quantity            : this.el.quantity.value,
             use_count           : this.el.use_count.value,
             unit_id             : this.el.unit.value,
-            sum_flag            : (this.el._sum_flag.checked == true) ? 1 : 0
+            sum_flag            : (this.el.sum_flag.checked == true) ? 1 : 0
         }).then(reply=>{
 
             window.util.unblockUI();
