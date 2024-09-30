@@ -221,7 +221,7 @@
                 t.option({value:''},' - ')
             );
 
-            if(maaterial_group.value == '') return false;
+            if(material_group.value == '') return false;
 
             window.util.blockUI();
 
