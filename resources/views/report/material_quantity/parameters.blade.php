@@ -225,7 +225,7 @@
 
             window.util.blockUI();
 
-            window.util.$get('/api/materials/list',{
+            window.util.$get('/api/material/list',{
                 'material_group_id': material_group.value
             }).then(reply=>{
                 window.util.unblockUI();
