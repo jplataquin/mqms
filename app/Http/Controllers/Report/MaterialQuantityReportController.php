@@ -14,6 +14,7 @@ use App\Models\MaterialQuantity;
 use App\Models\PurchaseOrderItem;
 use App\Models\MaterialItem;
 use App\Models\ComponentUnit;
+use App\Models\MaterialGroup;
 use Illuminate\Support\Facades\DB;
 
 class MaterialQuantityReportController extends Controller
@@ -22,11 +23,11 @@ class MaterialQuantityReportController extends Controller
 
         $projects = Project::where('deleted_at','!=',null)->get();
 
-        $item_groups = ItemGroup::where('deleted_at','!=',null)->get();
+        $material_groups = MaterialGroup::where('deleted_at','!=',null)->get();
 
         return view('report/material_quantity/paramters',[
             'projects'      => $projects,
-            'item_groups'   => $item_groups
+            'material_groups'   => $material_groups
         ]);
     }
 }
