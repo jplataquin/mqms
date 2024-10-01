@@ -182,17 +182,23 @@ class MaterialItemController extends Controller
 
          //todo check role
 
-         $page       = (int) $request->input('page')     ?? 1;
-         $limit      = (int) $request->input('limit')    ?? 10;
-         $orderBy    = $request->input('order_by')       ?? 'id';
-         $order      = $request->input('order')          ?? 'DESC';
-         $query      = $request->input('query')          ?? '';
+         $page              = (int) $request->input('page')     ?? 1;
+         $limit             = (int) $request->input('limit')    ?? 10;
+         $orderBy           = $request->input('order_by')       ?? 'id';
+         $order             = $request->input('order')          ?? 'DESC';
+         $query             = $request->input('query')          ?? '';
+         $material_group_id = $request->input('material_group_id');
+
          $result = [];
  
          $materialItem = new MaterialItem();
  
          if($query != ''){
              $materialItem = $materialItem->where('name','LIKE','%'.$query.'%');
+         }
+
+         if($material_group_id){
+            $materialItem = $materialItem->where('material_group_id',$material_group_id);
          }
  
          if($limit > 0){
