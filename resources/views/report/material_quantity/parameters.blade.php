@@ -65,13 +65,13 @@
                     <div class="col-lg-6 mb-3">
                         <div class="form-group">
                             <label>From</label>
-                            <input type="text" class="form-group" id="from"/>
+                            <input type="text" class="form-control" id="from"/>
                         </div>
                     </div>
                     <div class="col-lg-6 mb-3">
                         <div class="form-group">
                             <label>To</label>
-                            <input type="text" class="form-group" id="from"/>
+                            <input type="text" class="form-control" id="from"/>
                         </div>
                     </div>
                 </div>
