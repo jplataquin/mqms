@@ -78,7 +78,7 @@
                     <div class="col-lg-12 mb-3">
                         <div class="form-group">
                             <label>Selected Material</label>
-                            <ul class="list-group" id="material_item_select">
+                            <ul class="list-group" id="material_item_list">
                             </ul>
                         </div>
                     </div>
