@@ -231,7 +231,7 @@
 
                 reply.data.map(item=>{
 
-                    material_item_select.append(
+                    material_item_list.append(
                         t.li({class:'list-group_item'},()=>{
                             t.div({class:'form-check form-check-inline'},(el)=>{
                                 t.input({class:'form-check-input',type:'checkbox',value:item.id,checked:true})
