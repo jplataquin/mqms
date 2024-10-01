@@ -232,7 +232,7 @@
                         t.li({class:'list-group_item'},()=>{
                             t.div({class:'form-check form-check-inline'},(el)=>{
                                 t.input({class:'form-check-input',type:'checkbox',value:item.id,checked:true})
-                                t.label({class:'form-check-label'},item.brand+' '+item.name+' '+item.unit_specification)
+                                t.label({class:'form-check-label'},item.brand+' '+item.name+' '+item.specification_unit_packaging)
                             })
                         })
                     );//append
