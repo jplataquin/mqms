@@ -9,6 +9,7 @@ use App\Models\Project;
 use App\Models\Section;
 use App\Models\Component;
 use App\Models\Supplier;
+use App\Models\User;
 use App\Models\MaterialQuantityRequestItem;
 use App\Models\MaterialQuantity;
 use App\Models\PurchaseOrderItem;
@@ -25,9 +26,12 @@ class MaterialQuantityReportController extends Controller
 
         $material_groups = MaterialGroup::where('deleted_at',null)->get();
 
+        $users = User::where('deleted_at',null)->get();
+
         return view('report/material_quantity/parameters',[
-            'projects'      => $projects,
-            'material_groups'   => $material_groups
+            'projects'          => $projects,
+            'material_groups'   => $material_groups,
+            'users'             => $users
         ]);
     }
 }

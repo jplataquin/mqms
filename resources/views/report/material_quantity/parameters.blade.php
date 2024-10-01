@@ -77,6 +77,20 @@
                 </div>
 
                 <div class="row mb-3">
+                    <div class="row mb-3">
+                        <div class="form-group">
+                            <label>User</label>
+                            <select class="form-select">
+                                <option value=""> -  </option>
+                                @foreach($users as $user)
+                                <option value="{{$user->id}}">{{$user->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
                     <div class="col-lg-12 mb-3">
                         <div class="form-group">
                             <label>Status</label>
