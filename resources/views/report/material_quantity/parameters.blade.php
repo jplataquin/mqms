@@ -121,7 +121,7 @@
                 </div>
 
                 <div class="row mb-3">
-                    <div class="col-lg-6 text-center">
+                    <div class="col-lg-12 text-center">
                         <button class="btn btn-primary">Submit</button>
                         <button class="btn btn-secondary">Cancel</button>
                     </div>
