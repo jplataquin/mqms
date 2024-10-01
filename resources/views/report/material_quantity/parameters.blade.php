@@ -78,8 +78,11 @@
                     <div class="col-lg-12 mb-3">
                         <div class="form-group">
                             <label>Selected Material</label>
-                            <div class="text-end">
-                                <button id="allBtn" class="btn btn-secondary">All</button>
+                            <div class="text-end mb-3">
+                                <button id="allBtn" class="btn btn-secondary">
+                                    All
+                                    <i class="bi bi-journal"></i>
+                                </button>
                             </div>
                             <ul class="list-group" id="material_item_list">
                             </ul>
