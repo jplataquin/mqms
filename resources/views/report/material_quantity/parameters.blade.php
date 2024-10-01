@@ -99,7 +99,7 @@
         const component             = $q('#component').first();
         const material_group        = $q('#material_group').first();
         const material_item_list    = $q('#material_item_list').first();
-        const all_btn               = $q('allBtn').first();
+        const all_btn               = $q('#allBtn').first();
         
         const t = new Template();
 
