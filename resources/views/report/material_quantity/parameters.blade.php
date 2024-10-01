@@ -114,7 +114,7 @@
                                     <i id="check_icon_off" class="bi bi-check-square d-none"></i>
                                 </button>
                             </div>
-                            <ul class="list-group" id="material_item_list">
+                            <ul class="list-group border border-secondary" id="material_item_list">
                             </ul>
                         </div>
                     </div>
