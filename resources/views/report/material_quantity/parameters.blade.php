@@ -79,7 +79,7 @@
                         <div class="form-group">
                             <label>Selected Material</label>
                             <div class="text-end">
-                                <button id="allBtn" class="btn btn-secondary">All<button
+                                <button id="allBtn" class="btn btn-secondary">All</button>
                             </div>
                             <ul class="list-group" id="material_item_list">
                             </ul>
