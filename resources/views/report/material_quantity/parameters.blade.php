@@ -81,7 +81,7 @@
                             <div class="text-end mb-3">
                                 <button id="allBtn" class="btn btn-secondary">
                                     All
-                                    <i class="bi bi-journal"></i>
+                                    <i class="bi bi-check-square-fill"></i>
                                 </button>
                             </div>
                             <ul class="list-group" id="material_item_list">
