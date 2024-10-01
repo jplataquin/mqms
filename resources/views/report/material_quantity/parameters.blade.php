@@ -81,7 +81,8 @@
                             <div class="text-end mb-3">
                                 <button id="allBtn" class="btn btn-secondary">
                                     All
-                                    <i class="bi bi-check-square-fill"></i>
+                                    <i id="check_icon_on" class="bi bi-check-square-fill"></i>
+                                    <i id="check_icon_off" class="bi bi-check-square-fill d-none"></i>
                                 </button>
                             </div>
                             <ul class="list-group" id="material_item_list">
@@ -103,8 +104,12 @@
         const material_group        = $q('#material_group').first();
         const material_item_list    = $q('#material_item_list').first();
         const all_btn               = $q('#allBtn').first();
+        const check_icon_on         = $q('#check_icon_on').first();
+        const check_icon_off        = $q('#check_icon_off').first();
         
         const t = new Template();
+
+        let check_all_flag = true;
 
         project.onchange = ()=>{
             section.innerHTML           = '';
@@ -250,12 +255,29 @@
 
         all_btn.onclick = ()=>{
 
-            
             $q('.material-item').apply(item=>{
 
-                console.log(item);
-                item.checked = true;
+                if(check_all_flag){
+                    item.checked    = false;
+                    
+                }else{
+                    item.checked    = true;
+                }
+                
             });
+
+
+            if(check_all_flag){
+                check_all_flag  = false;
+                check_icon_off.classList.remove('d-none');
+                check_icon_on.classList.add('d-none');
+                
+            }else{
+                check_all_flag  = true;
+                check_icon_on.classList.remove('d-none');
+                check_icon_off.classList.add('d-none');
+                
+            }
         }
     </script>
 </div>
