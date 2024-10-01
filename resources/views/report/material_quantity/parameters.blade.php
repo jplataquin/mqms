@@ -62,6 +62,35 @@
                 </div> <!-- div row -->
 
                 <div class="row mb-3">
+                    <div class="col-lg-6 mb-3">
+                        <div class="form-group">
+                            <label>From</label>
+                            <input type="text" class="form-group" id="from"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                        <div class="form-group">
+                            <label>To</label>
+                            <input type="text" class="form-group" id="from"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-lg-12 mb-3">
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select class="form-select" id="status">
+                                <option value=""> - </option>
+                                <option value="PEND">Pending</option>
+                                <option value="APRV">Approved</option>
+                                <option value="REJC">Rejected</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
                     <div class="col-lg-12 mb-3">
                         <div class="form-group">
                             <label>Material Group</label>
