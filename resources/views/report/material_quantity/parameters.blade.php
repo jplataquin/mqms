@@ -246,7 +246,11 @@
 
 
         all_btn.onclick = ()=>{
+
+            
             $q('.material-item').apply(item=>{
+
+                console.log(item);
                 item.checked = true;
             });
         }
