@@ -78,6 +78,9 @@
                     <div class="col-lg-12 mb-3">
                         <div class="form-group">
                             <label>Selected Material</label>
+                            <div class="text-end">
+                                <button id="allBtn" class="btn btn-secondary">All<button
+                            </div>
                             <ul class="list-group" id="material_item_list">
                             </ul>
                         </div>
@@ -96,6 +99,7 @@
         const component             = $q('#component').first();
         const material_group        = $q('#material_group').first();
         const material_item_list    = $q('#material_item_list').first();
+        const all_btn               = $q('allBtn').first();
         
         const t = new Template();
 
@@ -230,7 +234,7 @@
 
                     material_item_list.append(
                         t.li({class:'list-group-item'},()=>{
-                            t.div({class:'form-check form-check-inline'},(el)=>{
+                            t.div({class:'material-item form-check form-check-inline'},(el)=>{
                                 t.input({class:'form-check-input',type:'checkbox',value:item.id,checked:true})
                                 t.label({class:'form-check-label'},item.brand+' '+item.name+' '+item.specification_unit_packaging)
                             })
@@ -241,6 +245,11 @@
         }//material_group
 
 
+        all_btn.onclick = ()=>{
+            $q('.material-item').apply(item=>{
+                item.checked = true;
+            });
+        }
     </script>
 </div>
 @endsection
