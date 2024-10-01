@@ -82,7 +82,7 @@
                                 <button id="allBtn" class="btn btn-secondary">
                                     All
                                     <i id="check_icon_on" class="bi bi-check-square-fill"></i>
-                                    <i id="check_icon_off" class="bi bi-check-square-fill d-none"></i>
+                                    <i id="check_icon_off" class="bi bi-check-square d-none"></i>
                                 </button>
                             </div>
                             <ul class="list-group" id="material_item_list">
