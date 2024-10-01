@@ -210,9 +210,6 @@
             
             material_item_list.innerHTML = '';
 
-            material_item_select.append(
-                t.option({value:''},' - ')
-            );
 
             if(material_group.value == '') return false;
 
