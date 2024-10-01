@@ -95,7 +95,6 @@
         const contract_item         = $q('#contract_item').first();
         const component             = $q('#component').first();
         const material_group        = $q('#material_group').first();
-        const material_item_select  = $q('#material_item_select').first();
         const material_item_list    = $q('#material_item_list').first();
         
         const t = new Template();
@@ -209,7 +208,6 @@
 
         material_group.onchange = ()=>{
             
-            material_item_select.innerHTML = '';
             material_item_list.innerHTML = '';
 
             material_item_select.append(
