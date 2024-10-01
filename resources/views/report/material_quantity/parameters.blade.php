@@ -110,6 +110,12 @@
         const t = new Template();
 
         let check_all_flag = true;
+    
+        function reset(){
+            check_all_flag = true;
+            check_icon_on.classList.remove('d-none');
+            check_icon_off.classList.add('d-none');
+        }
 
         project.onchange = ()=>{
             section.innerHTML           = '';
@@ -249,6 +255,8 @@
                         })
                     );//append
                 });
+
+                reset();
             });
         }//material_group
 
