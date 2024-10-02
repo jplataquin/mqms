@@ -104,7 +104,7 @@
                         @php 
                         
                         $item_name = $materialItemArr[ $item->material_item_id]->brand.' '.$materialItemArr[ $item->material_item_id]->name.' '.$materialItemArr[ $item->material_item_id]->specification_unit_packaging;
-                        $item_name = Str::wordWrap($item_name, 7, "<br>", false);
+                        $item_name = Str::wordWrap($item_name, 8, "<br>", false);
 
                         @endphp
                         <td>{!! $item_name !!}</td>
