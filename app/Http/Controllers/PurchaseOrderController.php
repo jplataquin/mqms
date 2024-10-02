@@ -24,6 +24,7 @@ use Carbon\Carbon;
 use Spipu\Html2Pdf\Html2Pdf;
 use Spipu\Html2Pdf\Exception\Html2PdfException;
 use Spipu\Html2Pdf\Exception\ExceptionFormatter;
+use Illuminate\Support\Str;
 
 class PurchaseOrderController extends Controller
 {

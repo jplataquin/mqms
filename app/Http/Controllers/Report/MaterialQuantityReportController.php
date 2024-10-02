@@ -34,4 +34,8 @@ class MaterialQuantityReportController extends Controller
             'users'             => $users
         ]);
     }
+
+    public function generate(Request $request){
+        
+    }
 }
