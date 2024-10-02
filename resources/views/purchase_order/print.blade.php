@@ -104,10 +104,10 @@
                         @php 
                         
                         $item_name = $materialItemArr[ $item->material_item_id]->brand.' '.$materialItemArr[ $item->material_item_id]->name.' '.$materialItemArr[ $item->material_item_id]->specification_unit_packaging;
-                        $item_name = Str::wordWrap($item_name, 10, "</br>", false);
+                        $item_name = Str::wordWrap($item_name, 7, "<br>", false);
 
                         @endphp
-                        <td>{{ $item_name }}</td>
+                        <td>{{! $item_name !}}</td>
                         <td class="text-center">{{number_format($item->quantity,2)}}</td>
                         <td class="text-right">P {{number_format($item->price,2)}}</td>
                         <td class="text-right">P {{number_format($item->quantity*$item->price,2)}}</td>
