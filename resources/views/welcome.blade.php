@@ -40,7 +40,7 @@
                 
 
                 <div class="text-center mt-4">
-                    <h1>Aeon MQMS</h1>
+                    <h1>Aeon</h1>
                     
                     <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
                         Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
