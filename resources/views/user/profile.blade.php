@@ -6,9 +6,9 @@
         <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
             <ul>
                 <li>
-                    <a href="/users">
+                    <a href="#">
                         <span>
-                        Users
+                        User
                         </span>
                     </a>
                 </li>
