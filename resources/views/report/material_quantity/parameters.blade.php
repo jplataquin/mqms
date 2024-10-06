@@ -176,6 +176,14 @@
                 t.option({value:''},'*')
             );
 
+            contract_item.append(
+                t.option({value:''},'*')
+            );
+
+            component.append(
+                t.option({value:''},'*')
+            );
+
             if(project.value == '') return false;
 
             window.util.blockUI();
@@ -209,6 +217,10 @@
             component.innerHTML         = '';
 
             contract_item.append(
+                t.option({value:''},'*')
+            );
+
+            component.append(
                 t.option({value:''},'*')
             );
 
