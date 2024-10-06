@@ -140,7 +140,8 @@ Route::middleware(['auth',CheckForResetPassword::class])->group(function () {
    // Route::get('/report/a/select', [App\Http\Controllers\Report\ReportAController::class, 'select']);
     //Route::get('/report/a/generate/{project_id}/{section_id}/{component_id}', [App\Http\Controllers\Report\ReportAController::class, 'generate']);
     
-    Route::get('/report/material_quantity/parameters', [App\Http\Controllers\Report\MaterialQuantityReportController::class, 'parameters']);
+    Route::get('/report/material_request/parameters', [App\Http\Controllers\Report\MaterialRequestReportController::class, 'parameters']);
+    Route::get('/report/material_request/generate', [App\Http\Controllers\Report\MaterialRequestReportController::class, 'generate']);
     
 
     Route::get('/users', [App\Http\Controllers\UserController::class, 'list']);

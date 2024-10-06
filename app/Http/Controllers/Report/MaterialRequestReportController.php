@@ -18,7 +18,7 @@ use App\Models\ComponentUnit;
 use App\Models\MaterialGroup;
 use Illuminate\Support\Facades\DB;
 
-class MaterialQuantityReportController extends Controller
+class MaterialRequestReportController extends Controller
 {
     public function parameters(){
 
@@ -36,6 +36,6 @@ class MaterialQuantityReportController extends Controller
     }
 
     public function generate(Request $request){
-        
+        echo $request->input('material_items');
     }
 }
