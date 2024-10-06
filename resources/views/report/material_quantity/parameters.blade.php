@@ -381,7 +381,7 @@
                 material_items      : material_item_arr.join(',')
             });
 
-            winow.open('/report/material_request/generate?'+query,'_blank').focus();
+            window.open('/report/material_request/generate?'+query,'_blank').focus();
         }
     </script>
 </div>
