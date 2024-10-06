@@ -71,7 +71,7 @@
                     <div class="col-lg-6 mb-3">
                         <div class="form-group">
                             <label>To</label>
-                            <input type="text" class="form-control" id="from"/>
+                            <input type="text" class="form-control" id="to"/>
                         </div>
                     </div>
                 </div>
@@ -79,8 +79,8 @@
                 <div class="row mb-3">
                     <div class="row mb-3">
                         <div class="form-group">
-                            <label>User</label>
-                            <select class="form-select">
+                            <label>Requested By</label>
+                            <select id="requested_by" class="form-select">
                                 <option value=""> -  </option>
                                 @foreach($users as $user)
                                 <option value="{{$user->id}}">{{$user->name}}</option>
@@ -136,8 +136,8 @@
 
                 <div class="row mb-3">
                     <div class="col-lg-12 text-end">
-                        <button class="btn btn-primary">Submit</button>
-                        <button class="btn btn-secondary">Cancel</button>
+                        <button id="submit_btn" class="btn btn-primary">Submit</button>
+                        <button id="cancel_btn" class="btn btn-secondary">Cancel</button>
                     </div>
                 </div>
             </div><!-- div folder-form-body-->
@@ -151,11 +151,17 @@
         const section               = $q('#section').first();
         const contract_item         = $q('#contract_item').first();
         const component             = $q('#component').first();
+        const requested_by          = $q('#requested_by').first();
         const material_group        = $q('#material_group').first();
+        const status                = $q('#status').first();
+        const from                  = $q('#from').first();
+        const to                    = $q('#to').first();
         const material_item_list    = $q('#material_item_list').first();
         const all_btn               = $q('#allBtn').first();
         const check_icon_on         = $q('#check_icon_on').first();
         const check_icon_off        = $q('#check_icon_off').first();
+        const submit_btn            = $q('#submit_btn').first();
+        const cancel_btn            = $q('#cancel_btn').first();
         
         const t = new Template();
 
@@ -348,6 +354,34 @@
                 check_icon_off.classList.add('d-none');
                 
             }
+        }
+
+
+        submit_btn.onclick = ()=>{
+
+            let material_item_arr = [];
+
+            $q('.material-item').all().each(item=>{
+
+                if(item.checked == true){
+                    material_item_arr.push(item.value);
+                }
+            });
+
+            let query = new URLSearchParams({
+                project_id          : project.value,
+                section_id          : section.value,
+                contract_item_id    : contract_item.value,
+                component_id        : component.value,
+                requested_by        : requested_by.value,
+                status              : status.value,
+                from                : from.value,
+                to                  : to.value,
+                material_group_id   : material_group.value,
+                material_items      : material_item_arr.join(',')
+            });
+
+            winow.open('/report/material_request/generate?'+query,'_blank').focus();
         }
     </script>
 </div>
