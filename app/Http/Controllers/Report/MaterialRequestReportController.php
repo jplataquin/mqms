@@ -47,7 +47,7 @@ class MaterialRequestReportController extends Controller
         $status             = $request->input('status');
 
         //Query material request
-        $material_request = new MaterialQuantityRequst();
+        $material_request = new MaterialQuantityRequest();
 
         if($project_id){
 
@@ -72,7 +72,7 @@ class MaterialRequestReportController extends Controller
         }/*****/
 
 
-        
+
         $material_item_id_arr = explode(',',$request->input('material_items'));
 
     }
