@@ -361,7 +361,7 @@
 
             let material_item_arr = [];
 
-            $q('.material-item').all().map(item=>{
+            $q('.material-item').items().map(item=>{
 
                 if(item.checked == true){
                     material_item_arr.push(item.value);
