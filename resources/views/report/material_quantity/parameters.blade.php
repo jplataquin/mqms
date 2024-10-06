@@ -361,7 +361,7 @@
 
             let material_item_arr = [];
 
-            $q('.material-item').all().each(item=>{
+            $q('.material-item').get().each(item=>{
 
                 if(item.checked == true){
                     material_item_arr.push(item.value);
