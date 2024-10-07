@@ -6,6 +6,8 @@ import en_ca from '/node_modules/vanillajs-datepicker/js/i18n/locales/en-CA.js';
 
 Object.assign(Datepicker.locales, en_ca);
 
+window.Datepicker = Datepicker;
+
 window.util = {};
 window.ui   = {};
 
