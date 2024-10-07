@@ -146,7 +146,7 @@
 
     <script type="module">
         import {$q,Template} from '/adarna.js';
-        import { Datepicker } from '/datepicker.js'; 
+//import { Datepicker } from '/datepicker.js'; 
 
         const project               = $q('#project').first();
         const section               = $q('#section').first();
