@@ -6,10 +6,12 @@ import en_ca from '/node_modules/vanillajs-datepicker/js/i18n/locales/en-CA.js';
 
 Object.assign(Datepicker.locales, en_ca);
 
-window.Datepicker = Datepicker;
 
 window.util = {};
 window.ui   = {};
+
+
+window.util.Datepicker = Datepicker;
 
 const t                   = new Template();
 const primaryModalElement = document.getElementById('primary_modal');
