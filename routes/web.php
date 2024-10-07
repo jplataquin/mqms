@@ -151,6 +151,14 @@ Route::middleware(['auth',CheckForResetPassword::class])->group(function () {
 });
 
 
+Route::get('datepicker.js', function(){
+
+    $response = Response::make(File::get(base_path('node_modules/vanillajs-datepicker/js/Datepicker.js')), 200);
+    $response->header("Content-Type", 'text/javascript');
+
+    return $response;
+});
+
 
 Route::get('adarna.js', function(){
 

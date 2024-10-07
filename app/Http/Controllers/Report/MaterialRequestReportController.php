@@ -71,7 +71,21 @@ class MaterialRequestReportController extends Controller
             }
         }/*****/
 
+        if($requested_by){
+            $material_request = $material_request->where('created_by',$requested_by);
+        }
 
+        if($from){
+            $material_request = $material_request->where('created_at','>=',$from);
+        }
+
+        if($to){
+            $material_request = $material_request->where('created_at','<=',$to);
+        }
+
+        if($status){
+            $material_request = $material_request->where('status',$status);
+        }
 
         $material_item_id_arr = explode(',',$request->input('material_items'));
 

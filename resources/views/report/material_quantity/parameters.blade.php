@@ -146,6 +146,7 @@
 
     <script type="module">
         import {$q,Template} from '/adarna.js';
+        import { Datepicker } from '/Datepicker.js'; 
 
         const project               = $q('#project').first();
         const section               = $q('#section').first();
@@ -164,6 +165,11 @@
         const cancel_btn            = $q('#cancel_btn').first();
         
         const t = new Template();
+
+        let from_dp = new DateRangePicker(from, {
+            autohide:true,
+            enableOnReadonly:false
+        }); 
 
         let check_all_flag = true;
     
