@@ -146,7 +146,7 @@
 
     <script type="module">
         import {$q,Template} from '/adarna.js';
-        import { Datepicker } from '/Datepicker.js'; 
+        import { Datepicker } from '/datepicker.js'; 
 
         const project               = $q('#project').first();
         const section               = $q('#section').first();
@@ -166,7 +166,7 @@
         
         const t = new Template();
 
-        let from_dp = new DateRangePicker(from, {
+        let from_dp = new Daatepicker(from, {
             autohide:true,
             enableOnReadonly:false
         }); 
