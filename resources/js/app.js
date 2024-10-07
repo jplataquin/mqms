@@ -1,7 +1,7 @@
 import './bootstrap';
 import { Modal } from 'bootstrap';
 import {Template,$util} from '/node_modules/adarna/dist/adarna.js';
-import Datepicker from '/node_modules/vanillajs-datepicker/Datepicker';
+import Datepicker from '/node_modules/vanillajs-datepicker/js/Datepicker';
 import en from '/node_modules/vanillajs-datepicker/locales/en';
 
 Object.assign(Datepicker.locales, en);
