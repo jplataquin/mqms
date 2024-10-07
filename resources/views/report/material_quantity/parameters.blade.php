@@ -166,7 +166,7 @@
         
         const t = new Template();
 
-        let from_dp = new Daatepicker(from, {
+        let from_dp = new Datepicker(from, {
             autohide:true,
             enableOnReadonly:false
         }); 
