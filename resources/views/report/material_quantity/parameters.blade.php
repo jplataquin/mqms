@@ -166,10 +166,14 @@
         
         const t = new Template();
 
-        let from_dp = new window.util.Datepicker(from, {
+        const date_config = {
             autohide:true,
             enableOnReadonly:false
-        }); 
+        };
+
+        let from_dp = new window.util.Datepicker(from, date_config); 
+
+        let to_dp = new window.util.Datepicker(to, date_config); 
 
         let check_all_flag = true;
     
@@ -180,6 +184,8 @@
         }
 
         project.onchange = ()=>{
+
+            alert(from_dp.getDate('yyyy-mm-dd'));
             section.innerHTML           = '';
             contract_item.innerHTML     = '';
             component.innerHTML         = '';
