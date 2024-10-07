@@ -65,13 +65,13 @@
                     <div class="col-lg-6 mb-3">
                         <div class="form-group">
                             <label>From</label>
-                            <input type="text" class="form-control" id="from"/>
+                            <input type="text" class="form-control" id="from" readonly="true"/>
                         </div>
                     </div>
                     <div class="col-lg-6 mb-3">
                         <div class="form-group">
                             <label>To</label>
-                            <input type="text" class="form-control" id="to"/>
+                            <input type="text" class="form-control" id="to" readonly="true"/>
                         </div>
                     </div>
                 </div>
@@ -168,7 +168,6 @@
 
         const date_config = {
             autohide:true,
-            enableOnReadonly:false
         };
 
         let from_dp = new window.util.Datepicker(from, date_config); 
@@ -185,7 +184,6 @@
 
         project.onchange = ()=>{
 
-            alert(from_dp.getDate('yyyy-mm-dd'));
             section.innerHTML           = '';
             contract_item.innerHTML     = '';
             component.innerHTML         = '';
@@ -387,8 +385,8 @@
                 component_id        : component.value,
                 requested_by        : requested_by.value,
                 status              : status.value,
-                from                : from.value,
-                to                  : to.value,
+                from                : from_dp.getDate('yyyy-mm-dd'),
+                to                  : to_dp.getDate('yyyy-mm-dd'),
                 material_group_id   : material_group.value,
                 material_items      : material_item_arr.join(',')
             });
