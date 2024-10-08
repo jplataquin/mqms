@@ -67,7 +67,7 @@ class MaterialItemReportController extends Controller
                 $result[$mr_item->material_item_id][$mc->supplier_id][$mc->payment_term_id][$mc->price] = $mc->created_at;
             }
 
-            $result[$mr_item->material_item_id][$mc->supplier_id][$mc->payment_term_id][$mc->price] = $mc->created_at
+            $result[$mr_item->material_item_id][$mc->supplier_id][$mc->payment_term_id][$mc->price] = $mc->created_at;
         }
 
         $supplier_options       = Supplier::toOptions();
