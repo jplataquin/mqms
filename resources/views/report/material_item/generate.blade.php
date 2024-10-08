@@ -33,7 +33,7 @@
 
                         @foreach($res2 as $payment_term_id => $res3)
                             <div class="mb-3 ps-3">
-                                <h4>{{ $payment_term_options[$payment_term_id] }}</h4>
+                                <h4>{{ $payment_term_options[$payment_term_id]->text }}</h4>
 
                                 <ul class="list-group">
                                     @foreach($res3 as $price => $res4)
