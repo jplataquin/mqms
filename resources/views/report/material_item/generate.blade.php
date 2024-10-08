@@ -37,7 +37,7 @@
 
                                 <ul class="list-group">
                                     @foreach($res3 as $price => $res4)
-                                        <li class="list-group-item">P {{number_format($price,2)}}
+                                        <li class="list-group-item">P {{number_format($price,2)}}</li>
                                     @endforeach
                                 
                                 </ul>
