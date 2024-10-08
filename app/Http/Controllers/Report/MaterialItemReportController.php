@@ -31,7 +31,9 @@ class MaterialItemReportController extends Controller
     public function generate(Request $request){
         $material_item_id_arr = explode(',',$request->input('material_items'));
 
-        $material_request_items = MaterialQuantityRequestItem::whereIn('material_item_id',$material_item_id_arr)->where('status','APRV')
+        $material_request_items = MaterialQuantityRequestItem::whereIn('material_item_id',$material_item_id_arr)
+        ->where('status','APRV')
+        ->orderBy('created_at','DESC')
         ->get();
 
         $result = [];
@@ -62,8 +64,10 @@ class MaterialItemReportController extends Controller
 
             //Set price grouping
             if(! isset( $result[$mr_item->material_item_id][$mc->supplier_id][$mc->payment_term_id][$mc->price] ) ){
-                $result[$mr_item->material_item_id][$mc->supplier_id][$mc->payment_term_id][$mc->price] = $mc;
+                $result[$mr_item->material_item_id][$mc->supplier_id][$mc->payment_term_id][$mc->price] = $mc->created_at;
             }
+
+            $result[$mr_item->material_item_id][$mc->supplier_id][$mc->payment_term_id][$mc->price] = $mc->created_at
         }
 
         $supplier_options       = Supplier::toOptions();

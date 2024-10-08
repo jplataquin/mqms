@@ -38,8 +38,8 @@
                                 <h4>{{ $payment_term_options[$payment_term_id]->text }}</h4>
 
                                 <ul class="list-group">
-                                    @foreach($res3 as $price => $res4)
-                                        <li class="list-group-item">P {{number_format($price,2)}}</li>
+                                    @foreach($res3 as $price => $created_at)
+                                        <li class="list-group-item">P{{number_format($price,2)}} [ {{$created_at}} ]</li>
                                     @endforeach
                                 
                                 </ul>
