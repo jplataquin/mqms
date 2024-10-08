@@ -29,7 +29,10 @@ class MaterialItemReportController extends Controller
     }
 
     public function generate(Request $request){
+        
         $material_item_id_arr = explode(',',$request->input('material_items'));
+
+        print_r($material_item_id_arr);
 
         $material_request_items = MaterialQuantityRequestItem::whereIn('material_item_id',$material_item_id_arr)
         ->where('status','APRV')
