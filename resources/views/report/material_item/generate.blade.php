@@ -37,7 +37,7 @@
 
                                 <ul class="list-group">
                                     @foreach($res3 as $price => $res4)
-                                        <li class="list-group-item">P {{number_format($price,2)}} - {{$res3->created_at}}
+                                        <li class="list-group-item">P {{number_format($price,2)}}
                                     @endforeach
                                 
                                 </ul>
