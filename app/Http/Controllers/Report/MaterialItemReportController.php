@@ -40,7 +40,7 @@ class MaterialItemReportController extends Controller
 
         foreach($material_request_items as $mr_item){
 
-            $mc = MaterialCanvass::whereIn('material_quantity_request_item_id',$mr_item->id)
+            $mc = MaterialCanvass::where('material_quantity_request_item_id',$mr_item->id)
             ->where('status','APRV')->first();
 
             if(!$mc) continue;
