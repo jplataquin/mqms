@@ -19,7 +19,7 @@ class Supplier extends Model
         if(count($ids)){    
             $rows = parent::whereIn('id',$ids)->orderBy('text','ASC')->where('deleted_at',null)->get();
         }else{
-            $rows = parent::orderBy('text','ASC')->where('deleted_at',null)->get();
+            $rows = parent::orderBy('name','ASC')->where('deleted_at',null)->get();
         }
         
 
@@ -28,7 +28,7 @@ class Supplier extends Model
         foreach($rows as $row){
             $result[$row->id] = (object) [
                 'id'    => $row->id,
-                'text'  => $row->text,
+                'text'  => $row->name,
                 'deleted' => (boolean) ($row->deleted_at != null)
             ];
         }
