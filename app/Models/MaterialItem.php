@@ -33,7 +33,7 @@ class MaterialItem extends Model
         $result = [];
         
         foreach($rows as $row){
-            $result[] = (object) [
+            $result[$row->id] = (object) [
                 'id'    => $row->id,
                 'text'  => trim($row->brand.' '.$row->name.' '.$row->specification_unit_packaging)
             ];
