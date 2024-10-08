@@ -14,14 +14,14 @@ use App\Models\MaterialItem;
 use App\Models\MaterialGroup;
 use Illuminate\Support\Facades\DB;
 
-class MaterialRequestReportController extends Controller
+class MaterialItemReportController extends Controller
 {
 
     public function paramters(){
 
         $material_groups = MaterialGroup::where('deleted_at',null)->get();
 
-        return view('/report/material_item_report/parameters',[
+        return view('/report/material_item/parameters',[
             'material_groups' => $material_groups
         ]);
     }
