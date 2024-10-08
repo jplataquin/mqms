@@ -20,4 +20,25 @@ class MaterialItem extends Model
         return $this->hasOne(MaterialGroup::class);
     }
 
+    //To do make this into a callback later on
+    public static function toOptions(Array $ids = []){
+
+        if(count($ids)){    
+            $rows = parent::whereIn('id',$ids)->get();
+        }else{
+            $rows = parent::get();
+        }
+        
+
+        $result = [];
+        
+        foreach($rows as $row){
+            $result[] = (object) [
+                'id'    => $row->id,
+                'text'  => $row->text
+            ];
+        }
+
+        return $result;
+    }
 }

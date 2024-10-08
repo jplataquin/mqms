@@ -14,4 +14,27 @@ class Supplier extends Model
 
     protected $table = 'suppliers';
   
+    public static function toOptions(Array $ids = []){
+
+        if(count($ids)){    
+            $rows = parent::whereIn('id',$ids)->orderBy('text','ASC')->where('deleted_at',null)->get();
+        }else{
+            $rows = parent::orderBy('text','ASC')->where('deleted_at',null)->get();
+        }
+        
+
+        $result = [];
+        
+        foreach($rows as $row){
+            $result[$row->id] = (object) [
+                'id'    => $row->id,
+                'text'  => $row->text,
+                'deleted' => (boolean) ($row->deleted_at != null)
+            ];
+        }
+
+       
+       
+        return $result;
+    }
 }
