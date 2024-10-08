@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 class MaterialItemReportController extends Controller
 {
 
-    public function paramters(){
+    public function parameters(){
 
         $material_groups = MaterialGroup::where('deleted_at',null)->get();
 
