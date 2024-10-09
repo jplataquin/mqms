@@ -53,15 +53,15 @@
     @foreach($result as $material_item_id => $res1)
 
             <div class="mb-5 ps-5 border">
-                <h2>{{ $material_item_options[$material_item_id]->text }}</h2>
+                <h3>{{ $material_item_options[$material_item_id]->text }}</h3>
 
                 @foreach($res1 as $supplier_id => $res2)
                     <div class="mb-5 ps-5 border">
-                        <h3>{{ $supplier_options[$supplier_id]->text }}</h3>
+                        <h4>{{ $supplier_options[$supplier_id]->text }}</h>
 
                         @foreach($res2 as $payment_term_id => $res3)
                             <div class="mb-5 ps-5">
-                                <h4>{{ $payment_term_options[$payment_term_id]->text }}</h4>
+                                <h5>{{ $payment_term_options[$payment_term_id]->text }}</h5>
 
                                 <ul>
                                     @foreach($res3 as $price => $created_at)
