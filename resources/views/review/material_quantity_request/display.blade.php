@@ -29,7 +29,7 @@
             Material Request Review
         </div>
         <div class="folder-form-body">
-            <table class="record-table-horizontal">
+            <table class="record-table-horizontal" hx-boost="true" hx-select="#content" hx-target="#main">
                 <tbody>
                     <tr>
                         <th width="150px">ID</th>
@@ -45,7 +45,11 @@
                     </tr>
                     <tr>
                         <th>Component</th>
-                        <td>{{$component->name}}</td>
+                        <td>
+                            <a href="/project/section/contract_item/component/{{$component->id}}">
+                                {{$component->name}}
+                            </a>
+                        </td>
                     </tr>
                     <tr>
                         <th>Status</th>
