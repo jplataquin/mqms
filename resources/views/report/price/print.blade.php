@@ -81,7 +81,7 @@
     @foreach($result as $material_item_id => $res1)
 
             <div class="mb-10 border">
-                <div style="margin-left:3px" class="grey-bg">
+                <div style="padding-left:3px" class="grey-bg">
                     <h3>{{ $material_item_options[$material_item_id]->text }}</h3>
                 </div>
                 @foreach($res1 as $supplier_id => $res2)
