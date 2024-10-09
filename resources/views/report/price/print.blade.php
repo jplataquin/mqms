@@ -37,6 +37,10 @@
         padding-left: auto;
         padding-right:auto;
     }
+
+    .grey-bg{
+        background-color: #d3d3d3;
+    }
 </style>
 <page>
 
@@ -77,8 +81,9 @@
     @foreach($result as $material_item_id => $res1)
 
             <div class="mb-10 ps-10 border">
-                <h3>{{ $material_item_options[$material_item_id]->text }}</h3>
-
+                <div class="grey-bg">
+                    <h3>{{ $material_item_options[$material_item_id]->text }}</h3>
+                </div>
                 @foreach($res1 as $supplier_id => $res2)
                     <div class="mb-5 ps-10 border">
                         <h4>{{ $supplier_options[$supplier_id]->text }}</h4>
