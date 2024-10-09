@@ -85,7 +85,7 @@
                     <h3>{{ $material_item_options[$material_item_id]->text }}</h3>
                 </div>
                 @foreach($res1 as $supplier_id => $res2)
-                    <div style="maring-left:10px" class="mb-5 ps-10 border">
+                    <div style="margin-left:10px" class="mb-5 ps-10 border">
                         <h4>{{ $supplier_options[$supplier_id]->text }}</h4>
 
                         @foreach($res2 as $payment_term_id => $res3)
