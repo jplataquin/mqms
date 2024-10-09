@@ -19,6 +19,10 @@
         padding-left: 5px;
     }
 
+    .ps-10{
+        padding-left: 10px;
+    }
+
 
     .border{
         border-left: solid 1px #000000;
@@ -39,9 +43,9 @@
             </td>
         </tr>
         <tr>
-            <td class="text-center" colspan="4">
+            <th  style="text-align:center" colspan="4">
                 Price Report
-            </td>
+            </th>
         </tr>
         <tr>
             <th style="width:10%">Project</th>
@@ -72,7 +76,7 @@
                 <h3>{{ $material_item_options[$material_item_id]->text }}</h3>
 
                 @foreach($res1 as $supplier_id => $res2)
-                    <div class="mb-5 ps-5 border">
+                    <div class="mb-5 ps-10 border">
                         <h4>{{ $supplier_options[$supplier_id]->text }}</h4>
 
                         @foreach($res2 as $payment_term_id => $res3)
@@ -90,7 +94,7 @@
                     </div>
 
                 @endforeach
-
+            <hr>
             </div>
 
         @endforeach
