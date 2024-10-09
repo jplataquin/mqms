@@ -369,7 +369,7 @@ class PriceReportController extends Controller
 
         $current_datetime = Carbon::now();
 
-        $html = view('/report/price/generate',[
+        $html = view('/report/price/print',[
             'result'                => $result,
             'project_name'          => $project_name,
             'section_name'          => $section_name,
