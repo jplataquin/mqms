@@ -90,6 +90,19 @@
 
                         <li class="menu-item">
                             <div class="nav-item">
+                                <a href="#" class="inactive-nav-item">Reports</a>
+                            </div>
+
+                            <ul class="list-unstyled menu-sub-items">
+                                <li class="nav-sub-item">
+                                    <a href="/report/price/paramters" hx-select="#content" hx-target="#main">Price</a>
+                                </li>
+                            </ul>
+                        </li>
+                       
+
+                        <li class="menu-item">
+                            <div class="nav-item">
                                 <a href="#" class="inactive-nav-item">Review</a>
                             </div>
 
