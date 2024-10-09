@@ -369,7 +369,7 @@ class PriceReportController extends Controller
 
         $current_datetime = Carbon::now();
 
-        return view('/report/price/generate',[
+        $html = view('/report/price/generate',[
             'result'                => $result,
             'project_name'          => $project_name,
             'section_name'          => $section_name,
@@ -383,6 +383,23 @@ class PriceReportController extends Controller
             'material_item_options' => $material_item_options,
             'current_datetime'      => $current_datetime
         ]);
+
+
+        $html2pdf = new Html2Pdf('P','A4','en', false, 'UTF-8', [5, 5, 10, 0]);
+           
+
+        try {
+            $html2pdf->writeHTML($html);
+            $html2pdf->output('Price Report.pdf');
+            $html2pdf->clean();
+        
+        }catch(Html2PdfException $e) {
+            $html2pdf->clean();
+        
+            $formatter = new ExceptionFormatter($e);
+            echo $html;
+            echo $formatter->getHtmlMessage();        
+        }
 
     }
 }
