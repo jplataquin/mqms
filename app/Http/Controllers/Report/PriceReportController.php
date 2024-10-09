@@ -386,7 +386,6 @@ class PriceReportController extends Controller
 
 
         $html2pdf = new Html2Pdf('P','A4','en', false, 'UTF-8', [5, 5, 10, 0]);
-           
 
         try {
             $html2pdf->writeHTML($html);
