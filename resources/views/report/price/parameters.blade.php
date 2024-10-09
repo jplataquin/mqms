@@ -352,10 +352,19 @@
                 project_id          : project.value,
                 section_id          : section.value,
                 contract_item_id    : contract_item.value,
-                component_id        : component.value,
-                from                : from_dp.getDate('yyyy-mm-dd') ?? '',
-                to                  : to_dp.getDate('yyyy-mm-dd') ?? '',
+                component_id        : component.value
             });
+
+            from_val  = from_dp.getDate('yyyy-mm-dd') ?? '';
+            to_val    = to_dp.getDate('yyyy-mm-dd') ?? '';
+            
+            if(from_val){
+                query.append('from',from_val);
+            }
+
+            if(to_val){
+                query>append('to',to_val);
+            }
 
             window.open('/report/price/generate?'+query,'_blank').focus();
         }
