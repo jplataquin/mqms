@@ -81,11 +81,11 @@
     @foreach($result as $material_item_id => $res1)
 
             <div class="mb-10 border">
-                <div class="grey-bg">
+                <div style="margin-left:3px" class="grey-bg">
                     <h3>{{ $material_item_options[$material_item_id]->text }}</h3>
                 </div>
                 @foreach($res1 as $supplier_id => $res2)
-                    <div class="mb-5 ps-10 border">
+                    <div style="maring-left:10px" class="mb-5 ps-10 border">
                         <h4>{{ $supplier_options[$supplier_id]->text }}</h4>
 
                         @foreach($res2 as $payment_term_id => $res3)
