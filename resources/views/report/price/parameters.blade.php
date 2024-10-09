@@ -351,7 +351,7 @@
                 material_group_id   : material_group.value
             });
 
-            window.open('/report/material_item/generate?'+query,'_blank').focus();
+            window.open('/report/price/generate?'+query,'_blank').focus();
         }
     </script>
 </div>
