@@ -7,6 +7,10 @@
         padding: 3px;
     }
     
+    th{
+        padding:3px;
+    }
+    
     .mb-5{
         margin-bottom: 5px;
     }
