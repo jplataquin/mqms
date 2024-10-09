@@ -34,7 +34,7 @@
 
     <table border="1" class="mb-5">
         <tr>
-            <td class="text-center">
+            <td class="text-center" colspan="4">
                 <img src="storage/sys_images/header.png" style="width:500px"/>
             </td>
         </tr>
