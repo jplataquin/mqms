@@ -80,7 +80,7 @@
 
     @foreach($result as $material_item_id => $res1)
 
-            <div class="mb-10 ps-10 border">
+            <div class="mb-10 border">
                 <div class="grey-bg">
                     <h3>{{ $material_item_options[$material_item_id]->text }}</h3>
                 </div>
