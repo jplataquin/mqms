@@ -134,7 +134,7 @@
     cancelBtn.onclick = (e)=>{
         
         @if($back)
-            window.util.navTo('{{$back}}');
+            window.util.navTo('/{{$back}}');
         @else
             window.util.navTo('/master_data/material/items');
         @endif
