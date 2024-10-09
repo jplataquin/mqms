@@ -4,18 +4,18 @@ namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Models\Supplier;
-use App\Models\User;
 use App\Models\MaterialQuantityRequestItem;
 use App\Models\MaterialQuantityRequest;
-use App\Models\PurchaseOrderItem;
 use App\Models\MaterialItem;
 use App\Models\MaterialCanvass;
 use App\Models\MaterialGroup;
 use App\Models\PaymentTerm;
 use App\Models\Project;
-use Illuminate\Support\Facades\DB;
+use App\Models\Section;
+use App\Models\ContractItem;
+use App\Models\Component;
+use Illuminate\Support\Facades\Validator;
 
 class PriceReportController extends Controller
 {
