@@ -22,11 +22,11 @@ class MaterialItemController extends Controller
         ]);
     }
 
-    public function display($id){
+    public function display($id,Request $request){
 
         $id = (int) $id;
 
-        $back = Request::input('b');
+        $back = $request->input('b');
 
         $materialItem = MaterialItem::findOrFail($id);
         
