@@ -26,7 +26,7 @@ class PriceReportController extends Controller
 
         $material_groups = MaterialGroup::where('deleted_at',null)->get();
 
-        return view('/report/material_item/parameters',[
+        return view('/report/price/parameters',[
             'projects'          => $projects,
             'material_groups'   => $material_groups
         ]);
