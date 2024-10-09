@@ -80,7 +80,7 @@
                         <h4>{{ $supplier_options[$supplier_id]->text }}</h4>
 
                         @foreach($res2 as $payment_term_id => $res3)
-                            <div class="mb-5 ps-5">
+                            <div class="mb-5 ps-10 border">
                                 <h5>{{ $payment_term_options[$payment_term_id]->text }}</h5>
 
                                 <ul>
@@ -94,7 +94,7 @@
                     </div>
 
                 @endforeach
-            <hr>
+        
             </div>
 
         @endforeach
