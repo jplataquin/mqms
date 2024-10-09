@@ -132,9 +132,12 @@
 
 
     cancelBtn.onclick = (e)=>{
-
-         window.util.navTo('/master_data/material/items');
-      
+        
+        @if($back)
+            window.util.navTo('{{$back}}');
+        @else
+            window.util.navTo('/master_data/material/items');
+        @endif
     }
 </script>
 </div>

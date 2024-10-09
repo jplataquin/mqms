@@ -26,6 +26,8 @@ class MaterialItemController extends Controller
 
         $id = (int) $id;
 
+        $back = Request::input('b');
+
         $materialItem = MaterialItem::findOrFail($id);
         
         $materialGroup = new materialGroup();
@@ -34,7 +36,8 @@ class MaterialItemController extends Controller
 
         return view('material_item/display',[
             'materialItem'      => $materialItem,
-            'materialGroups'    => $materialGroupRows
+            'materialGroups'    => $materialGroupRows,
+            'back'              => $back
         ]);
     }
 
