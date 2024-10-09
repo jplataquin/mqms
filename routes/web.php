@@ -145,7 +145,7 @@ Route::middleware(['auth',CheckForResetPassword::class])->group(function () {
     
     Route::get('/report/price/parameters', [App\Http\Controllers\Report\PriceReportController::class, 'parameters']);
     Route::get('/report/price/generate', [App\Http\Controllers\Report\PriceReportController::class, 'generate']);
-    
+    Route::get('/report/price/print', [App\Http\Controllers\Report\PriceReportController::class, 'print']);
 
     Route::get('/users', [App\Http\Controllers\UserController::class, 'list']);
     Route::get('/user/create', [App\Http\Controllers\UserController::class, 'create']);

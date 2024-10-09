@@ -368,6 +368,41 @@
 
             window.open('/report/price/generate?'+query,'_blank').focus();
         }
+
+
+        submit_btn.onclick = ()=>{
+
+            let material_item_arr = [];
+
+            $q('.material-item').items().map(item=>{
+
+                if(item.checked == true){
+                    material_item_arr.push(item.value);
+                }
+            });
+
+            let query = new URLSearchParams({
+                material_items      : material_item_arr.join(','),
+                material_group_id   : material_group.value,
+                project_id          : project.value,
+                section_id          : section.value,
+                contract_item_id    : contract_item.value,
+                component_id        : component.value
+            });
+
+            let from_val  = from_dp.getDate('yyyy-mm-dd') ?? '';
+            let to_val    = to_dp.getDate('yyyy-mm-dd') ?? '';
+
+            if(from_val){
+                query.append('from',from_val);
+            }
+
+            if(to_val){
+                query>append('to',to_val);
+            }
+
+            window.open('/report/price/print?'+query,'_blank').focus();
+        }
     </script>
 </div>
 @endsection

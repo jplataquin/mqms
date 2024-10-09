@@ -117,7 +117,7 @@ class ReportAController extends Controller
             $material_items[$mir->id] = $mir;    
         }
 
-        return view('reports/report_a/generate',[
+        $html = view('reports/report_a/generate',[
             'project'               => $project,
             'section'               => $section,
             'component'             => $component,
@@ -127,6 +127,23 @@ class ReportAController extends Controller
             'purchase_order_item'   => $purchase_order_item,
             'material_items'        => $material_items,
             'unit_options'           => $unit_options
-        ]);
+        ])->render();
+
+
+        $html2pdf = new Html2Pdf('P','A4','en', false, 'UTF-8', [5, 5, 10, 0]);
+           
+
+        try {
+            $html2pdf->writeHTML($html);
+            $html2pdf->output('Price Report.pdf');
+            $html2pdf->clean();
+        
+        }catch(Html2PdfException $e) {
+            $html2pdf->clean();
+        
+            $formatter = new ExceptionFormatter($e);
+            echo $html;
+            echo $formatter->getHtmlMessage();        
+        }
     }
 }
