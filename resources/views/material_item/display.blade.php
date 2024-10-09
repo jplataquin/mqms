@@ -132,7 +132,12 @@
 
 
     cancelBtn.onclick = (e)=>{
+
+        @if($material_group_id_query)
+
+        @else
          window.util.navTo('/master_data/material/items');
+        @endif
     }
 </script>
 </div>
