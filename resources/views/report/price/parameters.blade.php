@@ -355,8 +355,8 @@
                 component_id        : component.value
             });
 
-            from_val  = from_dp.getDate('yyyy-mm-dd') ?? '';
-            to_val    = to_dp.getDate('yyyy-mm-dd') ?? '';
+            let from_val  = from_dp.getDate('yyyy-mm-dd') ?? '';
+            let to_val    = to_dp.getDate('yyyy-mm-dd') ?? '';
             
             if(from_val){
                 query.append('from',from_val);
