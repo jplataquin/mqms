@@ -17,7 +17,7 @@ use App\Models\PaymentTerm;
 use App\Models\Project;
 use Illuminate\Support\Facades\DB;
 
-class MaterialItemReportController extends Controller
+class PriceReportController extends Controller
 {
 
     public function parameters(){
