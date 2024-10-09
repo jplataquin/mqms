@@ -23,13 +23,41 @@
         </div>
         <hr>
 
-        <div class="folder-form-container">
-            <div class="folder-form-tab">{{$material_group->name}}</div>
+        <div class="folder-form-container mb-3">
+            <div class="folder-form-tab">Price Report</div>
+            <div class="folder-form-body">
+                <table class="record-table-horizontal">
+                    <tr>
+                        <th>Project</th>
+                        <td>{{$project_name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Section</th>
+                        <td>{{$section_name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Contract Item</th>
+                        <td>{{$contract_item_name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Component</th>
+                        <td>{{$component_name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Date Scope</th>
+                        <td>{{$from}} - {{$to}}</td>
+                    </tr>
+                    <tr>
+                        <th>Material Group</th>
+                        <td>{{$material_group->name}}</td>
+                    </tr>
+                </table>
+            </div>
         </div>
 
         @foreach($result as $material_item_id => $res1)
 
-            <div class="mb-3 ps-3">
+            <div class="mb-3 ps-3 border border-primary">
                 <h2>{{ $material_item_options[$material_item_id]->text }}</h2>
 
                 @foreach($res1 as $supplier_id => $res2)
