@@ -179,7 +179,7 @@
             });
 
             row.onclick = ()=>{
-                window.util.navTo('/master_data/material/item/'+item.id+'?bk={{url()->current()}}');
+                window.util.navTo('/master_data/material/item/'+item.id+'?b={{Request::path()}}');
             };
 
             $el.append(row).to(list);
