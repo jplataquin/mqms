@@ -61,11 +61,11 @@
                 <h2>{{ $material_item_options[$material_item_id]->text }}</h2>
 
                 @foreach($res1 as $supplier_id => $res2)
-                    <div class="mb-3 ps-3">
+                    <div class="mb-3 ps-3 border border-secondary">
                         <h3>{{ $supplier_options[$supplier_id]->text }}</h3>
 
                         @foreach($res2 as $payment_term_id => $res3)
-                            <div class="mb-3 ps-3">
+                            <div class="mb-3 ps-3 border border-warning">
                                 <h4>{{ $payment_term_options[$payment_term_id]->text }}</h4>
 
                                 <ul class="list-group">
