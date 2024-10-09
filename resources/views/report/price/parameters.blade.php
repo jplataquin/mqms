@@ -107,6 +107,7 @@
 
                 <div class="row mb-3">
                     <div class="col-lg-12 text-end">
+                        <button id="print_btn" class="btn btn-primary">Print</button>
                         <button id="submit_btn" class="btn btn-primary">Submit</button>
                         <button id="cancel_btn" class="btn btn-secondary">Cancel</button>
                     </div>
@@ -131,7 +132,8 @@
         const check_icon_off        = $q('#check_icon_off').first();
         const submit_btn            = $q('#submit_btn').first();
         const cancel_btn            = $q('#cancel_btn').first();
-        
+        const print_btn             = $q('#print_btn').first();
+
         const t = new Template();
 
         const date_config = {
@@ -370,7 +372,7 @@
         }
 
 
-        submit_btn.onclick = ()=>{
+        print_btn.onclick = ()=>{
 
             let material_item_arr = [];
 
