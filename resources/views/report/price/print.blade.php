@@ -23,10 +23,26 @@
     .border{
         border-left: solid 1px #000000;
     }
+
+    .text-center{
+        text-align: center !important;
+        padding-left: auto;
+        padding-right:auto;
+    }
 </style>
 <page>
 
     <table border="1" class="mb-5">
+        <tr>
+            <td class="text-center">
+                <img src="storage/sys_images/header.png" style="width:500px"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-center" colspan="4">
+                Price Report
+            </td>
+        </tr>
         <tr>
             <th style="width:10%">Project</th>
             <td style="width:40%">{{$project_name}}</td>
