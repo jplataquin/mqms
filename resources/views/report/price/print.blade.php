@@ -15,6 +15,10 @@
         margin-bottom: 5px;
     }
 
+    .mb-10{
+        margin-bottom: 5px;
+    }
+
     .ps-5{
         padding-left: 5px;
     }
@@ -72,7 +76,7 @@
 
     @foreach($result as $material_item_id => $res1)
 
-            <div class="mb-5 ps-10 border">
+            <div class="mb-10 ps-10 border">
                 <h3>{{ $material_item_options[$material_item_id]->text }}</h3>
 
                 @foreach($res1 as $supplier_id => $res2)
