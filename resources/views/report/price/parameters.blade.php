@@ -348,7 +348,13 @@
 
             let query = new URLSearchParams({
                 material_items      : material_item_arr.join(','),
-                material_group_id   : material_group.value
+                material_group_id   : material_group.value,
+                project_id          : project.value,
+                section_id          : section.value,
+                contract_item_id    : contract_item.value,
+                component_id        : component.value,
+                from                : from_dp.getDate('yyyy-mm-dd'),
+                to                  : to_dp.getDate('yyyy-mm-dd'),
             });
 
             window.open('/report/price/generate?'+query,'_blank').focus();
