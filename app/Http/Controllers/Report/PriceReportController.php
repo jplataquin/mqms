@@ -382,7 +382,7 @@ class PriceReportController extends Controller
             'payment_term_options'  => $payment_term_options,
             'material_item_options' => $material_item_options,
             'current_datetime'      => $current_datetime
-        ]);
+        ])->render();
 
 
         $html2pdf = new Html2Pdf('P','A4','en', false, 'UTF-8', [5, 5, 10, 0]);
