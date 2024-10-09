@@ -15,13 +15,14 @@
         padding-left: 5px;
     }
 
+
     .border{
         border: solid 1px #000000;
     }
 </style>
 <page>
 
-    <table border="1">
+    <table border="1" class="mb-5">
         <tr>
             <th style="width:10%">Project</th>
             <td style="width:40%">{{$project_name}}</td>
@@ -51,11 +52,11 @@
                 <h2>{{ $material_item_options[$material_item_id]->text }}</h2>
 
                 @foreach($res1 as $supplier_id => $res2)
-                    <div class="mb-3 ps-3 border">
+                    <div class="mb-5 ps-5 border">
                         <h3>{{ $supplier_options[$supplier_id]->text }}</h3>
 
                         @foreach($res2 as $payment_term_id => $res3)
-                            <div class="mb-3 ps-3">
+                            <div class="mb-5 ps-5">
                                 <h4>{{ $payment_term_options[$payment_term_id]->text }}</h4>
 
                                 <ul>
