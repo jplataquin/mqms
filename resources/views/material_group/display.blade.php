@@ -179,7 +179,7 @@
             });
 
             row.onclick = ()=>{
-                window.util.navTo('/master_data/material/item/'+item.id);
+                window.util.navTo('/master_data/material/item/'+item.id+'?material_group_id={{$id}}');
             };
 
             $el.append(row).to(list);
