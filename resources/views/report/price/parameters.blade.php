@@ -107,7 +107,7 @@
 
                 <div class="row mb-3">
                     <div class="col-lg-12 text-end">
-                        <button id="print_btn" class="btn btn-primary">Print</button>
+                        <button id="print_btn" class="btn btn-warning">Print</button>
                         <button id="submit_btn" class="btn btn-primary">Submit</button>
                         <button id="cancel_btn" class="btn btn-secondary">Cancel</button>
                     </div>
