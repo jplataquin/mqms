@@ -23,6 +23,9 @@
         </div>
         <hr>
 
+        <div class="folder-form-container">
+            <div class="folder-form-tab">{{$material_group->name}}</div>
+        </div>
 
         @foreach($result as $material_item_id => $res1)
 

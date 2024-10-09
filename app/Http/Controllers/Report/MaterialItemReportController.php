@@ -14,6 +14,7 @@ use App\Models\MaterialItem;
 use App\Models\MaterialCanvass;
 use App\Models\MaterialGroup;
 use App\Models\PaymentTerm;
+use App\Models\Project;
 use Illuminate\Support\Facades\DB;
 
 class MaterialItemReportController extends Controller
@@ -21,17 +22,22 @@ class MaterialItemReportController extends Controller
 
     public function parameters(){
 
+        $projects = Project::where('deleted_at',null)->get();
+
         $material_groups = MaterialGroup::where('deleted_at',null)->get();
 
         return view('/report/material_item/parameters',[
-            'material_groups' => $material_groups
+            'projects'          => $projects,
+            'material_groups'   => $material_groups
         ]);
     }
 
     public function generate(Request $request){
         
-        $material_item_id_arr = explode(',',$request->input('material_items'));
+        $material_group_id      = (int) $request->input('material_group_id');
+        $material_item_id_arr   = explode(',',$request->input('material_items'));
 
+        
 
         $material_request_items = MaterialQuantityRequestItem::whereIn('material_item_id',$material_item_id_arr)
         ->where('status','APRV')
