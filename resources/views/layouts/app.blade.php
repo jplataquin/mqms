@@ -95,7 +95,7 @@
 
                             <ul class="list-unstyled menu-sub-items">
                                 <li class="nav-sub-item">
-                                    <a href="/report/price/paramters" hx-select="#content" hx-target="#main">Price</a>
+                                    <a href="/report/price/parameters" hx-select="#content" hx-target="#main">Price</a>
                                 </li>
                             </ul>
                         </li>
