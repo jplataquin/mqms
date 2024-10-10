@@ -179,7 +179,7 @@
             });
 
             row.onclick = (e)=>{
-                window.util.navTo('/master_data/material/item/'+item.id+'?b={{Request::path()}}',e);
+                window.util.navTo('/master_data/material/item/'+item.id+'?b={{Request::path()}}&material_group_id={{$id}}',e);
             };
 
             $el.append(row).to(list);
