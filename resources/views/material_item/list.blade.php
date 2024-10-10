@@ -47,17 +47,10 @@
                         <input type="text" id="query" class="form-control"/>
                     </div>
                 </div>
-                <div class="col-lg-2">
-                    <div class="form-group">
-                        <label>&nbsp;</label>
-                        <button id="searchBtn" class="btn w-100 btn-primary">Search</button>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="form-group">
-                        <label>&nbsp;</label>
-                        <button id="createBtn" class="btn w-100 btn-warning">Create</button>
-                    </div>
+                <div class="col-lg-4">
+                        <button id="searchBtn" class="btn btn-primary">Search</button>
+                        <button id="createBtn" class="btn btn-warning">Create</button>
+                        <button id="printBtn" class="btn btn-secondary">Print</button>
                 </div>
             </div>
         </div>
