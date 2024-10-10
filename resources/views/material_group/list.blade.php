@@ -102,8 +102,8 @@
                 t.div({class:'item-header'},item.name);
             });
 
-            row.onclick = ()=>{
-                 window.util.navTo('/master_data/material/group/'+item.id);
+            row.onclick = (e)=>{
+                 window.util.navTo('/master_data/material/group/'+item.id,e);
             };
 
             $el.append(row).to(list);
