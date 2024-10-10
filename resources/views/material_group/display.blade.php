@@ -259,7 +259,7 @@
     }
 
     createBtn.onclick = ()=>{
-        window.util.navTo('/master_data/material/item/create?b={{Request::path()}}&material_group_id={{$id}') ;
+        window.util.navTo('/master_data/material/item/create?b={{Request::path()}}&material_group_id={{$id}}') ;
     }
 
     reinitalize();
