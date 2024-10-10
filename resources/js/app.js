@@ -597,12 +597,19 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
 }
 
 
-window.util.navTo = function(url){
+window.util.navTo = function(url,evt){
     let el = document.getElementById('#__nav_helper');
 
     if(!url){
         console.error('URL not defined');
         return false;
+    }
+
+    if(evt){
+        if(evt.ctrlKey){
+            window.open(url,'_blank').focus();
+            return false
+        }
     }
 
     if(el){
@@ -613,9 +620,9 @@ window.util.navTo = function(url){
         console.error('Nav helper element not found');
     }
 
-    setTimeout(()=>{
-        window.scrollTo(0,0);
-    },1000);
+    // setTimeout(()=>{
+    //     window.scrollTo(0,0);
+    // },1000);
 }
 
 

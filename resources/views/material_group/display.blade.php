@@ -178,8 +178,8 @@
                 t.div({class:'item-header'},item.brand+' '+item.name +' '+item.specification_unit_packaging+''.trim());
             });
 
-            row.onclick = ()=>{
-                window.util.navTo('/master_data/material/item/'+item.id+'?b={{Request::path()}}');
+            row.onclick = (e)=>{
+                window.util.navTo('/master_data/material/item/'+item.id+'?b={{Request::path()}}',e);
             };
 
             $el.append(row).to(list);
