@@ -11,14 +11,19 @@ use Illuminate\Validation\Rule;
 
 class MaterialItemController extends Controller
 {
-    public function create(){
+    public function create(Request $request){
 
         $materialGroup = new materialGroup();
+
+        $back               = $request->input('b');
+        $material_group_id  = (int) $request->input('material_group_id');
 
         $rows = $materialGroup::orderBy('name','ASC')->get();
 
         return view('material_item/create',[
-            'materialGroups' => $rows
+            'materialGroups'    => $rows,
+            'back'              => $back,
+            'material_group_id' => $material_group_id
         ]);
     }
 

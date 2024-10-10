@@ -36,7 +36,7 @@
                         <label>Material Group</label>
                         <select class="form-control" id="materialGroup">
                             @foreach($materialGroups as $group)
-                                <option value="{{$group->id}}" >{{$group->name}}</option>
+                                <option value="{{$group->id}}" @if($group->id == $material_group_id) selected @endif>{{$group->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -112,7 +112,12 @@
     }
 
     cancelBtn.onclick = (e) => {
-         window.util.navTo('/master_data/materials');
+
+        @if($back)
+            window.util.navTo('/{{$back}}');
+        @else
+            window.util.navTo('/master_data/materials');
+        @endif    
     }
 
 </script>
