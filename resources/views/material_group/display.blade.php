@@ -179,7 +179,7 @@
             });
 
             row.onclick = (e)=>{
-                window.util.navTo('/master_data/material/item/'+item.id+'?b={{Request::path()}}&material_group_id={{$id}}',e);
+                window.util.navTo('/master_data/material/item/'+item.id+'?b={{Request::path()}}',e);
             };
 
             $el.append(row).to(list);
@@ -259,7 +259,7 @@
     }
 
     createBtn.onclick = ()=>{
-        window.util.navTo('/master_data/material/item/create') ;
+        window.util.navTo('/master_data/material/item/create?b={{Request::path()}}&material_group_id={{$id}') ;
     }
 
     reinitalize();
