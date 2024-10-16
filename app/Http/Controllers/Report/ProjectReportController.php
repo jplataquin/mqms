@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use App\Models\Project;
 use App\Models\Section;
 use App\Models\Component;
+use App\Models\ContractItem;
 use App\Models\Supplier;
 use App\Models\User;
 use App\Models\MaterialQuantityRequestItem;
