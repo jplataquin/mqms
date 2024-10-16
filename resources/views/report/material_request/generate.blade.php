@@ -18,7 +18,7 @@
 
                     @foreach($component as $component_item_id => $component_item)
                         <tr>
-                            <td colspan="2">{{$component_item_arr[$component_item-id]->name}}</td>
+                            <td colspan="2">{{$component_item_arr[$component_item_id]->name}}</td>
                         </tr>
 
                         @foreach($component_item as $material_quantity_id => $result){
