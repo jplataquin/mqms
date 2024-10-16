@@ -13,7 +13,7 @@
 
                 @foreach($contract_item as $component_id => $component)
                     <tr>
-                        <td colspan="2">2 {{$component_arr[$component_id]->name}}</td>
+                        <td colspan="2">2 {{ $component_id }}</td>
                     </tr>
 
                     @foreach($component as $component_item_id => $component_item)
