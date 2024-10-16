@@ -20,6 +20,11 @@ class MaterialItem extends Model
         return $this->hasOne(MaterialGroup::class);
     }
 
+
+    public function formatted_name(){
+        return $this->name.' '$this->specification_unit_packaging.' '.$this->brand;
+    }
+
     //To do make this into a callback later on
     public static function toOptions(Array $ids = []){
 
