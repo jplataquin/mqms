@@ -112,9 +112,10 @@ class ProjectReportController extends Controller {
 
                         if( !isset( $report[ $contract_item->id ][ $component->id ][ $component_item->id ][ $material_quantity->id ] ) ){
                             $report[ $contract_item->id ][ $component->id ][ $component_item->id ][ $material_quantity->id ]    = [];
+                            $material_quantity_arr[ $material_quantity->id ] = $material_quantity;
+                  
                         }
 
-                        $material_quantity[ $material_quantity->id ] = $material_quantity;
                         
                         $material_item_arr[ $material_quantity->material_item_id ] = MaterialItem::find($material_quantity->material_item_id);
 
