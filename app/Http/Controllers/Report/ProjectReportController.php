@@ -45,12 +45,6 @@ class ProjectReportController extends Controller {
                 'required',
                 'integer',
                 'gte:1'
-            ],
-            'from' => [
-                'date_format:Y-m-d'
-            ],
-            'to' => [
-                'date_format:Y-m-d'
             ]
         ]);
 
