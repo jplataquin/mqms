@@ -22,15 +22,15 @@ class ContractItem extends Model
     public $deleteException = null;
 
     
-    public function ParentContractItem(): BelongsTo
-    {
-        return $this->belongsTo('ComponentItem','parent_contract_item_id','id');
-    }
+    // public function ParentContractItem(): BelongsTo
+    // {
+    //     return $this->belongsTo('ComponentItem','parent_contract_item_id','id');
+    // }
 
-    public function SubContractItems(): HasMany
-    {
-        return $this->hasMany('ContractItem','parent_contract_item_id','id');
-    }
+    // public function SubContractItems(): HasMany
+    // {
+    //     return $this->hasMany('ContractItem','parent_contract_item_id','id');
+    // }
 
     public function Section(): BelongsTo
     {
@@ -51,6 +51,10 @@ class ContractItem extends Model
         }
 
         return $user;
+    }
+
+    public function name(){
+        return $this->item_code.' '.$this->description;
     }
 
     public function UpdatedByUser(){   
