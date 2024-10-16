@@ -21,7 +21,7 @@
                             <td colspan="2">3 {{$component_item_arr[$component_item_id]->name}}</td>
                         </tr>
 
-                        @foreach($component_item as $material_quantity_id => $result){
+                        @foreach($component_item as $material_quantity_id => $result)
                             <tr>
                                 @php 
                                     //$material_item = $material_item_arr[ $material_quantity_arr[$material_quantity_id]->material_item_id ];
