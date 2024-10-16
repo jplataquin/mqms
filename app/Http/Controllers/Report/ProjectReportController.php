@@ -88,7 +88,7 @@ class ProjectReportController extends Controller {
                 $contract_item_arr[ $contract_item->id ]    = $contract_item;
             }
 
-            $components = $contract_item->Component()->where('deleted_at',null)->get();
+            $components = $contract_item->Components()->where('deleted_at',null)->get();
 
             foreach($components as $component){
 
