@@ -5,23 +5,20 @@
     <div class="container">
         <table>
             @foreach($report as $contract_item_id => $contract_item)
-                
-                @php
-                    print_r($contract_item);exit;
-                @endphp
+            
 
                 <tr>
-                    <td colspan="2">{{$contract_item->item_code}} {{$contract_item->description}}</td>
+                    <td colspan="2">{{ $contract_item_arr[$contract_item_id]->item_code }} {{$contract_item_arr[$contract_item_id]->description}}</td>
                 </tr>
 
                 @foreach($contract_item as $component_id => $component)
                     <tr>
-                        <td colspan="2">{{$component->name}}</td>
+                        <td colspan="2">{{$component_arr[$component_id]->name}}</td>
                     </tr>
 
                     @foreach($component as $component_item_id => $component_item)
                         <tr>
-                            <td colspan="2">{{$component_item->name}}</td>
+                            <td colspan="2">{{$component_item_arr[$component_item-id]->name}}</td>
                         </tr>
 
                         @foreach($component_item as $material_quantity_id => $result){
