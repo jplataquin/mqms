@@ -262,14 +262,4 @@ class MaterialRequestReportController extends Controller
     }
 
 
-    public get_arranged_material_request_items($material_request_id_arr){
-
-        $material_request_items = MaterialRequestItem::whereIn('material_request_id', $material_request_id_arr)->get();
-
-        $material_request_items_arr = [];
-
-        foreach($material_request_items as $mri){
-            $material_request_items_arr[$mri->id] = $mri;
-        }
-    }
 }
