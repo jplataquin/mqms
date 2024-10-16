@@ -19,8 +19,6 @@
                     @foreach($component as $component_item_id => $component_item)
                         <tr>
                             <td colspan="2">3 {{$component_item_arr[$component_item_id]->name}}</td>
-
-                            @php print_r($component_item); @endphp
                         </tr>
 
                         @foreach($component_item as $material_quantity_id => $result){

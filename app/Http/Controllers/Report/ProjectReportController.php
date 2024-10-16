@@ -106,7 +106,7 @@ class ProjectReportController extends Controller {
                         $component_item_arr[ $component_item->id ]                              = $component_item;
                     }
 
-                    $material_quantities = $component_item->MaterialQuantities()->where('deleted_at',null);
+                    $material_quantities = $component_item->MaterialQuantities()->where('deleted_at',null)->get();
 
                     foreach($material_quantities as $material_quantity){
 
