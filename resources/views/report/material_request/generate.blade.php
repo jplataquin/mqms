@@ -5,6 +5,11 @@
     <div class="container">
         <table>
             @foreach($report as $contract_item_id => $contract_item)
+                
+                @php
+                    $contract_item = $contract_item[ $contract_item_id ];
+                @endphp
+                
                 <tr>
                     <td colspan="2">{{$contract_item->item_code}} {{$contract_item->description}}</td>
                 </tr>
