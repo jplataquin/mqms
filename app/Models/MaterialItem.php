@@ -22,7 +22,7 @@ class MaterialItem extends Model
 
 
     public function formatted_name(){
-        return $this->name.' '$this->specification_unit_packaging.' '.$this->brand;
+        return $this->name.' '.$this->specification_unit_packaging.' '.$this->brand;
     }
 
     //To do make this into a callback later on
