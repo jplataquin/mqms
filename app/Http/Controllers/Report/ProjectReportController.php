@@ -46,16 +46,6 @@ class ProjectReportController extends Controller {
                 'integer',
                 'gte:1'
             ],
-            'contract_item_id' =>[
-                'required',
-                'integer',
-                'gte:1'
-            ],
-            'material_group_id'   => [
-                'required',
-                'integer',
-                'gte:1'               
-            ],
             'from' => [
                 'date_format:Y-m-d'
             ],
