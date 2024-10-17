@@ -18,7 +18,10 @@
 <div id="content">
     <div class="container">
 
-        <div class="callout">Alert: 3 items are over budget</div>
+        <div class="callout callout-danger">
+            <h4>Alert</h4> 
+            3 records are found to be over budget
+        </div>
 
 
         <table class="table">
