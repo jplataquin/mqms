@@ -10,10 +10,11 @@
                 <tr>
                     <td colspan="2">1 {{ $contract_item_arr[$contract_item_id]->item_code }} {{$contract_item_arr[$contract_item_id]->description}}</td>
                 </tr>
-
+                
                 @foreach($contract_item as $component_id => $component)
+                    
                     <tr>
-                        <td colspan="2">2 {{ $component_id }}</td>
+                        <td colspan="2" class="ps-5">2 {{ $component_id }}</td>
                     </tr>
 
                     @foreach($component as $component_item_id => $component_item)
@@ -30,15 +31,15 @@
                             </tr>
                             <tr>
                                 <td>Budget</td>
-                                <td>{{$result['budget_quantity']}}</td>
+                                <td>{{ number_format($result['budget_quantity'],2) }}</td>
                             </tr>
                             <tr>
                                 <td>Request</td>
-                                <td>{{$result['request_quantity']}}</td>
+                                <td>{{ number_format($result['request_quantity'],2) }}</td>
                             </tr>
                             <tr>
                                 <td>PO</td>
-                                <td>{{$result['po_quantity']}}</td>
+                                <td>{{ number_format($result['po_quantity'],2) }}</td>
                             </tr>
                         @endforeach
 
