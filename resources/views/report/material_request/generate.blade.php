@@ -4,7 +4,7 @@
 <style>
 
     .contract_item{
-        background-color: #c5d8f0;
+        background-color: #c5d8f0 !important;
     }
 
 
