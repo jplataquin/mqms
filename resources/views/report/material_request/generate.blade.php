@@ -14,12 +14,12 @@
                 @foreach($contract_item as $component_id => $component)
                     
                     <tr>
-                        <td colspan="2" class="ps-5">2 {{ $component_id }}</td>
+                        <td colspan="2" style="padding-left:5em" >2 {{ $component_id }}</td>
                     </tr>
 
                     @foreach($component as $component_item_id => $component_item)
                         <tr>
-                            <td colspan="2" class="ps-10">3 {{$component_item_arr[$component_item_id]->name}}</td>
+                            <td colspan="2">3 {{$component_item_arr[$component_item_id]->name}}</td>
                         </tr>
 
                         @foreach($component_item as $material_quantity_id => $result)
