@@ -150,8 +150,8 @@
                 t.td(item.name);
             });
 
-            row.onclick = ()=>{
-                document.location.href = '/review/component/'+item.contract_item_id+'/'+item.id;
+            row.onclick = (e)=>{
+               winow.util.navTo('/review/component/'+item.contract_item_id+'/'+item.id,e);
             };
 
             $el.append(row).to(list);
