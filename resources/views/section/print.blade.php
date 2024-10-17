@@ -165,7 +165,7 @@
             @foreach($contract_items as $contract_item)
                 
                 @php 
-                    $components = $contract_item->Components;
+                    $components = $contract_item->Components()->orderBy('name','ASC')->get();
 
                     $component_total_quantity                    = 0;
 
