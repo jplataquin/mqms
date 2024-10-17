@@ -4,10 +4,10 @@
 <style>
 
     .contract_item{
-        background-color: #d6d4d0;
+        background-color: #c5d8f0;
     }
 
-    
+
 </style>
 <div id="content">
     <div class="container">
@@ -27,7 +27,7 @@
 
                     @foreach($component as $component_item_id => $component_item)
                         <tr>
-                            <td colspan="2" style="padding-left:6em" class="component_item">3 {{$component_item_arr[$component_item_id]->name}}</td>
+                            <th colspan="2" style="padding-left:6em" class="component_item">3 {{$component_item_arr[$component_item_id]->name}}</th>
                         </tr>
 
                         @foreach($component_item as $material_quantity_id => $result)
