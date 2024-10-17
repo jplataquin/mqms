@@ -61,9 +61,9 @@ class SectionController extends Controller
         $section = Section::findOrFail($id);
         $project = $section->Project;
 
-        $contract_items = $section->ContractItems()->with('components')->get();
+        $contract_items = $section->ContractItems()->with('components')->orderBy('item_code','ASC')->get();
 
-        $unit_options = Unit::toOptions();
+        $unit_options     = Unit::toOptions();
 
         $current_datetime = Carbon::now();
         $current_user     = Auth::user();
