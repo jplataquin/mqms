@@ -18,9 +18,9 @@
 <div id="content">
     <div class="container">
 
-        <div class="callout callout-danger">
+        <div id="callout-danger" class="callout callout-danger d-none">
             <h4>Alert</h4> 
-            3 records are found to be over budget
+            <p class="callout-danger-p"></p>
         </div>
 
 
@@ -71,5 +71,19 @@
             @endforeach
         </table>
     </div>
+
+    <script type="module">
+        import {$q} from '/adarna.js';
+
+        const callout_danger    = $q('#callout-danger').first();
+        const callout_danger_p  = $q('#callout-danger-p').first();
+
+        let overbudget_count = $q('.overbudget').items().length;
+
+        if(overbudget_count){
+            callout_danger.classList.remove('d-none');
+            callout_danger_p.innerText = overbudget_count+' record(s) has been found to be overbudget';
+        }
+    </script>
 </div>
 @endsection
