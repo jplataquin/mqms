@@ -79,7 +79,7 @@ class ProjectReportController extends Controller {
         $material_quantity_arr  = [];
         $material_item_arr      = [];
 
-        $contract_items = ContractItem::where('section_id',$section_id)->where('deleted_at',null)->get();
+        $contract_items = ContractItem::where('section_id',$section_id)->where('deleted_at',null)->orderBy('item_code','ASC')->get();
 
         foreach($contract_items as $contract_item){
 
@@ -88,7 +88,7 @@ class ProjectReportController extends Controller {
                 $contract_item_arr[ $contract_item->id ]    = $contract_item;
             }
 
-            $components = $contract_item->Components()->where('deleted_at',null)->get();
+            $components = $contract_item->Components()->where('deleted_at',null)->orderBy('name','ASC')->get();
 
             foreach($components as $component){
 
@@ -97,7 +97,7 @@ class ProjectReportController extends Controller {
                     $component_arr[ $component->id ]                = $component;
                 }
 
-                $component_items= $component->ComponentItems()->where('deleted_at',null)->get();
+                $component_items= $component->ComponentItems()->orderBy('name','ASC')->where('deleted_at',null)->get();
 
                 foreach($component_items as $component_item){
 
