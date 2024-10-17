@@ -11,6 +11,8 @@
 
     .component{
         background-color: #eff0c5 !important;
+        position:sticky !important;
+        top:80px;
     }
 </style>
 <div id="content">
