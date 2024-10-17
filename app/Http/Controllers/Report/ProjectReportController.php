@@ -94,8 +94,9 @@ class ProjectReportController extends Controller {
 
                 if( !isset( $report[ $contract_item->id ][ $component->id ] ) ){
                     $report[ $contract_item->id ][ $component->id ] = [];
-                    $component_arr[ $component->id ]                = $component;
                 }
+
+                $component_arr[ $component->id ] = $component;
 
                 $component_items= $component->ComponentItems()->orderBy('name','ASC')->where('deleted_at',null)->get();
 
