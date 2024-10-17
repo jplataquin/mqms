@@ -5,6 +5,8 @@
 
     .contract_item{
         background-color: #c5d8f0 !important;
+        position:sticky !important;
+        top:40px;
     }
 
     .component{
