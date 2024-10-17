@@ -17,6 +17,10 @@
 </style>
 <div id="content">
     <div class="container">
+
+        <div class="callout">Alert: 3 items are over budget</div>
+
+
         <table class="table">
             @foreach($report as $contract_item_id => $contract_item)
             
@@ -49,11 +53,11 @@
                             </tr>
                             <tr>
                                 <td style="padding-left:12em">Request</td>
-                                <td class="@if($result['request_quantity'] > $result['budget_quantity']) text-danger @endif">{{ number_format($result['request_quantity'],2) }}</td>
+                                <td class="@if($result['request_quantity'] > $result['budget_quantity']) text-danger overbudget @endif">{{ number_format($result['request_quantity'],2) }}</td>
                             </tr>
                             <tr>
                                 <td style="padding-left:12em">PO</td>
-                                <td class="@if($result['po_quantity'] > $result['budget_quantity'] || $result['po_quantity'] > $result['request_quantity']) text-danger @endif">{{ number_format($result['po_quantity'],2) }}</td>
+                                <td class="@if($result['po_quantity'] > $result['budget_quantity'] || $result['po_quantity'] > $result['request_quantity']) text-danger overbudget @endif">{{ number_format($result['po_quantity'],2) }}</td>
                             </tr>
                         @endforeach
 
