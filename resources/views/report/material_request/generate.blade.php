@@ -3,7 +3,7 @@
 @section('content')
 <div id="content">
     <div class="container">
-        <table>
+        <table class="table">
             @foreach($report as $contract_item_id => $contract_item)
             
 
