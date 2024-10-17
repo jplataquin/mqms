@@ -151,7 +151,7 @@
             });
 
             row.onclick = (e)=>{
-               winow.util.navTo('/review/component/'+item.contract_item_id+'/'+item.id,e);
+               window.util.navTo('/review/component/'+item.contract_item_id+'/'+item.id,e);
             };
 
             $el.append(row).to(list);
