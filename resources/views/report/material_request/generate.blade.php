@@ -30,15 +30,15 @@
                                 <td colspan="2" style="padding-left:15em" >4 {{ $material_item->formatted_name() }}</td>
                             </tr>
                             <tr>
-                                <td class="text-end" >Budget</td>
+                                <td class="text-end" style="width:10%">Budget</td>
                                 <td>{{ number_format($result['budget_quantity'],2) }}</td>
                             </tr>
                             <tr>
-                                <td style="padding-left:20em" >Request</td>
+                                <td class="text-end" style="width:10%">Request</td>
                                 <td>{{ number_format($result['request_quantity'],2) }}</td>
                             </tr>
                             <tr>
-                                <td style="padding-left:20em" >PO</td>
+                                <td class="text-end" style="width:10%">PO</td>
                                 <td>{{ number_format($result['po_quantity'],2) }}</td>
                             </tr>
                         @endforeach
