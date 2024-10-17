@@ -61,7 +61,7 @@ class SectionController extends Controller
         $section = Section::findOrFail($id);
         $project = $section->Project;
 
-        $contract_items = $section->ContractItems()->with('components')->get();
+        $contract_items = $section->ContractItems()->where('item_code','ASC')->with('components')->get();
 
         $unit_options = Unit::toOptions();
 
