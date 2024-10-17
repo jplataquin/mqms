@@ -30,7 +30,7 @@
                                 <td colspan="2" style="padding-left:15em" >4 {{ $material_item->formatted_name() }}</td>
                             </tr>
                             <tr>
-                                <td style="padding-left:20em" >Budget</td>
+                                <td class="text-end" >Budget</td>
                                 <td>{{ number_format($result['budget_quantity'],2) }}</td>
                             </tr>
                             <tr>
