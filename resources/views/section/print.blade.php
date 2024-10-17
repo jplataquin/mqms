@@ -185,7 +185,7 @@
                             $component_total_quantity = $component_total_quantity + $component->quantity;
                         }
 
-                        $component_items_arr[$component->id] = $component->ComponentItems;
+                        $component_items_arr[$component->id] = $component->ComponentItems()->orderBy('name','ASC')->get();
                         
                         //Each component item row
                         foreach($component_items_arr[$component->id] as $component_item){
