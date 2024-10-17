@@ -49,11 +49,11 @@
                             </tr>
                             <tr>
                                 <td style="padding-left:12em">Request</td>
-                                <td>{{ number_format($result['request_quantity'],2) }}</td>
+                                <td class="@if($result['request_quantity'] > $result['budget_quantity']) text-danger @endif">{{ number_format($result['request_quantity'],2) }}</td>
                             </tr>
                             <tr>
                                 <td style="padding-left:12em">PO</td>
-                                <td>{{ number_format($result['po_quantity'],2) }}</td>
+                                <td class="@if($result['po_quantity'] > $result['budget_quantity'] || $result['po_quantity'] > $result['request_quantity']) text-danger @endif">{{ number_format($result['po_quantity'],2) }}</td>
                             </tr>
                         @endforeach
 
