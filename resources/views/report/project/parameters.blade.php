@@ -231,41 +231,6 @@
             });
         }//contract_item
 
-        material_group.onchange = ()=>{
-            
-            material_item_list.innerHTML = '';
-
-
-            if(material_group.value == '') return false;
-
-            window.util.blockUI();
-
-            window.util.$get('/api/material/item/list',{
-                'material_group_id': material_group.value
-            }).then(reply=>{
-                window.util.unblockUI();
-
-                if(reply.status <= 0){
-                    window.util.showMsg(reply);
-                    return false;
-                }
-
-
-                reply.data.map(item=>{
-
-                    material_item_list.append(
-                        t.li({class:'list-group-item'},()=>{
-                            t.div({class:'form-check form-check-inline'},(el)=>{
-                                t.input({class:'material-item  form-check-input',type:'checkbox',value:item.id,checked:true})
-                                t.label({class:'form-check-label'},item.brand+' '+item.name+' '+item.specification_unit_packaging)
-                            })
-                        })
-                    );//append
-                });
-
-                reset();
-            });
-        }//material_group
 
 
 
