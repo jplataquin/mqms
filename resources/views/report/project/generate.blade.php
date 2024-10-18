@@ -99,14 +99,30 @@
                                     Request
 
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: {{$request_percentage}}%;" aria-valuenow="{{$request_percentage}}" aria-valuemin="0" aria-valuemax="100">{{$request_percentage}}%</div>
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: {{$request_percentage}}%;" aria-valuenow="{{$request_percentage}}" aria-valuemin="0" aria-valuemax="100">{{$request_percentage}}%</div>
                                     </div>
                                     
                                 </td>
                                 <td class="@if($result['request_quantity'] > $result['budget_quantity']) text-danger overbudget @endif">{{ number_format($result['request_quantity'],2) }}</td>
                             </tr>
                             <tr>
-                                <td style="padding-left:12em">PO</td>
+                                <td style="padding-left:12em">
+                                    @php 
+                                        if($result['po_quantity']){
+                                            $po_percentage = ($result['po_quantity'] / $result['budget_quantity']) * 100;
+                                            $po_percentage = round($request_percentage,2);
+                                        }else{
+                                            $po_percentage = 0;
+                                        }
+                                    @endphp
+                                    
+                                    PO
+
+                                    <div class="progress">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{$po_percentage}}%;" aria-valuenow="{{$po_perecentage}}" aria-valuemin="0" aria-valuemax="100">{{$po_percentage}}%</div>
+                                    </div>
+                                    
+                                </td>
                                 <td class="@if($result['po_quantity'] > $result['budget_quantity'] || $result['po_quantity'] > $result['request_quantity']) text-danger overbudget @endif">{{ number_format($result['po_quantity'],2) }}</td>
                             </tr>
                         @endforeach
