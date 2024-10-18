@@ -10,7 +10,7 @@
     }
 
     .component{
-        background-color: #889c9e !important;
+        background-color: #c2d0d1 !important;
         position:sticky !important;
         top:80px;
     }
@@ -77,7 +77,7 @@
                                 @php 
                                     $material_item = $material_item_arr[ $material_quantity_arr[$material_quantity_id]->material_item_id ];
                                 @endphp
-                                <td colspan="2" style="padding-left:3em" class="material_item">4 {{ $material_item->formatted_name() }}</td>
+                                <td colspan="2" style="padding-left:3em" class="material_item">{{ $material_item->formatted_name() }}</td>
                             </tr>
                             <tr>
                                 <td style="padding-left:5em">
