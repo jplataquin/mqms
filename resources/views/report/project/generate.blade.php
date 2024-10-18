@@ -10,7 +10,7 @@
     }
 
     .component{
-        background-color: #eff0c5 !important;
+        background-color: #889c9e !important;
         position:sticky !important;
         top:80px;
     }
