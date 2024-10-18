@@ -2,6 +2,10 @@
 
 @section('content')
 <div id="content">
+
+{{ $back }}
+<br>
+{!! $back !!}
 <div class="container">
     <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
@@ -533,7 +537,7 @@
     cancelBtn.onclick = ()=>{
 
         @if($back)
-            window.util.navTo('/{{urldecode($back)}}');
+            window.util.navTo('/{{ $back }}');
         @else
             window.util.navTo('/project/section/contract_item/{{$contract_item->id}}');
         @endif
