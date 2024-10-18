@@ -99,7 +99,7 @@
                                     Request
 
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: {{$request_percentage}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                                        <div class="progress-bar" role="progressbar" style="width: {{$request_percentage}}%;" aria-valuenow="{{$request_percentage}}" aria-valuemin="0" aria-valuemax="100">{{$request_percentage}}%</div>
                                     </div>
                                     
                                 </td>
