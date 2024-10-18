@@ -82,8 +82,11 @@
                             <tr>
                                 <td style="padding-left:12em">
                                     Budget
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+                                    </div>
                                 </td>
-                                <td>{{ number_format($result['budget_quantity'],2) }}</td>
+                                <td>{{ number_format($result['budget_quantity'],2) }} Qty</td>
                             </tr>
                             <tr>
                                 <td style="padding-left:12em">
@@ -103,7 +106,7 @@
                                     </div>
                                     
                                 </td>
-                                <td class="@if($result['request_quantity'] > $result['budget_quantity']) text-danger overbudget @endif">{{ number_format($result['request_quantity'],2) }}</td>
+                                <td class="@if($result['request_quantity'] > $result['budget_quantity']) text-danger overbudget @endif">{{ number_format($result['request_quantity'],2) }} Qty</td>
                             </tr>
                             <tr>
                                 <td style="padding-left:12em">
@@ -123,7 +126,7 @@
                                     </div>
                                     
                                 </td>
-                                <td class="@if($result['po_quantity'] > $result['budget_quantity'] || $result['po_quantity'] > $result['request_quantity']) text-danger overbudget @endif">{{ number_format($result['po_quantity'],2) }}</td>
+                                <td class="@if($result['po_quantity'] > $result['budget_quantity'] || $result['po_quantity'] > $result['request_quantity']) text-danger overbudget @endif">{{ number_format($result['po_quantity'],2) }} Qty</td>
                             </tr>
                         @endforeach
 
