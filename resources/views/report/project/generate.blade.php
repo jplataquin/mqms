@@ -14,6 +14,14 @@
         position:sticky !important;
         top:80px;
     }
+
+    .bar{
+        padding:2px;
+    }
+
+    .bar-request{
+        background-color:#343aeb !important;
+    }
 </style>
 <div id="content">
     <div class="container">
@@ -72,11 +80,21 @@
                                 <td colspan="2" style="padding-left:9em" class="material_item">4 {{ $material_item->formatted_name() }}</td>
                             </tr>
                             <tr>
-                                <td style="padding-left:12em">Budget</td>
+                                <td style="padding-left:12em">
+                                    Budget
+                                </td>
                                 <td>{{ number_format($result['budget_quantity'],2) }}</td>
                             </tr>
                             <tr>
-                                <td style="padding-left:12em">Request</td>
+                                <td style="padding-left:12em">
+                                    @php 
+                                        $request_percentage = ($result['request_quantity'] / $result['budget_quantity']) * 100;
+                                        $request_percentage = round($request_percentage,2);
+                                    @endphp
+                                    <div class="bar bar-request" width="{{$request_percentage}}%">
+                                        Request
+                                    </div>
+                                </td>
                                 <td class="@if($result['request_quantity'] > $result['budget_quantity']) text-danger overbudget @endif">{{ number_format($result['request_quantity'],2) }}</td>
                             </tr>
                             <tr>
