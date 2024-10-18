@@ -145,7 +145,7 @@ class ComponentController extends Controller
         ]);
     }
 
-    public function display($id){
+    public function display($id,Request $request){
 
         
         $back = $request->input('b');
