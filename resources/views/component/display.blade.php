@@ -3,7 +3,7 @@
 @section('content')
 <div id="content">
 
-{{ htmlentities($back) }}
+{{ html_entity_decode($back) }}
 <br>
 <br>
 {!! $back !!}
