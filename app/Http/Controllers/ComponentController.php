@@ -148,10 +148,10 @@ class ComponentController extends Controller
     public function display($id,Request $request){
 
         
-        $back = urldecode($request->input('b'));
+        $back = $request->input('b');
         
         echo $back;
-        
+
         $component = Component::findOrFail($id);
 
         $contract_item   = $component->ContractItem;
