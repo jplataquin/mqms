@@ -37,7 +37,7 @@ class ProjectReportController extends Controller {
 
     public function generate(Request $request){
 
-        $url = $request->fullUrlWithQuery(request()->all());
+        $url = $_SERVER['REQUEST_URI'];
 
         echo $url;exit;
         $project_id             = $request->input('project_id');
