@@ -65,8 +65,11 @@
                     
                     <tr>
                         <td colspan="2" style="padding-left:1em" class="component">
+                            
+                            {{ $component_arr[ $component_id ]->name }}
+                            
                             <a class="link-offset-2 link-underline link-underline-opacity-0" href="/project/section/contract_item/component/{{$component_id}}" hx-boost="true" hx-select="#content" hx-target="#main">
-                                {{ $component_arr[ $component_id ]->name }}
+                                <i class="bi bi-box-arrow-up-right"></i>
                             </a>
                         </td>
                     </tr>
