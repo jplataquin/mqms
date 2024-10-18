@@ -21,6 +21,18 @@ use Illuminate\Support\Facades\Validator;
 
 class ProjectReportController extends Controller {
     
+    public function paramters(){
+
+        $projects = Project::where('deleted_at',null)->get();
+
+        $material_groups = MaterialGroup::where('deleted_at',null)->get();
+
+        $users = User::where('deleted_at',null)->get();
+
+        return view('report/project/parameters',[
+            'projects'          => $projects
+        ]);
+    }
     public function generate(Request $request){
 
         $project_id             = $request->input('project_id');
@@ -144,7 +156,7 @@ class ProjectReportController extends Controller {
         }//contract item
 
 
-        return view('/report/material_request/generate',[
+        return view('/report/project/generate',[
             'project_name'          => $project_name,
             'section_name'          => $section_name,
             'contract_item_arr'     => $contract_item_arr,

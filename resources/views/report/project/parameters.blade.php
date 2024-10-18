@@ -15,9 +15,9 @@
                 <li>
                     <a href="#" class="active">
                         <span>
-                        Material Quantity
+                        Project
                         </span>                    
-                        <i class="ms-2 bi bi-list-ul"></i>
+                        <i class="ms-2 bi bi-funnel"></i>
                     </a>
                 </li>
             </ul>
@@ -76,68 +76,10 @@
                     </div>
                 </div>
 
-                <div class="row mb-3">
-                    <div class="row mb-3">
-                        <div class="form-group">
-                            <label>Requested By</label>
-                            <select id="requested_by" class="form-select">
-                                <option value=""> -  </option>
-                                @foreach($users as $user)
-                                <option value="{{$user->id}}">{{$user->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <div class="col-lg-12 mb-3">
-                        <div class="form-group">
-                            <label>Status</label>
-                            <select class="form-select" id="status">
-                                <option value=""> - </option>
-                                <option value="PEND">Pending</option>
-                                <option value="APRV">Approved</option>
-                                <option value="REJC">Rejected</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <div class="col-lg-12 mb-3">
-                        <div class="form-group">
-                            <label>Material Group</label>
-                            <select class="form-select" id="material_group">
-                                <option value=""> - </option>
-                                @foreach($material_groups as $material_group)
-                                    <option value="{{$material_group->id}}">{{$material_group->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div> <!-- div row -->
-                <div class="row mb-3">
-                    <div class="col-lg-12 mb-3">
-                        <div class="form-group">
-                            <label>Selected Material</label>
-                            <div class="text-end mb-3">
-                                <button id="allBtn" class="btn btn-secondary">
-                                    All
-                                    <i id="check_icon_on" class="bi bi-check-square-fill"></i>
-                                    <i id="check_icon_off" class="bi bi-check-square d-none"></i>
-                                </button>
-                            </div>
-                            <ul class="list-group border border-secondary" id="material_item_list">
-                            </ul>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="row mb-3">
                     <div class="col-lg-12 text-end">
                         <button id="submit_btn" class="btn btn-primary">Submit</button>
-                        <button id="cancel_btn" class="btn btn-secondary">Cancel</button>
                     </div>
                 </div>
             </div><!-- div folder-form-body-->
@@ -152,17 +94,9 @@
         const section               = $q('#section').first();
         const contract_item         = $q('#contract_item').first();
         const component             = $q('#component').first();
-        const requested_by          = $q('#requested_by').first();
-        const material_group        = $q('#material_group').first();
-        const status                = $q('#status').first();
         const from                  = $q('#from').first();
         const to                    = $q('#to').first();
-        const material_item_list    = $q('#material_item_list').first();
-        const all_btn               = $q('#allBtn').first();
-        const check_icon_on         = $q('#check_icon_on').first();
-        const check_icon_off        = $q('#check_icon_off').first();
         const submit_btn            = $q('#submit_btn').first();
-        const cancel_btn            = $q('#cancel_btn').first();
         
         const t = new Template();
 
@@ -176,12 +110,7 @@
 
         let check_all_flag = true;
     
-        function reset(){
-            check_all_flag = true;
-            check_icon_on.classList.remove('d-none');
-            check_icon_off.classList.add('d-none');
-        }
-
+    
         project.onchange = ()=>{
 
             section.innerHTML           = '';
@@ -339,32 +268,6 @@
         }//material_group
 
 
-        all_btn.onclick = ()=>{
-
-            $q('.material-item').apply(item=>{
-
-                if(check_all_flag){
-                    item.checked    = false;
-                    
-                }else{
-                    item.checked    = true;
-                }
-                
-            });
-
-
-            if(check_all_flag){
-                check_all_flag  = false;
-                check_icon_off.classList.remove('d-none');
-                check_icon_on.classList.add('d-none');
-                
-            }else{
-                check_all_flag  = true;
-                check_icon_on.classList.remove('d-none');
-                check_icon_off.classList.add('d-none');
-                
-            }
-        }
 
 
         submit_btn.onclick = ()=>{
@@ -383,12 +286,8 @@
                 section_id          : section.value,
                 contract_item_id    : contract_item.value,
                 component_id        : component.value,
-                requested_by        : requested_by.value,
-                status              : status.value,
                 from                : from_dp.getDate('yyyy-mm-dd'),
-                to                  : to_dp.getDate('yyyy-mm-dd'),
-                material_group_id   : material_group.value,
-                material_items      : material_item_arr.join(',')
+                to                  : to_dp.getDate('yyyy-mm-dd')
             });
 
             window.open('/report/material_request/generate?'+query,'_blank').focus();

@@ -18,6 +18,27 @@
 <div id="content">
     <div class="container">
 
+        <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
+            <ul>
+                <li>
+                    <a href="/roles">
+                        <span>
+                        Report
+                        </span>                    
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="active">
+                        <span>
+                        Project
+                        </span>                    
+                        <i class="ms-2 bi bi-bar-chart"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <hr>
+
         <div id="callout-danger" class="callout callout-danger d-none">
             <h4>Alert</h4> 
             <p id="callout-danger-p"></p>
