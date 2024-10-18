@@ -69,7 +69,7 @@
 
                     @foreach($component as $component_item_id => $component_item)
                         <tr>
-                            <th colspan="2" style="padding-left:6em" class="component_item">{{$component_item_arr[$component_item_id]->name}}</th>
+                            <th colspan="2" style="padding-left:5em" class="component_item">{{$component_item_arr[$component_item_id]->name}}</th>
                         </tr>
 
                         @foreach($component_item as $material_quantity_id => $result)
@@ -77,10 +77,10 @@
                                 @php 
                                     $material_item = $material_item_arr[ $material_quantity_arr[$material_quantity_id]->material_item_id ];
                                 @endphp
-                                <td colspan="2" style="padding-left:9em" class="material_item">4 {{ $material_item->formatted_name() }}</td>
+                                <td colspan="2" style="padding-left:7em" class="material_item">4 {{ $material_item->formatted_name() }}</td>
                             </tr>
                             <tr>
-                                <td style="padding-left:12em">
+                                <td style="padding-left:8em">
                                     Budget
                                     <div class="progress">
                                         <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
@@ -89,7 +89,7 @@
                                 <td>{{ number_format($result['budget_quantity'],2) }} Qty</td>
                             </tr>
                             <tr>
-                                <td style="padding-left:12em">
+                                <td style="padding-left:8em">
                                     @php 
                                         if($result['request_quantity']){
                                             $request_percentage = ($result['request_quantity'] / $result['budget_quantity']) * 100;
@@ -109,7 +109,7 @@
                                 <td class="@if($result['request_quantity'] > $result['budget_quantity']) text-danger overbudget @endif">{{ number_format($result['request_quantity'],2) }} Qty</td>
                             </tr>
                             <tr>
-                                <td style="padding-left:12em">
+                                <td style="padding-left:8em">
                                     @php 
                                         if($result['po_quantity']){
                                             $po_percentage = ($result['po_quantity'] / $result['budget_quantity']) * 100;
