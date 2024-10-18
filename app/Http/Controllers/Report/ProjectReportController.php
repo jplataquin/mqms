@@ -39,6 +39,7 @@ class ProjectReportController extends Controller {
 
         $url = urlencode( str_replace(url('').'/','',$request->fullUrl()) );
 
+        echo $url;exit;
         $project_id             = $request->input('project_id');
         $section_id             = $request->input('section_id');
         $contract_item_id       = (int) $request->input('contract_item_id');

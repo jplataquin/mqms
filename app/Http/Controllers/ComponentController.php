@@ -150,7 +150,6 @@ class ComponentController extends Controller
         
         $back = urldecode($request->input('b'));
         
-        echo $back;exit;
         $component = Component::findOrFail($id);
 
         $contract_item   = $component->ContractItem;
