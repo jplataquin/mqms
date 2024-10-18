@@ -98,7 +98,7 @@ class ProjectReportController extends Controller {
         $contract_items = ContractItem::where('section_id',$section_id)->where('deleted_at',null)->orderBy('item_code','ASC');
 
         if($contract_item_id){
-          //  $contract_items = $contract_items->where('id',$contract_item_id);
+            $contract_items = $contract_items->where('id',$contract_item_id);
         }
 
         $contract_items = $contract_items->get();
@@ -111,7 +111,6 @@ class ProjectReportController extends Controller {
             }
 
             $components = $contract_item->Components()
-            ->where('status','APRV')
             ->where('deleted_at',null)->orderBy('name','ASC')->get();
 
             foreach($components as $component){
