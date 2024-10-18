@@ -5,6 +5,7 @@
 
 {{ $back }}
 <br>
+<br>
 {!! $back !!}
 <div class="container">
     <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
