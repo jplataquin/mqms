@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ProjectReportController extends Controller {
     
-    public function paramters(){
+    public function parameters(){
 
         $projects = Project::where('deleted_at',null)->get();
 
