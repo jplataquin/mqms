@@ -70,7 +70,7 @@ class ProjectReportController extends Controller {
 
         if ($validator->fails()) {
             
-            return view('/report/material_request/error',[
+            return view('/report/project/error',[
                 'message'          => '',
                 'validation_error' => $validator->messages()
             ]);
