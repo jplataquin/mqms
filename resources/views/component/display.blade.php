@@ -3,7 +3,7 @@
 @section('content')
 <div id="content">
 
-{{ $back }}
+{{ htmlspecialchars($back) }}
 <br>
 <br>
 {!! $back !!}
