@@ -85,7 +85,7 @@ class ProjectReportController extends Controller {
         $section_name   = $section->name;
 
         if(!$section){
-            return view('/report/material_request/error',[
+            return view('/report/project/error',[
                 'message'          => 'Section record not found',
                 'validation_error' => []
             ]);
