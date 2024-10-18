@@ -533,7 +533,7 @@
     cancelBtn.onclick = ()=>{
 
         @if($back)
-            window.util.navTo('/{{$back}}');
+            window.util.navTo('/{{urldecode($back)}}');
         @else
             window.util.navTo('/project/section/contract_item/{{$contract_item->id}}');
         @endif
