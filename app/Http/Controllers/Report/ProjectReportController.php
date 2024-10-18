@@ -39,7 +39,7 @@ class ProjectReportController extends Controller {
 
         $url = $_SERVER['REQUEST_URI'];
 
-        echo '<textarea>'.$url.'</textarea>';exit;
+        echo '<textarea>'.htmlspecialchars($url).'</textarea>';exit;
         $project_id             = $request->input('project_id');
         $section_id             = $request->input('section_id');
         $contract_item_id       = (int) $request->input('contract_item_id');
