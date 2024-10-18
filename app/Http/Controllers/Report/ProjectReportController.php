@@ -17,6 +17,7 @@ use App\Models\PurchaseOrderItem;
 use App\Models\MaterialItem;
 use App\Models\MaterialGroup;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
 class ProjectReportController extends Controller {
@@ -36,7 +37,8 @@ class ProjectReportController extends Controller {
 
     public function generate(Request $request){
 
-        echo str_replace($request->url(), '',$request->fullUrl());exit;
+        echo URL::current();
+        echo $request->fullUrl();exit;
         $project_id             = $request->input('project_id');
         $section_id             = $request->input('section_id');
         $contract_item_id       = (int) $request->input('contract_item_id');
