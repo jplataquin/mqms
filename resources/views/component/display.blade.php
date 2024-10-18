@@ -531,7 +531,12 @@
     }
 
     cancelBtn.onclick = ()=>{
-        window.util.navTo('/project/section/contract_item/{{$contract_item->id}}');
+
+        @if($back)
+            window.util.navTo('/{{$back}}');
+        @else
+            window.util.navTo('/project/section/contract_item/{{$contract_item->id}}');
+        @endif
     }
 
     updateBtn.onclick = ()=>{

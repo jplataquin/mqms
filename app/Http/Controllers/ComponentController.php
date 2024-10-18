@@ -147,6 +147,9 @@ class ComponentController extends Controller
 
     public function display($id){
 
+        
+        $back = $request->input('b');
+
         $component = Component::findOrFail($id);
 
         $contract_item   = $component->ContractItem;
@@ -176,7 +179,8 @@ class ComponentController extends Controller
             'componentItems'    => $componentItems,
             'materialItems'     => $materialItems,
             'hash'              => $hash,
-            'unit_options'      => $unit_options
+            'unit_options'      => $unit_options,
+            'back'              => $back
         ]);
     }
 
