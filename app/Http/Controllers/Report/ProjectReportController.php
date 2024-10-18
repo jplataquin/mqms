@@ -59,6 +59,7 @@ class ProjectReportController extends Controller {
                 'gte:1'
             ],
             'contract_item_id' =>[
+                'nullable',
                 'integer',
                 'gte:1'
             ]
@@ -101,7 +102,7 @@ class ProjectReportController extends Controller {
         }
 
         $contract_items = $contract_items->get();
-        
+
         foreach($contract_items as $contract_item){
 
             if( !isset( $report[ $contract_item->id ] ) ){
