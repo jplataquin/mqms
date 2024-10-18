@@ -88,12 +88,20 @@
                             <tr>
                                 <td style="padding-left:12em">
                                     @php 
-                                        $request_percentage = ($result['request_quantity'] / $result['budget_quantity']) * 100;
-                                        $request_percentage = round($request_percentage,2);
+                                        if($result['request_quantity']){
+                                            $request_percentage = ($result['request_quantity'] / $result['budget_quantity']) * 100;
+                                            $request_percentage = round($request_percentage,2);
+                                        }else{
+                                            $request_percentage = 0;
+                                        }
                                     @endphp
-                                    <div class="bar bar-request" width="{{$request_percentage}}%">
-                                        Request
+                                    
+                                    Request
+
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: {{$request_percentage}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
                                     </div>
+                                    
                                 </td>
                                 <td class="@if($result['request_quantity'] > $result['budget_quantity']) text-danger overbudget @endif">{{ number_format($result['request_quantity'],2) }}</td>
                             </tr>
