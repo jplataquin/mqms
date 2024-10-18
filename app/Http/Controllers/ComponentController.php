@@ -150,7 +150,6 @@ class ComponentController extends Controller
         
         $back = $request->input('b');
         
-        echo $back;exit;
 
         $component = Component::findOrFail($id);
 
