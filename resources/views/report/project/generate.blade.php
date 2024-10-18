@@ -64,7 +64,11 @@
                 @foreach($contract_item as $component_id => $component)
                     
                     <tr>
-                        <td colspan="2" style="padding-left:1em" class="component">{{ $component_arr[ $component_id ]->name }}</td>
+                        <td colspan="2" style="padding-left:1em" class="component">
+                            <a href="/project/section/contract_item/component/{{$component_id}}" hx-boost="true" hx-select="#content" hx-target="#main">
+                                {{ $component_arr[ $component_id ]->name }}
+                            </a>
+                        </td>
                     </tr>
 
                     @foreach($component as $component_item_id => $component_item)
