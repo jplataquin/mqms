@@ -33,16 +33,15 @@ class ProjectReportController extends Controller {
             'projects'          => $projects
         ]);
     }
+
     public function generate(Request $request){
 
         $project_id             = $request->input('project_id');
         $section_id             = $request->input('section_id');
-        $contract_item_id       = $request->input('contract_item_id');
-        $component_id           = $request->input('component_id');
+        $contract_item_id       = (int) $request->input('contract_item_id');
+        $component_id           = (int) $request->input('component_id');
         $from                   = $request->input('from');
         $to                     = $request->input('to');
-        $requested_by           = $request->input('requested_by');
-        $status                 = $request->input('status');
         $material_item_id_arr   = explode(',',$request->input('material_items'));
 
         $project_name       = '';
@@ -56,6 +55,10 @@ class ProjectReportController extends Controller {
             ],
             'section_id' =>[
                 'required',
+                'integer',
+                'gte:1'
+            ],
+            'contract_item_id' =>[
                 'integer',
                 'gte:1'
             ]
@@ -91,8 +94,14 @@ class ProjectReportController extends Controller {
         $material_quantity_arr  = [];
         $material_item_arr      = [];
 
-        $contract_items = ContractItem::where('section_id',$section_id)->where('deleted_at',null)->orderBy('item_code','ASC')->get();
+        $contract_items = ContractItem::where('section_id',$section_id)->where('deleted_at',null)->orderBy('item_code','ASC');
 
+        if($contract_item_id){
+            $contract_items = $contract_items->where('id',$contract_item_id);
+        }
+
+        $contract_items = $contract_items->get();
+        
         foreach($contract_items as $contract_item){
 
             if( !isset( $report[ $contract_item->id ] ) ){
@@ -100,7 +109,9 @@ class ProjectReportController extends Controller {
                 $contract_item_arr[ $contract_item->id ]    = $contract_item;
             }
 
-            $components = $contract_item->Components()->where('deleted_at',null)->orderBy('name','ASC')->get();
+            $components = $contract_item->Components()
+            ->where('status','APRV')
+            ->where('deleted_at',null)->orderBy('name','ASC')->get();
 
             foreach($components as $component){
 
