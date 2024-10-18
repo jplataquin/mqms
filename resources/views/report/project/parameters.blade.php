@@ -290,7 +290,7 @@
                 to                  : to_dp.getDate('yyyy-mm-dd')
             });
 
-            window.open('/report/material_request/generate?'+query,'_blank').focus();
+            window.open('/report/project/generate?'+query,'_blank').focus();
         }
     </script>
 </div>
