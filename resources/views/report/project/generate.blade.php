@@ -68,7 +68,7 @@
                             
                             {{ $component_arr[ $component_id ]->name }}
                             
-                            <a class="link-offset-2 link-underline link-underline-opacity-0" href="/project/section/contract_item/component/{{$component_id}}?b={{Request::path()}}" hx-boost="true" hx-select="#content" hx-target="#main">
+                            <a class="link-offset-2 link-underline link-underline-opacity-0" href="/project/section/contract_item/component/{{$component_id}}?b={{$url}}" hx-boost="true" hx-select="#content" hx-target="#main">
                                 <i class="bi bi-box-arrow-up-right"></i>
                             </a>
                         </td>

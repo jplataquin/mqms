@@ -37,7 +37,8 @@ class ProjectReportController extends Controller {
 
     public function generate(Request $request){
 
-        echo str_replace(url('').'/','',$request->fullUrl());exit;
+        $url = urlencode( str_replace(url('').'/','',$request->fullUrl()) );
+
         $project_id             = $request->input('project_id');
         $section_id             = $request->input('section_id');
         $contract_item_id       = (int) $request->input('contract_item_id');
@@ -179,7 +180,8 @@ class ProjectReportController extends Controller {
             'material_item_arr'     => $material_item_arr,
             'report'                => $report,
             'from'                  => $from,
-            'to'                    => $to
+            'to'                    => $to,
+            'url'                   => $url
         ]);
     }
 
