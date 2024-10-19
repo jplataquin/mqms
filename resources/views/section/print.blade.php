@@ -11,6 +11,7 @@
 
             th{
               text-wrap: wrap;
+              font-size:9px;
               padding-left:5px;
               padding-right:5px;  
             }
