@@ -41,7 +41,7 @@ class MaterialQuantityRequestController extends Controller
     public function create($project_id,$section_id,$contract_item_id,$component_id){
         
         $project_id = (int) $project_id;
-        $project = Project::findOrFail($project_id);
+        $project    = Project::findOrFail($project_id);
 
         //If the project is not active then do not allow
         if($project->status != 'ACTV'){
@@ -72,7 +72,7 @@ class MaterialQuantityRequestController extends Controller
             ]);
         }
 
-        $component_item_ids     = [];
+        $component_item_ids      = [];
         $component_item_options  = [];
 
         foreach($component->ComponentItems as $component_item){
