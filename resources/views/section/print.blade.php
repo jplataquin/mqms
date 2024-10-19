@@ -115,10 +115,9 @@
             </tr>
         </table>
         <br>
-        <table border="1">
-          
+        <table>
             <tr>
-                <td colspan="15">
+                <td>
                     Color legend: 
                     <br>  
                     <div>
@@ -131,6 +130,10 @@
                      <br>
                 </td>
             </tr>
+        </table>
+        <table border="1">
+          
+            
         
             <tr>
                 <th rowspan="2" style="text-align:center">Item Code</th>
