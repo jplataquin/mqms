@@ -237,12 +237,6 @@
                     </th>
                     
                     <th style="text-align:right">
-                        <!-- Contract Amount -->
-                        @php 
-                            $contract_amount                = $contract_item->contract_quantity * $contract_item->contract_unit_price;
-                            $grand_total_contract_amount    = $grand_total_contract_amount + $contract_amount;
-                        @endphp
-                        P {{ number_format($contract_amount,2) }}
                     </th>
 
                     <th style="text-align:right">
