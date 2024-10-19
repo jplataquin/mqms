@@ -118,7 +118,7 @@
         <table border="1">
           
             <tr>
-                <td colspan="15" style="width:100%">
+                <td colspan="15">
                     Color legend: 
                     <br>  
                     <div>
@@ -299,7 +299,8 @@
                     <tr class="@if(!$component->sum_flag || ($component->unit_id != $contract_item->unit_id)) bg-excluded-sum-component @endif">
                             @if($first)
                             <td rowspan="{{count($component_items_arr[$component->id])+2}}">
-                                
+                                [{{$component->id}}]
+                                <br>
                                 {!! Str::wordWrap($component->name,10,"<br>",false) !!}
                             </td>
                                 
