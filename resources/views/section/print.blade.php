@@ -371,7 +371,9 @@
                             
                             <td>
                                 
-                                {{$item_count}}.) {{$component_item->name}}
+                                @if($component_item->name)
+                                    {{$item_count}}.) {{$component_item->name}}
+                                @endif
 
                                 @php
                                     $item_count++;
