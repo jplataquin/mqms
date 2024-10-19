@@ -222,21 +222,31 @@
                     
                 @endphp
                 <tr class="bg-contract-item">
-                    <th  style="text-align:left"></th>
+                    <th  style="text-align:left">{{ Str::wordWrap($contract_item->item_code,10,"\n",false) }}</th>
                     
                     <th style="text-align:left">
+                        {!! Str::wordWrap($contract_item->description,30,"<br>",false) !!}
                     </th>
                     
                     <th  style="text-align:right">
+                        {!! Str::wordWrap(number_format($contract_item->contract_quantity,2),8,"<br>",false) !!}
                     </th>
                     
                     <th style="text-align:center">
+                        {!! Str::wordWrap($unit_options[$contract_item->unit_id]->text,8,"<br>",false) !!}
                     </th>
                     
                     <th style="text-align:right">
+                        P {{ number_format($contract_item->contract_unit_price,2) }}
                     </th>
                     
                     <th style="text-align:right">
+                        <!-- Contract Amount -->
+                        @php 
+                            $contract_amount                = $contract_item->contract_quantity * $contract_item->contract_unit_price;
+                            $grand_total_contract_amount    = $grand_total_contract_amount + $contract_amount;
+                        @endphp
+                        P {{ number_format($contract_amount,2) }}
                     </th>
 
                     <th style="text-align:right">
@@ -294,7 +304,9 @@
                     <tr class="@if(!$component->sum_flag || ($component->unit_id != $contract_item->unit_id)) bg-excluded-sum-component @endif">
                             @if($first)
                             <td rowspan="{{count($component_items_arr[$component->id])+2}}">
-                             
+                                [{{$component->id}}]
+                                <br>
+                                {!! Str::wordWrap($component->name,10,"<br>",false) !!}
                             </td>
                                 
                             
@@ -389,7 +401,53 @@
                                 @endif
                             </td>
                             <td style="text-align:center">
-                              
+                                @if($component_item->function_type_id == 1)
+                                    {{ 
+                                        formatFactor(
+                                            number_format(
+                                                round( ($component_item->function_variable  / $component->use_count), 6 )
+                                            ,6)
+                                        )
+                                    }} 
+                                    {{$unit_options[$component_item->unit_id]->text}}
+                                    /
+                                    {{$unit_options[$component->unit_id]->text}}   
+                                    
+                                    <strong> > </strong>
+                                @endif
+                                
+                                @if($component_item->function_type_id == 2)
+                                    {{ 
+                                        formatFactor(
+                                            number_format(
+                                                round( (1 / $component_item->function_variable) / $component->use_count,6)
+                                            ,6)
+                                        ) 
+                                    }} 
+                                    {{$unit_options[$component_item->unit_id]->text}}
+                                    /
+                                    {{$unit_options[$component->unit_id]->text}}    
+                                    
+
+                                    <strong> > </strong>
+                                @endif
+
+
+                                @if($component_item->function_type_id == 4)
+                                <strong> < </strong>
+
+                                    {{ 
+                                        number_format(
+                                            ($component_item->function_variable * $component->use_count),
+                                            2
+                                        ) 
+                                    }}  
+
+                                    {{$unit_options[$component->unit_id]->text}}
+                                    /
+                                    {{$unit_options[$component_item->unit_id]->text}}
+                                    
+                                @endif
                             </td>
                             <td style="text-align:right">
                                 {{ number_format($component_item->quantity,2) }}
@@ -438,5 +496,6 @@
             </tr>
 
         </table>
-        </div>
+        </div>           
+        
 </page>
