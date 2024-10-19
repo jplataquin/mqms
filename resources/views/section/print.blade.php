@@ -139,7 +139,7 @@
           
             <tr>
                 <th rowspan="2" style="text-align:center">Item Code</th>
-                <th style="text-align:center;" rowspan="2">Description-</th>
+                <th style="text-align:center;" rowspan="2">Description</th>
                 <th style="text-align:center" colspan="4">Contract</th>
                 <th style="text-align:center" colspan="4">POW/DUPA</th>
                 <th style="text-align:center">Factor</th>
@@ -222,10 +222,9 @@
                     
                 @endphp
                 <tr class="bg-contract-item">
-                    <th  style="text-align:left">{{ Str::wordWrap($contract_item->item_code,10,"\n",false) }}</th>
+                    <th  style="text-align:left"></th>
                     
                     <th style="text-align:left">
-                        {!! Str::wordWrap($contract_item->description,30,"<br>",false) !!}
                     </th>
                     
                     <th  style="text-align:right">
@@ -401,7 +400,53 @@
                                 @endif
                             </td>
                             <td style="text-align:center">
-                               
+                                @if($component_item->function_type_id == 1)
+                                    {{ 
+                                        formatFactor(
+                                            number_format(
+                                                round( ($component_item->function_variable  / $component->use_count), 6 )
+                                            ,6)
+                                        )
+                                    }} 
+                                    {{$unit_options[$component_item->unit_id]->text}}
+                                    /
+                                    {{$unit_options[$component->unit_id]->text}}   
+                                    
+                                    <strong> > </strong>
+                                @endif
+                                
+                                @if($component_item->function_type_id == 2)
+                                    {{ 
+                                        formatFactor(
+                                            number_format(
+                                                round( (1 / $component_item->function_variable) / $component->use_count,6)
+                                            ,6)
+                                        ) 
+                                    }} 
+                                    {{$unit_options[$component_item->unit_id]->text}}
+                                    /
+                                    {{$unit_options[$component->unit_id]->text}}    
+                                    
+
+                                    <strong> > </strong>
+                                @endif
+
+
+                                @if($component_item->function_type_id == 4)
+                                <strong> < </strong>
+
+                                    {{ 
+                                        number_format(
+                                            ($component_item->function_variable * $component->use_count),
+                                            2
+                                        ) 
+                                    }}  
+
+                                    {{$unit_options[$component->unit_id]->text}}
+                                    /
+                                    {{$unit_options[$component_item->unit_id]->text}}
+                                    
+                                @endif
                             </td>
                             <td style="text-align:right">
                                 {{ number_format($component_item->quantity,2) }}
