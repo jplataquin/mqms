@@ -222,10 +222,10 @@
                     
                 @endphp
                 <tr class="bg-contract-item">
-                    <th  style="text-align:left">{{ Str::wordWrap($contract_item->item_code,10,"\n",false) }}</th>
+                    <th  style="text-align:left">{{ nl2br( Str::wordWrap($contract_item->item_code,10,"\n",false) ) }}</th>
                     
                     <th style="text-align:left">
-                        {!! Str::wordWrap($contract_item->description,30,"<br>",false) !!}
+                        {{ nl2br( Str::wordWrap($contract_item->description,30,"\n",false) ) }}
                     </th>
                     
                     <th  style="text-align:right">
@@ -370,10 +370,7 @@
                         <tr class="@if(!$component_item->sum_flag || ($component_item->unit_id != $component->unit_id && $component_item->function_type_id != 4) ) bg-excluded-sum-component_item @endif">
                             
                             <td>
-                                
-                                @if($component_item->name)
-                                    {{$item_count}}.) {{$component_item->name}}
-                                @endif
+                                {{ nl2br( Str::wordWrap($item_count.'.) '.$component_item->name,30,"\n",false) ) }}
 
                                 @php
                                     $item_count++;
