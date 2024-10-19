@@ -134,11 +134,11 @@
         </table>
 
 
-        <div style="padding-left:5px;padding-right:5px">
+        <div>
         <table border="1">
           
             <tr>
-                <th rowspan="2" style="text-align:center">Item Code</th>
+                <th rowspan="2" style="text-align:center;width:10px">Item Code</th>
                 <th style="text-align:center;" rowspan="2">Description</th>
                 <th style="text-align:center" colspan="4">Contract</th>
                 <th style="text-align:center" colspan="4">POW/DUPA</th>
