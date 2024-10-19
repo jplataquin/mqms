@@ -161,7 +161,140 @@
                 <th style="text-align:center">AMOUNT</th>
             </tr>
 
-          
+            @php 
+                $grand_total_contract_amount        = 0;
+                $grand_total_ref_1_amount           = 0;
+                $grand_total_material_budget_amount = 0;
+            @endphp
+                
+            @foreach($contract_items as $contract_item)
+                
+                @php 
+                    $components = $contract_item->Components()->orderBy('name','ASC')->get();
+
+                    $component_total_quantity                    = 0;
+
+                    $contract_item_total_amount                  = 0;
+                    $component_items_arr                         = [];
+                    $component_item_quantity_total_per_component = [];
+
+                    $component_total_amount_arr                  = [];
+
+                    foreach($components as $component){
+
+                        
+
+                        $component_items_total_quantity = 0;
+                    
+                        if($component->sum_flag && ($component->unit_id == $contract_item->unit_id) ){
+                            $component_total_quantity = $component_total_quantity + $component->quantity;
+                        }
+
+                        $component_items_arr[$component->id] = $component->ComponentItems()->orderBy('name','ASC')->get();
+                        
+                        //Each component item row
+                        foreach($component_items_arr[$component->id] as $component_item){
+                            
+                            //Total the quantity for all component item
+                            if($component_item->sum_flag && $component_item->function_type_id == 4){ //As Equivalent function type
+                                $component_items_total_quantity = $component_items_total_quantity + ($component_item->quantity * $component_item->function_variable * $component->use_count);
+                            
+                            }else if($component_item->sum_flag && ($component_item->unit_id == $component->unit_id)){
+                               
+                                $component_items_total_quantity = $component_items_total_quantity + $component_item->quantity;
+                            
+                            }
+
+                            //Total the amount for each row
+                            $contract_item_total_amount = $contract_item_total_amount + ($component_item->quantity * $component_item->budget_price);
+                            
+                            if( !isset( $component_total_amount_arr[$component->id] )){
+                                $component_total_amount_arr[$component->id] = 0;
+                            }
+                            
+                            $component_total_amount_arr[$component->id] = $component_total_amount_arr[$component->id] + ($component_item->quantity * $component_item->budget_price);
+                            
+
+                        }
+
+                        $component_item_quantity_total_per_component[$component->id] = $component_items_total_quantity;
+                    }  
+                    
+                @endphp
+                <tr class="bg-contract-item">
+                    <th  style="text-align:left">{{ Str::wordWrap($contract_item->item_code,10,"\n",false) }}</th>
+                    
+                    <th style="text-align:left">
+                        {!! Str::wordWrap($contract_item->description,30,"<br>",false) !!}
+                    </th>
+                    
+                    <th  style="text-align:right">
+                        {!! Str::wordWrap(number_format($contract_item->contract_quantity,2),8,"<br>",false) !!}
+                    </th>
+                    
+                    <th style="text-align:center">
+                        {!! Str::wordWrap($unit_options[$contract_item->unit_id]->text,8,"<br>",false) !!}
+                    </th>
+                    
+                    <th style="text-align:right">
+                        P {{ number_format($contract_item->contract_unit_price,2) }}
+                    </th>
+                    
+                    <th style="text-align:right">
+                        <!-- Contract Amount -->
+                        @php 
+                            $contract_amount                = $contract_item->contract_quantity * $contract_item->contract_unit_price;
+                            $grand_total_contract_amount    = $grand_total_contract_amount + $contract_amount;
+                        @endphp
+                        P {{ number_format($contract_amount,2) }}
+                    </th>
+
+                    <th style="text-align:right">
+                        {{ number_format($contract_item->ref_1_quantity,2) }}
+                    </th>
+                    
+                    <th style="text-align:center">
+                        @if( isset( $unit_options[$contract_item->ref_1_unit_id] ) )
+                            {{ $unit_options[$contract_item->ref_1_unit_id]->text }}
+                        @endif
+                    </th>
+                    
+                    <th style="text-align:right">
+                        P {{ number_format($contract_item->ref_1_unit_price,2) }}
+                    </th>
+                    
+                    <th style="text-align:right">
+                        <!-- POW/DUPA Amount -->
+                        @php 
+                            $ref_1_amount                   = $contract_item->ref_1_quantity * $contract_item->ref_1_unit_price;
+                            $grand_total_ref_1_amount       = $grand_total_ref_1_amount + $ref_1_amount;
+                        @endphp
+                        P {{ number_format($ref_1_amount,2) }}
+                    </th>
+                    
+                    <th></th>
+                    
+                    <th style="text-align:right" class="@if($component_total_quantity > $contract_item->contract_quantity) font-color-danger @endif">
+                        {{ number_format($component_total_quantity,2) }}
+                    </th>
+                    <th style="text-align:center" class="text-center @if($component_total_quantity > $contract_item->contract_quantity) font-color-danger @endif">
+                        @if(isset($unit_options[$contract_item->unit_id]))
+                            {{$unit_options[$contract_item->unit_id]->text}}
+                        @endif
+                    </th>
+                    <th></th>
+                    <th style="text-align:right">
+                        <!-- Material Budget Amount-->
+                        @php 
+                            $grand_total_material_budget_amount = $grand_total_material_budget_amount + $contract_item_total_amount;
+                        @endphp
+                        
+                        P {{ number_format($contract_item_total_amount,2) }}
+                    </th>
+                </tr>
+
+                
+             
         </table>
         </div>           
         
