@@ -118,7 +118,7 @@
         <table border="1">
           
             <tr>
-                <td colspan="15">
+                <td colspan="15" style="width:100%">
                     Color legend: 
                     <br>  
                     <div>
@@ -133,12 +133,12 @@
             </tr>
         
             <tr>
-                <th rowspan="2" style="text-align:center" width="5%">Item Code</th>
-                <th style="text-align:center" rowspan="2" width="10%">Description</th>
-                <th style="text-align:center" colspan="4" width="20%">Contract</th>
-                <th style="text-align:center" colspan="4" width="20%">POW/DUPA</th>
-                <th style="text-align:center" width="5%">Factor</th>
-                <th style="text-align:center" colspan="4" width="20%">Material Budget</th>
+                <th rowspan="2" style="text-align:center">Item Code</th>
+                <th style="text-align:center" rowspan="2">Description</th>
+                <th style="text-align:center" colspan="4">Contract</th>
+                <th style="text-align:center" colspan="4">POW/DUPA</th>
+                <th style="text-align:center">Factor</th>
+                <th style="text-align:center" colspan="4">Material Budget</th>
             </tr>
             <tr>
                 <th style="text-align:center">QTY</th>
@@ -299,8 +299,7 @@
                     <tr class="@if(!$component->sum_flag || ($component->unit_id != $contract_item->unit_id)) bg-excluded-sum-component @endif">
                             @if($first)
                             <td rowspan="{{count($component_items_arr[$component->id])+2}}">
-                                [{{$component->id}}]
-                                <br>
+                                
                                 {!! Str::wordWrap($component->name,10,"<br>",false) !!}
                             </td>
                                 
