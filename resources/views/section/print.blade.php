@@ -134,7 +134,7 @@
         </table>
 
 
-        <div>
+
         <table border="1">
           
             <tr>
@@ -370,7 +370,8 @@
                         <tr class="@if(!$component_item->sum_flag || ($component_item->unit_id != $component->unit_id && $component_item->function_type_id != 4) ) bg-excluded-sum-component_item @endif">
                             
                             <td>
-                                {{$item_count}}.) {{$component_item->name}}
+
+                                {!! Str::wordWrap($item_count.'.) '.$component_item->name,30,"<br>",false) !!}
 
                                 @php
                                     $item_count++;
@@ -496,6 +497,6 @@
             </tr>
 
         </table>
-        </div>           
+                     
         
 </page>
