@@ -401,53 +401,7 @@
                                 @endif
                             </td>
                             <td style="text-align:center">
-                                @if($component_item->function_type_id == 1)
-                                    {{ 
-                                        formatFactor(
-                                            number_format(
-                                                round( ($component_item->function_variable  / $component->use_count), 6 )
-                                            ,6)
-                                        )
-                                    }} 
-                                    {{$unit_options[$component_item->unit_id]->text}}
-                                    /
-                                    {{$unit_options[$component->unit_id]->text}}   
-                                    
-                                    <strong> > </strong>
-                                @endif
-                                
-                                @if($component_item->function_type_id == 2)
-                                    {{ 
-                                        formatFactor(
-                                            number_format(
-                                                round( (1 / $component_item->function_variable) / $component->use_count,6)
-                                            ,6)
-                                        ) 
-                                    }} 
-                                    {{$unit_options[$component_item->unit_id]->text}}
-                                    /
-                                    {{$unit_options[$component->unit_id]->text}}    
-                                    
-
-                                    <strong> > </strong>
-                                @endif
-
-
-                                @if($component_item->function_type_id == 4)
-                                <strong> < </strong>
-
-                                    {{ 
-                                        number_format(
-                                            ($component_item->function_variable * $component->use_count),
-                                            2
-                                        ) 
-                                    }}  
-
-                                    {{$unit_options[$component->unit_id]->text}}
-                                    /
-                                    {{$unit_options[$component_item->unit_id]->text}}
-                                    
-                                @endif
+                               
                             </td>
                             <td style="text-align:right">
                                 {{ number_format($component_item->quantity,2) }}
