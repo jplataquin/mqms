@@ -68,7 +68,7 @@ class SectionController extends Controller
         $current_datetime = Carbon::now();
         $current_user     = Auth::user();
         
-        $html = view('section/print',[
+        return view('section/print',[
             'project'           => $project,
             'section'           => $section,
             'contract_items'    => $contract_items,
