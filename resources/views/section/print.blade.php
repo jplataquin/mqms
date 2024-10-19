@@ -134,7 +134,7 @@
         </table>
 
 
-
+        <div style="padding-left:5px;padding-right:5px">
         <table border="1">
           
             <tr>
@@ -438,6 +438,5 @@
             </tr>
 
         </table>
-                     
-        
+        </div>
 </page>
