@@ -134,7 +134,7 @@
         
             <tr>
                 <th rowspan="2" style="text-align:center" width="5%">Item Code</th>
-                <th style="text-align:center" rowspan="2" width="20%">Description</th>
+                <th style="text-align:center" rowspan="2" width="10%">Description</th>
                 <th style="text-align:center" colspan="4" width="20%">Contract</th>
                 <th style="text-align:center" colspan="4" width="20%">POW/DUPA</th>
                 <th style="text-align:center" width="5%">Factor</th>
