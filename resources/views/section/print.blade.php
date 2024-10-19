@@ -223,7 +223,7 @@
                     <th  style="text-align:left">{!! Str::wordWrap($contract_item->item_code,10,"<br>",false) !!}</th>
                     
                     <th style="text-align:left">
-                        {!! Str::wordWrap($contract_item->description,30,"<br>",false) !!}
+                        {!! Str::wordWrap($contract_item->description,50,"<br>",false) !!}
                     </th>
                     
                     <th  style="text-align:right">
