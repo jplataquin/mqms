@@ -370,8 +370,8 @@
                         <tr class="@if(!$component_item->sum_flag || ($component_item->unit_id != $component->unit_id && $component_item->function_type_id != 4) ) bg-excluded-sum-component_item @endif">
                             
                             <td>
-
-                                {!! Str::wordWrap($item_count.'.) '.$component_item->name,30,"<br>",false) !!}
+                                
+                                {{$item_count}}.) {{$component_item->name}}
 
                                 @php
                                     $item_count++;
