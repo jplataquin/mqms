@@ -294,6 +294,176 @@
                 </tr>
 
                 
+                @foreach($components as $component)
+                    
+                    @php
+                        $first      = true;
+                        $item_count = 1;
+
+                    @endphp
+                    <tr class="@if(!$component->sum_flag || ($component->unit_id != $contract_item->unit_id)) bg-excluded-sum-component @endif">
+                            @if($first)
+                            <td rowspan="{{count($component_items_arr[$component->id])+2}}">
+                                [{{$component->id}}]
+                                <br>
+                                {!! Str::wordWrap($component->name,10,"<br>",false) !!}
+                            </td>
+                                
+                            
+                                @php 
+                                    $first = false;
+                                @endphp
+                            @endif
+                        <td></td>
+                        <th style="text-align:right">
+                           
+                        </th>
+                        <th style="text-align:center">
+                           
+                        </th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <th style="text-align:right">
+                            {{ number_format($component->quantity,2) }}
+                        </th>
+                        <th style="text-align:center">
+                            {{ $unit_options[$component->unit_id]->text }}
+                        </th>
+                        
+                        <td></td>
+                        <td style="text-align:right">
+                           
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align:right;font-style: italic" class="@if($component_item_quantity_total_per_component[$component->id] > $component->quantity) font-color-danger @endif">
+                            {{ $component_item_quantity_total_per_component[$component->id] }}
+                        </td>
+                        <td style="text-align:center;font-style: italic" class="@if($component_item_quantity_total_per_component[$component->id] > $component->quantity) font-color-danger @endif">
+                            {{$unit_options[$component->unit_id]->text}}
+                        </td>
+                        <td></td>
+                        <td style="text-align:right;font-style: italic">
+                             <!-- Material Component Total Amount -->
+                             @if(isset($component_total_amount_arr[ $component->id ]))
+                                P {{ number_format($component_total_amount_arr[ $component->id ],2) }}
+                            @endif
+                        </td>
+                    </tr>
+                    @foreach($component_items_arr[$component->id] as $component_item)
+                        <tr class="@if(!$component_item->sum_flag || ($component_item->unit_id != $component->unit_id && $component_item->function_type_id != 4) ) bg-excluded-sum-component_item @endif">
+                            
+                            <td>
+                              
+                                @php
+                                    $item_count++;
+                                @endphp
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{$component_item->ref_1_quantity}}</td>
+                            <td style="text-align:center">
+                                @if(isset($unit_options[$component_item->ref_1_unit_id]))
+                                    {{ $unit_options[$component_item->ref_1_unit_id]->text }}
+                                @endif
+                            </td>
+                            <td style="text-align:right">
+                                @if($component_item->ref_1_unit_price)
+                                    P {{ number_format($component_item->ref_1_unit_price,2) }}
+                                @endif
+                            </td>
+                            <td style="text-align:right">
+                                @php
+                                    $ref_1_total = (float) $component_item->ref_1_unit_price * (float) $component_item->ref_1_quantity;
+                                @endphp
+
+                                @if($ref_1_total > 0)
+                                    P {{ number_format($ref_1_total,2) }}
+                                @endif
+                            </td>
+                            <td style="text-align:center">
+                                @if($component_item->function_type_id == 1)
+                                    {{ 
+                                        formatFactor(
+                                            number_format(
+                                                round( ($component_item->function_variable  / $component->use_count), 6 )
+                                            ,6)
+                                        )
+                                    }} 
+                                    {{$unit_options[$component_item->unit_id]->text}}
+                                    /
+                                    {{$unit_options[$component->unit_id]->text}}   
+                                    
+                                    <strong> > </strong>
+                                @endif
+                                
+                                @if($component_item->function_type_id == 2)
+                                    {{ 
+                                        formatFactor(
+                                            number_format(
+                                                round( (1 / $component_item->function_variable) / $component->use_count,6)
+                                            ,6)
+                                        ) 
+                                    }} 
+                                    {{$unit_options[$component_item->unit_id]->text}}
+                                    /
+                                    {{$unit_options[$component->unit_id]->text}}    
+                                    
+
+                                    <strong> > </strong>
+                                @endif
+
+
+                                @if($component_item->function_type_id == 4)
+                                <strong> < </strong>
+
+                                    {{ 
+                                        number_format(
+                                            ($component_item->function_variable * $component->use_count),
+                                            2
+                                        ) 
+                                    }}  
+
+                                    {{$unit_options[$component->unit_id]->text}}
+                                    /
+                                    {{$unit_options[$component_item->unit_id]->text}}
+                                    
+                                @endif
+                            </td>
+                            <td style="text-align:right">
+                                {{ number_format($component_item->quantity,2) }}
+                            </td>
+                            <td style="text-align:center">
+                                {{$unit_options[$component_item->unit_id]->text}}
+                            </td>
+                            <td style="text-align:right">
+                                P {{ number_format($component_item->budget_price,2) }}
+                            </td>
+                            <td style="text-align:right">
+                                P {{ number_format($component_item->quantity * $component_item->budget_price,2) }}
+                            </td>
+                        </tr>    
+                    @endforeach
+
+                @endforeach
             @endforeach
             
             <!-- Footer --> 
