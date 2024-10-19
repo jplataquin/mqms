@@ -224,7 +224,7 @@
                     <th  style="text-align:left">{{ Str::wordWrap($contract_item->item_code,10,"\n",false) }}</th>
                     
                     <th style="text-align:left">
-                        {!! Str::wordWrap($contract_item->description,30,"<br>",false) !!}
+                       
                     </th>
                     
                     <th  style="text-align:right">
@@ -303,7 +303,9 @@
                     <tr class="@if(!$component->sum_flag || ($component->unit_id != $contract_item->unit_id)) bg-excluded-sum-component @endif">
                             @if($first)
                             <td rowspan="{{count($component_items_arr[$component->id])+2}}">
-                              
+                                [{{$component->id}}]
+                                <br>
+                                {!! Str::wordWrap($component->name,10,"<br>",false) !!}
                             </td>
                                 
                             
