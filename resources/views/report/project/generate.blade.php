@@ -58,11 +58,8 @@
             
 
                 <tr>
-                    <th class="contract_item">{{ $contract_item_arr[$contract_item_id]->item_code }} {{$contract_item_arr[$contract_item_id]->description}}</th>
-
-                    
-                    <th class="contract_item text-end">
-                        P {{ number_format( ($contract_item_arr[$contract_item_id]->contract_quantity * $contract_item_arr[$contract_item_id]->contract_unit_price), 2) }}
+                    <th class="contract_item">
+                        {{ $contract_item_arr[$contract_item_id]->item_code }} {{$contract_item_arr[$contract_item_id]->description}}
                         <br>
                         <div class="progress">
                             <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
@@ -70,6 +67,12 @@
                         <div class="progress">
                             <div class="progress-bar bg-warning" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
                         </div>
+                    </th>
+
+                    
+                    <th class="contract_item text-end">
+                        P {{ number_format( ($contract_item_arr[$contract_item_id]->contract_quantity * $contract_item_arr[$contract_item_id]->contract_unit_price), 2) }}
+                        
                     </th>
                 </tr>
                 
