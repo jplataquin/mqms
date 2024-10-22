@@ -81,7 +81,8 @@
 
                     @foreach($component as $component_item_id => $component_item)
                         <tr>
-                            <th colspan="2" style="padding-left:2em" class="component_item">{{$component_item_arr[$component_item_id]->name}}</th>
+                            <th style="padding-left:2em" class="component_item">{{$component_item_arr[$component_item_id]->name}}</th>
+                            <th class="text-end component_total_amount" data-id="$component_item_id"> - </th>
                         </tr>
 
                         @foreach($component_item as $material_quantity_id => $result)
@@ -90,7 +91,7 @@
                                     $material_item = $material_item_arr[ $material_quantity_arr[$material_quantity_id]->material_item_id ];
                                 @endphp
                                 <td style="padding-left:3em" class="material_item">{{ $material_item->formatted_name() }}</td>
-                                <th>
+                                <th class="po_amount_{{$component_item_id}}" data-value="{{$result['po_amount']}}">
                                     P {{ number_format($result['po_amount'],2) }}
                                 </th>
                             </tr>
@@ -165,6 +166,21 @@
             callout_danger.classList.remove('d-none');
             callout_danger_p.innerText = overbudget_count+' record(s) has been found to be overbudget';
         }
+
+        $q('.component_total_amount').apply(elem =>{
+
+            let comp_id = elem.getAttribute('data-id');
+
+            let total = 0;
+
+            $q('.po_amount_'+comp_id).apply(item=>{
+
+                total = total + parseFloag(item.getAttribute('data-value'));
+            });
+
+            elem.innerHTML = 'P '+total;
+            
+        });
     </script>
 </div>
 @endsection
