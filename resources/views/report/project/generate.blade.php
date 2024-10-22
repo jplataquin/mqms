@@ -175,7 +175,9 @@
 
             $q('.po_amount_'+comp_id).apply(item=>{
 
-                total = total + parseFloat(item.getAttribute('data-value'));
+                let val = parseFloat(item.getAttribute('data-value'));
+                total = total + val;
+                console.log(total,val);
             });
 
             elem.innerHTML = 'P '+total;
