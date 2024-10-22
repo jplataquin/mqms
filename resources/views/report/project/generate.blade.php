@@ -185,8 +185,8 @@
                 total = total + val;
             });
 
-            elem.innerHTML = 'P '+window.util.numberFormat(total);
-
+            elem.innerText = 'P '+window.util.numberFormat(total);
+            elem.setAttribute('data-value',total);
         });
     </script>
 </div>
