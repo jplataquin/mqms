@@ -84,7 +84,10 @@
                                 @php 
                                     $material_item = $material_item_arr[ $material_quantity_arr[$material_quantity_id]->material_item_id ];
                                 @endphp
-                                <td colspan="2" style="padding-left:3em" class="material_item">{{ $material_item->formatted_name() }}</td>
+                                <td style="padding-left:3em" class="material_item">{{ $material_item->formatted_name() }}</td>
+                                <th>
+                                    P {{number_format($result['po_amount'],2)}}
+                                </th>
                             </tr>
                             <tr>
                                 <td style="padding-left:5em">
