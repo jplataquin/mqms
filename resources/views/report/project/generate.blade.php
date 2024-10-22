@@ -63,6 +63,7 @@
                     
                     <th class="contract_item text-end">
                         {{ $contract_item_arr[$contract_item_id]->quantity }}
+                        {{$contract_item_arr[$contract_item_id]->budget_price}}
                         P {{ number_format( ($contract_item_arr[$contract_item_id]->quantity * $contract_item_arr[$contract_item_id]->budget_price), 2) }}
                     </th>
                 </tr>
