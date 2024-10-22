@@ -65,6 +65,14 @@
                         P {{ number_format( ($contract_item_arr[$contract_item_id]->contract_quantity * $contract_item_arr[$contract_item_id]->contract_unit_price), 2) }}
                     </th>
                 </tr>
+                <tr>
+                    <td colspan="2">
+
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+                        </div>
+                    </td>
+                </tr>
                 
                 @foreach($contract_item as $component_id => $component)
                     
