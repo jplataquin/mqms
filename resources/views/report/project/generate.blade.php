@@ -69,7 +69,7 @@
                 @foreach($contract_item as $component_id => $component)
                     
                     <tr>
-                        <td colspan="2" style="padding-left:1em" class="component">
+                        <td style="padding-left:1em" class="component">
                             
                             {{ $component_arr[ $component_id ]->name }}
                             
@@ -77,12 +77,13 @@
                                 <i class="bi bi-box-arrow-up-right"></i>
                             </a>
                         </td>
+
+                        <th class="text-end component_total_amount" data-id="{{$component_id}}"> - </th>
                     </tr>
 
                     @foreach($component as $component_item_id => $component_item)
                         <tr>
-                            <th style="padding-left:2em" class="component_item">{{$component_item_arr[$component_item_id]->name}}</th>
-                            <th class="text-end component_total_amount" data-id="{{$component_item_id}}"> - </th>
+                            <th colspan="2" style="padding-left:2em" class="component_item">{{$component_item_arr[$component_item_id]->name}}</th>
                         </tr>
 
                         @foreach($component_item as $material_quantity_id => $result)
@@ -180,9 +181,8 @@
                 if(isNaN(val)){
                     val = 0;
                 }
-                
+
                 total = total + val;
-                console.log(total,val);
             });
 
             elem.innerHTML = 'P '+total;
