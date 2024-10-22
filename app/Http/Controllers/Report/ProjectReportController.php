@@ -166,9 +166,17 @@ class ProjectReportController extends Controller {
                         ->where('status','APRV')
                         ->sum('quantity');
 
+
+                        $total_po_amount = PurchaseOrderItem::where('component_item_id',$component_item->id)
+                        ->where('material_item_id',$material_quantity->material_item_id)
+                        ->where('status','APRV')
+                        ->select( DB::raw('SUM(quantity * price) as total') )
+                        ->first();
+
                         $report[ $contract_item->id ][ $component->id ][ $component_item->id ][ $material_quantity->id ]['budget_quantity']  = $material_quantity->quantity;
                         $report[ $contract_item->id ][ $component->id ][ $component_item->id ][ $material_quantity->id ]['request_quantity'] = $total_requested_quantity;
                         $report[ $contract_item->id ][ $component->id ][ $component_item->id ][ $material_quantity->id ]['po_quantity']      = $total_po_quantity;
+                        $report[ $contract_item->id ][ $component->id ][ $component_item->id ][ $material_quantity->id ]['po_amount']        = $total_po_amount;
                         
                     }//material quantity
 
