@@ -176,7 +176,7 @@ class ProjectReportController extends Controller {
                         $report[ $contract_item->id ][ $component->id ][ $component_item->id ][ $material_quantity->id ]['budget_quantity']  = $material_quantity->quantity;
                         $report[ $contract_item->id ][ $component->id ][ $component_item->id ][ $material_quantity->id ]['request_quantity'] = $total_requested_quantity;
                         $report[ $contract_item->id ][ $component->id ][ $component_item->id ][ $material_quantity->id ]['po_quantity']      = $total_po_quantity;
-                        $report[ $contract_item->id ][ $component->id ][ $component_item->id ][ $material_quantity->id ]['po_amount']        = $total_po_amount;
+                        $report[ $contract_item->id ][ $component->id ][ $component_item->id ][ $material_quantity->id ]['po_amount']        = $total_po_amount->total;
                         
                     }//material quantity
 
