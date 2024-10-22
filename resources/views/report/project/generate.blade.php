@@ -64,13 +64,16 @@
                 @foreach($contract_item as $component_id => $component)
                     
                     <tr>
-                        <td colspan="2" style="padding-left:1em" class="component">
+                        <td style="padding-left:1em" class="component">
                             
                             {{ $component_arr[ $component_id ]->name }}
                             
                             <a class="link-offset-2 link-underline link-underline-opacity-0" href="/project/section/contract_item/component/{{$component_id}}?b={{ urlencode($url) }}" hx-boost="true" hx-select="#content" hx-target="#main">
                                 <i class="bi bi-box-arrow-up-right"></i>
                             </a>
+                        </td>
+                        <td class="text-end">
+                            P {{ number_format( ($component_arr[ $component_id ]->quantity * $component_arr[ $component_id ]->budget_price), 2) }}
                         </td>
                     </tr>
 
@@ -86,12 +89,12 @@
                                 @endphp
                                 <td style="padding-left:3em" class="material_item">{{ $material_item->formatted_name() }}</td>
                                 <th>
-                                    P {{number_format($result['po_amount'],2)}}
+                                    P {{ number_format($result['po_amount'],2) }}
                                 </th>
                             </tr>
                             <tr>
                                 <td style="padding-left:5em">
-                                    Budget
+                                    Budget Qty
                                     <div class="progress">
                                         <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
                                     </div>
@@ -109,7 +112,7 @@
                                         }
                                     @endphp
                                     
-                                    Request
+                                    Request Qty
 
                                     <div class="progress">
                                         <div class="progress-bar bg-primary" role="progressbar" style="width: {{$request_percentage}}%;" aria-valuenow="{{$request_percentage}}" aria-valuemin="0" aria-valuemax="100">{{$request_percentage}}%</div>
@@ -129,7 +132,7 @@
                                         }
                                     @endphp
                                     
-                                    PO
+                                    PO Qty
 
                                     <div class="progress">
                                         <div class="progress-bar bg-warning" role="progressbar" style="width: {{$po_percentage}}%;" aria-valuenow="{{$po_percentage}}" aria-valuemin="0" aria-valuemax="100">{{$po_percentage}}%</div>
