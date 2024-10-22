@@ -176,6 +176,11 @@
             $q('.po_amount_'+comp_id).apply(item=>{
 
                 let val = parseFloat(item.getAttribute('data-value'));
+
+                if(isNaN(val)){
+                    val = 0;
+                }
+                
                 total = total + val;
                 console.log(total,val);
             });
