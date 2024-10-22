@@ -88,6 +88,27 @@
                             </div>
                             <div class="form-body">
                                 
+                            
+                            <div class="row mb-3">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Item Code & Description</label>
+
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="basic-addon2" onclick="document.querySelector('#contract_item').focus();"><i class="bi bi-list"></i></span>
+                                        
+                                            <select id="contract_item" class="form-select">
+                                                @foreach($contract_item_arr as $con_item)
+
+                                                    <option value="{{$con_item->data->id}}" @if($con_item->data->id == $contract_item->id) selected @endif>{{$con_item->data->item_code}} {{$con_item->data->description}}</option>
+
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                                 <div class="row mb-3">    
                                     <div class="col-lg-4 mb-3">
                                         <div class="form-container">
@@ -197,26 +218,6 @@
                         <div class="form-container">
                             <div class="form-header @if(!$component->sum_flag || $component->unit_id != $contract_item->unit_id) bg-excluded-sum-component @endif">Component</div>
                             <div class="form-body">
-
-                            <div class="row mb-3">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label>Contract Item</label>
-
-                                        <div class="input-group">
-                                            <span class="input-group-text" id="basic-addon2" onclick="document.querySelector('#contract_item').focus();"><i class="bi bi-list"></i></span>
-                                        
-                                            <select id="contract_item" class="form-select">
-                                                @foreach($contract_item_arr as $con_item)
-
-                                                    <option value="{{$con_item->data->id}}" @if($con_item->data->id == $contract_item->id) selected @endif>{{$con_item->data->item_code}} {{$con_item->data->description}}</option>
-
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="row mb-3">
                                     <div class="col-lg-12">
