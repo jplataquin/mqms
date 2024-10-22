@@ -78,7 +78,7 @@
                             </a>
                         </td>
 
-                        <th class="text-end component_total_amount component" data-id="{{$component_id}}"> - </th>
+                        <th class="text-end component_total_amount component component_{{$contract_item_id}}" data-id="{{$component_id}}" data-value="0"> - </th>
                     </tr>
 
                     @foreach($component as $component_item_id => $component_item)
