@@ -58,22 +58,24 @@
             
 
                 <tr>
-                    <th colspan="2" class="contract_item">{{ $contract_item_arr[$contract_item_id]->item_code }} {{$contract_item_arr[$contract_item_id]->description}}</th>
+                    <th class="contract_item">{{ $contract_item_arr[$contract_item_id]->item_code }} {{$contract_item_arr[$contract_item_id]->description}}</th>
+
+                    
+                    <th class="contract_item text-end">
+                        P {{ number_format( ($component_arr[ $component_id ]->quantity * $component_arr[ $component_id ]->budget_price), 2) }}
+                    </th>
                 </tr>
                 
                 @foreach($contract_item as $component_id => $component)
                     
                     <tr>
-                        <td style="padding-left:1em" class="component">
+                        <td colspan="2" style="padding-left:1em" class="component">
                             
                             {{ $component_arr[ $component_id ]->name }}
                             
                             <a class="link-offset-2 link-underline link-underline-opacity-0" href="/project/section/contract_item/component/{{$component_id}}?b={{ urlencode($url) }}" hx-boost="true" hx-select="#content" hx-target="#main">
                                 <i class="bi bi-box-arrow-up-right"></i>
                             </a>
-                        </td>
-                        <td class="text-end">
-                            P {{ number_format( ($component_arr[ $component_id ]->quantity * $component_arr[ $component_id ]->budget_price), 2) }}
                         </td>
                     </tr>
 
