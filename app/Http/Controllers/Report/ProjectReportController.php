@@ -115,7 +115,7 @@ class ProjectReportController extends Controller {
             }
 
             $components = $contract_item->Components()
-            ->where('deleted_at',null)->orderBy('name','ASC')
+            ->where('deleted_at',null)->orderBy('name','ASC');
 
             if($component_id){
 
@@ -123,6 +123,7 @@ class ProjectReportController extends Controller {
             }
 
             $components = $components->get();
+
 
             foreach($components as $component){
 
