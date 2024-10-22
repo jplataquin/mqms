@@ -529,6 +529,11 @@ window.util.createComponent = function(model,callback){
 }
 
 
+window.util.numberFormat = function(val){
+
+    let nFormat = new Intl.NumberFormat('en-US', {minimumFractionDigits: 2}).format(val);
+   
+}
 window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
 
     let charCode = (evt.which) ? evt.which : evt.keyCode;
