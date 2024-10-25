@@ -69,7 +69,7 @@
                             <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
                         </div>
                         <div class="progress">
-                            <div class="progress-bar bg-warning contract_item_amount_percent" data-id="{{$contract_item_id}}" data-amount="{{$contract_item_amount}}" role="progressbar" style="width: 0%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> - </div>
+                            <div class="progress-bar bg-warning contract_item_amount_percent" data-id="{{$contract_item_id}}" data-amount="{{$contract_item_amount}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
                         </div>
                     </th>
 
@@ -204,7 +204,7 @@
         });
 
 
-        $('.contract_item_amount_percent').apply(elem=>{
+        $q('.contract_item_amount_percent').apply(elem=>{
 
             let contract_item_id        = elem.getAttribute('data-id');
             let contract_item_amount    = elem.getAttribute('data-amount'); 
@@ -226,6 +226,7 @@
             percentage = Math.round(percentage);
 
             elem.style.width = elem;
+            elem.setAttribute('aria-valuenow',elem);
         });
     </script>
 </div>
