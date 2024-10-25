@@ -225,7 +225,7 @@
 
             percentage = Math.round(percentage);
 
-            elem.style.width = percentage;
+            elem.style.width = percentage+'%';
             elem.setAttribute('aria-valuenow',percentage);
 
             console.log(percentage);
