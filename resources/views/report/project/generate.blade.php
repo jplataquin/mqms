@@ -227,6 +227,8 @@
 
             elem.style.width = percentage;
             elem.setAttribute('aria-valuenow',percentage);
+
+            console.log(percentage);
         });
     </script>
 </div>
