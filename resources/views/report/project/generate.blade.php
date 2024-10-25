@@ -55,23 +55,27 @@
 
         <table class="table">
             @foreach($report as $contract_item_id => $contract_item)
-            
+
+                @php 
+
+                    $contract_item_amount = $contract_item_arr[$contract_item_id]->contract_quantity * $contract_item_arr[$contract_item_id]->contract_unit_price;
+                @endphp
 
                 <tr>
                     <th class="contract_item">
                         {{ $contract_item_arr[$contract_item_id]->item_code }} {{$contract_item_arr[$contract_item_id]->description}}
                         <br>
-                        <div class="progress">
+                        <div class="progress mb-3">
                             <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
                         </div>
                         <div class="progress">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+                            <div class="progress-bar bg-warning contract_item_amount_percent" data-id="{{$contract_item_id}}" data-amount="{{$contract_item_amount}}" role="progressbar" style="width: 0%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> - </div>
                         </div>
                     </th>
 
                     
                     <th class="contract_item text-end">
-                        P {{ number_format( ($contract_item_arr[$contract_item_id]->contract_quantity * $contract_item_arr[$contract_item_id]->contract_unit_price), 2) }}
+                        P {{ number_format( $contract_item_amount, 2) }}
                         
                     </th>
                 </tr>
@@ -197,6 +201,31 @@
 
             elem.innerText = 'P '+window.util.numberFormat(total);
             elem.setAttribute('data-value',total);
+        });
+
+
+        $('.contract_item_amount_percent').apply(elem=>{
+
+            let contract_item_id        = elem.getAttribute('data-id');
+            let contract_item_amount    = elem.getAttribute('data-amount'); 
+            let total                   = 0;
+            
+            $q('.component_'+contract_item_id).apply(item=>{
+                let val = parseFloat(item.getAttribute('data-value'));
+
+                if(isNaN(val)){
+                    val = 0;
+                }
+
+                total = total + val;
+            });
+
+
+            let percentage = (total / contract_item_amount) * 100;
+
+            percentage = Math.round(percentage);
+
+            elem.style.width = elem;
         });
     </script>
 </div>
