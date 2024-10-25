@@ -75,7 +75,7 @@
 
                     
                     <td class="contract_item text-end">
-                        <br>
+                        
                         <p class="font-weight-bold text-end">
                             P {{ number_format( $contract_item_amount, 2) }}
                         </p>
