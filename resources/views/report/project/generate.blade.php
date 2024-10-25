@@ -74,10 +74,12 @@
                     </th>
 
                     
-                    <th class="contract_item text-end">
-                        P {{ number_format( $contract_item_amount, 2) }}
-                        
-                    </th>
+                    <td class="contract_item text-end">
+                        <div class="font-weight-bold text-end">
+                            P {{ number_format( $contract_item_amount, 2) }}
+                        </div>
+                        <div class="contract_item_total_{{$contract_item_id}}">P 0.00</div>
+                    </td>
                 </tr>
                 
                 @foreach($contract_item as $component_id => $component)
@@ -92,7 +94,9 @@
                             </a>
                         </td>
 
-                        <th class="text-end component_total_amount component component_{{$contract_item_id}}" data-id="{{$component_id}}" data-value="0"> - </th>
+                        <td class="text-end component_total_amount component component_{{$contract_item_id}}" data-id="{{$component_id}}" data-value="0">
+                             - 
+                        </td>
                     </tr>
 
                     @foreach($component as $component_item_id => $component_item)
@@ -229,6 +233,7 @@
             elem.innerText      = percentage+'%';
             elem.setAttribute('aria-valuenow',percentage);
 
+            $q('.contract_item_total_'+contract_item_id).first().innerText = 'P '+window.util.numberFormat(total);
         });
     </script>
 </div>
