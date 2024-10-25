@@ -126,8 +126,7 @@
                                         <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
                                     </div>
                                 </td>
-                                <td>
-                                    <br>
+                                <td style="padding-top:1.8em">
                                     {{ number_format($result['budget_quantity'],2) }} Qty
                                 </td>
                             </tr>
@@ -149,7 +148,9 @@
                                     </div>
                                     
                                 </td>
-                                <td class="@if($result['request_quantity'] > $result['budget_quantity']) text-danger overbudget @endif">{{ number_format($result['request_quantity'],2) }} Qty</td>
+                                <td style="padding-top:1.8em" class="@if($result['request_quantity'] > $result['budget_quantity']) text-danger overbudget @endif">
+                                    {{ number_format($result['request_quantity'],2) }} Qty
+                                </td>
                             </tr>
                             <tr>
                                 <td style="padding-left:5em">
@@ -169,7 +170,9 @@
                                     </div>
                                     
                                 </td>
-                                <td class="@if($result['po_quantity'] > $result['budget_quantity'] || $result['po_quantity'] > $result['request_quantity']) text-danger overbudget @endif">{{ number_format($result['po_quantity'],2) }} Qty</td>
+                                <td style="padding-top:1.8em" class="@if($result['po_quantity'] > $result['budget_quantity'] || $result['po_quantity'] > $result['request_quantity']) text-danger overbudget @endif">
+                                    {{ number_format($result['po_quantity'],2) }} Qty
+                                </td>
                             </tr>
                         @endforeach
 
