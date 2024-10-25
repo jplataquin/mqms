@@ -76,10 +76,10 @@
                     
                     <td class="contract_item text-end">
                         <br>
-                        <div class="font-weight-bold text-end">
+                        <p class="font-weight-bold text-end">
                             P {{ number_format( $contract_item_amount, 2) }}
-                        </div>
-                        <div class="contract_item_total_{{$contract_item_id}} text-end">P 0.00</div>
+                        </p>
+                        <p class="contract_item_total_{{$contract_item_id}} text-end">P 0.00</p>
                     </td>
                 </tr>
                 
