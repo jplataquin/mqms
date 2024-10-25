@@ -12,7 +12,7 @@
     .component{
         background-color: #c2d0d1 !important;
         position:sticky !important;
-        top:100px;
+        top:140px;
     }
 
     .bar{
