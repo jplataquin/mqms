@@ -115,9 +115,9 @@
                                     $material_item = $material_item_arr[ $material_quantity_arr[$material_quantity_id]->material_item_id ];
                                 @endphp
                                 <td style="padding-left:3em" class="material_item">{{ $material_item->formatted_name() }}</td>
-                                <th class="po_amount_{{$component_id}}" data-value="{{$result['po_amount']}}">
+                                <td class="po_amount_{{$component_id}}" data-value="{{$result['po_amount']}}">
                                     P {{ number_format($result['po_amount'],2) }}
-                                </th>
+                                </td>
                             </tr>
                             <tr>
                                 <td style="padding-left:5em">
