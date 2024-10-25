@@ -126,7 +126,10 @@
                                         <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
                                     </div>
                                 </td>
-                                <td>{{ number_format($result['budget_quantity'],2) }} Qty</td>
+                                <td>
+                                    <br>
+                                    {{ number_format($result['budget_quantity'],2) }} Qty
+                                </td>
                             </tr>
                             <tr>
                                 <td style="padding-left:5em">
