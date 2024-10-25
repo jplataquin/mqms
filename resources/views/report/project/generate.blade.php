@@ -12,7 +12,7 @@
     .component{
         background-color: #c2d0d1 !important;
         position:sticky !important;
-        top:80px;
+        top:100px;
     }
 
     .bar{
@@ -61,7 +61,7 @@
                     $contract_item_amount = $contract_item_arr[$contract_item_id]->contract_quantity * $contract_item_arr[$contract_item_id]->contract_unit_price;
                 @endphp
 
-                <tr>
+                <tr style="height:100px">
                     <th class="contract_item">
                         {{ $contract_item_arr[$contract_item_id]->item_code }} {{$contract_item_arr[$contract_item_id]->description}}
                         <br>
