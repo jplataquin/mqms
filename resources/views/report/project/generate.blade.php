@@ -225,8 +225,8 @@
 
             percentage = Math.round(percentage);
 
-            elem.style.width = elem;
-            elem.setAttribute('aria-valuenow',elem);
+            elem.style.width = percentage;
+            elem.setAttribute('aria-valuenow',percentage);
         });
     </script>
 </div>
