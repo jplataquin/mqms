@@ -127,7 +127,7 @@
 
                         <td class="text-end component">
                             
-                            <div class="component_mb component_mb_{{contract_item_id}}" data-id="{{$component_id}}" data-value="0">(MB) P 0.00</div>
+                            <div class="component_mb component_mb_{{$contract_item_id}}" data-id="{{$component_id}}" data-value="0">(MB) P 0.00</div>
 
                             <div class="component_total_amount component_{{$contract_item_id}}" data-id="{{$component_id}}" data-value="0" > - </div> 
                         </td>
