@@ -99,7 +99,7 @@
                         <br>
                         <div>
                             <p class="fw-bold text-end mb-0 ">
-                                P {{ number_format( $contract_item_amount, 2) }}
+                                (CN) P {{ number_format( $contract_item_amount, 2) }}
                             </p>
                         </div>
                         <div>
