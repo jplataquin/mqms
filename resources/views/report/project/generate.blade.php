@@ -144,7 +144,7 @@
                                 @endphp
                                 <td style="padding-left:3em" class="material_item">{{ $material_item->formatted_name() }}</td>
                                 <td class="po_amount_{{$component_id}}" data-value="{{$result['po_amount']}}">
-                                    P {{ number_format($result['po_amount'],2) }}
+                                    (EX) P {{ number_format($result['po_amount'],2) }}
                                 </td>
                             </tr>
                             <tr>
@@ -253,6 +253,7 @@
             elem.setAttribute('data-value',total);
         });
 
+        //Expense
         $q('.component_total_amount').apply(elem =>{
 
             let comp_id = elem.getAttribute('data-id');
