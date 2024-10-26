@@ -201,7 +201,7 @@
 
         const callout_danger                = $q('#callout-danger').first();
         const callout_danger_p              = $q('#callout-danger-p').first();
-        const amount_grand_total_percent    = $('#amount_grand_total_percent').first();
+        const amount_grand_total_percent    = $q('#amount_grand_total_percent').first();
 
         let overbudget_count    = $q('.overbudget').items().length;
         
@@ -282,6 +282,8 @@
         }
 
         amount_grand_total_percent.style.width = grand_amount_percentage+'%';
+        amount_grand_total_percent.setAttribute('aria-valuenow',grand_amount_percentage);
+        amount_grand_total_percent.innerText = grand_amount_percentage+'%';
 
     </script>
 </div>
