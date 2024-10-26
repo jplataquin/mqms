@@ -54,9 +54,12 @@
         </div>
 
 
-        <div>
-            <div>
-
+        <div class="mb-5">
+            <div class="mb-3">
+                <h5 id="contract_grand_total"></h5>
+                <div class="progress mb-3">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+                </div>
             </div>
 
             <div>
@@ -207,6 +210,8 @@
         const callout_danger_p              = $q('#callout-danger-p').first();
         const amount_grand_total_percent    = $q('#amount_grand_total_percent').first();
         const amount_grand_total            = $q('#amount_grand_total').first();
+        const contract_grand_total_el       = $q('#contract_grand_total').first();
+
 
         let overbudget_count    = $q('.overbudget').items().length;
         
@@ -291,6 +296,7 @@
         amount_grand_total_percent.innerText = grand_amount_percentage+'%';
 
         amount_grand_total.innerText = 'P '+window.util.numberFormat(contract_item_grand_total);
+        contract_grand_total_el.innerText = 'P '+window.util.numberFormat(contract_grand_total);
 
     </script>
 </div>
