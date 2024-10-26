@@ -335,7 +335,7 @@
             elem.innerText      = percentage+'%';
             elem.setAttribute('aria-valuenow',percentage);
 
-            $q('.contract_item_total_'+contract_item_id).first().innerText = 'P '+window.util.numberFormat(total);
+            $q('.contract_item_total_'+contract_item_id).first().innerText = '(EX) P '+window.util.numberFormat(total);
         });
 
 
