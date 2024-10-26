@@ -90,7 +90,10 @@
                             <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
                         </div>
                         <div class="progress">
-                            <div class="progress-bar bg-warning contract_item_amount_percent" data-id="{{$contract_item_id}}" data-amount="{{$contract_item_amount}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
+                            <div class="progress-bar bg-warning contract_item_mb_percent" data-id="{{$contract_item_id}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning contract_item_amount_percent" data-id="{{$contract_item_id}}" data-value="{{$contract_item_amount}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
                         </div>
                     </th>
 
@@ -98,12 +101,12 @@
                     <td class="contract_item text-end">
                         <br>
                         <div>
-                            <p class="fw-bold text-end mb-0 ">
+                            <p class="fw-bold text-end mb-0" id="contract_item_amount_{{$contract_item_id}}" data-value="{{$contract_item_amount}}">
                                 (CN) P {{ number_format( $contract_item_amount, 2) }}
                             </p>
                         </div>
                         <div>
-                            <p class="fw-bold text-end mb-0 contract_item_mb" data-id="{{$contract_item_id}}">
+                            <p class="fw-bold text-end mb-0 contract_item_mb" id="contract_item_mb_{{$contract_item_id}}" data-value="0" data-id="{{$contract_item_id}}">
                                 (MB) P 0.00
                             </p>
                         </div>
@@ -240,10 +243,10 @@
 
         //Material Budget
         $q('.component_mb').apply(elem=>{
-            let comp_id = elem.getAttribute('data-id');
+            let id = elem.getAttribute('data-id');
             let total   = 0;
 
-            $q('.component_item_'+comp_id).apply(item=>{
+            $q('.component_item_'+id).apply(item=>{
                 
                 let val = parseFloat(item.getAttribute('data-value'));
 
@@ -259,10 +262,10 @@
         });
 
         $q('.contract_item_mb').apply(elem=>{
-            let comp_id = elem.getAttribute('data-id');
+            let id = elem.getAttribute('data-id');
             let total   = 0;
 
-            $q('.component_mb_'+comp_id).apply(item=>{
+            $q('.component_mb_'+id).apply(item=>{
                 
                 let val = parseFloat(item.getAttribute('data-value'));
 
@@ -275,6 +278,31 @@
 
             elem.innerText = '(MB) P '+window.util.numberFormat(total);
             elem.setAttribute('data-value',total);
+        });
+
+        
+        $q('.contract_item_mb_percent').apply(elem=>{
+
+            let id = elem.getAttribute('data-id');
+
+            let amount                  = $q('#contract_item_mb_'+id).first().getAttribute('data-value');
+            let contract_item_amount    = $q('#contract_item_amount_'+id).first().getAttribute('data-value');
+
+            if(isNaN(amount)){
+                amount = 0;
+            }
+
+            if(isNaN(contract_item_amount) || !contract_item_amount){
+                return false;
+            }
+
+            let percentage  = (amount / contract_item_amount) * 100;
+            percentage      = Math.round(percentage);         
+
+            elem.style.width    = percentage+'%';
+            elem.innerText      = percentage+'%';
+            elem.setAttribute('aria-valuenow',percentage);
+
         });
 
 
@@ -303,7 +331,7 @@
         $q('.contract_item_amount_percent').apply(elem=>{
 
             let contract_item_id        = elem.getAttribute('data-id');
-            let contract_item_amount    = elem.getAttribute('data-amount'); 
+            let contract_item_amount    = elem.getAttribute('data-value'); 
             let total                   = 0;
             
             contract_item_amount = parseFloat(contract_item_amount);
