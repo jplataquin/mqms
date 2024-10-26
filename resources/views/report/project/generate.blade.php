@@ -121,6 +121,7 @@
                         </td>
 
                         <td class="text-end component_total_amount component">
+                            <span class="component_mb" data-id="{{$component_id}}" data-value="0">(MB) P 0.00</span>
                             <span class="component_{{$contract_item_id}}" data-id="{{$component_id}}" data-value="0" > - </span> 
                         </td>
                     </tr>
@@ -128,7 +129,7 @@
                     @foreach($component as $component_item_id => $component_item)
                         <tr>
                             <th style="padding-left:2em" class="component_item" data-amount={{ $component_item_arr[$component_item_id]->quantity * $component_item_arr[$component_item_id]->budget_price }}>{{$component_item_arr[$component_item_id]->name}}</th>
-                            <th>(M) P {{ number_format($component_item_arr[$component_item_id]->quantity * $component_item_arr[$component_item_id]->budget_price,2) }}</th>
+                            <th>(MB) P {{ number_format($component_item_arr[$component_item_id]->quantity * $component_item_arr[$component_item_id]->budget_price,2) }}</th>
                         </tr>
 
                         @foreach($component_item as $material_quantity_id => $result)
