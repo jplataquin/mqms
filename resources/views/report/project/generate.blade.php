@@ -92,13 +92,14 @@
                         <div class="progress mb-3">
                             <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
                         </div>
-                    <td>
+                    </td>
                     <td class="contract_item text-end">
                         <p class="fw-bold text-end mb-0" id="contract_item_amount_{{$contract_item_id}}" data-value="{{$contract_item_amount}}">
                             (CN) P {{ number_format( $contract_item_amount, 2) }}
                         </p>
                     </td>
                 </tr>
+
                 <tr>
                     <td class="contract_item">    
                         <div class="progress mb-3">
@@ -111,6 +112,7 @@
                         </p>
                     </td>
                 </tr>
+
                 <tr>
                     <td class="contract_item">
                         <div class="progress">
