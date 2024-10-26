@@ -56,6 +56,7 @@
 
         <div class="mb-5">
             <div class="mb-3">
+                <h3>Contract Amount</h3>
                 <h5 id="contract_grand_total"></h5>
                 <div class="progress mb-3">
                     <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
@@ -63,6 +64,7 @@
             </div>
 
             <div>
+                <h3></h3>
                 <h5 id="amount_grand_total"></h5>
                 <div class="progress">
                     <div class="progress-bar bg-warning" id="amount_grand_total_percent" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
@@ -125,7 +127,7 @@
 
                     @foreach($component as $component_item_id => $component_item)
                         <tr>
-                            <th colspan="2" style="padding-left:2em" class="component_item">{{$component_item_arr[$component_item_id]->name}}</th>
+                            <th colspan="2" style="padding-left:2em" class="component_item" data-amount={{$component_item_arr[$component_item_id]->quantity * $component_item_arr[$component_item_id]->budget_price}}>{{$component_item_arr[$component_item_id]->name}}</th>
                         </tr>
 
                         @foreach($component_item as $material_quantity_id => $result)
