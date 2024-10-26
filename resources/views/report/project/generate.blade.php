@@ -5,13 +5,13 @@
 
     .contract_item{
         background-color: #c5d8f0 !important;
-        position:sticky !important;
+        /** position:sticky !important; **/
         top:40px;
     }
 
     .component{
         background-color: #c2d0d1 !important;
-        position:sticky !important;
+        /** position:sticky !important; **/
         top:140px;
     }
 
