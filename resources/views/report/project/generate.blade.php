@@ -127,7 +127,8 @@
 
                     @foreach($component as $component_item_id => $component_item)
                         <tr>
-                            <th colspan="2" style="padding-left:2em" class="component_item" data-amount={{$component_item_arr[$component_item_id]->quantity * $component_item_arr[$component_item_id]->budget_price}}>{{$component_item_arr[$component_item_id]->name}}</th>
+                            <th style="padding-left:2em" class="component_item" data-amount={{ $component_item_arr[$component_item_id]->quantity * $component_item_arr[$component_item_id]->budget_price }}>{{$component_item_arr[$component_item_id]->name}}</th>
+                            <th>P {{ number_format($component_item_arr[$component_item_id]->quantity * $component_item_arr[$component_item_id]->budget_price,2) }}</th>
                         </tr>
 
                         @foreach($component_item as $material_quantity_id => $result)
