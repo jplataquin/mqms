@@ -281,9 +281,8 @@
         //Expense
         $q('.component_total_amount').apply(elem =>{
 
-            let comp_id = elem.getAttribute('data-id');
-
-            let total = 0;
+            let comp_id     = elem.getAttribute('data-id');
+            let total       = 0;
 
             $q('.po_amount_'+comp_id).apply(item=>{
 
