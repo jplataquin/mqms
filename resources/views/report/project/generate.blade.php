@@ -47,22 +47,26 @@
         </div>
         <hr>
 
+
+        <div id="callout-danger" class="callout callout-danger d-none">
+            <h4>Alert</h4> 
+            <p id="callout-danger-p"></p>
+        </div>
+
+
         <div>
             <div>
 
             </div>
 
             <div>
+                <h5 id="amount_grand_total"></h5>
                 <div class="progress">
                     <div class="progress-bar bg-warning" id="amount_grand_total_percent" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
                 </div>
             </div>
         </div>
 
-        <div id="callout-danger" class="callout callout-danger d-none">
-            <h4>Alert</h4> 
-            <p id="callout-danger-p"></p>
-        </div>
 
 
         <table class="table">
@@ -202,6 +206,7 @@
         const callout_danger                = $q('#callout-danger').first();
         const callout_danger_p              = $q('#callout-danger-p').first();
         const amount_grand_total_percent    = $q('#amount_grand_total_percent').first();
+        const amount_grand_total            = $q('#amount_grand_total').first();
 
         let overbudget_count    = $q('.overbudget').items().length;
         
@@ -284,6 +289,8 @@
         amount_grand_total_percent.style.width = grand_amount_percentage+'%';
         amount_grand_total_percent.setAttribute('aria-valuenow',grand_amount_percentage);
         amount_grand_total_percent.innerText = grand_amount_percentage+'%';
+
+        amount_grand_total.innerText = 'P '+window.util.numberFormat(contract_item_grand_total);
 
     </script>
 </div>
