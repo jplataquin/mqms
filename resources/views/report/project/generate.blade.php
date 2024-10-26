@@ -82,39 +82,46 @@
                     $contract_item_amount = $contract_item_arr[$contract_item_id]->contract_quantity * $contract_item_arr[$contract_item_id]->contract_unit_price;
                 @endphp
 
-                <tr style="height:100px">
-                    <th class="contract_item">
+                <tr>
+                    <th colspan="2" class="contract_item">
                         {{ $contract_item_arr[$contract_item_id]->item_code }} {{$contract_item_arr[$contract_item_id]->description}}
-                        <br>
+                    </th>
+                </tr>
+                <tr>
+                    <td class="contract_item">
                         <div class="progress mb-3">
                             <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
                         </div>
+                    <td>
+                    <td class="contract_item text-end">
+                        <p class="fw-bold text-end mb-0" id="contract_item_amount_{{$contract_item_id}}" data-value="{{$contract_item_amount}}">
+                            (CN) P {{ number_format( $contract_item_amount, 2) }}
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="contract_item">    
                         <div class="progress mb-3">
                             <div class="progress-bar bg-primary contract_item_mb_percent" data-id="{{$contract_item_id}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
                         </div>
+                    </td>
+                    <td class="contract_item text-end">
+                        <p class="fw-bold text-end mb-0 contract_item_mb" id="contract_item_mb_{{$contract_item_id}}" data-value="0" data-id="{{$contract_item_id}}">
+                            (MB) P 0.00
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="contract_item">
                         <div class="progress">
                             <div class="progress-bar bg-warning contract_item_amount_percent" data-id="{{$contract_item_id}}" data-value="{{$contract_item_amount}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
                         </div>
-                    </th>
-
-                    
+                    </td>
                     <td class="contract_item text-end">
-                        <br>
-                        <div>
-                            <p class="fw-bold text-end mb-0" id="contract_item_amount_{{$contract_item_id}}" data-value="{{$contract_item_amount}}">
-                                (CN) P {{ number_format( $contract_item_amount, 2) }}
-                            </p>
-                        </div>
-                        <div>
-                            <p class="fw-bold text-end mb-0 contract_item_mb" id="contract_item_mb_{{$contract_item_id}}" data-value="0" data-id="{{$contract_item_id}}">
-                                (MB) P 0.00
-                            </p>
-                        </div>
-                        <div>
-                            <p class="contract_item_total_{{$contract_item_id}} text-end">P 0.00</p>
-                        </div>
+                        <p class="contract_item_total_{{$contract_item_id}} text-end">P 0.00</p>      
                     </td>
                 </tr>
+                    
                 
                 @foreach($contract_item as $component_id => $component)
                     
