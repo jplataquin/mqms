@@ -120,11 +120,11 @@
                             </a>
                         </td>
 
-                        <td class="text-end component_total_amount component">
+                        <td class="text-end component">
                             
                             <span class="component_mb" data-id="{{$component_id}}" data-value="0">(MB) P 0.00</span>
 
-                            <span class="component_{{$contract_item_id}}" data-id="{{$component_id}}" data-value="0" > - </span> 
+                            <span class="component_total_amount component_{{$contract_item_id}}" data-id="{{$component_id}}" data-value="0" > - </span> 
                         </td>
                     </tr>
 
