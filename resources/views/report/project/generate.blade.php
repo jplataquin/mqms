@@ -47,6 +47,18 @@
         </div>
         <hr>
 
+        <div>
+            <div>
+
+            </div>
+
+            <div>
+                <div class="progress">
+                    <div class="progress-bar bg-warning" id="amount_grand_total_percent" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
+                </div>
+            </div>
+        </div>
+
         <div id="callout-danger" class="callout callout-danger d-none">
             <h4>Alert</h4> 
             <p id="callout-danger-p"></p>
@@ -187,11 +199,16 @@
     <script type="module">
         import {$q} from '/adarna.js';
 
-        const callout_danger    = $q('#callout-danger').first();
-        const callout_danger_p  = $q('#callout-danger-p').first();
+        const callout_danger                = $q('#callout-danger').first();
+        const callout_danger_p              = $q('#callout-danger-p').first();
+        const amount_grand_total_percent    = $('#amount_grand_total_percent').first();
 
-        let overbudget_count = $q('.overbudget').items().length;
-
+        let overbudget_count    = $q('.overbudget').items().length;
+        
+        let contract_grand_total        = 0;
+        let contract_item_grand_total   = 0;
+        let grand_amount_percentage     = 0;
+        
         if(overbudget_count){
             callout_danger.classList.remove('d-none');
             callout_danger_p.innerText = overbudget_count+' record(s) has been found to be overbudget';
@@ -225,6 +242,14 @@
             let contract_item_amount    = elem.getAttribute('data-amount'); 
             let total                   = 0;
             
+            contract_item_amount = parseFloat(contract_item_amount);
+
+            if(isNaN(contract_item_amount)){
+                contract_item_amount = 0;
+            }
+
+            contract_grand_total = contract_grand_total + contract_item_amount;
+
             $q('.component_'+contract_item_id).apply(item=>{
                 let val = parseFloat(item.getAttribute('data-value'));
 
@@ -234,6 +259,8 @@
 
                 total = total + val;
             });
+
+            contract_item_grand_total = contract_item_grand_total + total;
 
 
             let percentage = (total / contract_item_amount) * 100;
@@ -246,6 +273,16 @@
 
             $q('.contract_item_total_'+contract_item_id).first().innerText = 'P '+window.util.numberFormat(total);
         });
+
+
+        if(contract_grand_total){
+
+            grand_amount_percentage = (contract_item_grand_total / contract_grand_total) * 100;
+            grand_amount_percentage = Math.round(grand_amount_percentage);
+        }
+
+        amount_grand_total_percent.style.width = grand_amount_percentage+'%';
+
     </script>
 </div>
 @endsection
