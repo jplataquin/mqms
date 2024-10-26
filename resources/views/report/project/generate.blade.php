@@ -103,6 +103,11 @@
                             </p>
                         </div>
                         <div>
+                            <p class="fw-bold text-end mb-0 contract_item_mb" data-id="{{$contract_item_id}}">
+                                (MB) P 0.00
+                            </p>
+                        </div>
+                        <div>
                             <p class="contract_item_total_{{$contract_item_id}} text-end">P 0.00</p>
                         </div>
                     </td>
@@ -122,7 +127,7 @@
 
                         <td class="text-end component">
                             
-                            <div class="component_mb" data-id="{{$component_id}}" data-value="0">(MB) P 0.00</div>
+                            <div class="component_mb component_mb_{{contract_item_id}}" data-id="{{$component_id}}" data-value="0">(MB) P 0.00</div>
 
                             <div class="component_total_amount component_{{$contract_item_id}}" data-id="{{$component_id}}" data-value="0" > - </div> 
                         </td>
@@ -252,6 +257,26 @@
             elem.innerText = '(MB) P '+window.util.numberFormat(total);
             elem.setAttribute('data-value',total);
         });
+
+        $q('.contract_item_mb').apply(elem=>{
+            let comp_id = elem.getAttribute('data-id');
+            let total   = 0;
+
+            $q('.component_mb_'+comp_id).apply(item=>{
+                
+                let val = parseFloat(item.getAttribute('data-value'));
+
+                if(isNaN(val)){
+                    val = 0;
+                }
+
+                total = total + val;
+            });
+
+            elem.innerText = '(MB) P '+window.util.numberFormat(total);
+            elem.setAttribute('data-value',total);
+        });
+
 
         //Expense
         $q('.component_total_amount').apply(elem =>{
