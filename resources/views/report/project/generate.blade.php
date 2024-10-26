@@ -122,7 +122,7 @@
 
                         <td class="text-end component">
                             
-                            <div class="component_mb" data-id="{{$component_id}}" data-value="0">(MB) P 0.00</div>
+                            <div class="component_mb" data-id="{{$component_id}}" data-value="0">(MB) P 0.00</date_interval_create_from_date_string>
 
                             <div class="component_total_amount component_{{$contract_item_id}}" data-id="{{$component_id}}" data-value="0" > - </div> 
                         </td>
@@ -130,8 +130,11 @@
 
                     @foreach($component as $component_item_id => $component_item)
                         <tr>
-                            <th style="padding-left:2em" class="component_item" data-amount={{ $component_item_arr[$component_item_id]->quantity * $component_item_arr[$component_item_id]->budget_price }}>{{$component_item_arr[$component_item_id]->name}}</th>
-                            <th>(MB) P {{ number_format($component_item_arr[$component_item_id]->quantity * $component_item_arr[$component_item_id]->budget_price,2) }}</th>
+                            @php 
+                                $component_item_mb = $component_item_arr[$component_item_id]->quantity * $component_item_arr[$component_item_id]->budget_price;
+                            @endphp
+                            <th style="padding-left:2em" class="component_item component_item_{{$component_id}}" data-value="{{$component_item_mb}}">{{$component_item_arr[$component_item_id]->name}}</th>
+                            <th>(MB) P {{ number_format($component_item_mb,2) }}</th>
                         </tr>
 
                         @foreach($component_item as $material_quantity_id => $result)
@@ -229,6 +232,26 @@
             callout_danger.classList.remove('d-none');
             callout_danger_p.innerText = overbudget_count+' record(s) has been found to be overbudget';
         }
+
+        //Material Budget
+        $q('.component_mb').apply(elem=>{
+            let comp_id = elem.getAttribute('data-id');
+            let total   = 0;
+
+            $q('.component_item_'+comp_id).apply(item=>{
+                
+                let val = parseFloat(item.getAttribute('data-value'));
+
+                if(isNaN(val)){
+                    val = 0;
+                }
+
+                total = total + val;
+            });
+
+            elem.innerText = '(MB) P '+window.util.numberFormat(total);
+            elem.setAttribute('data-value',total);
+        });
 
         $q('.component_total_amount').apply(elem =>{
 
