@@ -89,8 +89,8 @@
                         <div class="progress mb-3">
                             <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-warning contract_item_mb_percent" data-id="{{$contract_item_id}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
+                        <div class="progress mb-3">
+                            <div class="progress-bar bg-primary contract_item_mb_percent" data-id="{{$contract_item_id}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
                         </div>
                         <div class="progress">
                             <div class="progress-bar bg-warning contract_item_amount_percent" data-id="{{$contract_item_id}}" data-value="{{$contract_item_amount}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
