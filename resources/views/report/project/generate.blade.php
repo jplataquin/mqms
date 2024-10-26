@@ -270,7 +270,7 @@
                 total = total + val;
             });
 
-            elem.innerText = 'P '+window.util.numberFormat(total);
+            elem.innerText = '(EX) P '+window.util.numberFormat(total);
             elem.setAttribute('data-value',total);
         });
 
