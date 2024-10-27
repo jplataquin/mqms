@@ -139,7 +139,7 @@
                                 $component_item_material_budget = $component_item_arr[$component_item_id]->quantity * $component_item_arr[$component_item_id]->budget_price;
                             @endphp
                             <th style="padding-left:2em" class="component_item" data-value="{{$component_item_material_budget}}">{{$component_item_arr[$component_item_id]->name}}</th>
-                            <th>(MB) P {{ number_format($component_item_mb,2) }}</th>
+                            <th>(MB) P {{ number_format($component_item_material_budget,2) }}</th>
                         </tr>
 
                         @foreach($component_item as $material_quantity_id => $result)
