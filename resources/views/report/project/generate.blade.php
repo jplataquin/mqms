@@ -141,12 +141,12 @@
                             <th style="padding-left:2em" class="component_item" data-value="{{$component_item_material_budget}}">{{$component_item_arr[$component_item_id]->name}}</th>
                             <td>
                                 <div>
-                                    <p class="fw-bold">
+                                    <p class="fw-bold component_item_material_budget_total" data-value="{{$component_item_material_budget}}">
                                         (MB) P {{ number_format($component_item_material_budget,2) }}
                                     </p>
                                 </div>
                                 <div>
-                                    <p class="component_item_material_expense_total" data-id="{{$component_item_id}}"> - <p>
+                                    <p class="component_item_material_expense_total" data-id="{{$component_item_id}}" data-value="0"> - <p>
                                 </div>
                             </td>
                         </tr>
@@ -241,7 +241,7 @@
                
                 $q('.component_item_material_expense[data-component_item_id="'+component_item_id+'"]').apply(el=>{
                     
-                    let value = el.getAttribute('data-value');
+                    let value = parseFloat( el.getAttribute('data-value') );
                     
                     if(isNaN(value)){
                         value = 0;
