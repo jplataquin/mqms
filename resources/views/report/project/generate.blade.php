@@ -129,7 +129,7 @@
                             
                             <div class="component_material_budget"  data-id="{{$component_id}}" data-value="0"> - </div>
 
-                            <div class="component_material_expense" data-id="{{$component_id}}" data-value="0" > - </div> 
+                            <div class="component_material_expense_total" data-id="{{$component_id}}" data-value="0" > - </div> 
                         </td>
                     </tr>
 
@@ -146,7 +146,7 @@
                                     </p>
                                 </div>
                                 <div>
-                                    <p class="component_item_material_expense_total" data-id="{{$component_item_id}}" data-value="0"> - <p>
+                                    <p class="component_item_material_expense_total" data-component_id="{{$component_id}}" data-id="{{$component_item_id}}" data-value="0"> - <p>
                                 </div>
                             </td>
                         </tr>
@@ -255,6 +255,27 @@
             });
         }
 
+        function total_component_material_expense(){
+
+            $q('.component_material_expense_total').apply(elem=>{
+                let component_id = elem.getAttribute('data-id');
+                let total = 0;
+            
+                $q('.component_item_material_expense_total[data-component_id="'+component_id+'"]').apply(el=>{
+                    
+                    let value = parseFloat( el.getAttribute('data-value') );
+                    
+                    if(isNaN(value)){
+                        value = 0;
+                    }
+
+                    total = total + value;
+                });
+
+                elem.innerText = '(EX) P '+window.util.numberFormat(total);
+                elem.setAttribute('data-value',total);
+            });
+        }
         total_component_item_material_expense();
         
     </script>
