@@ -127,7 +127,7 @@
 
                         <td class="text-end component">
                             
-                            <div class="component_material_budget"  data-id="{{$component_id}}" data-value="0"> - </div>
+                            <div class="component_material_budget_total"  data-id="{{$component_id}}" data-value="0"> - </div>
 
                             <div class="component_material_expense_total" data-id="{{$component_id}}" data-value="0" > - </div> 
                         </td>
@@ -276,7 +276,9 @@
                 elem.setAttribute('data-value',total);
             });
         }
+
         total_component_item_material_expense();
+        total_component_material_expense();
         
     </script>
 </div>
