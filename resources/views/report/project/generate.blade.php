@@ -56,7 +56,7 @@
 
         <div class="mb-5">
             <div>
-                <h3>Material Buddget</h3>
+                <h3>Material Budget</h3>
                 <h5 id="material_budget_grand_total_text"></h5>
                 <div class="progress">
                     <div class="progress-bar bg-warning" id="material_budget_grand_total_percent" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> 100% </div>
@@ -86,7 +86,7 @@
 
                 <tr>
                     <td class="contract_item">
-                        <p>Material Budget</p>    
+                        <p>Budget</p>    
                         <div class="progress mb-3">
                             <div class="progress-bar bg-primary contract_item_mb_percent" data-id="{{$contract_item_id}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
                         </div>
@@ -100,7 +100,7 @@
 
                 <tr>
                     <td class="contract_item">
-                        <p>Material Expense</p>
+                        <p>Expense</p>
                         <div class="progress">
                             <div class="progress-bar bg-warning contract_item_ex_percent" data-id="{{$contract_item_id}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
                         </div>
@@ -146,7 +146,7 @@
                                     </p>
                                 </div>
                                 <div>
-                                    <p class="component_item_material_expense" data-id="{{$component_item_id}}"> - <p>
+                                    <p class="component_item_material_expense_total" data-id="{{$component_item_id}}"> - <p>
                                 </div>
                             </td>
                         </tr>
