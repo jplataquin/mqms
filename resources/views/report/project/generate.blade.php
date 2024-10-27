@@ -55,72 +55,60 @@
 
 
         <div class="mb-5">
-            <div class="mb-3">
-                <h3>Contract Amount</h3>
-                <h5 id="contract_grand_total"></h5>
-                <div class="progress mb-3">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+            <div>
+                <h3>Material Buddget</h3>
+                <h5 id="material_budget_grand_total_text"></h5>
+                <div class="progress">
+                    <div class="progress-bar bg-warning" id="material_budget_grand_total_percent" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> 100% </div>
                 </div>
             </div>
+        </div>
 
+        <div class="mb-5">
             <div>
-                <h3></h3>
-                <h5 id="amount_grand_total"></h5>
+                <h3>Material Expense</h3>
+                <h5 id="material_budget_grand_total_text"></h5>
                 <div class="progress">
-                    <div class="progress-bar bg-warning" id="amount_grand_total_percent" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
+                    <div class="progress-bar bg-warning" id="material_budget_grand_total_percent" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> 100% </div>
                 </div>
             </div>
         </div>
 
 
-
         <table class="table">
             @foreach($report as $contract_item_id => $contract_item)
-
-                @php 
-
-                    $contract_item_amount = $contract_item_arr[$contract_item_id]->contract_quantity * $contract_item_arr[$contract_item_id]->contract_unit_price;
-                @endphp
 
                 <tr>
                     <th colspan="2" class="contract_item">
                         {{ $contract_item_arr[$contract_item_id]->item_code }} {{$contract_item_arr[$contract_item_id]->description}}
                     </th>
                 </tr>
-                <tr>
-                    <td class="contract_item">
-                        <div class="progress mb-3">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
-                        </div>
-                    </td>
-                    <td class="contract_item text-end">
-                        <p class="fw-bold text-end mb-0" id="contract_item_amount_{{$contract_item_id}}" data-value="{{$contract_item_amount}}">
-                            (CN) P {{ number_format( $contract_item_amount, 2) }}
-                        </p>
-                    </td>
-                </tr>
 
                 <tr>
-                    <td class="contract_item">    
+                    <td class="contract_item">
+                        <p>Material Budget</p>    
                         <div class="progress mb-3">
                             <div class="progress-bar bg-primary contract_item_mb_percent" data-id="{{$contract_item_id}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
                         </div>
                     </td>
                     <td class="contract_item text-end">
-                        <p class="fw-bold text-end mb-0 contract_item_mb" id="contract_item_mb_{{$contract_item_id}}" data-value="0" data-id="{{$contract_item_id}}">
-                            (MB) P 0.00
+                        <p class="fw-bold text-end mb-0 contract_item_mb contract_item_mb_text" data-id="{{$contract_item_id}}">
+                            P 0.00
                         </p>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="contract_item">
+                        <p>Material Expense</p>
                         <div class="progress">
-                            <div class="progress-bar bg-warning contract_item_amount_percent" data-id="{{$contract_item_id}}" data-value="{{$contract_item_amount}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
+                            <div class="progress-bar bg-warning contract_item_ex_percent" data-id="{{$contract_item_id}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
                         </div>
                     </td>
                     <td class="contract_item text-end">
-                        <p class="contract_item_total_{{$contract_item_id}} text-end">P 0.00</p>      
+                        <p class="contract_item_ex_percent_ex_text text-end" data-id="{{$contract_item_id}}">
+                            P 0.00
+                        </p>      
                     </td>
                 </tr>
                     
@@ -132,35 +120,39 @@
                             
                             {{ $component_arr[ $component_id ]->name }}
                             
-                            <a class="link-offset-2 link-underline link-underline-opacity-0" href="/project/section/contract_item/component/{{$component_id}}?b={{ urlencode($url) }}" hx-boost="true" hx-select="#content" hx-target="#main">
+                            <a class="ms-3 link-offset-2 link-underline link-underline-opacity-0" href="/project/section/contract_item/component/{{$component_id}}?b={{ urlencode($url) }}" hx-boost="true" hx-select="#content" hx-target="#main">
                                 <i class="bi bi-box-arrow-up-right"></i>
                             </a>
                         </td>
 
                         <td class="text-end component">
                             
-                            <div class="component_mb component_mb_{{$contract_item_id}}" data-id="{{$component_id}}" data-value="0">(MB) P 0.00</div>
+                            <div class="component_material_budget"  data-id="{{$component_id}}" data-value="0"> - </div>
 
-                            <div class="component_total_amount component_{{$contract_item_id}}" data-id="{{$component_id}}" data-value="0" > - </div> 
+                            <div class="component_material_expense" data-id="{{$component_id}}" data-value="0" > - </div> 
                         </td>
                     </tr>
 
                     @foreach($component as $component_item_id => $component_item)
                         <tr>
                             @php 
-                                $component_item_mb = $component_item_arr[$component_item_id]->quantity * $component_item_arr[$component_item_id]->budget_price;
+                                $component_item_material_budget = $component_item_arr[$component_item_id]->quantity * $component_item_arr[$component_item_id]->budget_price;
                             @endphp
-                            <th style="padding-left:2em" class="component_item component_item_{{$component_id}}" data-value="{{$component_item_mb}}">{{$component_item_arr[$component_item_id]->name}}</th>
+                            <th style="padding-left:2em" class="component_item" data-value="{{$component_item_material_budget}}">{{$component_item_arr[$component_item_id]->name}}</th>
                             <th>(MB) P {{ number_format($component_item_mb,2) }}</th>
                         </tr>
 
                         @foreach($component_item as $material_quantity_id => $result)
+
+                            
+                            @php 
+                                $material_item = $material_item_arr[ $material_quantity_arr[$material_quantity_id]->material_item_id ];
+                            @endphp
+
                             <tr>
-                                @php 
-                                    $material_item = $material_item_arr[ $material_quantity_arr[$material_quantity_id]->material_item_id ];
-                                @endphp
+
                                 <td style="padding-left:3em" class="material_item">{{ $material_item->formatted_name() }}</td>
-                                <td class="po_amount_{{$component_id}}" data-value="{{$result['po_amount']}}">
+                                <td class="component_item_expense" data-component_id="{{$component_id}}" data-value="{{$result['po_amount']}}">
                                     (EX) P {{ number_format($result['po_amount'],2) }}
                                 </td>
                             </tr>
@@ -193,7 +185,7 @@
                                     </div>
                                     
                                 </td>
-                                <td style="padding-top:1.8em" class="@if($result['request_quantity'] > $result['budget_quantity']) text-danger overbudget @endif">
+                                <td style="padding-top:1.8em">
                                     {{ number_format($result['request_quantity'],2) }} Qty
                                 </td>
                             </tr>
@@ -215,7 +207,7 @@
                                     </div>
                                     
                                 </td>
-                                <td style="padding-top:1.8em" class="@if($result['po_quantity'] > $result['budget_quantity'] || $result['po_quantity'] > $result['request_quantity']) text-danger overbudget @endif">
+                                <td style="padding-top:1.8em">
                                     {{ number_format($result['po_quantity'],2) }} Qty
                                 </td>
                             </tr>
@@ -232,163 +224,7 @@
     <script type="module">
         import {$q} from '/adarna.js';
 
-        const callout_danger                = $q('#callout-danger').first();
-        const callout_danger_p              = $q('#callout-danger-p').first();
-        const amount_grand_total_percent    = $q('#amount_grand_total_percent').first();
-        const amount_grand_total            = $q('#amount_grand_total').first();
-        const contract_grand_total_el       = $q('#contract_grand_total').first();
-
-
-        let overbudget_count    = $q('.overbudget').items().length;
         
-        let contract_grand_total        = 0;
-        let contract_item_grand_total   = 0;
-        let grand_amount_percentage     = 0;
-        
-        if(overbudget_count){
-            callout_danger.classList.remove('d-none');
-            callout_danger_p.innerText = overbudget_count+' record(s) has been found to be overbudget';
-        }
-
-        //Material Budget
-        $q('.component_mb').apply(elem=>{
-            let id = elem.getAttribute('data-id');
-            let total   = 0;
-
-            $q('.component_item_'+id).apply(item=>{
-                
-                let val = parseFloat(item.getAttribute('data-value'));
-
-                if(isNaN(val)){
-                    val = 0;
-                }
-
-                total = total + val;
-            });
-
-            elem.innerText = '(MB) P '+window.util.numberFormat(total);
-            elem.setAttribute('data-value',total);
-        });
-
-        $q('.contract_item_mb').apply(elem=>{
-            let id = elem.getAttribute('data-id');
-            let total   = 0;
-
-            $q('.component_mb_'+id).apply(item=>{
-                
-                let val = parseFloat(item.getAttribute('data-value'));
-
-                if(isNaN(val)){
-                    val = 0;
-                }
-
-                total = total + val;
-            });
-
-            elem.innerText = '(MB) P '+window.util.numberFormat(total);
-            elem.setAttribute('data-value',total);
-        });
-
-        
-        $q('.contract_item_mb_percent').apply(elem=>{
-
-            let id = elem.getAttribute('data-id');
-
-            let amount                  = $q('#contract_item_mb_'+id).first().getAttribute('data-value');
-            let contract_item_amount    = $q('#contract_item_amount_'+id).first().getAttribute('data-value');
-
-            if(isNaN(amount)){
-                amount = 0;
-            }
-
-            if(isNaN(contract_item_amount) || !contract_item_amount){
-                return false;
-            }
-
-            let percentage  = (amount / contract_item_amount) * 100;
-            percentage      = Math.round(percentage);         
-
-            elem.style.width    = percentage+'%';
-            elem.innerText      = percentage+'%';
-            elem.setAttribute('aria-valuenow',percentage);
-
-        });
-
-
-        //Expense
-        $q('.component_total_amount').apply(elem =>{
-
-            let comp_id     = elem.getAttribute('data-id');
-            let total       = 0;
-
-            $q('.po_amount_'+comp_id).apply(item=>{
-
-                let val = parseFloat(item.getAttribute('data-value'));
-
-                if(isNaN(val)){
-                    val = 0;
-                }
-
-                total = total + val;
-            });
-
-            elem.innerText = '(EX) P '+window.util.numberFormat(total);
-            elem.setAttribute('data-value',total);
-        });
-
-
-        $q('.contract_item_amount_percent').apply(elem=>{
-
-            let contract_item_id        = elem.getAttribute('data-id');
-            let contract_item_amount    = elem.getAttribute('data-value'); 
-            let total                   = 0;
-            
-            contract_item_amount = parseFloat(contract_item_amount);
-
-            if(isNaN(contract_item_amount)){
-                contract_item_amount = 0;
-            }
-
-            contract_grand_total = contract_grand_total + contract_item_amount;
-
-            $q('.component_'+contract_item_id).apply(item=>{
-                let val = parseFloat(item.getAttribute('data-value'));
-
-                if(isNaN(val)){
-                    val = 0;
-                }
-
-                total = total + val;
-            });
-
-            contract_item_grand_total = contract_item_grand_total + total;
-
-
-            let percentage = (total / contract_item_amount) * 100;
-
-            percentage = Math.round(percentage);
-
-            elem.style.width    = percentage+'%';
-            elem.innerText      = percentage+'%';
-            elem.setAttribute('aria-valuenow',percentage);
-
-            $q('.contract_item_total_'+contract_item_id).first().innerText = '(EX) P '+window.util.numberFormat(total);
-        });
-
-
-        if(contract_grand_total){
-
-            grand_amount_percentage = (contract_item_grand_total / contract_grand_total) * 100;
-            grand_amount_percentage = Math.round(grand_amount_percentage);
-        }
-
-        amount_grand_total_percent.style.width = grand_amount_percentage+'%';
-        amount_grand_total_percent.setAttribute('aria-valuenow',grand_amount_percentage);
-        amount_grand_total_percent.innerText = grand_amount_percentage+'%';
-
-        amount_grand_total.innerText = 'P '+window.util.numberFormat(contract_item_grand_total);
-        contract_grand_total_el.innerText = 'P '+window.util.numberFormat(contract_grand_total);
-
     </script>
 </div>
 @endsection
