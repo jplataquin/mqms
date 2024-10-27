@@ -242,7 +242,7 @@
                 $q('.component_item_material_expense [data-component_item_id="'+component_item_id+'"]').apply(el=>{
 
                     let value = el.getAttribute('data-value');
-
+                    console.log(value);
                     if(isNaN(value)){
                         value = 0;
                     }
