@@ -232,7 +232,30 @@
 
     <script type="module">
         import {$q} from '/adarna.js';
+        
+        function total_component_item_material_expense(){
 
+            $q('.component_item_material_expense_total').apply(elem=>{
+                let component_item_id = elem.getAttribute('data-id');
+                let total = 0;
+
+                $q('.component_item_expense [data-component_item_id="'+component_item_id+'"]').apply(el=>{
+
+                    let value = el.getAttribute('data-value');
+
+                    if(isNaN(value)){
+                        value = 0;
+                    }
+
+                    total = total + value;
+                });
+
+                elem.innerText = '(EX) P '+window.util.numberFormat(total);
+                elem.setAttribute('data-value',total);
+            });
+        }
+
+        total_component_item_material_expense();
         
     </script>
 </div>
