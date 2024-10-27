@@ -239,8 +239,8 @@
                 let component_item_id = elem.getAttribute('data-id');
                 let total = 0;
                
-                $q('.component_item_material_expense [data-component_item_id="'+component_item_id+'"]').apply(el=>{
-                    console.log(el);
+                $q('.component_item_material_expense[data-component_item_id="'+component_item_id+'"]').apply(el=>{
+                    
                     let value = el.getAttribute('data-value');
                     
                     if(isNaN(value)){
