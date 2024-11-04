@@ -293,7 +293,7 @@
                     total = total + value;
                 });
 
-                elem.innerText = '(ME) P '+window.util.numberFormat(total);
+                elem.innerText = '(MB) P '+window.util.numberFormat(total);
                 elem.setAttribute('data-value',total);
             });
         }
