@@ -106,7 +106,7 @@
                         </div>
                     </td>
                     <td class="contract_item text-end">
-                        <p class="contract_item_ex_percent_ex_text text-end" data-id="{{$contract_item_id}}">
+                        <p class="contract_item_material_expense_total text-end" data-id="{{$contract_item_id}}">
                             P 0.00
                         </p>      
                     </td>
@@ -127,9 +127,9 @@
 
                         <td class="text-end component">
                             
-                            <div class="component_material_budget_total"  data-id="{{$component_id}}" data-value="0"> - </div>
+                            <div class="fw-bold component_material_budget_total"  data-id="{{$component_id}}" data-value="0"> - </div>
 
-                            <div class="component_material_expense_total" data-id="{{$component_id}}" data-value="0" > - </div> 
+                            <div class="fw-bold component_material_expense_total" data-contract_item_id="contract_item_id" data-id="{{$component_id}}" data-value="0" > - </div> 
                         </td>
                     </tr>
 
@@ -298,9 +298,34 @@
             });
         }
 
+        function contract_item_material_expense(){
+            $q('.contract_item_material_expense_total').apply(elem=>{
+                let contract_item_id = elem.getAttribute('data-id');
+                let total = 0;
+            
+                $q('.component_material_expense_total[data-contract_item_id="'+contract_item_id+'"]').apply(el=>{
+                    
+                    let value = parseFloat( el.getAttribute('data-value') );
+                    
+                    if(isNaN(value)){
+                        value = 0;
+                    }
+
+                    total = total + value;
+                });
+
+                elem.innerText = '(EX) P '+window.util.numberFormat(total);
+                elem.setAttribute('data-value',total);
+            });
+        }
+
         total_component_item_material_expense();
+
         total_component_material_expense();
+        
         total_component_material_budget();
+        
+        contract_item_material_expense();
         
     </script>
 </div>
