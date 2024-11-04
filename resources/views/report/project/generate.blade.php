@@ -92,7 +92,7 @@
                         </div>
                     </td>
                     <td class="contract_item text-end">
-                        <p class="fw-bold text-end mb-0 contract_item_mb contract_item_mb_text" data-id="{{$contract_item_id}}">
+                        <p class="fw-bold text-end mb-0 contract_item_material_budget_total" data-id="{{$contract_item_id}}">
                             P 0.00
                         </p>
                     </td>
@@ -298,7 +298,7 @@
             });
         }
 
-        function contract_item_material_expense(){
+        function total_contract_item_material_expense(){
             $q('.contract_item_material_expense_total').apply(elem=>{
                 let contract_item_id = elem.getAttribute('data-id');
                 let total = 0;
@@ -319,14 +319,38 @@
             });
         }
 
+        contract_item_material_budget_total
+
+        function total_contract_item_material_budget(){
+            $q('.contract_item_material_budget_total').apply(elem=>{
+                let contract_item_id = elem.getAttribute('data-id');
+                let total = 0;
+            
+                $q('.component_material_budget_total[data-contract_item_id="'+contract_item_id+'"]').apply(el=>{
+                    
+                    let value = parseFloat( el.getAttribute('data-value') );
+                    
+                    if(isNaN(value)){
+                        value = 0;
+                    }
+
+                    total = total + value;
+                });
+
+                elem.innerText = '(MB) P '+window.util.numberFormat(total);
+                elem.setAttribute('data-value',total);
+            });
+        }
+
         total_component_item_material_expense();
 
         total_component_material_expense();
         
         total_component_material_budget();
         
-        contract_item_material_expense();
+        total_contract_item_material_expense();
         
+        total_contract_item_material_budget();
     </script>
 </div>
 @endsection
