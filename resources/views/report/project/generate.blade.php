@@ -319,8 +319,6 @@
             });
         }
 
-        contract_item_material_budget_total
-
         function total_contract_item_material_budget(){
             $q('.contract_item_material_budget_total').apply(elem=>{
                 let contract_item_id = elem.getAttribute('data-id');
