@@ -57,7 +57,7 @@
         <div class="mb-5">
             <div>
                 <h3>Material Budget</h3>
-                <h5 id="material_budget_grand_total_text"></h5>
+                <h5 id="material_budget_grand_total"></h5>
                 <div class="progress">
                     <div class="progress-bar bg-warning" id="material_budget_grand_total_percent" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> 100% </div>
                 </div>
@@ -67,7 +67,7 @@
         <div class="mb-5">
             <div>
                 <h3>Material Expense</h3>
-                <h5 id="material_budget_grand_total_text"></h5>
+                <h5 id="material_expense_grand_total"></h5>
                 <div class="progress">
                     <div class="progress-bar bg-warning" id="material_budget_grand_total_percent" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> 100% </div>
                 </div>
@@ -92,7 +92,7 @@
                         </div>
                     </td>
                     <td class="contract_item text-end">
-                        <p class="fw-bold text-end mb-0 contract_item_material_budget_total" data-id="{{$contract_item_id}}">
+                        <p class="fw-bold text-end mb-0 contract_item_material_budget_total" data-id="{{$contract_item_id}}" data-value="0">
                             P 0.00
                         </p>
                     </td>
@@ -106,7 +106,7 @@
                         </div>
                     </td>
                     <td class="contract_item text-end">
-                        <p class="contract_item_material_expense_total text-end" data-id="{{$contract_item_id}}">
+                        <p class="fw-bold contract_item_material_expense_total text-end" data-id="{{$contract_item_id}}" data-value="0">
                             P 0.00
                         </p>      
                     </td>
@@ -340,6 +340,27 @@
             });
         }
 
+        function grand_total_material_expense(){
+
+            let elem  = $q('#material_expense_grand_total').first();
+            let total = 0;
+            
+                $q('.contract_item_material_expense_total').apply(el=>{
+                    
+                    let value = parseFloat( el.getAttribute('data-value') );
+                    
+                    if(isNaN(value)){
+                        value = 0;
+                    }
+
+                    total = total + value;
+                });
+
+                elem.innerText = '(MB) P '+window.util.numberFormat(total);
+                elem.setAttribute('data-value',total);
+            
+        }
+
         total_component_item_material_expense();
 
         total_component_material_expense();
@@ -349,6 +370,8 @@
         total_contract_item_material_expense();
         
         total_contract_item_material_budget();
+
+        grand_total_material_expense();
     </script>
 </div>
 @endsection
