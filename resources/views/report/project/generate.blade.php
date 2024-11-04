@@ -141,12 +141,12 @@
                             <th style="padding-left:2em" class="component_item" data-value="{{$component_item_material_budget}}">{{$component_item_arr[$component_item_id]->name}}</th>
                             <td>
                                 <div>
-                                    <p class="fw-bold component_item_material_budget_total" data-value="{{$component_item_material_budget}}">
+                                    <p class="fw-bold component_item_material_budget_total" data-component_id="{{$component_id}}" data-value="{{$component_item_material_budget}}">
                                         (MB) P {{ number_format($component_item_material_budget,2) }}
                                     </p>
                                 </div>
                                 <div>
-                                    <p class="component_item_material_expense_total" data-component_id="{{$component_id}}" data-id="{{$component_item_id}}" data-value="0"> - <p>
+                                    <p class="fw-bold component_item_material_expense_total" data-component_id="{{$component_id}}" data-id="{{$component_item_id}}" data-value="0"> - <p>
                                 </div>
                             </td>
                         </tr>
@@ -273,6 +273,27 @@
                 });
 
                 elem.innerText = '(EX) P '+window.util.numberFormat(total);
+                elem.setAttribute('data-value',total);
+            });
+        }
+
+        function total_component_material_budget(){
+            $q('.component_material_budget_total').apply(elem=>{
+                let component_id = elem.getAttribute('data-id');
+                let total = 0;
+            
+                $q('.component_item_material_budget_total[data-component_id="'+component_id+'"]').apply(el=>{
+                    
+                    let value = parseFloat( el.getAttribute('data-value') );
+                    
+                    if(isNaN(value)){
+                        value = 0;
+                    }
+
+                    total = total + value;
+                });
+
+                elem.innerText = '(MB) P '+window.util.numberFormat(total);
                 elem.setAttribute('data-value',total);
             });
         }
