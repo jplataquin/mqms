@@ -300,6 +300,7 @@
 
         total_component_item_material_expense();
         total_component_material_expense();
+        total_component_material_budget();
         
     </script>
 </div>
