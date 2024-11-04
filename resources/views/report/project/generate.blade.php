@@ -250,7 +250,7 @@
                     total = total + value;
                 });
 
-                elem.innerText = '(EX) P '+window.util.numberFormat(total);
+                elem.innerText = '(ME) P '+window.util.numberFormat(total);
                 elem.setAttribute('data-value',total);
             });
         }
@@ -272,7 +272,7 @@
                     total = total + value;
                 });
 
-                elem.innerText = '(EX) P '+window.util.numberFormat(total);
+                elem.innerText = '(ME) P '+window.util.numberFormat(total);
                 elem.setAttribute('data-value',total);
             });
         }
@@ -293,7 +293,7 @@
                     total = total + value;
                 });
 
-                elem.innerText = '(MB) P '+window.util.numberFormat(total);
+                elem.innerText = '(ME) P '+window.util.numberFormat(total);
                 elem.setAttribute('data-value',total);
             });
         }
@@ -314,7 +314,7 @@
                     total = total + value;
                 });
 
-                elem.innerText = '(EX) P '+window.util.numberFormat(total);
+                elem.innerText = '(ME) P '+window.util.numberFormat(total);
                 elem.setAttribute('data-value',total);
             });
         }
@@ -356,9 +356,30 @@
                     total = total + value;
                 });
 
-                elem.innerText = '(MB) P '+window.util.numberFormat(total);
+                elem.innerText = 'P '+window.util.numberFormat(total);
                 elem.setAttribute('data-value',total);
             
+        }
+
+        function grand_total_material_budget(){
+
+            let elem  = $q('#material_budget_grand_total').first();
+            let total = 0;
+
+            $q('.contract_item_material_budget_total').apply(el=>{
+                
+                let value = parseFloat( el.getAttribute('data-value') );
+                
+                if(isNaN(value)){
+                    value = 0;
+                }
+
+                total = total + value;
+            });
+
+            elem.innerText = 'P '+window.util.numberFormat(total);
+            elem.setAttribute('data-value',total);
+
         }
 
         total_component_item_material_expense();
@@ -372,6 +393,8 @@
         total_contract_item_material_budget();
 
         grand_total_material_expense();
+
+        grand_total_material_budget();
     </script>
 </div>
 @endsection
