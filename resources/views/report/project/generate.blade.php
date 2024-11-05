@@ -159,7 +159,7 @@
                             <tr>
 
                                 <td style="padding-left:3em" class="material_item">{{ $material_item->formatted_name() }}</td>
-                                <td class="component_item_material_expense" data-component_item_id="{{$component_item_id}}" data-value="{{$result['po_amount']}}">
+                                <td class="component_item_material_expense text-end" data-component_item_id="{{$component_item_id}}" data-value="{{$result['po_amount']}}">
                                     
                                     (ME) P {{ number_format($result['po_amount'],2) }}
                                     <br>
