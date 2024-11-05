@@ -69,7 +69,7 @@
         <div class="mb-5 row">
             <div class="col-lg-12">
                 <div class="progress">
-                    <div class="progress-bar bg-warning" id="material_expense_grand_total_percent" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> 100% </div>
+                    <div class="progress-bar bg-primary" id="material_expense_grand_total_percent" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> 100% </div>
                 </div>
             </div>
         </div>
@@ -89,7 +89,7 @@
                     <td class="contract_item">
                         <p>Expense / Budget</p>
                         <div class="progress">
-                            <div class="progress-bar bg-warning contract_item_percent" data-id="{{$contract_item_id}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
+                            <div class="progress-bar bg-primary contract_item_percent" data-id="{{$contract_item_id}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
                         </div>
                     </td>
                     <td class="contract_item text-end">
@@ -193,7 +193,7 @@
                                     PO Qty
 
                                     <div class="progress">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{$po_percentage}}%;" aria-valuenow="{{$po_percentage}}" aria-valuemin="0" aria-valuemax="100">{{$po_percentage}}%</div>
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: {{$po_percentage}}%;" aria-valuenow="{{$po_percentage}}" aria-valuemin="0" aria-valuemax="100">{{$po_percentage}}%</div>
                                     </div>
                                     
                                 </td>
