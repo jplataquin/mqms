@@ -131,12 +131,12 @@
                             <th style="padding-left:2em" class="component_item" data-value="{{$component_item_material_budget}}">{{$component_item_arr[$component_item_id]->name}}</th>
                             <td>
                                 <div>
-                                    <p class="fw-bold component_item_material_budget_total" data-component_id="{{$component_id}}" data-value="{{$component_item_material_budget}}">
+                                    <p class="fw-bold component_item_material_budget_total" data-id="{{$component_item_id}}" data-component_id="{{$component_id}}" data-value="{{$component_item_material_budget}}">
                                         (MB) P {{ number_format($component_item_material_budget,2) }}
                                     </p>
                                 </div>
                                 <div>
-                                    <p class="fw-bold component_item_material_expense_total" data-component_id="{{$component_id}}" data-id="{{$component_item_id}}" data-value="0"> - <p>
+                                    <p class="fw-bold component_item_material_expense_total check" data-check-target=".component_item_material_budget_total[data-id='{{$component_item_id}}']" data-component_id="{{$component_id}}" data-id="{{$component_item_id}}" data-value="0"> - <p>
                                 </div>
                             </td>
                         </tr>
@@ -216,6 +216,8 @@
     <script type="module">
         import {$q} from '/adarna.js';
         
+        let overbudget_count = 0;
+
         function total_component_item_material_expense(){
 
             $q('.component_item_material_expense_total').apply(elem=>{
@@ -429,6 +431,7 @@
                 
                 if(value > target_value){
                     elem.classList.add('text-danger');
+                    overbudget_count++;
                 }
             });
         }
