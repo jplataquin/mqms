@@ -388,10 +388,10 @@
 
                 let contract_item_id    = elem.getAttribute('data-id');
 
-                console.log(contract_item_id, $q('.contract_item_material_budget_total[data-id="'+contract_item_id+'"]').first());
+                console.log(contract_item_id, $q('.contract_item_material_budget_total[data-id="'+contract_item_id+'"]').first().getAttribute('data-value'));
 
-                let total_budget        = parseFloat( $q('.contract_item_material_budget_total[data-id="'+contract_item_id+'"]').first().getAttribute('data-amount') );
-                let total_expense       = parseFloat( $q('.contract_item_material_expense_total[data-id="'+contract_item_id+'"]').first().getAttribute('data-amount') );
+                let total_budget        = parseFloat( $q('.contract_item_material_budget_total[data-id="'+contract_item_id+'"]').first().getAttribute('data-value') );
+                let total_expense       = parseFloat( $q('.contract_item_material_expense_total[data-id="'+contract_item_id+'"]').first().getAttribute('data-value') );
 
                 console.log(total_budget, total_expense);
                 //Skip if total budget is zero
