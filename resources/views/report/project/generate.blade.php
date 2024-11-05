@@ -123,6 +123,10 @@
                             <div class="fw-bold component_material_budget_total" data-contract_item_id="{{$contract_item_id}}" data-id="{{$component_id}}" data-value="0"> - </div>
 
                             <div class="fw-bold component_material_expense_total check" data-check-target=".component_material_budget_total[data-id='{{$component_id}}']" data-contract_item_id="{{$contract_item_id}}" data-id="{{$component_id}}" data-value="0" > - </div> 
+
+                            <div class="fw-bold component_po_overhead_total" data-value="{{$total_po_overhead_arr[$component_id]}}" data-id="{{$component_id}}">
+                                (MO) P {{ number_format($total_po_overhead_arr[$component_id],2) }}
+                            </div>
                         </td>
                     </tr>
 

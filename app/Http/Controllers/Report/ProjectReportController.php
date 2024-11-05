@@ -97,6 +97,7 @@ class ProjectReportController extends Controller {
         $component_item_arr     = [];
         $material_quantity_arr  = [];
         $material_item_arr      = [];
+        $total_po_overhead_arr  = [];
 
         $contract_items = ContractItem::where('section_id',$section_id)->where('deleted_at',null)->orderBy('item_code','ASC');
 
@@ -130,6 +131,32 @@ class ProjectReportController extends Controller {
                 if( !isset( $report[ $contract_item->id ][ $component->id ] ) ){
                     $report[ $contract_item->id ][ $component->id ] = [];
                 }
+
+
+                $purchase_orders = PurchaseOrder::where('component_id',$component->id)
+                ->where('status','APRV')
+                ->where('project_id', $project_id)
+                ->where('section_id',$section_id)
+                ->get();
+
+                $total_po_overhead = 0;
+
+                foreach($purchase_orders as $purchase_order){
+                    
+                    try{
+
+                        $extras = json_decode($purchase_order->extras);
+                        
+                        foreach($extras as $key=>$value){
+                            $total_po_overhead = $total_po_overhead + (float) $value;
+                        }
+
+                    }catch(\Exception $e){
+                        //do nothing
+                    }
+                }
+
+                $total_po_overhead_arr[ $component->id ]['total_po_overhead'] = $total_po_overhead;
 
                 $component_arr[ $component->id ] = $component;
 
@@ -195,6 +222,7 @@ class ProjectReportController extends Controller {
             'component_item_arr'    => $component_item_arr,
             'material_quantity_arr' => $material_quantity_arr,
             'material_item_arr'     => $material_item_arr,
+            'total_po_overhead_arr' => $total_po_overhead_arr,
             'report'                => $report,
             'from'                  => $from,
             'to'                    => $to,
