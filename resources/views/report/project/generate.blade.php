@@ -388,8 +388,8 @@
 
                 let contract_item_id    = elem.getAttribute('data-id');
 
-                console.log(contract_item_id);
-                
+                console.log(contract_item_id, $q('.contract_item_material_budget_total[data-id="'+contract_item_id+'"]').first());
+
                 let total_budget        = parseFloat( $q('.contract_item_material_budget_total[data-id="'+contract_item_id+'"]').first().getAttribute('data-amount') );
                 let total_expense       = parseFloat( $q('.contract_item_material_expense_total[data-id="'+contract_item_id+'"]').first().getAttribute('data-amount') );
 
