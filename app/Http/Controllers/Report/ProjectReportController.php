@@ -148,8 +148,8 @@ class ProjectReportController extends Controller {
 
                         $extras = json_decode($purchase_order->extras);
                         
-                        foreach($extras as $key=>$value){
-                            $total_po_overhead = $total_po_overhead + (float) $value;
+                        foreach($extras as $extra){
+                            $total_po_overhead = $total_po_overhead + (float) $extra->value;
                         }
 
                     }catch(\Exception $e){

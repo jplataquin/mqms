@@ -703,10 +703,10 @@ class PurchaseOrderController extends Controller
         
     
         $html = view('purchase_order/print',[
-            'purchase_order'            => $purchaseOrder,
-            'material_quantity_request' => $materialQuantityRequest,
-            'project'                   => $project,
-            'section'                   => $section,
+            'purchase_order'                    => $purchaseOrder,
+            'material_quantity_request'         => $materialQuantityRequest,
+            'project'                           => $project,
+            'section'                           => $section,
             'component'                         => $component,
             'supplier'                          => $supplier,
             'payment_term'                      => $paymentTerm,
