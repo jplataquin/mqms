@@ -152,7 +152,7 @@
 
                                 <td style="padding-left:3em" class="material_item">{{ $material_item->formatted_name() }}</td>
                                 <td class="component_item_material_expense" data-component_item_id="{{$component_item_id}}" data-value="{{$result['po_amount']}}">
-                                    {{ number_format($result['budget_quantity'],2) }} Qty
+                                    <span data-value="{{$result['budget_quantity']}}" class="budget_quantity" data-id="{{$material_quantity_id}}">{{ number_format($result['budget_quantity'],2) }} Qty</span>
                                     <br>
                                     (ME) P {{ number_format($result['po_amount'],2) }}
                                 </td>
@@ -176,7 +176,7 @@
                                     
                                 </td>
                                 <td style="padding-top:1.8em">
-                                    {{ number_format($result['request_quantity'],2) }} Qty
+                                    <span data-value="{{$result['request_quantity']}}" class="request_quantity check" data-check-target=".budget_quantity[data-id='{{$material_quantity_id}}']" data-id="{{$material_quantity_id}}">{{ number_format($result['request_quantity'],2) }} Qty</span>
                                 </td>
                             </tr>
                             <tr>
@@ -197,7 +197,7 @@
                                     </div>
                                     
                                 </td>
-                                <td style="padding-top:1.8em">
+                                <td style="padding-top:1.8em" class="check" data-check-target=".request_quantity[data-id='{{$material_quantity_id}}']">
                                     {{ number_format($result['po_quantity'],2) }} Qty
                                 </td>
                             </tr>
@@ -400,6 +400,29 @@
 
             target.style.width  = percentage+'%';
             target.innerText    = percentage+'%';
+        }
+
+        function check(){
+
+            $q('.check').apply(elem=>{
+
+                elem.classList.remove('text-danger');
+
+                let target_query = elem.getAttribute('data-check-target');
+                let value  = parseFloat( elem.getAttribute('data-value') );
+                
+                if(!target) return false;
+
+                let target = $q(target_query).first();
+
+                if(!target) return false;
+
+                let target_value = parseFloat( target.getAttribute('data-value') );
+
+                if(value > target_value){
+                    elem.classList.add('text-danger');
+                }
+            });
         }
 
         /** Note the function call must run in order **/
