@@ -56,15 +56,24 @@
 
         <div class="mb-5">
             <div>
-                <h3>Material Budget</h3>
+                <h3>Total Budget</h3>
                 <h5 id="material_budget_grand_total"></h5>
             </div>
         </div>
 
-        <div class="mb-5">
-            <div>
+        <div class="mb-5 row">
+            <div class="col-lg-6 text-center">
+                <h3>Total Budget</h3>
+                <h5 id="material_budget_grand_total"></h5>
+            
+            </div>
+            <div class="col-lg-6 text-center">
                 <h3>Total Expense</h3>
                 <h5 id="material_expense_grand_total"></h5>
+            </div>
+        </div>
+        <div class="mb-5 row">
+            <div class="col-lg-12">
                 <div class="progress">
                     <div class="progress-bar bg-warning" id="material_expense_grand_total_percent" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> 100% </div>
                 </div>
