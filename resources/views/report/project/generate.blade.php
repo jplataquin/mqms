@@ -197,7 +197,7 @@
                                     </div>
                                     
                                 </td>
-                                <td style="padding-top:1.8em" class="check" data-value="{{$result['po_quantity']}}" data-check-target=".request_quantity[data-id='{{$material_quantity_id}}']">
+                                <td style="padding-top:1.8em" class="check" data-value="100000" data-check-target=".request_quantity[data-id='{{$material_quantity_id}}']">
                                     {{ number_format($result['po_quantity'],2) }} Qty
                                 </td>
                             </tr>
@@ -409,6 +409,10 @@
                 let target_query = elem.getAttribute('data-check-target');
                 let value  = parseFloat( elem.getAttribute('data-value') );
                 
+                if(isNaN(value)){
+                    value = 0;
+                }
+
                 if(!target_query) return false;
 
                 let target = $q(target_query).first();
@@ -417,7 +421,10 @@
 
                 let target_value = parseFloat( target.getAttribute('data-value') );
 
-                console.log(elem,value,target_value);
+                if(isNaN(target_value)){
+                    target_value = 0;
+                }
+                
                 if(value > target_value){
                     elem.classList.add('text-danger');
                 }
