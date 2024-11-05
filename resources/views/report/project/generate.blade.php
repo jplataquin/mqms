@@ -152,9 +152,11 @@
 
                                 <td style="padding-left:3em" class="material_item">{{ $material_item->formatted_name() }}</td>
                                 <td class="component_item_material_expense" data-component_item_id="{{$component_item_id}}" data-value="{{$result['po_amount']}}">
-                                    <span data-value="{{$result['budget_quantity']}}" class="budget_quantity" data-id="{{$material_quantity_id}}">{{ number_format($result['budget_quantity'],2) }} Qty</span>
-                                    <br>
+                                    
                                     (ME) P {{ number_format($result['po_amount'],2) }}
+                                    <br>
+                                    <span data-value="{{$result['budget_quantity']}}" class="budget_quantity" data-id="{{$material_quantity_id}}">{{ number_format($result['budget_quantity'],2) }} Qty</span>
+                                    
                                 </td>
                             </tr>
                             <tr>
@@ -197,7 +199,7 @@
                                     </div>
                                     
                                 </td>
-                                <td style="padding-top:1.8em" class="check" data-value="100000" data-check-target=".request_quantity[data-id='{{$material_quantity_id}}']">
+                                <td style="padding-top:1.8em" class="check" data-value="{{$result['po_quantity']}}" data-check-target=".request_quantity[data-id='{{$material_quantity_id}}']">
                                     {{ number_format($result['po_quantity'],2) }} Qty
                                 </td>
                             </tr>
