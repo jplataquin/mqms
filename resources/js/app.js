@@ -538,10 +538,13 @@ window.util.numberFormat = function(val,fractionDigits){
     console.log('---');
     console.log(val);
 
-    let a = new Intl.NumberFormat('en-US', {minimumFractionDigits: fractionDigits});
+    let a = new Intl.NumberFormat('en-US', {minimumFractionDigits: fractionDigits,maximumFractionDigits: fractionDigits});
     console.log(a.format(val));
 
-    return (new Intl.NumberFormat('en-US', {minimumFractionDigits: fractionDigits})).format(val);
+    return (new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: fractionDigits,
+        maximumFractionDigits: fractionDigits
+    })).format(val);
    
 }
 
