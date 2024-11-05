@@ -58,12 +58,12 @@
         <div class="mb-5 row">
             <div class="col-lg-6 text-center">
                 <h3>Total Budget</h3>
-                <h5 id="material_budget_grand_total"></h5>
+                <h5 id="material_budget_grand_total" data-value="0">-</h5>
             
             </div>
             <div class="col-lg-6 text-center">
                 <h3>Total Expense</h3>
-                <h5 id="material_expense_grand_total"></h5>
+                <h5 id="material_expense_grand_total" class="check" data-check-target="#material_budget_grand_total" data-value="0">-</h5>
             </div>
         </div>
         <div class="mb-5 row">
@@ -96,7 +96,7 @@
                         <p class="fw-bold text-end mb-0 contract_item_material_budget_total" data-id="{{$contract_item_id}}" data-value="0">
                             P 0.00
                         </p>
-                        <p class="fw-bold contract_item_material_expense_total text-end" data-id="{{$contract_item_id}}" data-value="0">
+                        <p class="fw-bold contract_item_material_expense_total text-end check" data-check-target=".contract_item_material_budget_total[data-id='{{$contract_item_id}}']" data-id="{{$contract_item_id}}" data-value="0">
                             P 0.00
                         </p>      
                     </td>
@@ -410,6 +410,7 @@
 
             target.style.width  = percentage+'%';
             target.innerText    = percentage+'%';
+
         }
 
         function check(){
