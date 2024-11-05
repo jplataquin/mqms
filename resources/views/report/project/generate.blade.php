@@ -417,6 +417,7 @@
 
                 let target_value = parseFloat( target.getAttribute('data-value') );
 
+                console.log(value,target_value);
                 if(value > target_value){
                     elem.classList.add('text-danger');
                 }
