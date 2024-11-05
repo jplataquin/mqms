@@ -58,18 +58,15 @@
             <div>
                 <h3>Material Budget</h3>
                 <h5 id="material_budget_grand_total"></h5>
-                <div class="progress">
-                    <div class="progress-bar bg-warning" id="material_budget_grand_total_percent" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> 100% </div>
-                </div>
             </div>
         </div>
 
         <div class="mb-5">
             <div>
-                <h3>Material Expense</h3>
+                <h3>Total Expense</h3>
                 <h5 id="material_expense_grand_total"></h5>
                 <div class="progress">
-                    <div class="progress-bar bg-warning" id="material_budget_grand_total_percent" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> 100% </div>
+                    <div class="progress-bar bg-warning" id="material_expense_grand_total_percent" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> 100% </div>
                 </div>
             </div>
         </div>
@@ -387,6 +384,21 @@
             });
         }
 
+        function grand_total_material_expense_percentage(){
+
+            let target                          = $q('#material_expense_grand_total_percent').first();
+            let material_expense_grand_total    = parseFloat( $q('#material_expense_grand_total').first().getAttribute('data-value') );
+            let material_budget_grand_total     = parseFloat( $q('#material_budget_grand_total').first().getAttribute('data-value') );
+
+            if(material_budget_grand_total <= 0 ) return false;
+
+            let percentage  = (material_expense_grand_total / material_budget_grand_total) * 100;
+            percentage      = Math.round(percentage);
+
+            target.style.width  = percentage+'%';
+            target.innerText    = percentage+'%';
+        }
+
         /** Note the function call must run in order **/
 
         total_component_item_material_expense();
@@ -403,8 +415,9 @@
 
         grand_total_material_budget();
 
-
         contract_item_percentage();
+
+        grand_total_material_expense_percentage();
     </script>
 </div>
 @endsection
