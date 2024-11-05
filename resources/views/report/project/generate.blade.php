@@ -197,7 +197,7 @@
                                     </div>
                                     
                                 </td>
-                                <td style="padding-top:1.8em" class="check" data-check-target=".request_quantity[data-id='{{$material_quantity_id}}']">
+                                <td style="padding-top:1.8em" class="check" data-value="{{$result['po_quantity']}}" data-check-target=".request_quantity[data-id='{{$material_quantity_id}}']">
                                     {{ number_format($result['po_quantity'],2) }} Qty
                                 </td>
                             </tr>
