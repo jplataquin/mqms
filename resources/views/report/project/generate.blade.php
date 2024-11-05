@@ -162,18 +162,9 @@
 
                                 <td style="padding-left:3em" class="material_item">{{ $material_item->formatted_name() }}</td>
                                 <td class="component_item_material_expense" data-component_item_id="{{$component_item_id}}" data-value="{{$result['po_amount']}}">
-                                    (ME) P {{ number_format($result['po_amount'],2) }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-left:5em">
-                                    Budget Qty
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
-                                    </div>
-                                </td>
-                                <td style="padding-top:1.8em">
                                     {{ number_format($result['budget_quantity'],2) }} Qty
+                                    <br>
+                                    (ME) P {{ number_format($result['po_amount'],2) }}
                                 </td>
                             </tr>
                             <tr>
