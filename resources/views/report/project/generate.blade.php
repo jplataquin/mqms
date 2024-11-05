@@ -96,12 +96,15 @@
                         </div>
                     </td>
                     <td class="contract_item text-end">
-                        <p class="fw-bold text-end mb-0 contract_item_material_budget_total" data-id="{{$contract_item_id}}" data-value="0">
-                            P 0.00
-                        </p>
-                        <p class="fw-bold contract_item_material_expense_total text-end check" data-check-target=".contract_item_material_budget_total[data-id='{{$contract_item_id}}']" data-id="{{$contract_item_id}}" data-value="0">
-                            P 0.00
-                        </p>      
+                        <div class="fw-bold text-end mb-0 contract_item_material_budget_total" data-id="{{$contract_item_id}}" data-value="0">
+                            (MB) P 0.00
+                        </div>
+                        <div class="fw-bold contract_item_material_expense_total text-end check" data-check-target=".contract_item_material_budget_total[data-id='{{$contract_item_id}}']" data-id="{{$contract_item_id}}" data-value="0">
+                            (ME) P 0.00
+                        </div>
+                        <div class="fw-bold contract_item_material_overhead_total text-end" data-id="{{$contract_item_id}}" data-value="0">
+                            (MO) P 0.00
+                        </div>       
                     </td>
                 </tr>
                     
@@ -124,7 +127,7 @@
 
                             <div class="fw-bold component_material_expense_total check" data-check-target=".component_material_budget_total[data-id='{{$component_id}}']" data-contract_item_id="{{$contract_item_id}}" data-id="{{$component_id}}" data-value="0" > - </div> 
 
-                            <div class="fw-bold component_po_overhead_total" data-value="{{$total_po_overhead_arr[$component_id]}}" data-id="{{$component_id}}">
+                            <div class="fw-bold component_material_overhead_total" data-value="{{$total_po_overhead_arr[$component_id]}}" data-id="{{$component_id}}">
                                 (MO) P {{ number_format($total_po_overhead_arr[$component_id],2) }}
                             </div>
                         </td>
@@ -338,6 +341,28 @@
             });
         }
 
+        function total_contract_item_material_overhead(){
+            
+            $q('.contract_item_material_overhead_total').apply(elem=>{
+                let contract_item_id = elem.getAttribute('data-id');
+                let total = 0;
+            
+                $q('.component_material_overhead_total[data-contract_item_id="'+contract_item_id+'"]').apply(el=>{
+                    
+                    let value = parseFloat( el.getAttribute('data-value') );
+                    
+                    if(isNaN(value)){
+                        value = 0;
+                    }
+
+                    total = total + value;
+                });
+
+                elem.innerText = '(MO) P '+window.util.numberFormat(total);
+                elem.setAttribute('data-value',total);
+            });
+        }
+
         function grand_total_material_expense(){
 
             let elem  = $q('#material_expense_grand_total').first();
@@ -462,6 +487,8 @@
         
         total_contract_item_material_budget();
 
+        total_contract_item_material_overhead();
+        
         grand_total_material_expense();
 
         grand_total_material_budget();
