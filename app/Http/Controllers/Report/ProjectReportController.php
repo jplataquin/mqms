@@ -157,7 +157,7 @@ class ProjectReportController extends Controller {
                     }
                 }
 
-                $total_po_overhead_arr[ $component->id ]['total_po_overhead'] = $total_po_overhead;
+                $total_po_overhead_arr[ $component->id ] = $total_po_overhead;
 
                 $component_arr[ $component->id ] = $component;
 
