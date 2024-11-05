@@ -390,6 +390,7 @@
                 let total_budget        = parseFloat( $q('.contract_item_material_budget_total[data-id="'+contract_item_id+'"]').first().getAttribute('data-amount') );
                 let total_expense       = parseFloat( $q('.contract_item_material_expense_total[data-id="'+contract_item_id+'"]').first().getAttribute('data-amount') );
 
+                console.log(total_budget, total_expense);
                 //Skip if total budget is zero
                 if(total_budget <= 0) return false;
 
