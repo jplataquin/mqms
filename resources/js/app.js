@@ -535,12 +535,6 @@ window.util.numberFormat = function(val,fractionDigits){
         fractionDigits = 2;
     }
 
-    console.log('---');
-    console.log(val);
-
-    let a = new Intl.NumberFormat('en-US', {minimumFractionDigits: fractionDigits,maximumFractionDigits: fractionDigits});
-    console.log(a.format(val));
-
     return (new Intl.NumberFormat('en-US', {
         minimumFractionDigits: fractionDigits,
         maximumFractionDigits: fractionDigits
