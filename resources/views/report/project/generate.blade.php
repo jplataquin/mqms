@@ -54,12 +54,6 @@
         </div>
 
 
-        <div class="mb-5">
-            <div>
-                <h3>Total Budget</h3>
-                <h5 id="material_budget_grand_total"></h5>
-            </div>
-        </div>
 
         <div class="mb-5 row">
             <div class="col-lg-6 text-center">
