@@ -56,12 +56,12 @@
 
 
         <div class="mb-5 row">
-            <div class="col-lg-6 text-center">
+            <div class="col-lg-6 col-md-6 text-center">
                 <h3>Total Budget</h3>
                 <h5 id="material_budget_grand_total" data-value="0">-</h5>
             
             </div>
-            <div class="col-lg-6 text-center">
+            <div class="col-lg-6 col-md-6 text-center">
                 <h3>Total Expense</h3>
                 <h5 id="material_expense_grand_total" class="check" data-check-target="#material_budget_grand_total" data-value="0">-</h5>
             </div>
