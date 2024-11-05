@@ -119,7 +119,7 @@
                             
                             <div class="fw-bold component_material_budget_total" data-contract_item_id="{{$contract_item_id}}" data-id="{{$component_id}}" data-value="0"> - </div>
 
-                            <div class="fw-bold component_material_expense_total" data-contract_item_id="{{$contract_item_id}}" data-id="{{$component_id}}" data-value="0" > - </div> 
+                            <div class="fw-bold component_material_expense_total check" data-check-target=".component_material_budget_total[data-id='{{$component_id}}']" data-contract_item_id="{{$contract_item_id}}" data-id="{{$component_id}}" data-value="0" > - </div> 
                         </td>
                     </tr>
 
@@ -136,7 +136,15 @@
                                     </p>
                                 </div>
                                 <div>
-                                    <p class="fw-bold component_item_material_expense_total check" data-check-target=".component_item_material_budget_total[data-id='{{$component_item_id}}']" data-component_id="{{$component_id}}" data-id="{{$component_item_id}}" data-value="0"> - <p>
+                                    <p 
+                                        class="fw-bold component_item_material_expense_total check" 
+                                        data-check-target=".component_item_material_budget_total[data-id='{{$component_item_id}}']" 
+                                        data-component_id="{{$component_id}}" 
+                                        data-id="{{$component_item_id}}" 
+                                        data-value="0"
+                                    > 
+                                    - 
+                                    <p>
                                 </div>
                             </td>
                         </tr>
