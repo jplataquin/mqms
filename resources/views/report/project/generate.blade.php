@@ -84,28 +84,18 @@
                     </th>
                 </tr>
 
+
                 <tr>
                     <td class="contract_item">
-                        <p>Budget</p>    
-                        <div class="progress mb-3">
-                            <div class="progress-bar bg-primary contract_item_mb_percent" data-id="{{$contract_item_id}}" role="progressbar" style="width: 100%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> 100% </div>
+                        <p>Expense / Budget</p>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning contract_item_percent" data-id="{{$contract_item_id}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
                         </div>
                     </td>
                     <td class="contract_item text-end">
                         <p class="fw-bold text-end mb-0 contract_item_material_budget_total" data-id="{{$contract_item_id}}" data-value="0">
                             P 0.00
                         </p>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="contract_item">
-                        <p>Expense</p>
-                        <div class="progress">
-                            <div class="progress-bar bg-warning contract_item_percent" data-id="{{$contract_item_id}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
-                        </div>
-                    </td>
-                    <td class="contract_item text-end">
                         <p class="fw-bold contract_item_material_expense_total text-end" data-id="{{$contract_item_id}}" data-value="0">
                             P 0.00
                         </p>      
