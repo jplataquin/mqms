@@ -442,6 +442,8 @@
         contract_item_percentage();
 
         grand_total_material_expense_percentage();
+
+        check();
     </script>
 </div>
 @endsection
