@@ -409,7 +409,6 @@
                 let target_query = elem.getAttribute('data-check-target');
                 let value  = parseFloat( elem.getAttribute('data-value') );
                 
-                console.log(target_query);
                 if(!target_query) return false;
 
                 let target = $q(target_query).first();
