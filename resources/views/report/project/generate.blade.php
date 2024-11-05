@@ -168,7 +168,7 @@
                                         }
                                     @endphp
                                     
-                                    Request Qty
+                                    Request
 
                                     <div class="progress">
                                         <div class="progress-bar bg-primary" role="progressbar" style="width: {{$request_percentage}}%;" aria-valuenow="{{$request_percentage}}" aria-valuemin="0" aria-valuemax="100">{{$request_percentage}}%</div>
@@ -184,13 +184,13 @@
                                     @php 
                                         if($result['po_quantity']){
                                             $po_percentage = ($result['po_quantity'] / $result['budget_quantity']) * 100;
-                                            $po_percentage = round($request_percentage,2);
+                                            $po_percentage = round($po_percentage,2);
                                         }else{
                                             $po_percentage = 0;
                                         }
                                     @endphp
                                     
-                                    PO Qty
+                                    PO
 
                                     <div class="progress">
                                         <div class="progress-bar bg-primary" role="progressbar" style="width: {{$po_percentage}}%;" aria-valuenow="{{$po_percentage}}" aria-valuemin="0" aria-valuemax="100">{{$po_percentage}}%</div>
