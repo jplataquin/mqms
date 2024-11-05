@@ -88,7 +88,7 @@
                     <td class="contract_item">
                         <p>Budget</p>    
                         <div class="progress mb-3">
-                            <div class="progress-bar bg-primary contract_item_mb_percent" data-id="{{$contract_item_id}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
+                            <div class="progress-bar bg-primary contract_item_mb_percent" data-id="{{$contract_item_id}}" role="progressbar" style="width: 100%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> 100% </div>
                         </div>
                     </td>
                     <td class="contract_item text-end">
@@ -102,7 +102,7 @@
                     <td class="contract_item">
                         <p>Expense</p>
                         <div class="progress">
-                            <div class="progress-bar bg-warning contract_item_ex_percent" data-id="{{$contract_item_id}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
+                            <div class="progress-bar bg-warning contract_item_percent" data-id="{{$contract_item_id}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
                         </div>
                     </td>
                     <td class="contract_item text-end">
@@ -162,7 +162,7 @@
 
                                 <td style="padding-left:3em" class="material_item">{{ $material_item->formatted_name() }}</td>
                                 <td class="component_item_material_expense" data-component_item_id="{{$component_item_id}}" data-value="{{$result['po_amount']}}">
-                                    (EX) P {{ number_format($result['po_amount'],2) }}
+                                    (ME) P {{ number_format($result['po_amount'],2) }}
                                 </td>
                             </tr>
                             <tr>
@@ -382,6 +382,28 @@
 
         }
 
+        function contract_item_percentage(){
+
+            $q('.contract_item_percent').apply(elem=>{
+
+                let contract_item_id    = elem.getAttribute('data-id');
+                let total_budget        = parseFloat( $q('.contract_item_material_budget_total[data-id="'+contract_item_id+'"]').first().getAttribute('data-amount') );
+                let total_expense       = parseFloat( $q('.contract_item_material_expense_total[data-id="'+contract_item_id+'"]').first().getAttribute('data-amount') );
+
+                //Skip if total budget is zero
+                if(total_budget <= 0) return false;
+
+                let percentage = (total_expense / total_budget) * 100;
+
+                percentage = Math.round(percentage);
+
+                elem.style.width    = percentage+'%';
+                elem.innerText      = percentage+'%';
+            });
+        }
+
+        /** Note the function call must run in order **/
+
         total_component_item_material_expense();
 
         total_component_material_expense();
@@ -395,6 +417,9 @@
         grand_total_material_expense();
 
         grand_total_material_budget();
+
+
+        contract_item_percentage();
     </script>
 </div>
 @endsection
