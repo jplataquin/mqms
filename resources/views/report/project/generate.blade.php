@@ -185,7 +185,7 @@
                                     </div>
                                     
                                 </td>
-                                <td style="padding-top:1.8em">
+                                <td style="padding-top:1.8em" class="text-end">
                                     <span data-value="{{$result['request_quantity']}}" class="request_quantity check" data-check-target=".budget_quantity[data-id='{{$material_quantity_id}}']" data-id="{{$material_quantity_id}}">{{ number_format($result['request_quantity'],2) }} Qty</span>
                                 </td>
                             </tr>
@@ -207,7 +207,7 @@
                                     </div>
                                     
                                 </td>
-                                <td style="padding-top:1.8em" class="check" data-value="{{$result['po_quantity']}}" data-check-target=".request_quantity[data-id='{{$material_quantity_id}}']">
+                                <td style="padding-top:1.8em" class="check text-end" data-value="{{$result['po_quantity']}}" data-check-target=".request_quantity[data-id='{{$material_quantity_id}}']">
                                     {{ number_format($result['po_quantity'],2) }} Qty
                                 </td>
                             </tr>
