@@ -534,8 +534,14 @@ window.util.numberFormat = function(val,fractionDigits){
     if(!fractionDigits){
         fractionDigits = 2;
     }
-    
-    return (new Intl.NumberFormat('en-US', {minimumFractionDigits: 2})).format(val);
+
+    console.log('---');
+    console.log(val);
+
+    let a = new Intl.NumberFormat('en-US', {minimumFractionDigits: fractionDigits});
+    console.log(a.format(val));
+
+    return (new Intl.NumberFormat('en-US', {minimumFractionDigits: fractionDigits})).format(val);
    
 }
 
