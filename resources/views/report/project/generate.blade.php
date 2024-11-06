@@ -102,9 +102,9 @@
 
                 <table class="horizontal-bar-stacked">
                     <tr>
-                        <td style="width: 40%" class="horizontal-bar-stacked-expense">40%</td>
-                        <td style="width: 10%" class="horizontal-bar-stacked-overhead">10%</td>
-                        <td style="width: 50%" class="horizontal-bar-stacked-default">50%</td>
+                        <td style="width: 0%" class="horizontal-bar-stacked-expense">40%</td>
+                        <td style="width: 0%" class="horizontal-bar-stacked-overhead">10%</td>
+                        <td style="width: 100%" class="horizontal-bar-stacked-default">50%</td>
                     </tr>
                 </table>
             </div>
