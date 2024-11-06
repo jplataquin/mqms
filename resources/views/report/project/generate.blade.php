@@ -31,10 +31,6 @@
         border-collapse: collapse;
     }
 
-    .horizontal-bar-stacked td{
-        border: solid 1px #000000;
-    }
-
     .horizontal-bar-stacked-expense{
         background-color: blue;
     }
