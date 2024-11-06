@@ -492,6 +492,11 @@
                     overhead_td.innerText        = overhead_percentage+'%';
                 }
 
+                if(default_percentage){
+                    default_td.style.display    = 'block';
+                    default_td.style.width      = default_percentage+'%';
+                    default_td.innerText        = default_percentage+'%';
+                }
                 //elem.style.width    = percentage+'%';
                 //elem.innerText      = percentage+'%';
             });
