@@ -38,13 +38,13 @@
 
     .horizontal-bar-stacked-expense{
         background-color: rgb(13, 110, 253);
-        display:none;
+        
         width:0%;
     }
 
     .horizontal-bar-stacked-overhead{
         background-color: rgb(255, 193, 7);
-        display:none;
+        
         width:0%;
     }
 
@@ -474,28 +474,28 @@
                 let default_td  = elem.querySelector('.horizontal-bar-stacked-default');
 
                 if(total_percentage > 100){
-                    default_td.style.display    = 'none';
+                    //default_td.style.display    = 'none';
                     expense_percentage          = 50;
                     overhead_percentage         = 50;
                     default_percentage          = 0;
                 }
 
                 if(expense_percentage){
-                    expense_td.style.display    = 'inline-block';
+                    //expense_td.style.display    = 'inline-block';
                     expense_td.style.width      = expense_percentage+'%';
                     expense_td.style.minWidth   = expense_percentage+'%';
                     expense_td.innerText        = expense_percentage+'%';
                 }
 
                 if(overhead_percentage){
-                    overhead_td.style.display    = 'inline-block';
+                    //overhead_td.style.display    = 'inline-block';
                     overhead_td.style.width      = overhead_percentage+'%';
                     overhead_td.style.minWidth   = overhead_percentage+'%';
                     overhead_td.innerText        = overhead_percentage+'%';
                 }
 
                 if(default_percentage){
-                    default_td.style.display    = 'inline-block';
+                    //default_td.style.display    = 'inline-block';
                     default_td.style.width      = default_percentage+'%';
                     default_td.style.minWidth      = default_percentage+'%';
                     default_td.innerText        = default_percentage+'%';
