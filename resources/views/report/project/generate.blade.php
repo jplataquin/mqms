@@ -32,7 +32,7 @@
     }
 
     .horizontal-bar-stacked td{
-        align:center;
+        text-align:center;
         color: #ffffff;
     }
 
