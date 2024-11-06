@@ -22,6 +22,28 @@
     .bar-request{
         background-color:#343aeb !important;
     }
+
+    .horizontal-bar-stacked{
+        width:100%;
+        height:2em;
+        border-collapse: collapse;
+    }
+
+    .horizontal-bar-stacked td{
+        border: solid 1px #000000;
+    }
+
+    .horizontal-bar-stacked-expense{
+        background-color: blue;
+    }
+
+    .horizontal-bar-stacked-overhead{
+        background-color: yellow;
+    }
+
+    .horizontal-bar-stacked-default{
+        background-color: grey;
+    }
 </style>
 <div id="content">
     <div class="container">
@@ -74,6 +96,14 @@
                 <div class="progress">
                     <div class="progress-bar bg-primary" id="material_expense_grand_total_percent" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> 100% </div>
                 </div>
+
+                <table classs="horizontal-bar-stacked">
+                    <tr>
+                        <td style="width: 40%" class="horizontal-bar-stacked-expense"></td>
+                        <td style="width: 10%" class="horizontal-bar-stacked-overhead"></td>
+                        <td style="width: 50%" class="horizontal-bar-stacked-default"></td>
+                    </tr>
+                </table>
             </div>
         </div>
 
