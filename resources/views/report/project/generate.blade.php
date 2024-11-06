@@ -31,8 +31,13 @@
         border-collapse: collapse;
     }
 
+    .horizontal-bar-stacked td{
+        align:center;
+        color: #ffffff;
+    }
+
     .horizontal-bar-stacked-expense{
-        background-color: blue;
+        background-color: rgb(13, 110, 253);
     }
 
     .horizontal-bar-stacked-overhead{
@@ -97,9 +102,9 @@
 
                 <table class="horizontal-bar-stacked">
                     <tr>
-                        <td style="width: 40%" class="horizontal-bar-stacked-expense"></td>
-                        <td style="width: 10%" class="horizontal-bar-stacked-overhead"></td>
-                        <td style="width: 50%" class="horizontal-bar-stacked-default"></td>
+                        <td style="width: 40%" class="horizontal-bar-stacked-expense">40%</td>
+                        <td style="width: 10%" class="horizontal-bar-stacked-overhead">10%</td>
+                        <td style="width: 50%" class="horizontal-bar-stacked-default">50%</td>
                     </tr>
                 </table>
             </div>
