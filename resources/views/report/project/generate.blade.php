@@ -127,7 +127,7 @@
                             -->
 
                             
-                            <table class="horizontal-bar-stacked contract_item_percent" data-id="{{$contract_item_id}}">
+                            <table cellpadding="0" cellspacing="0" class="horizontal-bar-stacked contract_item_percent" data-id="{{$contract_item_id}}">
                                 <tr>
                                     <td class="horizontal-bar-stacked-expense"></td>
                                     <td class="horizontal-bar-stacked-overhead"></td>
