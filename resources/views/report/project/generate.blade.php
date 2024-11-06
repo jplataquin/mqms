@@ -119,12 +119,7 @@
                 <tr>
                     <td class="contract_item">
                         <p>Expense / Budget</p>
-                        <div>
-                            <!--
-                            <div class="progress-bar bg-primary contract_item_percent" data-id="{{$contract_item_id}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
-                            -->
-
-                            
+                        <div class="progress">
                             <table cellpadding="0" cellspacing="0" class="horizontal-bar-stacked contract_item_percent" data-id="{{$contract_item_id}}">
                                 <tr>
                                     <td class="horizontal-bar-stacked-expense"></td>
