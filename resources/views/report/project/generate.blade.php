@@ -38,14 +38,19 @@
 
     .horizontal-bar-stacked-expense{
         background-color: rgb(13, 110, 253);
+        display:none;
+        width:0%;
     }
 
     .horizontal-bar-stacked-overhead{
         background-color: rgb(255, 193, 7);
+        display:none;
+        width:0%;
     }
 
     .horizontal-bar-stacked-default{
         background-color: rgb(233, 236, 239);
+        width:100%;
     }
 </style>
 <div id="content">
@@ -102,9 +107,9 @@
 
                 <table class="horizontal-bar-stacked">
                     <tr>
-                        <td style="width: 0%" class="horizontal-bar-stacked-expense"></td>
-                        <td style="width: 0%" class="horizontal-bar-stacked-overhead"></td>
-                        <td style="width: 100%" class="horizontal-bar-stacked-default">50%</td>
+                        <td class="horizontal-bar-stacked-expense"></td>
+                        <td class="horizontal-bar-stacked-overhead"></td>
+                        <td class="horizontal-bar-stacked-default"></td>
                     </tr>
                 </table>
             </div>
