@@ -97,7 +97,7 @@
         <div class="mb-5 row">
             <div class="col-lg-12">
                 <div class="progress">
-                    <div class="progress-bar bg-primary" id="material_expense_grand_total_percent" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> 100% </div>
+                    <div class="progress-bar bg-warning" id="material_expense_grand_total_percent" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> 100% </div>
                 </div>
 
                 <table class="horizontal-bar-stacked">
