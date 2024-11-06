@@ -483,18 +483,21 @@
                 if(expense_percentage){
                     expense_td.style.display    = 'inline';
                     expense_td.style.width      = expense_percentage+'%';
+                    expense_td.style.minWidth   = expense_percentage+'%';
                     expense_td.innerText        = expense_percentage+'%';
                 }
 
                 if(overhead_percentage){
                     overhead_td.style.display    = 'inline';
                     overhead_td.style.width      = overhead_percentage+'%';
+                    overhead_td.style.minWidth   = overhead_percentage+'%';
                     overhead_td.innerText        = overhead_percentage+'%';
                 }
 
                 if(default_percentage){
                     default_td.style.display    = 'inline';
                     default_td.style.width      = default_percentage+'%';
+                    default_td.style.minWidth      = default_percentage+'%';
                     default_td.innerText        = default_percentage+'%';
                 }
                 //elem.style.width    = percentage+'%';
