@@ -104,14 +104,6 @@
                 <div class="progress">
                     <div class="progress-bar bg-warning" id="material_expense_grand_total_percent" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> 100% </div>
                 </div>
-
-                <table class="horizontal-bar-stacked">
-                    <tr>
-                        <td class="horizontal-bar-stacked-expense"></td>
-                        <td class="horizontal-bar-stacked-overhead"></td>
-                        <td class="horizontal-bar-stacked-default"></td>
-                    </tr>
-                </table>
             </div>
         </div>
 
@@ -130,7 +122,18 @@
                     <td class="contract_item">
                         <p>Expense / Budget</p>
                         <div class="progress">
+                            <!--
                             <div class="progress-bar bg-primary contract_item_percent" data-id="{{$contract_item_id}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
+                            -->
+
+                            
+                            <table class="horizontal-bar-stacked contract_item_percent" data-id="{{$contract_item_id}}">
+                                <tr>
+                                    <td class="horizontal-bar-stacked-expense"></td>
+                                    <td class="horizontal-bar-stacked-overhead"></td>
+                                    <td class="horizontal-bar-stacked-default"></td>
+                                </tr>
+                            </table>
                         </div>
                     </td>
                     <td class="contract_item text-end">
@@ -452,16 +455,45 @@
 
                 let total_budget        = parseFloat( $q('.contract_item_material_budget_total[data-id="'+contract_item_id+'"]').first().getAttribute('data-value') );
                 let total_expense       = parseFloat( $q('.contract_item_material_expense_total[data-id="'+contract_item_id+'"]').first().getAttribute('data-value') );
-
+                let total_overhead      = parseFloat( $q('.contract_item_material_overhead_total[data-id="'+contract_item_id+'"]').first().getAttribute('data-value') );
+                
                 //Skip if total budget is zero
                 if(total_budget <= 0) return false;
 
-                let percentage = (total_expense / total_budget) * 100;
+                let expense_percentage  = (total_expense / total_budget) * 100;
+                expense_percentage      = Math.round(expense_percentage);
 
-                percentage = Math.round(percentage);
+                let overhead_percentage = (total_overhead / total_budget) * 100;
+                overhead_percentage     = Math.round(overhead_percentage);
 
-                elem.style.width    = percentage+'%';
-                elem.innerText      = percentage+'%';
+                let default_percentage  = 100 - (expense_percentage + overhead_percentage);
+                let total_percentage    = expense_percentage + overhead_percentage + default_percentage;
+
+                let expense_td  = elem.querySelector('.horizontal-bar-stacked-expense');
+                let overhead_td = elem.querySelector('.horizontal-bar-stacked-overhead');
+                let default_td  = elem.querySelector('.horizontal-bar-stacked-default');
+
+                if(total_percentage > 100){
+                    default_td.style.display    = 'none';
+                    expense_percentage          = 50;
+                    overhead_percentage         = 50;
+                    default_percentage          = 0;
+                }
+
+                if(expense_percentage){
+                    expense_td.style.display    = 'block';
+                    expense_td.style.width      = expense_percentage+'%';
+                    expense_td.innerText        = expense_percentage+'%';
+                }
+
+                if(overhead_percentage){
+                    overhead_td.style.display    = 'block';
+                    overhead_td.style.width      = overhead_percentage+'%';
+                    overhead_td.innerText        = overhead_percentage+'%';
+                }
+
+                //elem.style.width    = percentage+'%';
+                //elem.innerText      = percentage+'%';
             });
         }
 
