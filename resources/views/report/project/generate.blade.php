@@ -41,11 +41,11 @@
     }
 
     .horizontal-bar-stacked-overhead{
-        background-color: yellow;
+        background-color: rgb(255, 193, 7);
     }
 
     .horizontal-bar-stacked-default{
-        background-color: grey;
+        background-color: rgb(233, 236, 239);
     }
 </style>
 <div id="content">
