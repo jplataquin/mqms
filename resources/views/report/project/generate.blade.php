@@ -99,7 +99,7 @@
                     <div class="progress-bar bg-primary" id="material_expense_grand_total_percent" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> 100% </div>
                 </div>
 
-                <table classs="horizontal-bar-stacked">
+                <table class="horizontal-bar-stacked">
                     <tr>
                         <td style="width: 40%" class="horizontal-bar-stacked-expense"></td>
                         <td style="width: 10%" class="horizontal-bar-stacked-overhead"></td>
