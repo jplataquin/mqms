@@ -121,7 +121,7 @@
                 <tr>
                     <td class="contract_item">
                         <p>Expense / Budget</p>
-                        <div class="progress">
+                        <div>
                             <!--
                             <div class="progress-bar bg-primary contract_item_percent" data-id="{{$contract_item_id}}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> - </div>
                             -->
@@ -481,21 +481,21 @@
                 }
 
                 if(expense_percentage){
-                    expense_td.style.display    = 'inline';
+                    expense_td.style.display    = 'inline-block';
                     expense_td.style.width      = expense_percentage+'%';
                     expense_td.style.minWidth   = expense_percentage+'%';
                     expense_td.innerText        = expense_percentage+'%';
                 }
 
                 if(overhead_percentage){
-                    overhead_td.style.display    = 'inline';
+                    overhead_td.style.display    = 'inline-block';
                     overhead_td.style.width      = overhead_percentage+'%';
                     overhead_td.style.minWidth   = overhead_percentage+'%';
                     overhead_td.innerText        = overhead_percentage+'%';
                 }
 
                 if(default_percentage){
-                    default_td.style.display    = 'inline';
+                    default_td.style.display    = 'inline-block';
                     default_td.style.width      = default_percentage+'%';
                     default_td.style.minWidth      = default_percentage+'%';
                     default_td.innerText        = default_percentage+'%';
