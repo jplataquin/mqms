@@ -26,8 +26,8 @@
     .horizontal-bar-stacked{
         width: 100%;
         min-width: 100%;
-        min-height:2em;
-        max-height:2em;
+        min-height:1em;
+        max-height:1em;
         border-collapse: collapse;
     }
 
