@@ -84,7 +84,7 @@
 
 
         <div class="row">
-            <div class="col-lg-12 col-md-6 text-center p-3">
+            <div class="col-lg-12 col-md-12 text-center p-3">
                 <div class="border rounded border-primary">
                     <h3>Total Budget</h3>
                     <h5 id="material_budget_grand_total" data-value="0">-</h5>
@@ -401,7 +401,7 @@
                 });
 
                 elem.innerText = '(MO) P '+window.util.numberFormat(total);
-                elem.setAttribute('data-value',100);
+                elem.setAttribute('data-value',total);
             });
         }
 
