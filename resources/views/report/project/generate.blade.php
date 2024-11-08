@@ -83,7 +83,7 @@
 
 
 
-        <div class="mb-5 row">
+        <div class="mb-3 row">
             <div class="col-lg-12 col-md-6 text-center p-3">
                 <div class="border rounded border-primary">
                     <h3>Material Budget</h3>
@@ -91,7 +91,7 @@
                 </div>
             </div>
         </div>
-        <div class="mb-5 row">
+        <div class="mb-3 row">
             <div class="col-lg-6 col-md-6 text-center p-3">
                 <div class="border rounded border-primary">
                     <h3>Material Expense</h3>
@@ -598,6 +598,8 @@
         grand_total_material_expense();
 
         grand_total_material_budget();
+
+        grand_total_material_overhead();
 
         contract_item_percentage();
 
