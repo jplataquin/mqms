@@ -83,24 +83,24 @@
 
 
 
-        <div class="mb-3 row">
+        <div class="row">
             <div class="col-lg-12 col-md-6 text-center p-3">
                 <div class="border rounded border-primary">
-                    <h3>Material Budget</h3>
+                    <h3>Total Budget</h3>
                     <h5 id="material_budget_grand_total" data-value="0">-</h5>
                 </div>
             </div>
         </div>
-        <div class="mb-3 row">
+        <div class="row">
             <div class="col-lg-6 col-md-6 text-center p-3">
                 <div class="border rounded border-primary">
-                    <h3>Material Expense</h3>
+                    <h3>Total Expense</h3>
                     <h5 id="material_expense_grand_total" class="check" data-check-target="#material_budget_grand_total" data-value="0">-</h5>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 text-center p-3">
                 <div class="border rounded border-primary">
-                    <h3>Material Overhead</h3>
+                    <h3>Total Overhead</h3>
                     <h5 id="material_overhead_grand_total" data-value="0">-</h5>
                 </div>
             </div>
