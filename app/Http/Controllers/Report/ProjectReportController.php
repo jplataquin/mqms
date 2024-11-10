@@ -99,7 +99,7 @@ class ProjectReportController extends Controller {
         if(!$section){
             return view('/report/project/error',[
                 'message'          => 'Section record not found',
-                'validation_error' => []
+                'validation_error' => ''
             ]);
         }
 
@@ -113,8 +113,9 @@ class ProjectReportController extends Controller {
             if(!$contract_item){
                 return view('/report/project/error',[
                     'message'          => 'Contract Item record not found',
-                    'validation_error' => []
+                    'validation_error' => ''
                 ]); 
+                
             }
 
             $contract_item_name = $contract_item->name();
@@ -130,7 +131,7 @@ class ProjectReportController extends Controller {
             if(!$component){
                 return view('/report/project/error',[
                     'message'          => 'Component record not found',
-                    'validation_error' => []
+                    'validation_error' => ''
                 ]); 
             }
 
