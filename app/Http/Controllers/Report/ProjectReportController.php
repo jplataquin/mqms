@@ -124,7 +124,6 @@ class ProjectReportController extends Controller {
         if($component_id){
 
             $component = Component::where('id',$component_id)
-            ->where('project_id',$project->id)
             ->where('section_id',$section->id)
             ->where('deleted_at',null)
             ->first();
