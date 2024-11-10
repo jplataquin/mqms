@@ -173,7 +173,7 @@
             @foreach($report as $contract_item_id => $contract_item)
 
                 <tr>
-                    <th colspan="2" class="contract_item">
+                    <th colspan="2" class="contract_item fw-bold">
                         {{ $contract_item_arr[$contract_item_id]->item_code }} {{$contract_item_arr[$contract_item_id]->description}}
                     </th>
                 </tr>
@@ -209,7 +209,7 @@
                 @foreach($contract_item as $component_id => $component)
                     
                     <tr>
-                        <td style="padding-left:1em" class="component">
+                        <td style="padding-left:1em" class="component fw-bold">
                             
                             {{ $component_arr[ $component_id ]->name }}
                             
