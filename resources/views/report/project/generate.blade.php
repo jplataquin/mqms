@@ -471,7 +471,7 @@
             });
 
             elem.innerText = 'P '+window.util.numberFormat(total);
-            elem.setAttribute('data-value',100);
+            elem.setAttribute('data-value',1000);
 
         }
 
