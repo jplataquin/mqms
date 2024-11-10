@@ -4,27 +4,24 @@
 <style>
 
     .contract_item{
-        background-color: #324a5f !important;
+        background-color: #373f51 !important;
         color: #c7d0d9 !important;
         /** position:sticky !important; **/
         top:40px;
     }
 
     .component{
-        background-color: #1b2a41 !important;
-        color: #c7d0d9 !important;
+        background-color: #58a4b0 !important;
         /** position:sticky !important; **/
         top:140px;
     }
 
     .component_item{
-        background-color: #000000 !important;
-        color: #c7d0d9 !important;
+        background-color: #a9bcd0 !important;
     }
 
     .material_item{
-        background-color: #caa8f5 !important;
-        color: #c7d0d9 !important;
+        background-color: #d8dbe2 !important;
     }
 
     .bar{
