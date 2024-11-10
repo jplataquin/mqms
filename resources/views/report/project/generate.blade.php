@@ -11,7 +11,7 @@
     }
 
     .component{
-        background-color: #58a4b0 !important;
+        background-color: #A2A2A2 !important;
         /** position:sticky !important; **/
         top:140px;
     }
