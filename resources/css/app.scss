@@ -634,12 +634,16 @@ html, body {
 @media print
 {    
 
-   #bar{
-      display: none !important;
-   }
+  .breadcrumbs{
+    display: none !important;
+  }
 
-   .no-print, .no-print *
-   {
-        display: none !important;
-   }
+  #bar{
+    display: none !important;
+  }
+
+  .no-print, .no-print *
+  {
+      display: none !important;
+  }
 }
