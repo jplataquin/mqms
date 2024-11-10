@@ -54,6 +54,11 @@
         background-color: rgb(233, 236, 239);
         width:100%;
     }
+
+    .report-table th{
+        border-bottom-width: 0px !important;
+    }
+
 </style>
 <div id="content">
     <div class="container">
@@ -158,7 +163,7 @@
 
 
 
-        <table class="table" style="border-collapse: collapse">
+        <table class="table report-table">
             @foreach($report as $contract_item_id => $contract_item)
 
                 <tr>
