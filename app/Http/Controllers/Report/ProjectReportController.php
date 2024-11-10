@@ -151,9 +151,9 @@ class ProjectReportController extends Controller {
                 ->where('section_id',$section_id);
                 
                 //Date filter for puchase order
-                if($from){
-                    $purchase_orders = $purchase_orders->where('approved_at','>=',$from.' 00:00:00');
-                }
+                // if($from){
+                //     $purchase_orders = $purchase_orders->where('approved_at','>=',$from.' 00:00:00');
+                // }
 
                 if($to){
                     $purchase_orders = $purchase_orders->where('approved_at','<=',$to.' 23:59:59');
@@ -191,9 +191,9 @@ class ProjectReportController extends Controller {
                 ->where('section_id',$section_id);
                 
                 //Date filter for material quantitiy requests
-                if($from){
-                    $material_quantity_requests = $material_quantity_requests->where('approved_at','>=',$from.' 00:00:00');
-                }
+                // if($from){
+                //     $material_quantity_requests = $material_quantity_requests->where('approved_at','>=',$from.' 00:00:00');
+                // }
 
                 if($to){
                     $material_quantity_requests = $material_quantity_requests->where('approved_at','<=',$to.' 23:59:59');
