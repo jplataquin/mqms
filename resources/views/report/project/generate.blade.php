@@ -107,8 +107,15 @@
         </div>
         <div class="mb-5 row">
             <div class="col-lg-12">
+            
                 <div class="progress">
-                    <div class="progress-bar bg-warning" id="material_expense_grand_total_percent" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> 100% </div>
+                    <table cellpadding="0" cellspacing="0" class="horizontal-bar-stacked" id="material_expense_grand_total_percent">
+                        <tr>
+                            <td class="horizontal-bar-stacked-expense"></td>
+                            <td class="horizontal-bar-stacked-overhead"></td>
+                            <td class="horizontal-bar-stacked-default"></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
@@ -533,20 +540,63 @@
             });
         }
 
-        function grand_total_material_expense_percentage(){
+        function grand_total_material_percentage(){
 
-            let target                          = $q('#material_expense_grand_total_percent').first();
+            let elem                            = $q('#material_expense_grand_total_percent').first();
             let material_expense_grand_total    = parseFloat( $q('#material_expense_grand_total').first().getAttribute('data-value') );
             let material_budget_grand_total     = parseFloat( $q('#material_budget_grand_total').first().getAttribute('data-value') );
+            let material_overhead_grand_total   = parseFloat( $q('#material_overhead_grand_total').first().getAttribute('data-value') );
 
             if(material_budget_grand_total <= 0 ) return false;
 
-            let percentage  = (material_expense_grand_total / material_budget_grand_total) * 100;
-            percentage      = Math.round(percentage);
+            let expense_percentage  = (material_expense_grand_total / material_budget_grand_total) * 100;
+            expense_percentage      = Math.round(expense_percentage);
 
-            target.style.width  = percentage+'%';
-            target.innerText    = percentage+'%';
+            let overhead_percentage  = (material_overhead_grand_total / material_budget_grand_total) * 100;
+            overhead_percentage      = Math.round(overhead_percentage);
 
+            let default_percentage  = 100 - (expense_percentage + overhead_percentage);
+            let total_percentage    = expense_percentage + overhead_percentage + default_percentage;
+
+            let expense_td  = elem.querySelector('.horizontal-bar-stacked-expense');
+            let overhead_td = elem.querySelector('.horizontal-bar-stacked-overhead');
+            let default_td  = elem.querySelector('.horizontal-bar-stacked-default');
+
+            if(total_percentage > 100){
+                expense_percentage          = 50;
+                overhead_percentage         = 50;
+                default_percentage          = 0;
+            }
+
+            if(expense_percentage){
+                expense_td.style.width      = expense_percentage+'%';
+                expense_td.style.minWidth   = expense_percentage+'%';
+                expense_td.innerText        = expense_percentage+'%';
+            }
+
+            if(overhead_percentage){
+                overhead_td.style.width      = overhead_percentage+'%';
+                overhead_td.style.minWidth   = overhead_percentage+'%';
+                overhead_td.innerText        = overhead_percentage+'%';
+            }
+
+            if(default_percentage){
+                default_td.style.width      = default_percentage+'%';
+                default_td.style.minWidth   = default_percentage+'%';
+                default_td.innerText        = default_percentage+'%';
+            }
+
+            if(default_percentage <= 0){
+                default_td.style.display = 'none';
+            }
+
+            if(overhead_percentage <= 0){
+                overhead_td.style.display = 'none';
+            }
+
+            if(expense_percentage <= 0){
+                expense_td.style.display = 'none';
+            }
         }
 
         function check(){
@@ -603,7 +653,7 @@
 
         contract_item_percentage();
 
-        grand_total_material_expense_percentage();
+        grand_total_material_percentage();
 
         check();
     </script>
