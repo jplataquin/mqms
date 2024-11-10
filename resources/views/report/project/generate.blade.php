@@ -555,8 +555,8 @@
             let overhead_percentage  = (material_overhead_grand_total / material_budget_grand_total) * 100;
             overhead_percentage      = Math.round(overhead_percentage);
 
-            console.log(overhead_percentage);
-            
+            console.log(overhead_percentage, material_overhead_grand_total);
+
             let default_percentage  = 100 - (expense_percentage + overhead_percentage);
             let total_percentage    = expense_percentage + overhead_percentage + default_percentage;
 
