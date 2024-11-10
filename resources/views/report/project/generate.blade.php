@@ -12,7 +12,7 @@
 
     .component{
         background-color: #A2A2A2 !important;
-        /** position:sticky !important; **/
+        position:sticky !important;
         top:140px;
     }
 
@@ -59,6 +59,10 @@
         background-color: #c7d0d9;
         width:100%;
         color:#000000 !important;
+    }
+
+    .report-table{
+        font-size: 12px !important;
     }
 
     .report-table th{
