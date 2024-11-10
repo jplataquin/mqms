@@ -629,6 +629,34 @@
                     overbudget_count++;
                 }
             });
+
+
+            let material_budget_grand_total_el      = $q('#material_budget_grand_total').first();
+            let material_expene_grand_total_el      = $q('#material_expense_grand_total').first();
+            let materiaL_overhead_grand_total_el    = $q('#material_overhead_grand_total').first();
+
+            let material_budget_grand_total     = parseFloat( material_budget_grand_total_el.getAttribute('data-value') );
+            let material_expense_grand_total    = parseFloat( material_expene_grand_total_el.getAttribute('data-value') );
+            let material_overhead_grand_total   = parseFloat( $materiaL_overhead_grand_total_el.getAttribute('data-value') );
+
+            if(isNaN(material_expense_grand_total)){
+                material_expense_grand_total = 0;
+            }
+
+            if(isNaN(material_budget_grand_total)){
+                material_budget_grand_total = 0;
+            }
+
+            if(isNaN(material_budget_grand_total)){
+                material_overhead_grand_total = 0;
+            }
+
+            let total_expense_and_overhead = $material_expense_grand_total + $material_overhead_grand_total;
+
+            if(total_expense_and_overhead > $material_budget_grand_total){
+                material_expene_grand_total_el.classList.add('text-danger');
+                materiaL_overhead_grand_total_el.classList.add('text-danger');
+            }
         }
 
         /** Note the function call must run in order **/
