@@ -4,19 +4,19 @@
 <style>
 
     .contract_item{
-        background-color: #2b2d42 !important;
+        background-color: #ed6a5a !important;
         /** position:sticky !important; **/
         top:40px;
     }
 
     .component{
-        background-color: #8d99ae !important;
+        background-color: #f4f1bb !important;
         /** position:sticky !important; **/
         top:140px;
     }
 
     .component_item{
-        background-color: #edf2f4 !important;
+        background-color: #9bc1bc !important;
     }
 
     .bar{
