@@ -251,8 +251,8 @@
                 section_id          : section.value,
                 contract_item_id    : contract_item.value,
                 component_id        : component.value,
-                from                : from_dp.getDate('yyyy-mm-dd'),
-                to                  : to_dp.getDate('yyyy-mm-dd')
+                from                : from_dp.getDate('yyyy-mm-dd') ?? '',
+                to                  : to_dp.getDate('yyyy-mm-dd') ?? ''
             });
 
             window.open('/report/project/generate?'+query,'_blank').focus();
