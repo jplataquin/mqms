@@ -106,7 +106,7 @@
                         </tr>
                         <tr>
                             <th>As of</th>
-                            <td>{{$as_of}}</td>
+                            <td>{{$as_of_display}}</td>
                         </tr>
                     </tbody>
                 </table> 

@@ -307,7 +307,7 @@ class ProjectReportController extends Controller {
             'material_item_arr'     => $material_item_arr,
             'total_po_overhead_arr' => $total_po_overhead_arr,
             'report'                => $report,
-            'as_of'                 => $as_of,
+            'as_of_display'         => $as_of_display,
             'url'                   => $url
         ]);
     }
