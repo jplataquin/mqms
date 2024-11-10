@@ -128,7 +128,7 @@
                 </table> 
 
 
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col-lg-12 col-md-12 text-center">
                         <div class="border rounded border-primary">
                             <h3>Total Budget</h3>
