@@ -77,8 +77,7 @@
 
 
         <div id="callout-danger" class="callout callout-danger d-none">
-            <h4>Warning: Non-conforming items</h4> 
-            <p id="callout-danger-p"></p>
+            <h4 id="callout-danger-p">Warning: Non-conforming items</h4> 
         </div>
 
 
@@ -663,7 +662,7 @@
 
             if(nonconforming_item_count){
                 $q('#callout-danger').first().classList.remove('d-none');  
-                $q('#callout-danger-p').first().innerHTML = nonconforming_item_count;  
+                $q('#callout-danger-p').first().innerHTML = 'Warning: '+nonconforming_item_count+' non-conforming items detected';  
             }
         }
 
