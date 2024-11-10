@@ -262,8 +262,7 @@ class ProjectReportController extends Controller {
             'material_item_arr'     => $material_item_arr,
             'total_po_overhead_arr' => $total_po_overhead_arr,
             'report'                => $report,
-            'from'                  => $from,
-            'to'                    => $to,
+            'from'                  => $as_of,
             'url'                   => $url
         ]);
     }
