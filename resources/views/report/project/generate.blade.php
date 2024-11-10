@@ -6,7 +6,7 @@
     .contract_item{
         background-color: #373f51 !important;
         color: #c7d0d9 !important;
-        /** position:sticky !important; **/
+        position:sticky !important;
         top:40px;
     }
 
