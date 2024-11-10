@@ -66,6 +66,14 @@ class ProjectReportController extends Controller {
                 'nullable',
                 'integer',
                 'gte:1'
+            ],
+            'from' =>[
+                'nullable',
+                'date_format:Y-m-d'
+            ],
+            'to' => [
+                'nullable',
+                'date_format:Y-m-d'
             ]
         ]);
 
