@@ -80,7 +80,26 @@
             <h4 id="callout-danger-p">Warning: Non-conforming items</h4> 
         </div>
 
+        <div class="folder-form-container">
+            <div class="folder-form-tab">
+                Purchase Order
+            </div>
 
+            <div class="folder-form-body">
+                <table class="record-table-horizontal">
+                    <tbody>
+                        <tr>
+                            <th>Project</th>
+                            <td>{{$project_name}}</td>
+                        </tr>
+                        <tr>
+                            <th>Section</th>
+                            <td>{{$section_name}}</td>
+                        </tr>
+                    </tbody>
+                </table> 
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-lg-12 col-md-12 text-center p-3">
