@@ -629,3 +629,17 @@ html, body {
 }
 @media (max-width:1025px) { /* big landscape tablets, laptops, and desktops */ }
 @media (max-width:1281px) { /* hi-res laptops and desktops */ }
+
+/*** Print ***/
+@media print
+{    
+
+   #bar{
+      display: none !important;
+   }
+
+   .no-print, .no-print *
+   {
+        display: none !important;
+   }
+}
