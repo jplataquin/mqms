@@ -4,21 +4,26 @@
 <style>
 
     .contract_item{
-        background-color: #0a1128 !important;
+        background-color: #230c33 !important;
         color: #c7d0d9 !important;
         /** position:sticky !important; **/
         top:40px;
     }
 
     .component{
-        background-color: #001f54 !important;
+        background-color: #592e83 !important;
         color: #c7d0d9 !important;
         /** position:sticky !important; **/
         top:140px;
     }
 
     .component_item{
-        background-color: #034078 !important;
+        background-color: #9984d4 !important;
+        color: #c7d0d9 !important;
+    }
+
+    .material_item{
+        background-color: #caa8f5 !important;
         color: #c7d0d9 !important;
     }
 
@@ -262,7 +267,7 @@
                             <tr>
 
                                 <td style="padding-left:3em" class="material_item">{{ $material_item->formatted_name() }}</td>
-                                <td class="component_item_material_expense text-end" data-component_item_id="{{$component_item_id}}" data-value="{{$result['po_amount']}}">
+                                <td class="component_item_material_expense text-end material_item" data-component_item_id="{{$component_item_id}}" data-value="{{$result['po_amount']}}">
                                     
                                     (ME) P {{ number_format($result['po_amount'],2) }}
                                     <br>
