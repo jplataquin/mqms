@@ -164,12 +164,18 @@ class ProjectReportController extends Controller {
                 $contract_item_arr[ $contract_item->id ]    = $contract_item;
             }
 
-            $components = $contract_item->Components()
-            ->where('deleted_at',null)->orderBy('name','ASC');
-
+        
+        
             if($component_id){
 
                 $components = $components->where('id',$component_id)->where('deleted_at',null)->where('status','APRV');
+            
+            }else{
+
+                $components = $contract_item->Components()
+                ->where('status','APRV')
+                ->where('deleted_at',null)->orderBy('name','ASC');
+    
             }
 
             $components = $components->get();
