@@ -165,6 +165,7 @@ class ProjectReportController extends Controller {
             }
 
             $components = $contract_item->Components()
+            ->where('status','APRV')
             ->where('deleted_at',null)->orderBy('name','ASC');
 
             if($component_id){
