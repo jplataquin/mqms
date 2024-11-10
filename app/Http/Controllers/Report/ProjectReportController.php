@@ -170,7 +170,7 @@ class ProjectReportController extends Controller {
 
             if($component_id){
 
-                $components = $components->where('id',$component_id);
+                $components = $components->where('id',$component_id)->where('deleted_at',null)->where('status','APRV');
             }
 
             $components = $components->get();
