@@ -86,7 +86,7 @@
             </div>
 
             <div class="folder-form-body">
-                <table class="record-table-horizontal">
+                <table class="record-table-horizontal mb-3">
                     <tbody>
                         <tr>
                             <th>Project</th>
@@ -110,45 +110,48 @@
                         </tr>
                     </tbody>
                 </table> 
+
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 text-center p-3">
+                        <div class="border rounded border-primary">
+                            <h3>Total Budget</h3>
+                            <h5 id="material_budget_grand_total" data-value="0">-</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 text-center p-3">
+                        <div class="border rounded border-primary">
+                            <h3>Total Expense</h3>
+                            <h5 id="material_expense_grand_total" class="check" data-check-target="#material_budget_grand_total" data-value="0">-</h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 text-center p-3">
+                        <div class="border rounded border-primary">
+                            <h3>Total Overhead</h3>
+                            <h5 id="material_overhead_grand_total" data-value="0">-</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-5 row">
+                    <div class="col-lg-12">
+                    
+                        <div class="progress">
+                            <table cellpadding="0" cellspacing="0" class="horizontal-bar-stacked" id="material_expense_grand_total_percent">
+                                <tr>
+                                    <td class="horizontal-bar-stacked-expense"></td>
+                                    <td class="horizontal-bar-stacked-overhead"></td>
+                                    <td class="horizontal-bar-stacked-default"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-12 col-md-12 text-center p-3">
-                <div class="border rounded border-primary">
-                    <h3>Total Budget</h3>
-                    <h5 id="material_budget_grand_total" data-value="0">-</h5>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6 col-md-6 text-center p-3">
-                <div class="border rounded border-primary">
-                    <h3>Total Expense</h3>
-                    <h5 id="material_expense_grand_total" class="check" data-check-target="#material_budget_grand_total" data-value="0">-</h5>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 text-center p-3">
-                <div class="border rounded border-primary">
-                    <h3>Total Overhead</h3>
-                    <h5 id="material_overhead_grand_total" data-value="0">-</h5>
-                </div>
-            </div>
-        </div>
-        <div class="mb-5 row">
-            <div class="col-lg-12">
-            
-                <div class="progress">
-                    <table cellpadding="0" cellspacing="0" class="horizontal-bar-stacked" id="material_expense_grand_total_percent">
-                        <tr>
-                            <td class="horizontal-bar-stacked-expense"></td>
-                            <td class="horizontal-bar-stacked-overhead"></td>
-                            <td class="horizontal-bar-stacked-default"></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
 
 
         <table class="table">
