@@ -77,7 +77,7 @@
 
 
         <div id="callout-danger" class="callout callout-danger d-none">
-            <h4>Alert</h4> 
+            <h4>Warning: Non-conforming items</h4> 
             <p id="callout-danger-p"></p>
         </div>
 
@@ -601,12 +601,7 @@
 
         function check(){
 
-            let level_6 = 0;
-            let level_5 = 0;
-            let level_4 = 0;
-            let level_3 = 0;
-            let level_2 = 0;
-            let level_1 = 0;
+            let nonconforming_item_count = 0;
 
             $q('.check').apply(elem=>{
 
@@ -633,7 +628,7 @@
                 
                 if(value > target_value){
                     elem.classList.add('text-danger');
-                    overbudget_count++;
+                    nonconforming_item_count++;
                 }
             });
 
@@ -663,8 +658,13 @@
             if(total_expense_and_overhead > material_budget_grand_total){
                 material_expene_grand_total_el.classList.add('text-danger');
                 materiaL_overhead_grand_total_el.classList.add('text-danger');
+                nonconforming_item_count++;
             }
 
+            if(nonconforming_item_cont){
+                $q('#callout-danger').first().classList.remove('d-none');  
+                $q('#callout-danger-p').first().innerHTML = nonconforming_item_count;  
+            }
         }
 
         /** Note the function call must run in order **/
