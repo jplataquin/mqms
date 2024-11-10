@@ -286,7 +286,7 @@
                                     Request
 
                                     <div class="progress">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{$request_percentage}}%;" aria-valuenow="{{$request_percentage}}" aria-valuemin="0" aria-valuemax="100">{{$request_percentage}}%</div>
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: {{$request_percentage}}%;" aria-valuenow="{{$request_percentage}}" aria-valuemin="0" aria-valuemax="100">{{$request_percentage}}%</div>
                                     </div>
                                     
                                 </td>
@@ -308,7 +308,7 @@
                                     PO
 
                                     <div class="progress">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{$po_percentage}}%;" aria-valuenow="{{$po_percentage}}" aria-valuemin="0" aria-valuemax="100">{{$po_percentage}}%</div>
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: {{$po_percentage}}%;" aria-valuenow="{{$po_percentage}}" aria-valuemin="0" aria-valuemax="100">{{$po_percentage}}%</div>
                                     </div>
                                     
                                 </td>
