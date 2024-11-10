@@ -637,7 +637,7 @@
 
             let material_budget_grand_total     = parseFloat( material_budget_grand_total_el.getAttribute('data-value') );
             let material_expense_grand_total    = parseFloat( material_expene_grand_total_el.getAttribute('data-value') );
-            let material_overhead_grand_total   = parseFloat( $materiaL_overhead_grand_total_el.getAttribute('data-value') );
+            let material_overhead_grand_total   = parseFloat( materiaL_overhead_grand_total_el.getAttribute('data-value') );
 
             if(isNaN(material_expense_grand_total)){
                 material_expense_grand_total = 0;
