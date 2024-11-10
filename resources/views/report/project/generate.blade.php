@@ -243,7 +243,7 @@
                                     
                                 </td>
                                 <td style="padding-top:1.8em" class="text-end">
-                                    <span data-value="{{$result['request_quantity']}}" class="request_quantity check" data-check-target=".budget_quantity[data-id='{{$material_quantity_id}}']" data-id="{{$material_quantity_id}}">{{ number_format($result['request_quantity'],2) }} Qty</span>
+                                    <span data-value="{{$result['request_quantity']}}" class="request_quantity check" data-check-level="1" data-check-target=".budget_quantity[data-id='{{$material_quantity_id}}']" data-id="{{$material_quantity_id}}">{{ number_format($result['request_quantity'],2) }} Qty</span>
                                 </td>
                             </tr>
                             <tr>
@@ -264,7 +264,7 @@
                                     </div>
                                     
                                 </td>
-                                <td style="padding-top:1.8em" class="check text-end" data-value="{{$result['po_quantity']}}" data-check-target=".request_quantity[data-id='{{$material_quantity_id}}']">
+                                <td style="padding-top:1.8em" class="check text-end" data-value="{{$result['po_quantity']}}" data-check-level="1" data-check-target=".request_quantity[data-id='{{$material_quantity_id}}']">
                                     {{ number_format($result['po_quantity'],2) }} Qty
                                 </td>
                             </tr>
@@ -601,6 +601,13 @@
 
         function check(){
 
+            let level_6 = 0;
+            let level_5 = 0;
+            let level_4 = 0;
+            let level_3 = 0;
+            let level_2 = 0;
+            let level_1 = 0;
+
             $q('.check').apply(elem=>{
 
                 elem.classList.remove('text-danger');
@@ -658,8 +665,6 @@
                 materiaL_overhead_grand_total_el.classList.add('text-danger');
             }
 
-            material_expene_grand_total_el.classList.add('text-danger');
-                materiaL_overhead_grand_total_el.classList.add('text-danger');
         }
 
         /** Note the function call must run in order **/
