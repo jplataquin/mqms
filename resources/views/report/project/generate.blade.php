@@ -98,11 +98,11 @@
                         </tr>
                         <tr>
                             <th>Contract Item</th>
-                            <td></td>
+                            <td>{{$contract_item_name}}</td>
                         </tr>
                         <tr>
                             <th>Component</th>
-                            <td></td>
+                            <td>{{$component_name}}</td>
                         </tr>
                         <tr>
                             <th>As of</th>

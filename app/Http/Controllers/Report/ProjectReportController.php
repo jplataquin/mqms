@@ -49,6 +49,9 @@ class ProjectReportController extends Controller {
 
         $project_name       = '';
         $section_name       = '';
+        $contract_item_name = '*';
+        $component_name     = '*';
+        $as_of_display      = '*';
 
         $validator = Validator::make($request->all(),[
             'project_id' =>[
@@ -62,6 +65,11 @@ class ProjectReportController extends Controller {
                 'gte:1'
             ],
             'contract_item_id' =>[
+                'nullable',
+                'integer',
+                'gte:1'
+            ],
+            'component_id' =>[
                 'nullable',
                 'integer',
                 'gte:1'
@@ -93,6 +101,40 @@ class ProjectReportController extends Controller {
                 'message'          => 'Section record not found',
                 'validation_error' => []
             ]);
+        }
+
+        if($contract_item_id){
+            
+            $contract_item = ContractItem::where('id',$contract_item_id)
+            ->where('section_id',$section->id)
+            ->where('deleted_at',null)
+            ->first();
+
+            if(!$contract_item){
+                return view('/report/project/error',[
+                    'message'          => 'Contract Item record not found',
+                    'validation_error' => []
+                ]); 
+            }
+
+            $contract_item_name = $contract_item->name();
+        }
+
+        if($component_id){
+
+            $component = ContractItem::where('id',$component_id)
+            ->where('section_id',$project->id)
+            ->where('deleted_at',null)
+            ->first();
+
+            if(!$component){
+                return view('/report/project/error',[
+                    'message'          => 'Component record not found',
+                    'validation_error' => []
+                ]); 
+            }
+
+            $component_name = $component->name;
         }
 
         $report                                 = [];
@@ -255,8 +297,8 @@ class ProjectReportController extends Controller {
         return view('/report/project/generate',[
             'project_name'          => $project_name,
             'section_name'          => $section_name,
-            'contract_item_name'    => '',
-            'component_name'        => '',
+            'contract_item_name'    => $contract_item_name,
+            'component_name'        => $component_name,
             'contract_item_arr'     => $contract_item_arr,
             'component_arr'         => $component_arr,
             'component_item_arr'    => $component_item_arr,
