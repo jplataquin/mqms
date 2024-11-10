@@ -407,7 +407,7 @@
                 });
 
                 elem.innerText = '(MO) P '+window.util.numberFormat(total);
-                elem.setAttribute('data-value',10000);
+                elem.setAttribute('data-value',total);
             });
         }
 
