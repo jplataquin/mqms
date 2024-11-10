@@ -6,13 +6,11 @@
     .contract_item{
         background-color: #373f51 !important;
         color: #c7d0d9 !important;
-        position:sticky !important;
         top:40px;
     }
 
     .component{
         background-color: #A2A2A2 !important;
-        position:sticky !important;
         top:114px;
     }
 
@@ -80,7 +78,7 @@
             top:114px;
         }
     }
-    
+
 </style>
 <div id="content">
     <div class="container">
