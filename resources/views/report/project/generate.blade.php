@@ -58,6 +58,7 @@
     .horizontal-bar-stacked-default{
         background-color: #c7d0d9;
         width:100%;
+        color:#000000;
     }
 
     .report-table th{
