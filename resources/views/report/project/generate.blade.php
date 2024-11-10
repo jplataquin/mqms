@@ -69,7 +69,18 @@
         border-bottom-width: 0px !important;
     }
 
+    @media (min-width:961px){
+        .contract_item{
+            position:sticky !important;
+            top:40px;
+        }
 
+        .component{
+            position:sticky !important;
+            top:114px;
+        }
+    }
+    
 </style>
 <div id="content">
     <div class="container">
