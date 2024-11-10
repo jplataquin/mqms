@@ -158,7 +158,7 @@
 
 
 
-        <table class="table">
+        <table class="table" style="border-collapse: collapse">
             @foreach($report as $contract_item_id => $contract_item)
 
                 <tr>
