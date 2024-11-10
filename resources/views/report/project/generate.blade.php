@@ -13,7 +13,7 @@
     .component{
         background-color: #A2A2A2 !important;
         position:sticky !important;
-        top:85px;
+        top:74px;
     }
 
     .component_item{
