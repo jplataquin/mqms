@@ -661,7 +661,7 @@
                 nonconforming_item_count++;
             }
 
-            if(nonconforming_item_cont){
+            if(nonconforming_item_count){
                 $q('#callout-danger').first().classList.remove('d-none');  
                 $q('#callout-danger-p').first().innerHTML = nonconforming_item_count;  
             }
