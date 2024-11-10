@@ -704,7 +704,7 @@
 
             let total_expense_and_overhead = material_expense_grand_total + material_overhead_grand_total;
 
-            if(material_budget_grand_total == material_budget_grand_total){
+            if(total_expense_and_overhead > material_budget_grand_total){
                 material_expene_grand_total_el.classList.add('text-danger');
                 materiaL_overhead_grand_total_el.classList.add('text-danger');
                 nonconforming_item_count++;
