@@ -92,13 +92,15 @@ class ProjectReportController extends Controller {
             ]);
         }
 
-        $report                 = [];
-        $contract_item_arr      = [];
-        $component_arr          = [];
-        $component_item_arr     = [];
-        $material_quantity_arr  = [];
-        $material_item_arr      = [];
-        $total_po_overhead_arr  = [];
+        $report                                 = [];
+        $contract_item_arr                      = [];
+        $component_arr                          = [];
+        $component_item_arr                     = [];
+        $material_quantity_arr                  = [];
+        $material_item_arr                      = [];
+        $total_po_overhead_arr                  = [];
+        $valid_po_ids                           = [];
+        $valid_material_quantity_request_ids    = [];
 
         $contract_items = ContractItem::where('section_id',$section_id)->where('deleted_at',null)->orderBy('item_code','ASC');
 
@@ -136,14 +138,29 @@ class ProjectReportController extends Controller {
 
                 $purchase_orders = PurchaseOrder::where('component_id',$component->id)
                 ->where('status','APRV')
+                ->where('deleted_at',null)
                 ->where('project_id', $project_id)
-                ->where('section_id',$section_id)
-                ->get();
+                ->where('section_id',$section_id);
+                
+                //Date filter for puchase order
+                if($from){
+                    $purchase_orders = $purchase_orders->where('approved_at','>=',$from+' 00:00:00');
+                }
+
+                if($to){
+                    $purchase_orders = $purchase_orders->where('approved_at','<=',$to+' 23:59:59');
+                }
+                
+                $purchase_orders = $purchase_orders->get();
 
                 $total_po_overhead = 0;
-
+                
                 foreach($purchase_orders as $purchase_order){
                     
+                    //Add to valid po id
+                    $valid_po_ids[] = $purchase_order->id;
+                    
+                    //Calculate total po overhead
                     try{
 
                         $extras = json_decode($purchase_order->extras);
@@ -158,6 +175,28 @@ class ProjectReportController extends Controller {
                 }
 
                 $total_po_overhead_arr[ $component->id ] = $total_po_overhead;
+
+                $material_quantity_requests = MaterialQuantityRequest::where('component_id',$component->id)
+                ->where('status','APRV')
+                ->where('deleted_at',null)
+                ->where('project_id', $project_id)
+                ->where('section_id',$section_id);
+                
+                //Date filter for material quantitiy requests
+                if($from){
+                    $material_quantity_requests = $material_quantity_requests->where('approved_at','>=',$from+' 00:00:00');
+                }
+
+                if($to){
+                    $material_quantity_requests = $material_quantity_requests->where('approved_at','<=',$to+' 23:59:59');
+                }
+
+                $material_quantity_requests = $material_quantity_requests->get();
+
+                foreach($material_quantity_requests as $material_quantity_request){
+                    //Add valid material quantity requests id
+                    $valid_material_quantity_request_ids[] = $material_quantity_request->id;
+                }
 
                 $component_arr[ $component->id ] = $component;
 
@@ -187,17 +226,20 @@ class ProjectReportController extends Controller {
                         $total_requested_quantity = MaterialQuantityRequestItem::where('component_item_id',$component_item->id)
                         ->where('material_item_id', $material_quantity->material_item_id)
                         ->where('status','APRV')
+                        ->whereIn('material_quantity_request_id',$valid_material_quantity_request_ids)
                         ->sum('requested_quantity');
 
                         $total_po_quantity = PurchaseOrderItem::where('component_item_id',$component_item->id)
                         ->where('material_item_id',$material_quantity->material_item_id)
                         ->where('status','APRV')
+                        ->whereIn('purchase_order_id',$valid_po_ids)
                         ->sum('quantity');
 
 
                         $total_po_amount = PurchaseOrderItem::where('component_item_id',$component_item->id)
                         ->where('material_item_id',$material_quantity->material_item_id)
                         ->where('status','APRV')
+                        ->whereIn('purchase_order_id',$valid_po_ids)
                         ->select( DB::raw('SUM(quantity * price) as total') )
                         ->first();
 
