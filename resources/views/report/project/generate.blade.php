@@ -19,6 +19,7 @@
 
     .component_item{
         background-color: #034078 !important;
+        color: #c7d0d9 !important;
     }
 
     .bar{
