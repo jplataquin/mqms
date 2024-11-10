@@ -255,6 +255,8 @@ class ProjectReportController extends Controller {
         return view('/report/project/generate',[
             'project_name'          => $project_name,
             'section_name'          => $section_name,
+            'contract_item_name'    => '',
+            'component_name'        => '',
             'contract_item_arr'     => $contract_item_arr,
             'component_arr'         => $component_arr,
             'component_item_arr'    => $component_item_arr,
@@ -262,7 +264,7 @@ class ProjectReportController extends Controller {
             'material_item_arr'     => $material_item_arr,
             'total_po_overhead_arr' => $total_po_overhead_arr,
             'report'                => $report,
-            'from'                  => $as_of,
+            'as_of'                 => $as_of,
             'url'                   => $url
         ]);
     }

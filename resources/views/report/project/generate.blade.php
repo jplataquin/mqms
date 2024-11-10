@@ -82,7 +82,7 @@
 
         <div class="folder-form-container">
             <div class="folder-form-tab">
-                Purchase Order
+                Project Report
             </div>
 
             <div class="folder-form-body">
@@ -95,6 +95,18 @@
                         <tr>
                             <th>Section</th>
                             <td>{{$section_name}}</td>
+                        </tr>
+                        <tr>
+                            <th>Contract Item</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Component</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>As of</th>
+                            <td>{{$as_of}}</td>
                         </tr>
                     </tbody>
                 </table> 
