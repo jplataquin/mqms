@@ -471,7 +471,7 @@
             });
 
             elem.innerText = 'P '+window.util.numberFormat(total);
-            elem.setAttribute('data-value',total);
+            elem.setAttribute('data-value',100);
 
         }
 
@@ -493,7 +493,7 @@
                 expense_percentage      = Math.round(expense_percentage);
 
                 let overhead_percentage = (total_overhead / total_budget) * 100;
-                overhead_percentage     = 100; //Math.round(overhead_percentage);
+                overhead_percentage     = Math.round(overhead_percentage);
 
                 let default_percentage  = 100 - (expense_percentage + overhead_percentage);
                 let total_percentage    = expense_percentage + overhead_percentage + default_percentage;
