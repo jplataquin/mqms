@@ -124,7 +124,8 @@ class ProjectReportController extends Controller {
         if($component_id){
 
             $component = ContractItem::where('id',$component_id)
-            ->where('section_id',$project->id)
+            ->where('project_id',$project->id)
+            ->where('section_id',$section->id)
             ->where('deleted_at',null)
             ->first();
 
