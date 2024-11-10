@@ -136,7 +136,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col-lg-6 col-md-6 text-center">
                         <div class="border rounded border-primary">
                             <h3>Total Expense</h3>
