@@ -172,17 +172,11 @@
 
         <table class="table report-table">
             @foreach($report as $contract_item_id => $contract_item)
-
-                <tr>
-                    <th colspan="2" class="contract_item fw-bold">
-                        {{ $contract_item_arr[$contract_item_id]->item_code }} {{$contract_item_arr[$contract_item_id]->description}}
-                    </th>
-                </tr>
-
-
                 <tr>
                     <td class="contract_item">
-                        <p>Expense / Budget</p>
+                        <p>  
+                             {{ $contract_item_arr[$contract_item_id]->item_code }} {{$contract_item_arr[$contract_item_id]->description}}
+                        </p>
                         <div class="progress">
                             <table cellpadding="0" cellspacing="0" class="horizontal-bar-stacked contract_item_percent" data-id="{{$contract_item_id}}">
                                 <tr>
