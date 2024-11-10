@@ -67,11 +67,7 @@ class ProjectReportController extends Controller {
                 'integer',
                 'gte:1'
             ],
-            'from' =>[
-                'nullable',
-                'date_format:Y-m-d'
-            ],
-            'to' => [
+            'as_of' => [
                 'nullable',
                 'date_format:Y-m-d'
             ]
@@ -151,12 +147,8 @@ class ProjectReportController extends Controller {
                 ->where('section_id',$section_id);
                 
                 //Date filter for puchase order
-                // if($from){
-                //     $purchase_orders = $purchase_orders->where('approved_at','>=',$from.' 00:00:00');
-                // }
-
-                if($to){
-                    $purchase_orders = $purchase_orders->where('approved_at','<=',$to.' 23:59:59');
+                if($as_of){
+                    $purchase_orders = $purchase_orders->where('approved_at','<=',$as_of.' 23:59:59');
                 }
                 
                 $purchase_orders = $purchase_orders->get();
@@ -191,12 +183,8 @@ class ProjectReportController extends Controller {
                 ->where('section_id',$section_id);
                 
                 //Date filter for material quantitiy requests
-                // if($from){
-                //     $material_quantity_requests = $material_quantity_requests->where('approved_at','>=',$from.' 00:00:00');
-                // }
-
-                if($to){
-                    $material_quantity_requests = $material_quantity_requests->where('approved_at','<=',$to.' 23:59:59');
+                if($as_of){
+                    $material_quantity_requests = $material_quantity_requests->where('approved_at','<=',$as_of.' 23:59:59');
                 }
 
                 $material_quantity_requests = $material_quantity_requests->get();

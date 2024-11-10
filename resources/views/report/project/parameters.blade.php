@@ -30,7 +30,7 @@
             </div>
             <div class="folder-form-body">
                 <div class="row mb-3">
-                    <div class="col-lg-3 mb-3">
+                    <div class="col-lg-6 mb-3">
                         <div class="form-group">
                             <label>Project</label>
                             <select class="form-select" id="project">
@@ -41,19 +41,21 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-3 mb-3">
+                    <div class="col-lg-6 mb-3">
                         <div class="form-group">
                             <label>Section</label>
                             <select class="form-select" id="section"></select>
                         </div>
-                    </div>
-                    <div class="col-lg-3 mb-3">
+                    </div>  
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-6 mb-3">
                         <div class="form-group">
                             <label>Contract Item</label>
                             <select class="form-select" id="contract_item"></select>
                         </div>
                     </div>
-                    <div class="col-lg-3 mb-3">
+                    <div class="col-lg-6 mb-3">
                         <div class="form-group">
                             <label>Component</label>
                             <select class="form-select" id="component"></select>
@@ -62,16 +64,10 @@
                 </div> <!-- div row -->
 
                 <div class="row mb-3">
-                    <div class="col-lg-6 mb-3">
+                    <div class="col-lg-12 mb-3">
                         <div class="form-group">
-                            <label>From</label>
-                            <input type="text" class="form-control" id="from" readonly="true"/>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 mb-3">
-                        <div class="form-group">
-                            <label>To</label>
-                            <input type="text" class="form-control" id="to" readonly="true"/>
+                            <label>As of</label>
+                            <input type="text" class="form-control" id="as_of" readonly="true"/>
                         </div>
                     </div>
                 </div>
@@ -88,14 +84,12 @@
 
     <script type="module">
         import {$q,Template} from '/adarna.js';
-//import { Datepicker } from '/datepicker.js'; 
 
         const project               = $q('#project').first();
         const section               = $q('#section').first();
         const contract_item         = $q('#contract_item').first();
         const component             = $q('#component').first();
-        const from                  = $q('#from').first();
-        const to                    = $q('#to').first();
+        const as_of                 = $q('#as_of').first();
         const submit_btn            = $q('#submit_btn').first();
         
         const t = new Template();
@@ -104,9 +98,7 @@
             autohide:true,
         };
 
-        let from_dp = new window.util.Datepicker(from, date_config); 
-
-        let to_dp = new window.util.Datepicker(to, date_config); 
+        let as_of_dp = new window.util.Datepicker(as_of, date_config); 
 
         let check_all_flag = true;
     
@@ -251,8 +243,7 @@
                 section_id          : section.value,
                 contract_item_id    : contract_item.value,
                 component_id        : component.value,
-                from                : from_dp.getDate('yyyy-mm-dd') ?? '',
-                to                  : to_dp.getDate('yyyy-mm-dd') ?? ''
+                as_of               : as_of_dp.getDate('yyyy-mm-dd') ?? '',
             });
 
             window.open('/report/project/generate?'+query,'_blank').focus();
