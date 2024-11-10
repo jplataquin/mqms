@@ -44,8 +44,7 @@ class ProjectReportController extends Controller {
         $section_id             = $request->input('section_id');
         $contract_item_id       = (int) $request->input('contract_item_id');
         $component_id           = (int) $request->input('component_id');
-        $from                   = $request->input('from');
-        $to                     = $request->input('to');
+        $as_of                  = $request->input('as_of');
         $material_item_id_arr   = explode(',',$request->input('material_items'));
 
         $project_name       = '';
