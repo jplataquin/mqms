@@ -92,7 +92,7 @@ class ProjectReportController extends Controller {
             ]);
         }
 
-        $report                                 = [];
+        $report                                  = [];
         $contract_item_arr                      = [];
         $component_arr                          = [];
         $component_item_arr                     = [];
@@ -184,11 +184,11 @@ class ProjectReportController extends Controller {
                 
                 //Date filter for material quantitiy requests
                 if($from){
-                    $material_quantity_requests = $material_quantity_requests->where('approved_at','>=',$from+' 00:00:00');
+                    $material_quantity_requests = $material_quantity_requests->where('approved_at','>=',$from.' 00:00:00');
                 }
 
                 if($to){
-                    $material_quantity_requests = $material_quantity_requests->where('approved_at','<=',$to+' 23:59:59');
+                    $material_quantity_requests = $material_quantity_requests->where('approved_at','<=',$to.' 23:59:59');
                 }
 
                 $material_quantity_requests = $material_quantity_requests->get();
