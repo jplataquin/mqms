@@ -129,12 +129,7 @@
 
 
                 <div class="row mb-3">
-                    <div class="col-lg-4 col-md-4 text-center">
-                        <div class="border rounded border-primary">
-                            <h4>Total Budget</h4>
-                            <h5 id="material_budget_grand_total" data-value="0">-</h5>
-                        </div>
-                    </div>
+                    
                     <div class="col-lg-4 col-md-4 text-center">
                         <div class="border rounded border-primary">
                             <h4>Total Expense</h4>
@@ -145,6 +140,13 @@
                         <div class="border rounded border-primary">
                             <h4>Total Overhead</h4>
                             <h5 id="material_overhead_grand_total" data-value="0">-</h5>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 col-md-4 text-center">
+                        <div class="border rounded border-primary">
+                            <h4>Total Budget</h4>
+                            <h5 id="material_budget_grand_total" data-value="0">-</h5>
                         </div>
                     </div>
                 </div>
