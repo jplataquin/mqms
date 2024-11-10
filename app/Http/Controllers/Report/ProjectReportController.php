@@ -144,11 +144,11 @@ class ProjectReportController extends Controller {
                 
                 //Date filter for puchase order
                 if($from){
-                    $purchase_orders = $purchase_orders->where('approved_at','>=',$from+' 00:00:00');
+                    $purchase_orders = $purchase_orders->where('approved_at','>=',$from.' 00:00:00');
                 }
 
                 if($to){
-                    $purchase_orders = $purchase_orders->where('approved_at','<=',$to+' 23:59:59');
+                    $purchase_orders = $purchase_orders->where('approved_at','<=',$to.' 23:59:59');
                 }
                 
                 $purchase_orders = $purchase_orders->get();
