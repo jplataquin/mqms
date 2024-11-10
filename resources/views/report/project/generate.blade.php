@@ -130,7 +130,7 @@
 
                 <div class="row mb-3">
                     <div class="col-lg-12 col-md-12 text-center">
-                        <div class="border rounded border-primary">
+                        <div class="border rounded border-secondary">
                             <h4>Total Budget</h4>
                             <h5 id="material_budget_grand_total" data-value="0">-</h5>
                         </div>
@@ -138,13 +138,13 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-lg-6 col-md-6 text-center">
-                        <div class="border rounded border-primary">
+                        <div class="border rounded border-secondary">
                             <h4>Total Expense</h4>
                             <h5 id="material_expense_grand_total" class="check" data-check-target="#material_budget_grand_total" data-value="0">-</h5>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 text-center">
-                        <div class="border rounded border-primary">
+                        <div class="border rounded border-secondary">
                             <h4>Total Overhead</h4>
                             <h5 id="material_overhead_grand_total" data-value="0">-</h5>
                         </div>
