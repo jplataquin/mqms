@@ -4,21 +4,21 @@
 <style>
 
     .contract_item{
-        background-color: #283044 !important;
+        background-color: #4f6367 !important;
         color: #c7d0d9 !important;
         /** position:sticky !important; **/
         top:40px;
     }
 
     .component{
-        background-color: #78a1bb !important;
+        background-color: #7a9e9f !important;
         color: #c7d0d9 !important;
         /** position:sticky !important; **/
         top:140px;
     }
 
     .component_item{
-        background-color: #ebf5ee !important;
+        background-color: #b8d8d8 !important;
     }
 
     .bar{
