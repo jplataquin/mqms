@@ -657,6 +657,9 @@
                 material_expene_grand_total_el.classList.add('text-danger');
                 materiaL_overhead_grand_total_el.classList.add('text-danger');
             }
+
+            material_expene_grand_total_el.classList.add('text-danger');
+                materiaL_overhead_grand_total_el.classList.add('text-danger');
         }
 
         /** Note the function call must run in order **/
