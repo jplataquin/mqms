@@ -5,14 +5,14 @@
 
     .contract_item{
         background-color: #233d4d !important;
-        color: #ffffff !important;
+        color: #c7d0d9 !important;
         /** position:sticky !important; **/
         top:40px;
     }
 
     .component{
         background-color: #fe7f2d !important;
-        color: #ffffff !important;
+        color: #c7d0d9 !important;
         /** position:sticky !important; **/
         top:140px;
     }
@@ -53,7 +53,7 @@
     }
 
     .horizontal-bar-stacked-default{
-        background-color: rgb(233, 236, 239);
+        background-color: #c7d0d9;
         width:100%;
     }
 
