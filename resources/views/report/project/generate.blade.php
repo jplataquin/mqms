@@ -662,7 +662,7 @@
 
             if(nonconforming_item_count){
                 $q('#callout-danger').first().classList.remove('d-none');  
-                $q('#callout-danger-p').first().innerHTML = 'Warning: '+nonconforming_item_count+' non-conforming items detected';  
+                $q('#callout-danger-p').first().innerHTML = 'Warning: '+nonconforming_item_count+' Non-conforming items detected';  
             }
         }
 
