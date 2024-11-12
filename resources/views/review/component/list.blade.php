@@ -129,10 +129,16 @@
     const sortSelect      = $q('#sortSelect').first();
     const cancelBtn       = $q('#cancelBtn').first();
     const createBtn       = $q('#createBtn').first();
+    
     let page            = 1;
     let order           = 'DESC';
     let orderBy         = 'id';
 
+    window.util.quickNav = {
+        title:'Purchase Order',
+        url:'/purchase_order'
+    };
+    
     const t = new Template();
     
     function reinitalize(){

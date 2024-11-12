@@ -111,7 +111,7 @@
 
                             <ul class="list-unstyled menu-sub-items">
                                 <li class="nav-sub-item">
-                                    <a href="/review/components" hx-select="#content" hx-target="#main">Budget</a>
+                                    <a href="/review/components" hx-select="#content" hx-target="#main">Component</a>
                                 </li>
                                 <li class="nav-sub-item">
                                     <a href="/review/material_quantity_requests" hx-select="#content" hx-target="#main">Material Request</a>
