@@ -302,7 +302,7 @@
                     <tr class="@if(!$component->sum_flag || ($component->unit_id != $contract_item->unit_id)) bg-excluded-sum-component @endif">
                             @if($first)
                             <td rowspan="{{count($component_items_arr[$component->id])+2}}">
-                                [{{$contract_item.'/'.$component->id}}]
+                                [{{$contract_item->id.'/'.$component->id}}]
                                 <br>
                                 {!! Str::wordWrap($component->name,10,"<br>",false) !!}
                             </td>
