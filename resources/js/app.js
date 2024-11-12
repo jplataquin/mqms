@@ -529,6 +529,20 @@ window.util.createComponent = function(model,callback){
 }
 
 
+
+window.util.roundUp = function(num,decimalPlaces = 0){
+   
+    if (num < 0)
+        return -round(-num, decimalPlaces);
+    var p = Math.pow(10, decimalPlaces);
+    var n = num * p;
+    var f = n - Math.floor(n);
+    var e = Number.EPSILON * n;
+
+    // Determine whether this fraction is a midpoint value.
+    return (f >= .5 - e) ? Math.ceil(n) / p : Math.floor(n) / p;
+}
+
 window.util.numberFormat = function(val,fractionDigits){
 
     if(!fractionDigits){
@@ -540,6 +554,23 @@ window.util.numberFormat = function(val,fractionDigits){
         maximumFractionDigits: fractionDigits
     })).format(val);
    
+}
+
+window.util.pureNumber = function(val,fractionDigits = null){
+
+    val = ''+val+''.replace(/[^\d.-]/g,'');
+
+    val = parseFloat(val);
+
+    if( isNaN(val) ){
+        val = 0.0;
+    }
+    
+    if(fractionDigits != null){
+        val = window.util.roundUp(val,fractionDigits);
+    }
+
+    return val;
 }
 
 window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
@@ -656,35 +687,23 @@ window.util.navReload = function(){
 }
 
 
-window.util.parseNumber = function(str){
-    str = str+''.trim();
-    str = str.replace(/,/g, '');
-    str = parseFloat(str);
+// window.util.parseNumber = function(str){
+//     str = str+''.trim();
+//     str = str.replace(/,/g, '');
+//     str = parseFloat(str);
 
-    if(isNaN(str)) return 0;
+//     if(isNaN(str)) return 0;
 
-    return str;
-}
+//     return str;
+// }
 
-window.util.roundTwoDecimal = function(num){
-    num = window.util.parseNumber(num);
-    return Math.round((num + Number.EPSILON) * 100) / 100;
-}
+// window.util.roundTwoDecimal = function(num){
+//     num = window.util.parseNumber(num);
+//     return Math.round((num + Number.EPSILON) * 100) / 100;
+// }
 
 
-window.util.roundUp = function(num,decimal){
-    num = window.util.parseNumber(num);
-    
-    let v = '1';
 
-    for(let i = 1; i <= decimal; i++){
-        v = v+'0';
-    }
-
-    v = parseInt(v);
-
-    return Math.round((num + Number.EPSILON) * v) / v;
-}
 
 window.util.throttle = (fn, delay) => {   
     // Capture the current time   

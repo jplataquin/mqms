@@ -5,7 +5,8 @@ class CanvassItem extends Component{
 
     state(){
         return {
-            validationError: false
+            validationError: false,
+            moneyFormatFlag: false
         }
     }
 
@@ -22,7 +23,8 @@ class CanvassItem extends Component{
             payment_term_id:'',
             price:'',
             quantity:0,
-            approvalFlag: false
+            approvalFlag: false,
+            moneyFormatFlag: false
         }
     }
 
@@ -30,6 +32,7 @@ class CanvassItem extends Component{
         const t = new Template();
 
         this.el.status          = t.input({class:'form-control',disabled:true,value:this._model.status});
+
         this.el.deleteBtn       = t.button({class:'btn btn-danger form-control'},()=>{
             t.i({class:'bi bi-trash'});
         });
@@ -84,7 +87,8 @@ class CanvassItem extends Component{
                     t.div({class:'form-group'},()=>{
                         t.label('Price');
 
-                        this.el.price = t.input({class:'form-control',value:this._model.price,type:'number'});
+
+                        this.el.price = t.input({class:'form-control', value:this._model.price, type:'text'});
 
                     });
                 });
@@ -174,8 +178,7 @@ class CanvassItem extends Component{
             this.el.supplier.disabled       = true;
             this.el.payment_terms.disabled  = true;
             this.el.price.disabled          = true;
-
-            
+            this.el.price.value             = 'P '+window.util.numberFormat(this.el.price.value,2);
         }
 
           
@@ -255,8 +258,8 @@ class CanvassItem extends Component{
         this.el.price.onkeyup = (e)=>{
 
             if(this.el.price.value.trim() == ''){
-                this.el.total.value = 0;
-                this._model.price = 0;
+                this.el.total.value     = 0;
+                this._model.price       = 0;
                 return false;
             }
 
@@ -264,9 +267,11 @@ class CanvassItem extends Component{
                 this.el.price.value = '0.00';
             }
 
-            this.el.total.value = $util.numFormat.money('P',
-                (parseFloat(this.el.price.value) * parseFloat(this._model.quantity)).toFixed(2)
+            this.el.total.value = 'P '+window.util.numberFormat(
+                parseFloat(this.el.price.value) * parseFloat(this._model.quantity),
+                2
             );
+            
 
             this._model.price = this.el.price.value;
         }
@@ -354,7 +359,7 @@ class CanvassItem extends Component{
                 material_quantity_request_item_id: this._model.material_quantity_request_item_id,
                 supplier_id: this._model.supplier_id,
                 payment_term_id: this._model.payment_term_id,
-                price: parseFloat(this._model.price).toFixed(2),
+                price: window.util.pureNumber(this._model.price,2),
                 status: this._model.status
             }
         }
