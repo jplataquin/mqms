@@ -522,7 +522,12 @@
     const component       = $q('#component').first();
     const printBtn        = $q('#printBtn').first();
     const revertPendBtn   = $q('#revertPendBtn').first();
-
+    
+    window.util.quickNav = {
+        title:'Component',
+        url:'/review/component'
+    };
+    
     printBtn.onclick = ()=>{
         window.open('/project/section/print/{{$section->id}}','_blank').focus();
     }
