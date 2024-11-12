@@ -135,9 +135,10 @@
     let orderBy         = 'id';
 
     window.util.quickNav = {
-        title:'Purchase Order',
-        url:'/purchase_order'
+        title:'Component',
+        url:'/review/component'
     };
+    
     
     const t = new Template();
     
