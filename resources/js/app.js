@@ -558,10 +558,8 @@ window.util.numberFormat = function(val,fractionDigits){
 
 window.util.pureNumber = function(val,fractionDigits = null){
 
-    val = ''+val+''.replace(/[^\d.-]/g,'');
+    val = String(val).replace(/[^\d.-]/g,'');
 
-    console.log(val);
-    
     val = parseFloat(val);
 
     if( isNaN(val) ){
