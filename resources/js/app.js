@@ -560,6 +560,8 @@ window.util.pureNumber = function(val,fractionDigits = null){
 
     val = ''+val+''.replace(/[^\d.-]/g,'');
 
+    console.log(val);
+    
     val = parseFloat(val);
 
     if( isNaN(val) ){
