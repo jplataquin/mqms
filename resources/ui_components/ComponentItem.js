@@ -1,13 +1,8 @@
 import {Template,Component,Signal} from '/adarna.js';
 
-//D.R.Y. coding helpers
-// function roundTwoDecimal(num) {
-//     num = parseFloat(num);
-//     return Math.round((num + Number.EPSILON) * 100) / 100;
-// }
 
 function calculateTotalEquivalent(a,b){
-    return window.util.roundTwoDecimal(parseFloat(a) * parseFloat(b));
+    return window.util.roundUp(parseFloat(a) * parseFloat(b),2);
 }
 
 
@@ -360,7 +355,7 @@ class ComponentItem extends Component{
         }
         
         this.el.equivalent.onkeyup = ()=>{
-            this.el.material_quantity.value = window.util.roundTwoDecimal(this.el.quantity.value / this.el.equivalent.value);
+            this.el.material_quantity.value = window.util.roundUp(this.el.quantity.value / this.el.equivalent.value,2);
             this.el.total.value = calculateTotalEquivalent( this.el.material_quantity.value, this.el.equivalent.value);
            
         }
@@ -548,17 +543,17 @@ class ComponentItem extends Component{
         switch(this.el.function_type.value){
             case '1': //As Factor
 
-                    val = window.util.roundTwoDecimal(
+                    val = window.util.roundUp(
                         (parseFloat(this._model.component_quantity) * this.el.variable.value)  / parseInt(this._model.component_use_count)
-                    );
+                    ,2);
 
                 break;
 
             case '2': //As Divisor
 
-                    val = window.util.roundTwoDecimal( 
+                    val = window.util.roundUp( 
                         (parseFloat(this._model.component_quantity) / this.el.variable.value)  / parseInt(this._model.component_use_count)
-                    );
+                    ,2);
 
                 break;
 
@@ -776,7 +771,7 @@ class ComponentItem extends Component{
         
         const materialItem = t.tr((row)=>{
                     t.td(this.materialRegistry[data.material_item_id]);
-                    t.td(''+window.util.roundTwoDecimal(data.quantity));
+                    t.td(''+window.util.roundUp(data.quantity,2));
                     t.td(''+data.equivalent);
                     t.td(''+calculateTotalEquivalent(data.quantity,data.equivalent));
                     t.td({class:'text-center'},()=>{
@@ -849,7 +844,7 @@ class ComponentItem extends Component{
 
         const t = new Template();
 
-        const quantityInput     = t.input({class:'form-control',value: window.util.roundTwoDecimal(entry.quantity)});
+        const quantityInput     = t.input({class:'form-control',value: window.util.roundUp(entry.quantity,2)});
         const equivalentInput   = t.input({class:'form-control',value:entry.equivalent});
         const totalInput        = t.input({ class:'form-control', disabled:true});
 
