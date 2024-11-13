@@ -184,8 +184,8 @@ class MaterialQuantityController extends Controller
 
         return (object) [
             'total_approved_request' => $result->total_approved_request,
-            'over_budget'=> $over,
-            'mqr_ids'    => $mqr_ids
+            'over_budget'            => $over,
+            'mqr_ids'                => $mqr_ids
         ];
     }
 
@@ -276,15 +276,22 @@ class MaterialQuantityController extends Controller
                 'data'      => []
             ]);
         }
-        //--------------------------------------------//
+        //--------------------------------------------
 
         //Check if there are material request that has been affected by the change in quantity
-//$this->check_affected_material_request($id,$quantity,$equivalent,$materialQuantity);
+        $check_affected = $this->check_affected_material_request($quantity,$materialQuantity);
 
-
+        if($check_affected->over_budget){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'There are "'.number_format($check_affected->total_approved_request,2).'" units of approved material request that already exists'
+                'data'      => $check_affected->mqr_ids
+            ]);
+        }
+        //--------------------------------------------
+        
+        
         $user_id = Auth::user()->id;
-
-       
 
         //No change do nothing
         if($materialQuantity->quantity == $quantity && $materialQuantity == $equivalent){

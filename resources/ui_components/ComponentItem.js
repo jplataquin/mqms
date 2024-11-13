@@ -789,6 +789,14 @@ class ComponentItem extends Component{
                             });
                         }
 
+                        t.a({class:'me-5',href:'#'},()=>{
+                            t.i({class:'bi bi-list-task'});
+                        }).onclick = (e)=>{
+                            e.preventDefault();
+
+                            window.open('material_quantity/report/'+data.id,'_blank');
+                        }
+
                         t.a({href:'#'},()=>{
                             t.i({class:'bi bi-trash-fill'});
                         }).onclick = (e)=>{
@@ -945,14 +953,15 @@ class ComponentItem extends Component{
             window.util.blockUI();
 
             window.util.$post('/api/material_quantity/update',{
-                id: entry.material_quantity_id,
-                material_item_id: entry.material_item_id,
-                quantity: quantityInput.value,
-                equivalent: equivalentInput.value
+                id                  : entry.material_quantity_id,
+                material_item_id    : entry.material_item_id,
+                quantity            : quantityInput.value,
+                equivalent          : equivalentInput.value
             }).then(reply=>{
                 window.util.unblockUI();
 
                 if(reply.status <= 0){
+
                     window.util.showMsg(reply);
                     return false;
                 }
@@ -968,6 +977,7 @@ class ComponentItem extends Component{
 
         window.ui.primaryModal.show();
     }
+
 }
 
 export default (data)=>{
