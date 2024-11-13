@@ -183,6 +183,7 @@ class MaterialQuantityController extends Controller
         $mqr_ids = explode(',',$result->mqr_ids);
 
         return (object) [
+            'total_approved_request' => $result->total_approved_request,
             'over_budget'=> $over,
             'mqr_ids'    => $mqr_ids
         ];
@@ -192,6 +193,12 @@ class MaterialQuantityController extends Controller
 
         
         $materialQuantity = MaterialQuantity::find($id);
+
+        if(!$materialQuantity){
+            return false;
+        }
+
+        print_r($materialQuantity);
 
         $result = $this->check_affected_material_request(10000,$materialQuantity);
 
