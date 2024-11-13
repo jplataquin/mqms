@@ -359,7 +359,7 @@ class CanvassItem extends Component{
                 material_quantity_request_item_id: this._model.material_quantity_request_item_id,
                 supplier_id: this._model.supplier_id,
                 payment_term_id: this._model.payment_term_id,
-                price: window.util.pureNumber(this._model.price,2),
+                price: window.util.pureNumber(this._model.price,2).toFixed(2),
                 status: this._model.status
             }
         }

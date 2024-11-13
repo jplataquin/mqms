@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\MaterialItem;
 use App\Models\MaterialQuantity;
+use App\Models\MaterialQuantityRequestItem;
+use App\Models\MaterialQuantityRequest;
 use App\Models\ComponentItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -156,6 +158,20 @@ class MaterialQuantityController extends Controller
         ]);
     }
 
+    public function check_affected_material_request($quantity,$equivalent,$materialQuantity){
+
+        $material_item_id   = $materialQuantity->material_item_id;
+        $component_item_id  = $materialQuantity->component_item_id;
+        $component          = $materialQuantity->ComponentItem->Component;
+       
+        //Query valid material quantity request entries
+        MaterialQuantityRequest::where('component_item_id',$component_item_id)
+        ->where('material_item_id',$material_item_id)
+        ->where('deleted_at',null)
+        ->whereIn('statuss',['APRV','PEND'])
+        ->select('id')->get();
+    }
+
     public function _update(Request $request){
 
         $id         = (int) $request->input('id');
@@ -226,7 +242,10 @@ class MaterialQuantityController extends Controller
                 'data'      => []
             ]);
         }
-  
+        //--------------------------------------------//
+
+        //Check if there are material request that has been affected by the change in quantity
+        //$this->check_affected_material_request($id,$quantity,$equivalent,$materialQuantity);
 
 
         $user_id = Auth::user()->id;
