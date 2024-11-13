@@ -176,7 +176,7 @@ class MaterialQuantityController extends Controller
         
         $over = false;
 
-        if($quantity > $result->requested_quantity){
+        if($quantity > $result->total_approved_request){
             $over = true;
         }
 
