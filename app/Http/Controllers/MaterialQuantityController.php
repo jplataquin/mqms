@@ -284,7 +284,7 @@ class MaterialQuantityController extends Controller
         if($check_affected->over_budget){
             return response()->json([
                 'status'    => 0,
-                'message'   => 'There are "'.number_format($check_affected->total_approved_request,2).'" units of approved material request that already exists'
+                'message'   => 'There are "'.number_format($check_affected->total_approved_request,2).'" units of approved material request that already exists',
                 'data'      => $check_affected->mqr_ids
             ]);
         }
