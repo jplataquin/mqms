@@ -11,6 +11,7 @@ use App\Models\ComponentItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class MaterialQuantityController extends Controller
 {
@@ -158,18 +159,43 @@ class MaterialQuantityController extends Controller
         ]);
     }
 
-    public function check_affected_material_request($quantity,$equivalent,$materialQuantity){
+    private function check_affected_material_request($quantity,$materialQuantity){
 
         $material_item_id   = $materialQuantity->material_item_id;
         $component_item_id  = $materialQuantity->component_item_id;
-        $component          = $materialQuantity->ComponentItem->Component;
-       
-        //Query valid material quantity request entries
-        MaterialQuantityRequest::where('component_item_id',$component_item_id)
-        ->where('material_item_id',$material_item_id)
-        ->where('deleted_at',null)
-        ->whereIn('statuss',['APRV','PEND'])
-        ->select('id')->get();
+        
+
+        $result = DB::table('material_quantity_request_items')
+        ->join('material_quantity_requests', 'material_quantity_requests.id','=','material_quantity_request_items.material_quantity_request_id')
+        ->where('material_quantity_requests.status','APRV')
+        ->where('material_quantity_requests.deleted_at',null)
+        ->where('material_quantity_request_items.material_item_id',$material_item_id)
+        ->where('material_quantity_request_items.component_item_id',$component_item_id)
+        ->select(DB::raw('SUM(material_quantity_request_items.requested_quantity) AS total_approved_request, GROUP_CONCAT(material_quantity_requests.id) AS mqr_ids'))
+        ->first();
+        
+        $over = false;
+
+        if($quantity > $result->requested_quantity){
+            $over = true;
+        }
+
+        $mqr_ids = explode(',',$result->mqr_ids);
+
+        return (object) [
+            'over_budget'=> $over,
+            'mqr_ids'    => $mqr_ids
+        ];
+    }
+
+    public function test_mq($id){
+
+        
+        $materialQuantity = MaterialQuantity::find($id);
+
+        $result = $this->check_affected_material_request(10000,$materialQuantity);
+
+        print_r($result);
     }
 
     public function _update(Request $request){
@@ -245,7 +271,7 @@ class MaterialQuantityController extends Controller
         //--------------------------------------------//
 
         //Check if there are material request that has been affected by the change in quantity
-        //$this->check_affected_material_request($id,$quantity,$equivalent,$materialQuantity);
+//$this->check_affected_material_request($id,$quantity,$equivalent,$materialQuantity);
 
 
         $user_id = Auth::user()->id;

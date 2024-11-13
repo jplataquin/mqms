@@ -151,6 +151,8 @@ Route::middleware(['auth',CheckForResetPassword::class])->group(function () {
     Route::get('/user/create', [App\Http\Controllers\UserController::class, 'create']);
     Route::get('/user/{id}', [App\Http\Controllers\UserController::class, 'display']);
     Route::get('/me',[App\Http\Controllers\UserController::class, 'me']);
+
+    Route::get('/test_mq/{id}',[App\Http\Controllers\MaterialQuantityController::class, 'test_mq']);
 });
 
 
