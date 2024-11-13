@@ -6,7 +6,7 @@
         <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
             <ul>
                 <li>
-                    <a href="/material_quantity_request/{{$material_request->id}}">
+                    <a href="#">
                         <span>
                         Material Quantity
                         </span>
