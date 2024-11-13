@@ -202,6 +202,7 @@ class MaterialQuantityController extends Controller
 
         $result = $this->check_affected_material_request(10000,$materialQuantity);
 
+        echo '<br>';
         print_r($result);
     }
 
