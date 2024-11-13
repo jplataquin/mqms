@@ -409,10 +409,10 @@ class RequestMaterialItem extends Component{
 
             this.el.prevApprovedQuantity.value = reply.data.total_approved_quantity;
 
-            let budget                         = window.util.parseNumber(this.el.materialBudgetQuantity.value);
+            let budget                         = window.util.pureNumber(this.el.materialBudgetQuantity.value);
             let approved                       = reply.data.total_approved_quantity;
             let balance                        = budget - approved;
-            let request                        = window.util.parseNumber(this.el.requestedQuantity.value);
+            let request                        = window.util.pureNumber(this.el.requestedQuantity.value);
             this.el.quantityRemaining.value    = window.util.roundUp(balance,2);
 
             //If balance is negative
@@ -438,9 +438,9 @@ class RequestMaterialItem extends Component{
         
         if(!isNaN(this.el.prevApprovedQuantity.value)){
 
-            let remaining = window.util.parseNumber(this.el.materialBudgetQuantity.value) - window.util.parseNumber(this.el.prevApprovedQuantity.value);
+            let remaining = window.util.pureNumber(this.el.materialBudgetQuantity.value) - window.util.pureNumber(this.el.prevApprovedQuantity.value);
             
-            if( window.util.parseNumber(this.el.requestedQuantity.value) > remaining ){
+            if( window.util.pureNumber(this.el.requestedQuantity.value) > remaining ){
             
                 window.util.alert('Error','Requested quantity is out of budget');
             
