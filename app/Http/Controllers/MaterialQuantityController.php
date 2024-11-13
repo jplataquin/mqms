@@ -380,5 +380,56 @@ class MaterialQuantityController extends Controller
         ]);
     }
 
-   
+   public function report($id){
+
+        $id = (int) $id;
+
+        $materialQuantity = MaterialQuantity::findOrFail($id);
+
+        $material_item_id   = $materialQuantity->material_item_id;
+        $component_item_id  = $materialQuantity->component_item_id;
+        
+        $materialItem    = MaterialItem::find($material_item_id);
+        $componentItem   = $materialQuantity->ComponentItem;
+        $component       = $componentItem->Component; 
+        $contractItem    = $component->ContractItem; 
+        $section         = $contractItem->Section;
+        $project         = $section->Project;
+
+        $mqr_approved = DB::table('material_quantity_request_items')
+        ->join('material_quantity_requests', 'material_quantity_requests.id','=','material_quantity_request_items.material_quantity_request_id')
+        ->where('material_quantity_requests.status','APRV')
+        ->where('material_quantity_requests.deleted_at',null)
+        ->where('material_quantity_request_items.material_item_id',$material_item_id)
+        ->where('material_quantity_request_items.component_item_id',$component_item_id)
+        ->select(DB::raw('SUM(material_quantity_request_items.requested_quantity) AS total, GROUP_CONCAT(material_quantity_requests.id ORDER BY material_quantity_requests.id ASC) AS mqr_ids'))
+        ->first();
+
+        $mqr_pending = DB::table('material_quantity_request_items')
+        ->join('material_quantity_requests', 'material_quantity_requests.id','=','material_quantity_request_items.material_quantity_request_id')
+        ->where('material_quantity_requests.status','PEND')
+        ->where('material_quantity_requests.deleted_at',null)
+        ->where('material_quantity_request_items.material_item_id',$material_item_id)
+        ->where('material_quantity_request_items.component_item_id',$component_item_id)
+        ->select(DB::raw('SUM(material_quantity_request_items.requested_quantity) AS total, GROUP_CONCAT(material_quantity_requests.id ORDER BY material_quantity_requests.id ASC) AS mqr_ids'))
+        ->first();
+
+
+        return view('material_quantity/report',[
+            'mqr_approved' =>[
+                'total_quantity' => $mqr_approved->total,
+                'mqr_ids'        => explode(',',$mqr_approved->mqr_ids)
+            ],
+            'mqr_pending' =>[
+                'total_quantity' => $mqr_pending->total,
+                'mqr_ids'        => explode(',',$mqr_pending->mqr_ids)
+            ],
+            'material_item'     => $materialItem,
+            'component_item'    => $componentItem,
+            'component'         => $component,
+            'contract_item'     => $contractItem,
+            'section'           => $section,
+            'project'           => $project
+        ]);
+   }
 }

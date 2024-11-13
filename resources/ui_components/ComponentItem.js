@@ -794,7 +794,7 @@ class ComponentItem extends Component{
                         }).onclick = (e)=>{
                             e.preventDefault();
 
-                            window.open('/material_quantity/report/'+data.id,'_blank');
+                            window.open('/material_budget/report/'+data.id,'_blank');
                         }
 
                         t.a({href:'#'},()=>{

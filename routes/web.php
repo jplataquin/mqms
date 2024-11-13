@@ -80,6 +80,7 @@ Route::middleware(['auth',CheckForResetPassword::class])->group(function () {
     
     Route::get('/project/section/contract_item/component/{id}', [App\Http\Controllers\ComponentController::class, 'display']);
     Route::get('/project/section/contract_item/component/print/{id}', [App\Http\Controllers\ComponentController::class, 'preview']);
+    Route::get('/material_budget/report/{id}', [App\Http\Controllers\MaterialQuantityController::class, 'report']);
     
 
     Route::get('/master_data/supplier/create', [App\Http\Controllers\SupplierController::class, 'create']);
