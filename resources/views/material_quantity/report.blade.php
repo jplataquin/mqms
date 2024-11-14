@@ -57,6 +57,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Material Item</label>
+                            <input type="text" value="{{$material_item->formatted_name()}}" class="form-control" disabled="true"/>
+                        </div>
+                    </div>
+                </div>
 
                 
             </div>
@@ -65,7 +73,7 @@
         <div class="row mb-3">
             <div class="col-lg-12">
                 <hr>
-                <h3>{{$material_item->formatted_name()}}</h3>
+                <h3>Material Requests</h3>
                 <hr>
             </div>
         </div>
