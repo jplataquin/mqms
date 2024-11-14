@@ -163,9 +163,18 @@ class ComponentItem extends ComponentV2{
             component_item_equivalent:{
                 value:'',
                 update:(newVal)=>{
-                    this.el.component_item_equivalent.value = val+' '+this._model.component_unit_text;
+                    this.el.component_item_equivalent.value = window.util.numberFormat(newVal)+' '+this._model.component_unit_text;
                 }
-            }            
+            },
+            budget_price:{
+                value:'',
+                getVal: (val)=>{
+                    return window.util.pureNumber(val,2);
+                },
+                update:(newVal)=>{
+                    this.el.budget_price.value = window.util.numberFormat(newVal,2);
+                }
+            }           
         }
     }
 
@@ -585,7 +594,7 @@ class ComponentItem extends ComponentV2{
         
         this.setState('total_amount')
         this.el.total_amount.value = window.util.numberFormat(
-            window.util.pureNumber(this.el.budget_price.value) * window.util.pureNumber(this.el.quantity.value)
+            this.getState('budget_price') * this.getState('quantity')
         ,2);
     }
 
@@ -595,16 +604,16 @@ class ComponentItem extends ComponentV2{
         window.util.$post('/api/component_item/update/',{
             id                      : this._model.id,
             component_id            : this._model.component_id,
-            name                    : this.el.name.value,
-            budget_price            : window.util.pureNumber(this.el.budget_price.value,2),
-            quantity                : window.util.pureNumber(this.el.quantity.value,2),
-            unit_id                 : this.el.unit.value,
-            function_type_id        : this.el.function_type.value,
-            function_variable       : window.util.pureNumber(this.el.variable.value),
-            sum_flag                : (this.el.sum_flag.checked == true) ? 1 : 0,
-            ref_1_quantity          : window.util.pureNumber(this.el.ref_1_quantity.value),
-            ref_1_unit_id           : this.el.ref_1_unit_id.value,
-            ref_1_unit_price        : window.util.pureNumber(this.el.ref_1_unit_price.value)
+            name                    : this.getState('name'),
+            budget_price            : this.getState('budget_price'),
+            quantity                : this.getState('quantity'),
+            unit_id                 : this.getState('unit'),
+            function_type_id        : this.getState('function_type'),
+            function_variable       : this.getState('variable'),
+            sum_flag                : (this.getState('sum_flag') == true) ? 1 : 0,
+            ref_1_quantity          : this.getState('ref_1_quantity'),
+            ref_1_unit_id           : this.getState('ref_1_unit_id'),
+            ref_1_unit_price        : this.getState('ref_1_unit_price')
 
         }).then(reply=>{
 
@@ -616,28 +625,8 @@ class ComponentItem extends ComponentV2{
                 return false;
             }
             
-            this.setState({
-                quantity        : window.util.pureNumber(this.el.quantity.value),
-                variable        : window.util.pureNumber(this.el.variable.value),
-                ref_1_quantity  : window.util.pureNumber(this.el.ref_1_quantity.value),
-                ref_1_unit_price: window.util.pureNumber(this.el.ref_1_unit_price.value),
-                unit            : this.el.unit.value,
-                name            : this.el.name.value,
-                function_type_id: this.el.function_type.value, 
-                ref_1_unit_id   : this.el.ref_1_unit_id.value,       
-                editable        : false
-            });
+            this.setState('editable',false);
 
-            // this.setState('quantity',window.util.pureNumber(this.el.quantity.value));
-            // this.setState('unit',this.el.unit.value);
-            // this.setState('name',this.el.name.value);
-            // this.setState('function_type_id',this.el.function_type.value);
-            // this.setState('variable',window.util.pureNumber(this.el.variable.value));
-            // this.setState('editable',false);
-
-            // this.setState('ref_1_quantity',window.util.pureNumber(this.el.ref_1_quantity.value));
-            // this.setState('ref_1_unit_id',this.el.ref_1_unit_id.value);
-            // this.setState('ref_1_unit_price', window.util.pureNumber(this.el.ref_1_unit_price.value));
             
             this.updateMaterialList();
 
