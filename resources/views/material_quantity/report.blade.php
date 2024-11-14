@@ -75,9 +75,10 @@
             <div class="col-lg-6 mb-3">
                 <h4>Pending ({{ number_format($mqr_pending->total_quantity,2) }})</h4>
                 <div class="list-group">
-                    here{{ implode(',',$mqr_pending->mqr_ids) }}test
+
                     @foreach($mqr_pending->mqr_ids as $mqr_pending_id)
-                    
+
+                        @php if(!$mqr_pending_id) continue; @endphp
                         <a class="list-group-item list-group-item-action" href="/material_quantity_request/{{$mqr_pending_id}}">{{str_pad($mqr_pending_id,6,0,STR_PAD_LEFT)}}</a>
                     
                     @endforeach
