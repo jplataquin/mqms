@@ -73,7 +73,7 @@
         <div class="row mb-3" hx-boost="true" hx-select="#content" hx-target="#main">
             
             <div class="col-lg-6 mb-3">
-                <h4>Pending ({{ number_format($mqr_pending->total,2) }})</h4>
+                <h4>Pending ({{ number_format($mqr_pending->total_quantity,2) }})</h4>
                 <div class="list-group">
                     @foreach($mqr_pending->mqr_ids as $mqr_ending_id)
                        
@@ -84,7 +84,7 @@
             </div>
 
             <div class="col-lg-6 mb-3">
-                <h4>Approved ({{ number_format($mqr_approved->total,2) }})</h4>
+                <h4>Approved ({{ number_format($mqr_approved->total_quantity,2) }})</h4>
                 <div class="list-group">
                     @foreach(($mqr_approved->mqr_ids as $mqr_approved_id)
                        
