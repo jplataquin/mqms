@@ -25,19 +25,19 @@ class ComponentItem extends ComponentV2{
             },
             unit:{
                 value:'',
-                setVal: (newVal)=>{
+                update: (newVal)=>{
                     this.el.unit.value = newVal;
                 }
             },
             name:{
                 value:'',
-                setVal: (newVal)=>{
+                update: (newVal)=>{
                     this.el.name.value = newVal;
                 }
             },
             sum_flag:{
                 value:true,
-                setVal: (newVal)=>{
+                update: (newVal)=>{
                     this.el.sum_flag.checked = newVal;
                 }
             },
