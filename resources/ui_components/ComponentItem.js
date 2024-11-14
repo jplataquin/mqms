@@ -788,6 +788,8 @@ class ComponentItem extends ComponentV2{
                 alert(reply.message);
                 return false;
             }
+
+            console.log(this._state);
             
             this.setState({
                 budget_price        :reply.data.budget_price,
