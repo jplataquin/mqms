@@ -86,7 +86,7 @@
             <div class="col-lg-6 mb-3">
                 <h4>Approved ({{ number_format($mqr_approved->total_quantity,2) }})</h4>
                 <div class="list-group">
-                    @foreach(($mqr_approved->mqr_ids as $mqr_approved_id)
+                    @foreach($mqr_approved->mqr_ids as $mqr_approved_id)
                        
                         <a class="list-group-item list-group-item-action" href="/material_quantity_request/{{$mqr_approved_id}}">{{str_pad($mqr_approved_id,6,0,STR_PAD_LEFT)}}</a>
                        
