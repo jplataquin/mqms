@@ -424,6 +424,7 @@ class MaterialQuantityController extends Controller
                 'total_quantity' => $mqr_pending->total,
                 'mqr_ids'        => explode(',',$mqr_pending->mqr_ids)
             ],
+            'material_quantity' => $materialQuantity,
             'material_item'     => $materialItem,
             'component_item'    => $componentItem,
             'component'         => $component,

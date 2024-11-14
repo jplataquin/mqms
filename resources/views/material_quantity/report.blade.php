@@ -66,6 +66,14 @@
                     </div>
                 </div>
 
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Budget Quantity</label>
+                            <input type="text" value="{{$material_quantity->quantity}}" class="form-control" disabled="true"/>
+                        </div>
+                    </div>
+                </div>
                 
             </div>
         </div>
