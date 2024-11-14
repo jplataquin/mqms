@@ -595,7 +595,7 @@ class ComponentItem extends Component{
     }
 
     onStateChange_grand_total(newVal){
-        this.el.grandTotal.innerText = newVal;
+        this.el.grandTotal.innerText = window.util.numberFormat(newVal,2);
 
         if(newVal > this._state.quantity){
             this.el.grandTotal.style.color = '#ff0000';
