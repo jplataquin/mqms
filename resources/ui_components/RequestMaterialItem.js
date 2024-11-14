@@ -316,7 +316,7 @@ class RequestMaterialItem extends Component{
 
             //If empty string then 0
             let prev_approved   = window.util.pureNumber(this.el.prevApprovedQuantity.value);
-            let total_budget    = window.util.pureNumber(this.el.materialBudgetQuantity.value)0;
+            let total_budget    = window.util.pureNumber(this.el.materialBudgetQuantity.value);
 
             prev_approved = isNaN(prev_approved) ? 0 : prev_approved;
             total_budget  = isNaN(total_budget) ? 0 : total_budget;
