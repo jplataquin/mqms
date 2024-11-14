@@ -77,7 +77,7 @@
                 <div class="list-group">
                     @foreach($mqr_pending->mqr_ids as $mqr_ending_id)
                        
-                        <a class="list-group-item list-group-item-action" href="/material_quantity_request/{{$mqr_ending_id}}">{{str_pad($mqr_pending_id,6,0,STR_PAD_LEFT)}}</a>
+                        <a class="list-group-item list-group-item-action" href="/material_quantity_request/{{$mqr_pending_id}}">{{str_pad($mqr_pending_id,6,0,STR_PAD_LEFT)}}</a>
                        
                     @endforeach
                 </div>
