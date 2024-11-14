@@ -119,6 +119,7 @@ class RequestMaterialItem extends Component{
 
                 t.div({class:'row mb-3'},()=>{
                     
+                    console.log(this._model.materialBudgetQuantity);
                     t.div({class:'col-lg-4'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Total Budget');
