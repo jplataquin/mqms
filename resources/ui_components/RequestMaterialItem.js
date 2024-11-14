@@ -126,9 +126,7 @@ class RequestMaterialItem extends Component{
                                 type:'text',
                                 disabled:true,
                                 class:'form-control text-center',
-                                value: new Intl.NumberFormat().format(
-                                    this._model.materialBudgetQuantity
-                                )
+                                value: window.util.numberFormat(this._model.materialBudgetQuantity,2) 
                             });
                         });              
                     });
@@ -409,13 +407,15 @@ class RequestMaterialItem extends Component{
                 return false;
             }
 
-            this.el.prevApprovedQuantity.value = reply.data.total_approved_quantity;
+            this.el.prevApprovedQuantity.value = window.util.numberFormat(reply.data.total_approved_quantity,2);
 
             let budget                         = window.util.pureNumber(this.el.materialBudgetQuantity.value);
             let approved                       = reply.data.total_approved_quantity;
             let balance                        = budget - approved;
             let request                        = window.util.pureNumber(this.el.requestedQuantity.value);
-            this.el.quantityRemaining.value    = window.util.roundUp(balance,2);
+            this.el.quantityRemaining.value    = window.util.numberFormat(
+                                                    window.util.roundUp(balance,2)
+                                                );
 
             //If balance is negative
             if(balance < 0){
@@ -437,9 +437,12 @@ class RequestMaterialItem extends Component{
     }
 
     onStateChange_requestedQuantity(newVal){
-        
-        if(!isNaN(this.el.prevApprovedQuantity.value)){
 
+        let prevApprovedQuantity = this.el.prevApprovedQuantity.value;
+
+        if(prevApprovedQuantity != 'Calculating...'){
+
+            
             let remaining = window.util.pureNumber(this.el.materialBudgetQuantity.value) - window.util.pureNumber(this.el.prevApprovedQuantity.value);
             
             if( window.util.pureNumber(this.el.requestedQuantity.value) > remaining ){
