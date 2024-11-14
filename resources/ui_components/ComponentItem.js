@@ -1,4 +1,4 @@
-import {Template,Component,Signal} from '/adarna.js';
+import {Template,ComponentV2,Signal} from '/adarna.js';
 
 
 function calculateTotalEquivalent(a,b){
@@ -8,21 +8,164 @@ function calculateTotalEquivalent(a,b){
 
 const signal = new Signal();
 
-class ComponentItem extends Component{
+
+
+class ComponentItem extends ComponentV2{
 
     state(){
         return {
-            quantity: 0,
-            unit:'',
-            name:'',
-            sum_flag:true,
-            editable: false,
-            function_type_id:'',
-            variable:'',
-            grand_total:0,
-            ref_1_quantity:'',
-            ref_1_unit_id:'',
-            ref_1_unit_price:''
+            quantity: {
+                value: 0,
+                getVal: (val)=>{
+                    return window.util.pureNumber(val,2);
+                },
+                update: (newVal)=>{
+                    this.el.quantity.value = window.util.numberFormat(newVal,2);
+                }
+            },
+            unit:{
+                value:'',
+                setVal: (newVal)=>{
+                    this.el.unit.value = newVal;
+                }
+            },
+            name:{
+                value:'',
+                setVal: (newVal)=>{
+                    this.el.name.value = newVal;
+                }
+            },
+            sum_flag:{
+                value:true,
+                setVal: (newVal)=>{
+                    this.el.sum_flag.checked = newVal;
+                }
+            },
+            editable: {
+                value: false,
+                update: (newVal)=>{
+
+                    this.el.name.disabled               = !newVal;
+                    this.el.unit.disabled               = !newVal;
+                    this.el.budget_price.disabled       = !newVal;
+                    this.el.function_type.disabled      = !newVal;
+                    this.el.variable.disabled           = !newVal;
+                    this.el.sum_flag.disabled           = !newVal;
+                    this.el.ref_1_quantity.disabled     = !newVal;
+                    this.el.ref_1_unit_id.disabled      = !newVal;
+                    this.el.ref_1_unit_price.disabled   = !newVal;
+
+
+
+                    if(this.el.function_type.value == 4){
+                        this.el.quantity.disabled = !newVal;
+                    }
+
+                    //Editable (true)
+                    if(newVal){
+
+                        this.el.editComponentButton.style.display   = 'none';
+                        this.el.deleteComponentButton.style.display = 'none';
+
+                        this.el.cancelEditComponentButton.style.display = 'inline';
+                        this.el.updateComponentButton.style.display     = 'inline';
+                        
+                    }else{ //Editable (false)
+                        this.el.editComponentButton.style.display   = 'inline';
+                        this.el.deleteComponentButton.style.display = 'inline';
+
+                        this.el.cancelEditComponentButton.style.display     = 'none';
+                        this.el.updateComponentButton.style.display         = 'none';
+                    }
+                }
+            },
+            function_type_id:{
+                value:'',
+                update: (newVal)=>{
+                    this.el.function_type.value = newVal;
+                }
+            },
+            variable:{
+                value:'',
+                getVal: (val)=>{
+                    return window.util.pureNumber(val);
+                },
+                update: (newVal)=>{
+                    this.el.variable.value = window.util.numberFormat(newVal);
+                }
+            },
+            grand_total:{
+                value:0,
+                getVal: (val)=>{
+                    return window.util.pureNumber(val,2);
+                },
+                update: (newVal)=>{
+
+                    this.el.grandTotal.innerText = window.util.numberFormat(newVal,2);
+
+                    if(newVal > this.getState('quantity')){
+                        
+                        this.el.grandTotal.classList.add('text-danger');
+                        this.el.grandTotal.classList.add('overbudget');
+
+                        window.util.alert('Error','The Grand Total quantity is more than the Component quantity');
+
+                    }else{
+                        
+                        this.el.grandTotal.classList.remove('text-danger');
+                        this.el.grandTotal.classList.remove('overbudget');
+
+                    }
+                }
+            },
+            ref_1_quantity:{
+                value:'',
+                getVal: (val)=>{
+                    return window.util.pureNumber(val,2);
+                },
+                update:(newVal)=>{
+                    this.el.ref_1_quantity.value = window.util.numberFormat(newVal,2);
+                }
+            },
+            ref_1_unit_id:{
+                value:'',
+                update:(newVal)=>{
+                    this.el.ref_1_unit_id.value = newVal;
+                }
+            },
+            ref_1_unit_price:{
+                value:'',
+                getVal: (val)=>{
+                    return window.util.pureNumber(val,2);
+                },
+                update:(newVal)=>{
+                    this.el.ref_1_unit_price.value = window.util.numberFormat(newVal,2);
+                }
+            },
+            material_quantity:{
+                value:'',
+                getVal:(val)=>{
+                    return window.util.pureNumber(val);
+                },
+                update:(newVal)=>{
+                    this.el.material_quantity.value = newVal;
+                }
+            },
+            total_amount: {
+                value:'',
+                getVal:(val)=>{
+                    return window.util.pureNumber(val);
+                },
+                update:(newVal)=>{
+                    this.el.total_amount.value = window.util.numberFormat(newVal,2);
+                }
+            },
+            component_item_equivalent:{
+                value:'',
+                update:(newVal)=>{
+                    this.el.component_item_equivalent.value = val+' '+this._model.component_unit_text;
+                }
+            }            
         }
     }
 
@@ -132,9 +275,7 @@ class ComponentItem extends Component{
                         t.td();
                         t.td();
                         t.th('Grand Total');
-                        this.el.grandTotal = t.td(()=>{
-                            t.txt('0');
-                        });
+                        this.el.grandTotal = t.td('0');
                         t.td();
                     });
                 });
@@ -287,33 +428,10 @@ class ComponentItem extends Component{
                         t.tr(()=>{
                             t.td({colspan:7, class:'text-end'},(el)=>{
                                 
-                                this.el.deleteComponentButton = t.button({class:'btn btn-danger me-3',style:{
-                                    display: (()=>{
-                                        if(this._state.editable == true) return 'none';
-                                        if(this._state.editable == false) return 'inline';
-                                    })()
-                                }},'Delete');
-        
-                                this.el.editComponentButton = t.button({class:'btn btn-primary',style:{
-                                    display: (()=>{
-                                        if(this._state.editable == true) return 'none';
-                                        if(this._state.editable == false) return 'inline';
-                                    })()
-                                }},'Edit');
-        
-                                this.el.cancelEditComponentButton = t.button({class:'btn btn-primary me-3',style:{
-                                    display: (()=>{
-                                        if(this._state.editable == true) return 'inline';
-                                        if(this._state.editable == false) return 'none';
-                                    })()
-                                }},'Cancel');
-        
-                                this.el.updateComponentButton = t.button({class:'btn btn-warning',style:{
-                                    display: (()=>{
-                                        if(this._state.editable == true) return 'inline';
-                                        if(this._state.editable == false) return 'none';
-                                    })()
-                                }},'Update');
+                                this.el.deleteComponentButton       = t.button({class:'btn btn-danger me-3'},'Delete');
+                                this.el.editComponentButton         = t.button({class:'btn btn-primary'},'Edit');
+                                this.el.cancelEditComponentButton   = t.button({class:'btn btn-primary me-3'},'Cancel');
+                                this.el.updateComponentButton       = t.button({class:'btn btn-warning'},'Update');
                                 
                             });
                         });
@@ -340,24 +458,16 @@ class ComponentItem extends Component{
 
         this.functionVariableQuantity();
 
+        this.initEvents();
+    }
+
+    initEvents(){
         this.el.budget_price.onkeyup = ()=>{    
             this.calculateTotalAmount();
         }
-
-        
+ 
         this.el.budget_price.onkeypress = (e)=>{
             return window.util.inputNumber(this.el.budget_price,e,2,false);
-        }
-
-        
-        this.el.material_quantity.onkeyup = ()=>{
-            this.el.total.value = calculateTotalEquivalent( this.el.material_quantity.value, this.el.equivalent.value);
-        }
-        
-        this.el.equivalent.onkeyup = ()=>{
-            this.el.material_quantity.value = window.util.roundUp(this.el.quantity.value / this.el.equivalent.value,2);
-            this.el.total.value = calculateTotalEquivalent( this.el.material_quantity.value, this.el.equivalent.value);
-           
         }
 
         this.el.material_quantity.onkeypress = (e)=>{
@@ -372,10 +482,41 @@ class ComponentItem extends Component{
             return window.util.inputNumber(this.el.ref_1_unit_price,e,2,false);
         }
 
+        
+        this.el.material_quantity.onkeyup = ()=>{
+
+            let material_quantity = this.getState('material_quantity');
+            let equivalent        = this.getState('equivalent');
+            
+            this.setState({
+                total: calculateTotalEquivalent(material_quantity, equivalent)
+            });
+        }
+
+        
+        
+        this.el.equivalent.onkeyup = ()=>{
+            
+            let quantity            = this.getState('quantity');
+            let equivalent          = this.getState('equivalent');
+            let material_quantity   = this.getState('material_quantity');
+
+            this.setState({
+                material_quantity   : window.util.roundUp(quantity / equivalent,2),
+                total               : calculateTotalEquivalent( material_quantity, equivalent)
+            });
+
+           
+        }
+
+
         this.el.addBtn.onclick = ()=>{
 
-            if(this.el.total.value > this._state.quantity){
-                alert('Total equivalent cannot be greater than the component item quantity ('+this._state.quantity+' '+this._state.unit+')');
+            let total       = this.getState('total');
+            let quantity    = this.getState('quantity');
+
+            if(total > quantity){
+                window.util.alert('Total equivalent cannot be greater than the component item quantity ('+this.getState('quantity')+' '+this.getState('unit')+')');
                 return false;
             }
 
@@ -383,12 +524,12 @@ class ComponentItem extends Component{
         }
 
 
-        this.el.deleteComponentButton.onclick = (e)=>{
+        this.el.deleteComponentButton.onclick = async (e)=>{
             e.preventDefault();
 
-            let answer = prompt('Please confirm by entering "'+this._state.name+'"');
+            let answer = await window.util.prompt('Please confirm by entering "'+this.getState('name')+'"');
 
-            if(answer != this._state.name){
+            if(answer != this.getState('name')){
                 window.util.alert('Error','Invalid answer');
                 return false;
             }
@@ -418,21 +559,19 @@ class ComponentItem extends Component{
         }
 
         this.el.cancelEditComponentButton.onclick = (e)=>{
-            this.setState('editable',false);
-            this.el.unit.value      = this._state.unit;
-            this.el.name.value      = this._state.name;
-            this.el.quantity.value  = this._state.quantity;
-
-            this.el.ref_1_quantity.value        = this._state.ref_1_quantity;
-            this.el.ref_1_unit_id.value         = this._state.ref_1_unit_id;
-            this.el.ref_1_unit_price.value      = this._state.ref_1_unit_price;
             
-            if(this._state.sum_flag){
-                this.el.sum_flag.checked = true;
-            }else{
-                this.el.sum_flag.checked = false;
-            }
+            this.setState('editable',false);
 
+            this.reloadState([
+                'unit',
+                'name',
+                'quantity',
+                'ref_1_quantity',
+                'ref_1_unit_id',
+                'ref_1_unit_price',
+                'sum_flag'
+            ]);
+         
             this.updateComponentItemValues();
         }
 
@@ -443,10 +582,11 @@ class ComponentItem extends Component{
     }
 
     calculateTotalAmount(){
-  
-        this.el.total_amount.value = (new Intl.NumberFormat().format(
-            parseFloat(this.el.budget_price.value) * parseFloat(this.el.quantity.value)
-        ));
+        
+        this.setState('total_amount')
+        this.el.total_amount.value = window.util.numberFormat(
+            window.util.pureNumber(this.el.budget_price.value) * window.util.pureNumber(this.el.quantity.value)
+        ,2);
     }
 
     httpUpdate(){
@@ -456,15 +596,15 @@ class ComponentItem extends Component{
             id                      : this._model.id,
             component_id            : this._model.component_id,
             name                    : this.el.name.value,
-            budget_price            : this.el.budget_price.value,
-            quantity                : this.el.quantity.value,
+            budget_price            : window.util.pureNumber(this.el.budget_price.value,2),
+            quantity                : window.util.pureNumber(this.el.quantity.value,2),
             unit_id                 : this.el.unit.value,
             function_type_id        : this.el.function_type.value,
-            function_variable       : this.el.variable.value,
+            function_variable       : window.util.pureNumber(this.el.variable.value),
             sum_flag                : (this.el.sum_flag.checked == true) ? 1 : 0,
-            ref_1_quantity          : this.el.ref_1_quantity.value,
+            ref_1_quantity          : window.util.pureNumber(this.el.ref_1_quantity.value),
             ref_1_unit_id           : this.el.ref_1_unit_id.value,
-            ref_1_unit_price        : this.el.ref_1_unit_price.value
+            ref_1_unit_price        : window.util.pureNumber(this.el.ref_1_unit_price.value)
 
         }).then(reply=>{
 
@@ -475,17 +615,29 @@ class ComponentItem extends Component{
 
                 return false;
             }
-              
-            this.setState('quantity',parseFloat(this.el.quantity.value));
-            this.setState('unit',this.el.unit.value);
-            this.setState('name',this.el.name.value);
-            this.setState('function_type_id',this.el.function_type.value);
-            this.setState('variable',this.el.variable.value);
-            this.setState('editable',false);
+            
+            this.setState({
+                quantity        : window.util.pureNumber(this.el.quantity.value),
+                variable        : window.util.pureNumber(this.el.variable.value),
+                ref_1_quantity  : window.util.pureNumber(this.el.ref_1_quantity.value),
+                ref_1_unit_price: window.util.pureNumber(this.el.ref_1_unit_price.value),
+                unit            : this.el.unit.value,
+                name            : this.el.name.value,
+                function_type_id: this.el.function_type.value, 
+                ref_1_unit_id   : this.el.ref_1_unit_id.value,       
+                editable        : false
+            });
 
-            this.setState('ref_1_quantity',this.el.ref_1_quantity.value);
-            this.setState('ref_1_unit_id',this.el.ref_1_unit_id.value);
-            this.setState('ref_1_unit_price',this.el.ref_1_unit_price.value);
+            // this.setState('quantity',window.util.pureNumber(this.el.quantity.value));
+            // this.setState('unit',this.el.unit.value);
+            // this.setState('name',this.el.name.value);
+            // this.setState('function_type_id',this.el.function_type.value);
+            // this.setState('variable',window.util.pureNumber(this.el.variable.value));
+            // this.setState('editable',false);
+
+            // this.setState('ref_1_quantity',window.util.pureNumber(this.el.ref_1_quantity.value));
+            // this.setState('ref_1_unit_id',this.el.ref_1_unit_id.value);
+            // this.setState('ref_1_unit_price', window.util.pureNumber(this.el.ref_1_unit_price.value));
             
             this.updateMaterialList();
 
@@ -538,13 +690,16 @@ class ComponentItem extends Component{
 
     updateComponentItemValues(){
         
-        let val = 0;
+        let val                 = 0;
+        let component_quantity  = window.util.pureNumber(this._model.component_quantity);
+        let variable            = this.getState('variable');
+        let use_count           = parseInt(this._model.component_use_count);
 
         switch(this.el.function_type.value){
             case '1': //As Factor
 
                     val = window.util.roundUp(
-                        (parseFloat(this._model.component_quantity) * this.el.variable.value)  / parseInt(this._model.component_use_count)
+                        (component_quantity * variable )  / use_count
                     ,2);
 
                 break;
@@ -552,27 +707,31 @@ class ComponentItem extends Component{
             case '2': //As Divisor
 
                     val = window.util.roundUp( 
-                        (parseFloat(this._model.component_quantity) / this.el.variable.value)  / parseInt(this._model.component_use_count)
+                        (component_quantity / variable)  / use_count
                     ,2);
 
                 break;
 
             case '3': //Direct
 
-                    val = this.el.variable.value;
+                    val = variable;
                     
                 break;
             case '4': //As Equivalent
 
                 
-                val = ( parseFloat(this.el.variable.value) *  parseFloat(this.el.quantity.value) ) * parseInt(this._model.component_use_count); 
+                val = ( variable *  quantity ) * use_count; 
                 
-                val = window.util.roundUp(val,2);
+                if(val !== Infinity){
 
-                if(isFinite(val)){
-                    this.el.component_item_equivalent.value = val+' '+this._model.component_unit_text;
+                    val = window.util.roundUp(val,2);
+
+                    this.setState('component_item_equivalent',val+' '+this._model.component_unit_text);
+                
                 }else{
-                    this.el.component_item_equivalent.value = '';
+
+                    this.setState('component_item_equivalent','');
+                
                 }
                 
                 this.calculateTotalAmount();
@@ -583,74 +742,28 @@ class ComponentItem extends Component{
         }
 
         
-        if(isFinite(val)){
+        if(val !== Infinity){
 
             val = window.util.roundUp(val,2);
-            this.el.quantity.value = val;
+            this.setState('quantity',val);
+
         }else{
-            this.el.quantity.value = 0;
+
+            this.setState('quantity',0);
         }
 
         this.calculateTotalAmount();
     }
 
-    onStateChange_grand_total(newVal){
-        this.el.grandTotal.innerText = window.util.numberFormat(newVal,2);
-
-        if(newVal > this._state.quantity){
-            this.el.grandTotal.style.color = '#ff0000';
-
-            window.util.alert('Error','The Grand Total quantity is more than the Component quantity');
-
-        }else{
-            this.el.grandTotal.style.color = '#000000';
-        }
-    }
-
-    onStateChange_editable(newVal){
-       
-        this.el.name.disabled               = !newVal;
-        this.el.unit.disabled               = !newVal;
-        this.el.budget_price.disabled       = !newVal;
-        this.el.function_type.disabled      = !newVal;
-        this.el.variable.disabled           = !newVal;
-        this.el.sum_flag.disabled           = !newVal;
-        this.el.ref_1_quantity.disabled     = !newVal;
-        this.el.ref_1_unit_id.disabled      = !newVal;
-        this.el.ref_1_unit_price.disabled   = !newVal;
-
-        if(this.el.function_type.value == 4){
-            this.el.quantity.disabled = !newVal;
-        }
-
-        //Editable (true)
-        if(newVal){
-
-            this.el.editComponentButton.style.display   = 'none';
-            this.el.deleteComponentButton.style.display = 'none';
-
-            this.el.cancelEditComponentButton.style.display = 'inline';
-            this.el.updateComponentButton.style.display = 'inline';
-            
-        }else{ //Editable (false)
-            this.el.editComponentButton.style.display   = 'inline';
-            this.el.deleteComponentButton.style.display = 'inline';
-
-            
-            this.el.cancelEditComponentButton.style.display = 'none';
-            this.el.updateComponentButton.style.display = 'none';
-        }
-     
-    }
 
     updateMaterialList(){
 
         this.el.materialList.innerHTML = '';
 
         window.util.$get('/api/material_quantity/list',{
-            component_item_id:this._model.id,
-            page:1,
-            limit:0
+            component_item_id   :this._model.id,
+            page                :1,
+            limit               :0
         }).then(reply=>{
             
             if(reply.status <= 0 ){
@@ -686,40 +799,23 @@ class ComponentItem extends Component{
                 alert(reply.message);
                 return false;
             }
-           
-            this.setState('budget_price',parseFloat(reply.data.budget_price));
-            this.setState('quantity',parseFloat(reply.data.quantity));
-            this.setState('unit',reply.data.unit_id);
-            this.setState('name',reply.data.name);
-            this.setState('function_type_id',reply.data.function_type_id);
-            this.setState('variable',reply.data.function_variable);
-            this.setState('sum_flag',reply.data.sum_flag);
-            this.setState('ref_1_quantity',reply.data.ref_1_quantity);
-            this.setState('ref_1_unit_id',reply.data.ref_1_unit_id);
-            this.setState('ref_1_unit_price',reply.data.ref_1_unit_price);
             
-
-
-            this.el.name.value                  = reply.data.name;
-            this.el.budget_price.value          = reply.data.budget_price;
-            this.el.quantity.value              = reply.data.quantity;
-            this.el.unit.value                  = reply.data.unit_id;
-            this.el.function_type.value         = reply.data.function_type_id;
-            this.el.variable.value              = reply.data.function_variable;
-            this.el.ref_1_quantity.value        = reply.data.ref_1_quantity;
-            this.el.ref_1_unit_id.value         = reply.data.ref_1_unit_id;
-            this.el.ref_1_unit_price.value      = reply.data.ref_1_unit_price;
-            
-            
-            if(reply.data.sum_flag){
-                this.el.sum_flag.checked = true;
-            }else{
-                this.el.sum_flag.checked = false;
-            }
+            this.setState({
+                budget_price        :reply.data.budget_price,
+                quantity            :reply.data.quantity,
+                unit                :reply.data.unit_id,
+                name                :reply.data.name,
+                function_type_id    :reply.data.function_type_id,
+                variable            :reply.data.function_variable,
+                sum_flag            :reply.data.sum_flag,
+                ref_1_quantity      :reply.data.ref_1_quantity,
+                ref_1_unit_id       :reply.data.ref_1_unit_id,
+                ref_1_unit_price    :reply.data.ref_1_unit_price
+            });
 
             //Not "As Equivalent"
             if(reply.data.function_type_id != 4){
-                this.el.component_item_equivalent.value = '';
+                this.setState('component_item_equivalent','');
             }
 
             this.updateComponentItemValues();
@@ -735,10 +831,10 @@ class ComponentItem extends Component{
         this.el.addBtn.disabled = true;
 
         let data = {
-            component_item_id: this._model.id,
-            material_item_id: this.el.materialItemSelect.value,
-            quantity: this.el.material_quantity.value,
-            equivalent: this.el.equivalent.value
+            component_item_id   : this._model.id,
+            material_item_id    : this.el.materialItemSelect.value,
+            quantity            : this.getState('material_quantity'),
+            equivalent          : this.getState('value')
         };
 
         window.util.$post('/api/material_quantity/create',data).then(reply=>{
@@ -750,9 +846,11 @@ class ComponentItem extends Component{
                 return false;
             }
 
-            this.el.material_quantity.value = '';
-            this.el.equivalent.value = '';
-
+            this.el.setState({
+                material_quantity:'',
+                equivalent:''
+            });
+            
             this.appendMaterial({
                 id: reply.data.id,
                 material_item_id: data.material_item_id,
@@ -825,15 +923,17 @@ class ComponentItem extends Component{
                 });//tr
             
         
-        if(parseFloat(data.quantity) > parseFloat(this._state.quantity)){
+        if( parseFloat(data.quantity) > this.getState('quantity') ){
 
             materialItem.classList.add('border');
             materialItem.classList.add('border-danger');
+            materialItem.classList.add('overbudget');
         
         }else{
             
             materialItem.classList.remove('border');
             materialItem.classList.remove('border-danger');
+            materialItem.classList.remove('overbudget');
         
         }
 
@@ -895,7 +995,7 @@ class ComponentItem extends Component{
                     t.table({class:'table borderd'},()=>{
                         t.tr(()=>{
                             t.th('Comp. Item',);
-                            t.td(this._state.name);
+                            t.td(this.getState('name'));
                         });
                         t.tr(()=>{
                             t.th('Matt. Item',);
