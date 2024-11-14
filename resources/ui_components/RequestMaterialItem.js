@@ -312,7 +312,7 @@ class RequestMaterialItem extends Component{
             }
 
 
-            this.el.already_po.value =  new Intl.NumberFormat().format(reply.data.total);
+            this.el.already_po.value =  window.util.numberFormat(reply.data.total,2);
 
             //If empty string then 0
             let prev_approved   = window.util.pureNumber(this.el.prevApprovedQuantity.value);
