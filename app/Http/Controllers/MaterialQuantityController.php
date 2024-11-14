@@ -416,11 +416,11 @@ class MaterialQuantityController extends Controller
 
 
         return view('material_quantity/report',[
-            'mqr_approved' =>[
+            'mqr_approved' => (object) [
                 'total_quantity' => $mqr_approved->total,
                 'mqr_ids'        => explode(',',$mqr_approved->mqr_ids)
             ],
-            'mqr_pending' =>[
+            'mqr_pending' => (object) [
                 'total_quantity' => $mqr_pending->total,
                 'mqr_ids'        => explode(',',$mqr_pending->mqr_ids)
             ],
