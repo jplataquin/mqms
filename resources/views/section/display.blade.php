@@ -286,7 +286,9 @@
                         t.div({class:'col-6'},()=>{
 
                             if(typeof unit_options[res.unit_id] != 'undefined'){
-                                t.txt(res.contract_quantity+' '+unit_options[res.unit_id].text);
+                                t.txt(
+                                    window.util.numberFormat(res.contract_quantity)+' '+unit_options[res.unit_id].text
+                                );
                             }
                         });
                     });
