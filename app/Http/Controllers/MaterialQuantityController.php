@@ -415,7 +415,6 @@ class MaterialQuantityController extends Controller
         ->first();
 
 
-        print_r($mqr_pending->mqr_ids);exit;
         return view('material_quantity/report',[
             'mqr_approved' => (object) [
                 'total_quantity' => $mqr_approved->total,
