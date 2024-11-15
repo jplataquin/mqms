@@ -1,6 +1,6 @@
 import './bootstrap';
 import { Modal } from 'bootstrap';
-import {Template,$util} from '/node_modules/adarna/dist/adarna.js';
+import {Template,$util} from '/node_modules/adarna/build/adarna.min.js';
 import Datepicker from '/node_modules/vanillajs-datepicker/js/Datepicker';
 import en_ca from '/node_modules/vanillajs-datepicker/js/i18n/locales/en-CA.js';
 
