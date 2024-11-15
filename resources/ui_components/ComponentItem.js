@@ -469,6 +469,8 @@ class ComponentItem extends ComponentV2{
         this.functionVariableQuantity();
 
         this.initEvents();
+
+        this.reloadState('editable');
     }
 
     initEvents(){
