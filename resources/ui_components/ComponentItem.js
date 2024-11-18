@@ -526,7 +526,7 @@ class ComponentItem extends ComponentV2{
 
         
         
-        this.el.equivalent.onkeyup = ()=>{
+        this.el.equivalent.onkeypress = ()=>{
             
             let quantity            = this.getState('quantity');
             let equivalent          = this.getState('equivalent');
