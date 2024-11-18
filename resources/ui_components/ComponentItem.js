@@ -531,6 +531,8 @@ class ComponentItem extends ComponentV2{
             let equivalent          = this.getState('equivalent');
             let material_quantity   = this.getState('material_quantity');
 
+            if(equivalent == 0) return false;
+            
             this.setState({
                 material_quantity   : window.util.roundUp(quantity / equivalent,2),
                 total               : calculateTotalEquivalent( material_quantity, equivalent)
@@ -751,7 +753,6 @@ class ComponentItem extends ComponentV2{
                 break;
         }
 
-        console.log(val);
         if(val !== Infinity){
 
             val = window.util.roundUp(val,2);
