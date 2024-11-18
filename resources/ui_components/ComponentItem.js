@@ -864,7 +864,7 @@ class ComponentItem extends ComponentV2{
                 return false;
             }
 
-            this.el.setState({
+            this.setState({
                 material_quantity:'',
                 equivalent:''
             });
@@ -972,7 +972,7 @@ class ComponentItem extends ComponentV2{
 
         const quantityInput     = t.input({class:'form-control',value: window.util.roundUp(entry.quantity,2)});
         const equivalentInput   = t.input({class:'form-control',value:entry.equivalent});
-        const totalInput        = t.input({ class:'form-control', disabled:true});
+        const totalInput        = t.input({class:'form-control', disabled:true});
 
 
 
