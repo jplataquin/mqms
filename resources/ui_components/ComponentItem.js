@@ -2,6 +2,7 @@ import {Template,ComponentV2,Signal} from '/adarna.js';
 
 
 function calculateTotalEquivalent(a,b){
+    console.log(a,b);
     return window.util.roundUp(parseFloat(a) * parseFloat(b),2);
 }
 
@@ -532,7 +533,7 @@ class ComponentItem extends ComponentV2{
             let material_quantity   = this.getState('material_quantity');
 
             if(equivalent == 0) return false;
-            
+
             this.setState({
                 material_quantity   : window.util.roundUp(quantity / equivalent,2),
                 total               : calculateTotalEquivalent( material_quantity, equivalent)
