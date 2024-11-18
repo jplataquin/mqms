@@ -183,7 +183,7 @@ class ComponentItem extends ComponentV2{
                     return window.util.pureNumber(val);
                 },
                 update:(newVal)=>{
-                    this.el.equivalent.value = window.util.numberFormat(newVal,2);
+                    this.el.equivalent.value = newVal;
                 }
             },
             total:{
@@ -516,6 +516,8 @@ class ComponentItem extends ComponentV2{
         
         this.el.material_quantity.onkeyup = ()=>{
 
+            this.setState('material_quantity',this.el.material_quantity.value);
+
             let material_quantity = this.getState('material_quantity');
             let equivalent        = this.getState('equivalent');
             
@@ -529,7 +531,7 @@ class ComponentItem extends ComponentV2{
         this.el.equivalent.onkeyup = ()=>{
 
             this.setState('equivalent',this.el.equivalent.value);
-            
+
             let quantity            = this.getState('quantity');
             let equivalent          = this.getState('equivalent');
             let material_quantity   = this.getState('material_quantity');
@@ -539,8 +541,7 @@ class ComponentItem extends ComponentV2{
             if(equivalent == 0) return false;
 
             this.setState({
-                material_quantity   : window.util.roundUp(quantity / equivalent,2),
-                total               : calculateTotalEquivalent( material_quantity, equivalent)
+                total : calculateTotalEquivalent( material_quantity, equivalent)
             });
 
            
