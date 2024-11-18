@@ -172,8 +172,17 @@ class ComponentItem extends ComponentV2{
                     return window.util.pureNumber(val,2);
                 },
                 update:(newVal)=>{
-                    
+
                     this.el.budget_price.value = window.util.numberFormat(newVal,2);
+                }
+            },
+            equivalent:{
+                value:'',
+                getVal: (val)=>{
+                    return window.util.pureNumber(val);
+                },
+                update:(newVal)=>{
+                    this.el.equivalent.value = window.util.numberFormat(newVal,2);
                 }
             }           
         }
