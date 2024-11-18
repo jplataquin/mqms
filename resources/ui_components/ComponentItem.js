@@ -184,6 +184,15 @@ class ComponentItem extends ComponentV2{
                 update:(newVal)=>{
                     this.el.equivalent.value = window.util.numberFormat(newVal,2);
                 }
+            },
+            total:{
+                value:'',
+                getVal: (val)=>{
+                    return window.util.pureNumber(val);
+                },
+                update:(newVal)=>{
+                    this.el.total.value = window.util.numberFormat(newVal,2);
+                }
             }           
         }
     }
