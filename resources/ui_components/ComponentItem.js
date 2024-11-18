@@ -852,7 +852,7 @@ class ComponentItem extends ComponentV2{
             component_item_id   : this._model.id,
             material_item_id    : this.el.materialItemSelect.value,
             quantity            : this.getState('material_quantity'),
-            equivalent          : this.getState('value')
+            equivalent          : this.getState('equivalent')
         };
 
         window.util.$post('/api/material_quantity/create',data).then(reply=>{
