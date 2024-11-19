@@ -737,6 +737,8 @@ class ComponentItem extends ComponentV2{
 
             case '3': //Direct
 
+                    this.setState('equivalent','');
+
                     val = variable;
                     
                 break;
@@ -764,7 +766,7 @@ class ComponentItem extends ComponentV2{
                 break;
         }
 
-        console.log('val',val);
+
         if(val !== Infinity){
 
             val = window.util.roundUp(val,2);
