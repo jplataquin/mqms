@@ -670,18 +670,20 @@ class ComponentItem extends ComponentV2{
 
             window.util.unblockUI();
 
+            console.log(reply.status);
+
             if(reply.status <= 0){
                 window.util.showMsg(reply);
 
                 return false;
             }
             
-            this.setState('editable',false);
+            window.util.navReload();
+            // this.setState('editable',false);
 
-            
-            this.updateMaterialList();
+            // this.updateMaterialList();
 
-            signal.broadcast('set-component-status','PEND');
+            // signal.broadcast('set-component-status','PEND');
         });
     }
 
