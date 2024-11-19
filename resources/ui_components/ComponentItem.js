@@ -91,7 +91,7 @@ class ComponentItem extends ComponentV2{
                     return window.util.pureNumber(val);
                 },
                 update: (newVal)=>{
-                    this.el.variable.value = window.util.numberFormat(newVal);
+                    this.el.variable.value = window.util.pureNumber(newVal);
                 }
             },
             grand_total:{
