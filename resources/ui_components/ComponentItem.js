@@ -178,12 +178,10 @@ class ComponentItem extends ComponentV2{
                     this.el.total_amount.value = window.util.numberFormat(newVal,2);
                 }
             },
-            component_item_quantity:{
-
-            },
             component_item_equivalent:{
                 value:'',
                 update:(newVal)=>{
+                    console.log(this._model.component_unit_text);
                     this.el.component_item_equivalent.value = window.util.numberFormat(newVal)+' '+this._model.component_unit_text;
                 }
             },
@@ -756,7 +754,6 @@ class ComponentItem extends ComponentV2{
                 
                 val = ( variable * component_item_quantity ) * use_count; 
                 
-                console.log(val,variable,component_item_quantity,use_count);
 
                 if(val !== Infinity){
 
