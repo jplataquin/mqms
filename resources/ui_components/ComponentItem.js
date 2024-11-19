@@ -20,7 +20,7 @@ class ComponentItem extends ComponentV2{
                     return window.util.pureNumber(val,2);
                 },
                 update: (newVal)=>{
-                    this.el.quantity.value = window.util.numberFormat(newVal,2);
+                    this.el.quantity.value = newVal;
                 }
             },
             unit:{
@@ -86,8 +86,6 @@ class ComponentItem extends ComponentV2{
                     this.el.function_type.value = newVal;
 
                     switch(newVal){
-                        case '1': //As factor
-                        case '2': //As Divior
                         case '3': //Direct
             
                                 this.el.variable.disabled = false;
