@@ -721,6 +721,8 @@ class ComponentItem extends ComponentV2{
         let variable            = this.getState('variable');
         let use_count           = parseInt(this._model.component_use_count);
 
+        console.log('a',this.getState('function_type_id'),this.el.function_type.value);
+
         switch(this.el.function_type.value){
             case '1': //As Factor
 
@@ -750,11 +752,13 @@ class ComponentItem extends ComponentV2{
                 
                 val = ( variable *  component_quantity ) * use_count; 
                 
+                console.log(val);
+
                 if(val !== Infinity){
 
                     val = window.util.roundUp(val,2);
 
-                    this.setState('component_item_equivalent',val+' '+this._model.component_unit_text);
+                    this.setState('component_item_equivalent',val);
                 
                 }else{
 
