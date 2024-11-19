@@ -181,7 +181,6 @@ class ComponentItem extends ComponentV2{
             component_item_equivalent:{
                 value:'',
                 update:(newVal)=>{
-                    console.log(this._model.component_unit_text);
                     this.el.component_item_equivalent.value = window.util.numberFormat(newVal)+' '+this._model.component_unit_text;
                 }
             },
