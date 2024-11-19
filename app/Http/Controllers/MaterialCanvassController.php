@@ -108,6 +108,19 @@ class MaterialCanvassController extends Controller
         $component              = $materialQuantityRequest->Component;
         $items                  = $materialQuantityRequest->Items()->with('MaterialCanvass')->get();
        
+
+        
+        if($project->status != 'ACTV' || $component->status != 'APRV' || $materialQuantityRequest->status != 'APRV'){
+            return view('material_canvass/unavailable',[
+                'project'           => $project,
+                'section'           => $section,
+                'contract_item'     => $contract_item,
+                'component'         => $component,
+                'material_request'  => $materialQuantityRequest,
+                'message'           => 'Record Unmaintained'
+            ]);
+        }
+
         $component_item_id  = [];
 
         foreach($items as $item){
