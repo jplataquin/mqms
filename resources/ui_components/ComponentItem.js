@@ -720,8 +720,9 @@ class ComponentItem extends ComponentV2{
         let component_quantity  = window.util.pureNumber(this._model.component_quantity);
         let variable            = this.getState('variable');
         let use_count           = parseInt(this._model.component_use_count);
+        let function_type_id    = this.getState('function_type_id');
 
-        switch(this.el.function_type.value){
+        switch(function_type_id){
             case '1': //As Factor
 
                     val = window.util.roundUp(
@@ -750,6 +751,7 @@ class ComponentItem extends ComponentV2{
                 
                 val = ( variable *  component_quantity ) * use_count; 
                 
+                console.log('value',val);
                 if(val !== Infinity){
 
                     val = window.util.roundUp(val,2);
