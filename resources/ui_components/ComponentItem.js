@@ -82,7 +82,27 @@ class ComponentItem extends ComponentV2{
             function_type_id:{
                 value:'',
                 update: (newVal)=>{
+
                     this.el.function_type.value = newVal;
+
+                    switch(newVal){
+                        case '1': //As factor
+                        case '2': //As Divior
+                        case '3': //Direct
+            
+                                this.el.variable.disabled = false;
+                                this.el.quantity.disabled = true;
+            
+                            break;
+            
+                        case '4': //As Equivalent
+            
+                                this.el.variable.disabled = false;
+                                this.el.quantity.disabled = false;
+                            break;
+            
+                    }
+        
                 }
             },
             variable:{
@@ -677,24 +697,7 @@ class ComponentItem extends ComponentV2{
         }
     
         this.el.function_type.onchange = (e) =>{
-            switch(this.el.function_type.value){
-                case '1': //As factor
-                case '2': //As Divior
-                case '3': //Direct
-    
-                        this.el.variable.disabled = false;
-                        this.el.quantity.disabled = true;
-    
-                    break;
-    
-                case '4': //As Equivalent
-    
-                        this.el.variable.disabled = false;
-                        this.el.quantity.disabled = false;
-                    break;
-    
-            }
-
+            this.setState('function_type_id',this.el.function_type.value);
             this.el.variable.onkeyup();   
         }
     
