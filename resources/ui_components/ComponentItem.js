@@ -740,7 +740,7 @@ class ComponentItem extends ComponentV2{
 
             case '3': //Direct
 
-                    this.setState('equivalent','');
+                    this.setState('component_item_equivalent','');
 
                     val = variable;
                     
