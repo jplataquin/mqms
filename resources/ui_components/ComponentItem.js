@@ -759,7 +759,7 @@ class ComponentItem extends ComponentV2{
                 break;
         }
 
-        console.log('ehere');
+        console.log('val',val);
         if(val !== Infinity){
 
             val = window.util.roundUp(val,2);
