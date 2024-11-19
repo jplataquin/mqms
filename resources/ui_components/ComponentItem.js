@@ -535,7 +535,6 @@ class ComponentItem extends ComponentV2{
             let equivalent          = this.getState('equivalent');
             let material_quantity   = this.getState('material_quantity');
 
-            console.log(quantity,equivalent,material_quantity);
 
             if(equivalent == 0) return false;
 
@@ -696,11 +695,13 @@ class ComponentItem extends ComponentV2{
         }
     
         this.el.variable.onkeyup = (e)=>{
-            console.log('here');
+            
+            this.setState('variable',window.util.pureNumber(this.el.variable.value));
             this.updateComponentItemValues();
         }
 
         this.el.quantity.onkeyup = (e)=>{
+            this.setState('quantity',window.util.pureNumber(this.el.quantity.value));
             this.updateComponentItemValues();
         }
     }
