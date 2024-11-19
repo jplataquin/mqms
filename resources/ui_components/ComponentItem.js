@@ -635,7 +635,7 @@ class ComponentItem extends ComponentV2{
             budget_price            : this.getState('budget_price'),
             quantity                : this.getState('quantity'),
             unit_id                 : this.getState('unit'),
-            function_type_id        : this.getState('function_type'),
+            function_type_id        : this.getState('function_type_id'),
             function_variable       : this.getState('variable'),
             sum_flag                : (this.getState('sum_flag') == true) ? 1 : 0,
             ref_1_quantity          : this.getState('ref_1_quantity'),
