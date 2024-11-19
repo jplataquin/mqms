@@ -696,6 +696,7 @@ class ComponentItem extends ComponentV2{
         }
     
         this.el.variable.onkeyup = (e)=>{
+            console.log('here');
             this.updateComponentItemValues();
         }
 
@@ -758,7 +759,7 @@ class ComponentItem extends ComponentV2{
                 break;
         }
 
-        console.log(val);
+        console.log('ehere');
         if(val !== Infinity){
 
             val = window.util.roundUp(val,2);
