@@ -596,19 +596,23 @@ class ComponentItem extends ComponentV2{
 
         this.el.cancelEditComponentButton.onclick = (e)=>{
             
-            this.setState('editable',false);
+            //TODO fix this so it won't reload
 
-            this.reloadState([
-                'unit',
-                'name',
-                'quantity',
-                'ref_1_quantity',
-                'ref_1_unit_id',
-                'ref_1_unit_price',
-                'sum_flag'
-            ]);
+            // this.setState('editable',false);
+
+            // this.reloadState([
+            //     'unit',
+            //     'name',
+            //     'quantity',
+            //     'ref_1_quantity',
+            //     'ref_1_unit_id',
+            //     'ref_1_unit_price',
+            //     'sum_flag'
+            // ]);
          
-            this.updateComponentItemValues();
+            // this.updateComponentItemValues();
+
+            window.util.navReload();
         }
 
         this.el.updateComponentButton.onclick = (e)=>{
