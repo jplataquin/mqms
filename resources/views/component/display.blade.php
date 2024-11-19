@@ -453,17 +453,17 @@
                     //use count
                     
                     
-                    val = window.util.roundTwoDecimal(
+                    val = window.util.roundUp(
                         (parseFloat('{{$component->quantity}}') * component_item_variable.value)  / parseInt('{{$component->use_count}}')
-                    );
+                    ,2);
 
                 break;
 
             case '2': //Right hand divior
 
-                    val = window.util.roundTwoDecimal( 
+                    val = window.util.roundUp( 
                         (parseFloat('{{$component->quantity}}') / component_item_variable.value)  / parseInt('{{$component->use_count}}')
-                    );
+                    ,2);
 
                 break;
 
