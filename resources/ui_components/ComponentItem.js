@@ -752,7 +752,7 @@ class ComponentItem extends ComponentV2{
                 
                 val = ( variable *  component_quantity ) * use_count; 
                 
-                console.log(val);
+                console.log(val,variable,component_quantity,use_count);
 
                 if(val !== Infinity){
 
