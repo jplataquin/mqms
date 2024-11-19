@@ -2,7 +2,6 @@ import {Template,ComponentV2,Signal} from '/adarna.js';
 
 
 function calculateTotalEquivalent(a,b){
-    console.log(a,b);
     return window.util.roundUp(parseFloat(a) * parseFloat(b),2);
 }
 
@@ -738,7 +737,7 @@ class ComponentItem extends ComponentV2{
             case '4': //As Equivalent
 
                 
-                val = ( variable *  quantity ) * use_count; 
+                val = ( variable *  component_quantity ) * use_count; 
                 
                 if(val !== Infinity){
 
