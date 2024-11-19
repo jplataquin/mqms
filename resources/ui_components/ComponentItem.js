@@ -178,6 +178,9 @@ class ComponentItem extends ComponentV2{
                     this.el.total_amount.value = window.util.numberFormat(newVal,2);
                 }
             },
+            component_item_quantity:{
+
+            },
             component_item_equivalent:{
                 value:'',
                 update:(newVal)=>{
@@ -716,10 +719,11 @@ class ComponentItem extends ComponentV2{
 
     updateComponentItemValues(){
         
-        let val                 = 0;
-        let component_quantity  = window.util.pureNumber(this._model.component_quantity);
-        let variable            = this.getState('variable');
-        let use_count           = parseInt(this._model.component_use_count);
+        let val                     = 0;
+        let component_quantity      = window.util.pureNumber(this._model.component_quantity);
+        let variable                = this.getState('variable');
+        let use_count               = parseInt(this._model.component_use_count);
+        let component_item_quantity = this.getState('quantity'); 
 
         console.log('a',this.getState('function_type_id'),this.el.function_type.value);
 
@@ -750,9 +754,9 @@ class ComponentItem extends ComponentV2{
             case '4': //As Equivalent
 
                 
-                val = ( variable *  component_quantity ) * use_count; 
+                val = ( variable * component_item_quantity ) * use_count; 
                 
-                console.log(val,variable,component_quantity,use_count);
+                console.log(val,variable,component_item_quantity,use_count);
 
                 if(val !== Infinity){
 
