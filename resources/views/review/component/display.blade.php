@@ -568,6 +568,8 @@
         approveBtn.onclick = async (e)=>{
             e.preventDefault();
 
+            console.log($q('.is-invalid').items());
+            
             if( $q('.is-invalid').items().length ){
                 
                 let answer1 = prompt('Warning there are quantities that are over the limit, type "ok" to proceed.');
