@@ -480,7 +480,7 @@
                                     <th colspan="3" class="text-end">
                                         Grand Total
                                     </th>
-                                    <td class="@if(round($grand_total,2)  > $component_item->quantity ) is-invalid border border-danger @endif text-center">
+                                    <td class="@if(round($grand_total,2)  > round($component_item->quantity,2) ) is-invalid text-danger @endif text-center">
                                        
                                         {{ number_format($grand_total,2) }} {{ $unit_options[ $component_item->unit_id ]->text }}
                                     </td>
@@ -569,11 +569,10 @@
         approveBtn.onclick = async (e)=>{
             e.preventDefault();
 
-            console.log($q('.is-invalid').items());
 
             if( $q('.is-invalid').items().length ){
                 
-                let answer1 = prompt('Warning there are quantities that are over the limit, type "ok" to proceed.');
+                let answer1 = awaint window.util.prompt('Warning there are quantities that are over the limit, type "ok" to proceed.');
 
                 if(answer1 != 'ok'){
                     return false;
