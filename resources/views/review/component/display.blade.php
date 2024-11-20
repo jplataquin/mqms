@@ -481,6 +481,7 @@
                                         Grand Total
                                     </th>
                                     <td class="@if($grand_total > $component_item->quantity) is-invalid @endif text-center">
+                                        {{$grand_total}} {{$component_item->quantity}}
                                         {{ number_format($grand_total,2) }} {{ $unit_options[ $component_item->unit_id ]->text }}
                                     </td>
                                 </tr>
@@ -569,7 +570,7 @@
             e.preventDefault();
 
             console.log($q('.is-invalid').items());
-            
+
             if( $q('.is-invalid').items().length ){
                 
                 let answer1 = prompt('Warning there are quantities that are over the limit, type "ok" to proceed.');
