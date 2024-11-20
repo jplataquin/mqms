@@ -179,7 +179,7 @@
                             <i class="bi bi-copy"></i>
                         </button>
                     @endif
-                    
+
                     <button class="btn btn-warning" id="printBtn">Print</button>
                     <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
                     <button class="btn btn-warning d-none" id="updateBtn">Update</button>
@@ -348,7 +348,7 @@
     const component_item_ref_1_unit         = $q('#component_item_ref_1_unit').first();
     const component_item_ref_1_unit_price   = $q('#component_item_ref_1_unit_price').first(); 
    
-    const reviewLinkBtn                     = $q('#reviewLinkBtn')
+    const reviewLinkBtn                     = $q('#reviewLinkBtn').first();
    
     const t = new Template();
 
