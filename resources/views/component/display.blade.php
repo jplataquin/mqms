@@ -672,9 +672,9 @@
         reviewLinkBtn.onclick = async ()=>{
             let test = await window.util.copyToClipboard('{{ url("/review/component/".$contract_item->id."/".$component->id); }}');
             if(test){
-                window.util.alert('Review Link for "Component: {{$component->id}}" copied!');
+                window.util.alert('Clipboard','Review Link for "Component: {{$component->id}}" copied!');
             }else{
-                window.util.alert('Failed to copy');
+                window.util.alert('Clipboard','Failed to copy');
             }
         }
     }
