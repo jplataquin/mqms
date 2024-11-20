@@ -480,8 +480,8 @@
                                     <th colspan="3" class="text-end">
                                         Grand Total
                                     </th>
-                                    <td class="@if($grand_total > $component_item->quantity) is-invalid @endif text-center">
-                                        {{$grand_total}} {{$component_item->quantity}}
+                                    <td class="@if(round($grand_total,2)  > round($component_item->quantity,2) ) is-invalid border border-danger @endif text-center">
+                                       
                                         {{ number_format($grand_total,2) }} {{ $unit_options[ $component_item->unit_id ]->text }}
                                     </td>
                                 </tr>
