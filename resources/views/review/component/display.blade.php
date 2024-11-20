@@ -421,7 +421,7 @@
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Quantity</label>
-                                <input type="text" disabled="true" value="{{$component_item->quantity}} {{$unit_options[$component_item->unit_id]->text}}" class="form-control"/>
+                                <input type="text" disabled="true" value="{{ number_format($component_item->quantity,2) }} {{$unit_options[$component_item->unit_id]->text}}" class="form-control"/>
                             </div>
                         </div>
                         <div class="col-lg-3">
@@ -461,14 +461,14 @@
                                         {{$materialItems[$mq->material_item_id]->brand }} 
                                     </td>
                                     <td class="text-center">
-                                        {{$mq->quantity}}
+                                        {{number_format($mq->quantity,2) }}
                                     </td>
                                     
                                     <td class="text-center">
-                                        {{$mq->equivalent}} {{ $unit_options[ $component_item->unit_id ]->text }}
+                                        {{ number_format($mq->equivalent,2) }} {{ $unit_options[ $component_item->unit_id ]->text }}
                                     </td>
                                     <td class="text-center">
-                                        {{$mq->equivalent * $mq->quantity}} {{ $unit_options[ $component_item->unit_id ]->text }}
+                                        {{ number_format($mq->equivalent * $mq->quantity,2) }} {{ $unit_options[ $component_item->unit_id ]->text }}
                                     </td>
                                 </tr>
 
@@ -481,7 +481,7 @@
                                         Grand Total
                                     </th>
                                     <td class="@if($grand_total > $component_item->quantity) is-invalid @endif text-center">
-                                        {{$grand_total}} {{ $unit_options[ $component_item->unit_id ]->text }}
+                                        {{ number_format($grand_total,2) }} {{ $unit_options[ $component_item->unit_id ]->text }}
                                     </td>
                                 </tr>
 
