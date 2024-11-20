@@ -172,6 +172,14 @@
                     <button class="btn btn-danger" id="deleteBtn">Delete</button>
                 </div>
                 <div class="col-lg-6 text-end">
+
+                    @if($component->status == 'PEND')
+                        <button class="btn btn-outline-primary" id="reviewLinkBtn">
+                            Review Link
+                            <i class="bi bi-copy"></i>
+                        </button>
+                    @endif
+                    
                     <button class="btn btn-warning" id="printBtn">Print</button>
                     <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
                     <button class="btn btn-warning d-none" id="updateBtn">Update</button>
@@ -339,7 +347,9 @@
     const component_item_ref_1_quantity     = $q('#component_item_ref_1_quantity').first();
     const component_item_ref_1_unit         = $q('#component_item_ref_1_unit').first();
     const component_item_ref_1_unit_price   = $q('#component_item_ref_1_unit_price').first(); 
-    
+   
+    const reviewLinkBtn                     = $q('#reviewLinkBtn')
+   
     const t = new Template();
 
     const signalR = new Signal();
@@ -655,6 +665,18 @@
 
             window.util.navTo('/project/section/contract_item/{{$contract_item->id}}');
         });
+    }
+
+
+    if(reviewLinkBtn){
+        reviewLinkBtn.onclick = async ()=>{
+            let test = await window.util.copyToClipboard('{{ url("/review/component/".$contract_item->id."/".$component->id); }}');
+            if(test){
+                window.util.alert('Review Link for "Component: {{$component->id}}" copied!');
+            }else{
+                window.util.alert('Failed to copy');
+            }
+        }
     }
 
     @foreach($componentItems as $item)
