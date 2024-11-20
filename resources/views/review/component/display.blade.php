@@ -572,7 +572,7 @@
 
             if( $q('.is-invalid').items().length ){
                 
-                let answer1 = awaint window.util.prompt('Warning there are quantities that are over the limit, type "ok" to proceed.');
+                let answer1 = await window.util.prompt('Warning there are quantities that are over the limit, type "ok" to proceed.');
 
                 if(answer1 != 'ok'){
                     return false;
