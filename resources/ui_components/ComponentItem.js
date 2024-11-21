@@ -62,7 +62,7 @@ class ComponentItem extends ComponentV2{
                     this.el.ref_1_unit_price.disabled   = !newVal;
 
 
-                    //As equivalent
+
                     if(this.el.function_type.value == 4){
                         this.el.quantity.disabled = !newVal;
                     }
@@ -93,7 +93,7 @@ class ComponentItem extends ComponentV2{
 
                     switch(newVal){
                         case '3': //Direct
-                            console.log('here',this.el.variable);
+            
                                 this.el.variable.disabled = false;
                                 this.el.quantity.disabled = true;
             
@@ -394,18 +394,20 @@ class ComponentItem extends ComponentV2{
         
                             });
         
-                        
+                             
+                            t.td({class:''},(el)=>{
+                                
+                                this.el.variable = t.input({class:'form-control variable', type:'text', placeholder:'Variable',disabled:true,value:'Loading...'});
+        
+                            });
+
                             t.td({class:''},(el)=>{
                                 
                                 this.el.quantity = t.input({class:'form-control quantity', type:'text', placeholder:'Quantity',disabled:true,value:'Loading...'});
         
                             });
         
-                            t.td({class:''},(el)=>{
-                                
-                                this.el.component_item_equivalent = t.input({class:'form-control equivalent', type:'text', placeholder:'Equivalent',disabled:true,value:'Loading...'});
-        
-                            });
+                           
         
                             t.td({class:''},(el)=>{
         
@@ -428,13 +430,14 @@ class ComponentItem extends ComponentV2{
                                 this.el.budget_price = t.input({class:'form-control budget_price', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
                                 
                             });
-        
-                            
+
                             t.td({class:''},(el)=>{
                                 
-                                this.el.variable = t.input({class:'form-control variable', type:'text', placeholder:'Variable',disabled:true,value:'Loading...'});
+                                this.el.component_item_equivalent = t.input({class:'form-control equivalent', type:'text', placeholder:'Equivalent',disabled:true,value:'Loading...'});
         
                             });
+        
+                           
                         });
         
         
