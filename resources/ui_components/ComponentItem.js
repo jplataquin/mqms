@@ -207,6 +207,7 @@ class ComponentItem extends ComponentV2{
                     return window.util.pureNumber(val,2);
                 },
                 update:(newVal,oldVal)=>{
+                    console.log(newVal,oldVal);
                     if(newVal == oldVal) return false;
                     this.el.budget_price.value = window.util.numberFormat(newVal,2);
                 }
