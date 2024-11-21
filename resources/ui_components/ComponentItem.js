@@ -203,12 +203,14 @@ class ComponentItem extends ComponentV2{
                 value:'',
                 target:this.el.budget_price,
                 events:['keyup'],
+                onEvent:(evtName,val)=>{
+
+                },
                 getVal: (val)=>{
                     return window.util.pureNumber(val,2);
                 },
-                update:(newVal,oldVal)=>{
-                    console.log(newVal,oldVal);
-                    if(newVal == oldVal) return false;
+                update:(newVal)=>{
+
                     this.el.budget_price.value = window.util.numberFormat(newVal,2);
                 }
             },
