@@ -201,12 +201,6 @@ class ComponentItem extends ComponentV2{
             },
             budget_price:{
                 value:'',
-                target:this.el.budget_price,
-                events:['keyup'],
-                onEvent:(evtName,val)=>{
-                    console.log(val);
-                    return window.util.pureNumber(val);
-                },
                 getVal: (val)=>{
                     return window.util.pureNumber(val,2);
                 },
@@ -672,6 +666,8 @@ class ComponentItem extends ComponentV2{
     }
 
     calculateTotalAmount(){
+        
+        this.setState('budget_price',this.el.budget_price.value);
         
         this.setState('total_amount', 
             (this.getState('budget_price') * this.getState('quantity'))
