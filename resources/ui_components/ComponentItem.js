@@ -371,9 +371,9 @@ class ComponentItem extends ComponentV2{
                             t.th('Function Type');
                             t.th('Variable');
                             t.th('Quantity');
-                            t.th('Equivalent');
                             t.th('Unit');
                             t.th('Budget Price');
+                            t.th('Equivalent');
                         })
                         
                         t.tr(()=>{
@@ -390,11 +390,6 @@ class ComponentItem extends ComponentV2{
         
                             });
         
-                            t.td({class:''},(el)=>{
-                                
-                                this.el.variable = t.input({class:'form-control variable', type:'text', placeholder:'Variable',disabled:true,value:'Loading...'});
-        
-                            });
                         
                             t.td({class:''},(el)=>{
                                 
@@ -411,7 +406,7 @@ class ComponentItem extends ComponentV2{
                             t.td({class:''},(el)=>{
         
                                 this.el.unit = t.select({class:'form-control unit',disabled:true},()=>{
-                                    console.log('unitOptions',this._model.unitOptions);
+                                    
                                     for(let i in this._model.unitOptions){
         
                                         if(this._model.unitOptions[i].deleted){
@@ -430,7 +425,12 @@ class ComponentItem extends ComponentV2{
                                 
                             });
         
+                            
+                            t.td({class:''},(el)=>{
+                                
+                                this.el.variable = t.input({class:'form-control variable', type:'text', placeholder:'Variable',disabled:true,value:'Loading...'});
         
+                            });
                         });
         
         
