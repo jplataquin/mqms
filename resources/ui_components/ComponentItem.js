@@ -62,7 +62,7 @@ class ComponentItem extends ComponentV2{
                     this.el.ref_1_unit_price.disabled   = !newVal;
 
 
-
+                    //As equivalent
                     if(this.el.function_type.value == 4){
                         this.el.quantity.disabled = !newVal;
                     }
@@ -93,7 +93,7 @@ class ComponentItem extends ComponentV2{
 
                     switch(newVal){
                         case '3': //Direct
-            
+                            console.log('here',this.el.variable);
                                 this.el.variable.disabled = false;
                                 this.el.quantity.disabled = true;
             
