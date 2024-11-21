@@ -539,7 +539,7 @@ class ComponentItem extends ComponentV2{
             return window.util.inputNumber(this.el.material_quantity,e,2,false);
         }
 
-        this.el.ref_1_quantityaa.onkeypress = (e)=>{
+        this.el.ref_1_quantity.onkeypress = (e)=>{
             return window.util.inputNumber(this.el.ref_1_quantity,e,2,false);
         }
 
@@ -679,7 +679,7 @@ class ComponentItem extends ComponentV2{
 
         };
         console.log(data);
-        
+
         return false;
         window.util.blockUI();
         window.util.$post('/api/component_item/update/',{
