@@ -465,11 +465,6 @@ class ComponentItem extends ComponentV2{
             
                             });
         
-                            t.td({class:''},(el)=>{
-                                
-                                this.el.budget_price = t.input({class:'form-control budget_price', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
-                                
-                            });
 
                             t.td({class:''},(el)=>{
                                 
@@ -479,10 +474,21 @@ class ComponentItem extends ComponentV2{
         
                            
                         });
-        
+                        
+                        t.tr(()=>{
+                            t.th({colspan:2},'Budget Price');
+                            t.th({colspan:5},'Total Amount');
+                        });
         
                         t.tr(()=>{
-                            t.th({colspan:5,class:'text-end'},'Total Amount');
+
+                            
+                            t.td({class:''},(el)=>{
+                                
+                                this.el.budget_price = t.input({class:'form-control budget_price', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
+                                
+                            });
+                            
                             t.td({colspan:1},()=>{
                                 this.el.total_amount = t.input({class:'form-control',disabled:true});
                             });
