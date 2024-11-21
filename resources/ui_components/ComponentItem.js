@@ -26,7 +26,7 @@ class ComponentItem extends ComponentV2{
             unit:{
                 value:'',
                 update: (newVal)=>{
-                    console.log(newVal);
+                    
                     this.el.unit.value = newVal;
                 }
             },
@@ -411,6 +411,7 @@ class ComponentItem extends ComponentV2{
                             t.td({class:''},(el)=>{
         
                                 this.el.unit = t.select({class:'form-control unit',disabled:true},()=>{
+                                    console.log('unitOptions',this._model.unitOptions);
                                     for(let i in this._model.unitOptions){
         
                                         if(this._model.unitOptions[i].deleted){
@@ -676,7 +677,6 @@ class ComponentItem extends ComponentV2{
 
             window.util.unblockUI();
 
-            console.log(reply.status);
 
             if(reply.status <= 0){
                 window.util.showMsg(reply);
@@ -730,7 +730,6 @@ class ComponentItem extends ComponentV2{
         let use_count               = parseInt(this._model.component_use_count);
         let component_item_quantity = this.getState('quantity'); 
 
-        console.log('a',this.getState('function_type_id'),this.el.function_type.value);
 
         switch(this.el.function_type.value){
             case '1': //As Factor
