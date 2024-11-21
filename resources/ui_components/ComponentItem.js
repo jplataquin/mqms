@@ -377,8 +377,8 @@ class ComponentItem extends ComponentV2{
                         
                         t.tr(()=>{
                             t.th({class:'text-center', colspan:2},'POW/DUPA Quantity');
-                            t.th({class:'text-center', colspan:2},'POW/DUPA Unit');
-                            t.th({class:'text-center', colspan:4},'POW/DUPA Unit Price');
+                            t.th({class:'text-center', colspan:1},'POW/DUPA Unit');
+                            t.th({class:'text-center', colspan:2},'POW/DUPA Unit Price');
                         });
                 
                         t.tr(()=>{
@@ -387,7 +387,7 @@ class ComponentItem extends ComponentV2{
                                 this.el.ref_1_quantity = t.input({class:'form-control',disabled:true});
                             });
                 
-                            t.td({colspan:2},()=>{
+                            t.td({colspan:1},()=>{
                 
                                 this.el.ref_1_unit_id = t.select({class:'form-control',disabled:true},()=>{
                                     
@@ -406,7 +406,7 @@ class ComponentItem extends ComponentV2{
                 
                             });
                 
-                            t.td({colspan:4},()=>{
+                            t.td({colspan:2},()=>{
                                 this.el.ref_1_unit_price = t.input({class:'form-control',disabled:true});
                             });
                         });
@@ -416,7 +416,6 @@ class ComponentItem extends ComponentV2{
                             t.th('Variable');
                             t.th('Quantity');
                             t.th('Unit');
-                            t.th('Budget Price');
                             t.th('Equivalent');
                         })
                         
@@ -483,13 +482,13 @@ class ComponentItem extends ComponentV2{
                         t.tr(()=>{
 
                             
-                            t.td({class:''},(el)=>{
+                            t.td({colspan:2},(el)=>{
                                 
                                 this.el.budget_price = t.input({class:'form-control budget_price', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
                                 
                             });
                             
-                            t.td({colspan:1},()=>{
+                            t.td({colspan:5},()=>{
                                 this.el.total_amount = t.input({class:'form-control',disabled:true});
                             });
                         });
