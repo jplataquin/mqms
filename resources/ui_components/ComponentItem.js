@@ -231,7 +231,7 @@ class ComponentItem extends ComponentV2{
             component_use_count:1,
             component_unit_text:'',
             materialItemOptions:[],
-            unitOptions:[]
+            unitOptions:[1]
         }
     }
 
