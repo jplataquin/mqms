@@ -111,6 +111,8 @@ class ComponentItem extends ComponentV2{
             },
             variable:{
                 value:'',
+                target: this.el.variable,
+                events:['keyup'],
                 getVal: (val)=>{
                     return window.util.pureNumber(val);
                 },
@@ -168,6 +170,8 @@ class ComponentItem extends ComponentV2{
             },
             material_quantity:{
                 value:'',
+                target: this.el.material_quantity,
+                events:['keyup'],
                 getVal:(val)=>{
                     return window.util.pureNumber(val);
                 },
@@ -542,8 +546,7 @@ class ComponentItem extends ComponentV2{
         
         this.el.material_quantity.onkeyup = ()=>{
 
-            this.setState('material_quantity',this.el.material_quantity.value);
-
+          
             let material_quantity = this.getState('material_quantity');
             let equivalent        = this.getState('equivalent');
             
