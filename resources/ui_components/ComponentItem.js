@@ -526,6 +526,7 @@ class ComponentItem extends ComponentV2{
     }
 
     initEvents(){
+        
         this.el.budget_price.onkeyup = ()=>{    
             this.calculateTotalAmount();
         }
@@ -538,7 +539,7 @@ class ComponentItem extends ComponentV2{
             return window.util.inputNumber(this.el.material_quantity,e,2,false);
         }
 
-        this.el.ref_1_quantity.onkeypress = (e)=>{
+        this.el.ref_1_quantityaa.onkeypress = (e)=>{
             return window.util.inputNumber(this.el.ref_1_quantity,e,2,false);
         }
 
@@ -564,7 +565,6 @@ class ComponentItem extends ComponentV2{
 
             //this.setState('equivalent',this.el.equivalent.value);
 
-            let quantity            = this.getState('quantity');
             let equivalent          = this.getState('equivalent');
             let material_quantity   = this.getState('material_quantity');
 
@@ -656,14 +656,31 @@ class ComponentItem extends ComponentV2{
 
     calculateTotalAmount(){
         
-        this.setState('total_amount')
-        this.el.total_amount.value = window.util.numberFormat(
-            this.getState('budget_price') * this.getState('quantity')
-        ,2);
+        this.setState('total_amount', 
+            (this.getState('budget_price') * this.getState('quantity'))
+        );
     }
 
     httpUpdate(){
 
+        let data = {
+            id                      : this._model.id,
+            component_id            : this._model.component_id,
+            name                    : this.getState('name'),
+            budget_price            : this.getState('budget_price'),
+            quantity                : this.getState('quantity'),
+            unit_id                 : this.getState('unit'),
+            function_type_id        : this.getState('function_type_id'),
+            function_variable       : this.getState('variable'),
+            sum_flag                : (this.getState('sum_flag') == true) ? 1 : 0,
+            ref_1_quantity          : this.getState('ref_1_quantity'),
+            ref_1_unit_id           : this.getState('ref_1_unit_id'),
+            ref_1_unit_price        : this.getState('ref_1_unit_price')
+
+        };
+        console.log(data);
+        
+        return false;
         window.util.blockUI();
         window.util.$post('/api/component_item/update/',{
             id                      : this._model.id,
