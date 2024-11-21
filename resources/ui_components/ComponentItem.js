@@ -26,6 +26,7 @@ class ComponentItem extends ComponentV2{
             unit:{
                 value:'',
                 update: (newVal)=>{
+                    console.log(newVal);
                     this.el.unit.value = newVal;
                 }
             },
@@ -184,7 +185,7 @@ class ComponentItem extends ComponentV2{
                 }
             },
             component_item_equivalent:{
-                value:this._model.component_unit_text,
+                value:'',
                 update:(newVal)=>{
                     this.el.component_item_equivalent.value = window.util.numberFormat(newVal)+' '+this._model.component_unit_text;
                 }
