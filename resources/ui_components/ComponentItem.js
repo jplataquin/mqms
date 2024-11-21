@@ -206,8 +206,8 @@ class ComponentItem extends ComponentV2{
                 getVal: (val)=>{
                     return window.util.pureNumber(val,2);
                 },
-                update:(newVal)=>{
-
+                update:(newVal,oldVal)=>{
+                    if(newVal == oldVal) return false;
                     this.el.budget_price.value = window.util.numberFormat(newVal,2);
                 }
             },
