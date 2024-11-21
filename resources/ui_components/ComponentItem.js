@@ -47,7 +47,7 @@ class ComponentItem extends ComponentV2{
                 events: ['click'],
                 onEvent:()=>{
                     return true;
-                }
+                },
                 update: (newVal)=>{
 
                     this.el.name.disabled               = !newVal;
