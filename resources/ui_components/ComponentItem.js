@@ -358,16 +358,16 @@ class ComponentItem extends ComponentV2{
 
                     t.tbody(()=>{
                         t.tr({class:'component_item_sticky_trigger'},()=>{
-                            t.th({colspan:4},'Name');
-                            t.th({colspan:2},'Sum Flag');
+                            t.th({colspan:5},'Name');
+                            t.th({colspan:1},'Sum Flag');
                         });
         
                         t.tr(()=>{
-                            t.td({colspan:4},()=>{
+                            t.td({colspan:5},()=>{
                                 this.el.name = t.input({class:'form-control name',type:'text', placeholder:'Item',disabled:true,value:'Loading...'}); 
                             });
         
-                            t.td({colspan:2},()=>{
+                            t.td({colspan:1},()=>{
                                 t.div({class:'form-switch text-center'},()=>{                  
                                     this.el.sum_flag = t.input({class:'form-check-input sum_flag',value:1,type:'checkbox', disabled:true});
                                 });
