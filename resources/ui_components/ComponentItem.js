@@ -40,6 +40,9 @@ class ComponentItem extends ComponentV2{
                 value:true,
                 target:this.el.sum_flag,
                 events:['change'],
+                onEvent:function(){
+                    this.checked;
+                },
                 update: (newVal)=>{
                     this.el.sum_flag.checked = newVal;
                 }
