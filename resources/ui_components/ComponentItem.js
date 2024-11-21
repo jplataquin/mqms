@@ -358,12 +358,12 @@ class ComponentItem extends ComponentV2{
 
                     t.tbody(()=>{
                         t.tr({class:'component_item_sticky_trigger'},()=>{
-                            t.th({colspan:5},'Name');
+                            t.th({colspan:4},'Name');
                             t.th({colspan:1},'Sum Flag');
                         });
         
                         t.tr(()=>{
-                            t.td({colspan:5},()=>{
+                            t.td({colspan:4},()=>{
                                 this.el.name = t.input({class:'form-control name',type:'text', placeholder:'Item',disabled:true,value:'Loading...'}); 
                             });
         
