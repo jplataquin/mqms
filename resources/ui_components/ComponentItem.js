@@ -43,6 +43,11 @@ class ComponentItem extends ComponentV2{
             },
             editable: {
                 value: false,
+                target: this.el.editComponentButton,
+                events: ['click'],
+                onEvent:()=>{
+                    return true;
+                }
                 update: (newVal)=>{
 
                     this.el.name.disabled               = !newVal;
@@ -196,6 +201,8 @@ class ComponentItem extends ComponentV2{
             },
             equivalent:{
                 value:'',
+                target: this.el.equivalent,
+                events:['keyup'],
                 getVal: (val)=>{
                     return window.util.pureNumber(val);
                 },
@@ -547,7 +554,7 @@ class ComponentItem extends ComponentV2{
         
         this.el.equivalent.onkeyup = ()=>{
 
-            this.setState('equivalent',this.el.equivalent.value);
+            //this.setState('equivalent',this.el.equivalent.value);
 
             let quantity            = this.getState('quantity');
             let equivalent          = this.getState('equivalent');
