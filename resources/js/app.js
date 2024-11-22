@@ -585,7 +585,7 @@ window.util.numbersOnlyInput = function(arr,options){
 
     arr.map(el => {
 
-        el.addEventListiner('keypress',(evt)=>{
+        el.addEventListener('keypress',(evt)=>{
 
             let charCode = (evt.which) ? evt.which : evt.keyCode;
             
@@ -639,7 +639,7 @@ window.util.numbersOnlyInput = function(arr,options){
 
         }); //keypress
 
-        
+
     });
 }
 
