@@ -670,7 +670,18 @@ window.util.numbersOnlyInput = function(arr,options){
 
          el.addEventListener('paste',(evt)=>{
             setTimeout(()=>{
-                el.value = window.util.pureNumber(el.value);
+                let val = window.util.pureNumber(el.value);
+
+                if(decimalPlaces){
+                    let r = "^-?\\d+\\.\\d{0,"+(decimalPlaces)+"}$";
+                    let a = (new RegExp(r,'gi')).test(val);
+
+                    if(!a){
+                        val = '';
+                    }
+                }
+
+                el.value = val;
             },0);
          });
 
