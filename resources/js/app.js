@@ -651,7 +651,11 @@ window.util.numbersOnlyInput = function(arr,options){
                   
                 let r = "^-?\\d+\\.\\d{0,"+(decimalPlaces)+"}$";
                 let a = (new RegExp(r,'gi')).test(el.value);
-                if(!a){
+                let b = /^-?\d+$/.test(el.value);
+
+                console.log(a,b);
+
+                if(!a && el.value != ''){
                     el.value = el.value.slice(0, -1); 
                 }
             }
