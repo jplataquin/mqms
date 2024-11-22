@@ -208,6 +208,8 @@ class ComponentItem extends ComponentV2{
                 },
                 update:(newVal)=>{
 
+                    console.log('here',newVal,window.pop);
+                    
                     if(!window.pop){
                         this.el.budget_price.value = window.util.numberFormat(newVal,2);
                     }
