@@ -669,8 +669,9 @@ window.util.numbersOnlyInput = function(arr,options){
          });
 
          el.addEventListener('paste',(evt)=>{
-
-            console.log(el.value);
+            setTimeout(()=>{
+                console.log(el.value);
+            },0);
          });
 
     });
