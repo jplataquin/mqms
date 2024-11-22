@@ -589,7 +589,6 @@ window.util.numbersOnlyInput = function(arr,options){
 
             let charCode = (evt.which) ? evt.which : evt.keyCode;
             
-            console.log(charCode);
 
              //do not allow negative sign at the start
             if(negativeFlag && charCode == 45){
@@ -618,7 +617,6 @@ window.util.numbersOnlyInput = function(arr,options){
 
             }else if (charCode > 31 && (charCode < 48 || charCode > 57)){
                 
-                console.log('false');
                 evt.preventDefault();
                 return false;    
             }
