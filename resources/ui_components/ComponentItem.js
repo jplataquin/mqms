@@ -206,6 +206,7 @@ class ComponentItem extends ComponentV2{
                 },
                 update:(newVal)=>{
 
+                    return false;
                     this.el.budget_price.value = window.util.numberFormat(newVal,2);
                 }
             },
@@ -668,7 +669,7 @@ class ComponentItem extends ComponentV2{
     calculateTotalAmount(){
         
         this.setState('budget_price',this.el.budget_price.value);
-        
+
         this.setState('total_amount', 
             (this.getState('budget_price') * this.getState('quantity'))
         );
