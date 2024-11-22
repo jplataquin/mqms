@@ -665,8 +665,9 @@ window.util.numbersOnlyInput = function(arr,options){
 
 
          el.addEventListener('blur',()=>{
-            el.value = window.util.pureNumber(el);
+            el.value = window.util.pureNumber(el.value);
          });
+
     });
 }
 
