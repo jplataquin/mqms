@@ -668,6 +668,11 @@ window.util.numbersOnlyInput = function(arr,options){
             el.value = window.util.pureNumber(el.value);
          });
 
+         el.addEventListener('paste',(evt)=>{
+
+            console.log(el.value);
+         });
+
     });
 }
 
