@@ -653,9 +653,9 @@ window.util.numbersOnlyInput = function(arr,options){
                 let a = (new RegExp(r,'gi')).test(el.value);
                 let b = /^-?\d+$/.test(el.value);
 
-                console.log(a,b);
+                console.log(!a,!b);
 
-                if(!a && el.value != ''){
+                if(!a && !b && el.value != ''){
                     el.value = el.value.slice(0, -1); 
                 }
             }
