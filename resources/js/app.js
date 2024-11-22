@@ -580,7 +580,7 @@ window.util.numbersOnlyInput = function(arr,options){
         arr = [arr];
     }
 
-    let nagativeFlag    = options.negative ?? false;
+    let negativeFlag    = options.negative ?? false;
     let decimalPlaces   = options.precision ?? 0;
 
     arr.map(el => {
