@@ -203,6 +203,9 @@ class ComponentItem extends ComponentV2{
                 value:'',
                 target: this.el.budget_price,
                 events:['keyup'],
+                onEvent:function(){
+                    return this.value;
+                },
                 getVal: (val)=>{
                     return window.util.pureNumber(val,2);
                 },
