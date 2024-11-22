@@ -628,8 +628,10 @@ window.util.numbersOnlyInput = function(arr,options){
                 if(el.value == '-') return true;
                 
                 let r = "^-?\\d+\\.\\d{0,"+(decimalPlaces)+"}$";
-            
+                
+                
                 let a = (new RegExp(r,'gi')).test(el.value);
+
                 let b = /^-?\d+$/.test(el.value);
                 let c = /^-?\d+\.$/.test(el.value);
 
@@ -653,13 +655,17 @@ window.util.numbersOnlyInput = function(arr,options){
                 let a = (new RegExp(r,'gi')).test(el.value);
                 let b = /^-?\d+$/.test(el.value);
 
-                console.log(!a,!b);
 
                 if(!a && !b && el.value != ''){
                     el.value = el.value.slice(0, -1); 
                 }
             }
 
+         });
+
+
+         el.addEventListener('blur',()=>{
+            el.value = window.util.pureNumber(el);
          });
     });
 }
