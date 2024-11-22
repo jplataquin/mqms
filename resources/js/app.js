@@ -598,6 +598,7 @@ window.util.numbersOnlyInput = function(arr,options){
                 if (el.value.indexOf('-') === -1 && el.value == '') {        
                     return true;
                 } else {
+                    evt.preventDefault();
                     return false;
                 }
             }
@@ -611,12 +612,14 @@ window.util.numbersOnlyInput = function(arr,options){
                 if (el.value.indexOf('.') === -1 && decimalPlaces != 0) {
                     return true;
                 } else {
+                    evt.preventDefault();
                     return false;
                 }
 
             }else if (charCode > 31 && (charCode < 48 || charCode > 57)){
                 
                 console.log('false');
+                evt.preventDefault();
                 return false;    
             }
 
@@ -634,6 +637,7 @@ window.util.numbersOnlyInput = function(arr,options){
 
                 if(!a && !b && !c && el.value != ''){
 
+                    evt.preventDefault();
                     return false;
                 }
             }
