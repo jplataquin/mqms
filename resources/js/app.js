@@ -573,6 +573,77 @@ window.util.pureNumber = function(val,fractionDigits = null){
     return val;
 }
 
+
+window.util.numbersOnlyInput = function(arr,options){
+
+    if(!Array.isArray(arr)){
+        arr = [arr];
+    }
+
+    let nagativeFlag    = options.negative ?? false;
+    let decimalPlaces   = options.precision ?? 0;
+
+    arr.map(el => {
+
+        el.addEventListiner('keypress',(evt)=>{
+
+            let charCode = (evt.which) ? evt.which : evt.keyCode;
+            
+             //do not allow negative sign at the start
+            if(negativeFlag && charCode == 45){
+
+
+                if (el.value.indexOf('-') === -1 && el.value == '') {        
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+
+            //point
+            if (charCode == 46) {
+                
+
+                //Check if the text already contains the . character
+                if (el.value.indexOf('.') === -1 && decimalPlaces != 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            }else if (charCode > 31 && (charCode < 48 || charCode > 57)){
+            
+                return false;    
+            }
+
+
+             //if one is true then it's good
+            if(decimalPlaces){
+                
+                if(el.value == '-') return true;
+                
+                let r = "^-?\\d+\\.\\d{0,"+(decimalPlaces)+"}$";
+            
+                let a = (new RegExp(r,'gi')).test(el.value);
+                let b = /^-?\d+$/.test(el.value);
+                let c = /^-?\d+\.$/.test(el.value);
+
+                if(!a && !b && !c && el.value != ''){
+
+                    return false;
+                }
+            }
+        
+            return true;
+
+        }); //keypress
+
+        
+    });
+}
+
+
 window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
 
     let charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -622,7 +693,7 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
         console.log('b');
         
         let r = "^-?\\d+\\.\\d{0,"+(decimalPlaces)+"}$";
-        // /^-?\d+\.\d{0,1}$/
+       
         let a = (new RegExp(r,'gi')).test(txt.value);
         let b = /^-?\d+$/.test(txt.value);
         let c = /^-?\d+\.$/.test(txt.value);
