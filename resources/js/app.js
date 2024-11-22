@@ -627,6 +627,7 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
         let c = /^-?\d+\.$/.test(txt.value);
         
         
+        console.log(txt.value);
         console.log(a,b,c);
         
 
