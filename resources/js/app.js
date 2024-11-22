@@ -650,9 +650,15 @@ window.util.numbersOnlyInput = function(arr,options){
             if(decimalPlaces){
                   
                 let r = "^-?\\d+\\.\\d{0,"+(decimalPlaces)+"}$";
-        
-                if(!(new RegExp(r,'gi')).test(el.value) ){
-                    el.value = el.value.slice(0, -1); 
+            
+                let a = (new RegExp(r,'gi')).test(el.value);
+                let b = /^-?\d+$/.test(el.value);
+                let c = /^-?\d+\.$/.test(el.value);
+
+                 if(!a && !b && !c && el.value != ''){
+
+                    evt.preventDefault();
+                    return false;
                 }
             }
 
