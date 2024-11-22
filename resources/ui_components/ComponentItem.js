@@ -206,17 +206,20 @@ class ComponentItem extends ComponentV2{
                 getVal: (val)=>{
                     return window.util.pureNumber(val,2);
                 },
-                update:(newVal)=>{
+                update:(newVal,oldVal,flag)=>{
 
-                    console.log('here',newVal,window.pop);
-                    
-                    if(!window.pop){
+                    console.log('here',newVal,flag);
+
+                    if(!flag){
+                        console.log('shit');
                         this.el.budget_price.value = window.util.numberFormat(newVal,2);
                     }
 
                     this.setState('total_amount', 
                         (newVal * this.getState('quantity'))
                     );
+
+                    console.log('ok');
                 }
             },
             equivalent:{
