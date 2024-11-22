@@ -670,7 +670,7 @@ window.util.numbersOnlyInput = function(arr,options){
 
          el.addEventListener('paste',(evt)=>{
             setTimeout(()=>{
-                console.log(el.value);
+                el.value = window.util.pureNumber(el.value);
             },0);
          });
 
