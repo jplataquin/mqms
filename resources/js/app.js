@@ -586,7 +586,7 @@ window.util.numbersOnlyInput = function(arr,options){
     arr.map(el => {
 
         el.addEventListener('keypress',(evt)=>{
-
+            
             let charCode = (evt.which) ? evt.which : evt.keyCode;
             
 
@@ -646,22 +646,17 @@ window.util.numbersOnlyInput = function(arr,options){
         }); //keypress
 
 
-         el.addEventListener('keypress',(evt)=>{
+         el.addEventListener('keyup',(evt)=>{
             
             if(decimalPlaces){
                   
                 let r = "^-?\\d+\\.\\d{0,"+(decimalPlaces)+"}$";
-            
-                let a = (new RegExp(r,'gi')).test(el.value);
-
-            
-
-                if(!a){
+        
+                if(!(new RegExp(r,'gi')).test(el.value) ){
                     el.value = el.value.slice(0, -1); 
                 }
             }
 
-            console.log('up')
          });
     });
 }
