@@ -639,14 +639,26 @@ window.util.numbersOnlyInput = function(arr,options){
                     return false;
                 }
             }
-        
+            
+            console.log('press');
             return true;
 
         }); //keypress
 
 
          el.addEventListener('keyup',(evt)=>{
-            console.log(el.value);
+            
+            if(decimalPlaces){
+                  
+                let r = "^-?\\d+\\.\\d{0,"+(decimalPlaces-1)+"}$";
+            
+                let a = (new RegExp(r,'gi')).test(el.value);
+
+            
+                console.log(a);
+            }
+
+            console.log('up')
          });
     });
 }
