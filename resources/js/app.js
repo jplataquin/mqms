@@ -640,7 +640,6 @@ window.util.numbersOnlyInput = function(arr,options){
                 }
             }
             
-            console.log('press');
             return true;
 
         }); //keypress
