@@ -646,7 +646,7 @@ window.util.numbersOnlyInput = function(arr,options){
         }); //keypress
 
 
-         el.addEventListener('keydown',(evt)=>{
+         el.addEventListener('keypress',(evt)=>{
             
             if(decimalPlaces){
                   
