@@ -203,27 +203,20 @@ class ComponentItem extends ComponentV2{
                 value:'',
                 target: this.el.budget_price,
                 events:['keyup'],
-                onEvent:function(){
-                    console.log(this.value);
-                    return this.value;
-                },
+                
                 getVal: (val)=>{
                     return window.util.pureNumber(val,2);
                 },
                 update:(newVal,oldVal,flag)=>{
 
-                    console.log('here',newVal,flag);
-
                     if(!flag){
-                        console.log('shit');
                         this.el.budget_price.value = window.util.numberFormat(newVal,2);
                     }
 
                     this.setState('total_amount', 
-                        (newVal * this.getState('quantity'))
+                        ( window.util.pureNumber(newVal) * this.getState('quantity'))
                     );
 
-                    console.log('ok');
                 }
             },
             equivalent:{
