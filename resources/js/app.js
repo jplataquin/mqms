@@ -620,8 +620,9 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
         console.log('a');
         if(txt.value == '-') return true;
         console.log('b');
-        let r = "^-?\\d+\\.\\d{0,"+(decimalPlaces-1)+"}$";
-      
+        
+        let r = "^-?\\d+\\.\\d{0,"+(decimalPlaces)+"}$";
+        // /^-?\d+\.\d{0,1}$/
         let a = (new RegExp(r,'gi')).test(txt.value);
         let b = /^-?\d+$/.test(txt.value);
         let c = /^-?\d+\.$/.test(txt.value);
