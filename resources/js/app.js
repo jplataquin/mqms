@@ -650,7 +650,7 @@ window.util.numbersOnlyInput = function(arr,options){
             
             if(decimalPlaces){
                   
-                let r = "^-?\\d+\\.\\d{0,"+(decimalPlaces-1)+"}$";
+                let r = "^-?\\d+\\.\\d{0,"+(decimalPlaces)+"}$";
             
                 let a = (new RegExp(r,'gi')).test(el.value);
 
