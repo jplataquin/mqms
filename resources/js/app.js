@@ -658,8 +658,7 @@ window.util.numbersOnlyInput = function(arr,options){
                 console.log(a);
 
                 if(!a){
-                    evt.preventDefault();
-                    return false;
+                    
                 }
             }
 
