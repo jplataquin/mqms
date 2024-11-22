@@ -645,6 +645,9 @@ window.util.numbersOnlyInput = function(arr,options){
         }); //keypress
 
 
+         el.addEventListener('keyup',(evt)=>{
+            console.log(el.value);
+         });
     });
 }
 
