@@ -206,7 +206,8 @@ class ComponentItem extends ComponentV2{
                 },
                 update:(newVal)=>{
 
-                    return false;
+                    if(window.pop) return false;
+                    
                     this.el.budget_price.value = window.util.numberFormat(newVal,2);
                 }
             },
