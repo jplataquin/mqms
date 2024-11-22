@@ -552,9 +552,9 @@ class ComponentItem extends ComponentV2{
         //     this.calculateTotalAmount();
         // }
  
-        // this.el.budget_price.onkeypress = (e)=>{
-        //     return window.util.inputNumber(this.el.budget_price,e,2,false);
-        // }
+        this.el.budget_price.onkeypress = (e)=>{
+             return window.util.inputNumber(this.el.budget_price,e,2,false);
+        }
 
         this.el.material_quantity.onkeypress = (e)=>{
             return window.util.inputNumber(this.el.material_quantity,e,2,false);

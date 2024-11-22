@@ -577,7 +577,7 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
 
     let charCode = (evt.which) ? evt.which : evt.keyCode;
     
-    
+    console.log('charCode',charCode);
 
     //do not allow negative sign at the start
     if(negativeFlag && charCode == 45){
@@ -617,9 +617,9 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
 
     //if one is true then it's good
     if(decimalPlaces){
-
+        console.log('a');
         if(txt.value == '-') return true;
-
+        console.log('b');
         let r = "^-?\\d+\\.\\d{0,"+(decimalPlaces-1)+"}$";
       
         let a = (new RegExp(r,'gi')).test(txt.value);
@@ -627,10 +627,12 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
         let c = /^-?\d+\.$/.test(txt.value);
         
         
+        console.log(a,b,c);
         
 
         if(!a && !b && !c && txt.value != ''){
 
+            console.log('c');
             return false;
         }
     }
