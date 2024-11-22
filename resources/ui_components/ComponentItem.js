@@ -201,14 +201,20 @@ class ComponentItem extends ComponentV2{
             },
             budget_price:{
                 value:'',
+                target: this.el.budget_price,
+                events:['keyup'],
                 getVal: (val)=>{
                     return window.util.pureNumber(val,2);
                 },
                 update:(newVal)=>{
 
-                    if(window.pop) return false;
+                    if(!window.pop){
+                        this.el.budget_price.value = window.util.numberFormat(newVal,2);
+                    }
 
-                    this.el.budget_price.value = window.util.numberFormat(newVal,2);
+                    this.setState('total_amount', 
+                        (newVal * this.getState('quantity'))
+                    );
                 }
             },
             equivalent:{
@@ -540,9 +546,9 @@ class ComponentItem extends ComponentV2{
 
     initEvents(){
         
-        this.el.budget_price.onkeyup = ()=>{    
-            this.calculateTotalAmount();
-        }
+        // this.el.budget_price.onkeyup = ()=>{    
+        //     this.calculateTotalAmount();
+        // }
  
         this.el.budget_price.onkeypress = (e)=>{
             return window.util.inputNumber(this.el.budget_price,e,2,false);
