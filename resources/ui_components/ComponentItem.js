@@ -16,24 +16,24 @@ class ComponentItem extends ComponentV2{
         return {
             quantity: {
                 value: 0,
-                getVal: (val)=>{
+                getValue: (val)=>{
                     return window.util.pureNumber(val,2);
                 },
-                update: (newVal)=>{
-                    this.el.quantity.value = newVal;
+                onUpdate: (data)=>{
+                    this.el.quantity.value = data.value;
                 }
             },
             unit:{
                 value:'',
-                update: (newVal)=>{
+                onUpdate: (data)=>{
                     
-                    this.el.unit.value = newVal;
+                    this.el.unit.value = data.value;
                 }
             },
             name:{
                 value:'',
-                update: (newVal)=>{
-                    this.el.name.value = newVal;
+                onUpdate: (data)=>{
+                    this.el.name.value = data.value;
                 }
             },
             sum_flag:{
@@ -43,8 +43,8 @@ class ComponentItem extends ComponentV2{
                 onEvent:function(){
                     return this.checked;
                 },
-                update: (newVal)=>{
-                    this.el.sum_flag.checked = newVal;
+                onUpdate: (data)=>{
+                    this.el.sum_flag.checked = data.value;
                 }
             },
             editable: {
@@ -54,7 +54,9 @@ class ComponentItem extends ComponentV2{
                 onEvent:()=>{
                     return true;
                 },
-                update: (newVal)=>{
+                onUpdate: (data)=>{
+
+                    let newVal = data.value;
 
                     this.el.name.disabled               = !newVal;
                     this.el.unit.disabled               = !newVal;
@@ -79,20 +81,22 @@ class ComponentItem extends ComponentV2{
                         this.el.deleteComponentButton.style.display = 'none';
 
                         this.el.cancelEditComponentButton.style.display = 'inline';
-                        this.el.updateComponentButton.style.display     = 'inline';
+                        this.el.onUpdateComponentButton.style.display     = 'inline';
                         
                     }else{ //Editable (false)
                         this.el.editComponentButton.style.display   = 'inline';
                         this.el.deleteComponentButton.style.display = 'inline';
 
                         this.el.cancelEditComponentButton.style.display     = 'none';
-                        this.el.updateComponentButton.style.display         = 'none';
+                        this.el.onUpdateComponentButton.style.display       = 'none';
                     }
                 }
             },
             function_type_id:{
                 value:'',
-                update: (newVal)=>{
+                onUpdate: (data)=>{
+
+                    let newVal = data.value;
 
                     this.el.function_type.value = newVal;
 
@@ -118,19 +122,21 @@ class ComponentItem extends ComponentV2{
                 value:'',
                 target: this.el.variable,
                 events:['keyup'],
-                getVal: (val)=>{
+                getValue: (val)=>{
                     return window.util.pureNumber(val);
                 },
-                update: (newVal)=>{
-                    this.el.variable.value = window.util.pureNumber(newVal);
+                onUpdate: (data)=>{
+                    this.el.variable.value = window.util.pureNumber(data.value);
                 }
             },
             grand_total:{
                 value:0,
-                getVal: (val)=>{
+                getValue: (val)=>{
                     return window.util.pureNumber(val,2);
                 },
-                update: (newVal)=>{
+                onUpdate: (data)=>{
+
+                    let newVal = data.value;
 
                     this.el.grandTotal.innerText = window.util.numberFormat(newVal,2);
 
@@ -151,52 +157,55 @@ class ComponentItem extends ComponentV2{
             },
             ref_1_quantity:{
                 value:'',
-                getVal: (val)=>{
+                getValue: (val)=>{
                     return window.util.pureNumber(val,2);
                 },
-                update:(newVal)=>{
-                    this.el.ref_1_quantity.value = window.util.numberFormat(newVal,2);
+                onUpdate:(data)=>{
+                    this.el.ref_1_quantity.value = window.util.numberFormat(data.value,2);
                 }
             },
             ref_1_unit_id:{
                 value:'',
-                update:(newVal)=>{
-                    this.el.ref_1_unit_id.value = newVal;
+                onUpdate:(data)=>{
+                    this.el.ref_1_unit_id.value = data.value;
                 }
             },
             ref_1_unit_price:{
                 value:'',
-                getVal: (val)=>{
+                getValue: (val)=>{
                     return window.util.pureNumber(val,2);
                 },
-                update:(newVal)=>{
-                    this.el.ref_1_unit_price.value = window.util.numberFormat(newVal,2);
+                onUpdate:(data)=>{
+                    this.el.ref_1_unit_price.value = window.util.numberFormat(data.value,2);
                 }
             },
             material_quantity:{
                 value:'',
                 target: this.el.material_quantity,
                 events:['keyup'],
-                getVal:(val)=>{
-                    return window.util.pureNumber(val);
+                getValue:(data)=>{
+                    return window.util.pureNumber(data.value);
                 },
-                update:(newVal)=>{
-                    this.el.material_quantity.value = newVal;
+                onUpdate:(data)=>{
+
+                    if(!data.event){
+                        this.el.material_quantity.value = data.value;
+                    }
                 }
             },
             total_amount: {
                 value:'',
-                getVal:(val)=>{
+                getValue:(val)=>{
                     return window.util.pureNumber(val);
                 },
-                update:(newVal)=>{
-                    this.el.total_amount.value = window.util.numberFormat(newVal,2);
+                onUpdate:(data)=>{
+                    this.el.total_amount.value = window.util.numberFormat(data.value,2);
                 }
             },
             component_item_equivalent:{
                 value:'',
-                update:(newVal)=>{
-                    this.el.component_item_equivalent.value = window.util.numberFormat(newVal)+' '+this._model.component_unit_text;
+                onUpdate:(data)=>{
+                    this.el.component_item_equivalent.value = window.util.numberFormat(data.value)+' '+this._model.component_unit_text;
                 }
             },
             budget_price:{
@@ -204,17 +213,17 @@ class ComponentItem extends ComponentV2{
                 target: this.el.budget_price,
                 events:['keyup'],
                 
-                getVal: (val)=>{
+                getValue: (val)=>{
                     return window.util.pureNumber(val,2);
                 },
-                update:(newVal,oldVal,flag)=>{
+                onUpdate:(data)=>{
 
-                    if(!flag){
-                        this.el.budget_price.value = window.util.numberFormat(newVal,2);
+                    if(!data.event){
+                        this.el.budget_price.value = window.util.numberFormat(data.value,2);
                     }
 
                     this.setState('total_amount', 
-                        ( window.util.pureNumber(newVal) * this.getState('quantity'))
+                        ( window.util.pureNumber(data.value) * this.getState('quantity'))
                     );
 
                 }
@@ -223,20 +232,20 @@ class ComponentItem extends ComponentV2{
                 value:'',
                 target: this.el.equivalent,
                 events:['keyup'],
-                getVal: (val)=>{
+                getValue: (val)=>{
                     return window.util.pureNumber(val);
                 },
-                update:(newVal)=>{
-                    this.el.equivalent.value = newVal;
+                onUpdate:(data)=>{
+                    this.el.equivalent.value = data.value;
                 }
             },
             total:{
                 value:'',
-                getVal: (val)=>{
+                getValue: (val)=>{
                     return window.util.pureNumber(val);
                 },
-                update:(newVal)=>{
-                    this.el.total.value = window.util.numberFormat(newVal,2);
+                onUpdate:(data)=>{
+                    this.el.total.value = window.util.numberFormat(data.value,2);
                 }
             }           
         }
@@ -514,7 +523,7 @@ class ComponentItem extends ComponentV2{
                                 this.el.deleteComponentButton       = t.button({class:'btn btn-danger me-3'},'Delete');
                                 this.el.editComponentButton         = t.button({class:'btn btn-primary'},'Edit');
                                 this.el.cancelEditComponentButton   = t.button({class:'btn btn-primary me-3'},'Cancel');
-                                this.el.updateComponentButton       = t.button({class:'btn btn-warning'},'Update');
+                                this.el.onUpdateComponentButton       = t.button({class:'btn btn-warning'},'onUpdate');
                                 
                             });
                         });
@@ -548,7 +557,12 @@ class ComponentItem extends ComponentV2{
 
     initEvents(){
         
-        window.util.numbersOnlyInput(this.el.budget_price,{
+        window.util.numbersOnlyInput([
+            this.el.budget_price,
+            this.el.material_quantity,
+            this.el.ref_1_quantity,
+            this.el.ref_1_unit_price
+        ],{
             negative:false,
             precision:2
         });
@@ -561,17 +575,17 @@ class ComponentItem extends ComponentV2{
         //      return window.util.inputNumber(this.el.budget_price,e,2,false);
         // }
 
-        this.el.material_quantity.onkeypress = (e)=>{
-            return window.util.inputNumber(this.el.material_quantity,e,2,false);
-        }
+        // this.el.material_quantity.onkeypress = (e)=>{
+        //     return window.util.inputNumber(this.el.material_quantity,e,2,false);
+        // }
 
-        this.el.ref_1_quantity.onkeypress = (e)=>{
-            return window.util.inputNumber(this.el.ref_1_quantity,e,2,false);
-        }
+        // this.el.ref_1_quantity.onkeypress = (e)=>{
+        //     return window.util.inputNumber(this.el.ref_1_quantity,e,2,false);
+        // }
 
-        this.el.ref_1_unit_price.onkeypress = (e)=>{
-            return window.util.inputNumber(this.el.ref_1_unit_price,e,2,false);
-        }
+        // this.el.ref_1_unit_price.onkeypress = (e)=>{
+        //     return window.util.inputNumber(this.el.ref_1_unit_price,e,2,false);
+        // }
 
         
         this.el.material_quantity.onkeyup = ()=>{
@@ -669,13 +683,13 @@ class ComponentItem extends ComponentV2{
             //     'sum_flag'
             // ]);
          
-            // this.updateComponentItemValues();
+            // this.onUpdateComponentItemValues();
 
             window.util.navReload();
         }
 
-        this.el.updateComponentButton.onclick = (e)=>{
-           this.httpUpdate();
+        this.el.onUpdateComponentButton.onclick = (e)=>{
+           this.httponUpdate();
         }
 
     }
@@ -689,7 +703,7 @@ class ComponentItem extends ComponentV2{
         );
     }
 
-    httpUpdate(){
+    httponUpdate(){
 
         let data = {
             id                      : this._model.id,
@@ -710,7 +724,7 @@ class ComponentItem extends ComponentV2{
 
         return false;
         window.util.blockUI();
-        window.util.$post('/api/component_item/update/',{
+        window.util.$post('/api/component_item/onUpdate/',{
             id                      : this._model.id,
             component_id            : this._model.component_id,
             name                    : this.getState('name'),
@@ -738,7 +752,7 @@ class ComponentItem extends ComponentV2{
             window.util.navReload();
             // this.setState('editable',false);
 
-            // this.updateMaterialList();
+            // this.onUpdateMaterialList();
 
             // signal.broadcast('set-component-status','PEND');
         });
@@ -763,17 +777,17 @@ class ComponentItem extends ComponentV2{
         this.el.variable.onkeyup = (e)=>{
             
             this.setState('variable',window.util.pureNumber(this.el.variable.value));
-            this.updateComponentItemValues();
+            this.onUpdateComponentItemValues();
         }
 
         this.el.quantity.onkeyup = (e)=>{
             this.setState('quantity',window.util.pureNumber(this.el.quantity.value));
-            this.updateComponentItemValues();
+            this.onUpdateComponentItemValues();
         }
     }
 
 
-    updateComponentItemValues(){
+    onUpdateComponentItemValues(){
         
         let val                     = 0;
         let component_quantity      = window.util.pureNumber(this._model.component_quantity);
@@ -846,7 +860,7 @@ class ComponentItem extends ComponentV2{
     }
 
 
-    updateMaterialList(){
+    onUpdateMaterialList(){
 
         this.el.materialList.innerHTML = '';
 
@@ -909,9 +923,9 @@ class ComponentItem extends ComponentV2{
                 this.setState('component_item_equivalent','');
             }
 
-            this.updateComponentItemValues();
+            this.onUpdateComponentItemValues();
             
-            this.updateMaterialList();
+            this.onUpdateMaterialList();
    
         });
 
@@ -970,7 +984,7 @@ class ComponentItem extends ComponentV2{
                         }).onclick = (e)=>{
                             e.preventDefault();
 
-                            this.updateMaterialEntry({
+                            this.onUpdateMaterialEntry({
                                 material_quantity_id: data.id,
                                 material_item_id: data.material_item_id,
                                 equivalent: data.equivalent,
@@ -1032,7 +1046,7 @@ class ComponentItem extends ComponentV2{
 
     }
 
-    updateMaterialEntry(entry){
+    onUpdateMaterialEntry(entry){
 
         
         window.ui.primaryModal.hide();
@@ -1123,12 +1137,12 @@ class ComponentItem extends ComponentV2{
         });
 
         const cancelBtn = t.button({class:'btn btn-secondary me-3'},'Cancel');
-        const updateBtn = t.button({class:'btn btn-warning'},'Update');
+        const onUpdateBtn = t.button({class:'btn btn-warning'},'onUpdate');
 
         const controls =  t.div({class:'row'},()=>{
             t.div({class:'col-12 text-end'},(el)=>{
                 el.append(cancelBtn);
-                el.append(updateBtn);
+                el.append(onUpdateBtn);
             });
         });
 
@@ -1137,13 +1151,13 @@ class ComponentItem extends ComponentV2{
         }
 
 
-        updateBtn.onclick = (e)=>{
+        onUpdateBtn.onclick = (e)=>{
 
             window.ui.primaryModal.hide();
             
             window.util.blockUI();
 
-            window.util.$post('/api/material_quantity/update',{
+            window.util.$post('/api/material_quantity/onUpdate',{
                 id                  : entry.material_quantity_id,
                 material_item_id    : entry.material_item_id,
                 quantity            : quantityInput.value,
@@ -1157,7 +1171,7 @@ class ComponentItem extends ComponentV2{
                     return false;
                 }
 
-                this.updateMaterialList();
+                this.onUpdateMaterialList();
 
             })
         }
