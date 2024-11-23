@@ -81,14 +81,14 @@ class ComponentItem extends ComponentV2{
                         this.el.deleteComponentButton.style.display = 'none';
 
                         this.el.cancelEditComponentButton.style.display = 'inline';
-                        this.el.onUpdateComponentButton.style.display     = 'inline';
+                        this.el.updateComponentButton.style.display     = 'inline';
                         
                     }else{ //Editable (false)
                         this.el.editComponentButton.style.display   = 'inline';
                         this.el.deleteComponentButton.style.display = 'inline';
 
                         this.el.cancelEditComponentButton.style.display     = 'none';
-                        this.el.onUpdateComponentButton.style.display       = 'none';
+                        this.el.updateComponentButton.style.display       = 'none';
                     }
                 }
             },
@@ -523,7 +523,7 @@ class ComponentItem extends ComponentV2{
                                 this.el.deleteComponentButton       = t.button({class:'btn btn-danger me-3'},'Delete');
                                 this.el.editComponentButton         = t.button({class:'btn btn-primary'},'Edit');
                                 this.el.cancelEditComponentButton   = t.button({class:'btn btn-primary me-3'},'Cancel');
-                                this.el.onUpdateComponentButton       = t.button({class:'btn btn-warning'},'onUpdate');
+                                this.el.updateComponentButton       = t.button({class:'btn btn-warning'},'Update');
                                 
                             });
                         });
@@ -688,7 +688,7 @@ class ComponentItem extends ComponentV2{
             window.util.navReload();
         }
 
-        this.el.onUpdateComponentButton.onclick = (e)=>{
+        this.el.updateComponentButton.onclick = (e)=>{
            this.httponUpdate();
         }
 
