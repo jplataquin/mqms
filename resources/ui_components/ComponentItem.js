@@ -99,7 +99,7 @@ class ComponentItem extends ComponentV2{
             },
             component_item_function_type:{
                 value:'',
-                target: this.component_item_function_type,
+                target: this.el.component_item_function_type,
                 events:['change'],
                 onUpdate: (data)=>{
 
@@ -108,6 +108,7 @@ class ComponentItem extends ComponentV2{
                     }
                     
                     this.updateComponentItemValues();
+                    console.log('here');
                 }
             },
             component_item_variable:{
@@ -561,6 +562,11 @@ class ComponentItem extends ComponentV2{
         
         this.getComponentItemData();
 
+        let test = this.component_item_function_type ?? null;
+        console.log('a',test);
+        console.log('b',this.component_item_function_type instanceof Element);
+        console.log('c',this.component_item_function_type instanceof HTMLElement);
+        
        // this.functionVariableQuantity();
 
         this.initEvents();
