@@ -409,9 +409,13 @@ class ComponentItem extends ComponentV2{
                         });
                         
                         t.tr(()=>{
-                            t.th({colspan:2},'POW/DUPA Quantity');
-                            t.th({colspan:1},'POW/DUPA Unit');
-                            t.th({colspan:2},'POW/DUPA Unit Price');
+                            t.th({colspan:5,class:'text-center'},'POW/DUPA')
+                        });
+
+                        t.tr(()=>{
+                            t.th({colspan:2},'Quantity');
+                            t.th({colspan:1},'Unit');
+                            t.th({colspan:2},'Unit Price');
                         });
                 
                         t.tr(()=>{
