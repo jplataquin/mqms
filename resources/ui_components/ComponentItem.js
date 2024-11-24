@@ -762,7 +762,7 @@ class ComponentItem extends ComponentV2{
 
     updateComponentItemValues(){
         
-        let val                             = 0;
+        let equivalent                      = 0;
         let component_quantity              = window.util.pureNumber(this._model.component_quantity);
         let variable                        = this.getState('component_item_variable');
         let use_count                       = parseInt(this._model.component_use_count);
@@ -774,7 +774,7 @@ class ComponentItem extends ComponentV2{
         switch(component_item_function_type){
             case '1': //As Factor
 
-                    val = window.util.roundUp(
+                equivalent = window.util.roundUp(
                         (component_quantity * variable )  / use_count
                     ,2);
 
@@ -784,10 +784,11 @@ class ComponentItem extends ComponentV2{
 
             case '2': //As Divisor
 
-                    val = window.util.roundUp( 
+                    equivalent = window.util.roundUp( 
                         (component_quantity / variable)  / use_count
                     ,2);
                     
+                    this.setState('component_item_quantity',variable);
                     this.setState('component_item_equivalent','');
 
                 break;
@@ -799,7 +800,7 @@ class ComponentItem extends ComponentV2{
 
                     this.setState('component_item_equivalent','');
 
-                    val = variable;
+                    equivalent = variable;
                     
                 break;
             case '4': //As Equivalent
@@ -807,14 +808,14 @@ class ComponentItem extends ComponentV2{
                 this.el.component_item_variable.disabled = false;
                 this.el.component_item_quantity.disabled = false;
 
-                val = ( variable * component_item_quantity ) * use_count; 
+                equivalent = ( variable * component_item_quantity ) * use_count; 
                 
 
-                if(val !== Infinity){
+                if(equivalent !== Infinity){
 
-                    val = window.util.roundUp(val,2);
+                    equivalent = window.util.roundUp(val,2);
 
-                    this.setState('component_item_equivalent',val);
+                    this.setState('component_item_equivalent',equivalent);
                 
                 }else{
 
@@ -830,15 +831,6 @@ class ComponentItem extends ComponentV2{
         }
 
 
-        if(val !== Infinity){
-
-            val = window.util.roundUp(val,2);
-            this.setState('component_item_quantity',val);
-
-        }else{
-
-            this.setState('component_item_quantity',0);
-        }
 
         this.calculateTotalAmount();
     }
