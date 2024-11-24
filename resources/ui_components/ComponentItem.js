@@ -763,6 +763,7 @@ class ComponentItem extends ComponentV2{
     updateComponentItemValues(){
         
         let equivalent                      = 0;
+        let quantity                        = 0;
         let component_quantity              = window.util.pureNumber(this._model.component_quantity);
         let variable                        = this.getState('component_item_variable');
         let use_count                       = parseInt(this._model.component_use_count);
@@ -774,20 +775,27 @@ class ComponentItem extends ComponentV2{
         switch(component_item_function_type){
             case '1': //As Factor
 
-                    equivalent = window.util.roundUp(
+                    this.el.component_item_quantity.disabled = true;
+                   
+                    quantity = window.util.roundUp(
                         (component_quantity * variable )  / use_count
                     ,2);
-
+                    
+                    this.setState('component_item_quantity',quantity);
+                    
                     this.setState('component_item_equivalent','');
 
                 break;
 
             case '2': //As Divisor
-
-                    equivalent = window.util.roundUp( 
+                    
+                    this.el.component_item_quantity.disabled = true;
+                   
+                    quantity = window.util.roundUp( 
                         (component_quantity / variable)  / use_count
                     ,2);
                     
+                    this.setState('component_item_quantity',quantity);
                     this.setState('component_item_equivalent','');
 
                 break;
