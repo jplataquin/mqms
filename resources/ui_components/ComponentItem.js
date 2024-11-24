@@ -100,7 +100,7 @@ class ComponentItem extends ComponentV2{
             component_item_function_type:{
                 value:'',
                 target: this.component_item_function_type,
-                events:['keyup','change'],
+                events:['change'],
                 onUpdate: (data)=>{
 
                     if(!data.event){
