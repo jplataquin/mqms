@@ -167,7 +167,7 @@ class ComponentItem extends ComponentV2{
                     return window.util.pureNumber(val);
                 },
                 onUpdate:(data)=>{
-                    this.el.component_item_total_amount.value = window.util.numberFormat(data.value,2);
+                    this.el.component_item_total_amount.value = 'P '+window.util.numberFormat(data.value,2);
                 }
             },
 
@@ -677,7 +677,7 @@ class ComponentItem extends ComponentV2{
     calculateTotalAmount(){
         
         console.log(this.getState('component_item_budget_price'), this.getState('component_item_quantity'));
-        
+
         this.setState('component_item_total_amount', 
             (this.getState('component_item_budget_price') * this.getState('component_item_quantity'))
         );
