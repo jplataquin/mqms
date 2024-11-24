@@ -912,7 +912,7 @@ class ComponentItem extends ComponentV2{
             });
 
 
-            this.onUpdateComponentItemValues();
+           // this.onUpdateComponentItemValues();
             
             //this.onUpdateMaterialList();
    
