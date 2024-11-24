@@ -382,7 +382,7 @@ class ComponentItem extends ComponentV2{
 
         return t.div({class:'form-container mb-5'},(el)=>{
             
-            t.div({class:'form-header component_item_sticky_untrigger'},'Item');
+            t.div({class:'form-header'},'Component Item');
 
             t.div({class:'form-body'},()=>{
 
@@ -390,7 +390,7 @@ class ComponentItem extends ComponentV2{
                     
 
                     t.tbody(()=>{
-                        t.tr({class:'component_item_sticky_trigger'},()=>{
+                        t.tr(()=>{
                             t.th({colspan:4},'Name');
                             t.th({colspan:1},'Sum Flag');
                         });
@@ -409,7 +409,7 @@ class ComponentItem extends ComponentV2{
                         });
                         
                         t.tr(()=>{
-                            t.th({colspan:5,class:'text-center'},'POW/DUPA')
+                            t.th({colspan:5,class:'text-center bg-divider'},'POW/DUPA')
                         });
 
                         t.tr(()=>{
@@ -449,7 +449,7 @@ class ComponentItem extends ComponentV2{
                         });
 
                         t.tr(()=>{
-                            t.th({colspan:5,class:'text-center'},'Material Budget')
+                            t.th({colspan:5,class:'text-center bg-divider'},'Material Budget')
                         });
         
                         t.tr(()=>{
