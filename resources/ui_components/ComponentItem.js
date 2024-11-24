@@ -779,14 +779,16 @@ class ComponentItem extends ComponentV2{
 
     updateComponentItemValues(){
         
-        let val                     = 0;
-        let component_quantity      = window.util.pureNumber(this._model.component_quantity);
-        let variable                = this.getState('component_item_variable');
-        let use_count               = parseInt(this._model.component_use_count);
-        let component_item_quantity = this.getState('component_item_quantity'); 
+        let val                             = 0;
+        let component_quantity              = window.util.pureNumber(this._model.component_quantity);
+        let variable                        = this.getState('component_item_variable');
+        let use_count                       = parseInt(this._model.component_use_count);
+        let component_item_quantity         = this.getState('component_item_quantity'); 
+        let component_item_function_type    = this.getState('component_item_function_type')
 
-
-        switch(this.getState('component_item_function_type')){
+        console.log(component_item_function_type);
+        
+        switch(component_item_function_type){
             case '1': //As Factor
 
                     val = window.util.roundUp(
