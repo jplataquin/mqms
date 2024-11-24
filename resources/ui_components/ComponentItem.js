@@ -186,6 +186,27 @@ class ComponentItem extends ComponentV2{
                     this.el.component_item_total_amount.value = window.util.numberFormat(data.value,2);
                 }
             },
+
+            component_item_budget_price:{
+                value:'',
+                target: this.el.component_item_budget_price,
+                events:['keyup'],
+                
+                getValue: (val)=>{
+                    return window.util.pureNumber(val,2);
+                },
+                onUpdate:(data)=>{
+
+                    if(!data.event){
+                        this.el.component_item_budget_price.value = window.util.numberFormat(data.value,2);
+                    }
+
+                    this.setState('total_amount', 
+                        ( window.util.pureNumber(data.value) * this.getState('quantity'))
+                    );
+
+                }
+            },
             
             /*******************************************************/
             // grand_total:{
@@ -236,26 +257,7 @@ class ComponentItem extends ComponentV2{
             //     }
             // },
             
-            // budget_price:{
-            //     value:'',
-            //     target: this.el.budget_price,
-            //     events:['keyup'],
-                
-            //     getValue: (val)=>{
-            //         return window.util.pureNumber(val,2);
-            //     },
-            //     onUpdate:(data)=>{
-
-            //         if(!data.event){
-            //             this.el.budget_price.value = window.util.numberFormat(data.value,2);
-            //         }
-
-            //         this.setState('total_amount', 
-            //             ( window.util.pureNumber(data.value) * this.getState('quantity'))
-            //         );
-
-            //     }
-            // },
+            
             // equivalent:{
             //     value:'',
             //     target: this.el.equivalent,
@@ -580,7 +582,7 @@ class ComponentItem extends ComponentV2{
 
         this.initEvents();
 
-        this.reloadState('editable');
+        //this.reloadState('editable');
     }
 
     initEvents(){
@@ -658,7 +660,7 @@ class ComponentItem extends ComponentV2{
 
         this.el.edit_component_item_button.onclick = (e)=>{
             e.preventDefault();
-            this.setState('editable',true);
+            this.setState('component_item_editable',true);
         }
 
         this.el.cancel_edit_component_item_button.onclick = (e)=>{
