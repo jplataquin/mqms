@@ -774,7 +774,7 @@ class ComponentItem extends ComponentV2{
         switch(component_item_function_type){
             case '1': //As Factor
 
-                equivalent = window.util.roundUp(
+                    equivalent = window.util.roundUp(
                         (component_quantity * variable )  / use_count
                     ,2);
 
@@ -813,7 +813,7 @@ class ComponentItem extends ComponentV2{
 
                 if(equivalent !== Infinity){
 
-                    equivalent = window.util.roundUp(val,2);
+                    equivalent = window.util.roundUp(equivalent,2);
 
                     this.setState('component_item_equivalent',equivalent);
                 
