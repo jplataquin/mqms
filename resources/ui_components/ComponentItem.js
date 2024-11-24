@@ -447,6 +447,10 @@ class ComponentItem extends ComponentV2{
                                 this.el.component_item_ref_1_unit_price = t.input({class:'form-control',disabled:true});
                             });
                         });
+
+                        t.tr(()=>{
+                            t.th({colspan:5,class:'text-center'},'Material Budget')
+                        });
         
                         t.tr(()=>{
                             t.th('Function Type');
@@ -512,7 +516,7 @@ class ComponentItem extends ComponentV2{
                         });
                         
                         t.tr(()=>{
-                            t.th({colspan:2},'Budget Price');
+                            t.th({colspan:2},'Unit Price');
                             t.th({colspan:5},'Total Amount');
                         });
         
