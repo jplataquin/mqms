@@ -382,7 +382,7 @@ class ComponentItem extends ComponentV2{
 
         return t.div({class:'form-container mb-5'},(el)=>{
             
-            t.div({class:'form-header'},'Component Item');
+            t.div({class:'form-header'},'');
 
             t.div({class:'form-body'},()=>{
 
@@ -391,7 +391,7 @@ class ComponentItem extends ComponentV2{
 
                     t.tbody(()=>{
                         t.tr(()=>{
-                            t.th({colspan:4},'Name');
+                            t.th({colspan:4},'Component Item');
                             t.th({colspan:1},'Sum Flag');
                         });
         
