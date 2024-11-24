@@ -32,13 +32,13 @@ class ComponentItem extends ComponentV2{
                 value:'',
                 onUpdate: (data)=>{
                     
-                    this.el.unit.value = data.value;
+                    this.el.component_item_unit.value = data.value;
                 }
             },
             component_item_name:{
                 value:'',
                 onUpdate: (data)=>{
-                    this.el.name.value = data.value;
+                    this.el.component_item_name.value = data.value;
                 }
             },
             component_item_sum_flag:{
