@@ -788,7 +788,6 @@ class ComponentItem extends ComponentV2{
                         (component_quantity / variable)  / use_count
                     ,2);
                     
-                    this.setState('component_item_quantity',variable);
                     this.setState('component_item_equivalent','');
 
                 break;
@@ -797,10 +796,10 @@ class ComponentItem extends ComponentV2{
                     
                     this.el.component_item_variable.disabled = false;
                     this.el.component_item_quantity.disabled = true;
-
+                    
+                    this.setState('component_item_quantity',variable);
                     this.setState('component_item_equivalent','');
 
-                    equivalent = variable;
                     
                 break;
             case '4': //As Equivalent
@@ -823,9 +822,6 @@ class ComponentItem extends ComponentV2{
                 
                 }
                 
-                this.calculateTotalAmount();
-                
-                return true; //exit the function
                 
                 break;
         }
