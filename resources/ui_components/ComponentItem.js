@@ -302,18 +302,18 @@ class ComponentItem extends ComponentV2{
     view(){
         const t = new Template();
 
-        this.el.materialItemSelect = t.select({class:'form-control'},()=>{
-            t.option({value:''},' - ');
-        });
+        // this.el.materialItemSelect = t.select({class:'form-control'},()=>{
+        //     t.option({value:''},' - ');
+        // });
 
-        this._model.materialItemOptions.map(item=>{
+        // this._model.materialItemOptions.map(item=>{
             
-            let option = t.option({value:item.id},item.brand+' '+item.name + ' '+item.specification_unit_packaging+''.trim());
+        //     let option = t.option({value:item.id},item.brand+' '+item.name + ' '+item.specification_unit_packaging+''.trim());
             
-            this.el.materialItemSelect.t.append(option);
+        //     this.el.materialItemSelect.t.append(option);
 
-            this.materialRegistry[item.id] = item.brand+' '+item.name +' '+item.specification_unit_packaging+''.trim();
-        });
+        //     this.materialRegistry[item.id] = item.brand+' '+item.name +' '+item.specification_unit_packaging+''.trim();
+        // });
 
         // this.el.materialMenu = t.div(()=>{
     
@@ -576,7 +576,7 @@ class ComponentItem extends ComponentV2{
         
         this.getComponentItemData();
 
-        this.functionVariableQuantity();
+       // this.functionVariableQuantity();
 
         this.initEvents();
 
