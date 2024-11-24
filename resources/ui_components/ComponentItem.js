@@ -201,7 +201,7 @@ class ComponentItem extends ComponentV2{
                         this.el.component_item_budget_price.value = window.util.numberFormat(data.value,2);
                     }
 
-                    this.setState('total_amount', 
+                    this.setState('component_item_total_amount', 
                         ( window.util.pureNumber(data.value) * this.getState('component_item_quantity'))
                     );
 
