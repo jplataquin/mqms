@@ -190,7 +190,7 @@ class ComponentItem extends ComponentV2{
             component_item_budget_price:{
                 value:'',
                 target: this.el.component_item_budget_price,
-                events:['keyup'],
+                events:['keyup','change'],
                 
                 getValue: (val)=>{
                     return window.util.pureNumber(val,2);
@@ -202,7 +202,7 @@ class ComponentItem extends ComponentV2{
                     }
 
                     this.setState('total_amount', 
-                        ( window.util.pureNumber(data.value) * this.getState('quantity'))
+                        ( window.util.pureNumber(data.value) * this.getState('component_item_quantity'))
                     );
 
                 }
