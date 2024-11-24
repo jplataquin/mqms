@@ -104,7 +104,7 @@ class ComponentItem extends ComponentV2{
                 onUpdate: (data)=>{
 
                     if(!data.event){
-                        this.el.component_item_function_type.value = newVal;
+                        this.el.component_item_function_type.value = data.value;
                     }
                     
                     this.updateComponentItemValues();
