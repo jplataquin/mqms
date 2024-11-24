@@ -103,29 +103,11 @@ class ComponentItem extends ComponentV2{
                 events:['keyup','change'],
                 onUpdate: (data)=>{
 
-                    let newVal = data.value;
-
                     if(!data.event){
                         this.el.component_item_function_type.value = newVal;
                     }
-
-                    switch(newVal){
-                        case '3': //Direct
-            
-                                this.el.component_item_variable.disabled = false;
-                                this.el.component_item_quantity.disabled = true;
-
-                            break;
-            
-                        case '4': //As Equivalent
-            
-                                this.el.component_item_variable.disabled = false;
-                                this.el.component_item_quantity.disabled = false;
-                            break;
-            
-                    }
                     
-                    //this.onUpdateComponentItemValues();
+                    this.updateComponentItemValues();
                 }
             },
             component_item_variable:{
@@ -787,7 +769,7 @@ class ComponentItem extends ComponentV2{
         let component_item_function_type    = this.getState('component_item_function_type')
 
         console.log(component_item_function_type);
-        
+
         switch(component_item_function_type){
             case '1': //As Factor
 
@@ -810,6 +792,9 @@ class ComponentItem extends ComponentV2{
                 break;
 
             case '3': //Direct
+                    
+                    this.el.component_item_variable.disabled = false;
+                    this.el.component_item_quantity.disabled = true;
 
                     this.setState('component_item_equivalent','');
 
@@ -818,7 +803,9 @@ class ComponentItem extends ComponentV2{
                 break;
             case '4': //As Equivalent
 
-                
+                this.el.component_item_variable.disabled = false;
+                this.el.component_item_quantity.disabled = false;
+
                 val = ( variable * component_item_quantity ) * use_count; 
                 
 
