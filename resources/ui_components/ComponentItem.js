@@ -141,7 +141,8 @@ class ComponentItem extends ComponentV2{
                         this.el.component_item_variable.value = window.util.pureNumber(data.value);
                     }
 
-                    //this.onUpdateComponentItemValues();
+
+                    this.updateComponentItemValues();
                 }
             },
 
@@ -776,81 +777,81 @@ class ComponentItem extends ComponentV2{
     // }
 
 
-    // onUpdateComponentItemValues(){
+    updateComponentItemValues(){
         
-    //     let val                     = 0;
-    //     let component_quantity      = window.util.pureNumber(this._model.component_quantity);
-    //     let variable                = this.getState('component_item_variable');
-    //     let use_count               = parseInt(this._model.component_use_count);
-    //     let component_item_quantity = this.getState('component_item_quantity'); 
+        let val                     = 0;
+        let component_quantity      = window.util.pureNumber(this._model.component_quantity);
+        let variable                = this.getState('component_item_variable');
+        let use_count               = parseInt(this._model.component_use_count);
+        let component_item_quantity = this.getState('component_item_quantity'); 
 
 
-    //     switch(this.getState('component_item_function_type')){
-    //         case '1': //As Factor
+        switch(this.getState('component_item_function_type')){
+            case '1': //As Factor
 
-    //                 val = window.util.roundUp(
-    //                     (component_quantity * variable )  / use_count
-    //                 ,2);
+                    val = window.util.roundUp(
+                        (component_quantity * variable )  / use_count
+                    ,2);
 
-    //                 this.setState('component_item_equivalent','');
+                    this.setState('component_item_equivalent','');
 
-    //             break;
+                break;
 
-    //         case '2': //As Divisor
+            case '2': //As Divisor
 
-    //                 val = window.util.roundUp( 
-    //                     (component_quantity / variable)  / use_count
-    //                 ,2);
+                    val = window.util.roundUp( 
+                        (component_quantity / variable)  / use_count
+                    ,2);
                     
-    //                 this.setState('component_item_equivalent','');
+                    this.setState('component_item_equivalent','');
 
-    //             break;
+                break;
 
-    //         case '3': //Direct
+            case '3': //Direct
 
-    //                 this.setState('component_item_equivalent','');
+                    this.setState('component_item_equivalent','');
 
-    //                 val = variable;
+                    val = variable;
                     
-    //             break;
-    //         case '4': //As Equivalent
+                break;
+            case '4': //As Equivalent
 
                 
-    //             val = ( variable * component_item_quantity ) * use_count; 
+                val = ( variable * component_item_quantity ) * use_count; 
                 
 
-    //             if(val !== Infinity){
+                if(val !== Infinity){
 
-    //                 val = window.util.roundUp(val,2);
+                    val = window.util.roundUp(val,2);
 
-    //                 this.setState('component_item_equivalent',val);
+                    this.setState('component_item_equivalent',val);
                 
-    //             }else{
+                }else{
 
-    //                 this.setState('component_item_equivalent','');
+                    this.setState('component_item_equivalent','');
                 
-    //             }
+                }
                 
-    //             this.calculateTotalAmount();
+                this.calculateTotalAmount();
                 
-    //             return true; //exit the function
+                return true; //exit the function
                 
-    //             break;
-    //     }
+                break;
+        }
 
 
-    //     if(val !== Infinity){
+        if(val !== Infinity){
 
-    //         val = window.util.roundUp(val,2);
-    //         this.setState('component_item_quantity',val);
+            val = window.util.roundUp(val,2);
+            this.setState('component_item_quantity',val);
 
-    //     }else{
+        }else{
 
-    //         this.setState('component_item_quantity',0);
-    //     }
+            this.setState('component_item_quantity',0);
+        }
 
-    //     this.calculateTotalAmount();
-    // }
+        this.calculateTotalAmount();
+    }
 
 
     // onUpdateMaterialList(){
