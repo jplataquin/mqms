@@ -559,8 +559,8 @@ class ComponentItem extends ComponentV2{
                 
                  t.div((el)=>{
                      el.append( MaterialQuantityList({
-                        materialItemOptions: materialItemOptions
-                     }) );
+                        materialItemOptions:materialItemOptions
+                     }));
                  });
 
             });//form-body
