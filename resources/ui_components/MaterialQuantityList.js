@@ -39,7 +39,7 @@ class MaterialQuantityList extends ComponentV2{
                 target:this.el.quantity,
                 events:['keyup','change'],
                 getValue:(val)=>{
-                    return window.util.pureNumber(val);
+                    return window.util.pureNumber(val,2);
                 },
                 onUpdate:(data)=>{
 
