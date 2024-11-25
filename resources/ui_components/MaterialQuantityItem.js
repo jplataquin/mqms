@@ -17,6 +17,7 @@ class MaterialQuantityItem extends ComponentV2{
         
         const t = new Template();
 
+        console.log(material_item_options[this._model.material_item_id]);
         return t.tr(()=>{
 
             t.td('test');
