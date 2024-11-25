@@ -29,5 +29,5 @@ class MaterialQuantityItem extends ComponentV2{
 
 
 export default (data)=>{
-    return (new MaterialQuantityList(data));
+    return (new MaterialQuantityItem(data));
 }
