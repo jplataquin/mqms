@@ -559,7 +559,7 @@ class ComponentItem extends ComponentV2{
                 
                  t.div((el)=>{
                      el.append( MaterialQuantityList({
-                        materialItemOptions: this._model.materialItemOptions
+                        material_item_options: this._model.materialItemOptions
                      }));
                  });
 

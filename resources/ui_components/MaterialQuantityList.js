@@ -14,7 +14,8 @@ class MaterialQuantityList extends ComponentV2{
 
     model(){
         return {
-            materialItemOptions:[]
+            component_item_id:0,
+            material_item_options:[]
         };
     }
 
@@ -67,7 +68,7 @@ class MaterialQuantityList extends ComponentV2{
             t.option({value:''},' - ');
         });
 
-        this._model.materialItemOptions.map(item=>{
+        this._model.material_item_options.map(item=>{
             
             let option = t.option({value:item.id},item.brand+' '+item.name + ' '+item.specification_unit_packaging+''.trim());
             
@@ -135,6 +136,27 @@ class MaterialQuantityList extends ComponentV2{
 
             });//row
 
+
+            t.div({class:'row'},()=>{
+                t.div({class:'col-lg-12'},()=>{
+                    t.table({class:'table'},()=>{
+                        t.thead(()=>{
+                            t.tr(()=>{
+                                t.th('Material');
+                                t.th('Quantity');
+                                t.th('Equivalent');
+                                t.th('Total');
+                            });
+                        });
+                        
+                        this.el.material_quantity_item_container = t.tbody(()=>{});
+
+                        t.tfoot()
+                        
+                    });
+                });
+            });
+
         });
     }
 
@@ -150,7 +172,44 @@ class MaterialQuantityList extends ComponentV2{
         
         this.el.addBtn.onlcick = (e)=>{
             e.preventDefault();
+            this.addMaterialQuantity();
         }
+
+        this.getMaterialQuantityList();
+    }
+
+    addMaterialQuantity(){
+
+    }
+
+    getMaterialQuantityList(){
+        
+        window.util.$get('/api/material_quantity/list',{
+            component_item_id   :this._model.component_item_id,
+            page                :1,
+            limit               :0
+        }).then(reply=>{
+            
+            if(reply.status <= 0 ){
+                window.util.showMsg(reply);
+                return false;
+            }
+
+
+            reply.data.map(item=>{
+
+
+                this.el.material_quantity_item_container.append(MaterialQuantityItem({
+                    id                      : item.id,
+                    material_item_options   : this._model.material_item_options,
+                    material_item_id        : item.material_item_id,
+                    quantity                : item.quantity,
+                    equivalent              : item.equivalent
+                }));
+
+            });
+        })
+        
     }
 }
 
