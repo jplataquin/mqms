@@ -1,5 +1,5 @@
 import {Template,ComponentV2,Signal} from '/adarna.js';
-
+import MaterialQuantityItem from '/ui_components/MaterialQuantityItem.js';
 
 // function calculateTotalEquivalent(a,b){
 //     return window.util.roundUp(parseFloat(a) * parseFloat(b),2);
