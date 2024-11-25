@@ -21,6 +21,11 @@ class MaterialQuantityList extends ComponentV2{
 
     state(){
         return {
+            material_item:{
+                value:'',
+                target: this.el.material_item_select,
+                events:['change']
+            },
             equivalent:{
                 value:0,
                 target:this.el.equivalent,
@@ -181,6 +186,36 @@ class MaterialQuantityList extends ComponentV2{
 
     addMaterialQuantity(){
 
+        let data = {
+            component_item_id   : this._model.component_item_id,
+            material_item_id    : this.getState('material_item'),
+            quantity            : this.getState('quantity'),
+            equivalent          : this.getState('equivalent')
+        };
+
+        console.log(data);
+        
+        window.util.blockUI();
+
+        window.util.$post('/api/material_quantity/create',data).then(reply=>{
+            
+            window.util.unblockUI();
+                
+            if(reply.status <= 0){
+                window.util.showMsg(reply);
+                return false;
+            }
+
+            
+            // this.appendMaterial({
+            //     id: reply.data.id,
+            //     material_item_id: data.material_item_id,
+            //     quantity: data.quantity,
+            //     equivalent: data.equivalent
+            // });
+
+            
+        });
     }
 
     getMaterialQuantityList(){
