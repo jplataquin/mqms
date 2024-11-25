@@ -146,6 +146,7 @@ class MaterialQuantityList extends ComponentV2{
                                 t.th('Quantity');
                                 t.th('Equivalent');
                                 t.th('Total');
+                                t.th('Options');
                             });
                         });
                         
