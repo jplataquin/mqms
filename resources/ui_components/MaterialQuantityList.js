@@ -89,14 +89,14 @@ class MaterialQuantityList extends ComponentV2{
         
                             t.div({class:'row'},()=>{
         
-                                t.div({class:'col-lg-6'},()=>{
+                                t.div({class:'col-lg-5'},()=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('Material');
                                         t.el(this.el.material_item_select);
                                     });
                                 });
                             
-                                t.div({class:'col-lg-1'},()=>{             
+                                t.div({class:'col-lg-2'},()=>{             
                                     t.div({class:'form-group'},()=>{
                                         t.label('Quantity');
                                         this.el.quantity = t.input({class:'form-control', type:'text'});
@@ -105,7 +105,7 @@ class MaterialQuantityList extends ComponentV2{
         
                                 t.div({class:'col-lg-2'},()=>{
                                     t.div({class:'form-group'},()=>{
-                                        t.label('Equivalent / Unit');
+                                        t.label('Equivalent');
                                         this.el.equivalent = t.input({class:'form-control', type:'text'});
                                     });
                                 });
