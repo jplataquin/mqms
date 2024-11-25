@@ -1,5 +1,5 @@
 import {Template,ComponentV2,Signal} from '/adarna.js';
-import MaterialQuantityList from './MaterialQuantityList';
+import MaterialQuantityList from '/ui_components/MaterialQuantityList';
 
 // function calculateTotalEquivalent(a,b){
 //     return window.util.roundUp(parseFloat(a) * parseFloat(b),2);
@@ -558,7 +558,9 @@ class ComponentItem extends ComponentV2{
         
                 
                  t.div((el)=>{
-                     el.append( MaterialQuantityList() );
+                     el.append( MaterialQuantityList({
+                        materialItemOptions: materialItemOptions
+                     }) );
                  });
 
             });//form-body
