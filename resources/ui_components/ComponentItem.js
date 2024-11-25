@@ -559,6 +559,7 @@ class ComponentItem extends ComponentV2{
                 
                  t.div((el)=>{
                      el.append( MaterialQuantityList({
+                        component_item_id    : this._model.id,
                         material_item_options: this._model.materialItemOptions
                      }));
                  });
