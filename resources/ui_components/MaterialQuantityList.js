@@ -178,6 +178,7 @@ class MaterialQuantityList extends ComponentV2{
         
         this.el.addBtn.onlcick = (e)=>{
             e.preventDefault();
+            console.log('add material quantity');
             this.addMaterialQuantity();
         }
 
