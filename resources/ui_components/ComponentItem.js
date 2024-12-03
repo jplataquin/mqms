@@ -105,6 +105,7 @@ class ComponentItem extends ComponentV2{
                 events:['change'],
                 onUpdate: (data)=>{
 
+                    console.log('change function type',data);
                     if(!data.event){
                         this.el.component_item_function_type.value = data.value;
                     }
