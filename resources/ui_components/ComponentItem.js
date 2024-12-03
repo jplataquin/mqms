@@ -37,8 +37,12 @@ class ComponentItem extends ComponentV2{
             },
             component_item_name:{
                 value:'',
+                events:['keyup','change','paste'],
                 onUpdate: (data)=>{
-                    this.el.component_item_name.value = data.value;
+
+                    if(!data.event){
+                        this.el.component_item_name.value = data.value;
+                    }
                 }
             },
             component_item_sum_flag:{
@@ -49,7 +53,10 @@ class ComponentItem extends ComponentV2{
                     return this.checked;
                 },
                 onUpdate: (data)=>{
-                    this.el.component_item_sum_flag.checked = data.value;
+
+                    if(!data.event){
+                        this.el.component_item_sum_flag.checked = data.value;
+                    }
                 }
             },
             component_item_editable: {
@@ -60,8 +67,6 @@ class ComponentItem extends ComponentV2{
                     return true;
                 },
                 onUpdate: (data)=>{
-
-                    console.log('component_item_editable',data);
 
                     let newVal = data.value;
 
@@ -147,14 +152,20 @@ class ComponentItem extends ComponentV2{
                     return window.util.pureNumber(val,2);
                 },
                 onUpdate:(data)=>{
-                    this.el.component_item_ref_1_quantity.value = window.util.numberFormat(data.value,2);
+
+                    if(data.event) { 
+                        this.el.component_item_ref_1_quantity.value = window.util.numberFormat(data.value,2);
+                    }
                 }
             },
             component_item_ref_1_unit_id:{
                 value:'',
                 events:['change'],
                 onUpdate:(data)=>{
-                    this.el.component_item_ref_1_unit_id.value = data.value;
+
+                    if(data.event){
+                        this.el.component_item_ref_1_unit_id.value = data.value;
+                    }
                 }
             },
             component_item_ref_1_unit_price:{
@@ -164,7 +175,10 @@ class ComponentItem extends ComponentV2{
                     return window.util.pureNumber(val,2);
                 },
                 onUpdate:(data)=>{
-                    this.el.component_item_ref_1_unit_price.value = window.util.numberFormat(data.value,2);
+
+                    if(data.event){
+                        this.el.component_item_ref_1_unit_price.value = window.util.numberFormat(data.value,2);
+                    }
                 }
             },
 
