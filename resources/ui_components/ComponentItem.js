@@ -61,6 +61,8 @@ class ComponentItem extends ComponentV2{
                 },
                 onUpdate: (data)=>{
 
+                    console.e.log('component_item_editable',data);
+                    
                     let newVal = data.value;
 
                     this.el.component_item_name.disabled               = !newVal;
