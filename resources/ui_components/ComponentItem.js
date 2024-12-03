@@ -823,6 +823,8 @@ class ComponentItem extends ComponentV2{
                         this.el.component_item_quantity.disabled = true;
                     }
 
+                    variable = winow.util.pureNumber(variable,2);
+                    
                     this.setState('component_item_quantity',variable);
                     this.setState('component_item_equivalent','');
 
