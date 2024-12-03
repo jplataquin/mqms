@@ -798,6 +798,10 @@ class ComponentItem extends ComponentV2{
                         (component_quantity / variable)  / use_count
                     ,2);
                     
+                    if(quantity === Infinity){
+                        quantity = 0;
+                    }
+                    
                     this.setState('component_item_quantity',quantity);
                     this.setState('component_item_equivalent','');
 
