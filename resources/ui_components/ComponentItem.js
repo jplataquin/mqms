@@ -686,7 +686,6 @@ class ComponentItem extends ComponentV2{
 
     calculateTotalAmount(){
         
-        console.log(this.getState('component_item_budget_price'), this.getState('component_item_quantity'));
 
         this.setState('component_item_total_amount', 
             (this.getState('component_item_budget_price') * this.getState('component_item_quantity'))
@@ -814,7 +813,7 @@ class ComponentItem extends ComponentV2{
                 equivalent = ( variable * component_item_quantity ) * use_count; 
                 
                 console.log('equivalent',equivalent);
-                
+
                 if(equivalent !== Infinity){
 
                     equivalent = window.util.roundUp(equivalent,2);
