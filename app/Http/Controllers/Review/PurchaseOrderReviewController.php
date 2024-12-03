@@ -161,7 +161,10 @@ class PurchaseOrderReviewController extends Controller
 
         $extras = json_decode($purchaseOrder->extras);
 
-        print_r($componentItemMaterialsArr);exit;
+        print_r($componentItemMaterialsArr);
+        
+        print_r($componentItemArr);
+        exit;
         return view('review/purchase_order/display',[
             'purchase_order'            => $purchaseOrder,
             'material_quantity_request' => $materialQuantityRequest,
