@@ -108,7 +108,6 @@ class ComponentItem extends ComponentV2{
                     }
                     
                     this.updateComponentItemValues();
-                    console.log('here');
                 }
             },
             component_item_variable:{
