@@ -43,8 +43,8 @@
         </table> 
         <hr>   
 
-
-    <div class="form-container" id="component_form" style="position:sticky;top:45px;background-color:#ffffff;z-index:900">
+    <!-- style="position:sticky;top:45px;background-color:#ffffff;z-index:900" -->
+    <div class="form-container" id="component_form" >
         <div class="form-header">
             Component
         </div>
