@@ -714,7 +714,7 @@ class ComponentItem extends ComponentV2{
 
         window.util.blockUI();
 
-        window.util.$post('/api/component_item/onUpdate/',data).then(reply=>{
+        window.util.$post('/api/component_item/update/',data).then(reply=>{
 
             window.util.unblockUI();
 
