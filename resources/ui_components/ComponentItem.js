@@ -17,7 +17,7 @@ class ComponentItem extends ComponentV2{
             component_item_quantity: {
                 value: 0,
                 target: this.el.component_item_quantity,
-                events:['keyup','change'],
+                events:['keyup'],
                 getValue: (val)=>{
                     return window.util.pureNumber(val,2);
                 },
@@ -37,7 +37,8 @@ class ComponentItem extends ComponentV2{
             },
             component_item_name:{
                 value:'',
-                events:['keyup','change','paste'],
+                target: this.el.component_item_name,
+                events:['keyup','paste'],
                 onUpdate: (data)=>{
 
                     if(!data.event){
@@ -148,7 +149,7 @@ class ComponentItem extends ComponentV2{
             component_item_ref_1_quantity:{
                 value:'',
                 target: this.el.component_item_ref_1_quantity,
-                events:['keyup','change'],
+                events:['keyup'],
                 getValue: (val)=>{
                     return window.util.pureNumber(val,2);
                 },
@@ -173,7 +174,7 @@ class ComponentItem extends ComponentV2{
             component_item_ref_1_unit_price:{
                 value:'',
                 target: this.el.component_item_ref_1_unit_price,
-                events:['keyup','change'],
+                events:['keyup'],
                 getValue: (val)=>{
                     return window.util.pureNumber(val,2);
                 },
