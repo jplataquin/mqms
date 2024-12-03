@@ -771,8 +771,10 @@ class ComponentItem extends ComponentV2{
         switch(component_item_function_type){
             case 1: //As Factor
 
-                    this.el.component_item_quantity.disabled = true;
-                   
+                    if(this.getState('component_item_editable')){
+                        this.el.component_item_quantity.disabled = true;
+                    }
+
                     quantity = window.util.roundUp(
                         (component_quantity * variable )  / use_count
                     ,2);
@@ -785,8 +787,10 @@ class ComponentItem extends ComponentV2{
 
             case 2: //As Divisor
                     
-                    this.el.component_item_quantity.disabled = true;
-                   
+                    if(this.getState('component_item_editable')){
+                        this.el.component_item_quantity.disabled = true;
+                    }
+
                     quantity = window.util.roundUp( 
                         (component_quantity / variable)  / use_count
                     ,2);
@@ -798,9 +802,13 @@ class ComponentItem extends ComponentV2{
 
             case 3: //Direct
                     
-                    this.el.component_item_variable.disabled = false;
-                    this.el.component_item_quantity.disabled = true;
-                    
+                    console.log('here 3');
+                    if(this.getState('component_item_editable')){
+                        this.el.component_item_variable.disabled = false;
+                        this.el.component_item_quantity.disabled = true;
+                        console.log('disabled');
+                    }
+
                     this.setState('component_item_quantity',variable);
                     this.setState('component_item_equivalent','');
 
