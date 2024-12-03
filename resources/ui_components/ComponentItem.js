@@ -768,7 +768,7 @@ class ComponentItem extends ComponentV2{
         console.log('function type',component_item_function_type);
 
         switch(component_item_function_type){
-            case '1': //As Factor
+            case 1: //As Factor
 
                     this.el.component_item_quantity.disabled = true;
                    
@@ -782,7 +782,7 @@ class ComponentItem extends ComponentV2{
 
                 break;
 
-            case '2': //As Divisor
+            case 2: //As Divisor
                     
                     this.el.component_item_quantity.disabled = true;
                    
@@ -795,7 +795,7 @@ class ComponentItem extends ComponentV2{
 
                 break;
 
-            case '3': //Direct
+            case 3: //Direct
                     
                     this.el.component_item_variable.disabled = false;
                     this.el.component_item_quantity.disabled = true;
@@ -805,7 +805,7 @@ class ComponentItem extends ComponentV2{
 
                     
                 break;
-            case '4': //As Equivalent
+            case 4: //As Equivalent
 
                 this.el.component_item_variable.disabled = false;
                 this.el.component_item_quantity.disabled = false;
