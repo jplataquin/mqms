@@ -247,7 +247,7 @@ class ComponentItemController extends Controller
             'quantity' => [
                 'required',
                 'numeric',
-                'gte:1'
+                'gte:0'
             ],
             'budget_price' => [
                 'required',
