@@ -589,7 +589,8 @@ class ComponentItem extends ComponentV2{
         window.util.numbersOnlyInput([
             this.el.component_item_budget_price,
             this.el.component_item_ref_1_quantity,
-            this.el.component_item_ref_1_unit_price
+            this.el.component_item_ref_1_unit_price,
+            this.el.component_item_variable
         ],{
             negative:false,
             precision:2
@@ -782,6 +783,10 @@ class ComponentItem extends ComponentV2{
                         (component_quantity * variable )  / use_count
                     ,2);
                     
+                    if(quantity === Infinity){
+                        quantity = 0;
+                    }
+
                     this.setState('component_item_quantity',quantity);
                     
                     this.setState('component_item_equivalent','');
@@ -801,7 +806,7 @@ class ComponentItem extends ComponentV2{
                     if(quantity === Infinity){
                         quantity = 0;
                     }
-                    
+
                     this.setState('component_item_quantity',quantity);
                     this.setState('component_item_equivalent','');
 
@@ -809,11 +814,9 @@ class ComponentItem extends ComponentV2{
 
             case 3: //Direct
                     
-                    console.log('here 3');
                     if(this.getState('component_item_editable')){
                         this.el.component_item_variable.disabled = false;
                         this.el.component_item_quantity.disabled = true;
-                        console.log('disabled');
                     }
 
                     this.setState('component_item_quantity',variable);
