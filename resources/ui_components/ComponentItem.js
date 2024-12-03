@@ -807,9 +807,11 @@ class ComponentItem extends ComponentV2{
                     
                 break;
             case 4: //As Equivalent
-
-                this.el.component_item_variable.disabled = false;
-                this.el.component_item_quantity.disabled = false;
+                    
+                if(this.getState('component_item_editable')){
+                    this.el.component_item_variable.disabled = false;
+                    this.el.component_item_quantity.disabled = false;
+                }
 
                 equivalent = ( variable * component_item_quantity ) * use_count; 
                 
