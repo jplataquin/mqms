@@ -103,7 +103,7 @@ class PurchaseOrderReviewController extends Controller
         $section                = $materialQuantityRequest->Section;
         $component              = $materialQuantityRequest->Component;
         $material_reqeust_items = $materialQuantityRequest->Items;
-        
+        //TODO compensate for delted items
         $componentItems         = $component->ComponentItems;
         $paymentTerm            = $purchaseOrder->PaymentTerm;
         $supplier               = $purchaseOrder->Supplier;
@@ -161,10 +161,6 @@ class PurchaseOrderReviewController extends Controller
 
         $extras = json_decode($purchaseOrder->extras);
 
-        print_r($componentItemMaterialsArr);
-        
-        print_r($componentItemArr);
-        exit;
         return view('review/purchase_order/display',[
             'purchase_order'            => $purchaseOrder,
             'material_quantity_request' => $materialQuantityRequest,
