@@ -142,6 +142,7 @@ class ComponentItem extends ComponentV2{
            
             component_item_ref_1_quantity:{
                 value:'',
+                events:['keyup','change','paste'],
                 getValue: (val)=>{
                     return window.util.pureNumber(val,2);
                 },
@@ -151,12 +152,14 @@ class ComponentItem extends ComponentV2{
             },
             component_item_ref_1_unit_id:{
                 value:'',
+                events:['change'],
                 onUpdate:(data)=>{
                     this.el.component_item_ref_1_unit_id.value = data.value;
                 }
             },
             component_item_ref_1_unit_price:{
                 value:'',
+                events:['keyup','change','paste'],
                 getValue: (val)=>{
                     return window.util.pureNumber(val,2);
                 },
@@ -720,6 +723,7 @@ class ComponentItem extends ComponentV2{
 
         };
 
+    
         window.util.blockUI();
 
         window.util.$post('/api/component_item/update/',data).then(reply=>{
