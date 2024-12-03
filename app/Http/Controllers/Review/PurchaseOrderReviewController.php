@@ -109,7 +109,7 @@ class PurchaseOrderReviewController extends Controller
         $supplier               = $purchaseOrder->Supplier;
         $items                  = $purchaseOrder->Items;
         
-        $material_item_id_arr                = [];
+        $material_item_id_arr           = [];
         $componentItemMaterialsArr      = [];
         $componentItemArr               = [];
 
@@ -161,6 +161,7 @@ class PurchaseOrderReviewController extends Controller
 
         $extras = json_decode($purchaseOrder->extras);
 
+        print_r($componentItemMaterialsArr);exit;
         return view('review/purchase_order/display',[
             'purchase_order'            => $purchaseOrder,
             'material_quantity_request' => $materialQuantityRequest,
