@@ -766,7 +766,6 @@ class ComponentItem extends ComponentV2{
         let component_item_quantity         = this.getState('component_item_quantity'); 
         let component_item_function_type    = this.getState('component_item_function_type')
 
-        console.log(component_item_function_type);
 
         switch(component_item_function_type){
             case '1': //As Factor
@@ -895,6 +894,8 @@ class ComponentItem extends ComponentV2{
             });
 
 
+            this.updateComponentItemValues();
+            
            // this.onUpdateComponentItemValues();
             
             //this.onUpdateMaterialList();
