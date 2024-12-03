@@ -153,7 +153,7 @@ class ComponentItem extends ComponentV2{
                 },
                 onUpdate:(data)=>{
 
-                    if(data.event) { 
+                    if(!data.event) { 
                         this.el.component_item_ref_1_quantity.value = window.util.numberFormat(data.value,2);
                     }
                 }
@@ -163,7 +163,7 @@ class ComponentItem extends ComponentV2{
                 events:['change'],
                 onUpdate:(data)=>{
 
-                    if(data.event){
+                    if(!data.event){
                         this.el.component_item_ref_1_unit_id.value = data.value;
                     }
                 }
@@ -176,7 +176,7 @@ class ComponentItem extends ComponentV2{
                 },
                 onUpdate:(data)=>{
 
-                    if(data.event){
+                    if(!data.event){
                         this.el.component_item_ref_1_unit_price.value = window.util.numberFormat(data.value,2);
                     }
                 }
