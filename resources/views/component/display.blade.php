@@ -689,7 +689,8 @@
                 component_use_count: parseFloat('{{$component->use_count}}'),
                 component_unit_text: '{{ $unit_options[$component->unit_id]->text }}',
                 materialItemOptions: materialItemOptions,
-                unitOptions: @json($unit_options)
+                unitOptions: @json($unit_options),
+                component_item_editable: false
             })
         );
 
