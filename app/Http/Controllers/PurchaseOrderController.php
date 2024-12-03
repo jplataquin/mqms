@@ -218,7 +218,7 @@ class PurchaseOrderController extends Controller
         $componentItems                 = $component->ComponentItems;
         $paymentTerm                    = $purchaseOrder->PaymentTerm;
         $supplier                       = $purchaseOrder->Supplier;
-        $materialQuantityRequestItems   = $purchaseOrder->Items;
+        $materialQuantityRequestItems   = $purchaseOrder->Items()->where('deleted_at',null)->get();
         
         $material_id_arr                            = [];
         $componentItemMaterialsArr                  = [];
@@ -637,15 +637,17 @@ class PurchaseOrderController extends Controller
 
         try {  
 
-            PurchaseOrderItem::where('purchase_order_id', $id)->delete();
-        
+            
             $purchaseOrder->forceDelete();
+
+            PurchaseOrderItem::where('purchase_order_id', $id)->forceDelete();
+        
 
             DB::commit();
         
             return response()->json([
                 'status' => 1,
-                'message' => 'test '.$id,
+                'message' => '',
                 'data' =>  []
             ]);
 

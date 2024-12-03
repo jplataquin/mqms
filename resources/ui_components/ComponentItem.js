@@ -680,7 +680,7 @@ class ComponentItem extends ComponentV2{
         }
 
         this.el.update_component_item_button.onclick = (e)=>{
-           this.httponUpdate();
+           this.httpUpdate();
         }
 
     }
@@ -694,7 +694,7 @@ class ComponentItem extends ComponentV2{
         );
     }
 
-    httponUpdate(){
+    httpUpdate(){
 
         let data = {
             id                      : this._model.id,
@@ -711,25 +711,10 @@ class ComponentItem extends ComponentV2{
             ref_1_unit_price        : this.getState('component_item_ref_1_unit_price')
 
         };
-        console.log(data);
 
-        return false;
         window.util.blockUI();
-        window.util.$post('/api/component_item/onUpdate/',{
-            id                      : this._model.id,
-            component_id            : this._model.component_id,
-            name                    : this.getState('name'),
-            budget_price            : this.getState('budget_price'),
-            quantity                : this.getState('quantity'),
-            unit_id                 : this.getState('unit'),
-            function_type_id        : this.getState('function_type'),
-            function_variable       : this.getState('variable'),
-            sum_flag                : (this.getState('sum_flag') == true) ? 1 : 0,
-            ref_1_quantity          : this.getState('ref_1_quantity'),
-            ref_1_unit_id           : this.getState('ref_1_unit_id'),
-            ref_1_unit_price        : this.getState('ref_1_unit_price')
 
-        }).then(reply=>{
+        window.util.$post('/api/component_item/onUpdate/',data).then(reply=>{
 
             window.util.unblockUI();
 
