@@ -17,6 +17,8 @@ class CreateComponentItemForm extends ComponentV2{
                     if(!data.event){
                         this.el.quantity.value = data.value;
                     }
+
+                    this.updateComponentItemValues();
                 }
             },
             unit:{
