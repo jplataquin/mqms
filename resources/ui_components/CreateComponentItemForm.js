@@ -27,7 +27,7 @@ class CreateComponentItemForm extends ComponentV2{
     
                     t.tr(()=>{
                         t.td({colspan:4},()=>{
-                            this.el.name = t.input({class:'form-control name',type:'text'); 
+                            this.el.name = t.input({class:'form-control name',type:'text'}); 
                         });
     
                         t.td({colspan:1},()=>{
