@@ -1,7 +1,7 @@
-import {Template,Component} from '/adarna.js';
+import {Template,ComponentV2} from '/adarna.js';
 
 
-class CreateComponentItemForm extends Component{
+class CreateComponentItemForm extends ComponentV2{
 
     model(){
         return {

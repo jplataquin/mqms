@@ -191,7 +191,7 @@
     
     <hr>
 
-    <div class="folder-form-container">
+    <div class="folder-form-container d-none">
         <div class="folder-form-tab">
             Items
         </div>
