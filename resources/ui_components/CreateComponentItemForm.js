@@ -180,37 +180,27 @@ class CreateComponentItemForm extends ComponentV2{
 
     controller(){
 
-       
+        initEvents();
   
     }
 
-    setupUnits(){
+    initEvents(){
 
-        // const t = new Template();
+        window.util.numbersOnlyInput([
+            this.el.budget_price,
+            this.el.ref_1_quantity,
+            this.el.ref_1_unit_price
+        ],{
+            negative:false,
+            precision:2
+        });
 
-        // this.el.unit.append(
-        //     t.option({value:''},' - ')
-        // );
+        window.util.numbersOnlyInput(this.el.variable,{
+            negative:false,
+            precision:6
+        });
 
-    
-
-        // for(let key in this._model.unit_options){
-
-        //     let item = this._model.unit_options[key];
-
-        //     //Skip if deleted
-        //     if(item.deleted) continue;
-
-        //     let unit_option    = t.option({value:item.id},item.text);
-
-
-        //     this.el.unit.append(
-        //         unit_option
-        //     );
-
-        // };
     }
-
 
     submit(){
 
