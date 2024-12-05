@@ -81,65 +81,67 @@ class MaterialQuantityList extends ComponentV2{
 
         });
 
+        
+        let rem = t.div({class:'row'},()=>{
+
+            t.div({class:'col-lg-12'},()=>{
+
+                t.div({class:'folder-form-container'},()=>{
+
+                    t.div({class:'folder-form-tab'},'Material Quantity');
+                            
+                    t.div({class:'folder-form-body'},()=>{
+    
+                        t.div({class:'row'},()=>{
+    
+                            t.div({class:'col-lg-5'},()=>{
+                                t.div({class:'form-group'},()=>{
+                                    t.label('Material');
+                                    t.el(this.el.material_item_select);
+                                });
+                            });
+                        
+                            t.div({class:'col-lg-2'},()=>{             
+                                t.div({class:'form-group'},()=>{
+                                    t.label('Quantity');
+                                    this.el.quantity = t.input({class:'form-control', type:'text'});
+                                });
+                            });                           
+    
+                            t.div({class:'col-lg-2'},()=>{
+                                t.div({class:'form-group'},()=>{
+                                    t.label('Equivalent');
+                                    this.el.equivalent = t.input({class:'form-control', type:'text'});
+                                });
+                            });
+                            
+                            
+                            t.div({class:'col-lg-2'},()=>{
+                                t.div({class:'form-group'},()=>{
+                                    t.label('Total');
+                                    this.el.total = t.input({class:'form-control', type:'number',disabled:true});
+                                });
+                            });
+    
+                        
+                            t.div({class:'col-lg-1'},()=>{
+                                t.div({class:'form-group'},()=>{
+                                    t.label('&nbsp');
+                                    this.el.addBtn = t.button({class:'btn btn-warning w-100'},'Add');
+                                });
+                            });
+        
+                        });//row
+    
+                    });//body
+                });
+
+            });//col
+
+        });//row
+
         return t.div({class:'container'},()=>{
 
-            t.div({class:'row'},()=>{
-
-                t.div({class:'col-lg-12'},()=>{
-
-                    t.div({class:'folder-form-container'},()=>{
-
-                        t.div({class:'folder-form-tab'},'Material Quantity');
-                                
-                        t.div({class:'folder-form-body'},()=>{
-        
-                            t.div({class:'row'},()=>{
-        
-                                t.div({class:'col-lg-5'},()=>{
-                                    t.div({class:'form-group'},()=>{
-                                        t.label('Material');
-                                        t.el(this.el.material_item_select);
-                                    });
-                                });
-                            
-                                t.div({class:'col-lg-2'},()=>{             
-                                    t.div({class:'form-group'},()=>{
-                                        t.label('Quantity');
-                                        this.el.quantity = t.input({class:'form-control', type:'text'});
-                                    });
-                                });                           
-        
-                                t.div({class:'col-lg-2'},()=>{
-                                    t.div({class:'form-group'},()=>{
-                                        t.label('Equivalent');
-                                        this.el.equivalent = t.input({class:'form-control', type:'text'});
-                                    });
-                                });
-                                
-                                
-                                t.div({class:'col-lg-2'},()=>{
-                                    t.div({class:'form-group'},()=>{
-                                        t.label('Total');
-                                        this.el.total = t.input({class:'form-control', type:'number',disabled:true});
-                                    });
-                                });
-        
-                            
-                                t.div({class:'col-lg-1'},()=>{
-                                    t.div({class:'form-group'},()=>{
-                                        t.label('&nbsp');
-                                        this.el.addBtn = t.button({class:'btn btn-warning w-100'},'Add');
-                                    });
-                                });
-            
-                            });//row
-        
-                        });//body
-                    });
-
-                });//col
-
-            });//row
 
 
             t.div({class:'row'},()=>{
