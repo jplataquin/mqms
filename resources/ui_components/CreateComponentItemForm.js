@@ -180,7 +180,7 @@ class CreateComponentItemForm extends ComponentV2{
 
     controller(){
 
-        initEvents();
+        this.initEvents();
   
     }
 
