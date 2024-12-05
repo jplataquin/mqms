@@ -9,6 +9,10 @@ class CreateComponentItemForm extends ComponentV2{
                 value: 0,
                 target: this.el.quantity,
                 events:['keyup'],
+                onEvent: function(){
+                    this.updateComponentItemValues();     
+                    return this.value;
+                },
                 getValue: (val)=>{
                     return window.util.pureNumber(val,2);
                 },
@@ -18,7 +22,6 @@ class CreateComponentItemForm extends ComponentV2{
                         this.el.quantity.value = data.value;
                     }
 
-                    this.updateComponentItemValues();
                 }
             },
             unit:{
