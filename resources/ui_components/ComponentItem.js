@@ -33,9 +33,13 @@ class ComponentItem extends ComponentV2{
             },
             component_item_unit:{
                 value:'',
+                target:this.el.component_item_unit,
+                events:['change'],
                 onUpdate: (data)=>{
                     
-                    this.el.component_item_unit.value = data.value;
+                    if(!data.event){
+                        this.el.component_item_unit.value = data.value;
+                    }
                 }
             },
             component_item_name:{
@@ -157,7 +161,7 @@ class ComponentItem extends ComponentV2{
                     return window.util.pureNumber(val,2);
                 },
                 onUpdate:(data)=>{
-                    
+
                     if(!data.event) { 
                         this.el.component_item_ref_1_quantity.value = window.util.numberFormat(data.value,2);
                     }

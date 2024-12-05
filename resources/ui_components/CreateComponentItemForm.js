@@ -24,9 +24,13 @@ class CreateComponentItemForm extends ComponentV2{
             },
             unit:{
                 value:'',
+                target:this.el.unit,
+                events:['change'],
                 onUpdate: (data)=>{
                     
-                    this.el.unit.value = data.value;
+                    if(!data.event){
+                        this.el.unit.value = data.value;
+                    }
                 }
             },
             name:{
@@ -516,7 +520,7 @@ class CreateComponentItemForm extends ComponentV2{
 
             
             window.util.drawerModal.close();
-            
+
             this._model.append_component_item(reply.data);
 
             
