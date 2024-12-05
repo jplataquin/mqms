@@ -574,7 +574,7 @@ class ComponentItem extends ComponentV2{
                             });
                         });
 
-
+                        /**
                         t.tr(()=>{
                             t.th({colspan:5,class:'text-center bg-divider'},'Material Quantities')
                         });
@@ -590,6 +590,7 @@ class ComponentItem extends ComponentV2{
                                 });//div
                             });
                         });
+                        **/
         
                     });//tbody
         
