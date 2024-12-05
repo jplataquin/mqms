@@ -437,8 +437,8 @@ class CreateComponentItemForm extends ComponentV2{
                 break;
             case 4: //As Equivalent
                     
-                this.el.component_item_variable.disabled = false;
-                this.el.component_item_quantity.disabled = false;
+                this.el.variable.disabled = false;
+                this.el.quantity.disabled = false;
                 
 
                 equivalent_value = ( variable * quantity ) * component_use_count; 
