@@ -661,6 +661,10 @@
 
     add_component_item_button.onclick = ()=>{
         window.util.drawerModal.content('Add Component Item',CreateComponentItemForm({
+            component_id:'{{$component->id}}',
+            component_quantity: parseFloat('{{$component->quantity}}'),
+            component_use_count: parseFloat('{{$component->use_count}}'),
+            component_unit_text: '{{ $unit_options[$component->unit_id]->text }}',
             unit_options: @json($unit_options),
         })).open();
     }

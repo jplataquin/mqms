@@ -3,10 +3,178 @@ import {Template,ComponentV2} from '/adarna.js';
 
 class CreateComponentItemForm extends ComponentV2{
 
+    state(){
+        return {
+            quantity: {
+                value: 0,
+                target: this.el.quantity,
+                events:['keyup'],
+                getValue: (val)=>{
+                    return window.util.pureNumber(val,2);
+                },
+                onUpdate: (data)=>{
+
+                    if(!data.event){
+                        this.el.quantity.value = data.value;
+                    }
+                }
+            },
+            unit:{
+                value:'',
+                onUpdate: (data)=>{
+                    
+                    this.el.unit.value = data.value;
+                }
+            },
+            name:{
+                value:'',
+                target: this.el.name,
+                events:['keyup','paste'],
+                onUpdate: (data)=>{
+
+                    if(!data.event){
+                        this.el.name.value = data.value;
+                    }
+                }
+            },
+            sum_flag:{
+                value:true,
+                target:this.el.sum_flag,
+                events:['change'],
+                onEvent:function(){
+                    return this.checked;
+                },
+                onUpdate: (data)=>{
+
+                    if(!data.event){
+                        this.el.sum_flag.checked = data.value;
+                    }
+                }
+            },
+           
+            function_type:{
+                value:'',
+                target: this.el.function_type,
+                events:['change'],
+                getValue:(val)=>{
+                    return parseInt(val);
+                },
+                onUpdate: (data)=>{
+
+                    if(!data.event){
+                        this.el.function_type.value = data.value;
+                    }
+                    
+                    this.updateComponentItemValues();
+                }
+            },
+            variable:{
+                value:'',
+                target: this.el.variable,
+                events:['keyup','change'],
+                getValue: (val)=>{
+                    return window.util.pureNumber(val);
+                },
+                onUpdate: (data)=>{
+
+                    if(!data.event){
+                        this.el.variable.value = window.util.pureNumber(data.value);
+                    }
+
+
+                    this.updateComponentItemValues();
+                }
+            },
+
+            equivalent:{
+                value:'',
+                onUpdate:(data)=>{
+                    this.el.equivalent.value = window.util.numberFormat(data.value)+' '+this._model.component_unit_text;
+                }
+            },
+           
+            ref_1_quantity:{
+                value:'',
+                target: this.el.ref_1_quantity,
+                events:['keyup'],
+                getValue: (val)=>{
+                    return window.util.pureNumber(val,2);
+                },
+                onUpdate:(data)=>{
+
+                    if(!data.event) { 
+                        this.el.ref_1_quantity.value = window.util.numberFormat(data.value,2);
+                    }
+                }
+            },
+            ref_1_unit_id:{
+                value:'',
+                target: this.el.ref_1_unit_id,
+                events:['change'],
+                onUpdate:(data)=>{
+
+                    if(!data.event){
+                        this.el.ref_1_unit_id.value = data.value;
+                    }
+                }
+            },
+            ref_1_unit_price:{
+                value:'',
+                target: this.el.ref_1_unit_price,
+                events:['keyup'],
+                getValue: (val)=>{
+                    return window.util.pureNumber(val,2);
+                },
+                onUpdate:(data)=>{
+
+                    if(!data.event){
+                        this.el.ref_1_unit_price.value = window.util.numberFormat(data.value,2);
+                    }
+                }
+            },
+
+            total_amount: {
+                value:'',
+                getValue:(val)=>{
+                    return window.util.pureNumber(val);
+                },
+                onUpdate:(data)=>{
+                    this.el.total_amount.value = 'P '+window.util.numberFormat(data.value,2);
+                }
+            },
+
+            budget_price:{
+                value:'',
+                target: this.el.budget_price,
+                events:['keyup','change'],
+                getValue: (val)=>{
+                    return window.util.pureNumber(val,2);
+                },
+                onUpdate:(data)=>{
+
+                    if(!data.event){
+                        this.el.budget_price.value = window.util.numberFormat(data.value,2);
+                    }
+
+                    this.setState('total_amount', 
+                        ( window.util.pureNumber(data.value) * this.getState('quantity'))
+                    );
+
+                }
+            },
+                  
+        }
+    }
+
+
     model(){
         return {
             contract_item_id:'',
             section_id:'',
+            component_id:'',
+            component_unit_text:'',
+            component_quantity:'',
+            component_use_count:'',
             unit_options:[]
         }
     }
@@ -201,6 +369,108 @@ class CreateComponentItemForm extends ComponentV2{
             precision:6
         });
 
+    }
+
+    updateComponentItemValues(){
+
+        let equivalent_value                = 0;
+        let quantity_value                  = 0;
+
+        let component_quantity              = window.util.pureNumber(this._model.component_quantity);
+        let component_use_count             = parseInt(this._model.component_use_count);
+        
+        let variable         = this.getState('variable');
+        let quantity         = this.getState('quantity'); 
+        let function_type    = this.getState('function_type')
+
+
+        switch(function_type){
+            case 1: //As Factor
+
+                    this.el.quantity.disabled = true;
+                    
+
+                    quantity_value = window.util.roundUp(
+                        (component_quantity * variable )  / component_use_count
+                    ,2);
+                    
+                    if(quantity_value === Infinity){
+                        quantity_value = 0;
+                    }
+
+                    this.setState('quantity',quantity_value);
+                    
+                    this.setState('equivalent','');
+
+                break;
+
+            case 2: //As Divisor
+                    
+                    this.el.quantity.disabled = true;
+                    
+
+                    quantity_value = window.util.roundUp( 
+                        (component_quantity / variable)  / component_use_count
+                    ,2);
+                    
+                    if(quantity_value === Infinity){
+                        quantity_value = 0;
+                    }
+
+                    this.setState('quantity',quantity_value);
+                    this.setState('equivalent','');
+
+                break;
+
+            case 3: //Direct
+                    
+                    this.el.variable.disabled = false;
+                    this.el.quantity.disabled = true;
+                    
+
+                    variable = window.util.pureNumber(variable,2);
+
+                    this.setState('quantity',variable);
+                    this.setState('equivalent','');
+
+                    
+                break;
+            case 4: //As Equivalent
+                    
+                this.el.component_item_variable.disabled = false;
+                this.el.component_item_quantity.disabled = false;
+                
+
+                equivalent_value = ( variable * quantity ) * component_use_count; 
+                
+
+                if(equivalent_value !== Infinity){
+
+                    equivalent_value = window.util.roundUp(equivalent_value,2);
+
+                    this.setState('equivalent',equivalent_value);
+                
+                }else{
+
+                    this.setState('equivalent','');
+                
+                }
+                
+                
+                break;
+        }
+
+
+
+        this.calculateTotalAmount();
+    }
+
+    calculateTotalAmount(){
+        
+
+        this.setState('total_amount', 
+            (this.getState('budget_price') * this.getState('quantity'))
+        );
     }
 
     submit(){
