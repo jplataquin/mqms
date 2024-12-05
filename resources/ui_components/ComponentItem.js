@@ -656,9 +656,9 @@ class ComponentItem extends ComponentV2{
         this.el.delete_component_item_button.onclick = async (e)=>{
             e.preventDefault();
 
-            let answer = await window.util.prompt('Please confirm by entering "'+this.getState('name')+'"');
+            let answer = await window.util.prompt('Please confirm by entering "'+this.getState('component_item_name')+'"');
 
-            if(answer != this.getState('name')){
+            if(answer != this.getState('component_item_name')){
                 window.util.alert('Error','Invalid answer');
                 return false;
             }
