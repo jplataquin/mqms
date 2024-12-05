@@ -32,7 +32,7 @@ class CreateComponentItemForm extends ComponentV2{
     
                         t.td({colspan:1},()=>{
                             t.div({class:'form-switch text-center'},()=>{                  
-                                this.el.sum_flag = t.input({class:'form-check-input sum_flag',value:1,type:'checkbox'});
+                                this.el.sum_flag = t.input({class:'form-check-input sum_flag',value:1,type:'checkbox',checked:true});
                             });
                         });
                         
