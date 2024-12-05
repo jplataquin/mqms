@@ -9,9 +9,9 @@ class CreateComponentItemForm extends ComponentV2{
                 value: 0,
                 target: this.el.quantity,
                 events:['keyup'],
-                onEvent: function(){
+                onEvent: ()=>{
                     this.updateComponentItemValues();     
-                    return this.value;
+                    return this.el.quantity.value;
                 },
                 getValue: (val)=>{
                     return window.util.pureNumber(val,2);

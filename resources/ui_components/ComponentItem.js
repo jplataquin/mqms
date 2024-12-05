@@ -18,9 +18,9 @@ class ComponentItem extends ComponentV2{
                 value: 0,
                 target: this.el.component_item_quantity,
                 events:['keyup'],
-                onEvent: function(){
+                onEvent: ()=>{
                     this.updateComponentItemValues();     
-                    return this.value;
+                    return this.el.component_item_quantity.value;
                 },
                 getValue: (val)=>{
                     return window.util.pureNumber(val,2);
