@@ -666,6 +666,24 @@
             component_use_count: parseFloat('{{$component->use_count}}'),
             component_unit_text: '{{ $unit_options[$component->unit_id]->text }}',
             unit_options: @json($unit_options),
+            append_component_item:(data)=>{
+                
+                let item = ComponentItemEl({
+                    id: data.id,
+                    component_id:'{{$component->id}}',
+                    component_quantity: parseFloat('{{$component->quantity}}'),
+                    component_use_count: parseFloat('{{$component->use_count}}'),
+                    component_unit_text: '{{$unit_options[$component->unit_id]->text}}',
+                    materialItemOptions: materialItemOptions,
+                    unitOptions: @json($unit_options)
+                });
+
+                $el.append(item).to(component_item_list);
+
+                item.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+                
+                signalB.broadcast('set-component-status','PEND');
+            }
         })).open();
     }
 

@@ -56,7 +56,7 @@ class CreateComponentItemForm extends ComponentV2{
             },
            
             function_type:{
-                value:'',
+                value:3,
                 target: this.el.function_type,
                 events:['change'],
                 getValue:(val)=>{
@@ -172,13 +172,12 @@ class CreateComponentItemForm extends ComponentV2{
 
     model(){
         return {
-            contract_item_id:'',
-            section_id:'',
             component_id:'',
             component_unit_text:'',
             component_quantity:'',
             component_use_count:'',
-            unit_options:[]
+            unit_options:[],
+            append_component_item:()=>{}
         }
     }
 
@@ -344,12 +343,26 @@ class CreateComponentItemForm extends ComponentV2{
     
             });//table
     
-           
+            t.div({class:'row mb-3'},()=>{
+                t.div({class:'col-lg-12 text-end'},()=>{
+                    this.el.btn_submit = t.button({class:'btn btn-primary me-3'},'Submit');
+                    this.el.btn_cancel = t.button({class:'btn btn-secondary'},'Cancel');
+                });
+            });//div row
         });//div
 
     }//view
 
     controller(){
+
+        this.el.btn_submit.onclick = ()=>{
+            this.submit();
+          }
+  
+          this.el.btn_cancel.onclick = ()=>{
+              window.util.drawerModal.close();
+          }
+  
 
         this.initEvents();
   
@@ -478,29 +491,36 @@ class CreateComponentItemForm extends ComponentV2{
 
     submit(){
 
-        // window.util.blockUI();
+        window.util.blockUI();
 
-        // window.util.$post('/api/component/create',{
-        //     section_id          : this._model.section_id,
-        //     contract_item_id    : this._model.contract_item_id,
-        //     name                : this.el.name.value,
-        //     quantity            : this.el.quantity.value,
-        //     use_count           : this.el.use_count.value,
-        //     unit_id             : this.el.unit.value,
-        //     sum_flag            : (this.el._sum_flag.checked == true) ? 1 : 0
-        // }).then(reply=>{
+        window.util.$post('/api/component_item/create',{
+            component_id                    : this._model.component_id,
+            name                            : this.getState('name'),
+            budget_price                    : this.getState('budget_price'),
+            quantity                        : this.getState('quantity'),
+            unit_id                         : this.getState('unit'),
+            function_type_id                : this.getState('function_type'),
+            function_variable               : this.getState('variable'),
+            sum_flag                        : this.getState('sum_flag'),
+            ref_1_quantity                  : this.getState('ref_1_quantity'),
+            ref_1_unit_id                   : this.getState('ref_1_unit_id'),
+            ref_1_unit_price                : this.getState('ref_1_unit_price')
+        }).then(reply=>{
 
-        //     window.util.unblockUI();
+            window.util.unblockUI();
 
-        //     if(reply.status <= 0){
-        //         window.util.showMsg(reply);
-        //         return false;
-        //     }
+            if(reply.status <= 0){
+                window.util.showMsg(reply);
+                return false;
+            }
 
-        //     //Component(reply.data.id)).to(component_list)
-        //     this._model.callback(reply.data.id);
-        //     window.util.drawerModal.close();
-        // });
+            
+            window.util.drawerModal.close();
+            
+            this._model.append_component_item(reply.data);
+
+            
+        });
 
     }
 }
