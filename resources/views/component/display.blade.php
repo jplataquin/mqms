@@ -320,7 +320,7 @@
     import {Template,$q,$el,State,Signal} from '/adarna.js';
     import ComponentItemEl from '/ui_components/ComponentItem.js';
     import CreateComponentItemForm from '/ui_components/CreateComponentItemForm.js';
-    
+
     const materialItemOptions       = @json($materialItems);
     const component                 = $q('#component').first();
     const component_item_list       = $q('#component_item_list').first();
@@ -660,7 +660,9 @@
 
 
     add_component_item_button.onclick = ()=>{
-        window.util.drawerModal.content('Add Component Item',CreateComponentItemForm()).open();
+        window.util.drawerModal.content('Add Component Item',CreateComponentItemForm({
+            unit_options: @json($unit_options),
+        })).open();
     }
 
     printBtn.onclick = ()=>{
