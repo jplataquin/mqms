@@ -621,7 +621,8 @@ class ComponentItem extends ComponentV2{
         window.util.numbersOnlyInput([
             this.el.component_item_budget_price,
             this.el.component_item_ref_1_quantity,
-            this.el.component_item_ref_1_unit_price
+            this.el.component_item_ref_1_unit_price,
+            this.el.component_item_quantity
         ],{
             negative:false,
             precision:2

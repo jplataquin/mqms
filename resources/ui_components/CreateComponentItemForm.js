@@ -189,7 +189,8 @@ class CreateComponentItemForm extends ComponentV2{
         window.util.numbersOnlyInput([
             this.el.budget_price,
             this.el.ref_1_quantity,
-            this.el.ref_1_unit_price
+            this.el.ref_1_unit_price,
+            this.el.quantity
         ],{
             negative:false,
             precision:2
