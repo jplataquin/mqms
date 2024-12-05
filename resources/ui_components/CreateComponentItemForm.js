@@ -263,7 +263,7 @@ class CreateComponentItemForm extends ComponentV2{
                         t.td({class:''},(el)=>{
                             
                             this.el.function_type = t.select({class:'form-control function_type'},()=>{
-                                t.option({value:3},'As Direct');
+                                t.option({value:3,selected:true},'As Direct');
                                 t.option({value:4},'As Equivalent');
                                 t.option({value:1},'As Factor');
                                 t.option({value:2},'As Divisor');
