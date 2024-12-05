@@ -27,12 +27,12 @@ class CreateComponentItemForm extends ComponentV2{
     
                     t.tr(()=>{
                         t.td({colspan:4},()=>{
-                            this.el.name = t.input({class:'form-control name',type:'text', placeholder:'Item',disabled:true,value:'Loading...'}); 
+                            this.el.name = t.input({class:'form-control name',type:'text'); 
                         });
     
                         t.td({colspan:1},()=>{
                             t.div({class:'form-switch text-center'},()=>{                  
-                                this.el.sum_flag = t.input({class:'form-check-input sum_flag',value:1,type:'checkbox', disabled:true});
+                                this.el.sum_flag = t.input({class:'form-check-input sum_flag',value:1,type:'checkbox'});
                             });
                         });
                         
@@ -51,12 +51,12 @@ class CreateComponentItemForm extends ComponentV2{
                     t.tr(()=>{
                         
                         t.td({colspan:2},()=>{
-                            this.el.ref_1_quantity = t.input({class:'form-control',disabled:true});
+                            this.el.ref_1_quantity = t.input({class:'form-control'});
                         });
             
                         t.td({colspan:1},()=>{
             
-                            this.el.ref_1_unit_id = t.select({class:'form-control',disabled:true},()=>{
+                            this.el.ref_1_unit_id = t.select({class:'form-control'},()=>{
                                 
                                 t.option({value:''},' - ');
             
@@ -74,7 +74,7 @@ class CreateComponentItemForm extends ComponentV2{
                         });
             
                         t.td({colspan:2},()=>{
-                            this.el.ref_1_unit_price = t.input({class:'form-control',disabled:true});
+                            this.el.ref_1_unit_price = t.input({class:'form-control'});
                         });
                     });
 
@@ -94,7 +94,7 @@ class CreateComponentItemForm extends ComponentV2{
                         
                         t.td({class:''},(el)=>{
                             
-                            this.el.function_type = t.select({class:'form-control function_type',disabled:true},()=>{
+                            this.el.function_type = t.select({class:'form-control function_type'},()=>{
                                 t.option({value:3},'As Direct');
                                 t.option({value:4},'As Equivalent');
                                 t.option({value:1},'As Factor');
@@ -107,13 +107,13 @@ class CreateComponentItemForm extends ComponentV2{
                          
                         t.td({class:''},(el)=>{
                             
-                            this.el.variable = t.input({class:'form-control variable', type:'text', placeholder:'Variable',disabled:true,value:'Loading...'});
+                            this.el.variable = t.input({class:'form-control variable', type:'text'});
     
                         });
 
                         t.td({class:''},(el)=>{
                             
-                            this.el.quantity = t.input({class:'form-control quantity', type:'text', placeholder:'Quantity',disabled:true,value:'Loading...'});
+                            this.el.quantity = t.input({class:'form-control quantity', type:'text'});
     
                         });
     
@@ -121,7 +121,7 @@ class CreateComponentItemForm extends ComponentV2{
     
                         t.td({class:''},(el)=>{
     
-                            this.el.unit = t.select({class:'form-control unit',disabled:true},()=>{
+                            this.el.unit = t.select({class:'form-control unit'},()=>{
                                 
                                 for(let i in this._model.unit_options){
     
@@ -138,7 +138,7 @@ class CreateComponentItemForm extends ComponentV2{
 
                         t.td({class:''},(el)=>{
                             
-                            this.el.equivalent = t.input({class:'form-control equivalent', type:'text', placeholder:'Equivalent',disabled:true,value:'Loading...'});
+                            this.el.equivalent = t.input({class:'form-control equivalent', type:'text'});
     
                         });
     
@@ -155,7 +155,7 @@ class CreateComponentItemForm extends ComponentV2{
                         
                         t.td({colspan:2},(el)=>{
                             
-                            this.el.budget_price = t.input({class:'form-control budget_price', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
+                            this.el.budget_price = t.input({class:'form-control budget_price', type:'text'});
                             
                         });
                         
