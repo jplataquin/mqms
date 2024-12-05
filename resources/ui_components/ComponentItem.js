@@ -415,7 +415,7 @@ class ComponentItem extends ComponentV2{
 
                     t.tbody(()=>{
                         t.tr(()=>{
-                            t.th({colspan:4},'Component Item');
+                            t.th({colspan:4},'Name');
                             t.th({colspan:1},'Sum Flag');
                         });
         

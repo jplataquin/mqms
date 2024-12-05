@@ -310,7 +310,7 @@
             Component Items
         </div>
         <div class="folder-form-body text-end">
-            <button class="btn btn-warning">Add</button>
+            <button class="btn btn-warning" id="addComponentItemBtn">Add</button>
         </div>
     </div>
     <div id="component_item_list" class="mt-3"></div>
@@ -337,6 +337,7 @@
     const component_sticky_trigger  = $q('#component_sticky_trigger').first();
     const component_controls        = $q('#component_controls').first();
     const component_form            = $q('#component_form').first();
+    const add_component_item_button = $q('#addComponentItemBtn').first();
 
     /***
     const item_sticky_container = $q('#item_sticky_container').first();
@@ -655,6 +656,12 @@
         });
     }
     ***/
+
+
+    add_component_item_button.onclick = ()=>{
+        alert('test');
+    }
+    
     printBtn.onclick = ()=>{
         window.open( '/project/section/contract_item/component/print/{{$component->id}}','_blank').focus();
     }
