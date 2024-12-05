@@ -18,10 +18,6 @@ class ComponentItem extends ComponentV2{
                 value: 0,
                 target: this.el.component_item_quantity,
                 events:['keyup'],
-                onEvent: ()=>{
-                    this.updateComponentItemValues();     
-                    return this.el.component_item_quantity.value;
-                },
                 getValue: (val)=>{
                     return window.util.pureNumber(val,2);
                 },
@@ -30,6 +26,9 @@ class ComponentItem extends ComponentV2{
                     if(!data.event){
                         this.el.component_item_quantity.value = data.value;
                     }
+
+                    
+                    this.updateComponentItemValues();     
                 }
             },
             component_item_unit:{
