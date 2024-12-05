@@ -44,6 +44,8 @@
         <hr>   
 
     <!-- style="position:sticky;top:45px;background-color:#ffffff;z-index:900" -->
+    
+    
     <div class="form-container" id="component_form" >
         <div class="form-header">
             Component
@@ -189,8 +191,10 @@
         </div>
     </div>
     
+
     <hr>
 
+    <!--
     <div class="folder-form-container d-none">
         <div class="folder-form-tab">
             Items
@@ -300,6 +304,15 @@
             </div>
         </div>
     </div>
+    -->
+    <div class="folder-form-container">
+        <div class="folder-form-tab">
+            Component Items
+        </div>
+        <div class="folder-form-body text-end">
+            <button class="btn btn-warning">Add</button>
+        </div>
+    </div>
     <div id="component_item_list" class="mt-3"></div>
 </div>
 
@@ -325,6 +338,7 @@
     const component_controls        = $q('#component_controls').first();
     const component_form            = $q('#component_form').first();
 
+    /***
     const item_sticky_container = $q('#item_sticky_container').first();
     const item_name             = $q('#item_name').first();
     const item_sum_flag         = $q('#item_sum_flag').first();
@@ -347,7 +361,7 @@
     const component_item_ref_1_quantity     = $q('#component_item_ref_1_quantity').first();
     const component_item_ref_1_unit         = $q('#component_item_ref_1_unit').first();
     const component_item_ref_1_unit_price   = $q('#component_item_ref_1_unit_price').first(); 
-   
+    ***/
     const reviewLinkBtn                     = $q('#reviewLinkBtn').first();
    
     const t = new Template();
@@ -364,6 +378,7 @@
         status.innerHTML = value;
     });
 
+    /****************************** */
     // const sticky_observer = new IntersectionObserver((entries)=>{
     //     for (let entry of entries) {
 
@@ -419,7 +434,9 @@
     //     });
 
     // },300));
+    /******************************** */
 
+    /***
     component_item_variable.onkeypress = (e)=>{
         return window.util.inputNumber(component_item_variable,e,6,false);
     }
@@ -526,6 +543,7 @@
     component_item_ref_1_unit_price.onkeypress = (e)=>{
         return window.util.inputNumber(component_item_ref_1_unit_price,e,2,false);
     }
+    **/
 
     editBtn.onclick = ()=>{
 
@@ -574,6 +592,7 @@
         });
     }
     
+    /***
     component_item_budget_price.onkeypress = (e)=>{
         return window.util.inputNumber(component_item_budget_price,e,2,false);
     }
@@ -635,7 +654,7 @@
             
         });
     }
-
+    ***/
     printBtn.onclick = ()=>{
         window.open( '/project/section/contract_item/component/print/{{$component->id}}','_blank').focus();
     }
