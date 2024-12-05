@@ -573,20 +573,31 @@ class ComponentItem extends ComponentV2{
                                 
                             });
                         });
-        
+
+
+                        t.tr(()=>{
+                            t.th({colspan:5,class:'text-center bg-divider'},'Material Quantities')
+                        });
+                        
+                        t.tr(()=>{
+                            t.td({colspan:5},()=>{
+
+                                t.div((el)=>{
+                                    el.append( MaterialQuantityList({
+                                       component_item_id    : this._model.id,
+                                       material_item_options: this._model.materialItemOptions
+                                    }));
+                                });//div
+                            });
+                        });
         
                     });//tbody
         
         
                 });//table
         
+                 
                 
-                 t.div((el)=>{
-                     el.append( MaterialQuantityList({
-                        component_item_id    : this._model.id,
-                        material_item_options: this._model.materialItemOptions
-                     }));
-                 });
 
             });//form-body
 
