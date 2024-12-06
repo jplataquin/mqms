@@ -342,7 +342,7 @@ class ComponentItem extends ComponentV2{
 
 
 
-        return t.div({class:'form-container mb-5'},(el)=>{
+        return t.div({class:'form-container mb-5 shadow p-3 mb-5 bg-white rounded'},(el)=>{
             
             t.div({class:'form-header'},'');
 
@@ -352,7 +352,7 @@ class ComponentItem extends ComponentV2{
                     
 
                     t.tbody(()=>{
-                        t.tr({class:'shadow p-3 mb-5 bg-white rounded'},()=>{
+                        t.tr(()=>{
                             t.th({colspan:4},'Name');
                             t.th({colspan:1},'Sum Flag');
                         });
