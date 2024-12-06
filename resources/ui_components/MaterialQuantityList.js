@@ -162,7 +162,7 @@ class MaterialQuantityList extends ComponentV2{
                         t.tfoot(()=>{
                             t.tr(()=>{
                                 t.td({class:'text-end',colspan:5},()=>{
-                                    this.el.addBtn = t.button({class:'btn btn-warning w-100'},'Add');
+                                    this.el.addBtn = t.button({class:'btn btn-warning'},'Add');
                                 });
                             });
                         });//foot
