@@ -496,10 +496,6 @@ class ComponentItem extends ComponentV2{
                             });
                         });
 
-
-                        t.tr(()=>{
-                            t.th({colspan:5,class:'text-center bg-divider'},'Material Quantities')
-                        });
                         
                         t.tr(()=>{
                             t.td({colspan:5},()=>{
@@ -522,7 +518,7 @@ class ComponentItem extends ComponentV2{
                                 this.el.edit_component_item_button         = t.button({class:'btn btn-primary'},'Edit');
                                 this.el.cancel_edit_component_item_button  = t.button({class:'btn btn-primary me-3'},'Cancel');
                                 this.el.update_component_item_button       = t.button({class:'btn btn-warning'},'Update');
-                                
+
                             });
                         });
 
