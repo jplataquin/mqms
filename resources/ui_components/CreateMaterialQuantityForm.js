@@ -10,7 +10,7 @@ class CreateMaterialQuantityForm extends ComponentV2{
     }
     
     view(){
-        const t = Template();
+        const t = new Template();
 
         return t.div(()=>{
 
