@@ -138,7 +138,7 @@ class ComponentItemController extends Controller
             $ref_1_unit_price   = null;
         }
          
-        
+
         $user_id = Auth::user()->id;
 
         $component_item = new ComponentItem();
@@ -225,14 +225,14 @@ class ComponentItemController extends Controller
          $budget_price      = $request->input('budget_price') ?? '';
          $quantity          = $request->input('quantity') ?? '';
          $function_variable = $request->input('function_variable');
-         $ref_1_quantity    = $request->input('ref_1_quantity');
-         $ref_1_unit_price  = $request->input('ref_1_unit_price');
          $id                = (int) $request->input('id');
          $component_id      = (int) $request->input('component_id');
          $function_type_id  = (int) $request->input('function_type_id');
          $unit_id           = (int) $request->input('unit_id') ?? 0;
          $sum_flag          = (boolean) $request->input('sum_flag');
          $ref_1_unit_id     = (int) $request->input('ref_1_unit_id');
+         $ref_1_quantity    = (float) $request->input('ref_1_quantity');
+         $ref_1_unit_price  = (float) $request->input('ref_1_unit_price');
         
          $rules = [
             'name' => [
@@ -282,12 +282,10 @@ class ComponentItemController extends Controller
            ]
          ];
 
-         if($ref_1_quantity != '' || $ref_1_unit_id != 0){
+         if($ref_1_quantity > 0){
 
             $rules['ref_1_quantity'] = [
-               'required_with:ref_1_unit_id',
-               'numeric',
-               'gte:1',
+               'numeric'
             ];
 
             $rules['ref_1_unit_id'] = [
@@ -295,15 +293,13 @@ class ComponentItemController extends Controller
                'integer',
                'gte:1'
             ];
+
+            $rules['ref_1_unit_price'] = [
+                'numeric',
+                'gt:0'
+             ];
          }
          
-         if($ref_1_unit_price){
-            $rules['ref_1_unit_price'] = [
-               'numeric',
-               'gt:0'
-            ];
-         }
-
 
          $validator = Validator::make($request->all(),$rules);
  
@@ -351,6 +347,13 @@ class ComponentItemController extends Controller
         //     }
         // }
  
+        if($ref_1_quantity <= 0){
+            $ref_1_quantity     = null;
+            $ref_1_unit_id      = null;
+            $ref_1_unit_price   = null;
+        }
+         
+        
          $component_item->name                   = $name;
          $component_item->quantity               = $quantity;
          $component_item->budget_price           = $budget_price;
