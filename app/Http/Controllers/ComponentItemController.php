@@ -110,13 +110,6 @@ class ComponentItemController extends Controller
             ];
         }
 
-        if($ref_1_quantity <= 0){
-            $ref_1_quantity     = null;
-            $ref_1_unit_id      = null;
-            $ref_1_unit_price   = null;
-        }
-         
-
         $validator = Validator::make($request->all(),$rules);
 
         if ($validator->fails()) {
@@ -138,6 +131,14 @@ class ComponentItemController extends Controller
             ]);
         }
 
+
+        if($ref_1_quantity <= 0){
+            $ref_1_quantity     = null;
+            $ref_1_unit_id      = null;
+            $ref_1_unit_price   = null;
+        }
+         
+        
         $user_id = Auth::user()->id;
 
         $component_item = new ComponentItem();
