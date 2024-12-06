@@ -140,8 +140,9 @@ class MaterialQuantityList extends ComponentV2{
 
         });//row
 
-        return t.div({class:'container'},()=>{
+        return t.div({class:'container'},(el)=>{
 
+            el.append(rem);
 
 
             t.div({class:'row'},()=>{
