@@ -497,22 +497,6 @@ class ComponentItem extends ComponentV2{
                         });
 
 
-                       
-        
-                    
-        
-                        t.tr(()=>{
-                            t.td({colspan:7, class:'text-end'},(el)=>{
-                                
-                                this.el.delete_component_item_button       = t.button({class:'btn btn-danger me-3'},'Delete');
-                                this.el.edit_component_item_button         = t.button({class:'btn btn-primary'},'Edit');
-                                this.el.cancel_edit_component_item_button  = t.button({class:'btn btn-primary me-3'},'Cancel');
-                                this.el.update_component_item_button       = t.button({class:'btn btn-warning'},'Update');
-                                
-                            });
-                        });
-
-                        /**
                         t.tr(()=>{
                             t.th({colspan:5,class:'text-center bg-divider'},'Material Quantities')
                         });
@@ -528,6 +512,22 @@ class ComponentItem extends ComponentV2{
                                 });//div
                             });
                         });
+        
+                    
+        
+                        t.tr(()=>{
+                            t.td({colspan:7, class:'text-end'},(el)=>{
+                                
+                                this.el.delete_component_item_button       = t.button({class:'btn btn-danger me-3'},'Delete');
+                                this.el.edit_component_item_button         = t.button({class:'btn btn-primary'},'Edit');
+                                this.el.cancel_edit_component_item_button  = t.button({class:'btn btn-primary me-3'},'Cancel');
+                                this.el.update_component_item_button       = t.button({class:'btn btn-warning'},'Update');
+                                
+                            });
+                        });
+
+                        /**
+                      
                         **/
         
                     });//tbody
