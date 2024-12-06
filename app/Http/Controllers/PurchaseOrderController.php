@@ -218,7 +218,7 @@ class PurchaseOrderController extends Controller
         $componentItems                 = $component->ComponentItems;
         $paymentTerm                    = $purchaseOrder->PaymentTerm;
         $supplier                       = $purchaseOrder->Supplier;
-        $materialQuantityRequestItems   = $purchaseOrder->Items()->where('deleted_at',null)->get();
+        $materialQuantityRequestItems   = $purchaseOrder->Items;
         
         $material_id_arr                            = [];
         $componentItemMaterialsArr                  = [];
