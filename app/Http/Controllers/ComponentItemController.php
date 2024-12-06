@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Fluent;
 
 class ComponentItemController extends Controller
 {   
@@ -37,12 +38,12 @@ class ComponentItemController extends Controller
         $quantity          = $request->input('quantity') ?? '';
         $budget_price      = $request->input('budget_price') ?? '';
         $function_variable = $request->input('function_variable');
-        $ref_1_quantity    = $request->input('ref_1_quantity');
-        $ref_1_unit_price  = $request->input('ref_1_unit_price');
         $unit_id           = (int) $request->input('unit_id') ?? 0;
         $component_id      = (int) $request->input('component_id');
         $function_type_id  = (int) $request->input('function_type_id');
         $ref_1_unit_id     = (int) $request->input('ref_1_unit_id');
+        $ref_1_quantity    = (float) $request->input('ref_1_quantity');
+        $ref_1_unit_price  = (float) $request->input('ref_1_unit_price');
         $sum_flag          = (boolean) $request->input('sum_flag');
         
         $rules = [
@@ -90,12 +91,10 @@ class ComponentItemController extends Controller
             ]
         ];
 
-        if($ref_1_quantity != '' || $ref_1_unit_id != 0){
+        if($ref_1_quantity > 0){
 
             $rules['ref_1_quantity'] = [
-                'required_with:ref_1_unit_id',
-                'numeric',
-                'gte:0',
+                'numeric'
             ];
 
             $rules['ref_1_unit_id'] = [
@@ -103,15 +102,20 @@ class ComponentItemController extends Controller
                 'integer',
                 'gte:1'
             ];
-        }
-         
-        if($ref_1_unit_price){
+
             $rules['ref_1_unit_price'] = [
                 'required_with:ref_1_quantity',
                 'numeric',
-                'gt:0'
+                'gt:1'
             ];
         }
+
+        if($ref_1_quantity <= 0){
+            $ref_1_quantity     = null;
+            $ref_1_unit_id      = null;
+            $ref_1_unit_price   = null;
+        }
+         
 
         $validator = Validator::make($request->all(),$rules);
 
@@ -137,6 +141,8 @@ class ComponentItemController extends Controller
         $user_id = Auth::user()->id;
 
         $component_item = new ComponentItem();
+
+        
 
         $component_item->component_id              = $component_id;
         $component_item->name                      = $name;
