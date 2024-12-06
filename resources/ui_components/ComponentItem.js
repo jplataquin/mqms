@@ -342,7 +342,7 @@ class ComponentItem extends ComponentV2{
 
 
 
-        return t.div({class:'form-container mb-5 shadow p-3 mb-5 bg-white rounded'},(el)=>{
+        return t.div({class:'form-container mb-5 shadow bg-white rounded'},(el)=>{
             
             t.div({class:'form-header'},'');
 
