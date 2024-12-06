@@ -159,7 +159,13 @@ class MaterialQuantityList extends ComponentV2{
                         
                         this.el.material_quantity_item_container = t.tbody(()=>{});
 
-                        t.tfoot()
+                        t.tfoot(()=>{
+                            t.tr(()=>{
+                                t.td({class:'text-end',colspan:5},()=>{
+                                    this.el.addBtn = t.button({class:'btn btn-warning w-100'},'Add');
+                                });
+                            });
+                        });//foot
                         
                     });
                 });
