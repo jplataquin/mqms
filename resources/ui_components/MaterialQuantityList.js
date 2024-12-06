@@ -29,7 +29,7 @@ class MaterialQuantityList extends ComponentV2{
             equivalent:{
                 value:0,
                 target:this.el.equivalent,
-                events:['keyup','change'],
+                events:['keyup'],
                 getValue:(val)=>{
                     return window.util.pureNumber(val);
                 },
@@ -142,7 +142,6 @@ class MaterialQuantityList extends ComponentV2{
 
         return t.div({class:'container'},(el)=>{
 
-            el.append(rem);
 
 
             t.div({class:'row'},()=>{
