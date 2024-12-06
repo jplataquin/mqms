@@ -512,7 +512,14 @@ class ComponentItem extends ComponentV2{
                     
         
                         t.tr(()=>{
-                            t.td({colspan:7, class:'text-end'},(el)=>{
+
+                            t.td(()=>{
+                                
+                                this.el.add_material_quantity_button       = t.button({class:'btn btn-warning'},'Add Material');
+
+                            });
+
+                            t.td({colspan:6, class:'text-end'},(el)=>{
                                 
                                 this.el.delete_component_item_button       = t.button({class:'btn btn-danger me-3'},'Delete');
                                 this.el.edit_component_item_button         = t.button({class:'btn btn-primary'},'Edit');
