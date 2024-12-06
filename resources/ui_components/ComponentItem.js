@@ -1,5 +1,6 @@
 import {Template,ComponentV2,Signal} from '/adarna.js';
 import MaterialQuantityList from '/ui_components/MaterialQuantityList.js';
+import CreateMaterialQuantityForm from '/ui_components/CreateMaterialQuantityForm.js';
 
 // function calculateTotalEquivalent(a,b){
 //     return window.util.roundUp(parseFloat(a) * parseFloat(b),2);
@@ -631,6 +632,14 @@ class ComponentItem extends ComponentV2{
 
         this.el.update_component_item_button.onclick = (e)=>{
            this.httpUpdate();
+        }
+
+
+        this.el.add_material_quantity_button.onclick = (e)=>{
+
+            window.util.drawerModal.content('Add Material Quantity',CreateMaterialQuantityForm({
+                
+            })).open();
         }
 
     }
