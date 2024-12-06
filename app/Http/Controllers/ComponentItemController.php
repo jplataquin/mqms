@@ -122,7 +122,7 @@ class ComponentItemController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status'    => -2,
-                'message'   => 'Failed Validation',
+                'message'   => 'Failed Validation '.$ref_1_quantity,
                 'data'      => $validator->messages()
             ]);
         }
