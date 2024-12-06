@@ -95,7 +95,7 @@ class ComponentItemController extends Controller
             $rules['ref_1_quantity'] = [
                 'required_with:ref_1_unit_id',
                 'numeric',
-                'gte:1',
+                'gte:0',
             ];
 
             $rules['ref_1_unit_id'] = [

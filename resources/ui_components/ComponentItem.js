@@ -158,11 +158,7 @@ class ComponentItem extends ComponentV2{
                 target: this.el.component_item_ref_1_quantity,
                 events:['keyup'],
                 getValue: (val)=>{
-                    let value = window.util.pureNumber(val,2);
-
-                    if(value <= 0) return '';
-
-                    return value;
+                    return window.util.pureNumber(val,2);
                 },
                 onUpdate:(data)=>{
 
@@ -187,11 +183,7 @@ class ComponentItem extends ComponentV2{
                 target: this.el.component_item_ref_1_unit_price,
                 events:['keyup'],
                 getValue: (val)=>{
-                    let value = window.util.pureNumber(val,2);
-
-                    if(value <= 0) return '';
-
-                    return value;
+                    return window.util.pureNumber(val,2);
                 },
                 onUpdate:(data)=>{
 
@@ -231,76 +223,7 @@ class ComponentItem extends ComponentV2{
                 }
             },
             
-            /*******************************************************/
-            // grand_total:{
-            //     value:0,
-            //     getValue: (val)=>{
-            //         return window.util.pureNumber(val,2);
-            //     },
-            //     onUpdate: (data)=>{
-
-            //         let newVal = data.value;
-
-            //         this.el.grandTotal.innerText = window.util.numberFormat(newVal,2);
-
-            //         if(newVal > this.getState('quantity')){
-                        
-            //             this.el.grandTotal.classList.add('text-danger');
-            //             this.el.grandTotal.classList.add('overbudget');
-
-            //             window.util.alert('Error','The Grand Total quantity is more than the Component quantity');
-
-            //         }else{
-                        
-            //             this.el.grandTotal.classList.remove('text-danger');
-            //             this.el.grandTotal.classList.remove('overbudget');
-
-            //         }
-            //     }
-            // },
-            // material_quantity:{
-            //     value:'',
-            //     target: this.el.material_quantity,
-            //     events:['keyup','change'],
-            //     getValue:(data)=>{
-            //         return window.util.pureNumber(data.value);
-            //     },
-            //     onUpdate:(data)=>{
-
-            //         if(!data.event){
-            //             this.el.material_quantity.value = data.value;
-            //         }
-
-            //         let material_quantity = this.getState('material_quantity');
-            //         let equivalent        = this.getState('equivalent');
-                    
-            //         this.setState({
-            //             total: calculateTotalEquivalent(material_quantity, equivalent)
-            //         });
-            //     }
-            // },
-            
-            
-            // equivalent:{
-            //     value:'',
-            //     target: this.el.equivalent,
-            //     events:['keyup'],
-            //     getValue: (val)=>{
-            //         return window.util.pureNumber(val);
-            //     },
-            //     onUpdate:(data)=>{
-            //         this.el.equivalent.value = data.value;
-            //     }
-            // },
-            // total:{
-            //     value:'',
-            //     getValue: (val)=>{
-            //         return window.util.pureNumber(val);
-            //     },
-            //     onUpdate:(data)=>{
-            //         this.el.total.value = window.util.numberFormat(data.value,2);
-            //     }
-            // }           
+                  
         }
     }
 
@@ -620,15 +543,13 @@ class ComponentItem extends ComponentV2{
         });//form-container
     }
 
-    controller(dom){
+    controller(){
         
         this.getComponentItemData();
 
-       // this.functionVariableQuantity();
 
         this.initEvents();
 
-        //this.reloadState('editable');
     }
 
     initEvents(){
@@ -649,38 +570,7 @@ class ComponentItem extends ComponentV2{
         });
 
 
-        // this.el.equivalent.onkeyup = ()=>{
-
-        //     //this.setState('equivalent',this.el.equivalent.value);
-
-        //     let equivalent          = this.getState('equivalent');
-        //     let material_quantity   = this.getState('material_quantity');
-
-
-        //     if(equivalent == 0) return false;
-
-        //     this.setState({
-        //         total : calculateTotalEquivalent( material_quantity, equivalent)
-        //     });
-
-           
-        // }
-
-
-        // this.el.addBtn.onclick = ()=>{
-
-        //     let total       = this.getState('total');
-        //     let quantity    = this.getState('quantity');
-
-        //     if(total > quantity){
-        //         window.util.alert('Total equivalent cannot be greater than the component item quantity ('+this.getState('quantity')+' '+this.getState('unit')+')');
-        //         return false;
-        //     }
-
-        //     this.addMaterial();
-        // }
-
-
+    
         this.el.delete_component_item_button.onclick = async (e)=>{
             e.preventDefault();
 
