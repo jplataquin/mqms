@@ -352,7 +352,7 @@ class ComponentItem extends ComponentV2{
                     
 
                     t.tbody(()=>{
-                        t.tr(()=>{
+                        t.tr({class:'shadow p-3 mb-5 bg-white rounded'},()=>{
                             t.th({colspan:4},'Name');
                             t.th({colspan:1},'Sum Flag');
                         });
