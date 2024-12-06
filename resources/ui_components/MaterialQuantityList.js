@@ -140,7 +140,7 @@ class MaterialQuantityList extends ComponentV2{
 
         });//row
 
-        return t.div({class:'container'},(el)=>{
+        return t.div({class:'container border border-primary'},(el)=>{
 
 
 
