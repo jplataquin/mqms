@@ -158,7 +158,11 @@ class ComponentItem extends ComponentV2{
                 target: this.el.component_item_ref_1_quantity,
                 events:['keyup'],
                 getValue: (val)=>{
-                    return window.util.pureNumber(val,2);
+                    let value = window.util.pureNumber(val,2);
+
+                    if(value <= 0) return '';
+
+                    return value;
                 },
                 onUpdate:(data)=>{
 
@@ -183,7 +187,11 @@ class ComponentItem extends ComponentV2{
                 target: this.el.component_item_ref_1_unit_price,
                 events:['keyup'],
                 getValue: (val)=>{
-                    return window.util.pureNumber(val,2);
+                    let value = window.util.pureNumber(val,2);
+
+                    if(value <= 0) return '';
+
+                    return value;
                 },
                 onUpdate:(data)=>{
 
