@@ -65,6 +65,16 @@ class MaterialQuantityList extends ComponentV2{
         }
     }
 
+    init(){
+        this.material_item_registry = {};
+
+        this._model.material_item_options.map(item=>{
+            
+            this.material_item_registry[item.id] = item;
+        });
+
+    }
+
     view(){
 
         const t = new Template();
@@ -236,11 +246,9 @@ class MaterialQuantityList extends ComponentV2{
 
             reply.data.map(item=>{
 
-                console.log(item);
-
                 this.el.material_quantity_item_container.append(MaterialQuantityItem({
                     id                      : item.id,
-                    material_item_options   : this._model.material_item_options,
+                    name                    : material_item_registry[item.id].brand+' '+material_item_registry[item.id].name+' '+material_item_registry[item.id].specification_unit_packaging+''.trim(),
                     material_item_id        : item.material_item_id,
                     quantity                : item.quantity,
                     equivalent              : item.equivalent
