@@ -19,6 +19,7 @@ class CreateMaterialQuantityForm extends ComponentV2{
                 },
                 onUpdate:(data)=>{
 
+                    console.log('here');
                     if(!data.event){
                         this.el.quantity.value = data.value;
                     }
