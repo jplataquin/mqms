@@ -139,6 +139,17 @@ class CreateMaterialQuantityForm extends ComponentV2{
 
 
         this.el.btn_submit.onclick = ()=>{
+
+            let data = {
+                component_item_id: this._model.component_item_id,
+                material_item_id: this.getState('material_item_id'),
+                quantity: this.getState('quantity'),
+                equivalent: this.getState('equivalent')
+            };
+
+            console.log(data);
+
+            return false;
             window.util.blockUI();
 
             window.util.$post('/api/project/create',{
