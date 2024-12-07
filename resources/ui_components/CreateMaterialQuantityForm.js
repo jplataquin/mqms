@@ -3,6 +3,51 @@ import {Template,ComponentV2} from '/adarna.js';
 
 class CreateMaterialQuantityForm extends ComponentV2{
 
+    state(){
+        return {
+            material_item_id:{
+                value:'',
+                target: this.el.material_item_select,
+                events:['change']
+            },
+            quantity:{
+                value:'',
+                target: this.el.quantity,
+                events:['keyup','change'],
+                getValue:(val)=>{
+                    return window.util.pureNumber(val);
+                },
+                onUpdate:(data)=>{
+
+                    if(!data.event){
+                        this.el.quantity.value = data.value;
+                    }
+
+                    this.calculateTotal();
+                }
+            },
+            equivalent:{
+                value:'',
+                target: this.el.equivalent,
+                events:['keyup','change'],
+                getValue:(val)=>{
+                    return window.util.pureNumber(val);
+                },
+                onUpdate:(data)=>{
+
+                    if(!data.event){
+                        this.el.equivalent.value = data.value;
+                    }
+                    
+                    this.calculateTotal();
+                }
+            },
+            total:{
+                target:this.el.total
+            }
+        }
+    }
+    
     model(){
         return {
             component_item_id:'',
@@ -28,7 +73,7 @@ class CreateMaterialQuantityForm extends ComponentV2{
 
         return t.div(()=>{
 
-            t.div({class:'row'},()=>{
+            t.div({class:'row mb-5'},()=>{
 
                 t.div({class:'col-lg-3'},()=>{
                     t.div({class:'form-group'},(el)=>{
@@ -115,6 +160,13 @@ class CreateMaterialQuantityForm extends ComponentV2{
             window.util.drawerModal.close();
         }
 
+    }
+
+    calculateTotal(){
+
+        this.setState('total',(
+            this.getState('quantity') * this.getState('equivalent')
+        ));
     }
 }
 
