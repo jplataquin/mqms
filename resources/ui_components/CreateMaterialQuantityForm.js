@@ -42,7 +42,7 @@ class CreateMaterialQuantityForm extends ComponentV2{
                     t.div({class:'form-group'},()=>{
                         t.label('Quantity');
 
-                        t.input({class:'form-control'});
+                        this.el.quantity = t.input({class:'form-control',type:'text'});
                     });
                 });
 
@@ -51,21 +51,70 @@ class CreateMaterialQuantityForm extends ComponentV2{
                         t.label('Equivalent / Quantity');
 
                         
-                        t.input({class:'form-control'});
+                        this.el.equivalent = t.input({class:'form-control'});
                     });
                 });
 
                 t.div({class:'col-lg-3'},()=>{
                     t.div({class:'form-group'},()=>{
-                        t.label('Total');
+                        t.label('Total Equivalent');
                         
-                        t.input({class:'form-control',disabled:true});
+                        this.el.total = t.input({class:'form-control',disabled:true});
                     });
                 });
 
             });
 
+
+            t.div({class:'row mb-3'},()=>{
+                t.div({class:'col-lg-12 text-end'},()=>{
+                    this.el.btn_submit = t.button({class:'btn btn-primary me-3'},'Submit');
+                    this.el.btn_cancel = t.button({class:'btn btn-secondary'},'Cancel');
+                });
+            });//div row
+
+
         });
+    }
+
+    controller(){
+
+        window.util.numbersOnlyInput([
+            this.el.equivalent,
+            this.el.quantity
+        ],{
+            negative:false,
+            precision:2
+        });
+
+
+
+        this.el.btn_submit.onclick = ()=>{
+            window.util.blockUI();
+
+            window.util.$post('/api/project/create',{
+                name: this.el.project_name.value,
+                status: this.el.project_status.value
+            }).then(reply=>{
+                
+                window.util.unblockUI();
+                
+                if(reply.status <= 0 ){
+                    window.util.showMsg(reply);
+                    return false;
+                };
+                
+                window.util.drawerModal.close();
+                window.util.navReload();
+    
+            
+            });
+        }
+
+        this.el.btn_cancel.onclick = ()=>{
+            window.util.drawerModal.close();
+        }
+
     }
 }
 
