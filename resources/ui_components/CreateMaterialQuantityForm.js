@@ -43,11 +43,15 @@ class CreateMaterialQuantityForm extends ComponentV2{
                 }
             },
             total:{
-                target:this.el.total
+                value:0,
+                target:this.el.total,
+                onUpate:(data)=>{
+                    this.el.total.value = data.value
+                }
             }
         }
     }
-    
+
     model(){
         return {
             component_item_id:'',
