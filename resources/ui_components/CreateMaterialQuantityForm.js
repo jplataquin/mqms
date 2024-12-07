@@ -147,15 +147,7 @@ class CreateMaterialQuantityForm extends ComponentV2{
                 equivalent: this.getState('equivalent')
             };
 
-            console.log(data);
-
-            return false;
-            window.util.blockUI();
-
-            window.util.$post('/api/project/create',{
-                name: this.el.project_name.value,
-                status: this.el.project_status.value
-            }).then(reply=>{
+            window.util.$post('/api/material_quantity/create',data).then(reply=>{
                 
                 window.util.unblockUI();
                 
@@ -165,9 +157,8 @@ class CreateMaterialQuantityForm extends ComponentV2{
                 };
                 
                 window.util.drawerModal.close();
-                window.util.navReload();
+                //window.util.navReload();
     
-            
             });
         }
 
