@@ -67,14 +67,14 @@ class MaterialQuantityList extends ComponentV2{
 
     init(){
 
+        this.material_item_registry = {};
         
     }
 
     view(){
 
-        this.material_item_registry = {};
 
-        
+
         const t = new Template();
 
         this.el.material_item_select = t.select({class:'form-control'},()=>{
@@ -248,7 +248,7 @@ class MaterialQuantityList extends ComponentV2{
 
                 this.el.material_quantity_item_container.append(MaterialQuantityItem({
                     id                      : item.id,
-                    name                    : material_item_registry[item.id].brand+' '+material_item_registry[item.id].name+' '+material_item_registry[item.id].specification_unit_packaging+''.trim(),
+                    name                    : this.material_item_registry[item.id].brand+' '+this.material_item_registry[item.id].name+' '+this.material_item_registry[item.id].specification_unit_packaging+''.trim(),
                     material_item_id        : item.material_item_id,
                     quantity                : item.quantity,
                     equivalent              : item.equivalent
