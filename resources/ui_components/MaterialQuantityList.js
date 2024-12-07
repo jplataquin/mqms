@@ -196,7 +196,6 @@ class MaterialQuantityList extends ComponentV2{
             equivalent          : this.getState('equivalent')
         };
 
-        console.log(data);
         
         window.util.blockUI();
 
@@ -237,7 +236,8 @@ class MaterialQuantityList extends ComponentV2{
 
             reply.data.map(item=>{
 
-
+                console.log(item);
+                
                 this.el.material_quantity_item_container.append(MaterialQuantityItem({
                     id                      : item.id,
                     material_item_options   : this._model.material_item_options,
