@@ -235,7 +235,7 @@ class ComponentItem extends ComponentV2{
             component_quantity:0,
             component_use_count:1,
             component_unit_text:'',
-            materialItemOptions:[],
+            material_item_options:[],
             unitOptions:[]
         }
     }
@@ -638,7 +638,8 @@ class ComponentItem extends ComponentV2{
         this.el.add_material_quantity_button.onclick = (e)=>{
 
             window.util.drawerModal.content('Add Material Quantity',CreateMaterialQuantityForm({
-                
+                material_item_options:this._model.material_item_options,
+                component_item_id: this._model.id
             })).open();
         }
 
