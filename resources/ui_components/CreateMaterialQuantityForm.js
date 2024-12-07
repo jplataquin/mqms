@@ -16,13 +16,13 @@ class CreateMaterialQuantityForm extends ComponentV2{
 
             t.div({class:'row'},()=>{
 
-                t.div({clas:'col-lg-3'},()=>{
+                t.div({class:'col-lg-3'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label('Material');
                     });
                 });
 
-                t.div({clas:'col-lg-3'},()=>{
+                t.div({class:'col-lg-3'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label('Quantity');
 
@@ -30,7 +30,7 @@ class CreateMaterialQuantityForm extends ComponentV2{
                     });
                 });
 
-                t.div({clas:'col-lg-3'},()=>{
+                t.div({class:'col-lg-3'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label('Equivalent / Quantity');
 
@@ -39,7 +39,7 @@ class CreateMaterialQuantityForm extends ComponentV2{
                     });
                 });
 
-                t.div({clas:'col-lg-3'},()=>{
+                t.div({class:'col-lg-3'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label('Total');
                         
