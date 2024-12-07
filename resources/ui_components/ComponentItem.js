@@ -505,6 +505,7 @@ class ComponentItem extends ComponentV2{
                                     el.append( MaterialQuantityList({
                                        component_item_id    : this._model.id,
                                        material_item_options: this._model.material_item_options
+                                       
                                     }));
                                 });//div
                             });
