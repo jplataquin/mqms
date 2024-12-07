@@ -66,13 +66,15 @@ class MaterialQuantityList extends ComponentV2{
     }
 
     init(){
-        this.material_item_registry = {};
 
         
     }
 
     view(){
 
+        this.material_item_registry = {};
+
+        
         const t = new Template();
 
         this.el.material_item_select = t.select({class:'form-control'},()=>{
