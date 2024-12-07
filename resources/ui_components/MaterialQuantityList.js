@@ -68,11 +68,7 @@ class MaterialQuantityList extends ComponentV2{
     init(){
         this.material_item_registry = {};
 
-        this._model.material_item_options.map(item=>{
-            
-            this.material_item_registry[item.id] = item;
-        });
-
+        
     }
 
     view(){
@@ -89,6 +85,8 @@ class MaterialQuantityList extends ComponentV2{
             
             this.el.material_item_select.append(option);
 
+            this.material_item_registry[item.id] = item;
+        
         });
 
         
