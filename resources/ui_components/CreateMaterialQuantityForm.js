@@ -23,7 +23,7 @@ class CreateMaterialQuantityForm extends ComponentV2{
             
             this.el.material_item_select.t.append(option);
 
-            this.materialRegistry[item.id] = item.brand+' '+item.name +' '+item.specification_unit_packaging+''.trim();
+            //this.materialRegistry[item.id] = item.brand+' '+item.name +' '+item.specification_unit_packaging+''.trim();
         });
 
         return t.div(()=>{
