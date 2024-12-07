@@ -246,9 +246,11 @@ class MaterialQuantityList extends ComponentV2{
 
             reply.data.map(item=>{
 
+                let material_item = this.material_item_registry[item.material_item_id];
+                
                 this.el.material_quantity_item_container.append(MaterialQuantityItem({
                     id                      : item.id,
-                    name                    : this.material_item_registry[item.id].brand+' '+this.material_item_registry[item.id].name+' '+this.material_item_registry[item.id].specification_unit_packaging+''.trim(),
+                    name                    : material_item.brand+' '+material_item.name+' '+material_item.specification_unit_packaging+''.trim(),
                     material_item_id        : item.material_item_id,
                     quantity                : item.quantity,
                     equivalent              : item.equivalent
