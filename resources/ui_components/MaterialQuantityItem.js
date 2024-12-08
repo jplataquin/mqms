@@ -88,6 +88,12 @@ class MaterialQuantityItem extends ComponentV2{
     }
 
     
+    calculateTotal(quantityInput,equivalentInput,totalInput){
+        
+        let total = window.util.pureNumber(quantityInput.value) * window.util.pureNumber(equivalentInput.value);
+        
+        totalInput.value = window.util.numberFormat(total,2);
+    }
 
     showUpdateMaterialForm(){
 
@@ -115,13 +121,13 @@ class MaterialQuantityItem extends ComponentV2{
 
         [quantityInput,equivalentInput].map(el=>{
 
-            el.onkeyup = ()=>{
+            el.addEventListiner('keyup',()=>{
                 this.calculateTotal(quantityInput,equivalentInput,totalInput);
-            }
+            });
 
-            el.onchange = ()=>{
+            el.addEventListiner('change',()=>{
                 this.calculateTotal(quantityInput,equivalentInput,totalInput);
-            }
+            });
         });
 
         const content = t.div(()=>{
