@@ -2,10 +2,6 @@ import {Template,ComponentV2,Signal} from '/adarna.js';
 import MaterialQuantityList from '/ui_components/MaterialQuantityList.js';
 import CreateMaterialQuantityForm from '/ui_components/CreateMaterialQuantityForm.js';
 
-// function calculateTotalEquivalent(a,b){
-//     return window.util.roundUp(parseFloat(a) * parseFloat(b),2);
-// }
-
 
 const signal = new Signal();
 
@@ -251,98 +247,6 @@ class ComponentItem extends ComponentV2{
     view(){
         const t = new Template();
 
-        // this.el.materialItemSelect = t.select({class:'form-control'},()=>{
-        //     t.option({value:''},' - ');
-        // });
-
-        // this._model.materialItemOptions.map(item=>{
-            
-        //     let option = t.option({value:item.id},item.brand+' '+item.name + ' '+item.specification_unit_packaging+''.trim());
-            
-        //     this.el.materialItemSelect.t.append(option);
-
-        //     this.materialRegistry[item.id] = item.brand+' '+item.name +' '+item.specification_unit_packaging+''.trim();
-        // });
-
-        // this.el.materialMenu = t.div(()=>{
-    
-        //     t.div({class:'folder-form-container'},()=>{
-
-        //         t.div({class:'folder-form-tab'},'Material Quantity');
-                
-        //         t.div({class:'folder-form-body'},()=>{
-
-        //             t.div({class:'row'},()=>{
-
-        //                 t.div({class:'col-lg-6'},()=>{
-        //                     t.div({class:'form-group'},()=>{
-        //                         t.label('Material');
-        //                         t.el(this.el.materialItemSelect);
-        //                     });
-        //                 });
-                    
-        //                 t.div({class:'col-lg-1'},()=>{             
-        //                     t.div({class:'form-group'},()=>{
-        //                         t.label('Quantity');
-        //                         this.el.material_quantity = t.input({class:'form-control', type:'text'});
-        //                     });
-        //                 });                           
-
-        //                 t.div({class:'col-lg-2'},()=>{
-        //                     t.div({class:'form-group'},()=>{
-        //                         t.label('Equivalent / Unit');
-        //                         this.el.equivalent = t.input({class:'form-control', type:'text'});
-        //                     });
-        //                 });
-                        
-                        
-        //                 t.div({class:'col-lg-2'},()=>{
-        //                     t.div({class:'form-group'},()=>{
-        //                         t.label('Total');
-        //                         this.el.total = t.input({class:'form-control', type:'number',disabled:true});
-        //                     });
-        //                 });
-
-                    
-        //                 t.div({class:'col-lg-1'},()=>{
-        //                     t.div({class:'form-group'},()=>{
-        //                         t.label('&nbsp');
-        //                         this.el.addBtn = t.button({class:'btn btn-warning w-100'},'Add');
-        //                     });
-        //                 });
- 
-        //             });//row
-
-        //         });//body
-                
-        //     });//container
-
-
-        //     t.table({class:'table'},()=>{
-
-        //         t.thead(()=>{
-        //             t.th('Material');
-        //             t.th('Quantity');
-        //             t.th('Equivalent / Unit');
-        //             t.th('Total');
-        //         });
-
-        //         this.el.materialList = t.tbody();
-
-        //         t.tfoot(()=>{
-        //             t.tr(()=>{
-        //                 t.td();
-        //                 t.td();
-        //                 t.th('Grand Total');
-        //                 this.el.grandTotal = t.td('0');
-        //                 t.td();
-        //             });
-        //         });
-        //     })//table
-        // });
-
-
-
         return t.div({class:'form-container mb-5 shadow-lg bg-white rounded'},(el)=>{
             
             t.div({class:'form-header'},'');
@@ -353,23 +257,32 @@ class ComponentItem extends ComponentV2{
                     
 
                     t.tbody(()=>{
+
                         t.tr(()=>{
-                            t.th({colspan:4},'Name');
-                            t.th({colspan:1},'Sum Flag');
-                        });
-        
-                        t.tr(()=>{
+
                             t.td({colspan:4},()=>{
-                                this.el.component_item_name = t.input({class:'form-control name',type:'text', placeholder:'Item',disabled:true,value:'Loading...'}); 
-                            });
-        
-                            t.td({colspan:1},()=>{
-                                t.div({class:'form-switch text-center'},()=>{                  
-                                    this.el.component_item_sum_flag = t.input({class:'form-check-input sum_flag',value:1,type:'checkbox', disabled:true});
+                                t.div({class:'row'},()=>{
+                                    
+                                    t.div({class:'col-lg-10'},()=>{
+                                        t.div({class:'form-group'},()=>{
+                                            t.label('Name');
+                                            this.el.component_item_name = t.input({class:'form-control name',type:'text', placeholder:'Item',disabled:true,value:'Loading...'}); 
+                                        });
+                                    });
+
+                                    t.div({class:'col-lg-2'},()=>{
+                                        t.div({class:'form-group'},()=>{
+                                            t.label('Sum Flag');
+
+                                            t.div({class:'form-switch text-center'},()=>{                  
+                                                this.el.component_item_sum_flag = t.input({class:'form-check-input sum_flag',value:1,type:'checkbox', disabled:true});
+                                            });
+                                        });
+                                    });
                                 });
                             });
-                            
                         });
+
                         
                         t.tr(()=>{
                             t.th({colspan:5,class:'text-center bg-divider'},'POW/DUPA')
@@ -544,8 +457,6 @@ class ComponentItem extends ComponentV2{
                 });//table
         
                  
-                
-
             });//form-body
 
         });//form-container
@@ -617,20 +528,6 @@ class ComponentItem extends ComponentV2{
             
             //TODO fix this so it won't reload
 
-            // this.setState('editable',false);
-
-            // this.reloadState([
-            //     'unit',
-            //     'name',
-            //     'quantity',
-            //     'ref_1_quantity',
-            //     'ref_1_unit_id',
-            //     'ref_1_unit_price',
-            //     'sum_flag'
-            // ]);
-         
-            // this.onUpdateComponentItemValues();
-
             window.util.navReload();
         }
 
@@ -693,35 +590,8 @@ class ComponentItem extends ComponentV2{
             }
             
             window.util.navReload();
-            // this.setState('editable',false);
-
-            // this.onUpdateMaterialList();
-
-            // signal.broadcast('set-component-status','PEND');
         });
     }
-
-    // functionVariableQuantity(){
-
-
-    //     this.el.variable.onkeypress = (e)=>{
-    //         return window.util.inputNumber(this.el.variable,e,6,false);
-    //     }
-
-    //     this.el.quantity.onkeypress = (e)=>{
-    //         return window.util.inputNumber(this.el.quantity,e,2,false);
-    //     }
-    
-    //     this.el.function_type.onchange = (e) =>{
-    //         this.el.variable.onkeyup();   
-    //     }
-    
-
-    //     this.el.quantity.onkeyup = (e)=>{
-    //         this.setState('quantity',window.util.pureNumber(this.el.quantity.value));
-    //         this.onUpdateComponentItemValues();
-    //     }
-    // }
 
 
     updateComponentItemValues(){
@@ -821,37 +691,6 @@ class ComponentItem extends ComponentV2{
     }
 
 
-    // onUpdateMaterialList(){
-
-    //     this.el.materialList.innerHTML = '';
-
-    //     window.util.$get('/api/material_quantity/list',{
-    //         component_item_id   :this._model.id,
-    //         page                :1,
-    //         limit               :0
-    //     }).then(reply=>{
-            
-    //         if(reply.status <= 0 ){
-    //             window.util.showMsg(reply);
-    //             return false;
-    //         }
-
-    //         let grand_total = 0;
-
-    //         reply.data.map(item=>{
-    //             this.appendMaterial({
-    //                 id:item.id,
-    //                 material_item_id: item.material_item_id,
-    //                 quantity: item.quantity,
-    //                 equivalent: item.equivalent
-    //             });
-
-    //             grand_total = grand_total + (item.quantity * item.equivalent)
-    //         });
-
-    //         this.setState('grand_total',grand_total);
-    //     });
-    // }
 
     getComponentItemData(){
 
@@ -879,268 +718,11 @@ class ComponentItem extends ComponentV2{
                 component_item_ref_1_unit_price    :reply.data.ref_1_unit_price
             });
 
-
-          //  this.updateComponentItemValues();
-
-           // this.onUpdateComponentItemValues();
-            
-            //this.onUpdateMaterialList();
    
         });
 
     }
 
-    // addMaterial(){
-
-    //     this.el.addBtn.disabled = true;
-
-    //     let data = {
-    //         component_item_id   : this._model.id,
-    //         material_item_id    : this.el.materialItemSelect.value,
-    //         quantity            : this.getState('material_quantity'),
-    //         equivalent          : this.getState('equivalent')
-    //     };
-
-    //     window.util.$post('/api/material_quantity/create',data).then(reply=>{
-            
-    //         this.el.addBtn.disabled = false;
-             
-    //         if(reply.status <= 0){
-    //             window.util.showMsg(reply);
-    //             return false;
-    //         }
-
-    //         this.setState({
-    //             material_quantity:'',
-    //             equivalent:''
-    //         });
-            
-    //         this.appendMaterial({
-    //             id: reply.data.id,
-    //             material_item_id: data.material_item_id,
-    //             quantity: data.quantity,
-    //             equivalent: data.equivalent
-    //         });
-
-            
-    //         signal.broadcast('set-component-status','PEND');
-    //     });
-
-    // }
-
-    // appendMaterial(data){
-    //     const t = new Template();
-        
-    //     const materialItem = t.tr((row)=>{
-    //                 t.td(this.materialRegistry[data.material_item_id]);
-    //                 t.td(''+window.util.roundUp(data.quantity,2));
-    //                 t.td(''+data.equivalent);
-    //                 t.td(''+calculateTotalEquivalent(data.quantity,data.equivalent));
-    //                 t.td({class:'text-center'},()=>{
-                        
-    //                     t.a({class:'me-5',href:'#'},()=>{
-    //                         t.i({class:'bi bi-pencil-square'});
-    //                     }).onclick = (e)=>{
-    //                         e.preventDefault();
-
-    //                         this.onUpdateMaterialEntry({
-    //                             material_quantity_id: data.id,
-    //                             material_item_id: data.material_item_id,
-    //                             equivalent: data.equivalent,
-    //                             quantity: data.quantity
-    //                         });
-    //                     }
-
-    //                     t.a({class:'me-5',href:'#'},()=>{
-    //                         t.i({class:'bi bi-list-task'});
-    //                     }).onclick = (e)=>{
-    //                         e.preventDefault();
-
-    //                         window.open('/material_budget/report/'+data.id,'_blank');
-    //                     }
-
-    //                     t.a({href:'#'},()=>{
-    //                         t.i({class:'bi bi-trash-fill'});
-    //                     }).onclick = (e)=>{
-    //                         e.preventDefault();
-                            
-    //                         if(confirm('Are you sure you want to delete this entry')){
-                                
-    //                             window.util.blockUI();
-                                
-    //                             window.util.$post('/api/material_quantity/delete',{
-    //                                 id:data.id
-    //                             }).then(reply=>{
-
-    //                                 window.util.unblockUI();
-
-    //                                 if(reply.status <= 0){
-    //                                     window.util.showMsg(reply);
-    //                                     return false;
-    //                                 }
-
-    //                                 row.t.remove();
-    //                             });
-    //                         }
-    //                     };
-    //                 });//td
-    //             });//tr
-            
-        
-    //     if( parseFloat(data.quantity) > this.getState('quantity') ){
-
-    //         materialItem.classList.add('border');
-    //         materialItem.classList.add('border-danger');
-    //         materialItem.classList.add('overbudget');
-        
-    //     }else{
-            
-    //         materialItem.classList.remove('border');
-    //         materialItem.classList.remove('border-danger');
-    //         materialItem.classList.remove('overbudget');
-        
-    //     }
-
-    //     this.el.materialList.append(materialItem);
-
-    // }
-
-    // onUpdateMaterialEntry(entry){
-
-        
-    //     window.ui.primaryModal.hide();
-
-    //     window.ui.primaryModalTitle.innerHTML    = 'Modify Material Entry';
-    //     window.ui.primaryModalBody.innerHTML     = '';
-    //     window.ui.primaryModalFooter.innerHTML   = '';
-
-    //     const t = new Template();
-
-    //     const quantityInput     = t.input({class:'form-control',value: window.util.roundUp(entry.quantity,2)});
-    //     const equivalentInput   = t.input({class:'form-control',value:entry.equivalent});
-    //     const totalInput        = t.input({class:'form-control', disabled:true});
-
-
-
-    //     quantityInput.onkeypress = (e)=>{
-    //         return window.util.inputNumber(quantityInput,e,2,false);
-    //     }
-
-
-    //     let throttle = false;
-
-    //     [quantityInput,equivalentInput].map(item=>{
-
-    //         item.onkeyup = ()=>{
-
-    //             if(!throttle){
-                    
-    //                 throttle = true;
-
-    //                 setTimeout(()=>{
-                            
-    //                     let val = calculateTotalEquivalent(equivalentInput.value,quantityInput.value);
-
-    //                     totalInput.value = val;
-
-    //                     throttle = false;
-    //                 },500);
-    //             }
-                
-    //         }
-    //     });
-
-    //     totalInput.value = calculateTotalEquivalent(equivalentInput.value,quantityInput.value);
-
-    //     const content = t.div(()=>{
-            
-    //         t.div({class:'row mb-3'},()=>{
-    //             t.div({class:'col-12 mb-3'},()=>{
-    //                 t.table({class:'table borderd'},()=>{
-    //                     t.tr(()=>{
-    //                         t.th('Comp. Item',);
-    //                         t.td(this.getState('name'));
-    //                     });
-    //                     t.tr(()=>{
-    //                         t.th('Matt. Item',);
-    //                         t.td(this.materialRegistry[entry.material_item_id])
-    //                     });
-    //                 })
-    //             });
-    //         });
-
-    //         t.div({class:'row'},()=>{
-                
-    //             t.div({class:'col-4'},()=>{
-    //                 t.div({class:'form-group'},(el)=>{
-    //                     t.label('Quantity'),
-    //                     el.append(quantityInput);
-    //                 });
-    //             });
-
-    //             t.div({class:'col-4'},()=>{
-    //                 t.div({class:'form-group'},(el)=>{
-    //                     t.label('Equivalent / Unit'),
-    //                     el.append(equivalentInput);
-    //                 });
-    //             });
-
-    //             t.div({class:'col-4'},()=>{
-    //                 t.div({class:'form-group'},(el)=>{
-    //                     t.label('Total'),
-    //                     el.append(totalInput);
-    //                 });
-    //             });
-    //         });
-
-    //     });
-
-    //     const cancelBtn = t.button({class:'btn btn-secondary me-3'},'Cancel');
-    //     const onUpdateBtn = t.button({class:'btn btn-warning'},'onUpdate');
-
-    //     const controls =  t.div({class:'row'},()=>{
-    //         t.div({class:'col-12 text-end'},(el)=>{
-    //             el.append(cancelBtn);
-    //             el.append(onUpdateBtn);
-    //         });
-    //     });
-
-    //     cancelBtn.onclick = (e)=>{
-    //         window.ui.primaryModal.hide();
-    //     }
-
-
-    //     onUpdateBtn.onclick = (e)=>{
-
-    //         window.ui.primaryModal.hide();
-            
-    //         window.util.blockUI();
-
-    //         window.util.$post('/api/material_quantity/onUpdate',{
-    //             id                  : entry.material_quantity_id,
-    //             material_item_id    : entry.material_item_id,
-    //             quantity            : quantityInput.value,
-    //             equivalent          : equivalentInput.value
-    //         }).then(reply=>{
-    //             window.util.unblockUI();
-
-    //             if(reply.status <= 0){
-
-    //                 window.util.showMsg(reply);
-    //                 return false;
-    //             }
-
-    //             this.onUpdateMaterialList();
-
-    //         })
-    //     }
-
-    //     window.ui.primaryModalBody.append(content);
-
-    //     window.ui.primaryModalFooter.append(controls);
-
-    //     window.ui.primaryModal.show();
-    // }
 
 }
 

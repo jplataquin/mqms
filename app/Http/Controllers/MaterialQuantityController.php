@@ -175,7 +175,8 @@ class MaterialQuantityController extends Controller
         ->first();
         
         $over = false;
-
+        
+        //If request quantity is lower than the approved request
         if($quantity < $result->total_approved_request){
             $over = true;
         }
