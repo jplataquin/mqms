@@ -15,7 +15,6 @@ class MaterialQuantityList extends ComponentV2{
     model(){
         return {
             component_item_id:0,
-            after_add_callback: ()=>{},
             material_item_options:[]
         };
     }

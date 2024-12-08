@@ -55,6 +55,7 @@ class CreateMaterialQuantityForm extends ComponentV2{
     model(){
         return {
             component_item_id:'',
+            after_add_callback: ()=>{},
             material_item_options:[]
         }
     }
