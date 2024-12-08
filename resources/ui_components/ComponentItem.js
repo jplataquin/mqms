@@ -265,14 +265,14 @@ class ComponentItem extends ComponentV2{
                                 t.td({colspan:5},()=>{
                                     t.div({class:'row shadow-lg p-3 bg-body rounded border mb-3'},()=>{
                                         
-                                        t.div({class:'col-lg-10'},()=>{
+                                        t.div({class:'col-lg-10 col-sm-10'},()=>{
                                             t.div({class:'form-group'},()=>{
                                                 t.label('Name');
                                                 this.el.component_item_name = t.input({class:'form-control name',type:'text', placeholder:'Item',disabled:true,value:'Loading...'}); 
                                             });
                                         });
 
-                                        t.div({class:'col-lg-2'},()=>{
+                                        t.div({class:'col-lg-2 col-sm-2'},()=>{
                                             t.div({class:'form-group'},()=>{
                                                 t.label('Sum Flag');
 
