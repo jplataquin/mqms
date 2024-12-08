@@ -87,6 +87,7 @@ class MaterialQuantityItem extends ComponentV2{
 
     }
 
+    
 
     showUpdateMaterialForm(){
 
@@ -102,6 +103,26 @@ class MaterialQuantityItem extends ComponentV2{
         const quantityInput     = t.input({class:'form-control',value: this._model.quantity});
         const equivalentInput   = t.input({class:'form-control',value: this._model.equivalent});
         const totalInput        = t.input({class:'form-control', disabled:true});
+
+
+        window.util.numbersOnlyInput([
+            quantityInput,
+            equivalentInput
+        ],{
+            negative:false,
+            precision:2
+        });
+
+        [quantityInput,equivalentInput].map(el=>{
+
+            el.onkeyup = ()=>{
+                this.calculateTotal(quantityInput,equivalentInput,totalInput);
+            }
+
+            el.onchange = ()=>{
+                this.calculateTotal(quantityInput,equivalentInput,totalInput);
+            }
+        });
 
         const content = t.div(()=>{
             
@@ -147,12 +168,12 @@ class MaterialQuantityItem extends ComponentV2{
         });
 
         const cancelBtn = t.button({class:'btn btn-secondary me-3'},'Cancel');
-        const onUpdateBtn = t.button({class:'btn btn-warning'},'Update');
+        const updateBtn = t.button({class:'btn btn-warning'},'Update');
 
         const controls =  t.div({class:'row'},()=>{
             t.div({class:'col-12 text-end'},(el)=>{
                 el.append(cancelBtn);
-                el.append(onUpdateBtn);
+                el.append(updateBtn);
             });
         });
 
@@ -161,15 +182,14 @@ class MaterialQuantityItem extends ComponentV2{
         }
 
 
-        onUpdateBtn.onclick = (e)=>{
+        updateBtn.onclick = (e)=>{
 
             window.ui.primaryModal.hide();
             
             window.util.blockUI();
 
-            window.util.$post('/api/material_quantity/onUpdate',{
-                id                  : entry.material_quantity_id,
-                material_item_id    : entry.material_item_id,
+            window.util.$post('/api/material_quantity/update',{
+                id                  : this._model.id,
                 quantity            : quantityInput.value,
                 equivalent          : equivalentInput.value
             }).then(reply=>{
@@ -181,7 +201,7 @@ class MaterialQuantityItem extends ComponentV2{
                     return false;
                 }
 
-                this.onUpdateMaterialList();
+                this._model.after_action_callback();
 
             })
         }
