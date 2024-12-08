@@ -190,3 +190,12 @@ Route::get('/ui_components/{file}', function($file){
 
     return $response;
 });
+
+
+Route::get('/ui_components/create_forms/{file}', function($file){
+
+    $response = Response::make(File::get(base_path('resources/ui_components/create_forms/'.$file)), 200);
+    $response->header("Content-Type", 'text/javascript');
+
+    return $response;
+});
