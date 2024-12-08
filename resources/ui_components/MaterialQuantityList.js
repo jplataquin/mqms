@@ -83,7 +83,7 @@ class MaterialQuantityList extends ComponentV2{
 
         this.getMaterialQuantityList();
 
-        this.dom.handler.refreshList = () =>{
+        this._dom.handler.refreshList = () =>{
             this.getMaterialQuantityList();
         }
     }
