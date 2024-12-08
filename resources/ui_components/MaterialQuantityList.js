@@ -61,6 +61,14 @@ class MaterialQuantityList extends ComponentV2{
 
                     this.el.total.value = window.util.pureNumber(data.value,2);
                 }
+            },
+            grand_total:{
+                value:0,
+                target:this.el.grand_total,
+                onUpdate:(data)=>{
+
+                    this.el.grand_total.innerText = window.util.numberFormat(data.value,2);
+                }
             }
         }
     }
@@ -75,84 +83,9 @@ class MaterialQuantityList extends ComponentV2{
 
 
 
-        const t = new Template();
-
-        this.el.material_item_select = t.select({class:'form-control'},()=>{
-            t.option({value:''},' - ');
-        });
-
-        this._model.material_item_options.map(item=>{
-            
-            let option = t.option({value:item.id},item.brand+' '+item.name + ' '+item.specification_unit_packaging+''.trim());
-            
-            this.el.material_item_select.append(option);
-
-            this.material_item_registry[item.id] = item;
-        
-        });
-
-        
-        let rem = t.div({class:'row'},()=>{
-
-            t.div({class:'col-lg-12'},()=>{
-
-                t.div({class:'folder-form-container'},()=>{
-
-                    t.div({class:'folder-form-tab'},'Material Quantity');
-                            
-                    t.div({class:'folder-form-body'},()=>{
-    
-                        t.div({class:'row'},()=>{
-    
-                            t.div({class:'col-lg-5'},()=>{
-                                t.div({class:'form-group'},()=>{
-                                    t.label('Material');
-                                    t.el(this.el.material_item_select);
-                                });
-                            });
-                        
-                            t.div({class:'col-lg-2'},()=>{             
-                                t.div({class:'form-group'},()=>{
-                                    t.label('Quantity');
-                                    this.el.quantity = t.input({class:'form-control', type:'text'});
-                                });
-                            });                           
-    
-                            t.div({class:'col-lg-2'},()=>{
-                                t.div({class:'form-group'},()=>{
-                                    t.label('Equivalent');
-                                    this.el.equivalent = t.input({class:'form-control', type:'text'});
-                                });
-                            });
-                            
-                            
-                            t.div({class:'col-lg-2'},()=>{
-                                t.div({class:'form-group'},()=>{
-                                    t.label('Total');
-                                    this.el.total = t.input({class:'form-control', type:'number',disabled:true});
-                                });
-                            });
-    
-                        
-                            t.div({class:'col-lg-1'},()=>{
-                                t.div({class:'form-group'},()=>{
-                                    t.label('&nbsp');
-                                    this.el.addBtn = t.button({class:'btn btn-warning w-100'},'Add');
-                                });
-                            });
-        
-                        });//row
-    
-                    });//body
-                });
-
-            });//col
-
-        });//row
+        const t = new Template();        
 
         return t.div({class:'container border border-primary'},(el)=>{
-
-
 
             t.div({class:'row'},()=>{
                 t.div({class:'col-lg-12'},()=>{
@@ -170,6 +103,11 @@ class MaterialQuantityList extends ComponentV2{
                         this.el.material_quantity_item_container = t.tbody(()=>{});
 
                         t.tfoot(()=>{
+                            t.td();
+                            t.td();
+                            t.td('Grand Total');
+                            this.el.grand_total = t.th();
+                            t.td();
                         });//foot
                         
                     });
@@ -244,6 +182,8 @@ class MaterialQuantityList extends ComponentV2{
             }
 
 
+            let grand_total = 0;
+
             reply.data.map(item=>{
 
                 let material_item = this.material_item_registry[item.material_item_id];
@@ -256,8 +196,11 @@ class MaterialQuantityList extends ComponentV2{
                     equivalent              : item.equivalent
                 }));
 
+                grand_total = grand_total + (item.quantity * item.equivalent);
             });
-        })
+
+            this.setState('grand_total',grand_total);
+        });
         
     }
 }
