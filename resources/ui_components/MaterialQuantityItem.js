@@ -12,7 +12,7 @@ class MaterialQuantityItem extends ComponentV2{
             equivalent              : 0,
             component_item_name     : '',
             component_item_quantity : 0,
-            grand_total             : 0,
+            get_grand_total         : ()=>{return 0},
             after_action_callback   : ()=>{}
         }
     }
@@ -153,7 +153,7 @@ class MaterialQuantityItem extends ComponentV2{
                         });
                         t.tr(()=>{
                             t.th('Grand Total');
-                            t.td( window.util.numberFormat(this._model.grand_total,2) );
+                            t.td( window.util.numberFormat(this._model.get_grand_total(),2) );
                         });
                     })
                 });

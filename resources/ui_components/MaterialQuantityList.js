@@ -122,7 +122,9 @@ class MaterialQuantityList extends ComponentV2{
                     equivalent              : item.equivalent,
                     component_item_name     : this._model.component_item_name,
                     component_item_quantity : this._model.component_item_quantity,
-                    grand_total             : this.getState('grand_total'),
+                    get_grand_total         : ()=>{
+                        return this.getState('grand_total')
+                    },
                     after_action_callback   : ()=>{
                         this.getMaterialQuantityList();
                     }
