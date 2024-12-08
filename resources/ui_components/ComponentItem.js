@@ -716,6 +716,7 @@ class ComponentItem extends ComponentV2{
                 component_item_id       : this._model.id,
                 component_item_name     : reply.data.name,
                 component_item_quantity : reply.data.quantity,
+                component_item_unit_text: this._model.unitOptions[reply.data.unit_id].text,
                 material_item_options   : this._model.material_item_options
             });
 
