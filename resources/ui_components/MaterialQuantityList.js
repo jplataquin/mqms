@@ -42,7 +42,7 @@ class MaterialQuantityList extends ComponentV2{
 
         this._model.material_item_options.map(item=>{
             
-            this.material_item_registry[item.id] = item.brand+' '+item.name +' '+item.specification_unit_packaging+''.trim();
+            this.material_item_registry[item.id] = item;
         });
 
         const t = new Template();        
