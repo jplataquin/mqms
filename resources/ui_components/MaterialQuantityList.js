@@ -29,7 +29,7 @@ class MaterialQuantityList extends ComponentV2{
                 target:this.el.grand_total,
                 onUpdate:(data)=>{
 
-                    this.el.grand_total.innerText = window.util.numberFormat(data.value,2);
+                    this.el.grand_total.innerText = window.util.numberFormat(data.value,2)+' '+this._model.component_item_unit_text;
                 }
             }
         }
