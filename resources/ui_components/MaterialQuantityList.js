@@ -54,14 +54,6 @@ class MaterialQuantityList extends ComponentV2{
                     );
                 }
             },
-            total:{
-                value:0,
-                target:this.el.total,
-                onUpdate:(data)=>{
-
-                    this.el.total.value = window.util.pureNumber(data.value,2);
-                }
-            },
             grand_total:{
                 value:0,
                 target:this.el.grand_total,
