@@ -81,12 +81,17 @@ class MaterialQuantityList extends ComponentV2{
 
     controller(){
 
-
         this.getMaterialQuantityList();
+
+        this.dom.handler.refreshList = () =>{
+            this.getMaterialQuantityList();
+        }
     }
 
     getMaterialQuantityList(){
         
+        this.el.material_quantity_item_container.innerHTML = '';
+
         window.util.$get('/api/material_quantity/list',{
             component_item_id   :this._model.component_item_id,
             page                :1,

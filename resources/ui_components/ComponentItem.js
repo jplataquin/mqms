@@ -502,11 +502,14 @@ class ComponentItem extends ComponentV2{
                             t.td({colspan:5},()=>{
 
                                 t.div((el)=>{
-                                    el.append( MaterialQuantityList({
-                                       component_item_id    : this._model.id,
-                                       material_item_options: this._model.material_item_options
-                                       
-                                    }));
+
+                                    this.el.material_quantity_list = MaterialQuantityList({
+                                        component_item_id    : this._model.id,
+                                        material_item_options: this._model.material_item_options
+                                        
+                                     });
+
+                                    el.append( this.el.material_quantity_list );
                                 });//div
                             });
                         });
@@ -640,7 +643,10 @@ class ComponentItem extends ComponentV2{
 
             window.util.drawerModal.content('Add Material Quantity',CreateMaterialQuantityForm({
                 material_item_options:this._model.material_item_options,
-                component_item_id: this._model.id
+                component_item_id: this._model.id,
+                after_add_callback: ()=>{
+                    this.el.material_quantity_list.handler.refreshList();
+                }
             })).open();
         }
 
