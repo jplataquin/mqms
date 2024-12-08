@@ -85,7 +85,7 @@ class MaterialQuantityItem extends ComponentV2{
 
     controller(){
 
-        this.el.delete_btn.onclick = async ()=>{
+        this.el.delete_btn.onclick = async (e)=>{
 
             e.preventDefault();
                     
@@ -110,7 +110,7 @@ class MaterialQuantityItem extends ComponentV2{
             }
         }
 
-        
+
     }
 }
 
