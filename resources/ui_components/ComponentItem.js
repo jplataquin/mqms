@@ -529,9 +529,9 @@ class ComponentItem extends ComponentV2{
 
         this.el.cancel_edit_component_item_button.onclick = (e)=>{
             
-            //TODO fix this so it won't reload
+            this.getComponentItemData();
 
-            window.util.navReload();
+            this.setState('component_item_editable',false);
         }
 
         this.el.update_component_item_button.onclick = (e)=>{
