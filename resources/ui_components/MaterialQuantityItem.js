@@ -121,11 +121,11 @@ class MaterialQuantityItem extends ComponentV2{
 
         [quantityInput,equivalentInput].map(el=>{
 
-            el.addEventListiner('keyup',()=>{
+            el.addEventListener('keyup',()=>{
                 this.calculateTotal(quantityInput,equivalentInput,totalInput);
             });
 
-            el.addEventListiner('change',()=>{
+            el.addEventListener('change',()=>{
                 this.calculateTotal(quantityInput,equivalentInput,totalInput);
             });
         });
