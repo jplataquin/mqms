@@ -43,7 +43,7 @@ class MaterialQuantityItem extends ComponentV2{
                 // }
 
                 t.a({class:'me-5',href:'#'},()=>{
-                    t.i({class:'bi bi-list-task'});
+                    this.el.report_btn = t.i({class:'bi bi-list-task'});
                 });
                 
                 // .onclick = (e)=>{
@@ -56,28 +56,6 @@ class MaterialQuantityItem extends ComponentV2{
                     this.el.delete_btn = t.i({class:'bi bi-trash-fill'});
                 });
                 
-                // .onclick = (e)=>{
-                //     e.preventDefault();
-                    
-                //     if(confirm('Are you sure you want to delete this entry')){
-                        
-                //         window.util.blockUI();
-                        
-                //         window.util.$post('/api/material_quantity/delete',{
-                //             id:data.id
-                //         }).then(reply=>{
-
-                //             window.util.unblockUI();
-
-                //             if(reply.status <= 0){
-                //                 window.util.showMsg(reply);
-                //                 return false;
-                //             }
-
-                //             row.t.remove();
-                //         });
-                //     }
-                // };
                 
             });
         });
@@ -110,6 +88,11 @@ class MaterialQuantityItem extends ComponentV2{
             }
         }
 
+        this.el.report_btn.onclick = (e)=>{
+            e.preventDefault();
+
+            window.open('/material_budget/report/'+this._model.id,'_blank');
+        }
 
     }
 }
