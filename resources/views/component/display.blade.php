@@ -209,7 +209,7 @@
 <script type="module">
     import {Template,$q,$el,State,Signal} from '/adarna.js';
     import ComponentItemEl from '/ui_components/ComponentItem.js';
-    import CreateComponentItemForm from '/ui_components/CreateComponentItemForm.js';
+    import CreateComponentItemForm from '/ui_components/create_forms/CreateComponentItemForm.js';
 
     const materialItemOptions       = @json($materialItems);
     const component                 = $q('#component').first();

@@ -98,7 +98,7 @@
 
 <script type="module">
     import {$q,$el,Template} from '/adarna.js';
-    import CreateSectionForm from '/ui_components/CreateSectionForm.js';
+    import CreateSectionForm from '/ui_components/create_forms/CreateSectionForm.js';
 
     const project_name                 = $q('#project_name').first();
     const status                      = $q('#status').first();

@@ -213,7 +213,7 @@
  
 <script type="module">
     import {$q,$el, Template} from '/adarna.js';
-    import CreateContractItemForm from '/ui_components/CreateContractItemForm.js';
+    import CreateContractItemForm from '/ui_components/create_forms/CreateContractItemForm.js';
 
     const sectionName                 = $q('#sectionName').first();
     const search_filter               = $q("#searchFilter").first();

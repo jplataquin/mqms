@@ -185,7 +185,7 @@
 </div>  
 <script type="module">
     import {$q,$el,Template} from '/adarna.js';
-    import CreateComponentForm from '/ui_components/CreateComponentForm.js';
+    import CreateComponentForm from '/ui_components/create_forms/CreateComponentForm.js';
 
     const editBtn                     = $q('#editBtn').first();
     const updateBtn                   = $q('#updateBtn').first();

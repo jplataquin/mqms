@@ -1,6 +1,6 @@
 import {Template,ComponentV2,Signal} from '/adarna.js';
 import MaterialQuantityList from '/ui_components/MaterialQuantityList.js';
-import CreateMaterialQuantityForm from '/ui_components/CreateMaterialQuantityForm.js';
+import CreateMaterialQuantityForm from '/ui_components/create_forms/CreateMaterialQuantityForm.js';
 
 
 const signal = new Signal();

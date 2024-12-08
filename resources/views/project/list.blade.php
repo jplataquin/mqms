@@ -69,7 +69,7 @@
 
 <script type="module">
     import {$q,Template,$el} from '/adarna.js';
-    import CreateProjectForm from '/ui_components/CreateProjectForm.js'
+    import CreateProjectForm from '/ui_components/create_forms/CreateProjectForm.js'
 
     const list            = $q('#list').first();
     const query           = $q('#query').first();
