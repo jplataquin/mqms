@@ -28,29 +28,14 @@ class MaterialQuantityItem extends ComponentV2{
             t.td({class:'text-center'},()=>{
                         
                 t.a({class:'me-5',href:'#'},()=>{
-                    t.i({class:'bi bi-pencil-square'});
+                    this.el.edit_btn = t.i({class:'bi bi-pencil-square'});
                 });
                 
-                // .onclick = (e)=>{
-                //     e.preventDefault();
-
-                //     this.onUpdateMaterialEntry({
-                //         material_quantity_id: data.id,
-                //         material_item_id: data.material_item_id,
-                //         equivalent: data.equivalent,
-                //         quantity: data.quantity
-                //     });
-                // }
+                
 
                 t.a({class:'me-5',href:'#'},()=>{
                     this.el.report_btn = t.i({class:'bi bi-list-task'});
                 });
-                
-                // .onclick = (e)=>{
-                //     e.preventDefault();
-
-                //     window.open('/material_budget/report/'+data.id,'_blank');
-                // }
 
                 t.a({href:'#'},()=>{
                     this.el.delete_btn = t.i({class:'bi bi-trash-fill'});
@@ -63,6 +48,17 @@ class MaterialQuantityItem extends ComponentV2{
 
     controller(){
 
+        this.el.edit_btn.onclick = (e)=>{
+            e.preventDefault();
+
+            this.onUpdateMaterialEntry({
+                material_quantity_id: data.id,
+                material_item_id: data.material_item_id,
+                equivalent: data.equivalent,
+                quantity: data.quantity
+            });
+        }
+        
         this.el.delete_btn.onclick = async (e)=>{
 
             e.preventDefault();
@@ -94,6 +90,112 @@ class MaterialQuantityItem extends ComponentV2{
             window.open('/material_budget/report/'+this._model.id,'_blank');
         }
 
+    }
+
+
+    onUpdateMaterialEntry(entry){
+
+        
+        window.ui.primaryModal.hide();
+
+        window.ui.primaryModalTitle.innerHTML    = 'Modify Material Entry';
+        window.ui.primaryModalBody.innerHTML     = '';
+        window.ui.primaryModalFooter.innerHTML   = '';
+
+        const t = new Template();
+
+        const quantityInput     = t.input({class:'form-control',value: this._model.quantity});
+        const equivalentInput   = t.input({class:'form-control',value: this._model.equivalent});
+        const totalInput        = t.input({class:'form-control', disabled:true});
+
+        const content = t.div(()=>{
+            
+            t.div({class:'row mb-3'},()=>{
+                t.div({class:'col-12 mb-3'},()=>{
+                    t.table({class:'table borderd'},()=>{
+                        t.tr(()=>{
+                            t.th('Comp. Item',);
+                            t.td('Component item');
+                        });
+                        t.tr(()=>{
+                            t.th('Matt. Item',);
+                            t.td(this._model.name)
+                        });
+                    })
+                });
+            });
+
+            t.div({class:'row'},()=>{
+                
+                t.div({class:'col-4'},()=>{
+                    t.div({class:'form-group'},(el)=>{
+                        t.label('Quantity'),
+                        el.append(quantityInput);
+                    });
+                });
+
+                t.div({class:'col-4'},()=>{
+                    t.div({class:'form-group'},(el)=>{
+                        t.label('Equivalent / Unit'),
+                        el.append(equivalentInput);
+                    });
+                });
+
+                t.div({class:'col-4'},()=>{
+                    t.div({class:'form-group'},(el)=>{
+                        t.label('Total'),
+                        el.append(totalInput);
+                    });
+                });
+            });
+
+        });
+
+        const cancelBtn = t.button({class:'btn btn-secondary me-3'},'Cancel');
+        const onUpdateBtn = t.button({class:'btn btn-warning'},'onUpdate');
+
+        const controls =  t.div({class:'row'},()=>{
+            t.div({class:'col-12 text-end'},(el)=>{
+                el.append(cancelBtn);
+                el.append(onUpdateBtn);
+            });
+        });
+
+        cancelBtn.onclick = (e)=>{
+            window.ui.primaryModal.hide();
+        }
+
+
+        onUpdateBtn.onclick = (e)=>{
+
+            window.ui.primaryModal.hide();
+            
+            window.util.blockUI();
+
+            window.util.$post('/api/material_quantity/onUpdate',{
+                id                  : entry.material_quantity_id,
+                material_item_id    : entry.material_item_id,
+                quantity            : quantityInput.value,
+                equivalent          : equivalentInput.value
+            }).then(reply=>{
+                window.util.unblockUI();
+
+                if(reply.status <= 0){
+
+                    window.util.showMsg(reply);
+                    return false;
+                }
+
+                this.onUpdateMaterialList();
+
+            })
+        }
+
+        window.ui.primaryModalBody.append(content);
+
+        window.ui.primaryModalFooter.append(controls);
+
+        window.ui.primaryModal.show();
     }
 }
 
