@@ -9,7 +9,8 @@ class MaterialQuantityItem extends ComponentV2{
             name:'',
             material_item_id        : 0,
             quantity                : 0,
-            equivalent              : 0
+            equivalent              : 0,
+            after_action_callback   : ()=>{}
         }
     }
 
@@ -52,7 +53,7 @@ class MaterialQuantityItem extends ComponentV2{
                 // }
 
                 t.a({href:'#'},()=>{
-                    t.i({class:'bi bi-trash-fill'});
+                    this.el.delete_btn = t.i({class:'bi bi-trash-fill'});
                 });
                 
                 // .onclick = (e)=>{
@@ -80,6 +81,36 @@ class MaterialQuantityItem extends ComponentV2{
                 
             });
         });
+    }
+
+    controller(){
+
+        this.el.delete_btn.onclick = async ()=>{
+
+            e.preventDefault();
+                    
+            let ans = await window.util.confirm('Are you sure you want to delete this entry');
+
+            if(ans){
+                window.util.blockUI();
+                    
+                window.util.$post('/api/material_quantity/delete',{
+                    id:this._model.id
+                }).then(reply=>{
+
+                    window.util.unblockUI();
+
+                    if(reply.status <= 0){
+                        window.util.showMsg(reply);
+                        return false;
+                    }
+
+                    this._model.after_action_callback();
+                });
+            }
+        }
+
+        
     }
 }
 

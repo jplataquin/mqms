@@ -81,7 +81,6 @@ class MaterialQuantityList extends ComponentV2{
 
     controller(){
 
-        console.log(this.material_item_registry);
         this.getMaterialQuantityList();
 
         this._dom.handler.refreshList = () =>{
@@ -116,7 +115,10 @@ class MaterialQuantityList extends ComponentV2{
                     name                    : material_item.brand+' '+material_item.name+' '+material_item.specification_unit_packaging+''.trim(),
                     material_item_id        : item.material_item_id,
                     quantity                : item.quantity,
-                    equivalent              : item.equivalent
+                    equivalent              : item.equivalent,
+                    after_action_callback   : ()=>{
+                        this.getMaterialQuantityList();
+                    }
                 }));
 
                 grand_total = grand_total + (item.quantity * item.equivalent);
