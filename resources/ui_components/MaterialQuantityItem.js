@@ -51,12 +51,7 @@ class MaterialQuantityItem extends ComponentV2{
         this.el.edit_btn.onclick = (e)=>{
             e.preventDefault();
 
-            this.onUpdateMaterialEntry({
-                material_quantity_id: data.id,
-                material_item_id: data.material_item_id,
-                equivalent: data.equivalent,
-                quantity: data.quantity
-            });
+            this.showUpdateMaterialForm();
         }
         
         this.el.delete_btn.onclick = async (e)=>{
@@ -93,7 +88,7 @@ class MaterialQuantityItem extends ComponentV2{
     }
 
 
-    onUpdateMaterialEntry(entry){
+    showUpdateMaterialForm(){
 
         
         window.ui.primaryModal.hide();
