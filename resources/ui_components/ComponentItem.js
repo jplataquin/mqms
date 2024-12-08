@@ -416,16 +416,7 @@ class ComponentItem extends ComponentV2{
                             t.tr(()=>{
                                 t.td({colspan:5},()=>{
 
-                                    t.div((el)=>{
-
-                                        this.el.material_quantity_list = MaterialQuantityList({
-                                            component_item_id    : this._model.id,
-                                            material_item_options: this._model.material_item_options
-                                            
-                                        });
-
-                                        el.append( this.el.material_quantity_list );
-                                    });//div
+                                    this.el.material_quantity_list_container = t.div();//div
                                 });
                             });
             
@@ -721,6 +712,14 @@ class ComponentItem extends ComponentV2{
                 component_item_ref_1_unit_price    :reply.data.ref_1_unit_price
             });
 
+            this.el.material_quantity_list = MaterialQuantityList({
+                component_item_id       : this._model.id,
+                component_item_name     : reply.data.name,
+                component_item_quantity : reply.data.quantity,
+                material_item_options   : this._model.material_item_options
+            });
+
+            this.el.material_quantity_list_container.append(this.el.material_quantity_list);
    
         });
 

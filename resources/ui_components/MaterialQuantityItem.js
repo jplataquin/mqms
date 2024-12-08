@@ -10,6 +10,9 @@ class MaterialQuantityItem extends ComponentV2{
             material_item_id        : 0,
             quantity                : 0,
             equivalent              : 0,
+            component_item_name     : '',
+            component_item_quantity : 0,
+            grand_total             : 0,
             after_action_callback   : ()=>{}
         }
     }
@@ -138,11 +141,19 @@ class MaterialQuantityItem extends ComponentV2{
                     t.table({class:'table borderd'},()=>{
                         t.tr(()=>{
                             t.th('Comp. Item',);
-                            t.td('Component item');
+                            t.td(this._model.component_item_name);
+                        });
+                        t.tr(()=>{
+                            t.th('Comp. Quantity');
+                            t.td( window.util.numberFormat(this._model.component_item_quantity,2) );
                         });
                         t.tr(()=>{
                             t.th('Matt. Item',);
                             t.td(this._model.name)
+                        });
+                        t.tr(()=>{
+                            t.th('Grand Total');
+                            t.td( window.util.numberFormat(this._model.grand_total,2) );
                         });
                     })
                 });

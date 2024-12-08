@@ -16,6 +16,7 @@ class MaterialQuantityList extends ComponentV2{
         return {
             component_item_id:0,
             component_item_quantity:0,
+            component_item_name: '',
             material_item_options:[]
         };
     }
@@ -119,6 +120,7 @@ class MaterialQuantityList extends ComponentV2{
                     material_item_id        : item.material_item_id,
                     quantity                : item.quantity,
                     equivalent              : item.equivalent,
+                    component_item_name     : this._model.component_item_name,
                     component_item_quantity : this._model.component_item_quantity,
                     grand_total             : this.getState('grand_total'),
                     after_action_callback   : ()=>{
