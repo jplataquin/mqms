@@ -22,9 +22,9 @@ class MaterialQuantityItem extends ComponentV2{
         return t.tr(()=>{
 
             t.td(this._model.name);
-            t.td( window.util.numberFormat(this._model.quantity,2) );
-            t.td( window.util.numberFormat(this._model.equivalent,2) );
-            t.td( window.util.numberFormat(this._model.equivalent * this._model.quantity,2) );
+            t.td({class:'text-center'}, window.util.numberFormat(this._model.quantity,2) );
+            t.td({class:'text-center'}, window.util.numberFormat(this._model.equivalent,2) );
+            t.td({class:'text-center'}, window.util.numberFormat(this._model.equivalent * this._model.quantity,2) );
             t.td({class:'text-center'},()=>{
                         
                 t.a({class:'me-5',href:'#'},()=>{
@@ -111,7 +111,7 @@ class MaterialQuantityItem extends ComponentV2{
         const totalInput        = t.input({class:'form-control', disabled:true});
 
         this.calculateTotal(quantityInput,equivalentInput,totalInput);
-        
+
         window.util.numbersOnlyInput([
             quantityInput,
             equivalentInput
