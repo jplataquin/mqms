@@ -81,6 +81,7 @@ class MaterialQuantityList extends ComponentV2{
 
     controller(){
 
+        console.log(this.material_item_registry);
         this.getMaterialQuantityList();
 
         this._dom.handler.refreshList = () =>{
@@ -105,7 +106,7 @@ class MaterialQuantityList extends ComponentV2{
 
 
             let grand_total = 0;
-
+            
             reply.data.map(item=>{
 
                 let material_item = this.material_item_registry[item.material_item_id];
