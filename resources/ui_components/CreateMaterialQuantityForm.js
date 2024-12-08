@@ -157,7 +157,7 @@ class CreateMaterialQuantityForm extends ComponentV2{
                 };
                 
                 window.util.drawerModal.close();
-                //window.util.navReload();
+                this._model.after_add_callback();
     
             });
         }
