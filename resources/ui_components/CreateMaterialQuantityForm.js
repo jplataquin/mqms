@@ -98,7 +98,7 @@ class CreateMaterialQuantityForm extends ComponentV2{
 
                 t.div({class:'col-lg-3'},()=>{
                     t.div({class:'form-group'},()=>{
-                        t.label('Equivalent / Quantity');
+                        t.label('Equivalent');
 
                         
                         this.el.equivalent = t.input({class:'form-control'});

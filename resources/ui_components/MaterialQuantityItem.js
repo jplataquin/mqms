@@ -131,7 +131,7 @@ class MaterialQuantityItem extends ComponentV2{
 
                 t.div({class:'col-4'},()=>{
                     t.div({class:'form-group'},(el)=>{
-                        t.label('Equivalent / Unit'),
+                        t.label('Equivalent'),
                         el.append(equivalentInput);
                     });
                 });
@@ -147,7 +147,7 @@ class MaterialQuantityItem extends ComponentV2{
         });
 
         const cancelBtn = t.button({class:'btn btn-secondary me-3'},'Cancel');
-        const onUpdateBtn = t.button({class:'btn btn-warning'},'onUpdate');
+        const onUpdateBtn = t.button({class:'btn btn-warning'},'Update');
 
         const controls =  t.div({class:'row'},()=>{
             t.div({class:'col-12 text-end'},(el)=>{
