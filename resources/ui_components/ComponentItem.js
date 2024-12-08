@@ -251,7 +251,7 @@ class ComponentItem extends ComponentV2{
             
             t.div({class:'form-header'},'');
 
-            t.div({class:'form-body'},()=>{
+            t.div({class:'form-body border'},()=>{
 
                 t.div({class:'table-responsive'},()=>{
                 
