@@ -261,7 +261,7 @@ class ComponentItem extends ComponentV2{
                         t.tr(()=>{
 
                             t.td({colspan:4},()=>{
-                                t.div({class:'row'},()=>{
+                                t.div({class:'row shadow-lg p-3 mb-5 bg-body rounded'},()=>{
                                     
                                     t.div({class:'col-lg-10'},()=>{
                                         t.div({class:'form-group'},()=>{
