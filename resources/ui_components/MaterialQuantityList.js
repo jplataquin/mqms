@@ -51,27 +51,29 @@ class MaterialQuantityList extends ComponentV2{
 
             t.div({class:'row'},()=>{
                 t.div({class:'col-lg-12'},()=>{
-                    t.table({class:'table'},()=>{
-                        t.thead(()=>{
-                            t.tr(()=>{
-                                t.th('Material');
-                                t.th('Quantity');
-                                t.th('Equivalent');
-                                t.th('Total');
-                                t.th({class:'text-center'},'Options');
+                    t.div({class:'table-responsive'},()=>{
+                        t.table({class:'table'},()=>{
+                            t.thead(()=>{
+                                t.tr(()=>{
+                                    t.th('Material');
+                                    t.th('Quantity');
+                                    t.th('Equivalent');
+                                    t.th('Total');
+                                    t.th({class:'text-center'},'Options');
+                                });
                             });
-                        });
-                        
-                        this.el.material_quantity_item_container = t.tbody(()=>{});
+                            
+                            this.el.material_quantity_item_container = t.tbody(()=>{});
 
-                        t.tfoot(()=>{
-                            t.td();
-                            t.td();
-                            t.th('Grand Total');
-                            this.el.grand_total = t.td();
-                            t.td();
-                        });//foot
-                        
+                            t.tfoot(()=>{
+                                t.td();
+                                t.td();
+                                t.th('Grand Total');
+                                this.el.grand_total = t.td();
+                                t.td();
+                            });//foot
+                            
+                        });
                     });
                 });
             });

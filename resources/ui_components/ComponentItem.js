@@ -276,7 +276,7 @@ class ComponentItem extends ComponentV2{
                                             t.div({class:'form-group'},()=>{
                                                 t.label('Sum Flag');
 
-                                                t.div({class:'form-switch text-center'},()=>{                  
+                                                t.div({class:'form-switch'},()=>{                  
                                                     this.el.component_item_sum_flag = t.input({class:'form-check-input sum_flag',value:1,type:'checkbox', disabled:true});
                                                 });
                                             });
