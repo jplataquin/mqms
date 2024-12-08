@@ -110,7 +110,8 @@ class MaterialQuantityItem extends ComponentV2{
         const equivalentInput   = t.input({class:'form-control',value: this._model.equivalent});
         const totalInput        = t.input({class:'form-control', disabled:true});
 
-
+        this.calculateTotal(quantityInput,equivalentInput,totalInput);
+        
         window.util.numbersOnlyInput([
             quantityInput,
             equivalentInput
