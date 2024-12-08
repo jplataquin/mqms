@@ -583,7 +583,9 @@ class ComponentItem extends ComponentV2{
                 return false;
             }
             
-            window.util.navReload();
+            this.getComponentItemData();
+            
+            this.setState('component_item_editable',false);
         });
     }
 
@@ -720,6 +722,7 @@ class ComponentItem extends ComponentV2{
                 material_item_options   : this._model.material_item_options
             });
 
+            this.el.material_quantity_list_container.innerHTML = '';
             this.el.material_quantity_list_container.append(this.el.material_quantity_list);
    
         });
