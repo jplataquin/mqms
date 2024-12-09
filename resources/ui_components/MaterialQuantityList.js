@@ -29,6 +29,12 @@ class MaterialQuantityList extends ComponentV2{
                 target:this.el.grand_total,
                 onUpdate:(data)=>{
 
+                    if(data.value > this._model.component_item_quantity){
+                        this.el.grand_total.classList.add('text-danger');
+                    }else{
+                        this.el.grand_total.classList.remove('text-danger');
+                    }
+                    
                     this.el.grand_total.innerText = window.util.numberFormat(data.value,2)+' '+this._model.component_item_unit_text;
                 }
             }
@@ -71,7 +77,7 @@ class MaterialQuantityList extends ComponentV2{
                             t.tfoot(()=>{
                                 t.td();
                                 t.td();
-                                t.th({class:'text-end'},'Material Total');
+                                t.th({class:'text-center'},'Material Total');
                                 this.el.grand_total = t.td({class:'text-center'});
                                 t.td();
                             });//foot
