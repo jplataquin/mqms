@@ -87,7 +87,7 @@ class CreateMaterialQuantityForm extends ComponentV2{
                 t.div({class:'col-lg-12'},()=>{
                     t.table({class:'table'},()=>{
                         t.tr(()=>{
-                            t.th('Comp. Name');
+                            t.th({width:'10%'},'Comp. Name');
                             t.td(this._model.component_item_name);
                         });
                         t.tr(()=>{
@@ -95,7 +95,7 @@ class CreateMaterialQuantityForm extends ComponentV2{
                             t.td(this._model.component_item_quantity+' '+this._model.component_item_unit_text);
                         });
                         t.tr(()=>{
-                            t.th('Grand Total');
+                            t.th('Matt. Total');
                             t.td(this._model.get_grand_total()+' '+this._model.component_item_unit_text);
                         });
                     });

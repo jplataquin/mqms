@@ -71,7 +71,7 @@ class MaterialQuantityList extends ComponentV2{
                             t.tfoot(()=>{
                                 t.td();
                                 t.td();
-                                t.th({class:'text-end'},'Grand Total');
+                                t.th({class:'text-end'},'Material Total');
                                 this.el.grand_total = t.td({class:'text-center'});
                                 t.td();
                             });//foot
