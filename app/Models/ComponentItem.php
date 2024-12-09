@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Component;
 use App\Models\MaterialQuantity;
+use App\Models\MaterialQuantityRequestItem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,6 +29,10 @@ class ComponentItem extends Model
     public function Component(): BelongsTo
     {
         return $this->belongsTo(Component::class);
+    }
+
+    public function MaterialQuantityRequestItems(){
+        return $this->hasMany(MaterialQuantityRequestItem::class);
     }
 
     public function delete(){

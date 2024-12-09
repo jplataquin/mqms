@@ -421,6 +421,18 @@ class ComponentItemController extends Controller
         
         $component = $component_item->component;
 
+
+        //Check if component item has material requests items
+        $test_for_existing_request = $component_item->MaterialQuantityRequestItems()->whereIn('status',['APRV','PEND'])->count();
+
+        if($test_for_existing_request){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Cannot delete record, the Component Item has associated Material Request',
+                'data'      => []
+            ]);
+        }
+
         if(!$component_item->delete()){
 
             return response()->json([
