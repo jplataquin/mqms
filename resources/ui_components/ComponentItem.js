@@ -265,7 +265,7 @@ class ComponentItem extends ComponentV2{
                                 t.td({colspan:5},()=>{
                                     t.div({class:'row shadow-lg p-3 bg-body rounded border mb-3'},()=>{
                                         
-                                        t.div({class:'col-lg-10 col-sm-10'},()=>{
+                                        t.div({class:'col-lg-10 col-sm-10 mb-3'},()=>{
                                             t.div({class:'form-group'},()=>{
                                                 t.label('Name');
                                                 this.el.component_item_name = t.input({class:'form-control name',type:'text', placeholder:'Item',disabled:true,value:'Loading...'}); 
@@ -278,6 +278,10 @@ class ComponentItem extends ComponentV2{
 
                                                 t.div({class:'form-switch'},()=>{                  
                                                     this.el.component_item_sum_flag = t.input({class:'form-check-input sum_flag',value:1,type:'checkbox', disabled:true});
+                                                });
+
+                                                t.a({class:'me-5',href:'#'},()=>{
+                                                    this.el.report_btn = t.i({class:'bi bi-list-task'});
                                                 });
                                             });
                                         });
