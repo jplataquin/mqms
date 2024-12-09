@@ -272,13 +272,24 @@ class ComponentItem extends ComponentV2{
                                             });
                                         });
 
-                                        t.div({class:'col-lg-2 col-sm-2'},()=>{
+                                        t.div({class:'col-lg-1 col-sm-1'},()=>{
                                             t.div({class:'form-group'},()=>{
                                                 t.label('Sum Flag');
 
                                                 t.div({class:'form-switch'},()=>{                  
                                                     this.el.component_item_sum_flag = t.input({class:'form-check-input sum_flag',value:1,type:'checkbox', disabled:true});
                                                 });
+
+                                                t.a({class:'me-5',href:'#'},()=>{
+                                                    this.el.report_btn = t.i({class:'bi bi-list-task'});
+                                                });
+                                            });
+                                        });
+
+
+                                        t.div({class:'col-lg-1 col-sm-1'},()=>{
+                                            t.div({class:'form-group'},()=>{
+                                                t.label('');
 
                                                 t.a({class:'me-5',href:'#'},()=>{
                                                     this.el.report_btn = t.i({class:'bi bi-list-task'});
