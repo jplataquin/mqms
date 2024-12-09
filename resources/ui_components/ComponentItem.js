@@ -535,6 +535,12 @@ class ComponentItem extends ComponentV2{
             window.util.drawerModal.content('Add Material Quantity',CreateMaterialQuantityForm({
                 material_item_options:this._model.material_item_options,
                 component_item_id: this._model.id,
+                component_item_name: this.getState('component_item_name'),
+                component_item_quantity : this.getState('component_item_quantity'),
+                component_item_unit_text: this._model.unitOptions[this.getState('component_item_unit')].text,
+                get_grand_total: ()=>{
+                    return this.el.material_quantity_list.handler.getGrandTotal();
+                },
                 after_add_callback: ()=>{
                     this.el.material_quantity_list.handler.refreshList();
                 }

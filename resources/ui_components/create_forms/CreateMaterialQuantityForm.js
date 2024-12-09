@@ -46,7 +46,7 @@ class CreateMaterialQuantityForm extends ComponentV2{
                 value:0,
                 target:this.el.total,
                 onUpdate:(data)=>{
-                    this.el.total.value = data.value
+                    this.el.total.value = data.value+' '+this._model.component_item_unit_text;
                 }
             }
         }
@@ -55,6 +55,10 @@ class CreateMaterialQuantityForm extends ComponentV2{
     model(){
         return {
             component_item_id:'',
+            component_item_name: '',
+            component_item_quantity:0,
+            component_item_unit_text:'',
+            get_grand_total:()=>{ return 0; },
             after_add_callback: ()=>{},
             material_item_options:[]
         }
@@ -77,6 +81,27 @@ class CreateMaterialQuantityForm extends ComponentV2{
         });
 
         return t.div(()=>{
+
+            t.div({class:'row mb-3'},()=>{
+
+                t.div({class:'col-lg-12'},()=>{
+                    t.table({class:'table'},()=>{
+                        t.tr(()=>{
+                            t.th('Comp. Name');
+                            t.td(this._model.component_item_name);
+                        });
+                        t.tr(()=>{
+                            t.th('Comp. Quantity');
+                            t.td(this._model.component_item_quantity+' '+this._model.component_item_unit_text);
+                        });
+                        t.tr(()=>{
+                            t.th('Grand Total');
+                            t.td(this._model.get_grand_total()+' '+this._model.component_item_unit_text);
+                        });
+                    });
+                });
+
+            });
 
             t.div({class:'row mb-5'},()=>{
 

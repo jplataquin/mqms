@@ -91,6 +91,10 @@ class MaterialQuantityList extends ComponentV2{
         this._dom.handler.refreshList = () =>{
             this.getMaterialQuantityList();
         }
+
+        this._dom.handler.getGrandTotal() = ()=>{
+            return this.getState('grand_total');
+        }
     }
 
     getMaterialQuantityList(){
