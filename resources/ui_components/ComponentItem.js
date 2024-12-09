@@ -560,6 +560,12 @@ class ComponentItem extends ComponentV2{
             })).open();
         }
 
+
+        this.el.report_btn.onclick = (e)=>{
+            e.preventDefault();
+            window.open('/project/section/contract_item/component/report/'+this._model.id,'_blank');
+        }
+
     }
 
     calculateTotalAmount(){
