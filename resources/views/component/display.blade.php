@@ -252,10 +252,6 @@
         url: '/project/section/contract_item/component'
     };
     
-    signalR.receiver('set-component-status',(value)=>{
-        status.innerHTML = value;
-    });
-
    
     editBtn.onclick = ()=>{
 
