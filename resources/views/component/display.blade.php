@@ -242,9 +242,14 @@
     const signal = new Signal();
 
     signal.receiver('material-total-calculated',(data)=>{
-        if(data.value > data.component_item_quantity && callout_non_conforming.classList.contains('d-none')){
+        
+        
+        callout_non_conforming.classList.add('d-none');
+        
+        if( $q('.non-compliant').exists() ){
             callout_non_conforming.classList.remove('d-none');
         }
+
     });
 
     window.util.quickNav = {
@@ -324,7 +329,7 @@
 
                 item.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
                 
-                signalB.broadcast('set-component-status','PEND');
+        
             }
         })).open();
     }

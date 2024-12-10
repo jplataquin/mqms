@@ -31,8 +31,10 @@ class MaterialQuantityList extends ComponentV2{
 
                     if(data.value > this._model.component_item_quantity){
                         this.el.grand_total.classList.add('text-danger');
+                        this.el.grand_total.classList.add('non-compliant');
                     }else{
                         this.el.grand_total.classList.remove('text-danger');
+                        this.el.grand_total.classList.remove('non-compliant');
                     }
 
                     this.el.grand_total.innerText = window.util.numberFormat(data.value,2)+' '+this._model.component_item_unit_text;
@@ -148,9 +150,9 @@ class MaterialQuantityList extends ComponentV2{
             this.setState('grand_total',grand_total);
 
             signal.broadcast('material-total-calculated',{
-                value:grand_total,
-                component_item_quantity: this._model.component_item_quantity,
-                component_item_id: this._model.component_item_id
+                value:                      grand_total,
+                component_item_quantity:    this._model.component_item_quantity,
+                component_item_id:          this._model.component_item_id
             });
         });
         
