@@ -26,6 +26,11 @@
     </div>
 <hr>
 
+
+        <div id="callout-non-conforming" class="callout callout-danger d-none">
+            <h4>Warning: Non-conforming items</h4> 
+        </div>
+
         <table class="record-table-horizontal">
             <tr>
                 <th>Project</th>
@@ -230,11 +235,17 @@
     const component_form            = $q('#component_form').first();
     const add_component_item_button = $q('#addComponentItemBtn').first();
     const reviewLinkBtn             = $q('#reviewLinkBtn').first();
+    const callout_non_conforming    = $q('#callout-non-conforming').first();
    
     const t = new Template();
 
-    const signalR = new Signal();
-    const signalB = new Signal();
+    const signal = new Signal();
+
+    signal.receiver('material-total-calculated',(data)=>{
+        if(data.value > data.component_item_quantity && callout_non_conforming.classList.contains('d-none')){
+            callout_non_conforming.classList.remove('d-none');
+        }
+    });
 
     window.util.quickNav = {
         tile: 'Component',
