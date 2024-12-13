@@ -485,9 +485,7 @@ class ComponentItemController extends Controller
             
             $material_request = MaterialQuantityRequest::find($row->material_quantity_request_id);
 
-            echo $material_request;
-            
-            if(!$material_request){
+            if($material_request){
 
 
                 if($material_request->deleted_at != null){
@@ -495,8 +493,6 @@ class ComponentItemController extends Controller
                     $material_requests['DELE'][$material_request->id] = $material_request;
                 
                 }else{
-
-                    echo $material_request->status.' <br>';
 
                     switch ($material_request->status){
                         case 'APRV':
