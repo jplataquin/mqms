@@ -482,6 +482,8 @@ class ComponentItemController extends Controller
 
         foreach($material_quantity_request_ids as $row){
             
+            echo $row->material_quantity_request_id.'<br>';
+
             $material_request = MaterialQuantityRequest::find($row->material_quantity_request_id);
 
             if(!$material_request){
