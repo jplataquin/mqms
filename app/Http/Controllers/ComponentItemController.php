@@ -471,7 +471,7 @@ class ComponentItemController extends Controller
         $section        = $component->Section;
         $project        = $section->Project;
 
-        $material_quantity_request_ids = $component_item->MaterialQuantityRequestItems()->select(DB::raw('DISTINCT material_quantity_request_id, status'))->get();
+        $material_quantity_request_ids = $component_item->MaterialQuantityRequestItems()->select(DB::raw('DISTINCT material_quantity_request_id'))->get();
         
         $material_requests = [
             'APRV' => [],
@@ -486,6 +486,7 @@ class ComponentItemController extends Controller
 
             $material_request = MaterialQuantityRequest::find($row->material_quantity_request_id);
 
+            echo $material_request->id.' '.$material_request->status.' <br>';
             if(!$material_request){
 
                 if($material_request->deleted_at != null){
