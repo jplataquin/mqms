@@ -134,7 +134,7 @@
                                             <label>Equivalent</label>
                                             @php 
 
-                                                $equivalent = 0;
+                                                $equivalent = '';
 
                                                 if($component_item->function_type_id == 4){
 
@@ -144,7 +144,7 @@
                                                 if($equivalent){
                                                     $equivalent = $equivalent.' '.$component->unit_text();
                                                 }
-                                                
+
                                             @endphp
                                             <input type="text" class="form-control" disabled="true" value="{{ $equivalent }}"/>
                                         </div>
