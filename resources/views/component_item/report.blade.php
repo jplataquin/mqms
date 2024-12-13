@@ -59,10 +59,16 @@
                 </div>
 
                 <div class="row mb-3">
-                    <div class="col-lg-12">
+                    <div class="col-lg-11">
                         <div class="form-group">
                             <label>Component Item</label>
                             <input type="text" value="{{$component_item->name}}" class="form-control" disabled="ture"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-1">
+                        <div class="form-group">
+                            <label>Sum Flag</label>
+                            <input type="text" value="{{$component_item->sum_flag}}" class="form-control" disabled="ture"/>
                         </div>
                     </div>
                 </div>
