@@ -144,6 +144,7 @@
                                                 if($equivalent){
                                                     $equivalent = $equivalent.' '.$component->unit_text();
                                                 }
+                                                
                                             @endphp
                                             <input type="text" class="form-control" disabled="true" value="{{ $equivalent }}"/>
                                         </div>
