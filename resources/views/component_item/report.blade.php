@@ -141,6 +141,9 @@
                                                     $equivalent = ($component_item->function_variable * $component_item->quantity) * $component->use_count;
                                                 }
 
+                                                if($equivalent){
+                                                    $equivalent = $equivalent.' '.$component->unit_text();
+                                                }
                                             @endphp
                                             <input type="text" class="form-control" disabled="true" value="{{ $equivalent }}"/>
                                         </div>

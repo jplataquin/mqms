@@ -13,6 +13,7 @@ use App\Models\Section;
 use App\Models\ComponentItem;
 use App\Models\ContractItem;
 use App\Models\User;
+use App\Models\Unit;
 
 class Component extends Model
 {
@@ -36,6 +37,25 @@ class Component extends Model
     public function ComponentItems(): HasMany
     {
         return $this->hasMany(ComponentItem::class);
+    }
+    
+    public function unit_text(){
+
+        $unit = Unit::find($this->unit_id);
+
+        if(!$unit){
+            return '';
+        }
+        
+        $text = '';
+
+        $text = $unit->text;
+
+        if($unit->deleted_at){
+            $text = $text.' [Deleted]';
+        }
+
+        return $text;
     }
 
     public function CreatedByUser(){   
