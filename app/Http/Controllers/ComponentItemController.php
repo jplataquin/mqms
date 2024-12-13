@@ -488,6 +488,8 @@ class ComponentItemController extends Controller
 
             if(!$material_request){
 
+                echo 'here';
+                
                 if($material_request->deleted_at != null){
                 
                     $material_requests['DELE'][$material_request->id] = $material_request;
