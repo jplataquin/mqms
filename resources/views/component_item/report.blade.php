@@ -8,7 +8,7 @@
                 <li>
                     <a href="#">
                         <span>
-                        Material Quantity
+                        Component Item
                         </span>
                     </a>
                 </li>
@@ -26,7 +26,7 @@
 
         <div class="folder-form-container mb-5">
             <div class="folder-form-tab">
-                Material Quantity Report
+                Component Item Report
             </div>
             <div class="folder-form-body">
                 <div class="row mb-3">
@@ -57,23 +57,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-lg-12">
-                        <div class="form-group">
-                            <label>Material Item</label>
-                            <input type="text" value="{{$material_item->formatted_name()}}" class="form-control" disabled="true"/>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <div class="col-lg-12">
-                        <div class="form-group">
-                            <label>Budget Quantity</label>
-                            <input type="text" value="{{$material_quantity->quantity}}" class="form-control" disabled="true"/>
-                        </div>
-                    </div>
-                </div>
                 
             </div>
         </div>
@@ -89,30 +72,18 @@
         <div class="row mb-3" hx-boost="true" hx-select="#content" hx-target="#main">
             
             <div class="col-lg-6 mb-3 text-center">
-                <h4>Pending ({{ number_format($mqr_pending->total_quantity,2) }})</h4>
+                <h4>Pending ()</h4>
                 <div class="list-group">
 
-                    @foreach($mqr_pending->mqr_ids as $mqr_pending_id)
-
-                        @php if(!$mqr_pending_id) continue; @endphp
                         
-                        <a class="list-group-item list-group-item-action" href="/material_quantity_request/{{$mqr_pending_id}}">MR{{str_pad($mqr_pending_id,6,0,STR_PAD_LEFT)}}</a>
-                    
-                    @endforeach
                     
                 </div>
             </div>
 
             <div class="col-lg-6 mb-3 text-center">
-                <h4>Approved ({{ number_format($mqr_approved->total_quantity,2) }})</h4>
+                <h4>Approved ()</h4>
                 <div class="list-group">
-                    @foreach($mqr_approved->mqr_ids as $mqr_approved_id)
-                        
-                        @php if(!$mqr_approved_id) continue; @endphp
-                        
-                        <a class="list-group-item list-group-item-action" href="/material_quantity_request/{{$mqr_approved_id}}">MR{{str_pad($mqr_approved_id,6,0,STR_PAD_LEFT)}}</a>
-                       
-                    @endforeach
+                    
                 </div>
             </div>
 

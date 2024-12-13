@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Component;
 use App\Models\ComponentItem;
+use App\Models\MaterialQuantityRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -464,7 +465,12 @@ class ComponentItemController extends Controller
         $id = (int) $id;
 
         $component_item = ComponentItem::findOrFail($id);
-        
+
+        $component      = $component_item->Component;
+        $contract_item  = $component->ContractItem;        
+        $section        = $component->Section;
+        $project        = $section->Project;
+
         $material_quantity_request_ids = $component_item->MaterialQuantityRequestItems()->distinct()->get(['material_quantity_request_id']);
         
         $material_requests = [
@@ -514,7 +520,11 @@ class ComponentItemController extends Controller
         
         return view('/component_item/report',[
             'component_item'    => $component_item,
-            'material_requests' => $material_requests
+            'material_requests' => $material_requests,
+            'project'           => $project,
+            'section'           => $section,
+            'contract_item'     => $contract_item
+            'component'         => $component
         ]);
     }
    
