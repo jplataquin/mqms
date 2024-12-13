@@ -108,7 +108,7 @@
                             <div class="form-body">
                                 
                                 <div class="row mb-3">
-                                    
+
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label>Function Type</label>
@@ -118,7 +118,7 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label>Variable</label>
-                                            <input type="text" class="form-control" disabled="true" value="{{ $component_item->variable }}"/>
+                                            <input type="text" class="form-control" disabled="true" value="{{ $component_item->function_variable }}"/>
                                         </div>
                                     </div>
 

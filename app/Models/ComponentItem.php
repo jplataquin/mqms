@@ -80,7 +80,7 @@ class ComponentItem extends Model
         
         $text = '';
 
-        $text = $unit;
+        $text = $unit->text;
 
         if($unit->deleted_at){
             $text = $text.' [Deleted]';
