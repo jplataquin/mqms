@@ -516,7 +516,7 @@ class ComponentItemController extends Controller
             }
         }
 
-
+        print_r($material_requests);
         
         return view('/component_item/report',[
             'component_item'    => $component_item,
