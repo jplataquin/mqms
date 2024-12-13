@@ -475,6 +475,7 @@ class ComponentItemController extends Controller
         ];
 
         foreach($material_quantity_request_ids as $row){
+            
             $material_request = MaterialQuantityRequest::find($row->material_quantity_request_id);
 
             if(!$material_request){
@@ -512,7 +513,8 @@ class ComponentItemController extends Controller
 
         
         return view('/component_item/report',[
-            'component_item' => $component_item
+            'component_item'    => $component_item,
+            'material_requests' => $material_requests
         ]);
     }
    
