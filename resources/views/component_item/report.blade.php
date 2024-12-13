@@ -202,7 +202,9 @@
             <div class="col-lg-6 mb-3 text-center">
                 <h4>Approved ()</h4>
                 <div class="list-group">
-                    
+                    @foreach($material_requests['APRV'] as $row)
+                        <a class="list-group-item list-group-item-action" href="/material_quantity_request/{{$row->id}}">MR{{str_pad($row->id,6,0,STR_PAD_LEFT)}}</a>   
+                    @endforeach
                 </div>
             </div>
 
