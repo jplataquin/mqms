@@ -564,7 +564,7 @@ class ComponentItem extends ComponentV2{
 
         this.el.report_btn.onclick = (e)=>{
             e.preventDefault();
-            window.open('/project/section/contract_item/component/report/'+this._model.id,'_blank');
+            window.open('/component_item/report/'+this._model.id,'_blank');
         }
 
     }
