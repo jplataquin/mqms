@@ -1,6 +1,5 @@
 import {Template,ComponentV2} from '/adarna.js';
 
-
 class CreateMaterialQuantityForm extends ComponentV2{
 
     state(){
@@ -184,7 +183,7 @@ class CreateMaterialQuantityForm extends ComponentV2{
                 
                 window.util.drawerModal.close();
                 this._model.after_add_callback();
-    
+                
             });
         }
 

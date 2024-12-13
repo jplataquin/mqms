@@ -141,6 +141,8 @@ class MaterialQuantityList extends ComponentV2{
                     },
                     after_action_callback   : ()=>{
                         this.getMaterialQuantityList();
+                        
+                        signal.broadcast('component-item-update');
                     }
                 }));
 

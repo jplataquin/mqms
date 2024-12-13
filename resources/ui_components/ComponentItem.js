@@ -522,7 +522,7 @@ class ComponentItem extends ComponentV2{
 
                 this._dom.t.remove();
                 
-                signal.broadcast('set-component-status','PEND');
+                signal.broadcast('component-item-update');
             });
         }
 
@@ -556,6 +556,7 @@ class ComponentItem extends ComponentV2{
                 },
                 after_add_callback: ()=>{
                     this.el.material_quantity_list.handler.refreshList();
+                    signal.broadcast('component-item-update');
                 }
             })).open();
         }
@@ -611,6 +612,8 @@ class ComponentItem extends ComponentV2{
             this.getComponentItemData();
             
             this.setState('component_item_editable',false);
+
+            signal.broadcast('component-item-update');
         });
     }
 

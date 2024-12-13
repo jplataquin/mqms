@@ -457,5 +457,19 @@ class ComponentItemController extends Controller
             'data'      => []
         ]);
     }
+
+
+    public function report($id){
+
+        $id = (int) $id;
+
+        $component_item = ComponentItem::findOrFail($id);
+        
+        $material_quantity_request_ids = $component_item->MaterialQuantityRequestItem()->distinct()->get(['material_quantity_request_id']);
+        
+        print_r($material_quantity_request_ids);
+        return false;
+        return view('/component_item/report');
+    }
    
 }
