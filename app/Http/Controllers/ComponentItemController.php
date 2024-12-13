@@ -523,7 +523,7 @@ class ComponentItemController extends Controller
             'material_requests' => $material_requests,
             'project'           => $project,
             'section'           => $section,
-            'contract_item'     => $contract_item
+            'contract_item'     => $contract_item,
             'component'         => $component
         ]);
     }
