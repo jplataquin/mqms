@@ -471,7 +471,7 @@ class ComponentItemController extends Controller
         $section        = $component->Section;
         $project        = $section->Project;
 
-        $material_quantity_request_ids = $component_item->MaterialQuantityRequestItems()->distinct()->get(['material_quantity_request_id']);
+        $material_quantity_request_ids = $component_item->MaterialQuantityRequestItems()->select(DB::raw('DISTINCT material_quantity_request_id'))->get();
         
         $material_requests = [
             'APRV' => [],
