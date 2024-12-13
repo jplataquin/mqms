@@ -124,8 +124,8 @@
 
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label>Variable</label>
-                                            <input type="text" class="form-control" disabled="true" value="{{ $component_item->quantity }}"/>
+                                            <label>Quantity</label>
+                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($component_item->quantity,2) }}"/>
                                         </div>
                                     </div>
                                     
