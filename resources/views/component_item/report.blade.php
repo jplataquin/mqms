@@ -57,6 +57,24 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Component Item</label>
+                            <input type="text" value="{{$component_item->name}}" class="form-control" disabled="ture"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Status</label>
+                            <input type="text" value="{{$component_item->status}}" class="form-control" disabled="ture"/>
+                        </div>
+                    </div>
+                </div>
                 
             </div>
         </div>
