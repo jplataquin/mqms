@@ -84,7 +84,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Unit</label>
-                                            <input type="text" class="form-control" value="{{ $component_item->ref_1_unit_id }}" disabled="true"/>
+                                            <input type="text" class="form-control" value="{{ $component_item->ref_1_unit_text() }}" disabled="true"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">

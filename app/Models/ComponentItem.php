@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Component;
+use App\Models\Unit;
 use App\Models\MaterialQuantity;
 use App\Models\MaterialQuantityRequestItem;
 use Illuminate\Support\Facades\DB;
@@ -33,6 +34,33 @@ class ComponentItem extends Model
 
     public function MaterialQuantityRequestItems(){
         return $this->hasMany(MaterialQuantityRequestItem::class);
+    }
+
+    public function ref_1_unit_text(){
+       return $this->getUnitText($this->ref_1_unit_id);
+    }
+
+    public function unit_text(){
+        return $this->getUnitText($this->unit_id);
+    }
+
+    private function getUnitText($id){
+
+        $unit = Unit::find($id);
+
+        if(!$unit){
+            return '';
+        }
+        
+        $text = '';
+
+        $text = $unit;
+
+        if($unit->deleted_at){
+            $text = $text.' [Deleted]';
+        }
+
+        return $text;
     }
 
     public function delete(){
