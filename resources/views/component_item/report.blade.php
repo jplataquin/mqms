@@ -132,7 +132,7 @@
                                      <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Equivalent</label>
-                                            <input type="text" class="form-control" disabled="true" value="{{ }}"/>
+                                            <input type="text" class="form-control" disabled="true" value=""/>
                                         </div>
                                     </div>
 
