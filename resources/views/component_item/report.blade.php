@@ -109,30 +109,30 @@
                                 
                                 <div class="row mb-3">
 
-                                    <div class="col-3">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Function Type</label>
                                             <input type="text" class="form-control" disabled="true" value="{{ $component_item->function_type_text() }}"/>
                                         </div>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Variable</label>
                                             <input type="text" class="form-control" disabled="true" value="{{ $component_item->function_variable }}"/>
                                         </div>
                                     </div>
 
-                                    <div class="col-3">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Quantity</label>
-                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($component_item->quantity,2) }}"/>
+                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($component_item->quantity,2).' '.$component_item->unit_text() }}"/>
                                         </div>
                                     </div>
                                     
-                                     <div class="col-3">
+                                     <div class="col-lg-3">
                                         <div class="form-group">
-                                            <label>Unit</label>
-                                            <input type="text" class="form-control" disabled="true" value="{{ $component_item->unit_text() }}"/>
+                                            <label>Equivalent</label>
+                                            <input type="text" class="form-control" disabled="true" value="{{ }}"/>
                                         </div>
                                     </div>
 
