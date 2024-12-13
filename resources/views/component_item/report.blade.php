@@ -161,7 +161,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Unit Price</label>
-                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($component_item->unit_price,2) }}"/>
+                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($component_item->budget_price,2) }}"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
