@@ -132,7 +132,17 @@
                                      <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Equivalent</label>
-                                            <input type="text" class="form-control" disabled="true" value=""/>
+                                            @php 
+
+                                                $equivalent = 0;
+
+                                                if($component_item->function_type_id == 4){
+
+                                                    $equivalent = ($component_item->function_variable * $component_item->quantity) * $component->use_count;
+                                                }
+
+                                            @endphp
+                                            <input type="text" class="form-control" disabled="true" value="{{ $equivalent }}"/>
                                         </div>
                                     </div>
 
