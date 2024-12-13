@@ -467,7 +467,9 @@ class ComponentItemController extends Controller
         
         $material_quantity_request_ids = $component_item->MaterialQuantityRequestItems()->distinct()->get(['material_quantity_request_id']);
         
-        print_r($material_quantity_request_ids);
+        foreach($material_quantity_request_ids as $row){
+            echo $row->material_quantity_request_id.'<br>';
+        }
         return false;
         //return view('/component_item/report');
     }
