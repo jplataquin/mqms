@@ -467,11 +467,53 @@ class ComponentItemController extends Controller
         
         $material_quantity_request_ids = $component_item->MaterialQuantityRequestItems()->distinct()->get(['material_quantity_request_id']);
         
+        $material_requests = [
+            'APRV' => [],
+            'PEND' => [],
+            'REJC' => [],
+            'DELE' => []
+        ];
+
         foreach($material_quantity_request_ids as $row){
-            echo $row->material_quantity_request_id.'<br>';
+            $material_request = MaterialQuantityRequest::find($row->material_quantity_request_id);
+
+            if(!$material_request){
+
+                if($material_request->deleted_at != null){
+                
+                    $material_requests['DELE'][$material_request->id] = $material_request;
+                
+                }else{
+
+                    switch ($material_request->status){
+                        case 'APRV':
+
+                            $material_requests['APRV'][$material_request->id] = $material_request;
+                
+                            break;
+                        
+                        case 'PEND':
+
+                            $material_requests['PEND'][$material_request->id] = $material_request;
+                
+                            break;
+
+                        case 'REJC':
+
+                            $material_requests['REJC'][$material_request->id] = $material_request;
+                
+                            break;
+                    }
+                }
+                 
+            }
         }
-        return false;
-        //return view('/component_item/report');
+
+
+        
+        return view('/component_item/report',[
+            'component_item' => $component_item
+        ]);
     }
    
 }
