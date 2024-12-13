@@ -68,7 +68,7 @@
                     <div class="col-lg-1">
                         <div class="form-group">
                             <label>Sum Flag</label>
-                            <input type="text" value="{{ ($component_item->sum_flag) ?? ✅ : ❌}}" class="form-control" disabled="ture"/>
+                            <input type="text" value="{{ @if($component_item->sum_flag) ✅ else ❌ @endif}}" class="form-control" disabled="ture"/>
                         </div>
                     </div>
                 </div>
