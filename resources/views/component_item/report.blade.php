@@ -69,13 +69,28 @@
 
                 <div class="row mb-3">
                     <div class="col-lg-12">
-                        <div class="form-group">
-                            <label>Status</label>
-                            <input type="text" value="{{$component_item->status}}" class="form-control" disabled="ture"/>
+                        <div class="form-container">
+                            <div class="form-header">
+                                POW / DUPA
+                            </div>
+                            <div class="form-body">
+                            </div>
                         </div>
                     </div>
                 </div>
-                
+
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        <div class="form-container">
+                            <div class="form-header">
+                                Material Budget
+                            </div>
+                            <div class="form-body">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
         
