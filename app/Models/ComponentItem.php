@@ -44,6 +44,32 @@ class ComponentItem extends Model
         return $this->getUnitText($this->unit_id);
     }
 
+    public function function_type_text(){
+
+        $text = '';
+
+        switch($this->function_type_id){
+
+            case 1:
+                $text = 'As Factor';
+                break;
+            
+            case 2:
+                $text = 'As Divisor';
+                break;
+
+            case 3: 
+                $text = 'As Direct';
+                break;
+
+            case 4:
+                $text = 'As Equivalent';
+                break;
+        }
+
+        return $text;
+    }
+
     private function getUnitText($id){
 
         $unit = Unit::find($id);

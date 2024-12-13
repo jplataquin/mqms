@@ -106,6 +106,38 @@
                                 Material Budget
                             </div>
                             <div class="form-body">
+                                
+                                <div class="row mb-3">
+                                    
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label>Function Type</label>
+                                            <input type="text" class="form-control" disabled="true" value="{{ $component_item->function_type_text() }}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label>Variable</label>
+                                            <input type="text" class="form-control" disabled="true" value="{{ $component_item->variable }}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label>Variable</label>
+                                            <input type="text" class="form-control" disabled="true" value="{{ $component_item->quantity }}"/>
+                                        </div>
+                                    </div>
+                                    
+                                     <div class="col-3">
+                                        <div class="form-group">
+                                            <label>Unit</label>
+                                            <input type="text" class="form-control" disabled="true" value="{{ $component_item->unit_text() }}"/>
+                                        </div>
+                                    </div>
+
+                                </div>
+
                             </div>
                         </div>
                     </div>

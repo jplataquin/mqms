@@ -189,6 +189,9 @@ class CreateComponentItemForm extends ComponentV2{
         const t= new Template();
 
         return t.div(()=>{
+
+            t.div()
+
             t.div({class:'table-responsive'},()=>{
                 t.table({class:'table'},()=>{
                         
