@@ -180,7 +180,7 @@
 
                 <div class="mb-5 row">
                     <div class="col-lg-12 text-end">
-                        <button class="btn btn-warning">Print</button>
+                        <button class="btn btn-warning" id="printBtn" onclick="window.open('/report/project/print?project_id={{$project_id}}&section_id={{$section_id}}&contract_item_id={{$contract_item_id}}&component_id={{$component_id}}&as_of={{$as_of}}&material_items={{$material_items}}','_blank')">Print</button>
                     </div>
                 </div>
             </div>

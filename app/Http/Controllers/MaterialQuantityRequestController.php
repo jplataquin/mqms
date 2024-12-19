@@ -1077,7 +1077,7 @@ class MaterialQuantityRequestController extends Controller
         if($count_aprv_po){
             return [
                 'status'    => 0,
-                'message'   => 'This Material Request has approved Purchase Order(s), record dependency issue',
+                'message'   => 'Record dependency issue, this Material Request has (APRV,REJC) Purchase Order(s) that are dependent',
                 'data'      => []
             ];
         }

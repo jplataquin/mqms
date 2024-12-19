@@ -332,5 +332,8 @@ class ProjectReportController extends Controller {
 
     public function print(Request $request){
 
+        $data = $this->_generate($request);
+        
+        return view('/report/project/print',$data);
     }
 }
