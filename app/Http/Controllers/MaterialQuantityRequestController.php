@@ -1070,6 +1070,16 @@ class MaterialQuantityRequestController extends Controller
             ];
         }
 
+        $count_aprv_po = $material_quantity_request->PurchaseOrder()->where('status','APRV')->count();
+
+        if($count_aprv_po){
+            return [
+                'status'    => 0,
+                'message'   => 'This Material Request has approved Purchase Order(s), record dependency issue',
+                'data'      => []
+            ];
+        }
+
         $user_id    = Auth::user()->id;
 
         DB::beginTransaction();

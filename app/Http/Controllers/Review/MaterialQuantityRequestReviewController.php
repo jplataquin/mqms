@@ -31,6 +31,7 @@ class MaterialQuantityRequestReviewController extends Controller
 
         $project         = $materialQuantityRequest->Project;
         $section         = $materialQuantityRequest->Section;
+        $contract_item   = $materialQuantityRequest->ContractItem;
         $component       = $materialQuantityRequest->Component;
         $request_items   = $materialQuantityRequest->Items;
 
@@ -73,6 +74,7 @@ class MaterialQuantityRequestReviewController extends Controller
         return view('review/material_quantity_request/display',[
             'project'                   => $project,
             'section'                   => $section,
+            'contract_item'             => $contract_item,
             'component'                 => $component,
             'material_quantity_request' => $materialQuantityRequest,
             'request_items'             => $request_items,

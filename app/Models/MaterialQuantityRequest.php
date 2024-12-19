@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\MaterialQuantityRequestItem;
+use App\Models\PurchaseOrder;
 use App\Models\Project;
 use App\Models\Section;
 use App\Models\ContractItem;
@@ -26,6 +27,11 @@ class MaterialQuantityRequest extends Model
     public function Items(): HasMany
     {
         return $this->hasMany(MaterialQuantityRequestItem::class);
+    }
+
+    public function PurchaseOrder(): HasMany
+    {
+        return $this->hasMany(PurchaseOrder::class);
     }
 
     public function Project(): BelongsTo
