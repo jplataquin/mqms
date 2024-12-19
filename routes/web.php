@@ -143,7 +143,9 @@ Route::middleware(['auth',CheckForResetPassword::class])->group(function () {
     
     Route::get('/report/project/parameters', [App\Http\Controllers\Report\ProjectReportController::class, 'parameters']);
     Route::get('/report/project/generate', [App\Http\Controllers\Report\ProjectReportController::class, 'generate']);
+    Route::get('/report/project/print', [App\Http\Controllers\Report\ProjectReportController::class, 'print']);
     
+
     Route::get('/report/price/parameters', [App\Http\Controllers\Report\PriceReportController::class, 'parameters']);
     Route::get('/report/price/generate', [App\Http\Controllers\Report\PriceReportController::class, 'generate']);
     Route::get('/report/price/print', [App\Http\Controllers\Report\PriceReportController::class, 'print']);
