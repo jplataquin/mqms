@@ -175,13 +175,13 @@
     function renderRows(data){
         
         data.map(item=>{
-
+            console.log(item);
             let row = t.tr({class:'selectable-div'},()=>{
                 t.td(String(item.id).padStart(6,0));
                 t.td(item.status);
                 t.td(item.project.name);
                 t.td(item.section.name);
-                t.td(item.contractItem.name);
+                t.td('');
                 t.td(item.component.name);
                 t.td(
                     $util.dateTime(
