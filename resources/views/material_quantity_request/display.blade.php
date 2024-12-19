@@ -73,17 +73,40 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label>Status</label>
-                        <input type="text" value="{{$material_quantity_request->status}} {{$material_quantity_request->approved_at}}" class="form-control" disabled="true"/>
+                        <input type="text" value="{{$material_quantity_request->status}}" class="form-control" disabled="true"/>
                     </div>
                 </div>
             </div>
 
+            @if($material_quantity_request->status == 'APRV')
+
+            <div class="row mb-3">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>Approved By</label>
+                        <input type="text" value="{{$material_quantity_request->approvedByUser()->name}} ({{$material_quantity_request->approved_at}})" class="form-control" disabled="true"/>
+                    </div>
+                </div>
+            </div>
+
+            @elseif($material_quantity_request->status == 'REJC')
+
+            <div class="row mb-3">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>Rejected By</label>
+                        <input type="text" value="{{$material_quantity_request->rejectedByUser()->name}} ({{$material_quantity_request->rejected_at}})" class="form-control" disabled="true"/>
+                    </div>
+                </div>
+            </div>
+
+            @endif
             
             <div class="row mb-3">
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label>Created By</label>
-                        <input type="text" value="{{ $material_quantity_request->CreatedByUser()->name }} {{ $material_quantity_request->created_at }}" class="form-control" disabled="true"/>
+                        <input type="text" value="{{ $material_quantity_request->CreatedByUser()->name }} ({{ $material_quantity_request->created_at }})" class="form-control" disabled="true"/>
                     </div>
                 </div>
             </div>
