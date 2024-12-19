@@ -181,7 +181,7 @@
                 t.td(item.status);
                 t.td(item.project.name);
                 t.td(item.section.name);
-                t.td('');
+                t.td(item.contractItem.name);
                 t.td(item.component.name);
                 t.td(
                     $util.dateTime(
