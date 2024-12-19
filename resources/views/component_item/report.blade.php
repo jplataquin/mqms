@@ -218,7 +218,7 @@
             </div>
 
             <div class="col-lg-3 mb-3 text-center">
-                <h4>Rejected ( {{count($material_requests['DELE'])}} )</h4>
+                <h4>Deleted ( {{count($material_requests['DELE'])}} )</h4>
                 <div class="list-group">
                     @foreach($material_requests['DELE'] as $row)
                         <a class="list-group-item list-group-item-action" href="/material_quantity_request/{{$row->id}}">MR{{str_pad($row->id,6,0,STR_PAD_LEFT)}}</a>   
