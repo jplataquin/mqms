@@ -189,8 +189,8 @@
             });
             
 
-            row.onclick = ()=>{
-                window.util.navTo('/material_quantity_request/'+item.id);
+            row.onclick = (e)=>{
+                window.util.navTo('/material_quantity_request/'+item.id,e);
             };
 
             $el.append(row).to(list);
