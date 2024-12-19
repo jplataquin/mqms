@@ -312,6 +312,9 @@
             });
 
         });
+
+        reinitalize();
+        showData();
     }
 
     sectionSelect.onchange = (e)=>{
@@ -350,6 +353,9 @@
             });
 
         });
+
+        reinitalize();
+        showData();
     }
 
 
@@ -389,6 +395,14 @@
             });
 
         });
+
+        reinitalize();
+        showData();
+    }
+
+    componentSelect.onchange = ()=>{
+        reinitalize();
+        showData();
     }
 
     reinitalize();
