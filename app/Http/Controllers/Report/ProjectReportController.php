@@ -317,7 +317,7 @@ class ProjectReportController extends Controller {
 
             'project_id'                => $project_id,
             'section_id'                => $section_id,
-            'contract_item_id'          => $contract_item_id ?? $contract_item_id : '',
+            'contract_item_id'          => $contract_item_id ? $contract_item_id : '',
             'component_id'              => $component_id,
             'as_of'                     => $as_of,
             'material_items_request'    => $request->input('material_items')
