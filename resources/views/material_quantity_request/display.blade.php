@@ -73,7 +73,7 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label>Status</label>
-                        <input type="text" value="{{$material_quantity_request->status}}" class="form-control" disabled="true"/>
+                        <input type="text" value="{{$material_quantity_request->status}} {{$material_quantity_request->approved_at}}" class="form-control" disabled="true"/>
                     </div>
                 </div>
             </div>
