@@ -114,21 +114,23 @@
 
 
 <div class="container">
-                <table class="table border">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Status</th>
-                            <th>Project</th>
-                            <th>Section</th>
-                            <th>Contract Item</th>
-                            <th>Component</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody  id="list">
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table border">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Status</th>
+                                <th>Project</th>
+                                <th>Section</th>
+                                <th>Contract Item</th>
+                                <th>Component</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody  id="list">
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="row">
