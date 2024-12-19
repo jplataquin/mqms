@@ -190,8 +190,8 @@
 
         <div class="row mb-3" hx-boost="true" hx-select="#content" hx-target="#main">
             
-            <div class="col-lg-6 mb-3 text-center">
-                <h4>Pending ()</h4>
+            <div class="col-lg-3 mb-3 text-center">
+                <h4>Pending ( {{count($material_requests['PEND'])}} )</h4>
                 <div class="list-group">                    
                     @foreach($material_requests['PEND'] as $row)
                         <a class="list-group-item list-group-item-action" href="/material_quantity_request/{{$row->id}}">MR{{str_pad($row->id,6,0,STR_PAD_LEFT)}}</a>   
@@ -199,15 +199,32 @@
                 </div>
             </div>
 
-            <div class="col-lg-6 mb-3 text-center">
-                <h4>Approved ()</h4>
+            <div class="col-lg-3 mb-3 text-center">
+                <h4>Approved ( {{count($material_requests['APRV'])}} )</h4>
                 <div class="list-group">
                     @foreach($material_requests['APRV'] as $row)
                         <a class="list-group-item list-group-item-action" href="/material_quantity_request/{{$row->id}}">MR{{str_pad($row->id,6,0,STR_PAD_LEFT)}}</a>   
                     @endforeach
                 </div>
             </div>
+            
+            <div class="col-lg-3 mb-3 text-center">
+                <h4>Rejected ( {{count($material_requests['REJC'])}} )</h4>
+                <div class="list-group">
+                    @foreach($material_requests['REJC'] as $row)
+                        <a class="list-group-item list-group-item-action" href="/material_quantity_request/{{$row->id}}">MR{{str_pad($row->id,6,0,STR_PAD_LEFT)}}</a>   
+                    @endforeach
+                </div>
+            </div>
 
+            <div class="col-lg-3 mb-3 text-center">
+                <h4>Rejected ( {{count($material_requests['DELE'])}} )</h4>
+                <div class="list-group">
+                    @foreach($material_requests['DELE'] as $row)
+                        <a class="list-group-item list-group-item-action" href="/material_quantity_request/{{$row->id}}">MR{{str_pad($row->id,6,0,STR_PAD_LEFT)}}</a>   
+                    @endforeach
+                </div>
+            </div>
 
         </div>
     </div>
