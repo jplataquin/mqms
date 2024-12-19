@@ -36,8 +36,8 @@ class ProjectReportController extends Controller {
         ]);
     }
 
-    public function generate(Request $request){
-
+    private function _generate($request){
+        
         $url = htmlspecialchars( str_replace(url('').'/','',$request->fullUrl()) );
        
         $project_id             = $request->input('project_id');
@@ -300,8 +300,7 @@ class ProjectReportController extends Controller {
 
         }//contract item
 
-
-        return view('/report/project/generate',[
+        return [
             'project_name'          => $project_name,
             'section_name'          => $section_name,
             'contract_item_name'    => $contract_item_name,
@@ -314,8 +313,24 @@ class ProjectReportController extends Controller {
             'total_po_overhead_arr' => $total_po_overhead_arr,
             'report'                => $report,
             'as_of_display'         => $as_of_display,
-            'url'                   => $url
-        ]);
+            'url'                   => $url,
+
+            'project_id'            => $project_id,
+            'section_id'            => $section_id,
+            'contract_item_id'      => $contract_item_id,
+            'component_id'          => $component_id,
+            'material_items_req'    => $request->input('material_items')
+        ];
     }
 
+    public function generate(Request $request){
+
+        $data = $this->_generate($request);
+
+        return view('/report/project/generate',$data);
+    }
+
+    public function print(Request $request){
+
+    }
 }
