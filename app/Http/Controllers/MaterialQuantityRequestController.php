@@ -43,14 +43,6 @@ class MaterialQuantityRequestController extends Controller
         $project_id = (int) $project_id;
         $project    = Project::findOrFail($project_id);
 
-        //If the project is not active then do not allow
-        if($project->status != 'ACTV'){
-            return view('material_quantity_request/unavailable',[
-                'project'   => $project,
-                'section'   => $section,
-                'component' => $component
-            ]);
-        }
 
         $section_id = (int) $section_id;
         $section = Section::findOrFail($section_id);
@@ -61,6 +53,17 @@ class MaterialQuantityRequestController extends Controller
         $component_id = (int) $component_id;
         $component = Component::findOrFail($component_id);
 
+        //If the project is not active then do not allow
+        if($project->status != 'ACTV'){
+            return view('material_quantity_request/unavailable',[
+                'project'       => $project,
+                'section'       => $section,
+                'contract_item' => $contract_item,
+                'component'     => $component,
+                'message'       => 'Project status is not approved'
+            ]);
+        }
+
         //If the component is not approved then do not allow
         if($component->status != 'APRV'){
             return view('material_quantity_request/unavailable',[
@@ -68,7 +71,7 @@ class MaterialQuantityRequestController extends Controller
                 'section'       => $section,
                 'component'     => $component,
                 'contract_item' => $contract_item,
-                'message'   => 'Component status is not yet approved'
+                'message'       => 'Component status is not approved'
             ]);
         }
 
@@ -947,11 +950,11 @@ class MaterialQuantityRequestController extends Controller
         if($limit > 0){
             $page   = ($page-1) * $limit;
             
-            $result = $materialQuantityRequest->orderBy($orderBy,$order)->skip($page)->take($limit)->with('Project')->with('Section')->with('Component')->with('User')->get();
+            $result = $materialQuantityRequest->orderBy($orderBy,$order)->skip($page)->take($limit)->with('Project')->with('Section')->with('ContractItem')->with('Component')->with('User')->get();
             
         }else{
 
-            $result = $materialQuantityRequest->orderBy($orderBy,$order)->take($limit)->with('Project')->with('Section')->with('Component')->with('User')->get();
+            $result = $materialQuantityRequest->orderBy($orderBy,$order)->take($limit)->with('Project')->with('Section')->with('ContractItem')->with('Component')->with('User')->get();
         }
 
         return response()->json([
