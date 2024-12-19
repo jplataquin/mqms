@@ -85,7 +85,7 @@
                 <div class="list-group">
                     @foreach($pending as $pend_po)
                        
-                        <a class="list-group-item list-group-item-action" href="/purchase_order/{{$pend_po->id}}">{{str_pad($pend_po->id,6,0,STR_PAD_LEFT)}}</a>
+                        <a class="list-group-item list-group-item-action" href="/purchase_order/{{$pend_po->id}}">PO{{str_pad($pend_po->id,6,0,STR_PAD_LEFT)}}</a>
                        
                     @endforeach
                 </div>
@@ -96,7 +96,7 @@
                 <div class="list-group">
                     @foreach($approved as $aprv_po)
                        
-                        <a class="list-group-item list-group-item-action" href="/purchase_order/{{$aprv_po->id}}">{{str_pad($aprv_po->id,6,0,STR_PAD_LEFT)}}</a>
+                        <a class="list-group-item list-group-item-action" href="/purchase_order/{{$aprv_po->id}}">PO{{str_pad($aprv_po->id,6,0,STR_PAD_LEFT)}}</a>
                        
                     @endforeach
                 </div>
@@ -107,7 +107,7 @@
                 <div class="list-group">
                     @foreach($rejected as $rejc_po)
                        
-                        <a class="list-group-item list-group-item-action" href="/purchase_order/{{$rejc_po->id}}">{{str_pad($rejc_po->id,6,0,STR_PAD_LEFT)}}</a>
+                        <a class="list-group-item list-group-item-action" href="/purchase_order/{{$rejc_po->id}}">PO{{str_pad($rejc_po->id,6,0,STR_PAD_LEFT)}}</a>
                        
                     @endforeach
                 </div>
@@ -118,7 +118,7 @@
                 <div class="list-group">
                     @foreach($deleted as $del_po)
                        
-                        <a class="list-group-item list-group-item-action" href="/purchase_order/{{$del_po->id}}">{{str_pad($del_po->id,6,0,STR_PAD_LEFT)}}</a>
+                        <a class="list-group-item list-group-item-action" href="/purchase_order/{{$del_po->id}}">PO{{str_pad($del_po->id,6,0,STR_PAD_LEFT)}}</a>
                        
                     @endforeach
                 </div>

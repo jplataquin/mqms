@@ -80,7 +80,7 @@
             </div>
 
             <div class="row mt-5">
-                <div class="col-6 text-end">
+                <div class="col-lg-12 text-end">
                     <button class="btn btn-warning" id="resetBtn">Reset Password</button>
                 
                     <button class="btn btn-primary" id="editBtn">Edit</button>

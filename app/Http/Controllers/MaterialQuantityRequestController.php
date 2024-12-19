@@ -1070,7 +1070,9 @@ class MaterialQuantityRequestController extends Controller
             ];
         }
 
-        $count_aprv_po = $material_quantity_request->PurchaseOrder()->where('status','APRV')->count();
+        $count_aprv_po = $material_quantity_request->PurchaseOrder()
+        ->where('deleted_at',null)
+        ->whereIn('status',['APRV','PEND'])->count();
 
         if($count_aprv_po){
             return [
