@@ -82,8 +82,8 @@
             <div class="row mb-3">
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <label>Date Created</label>
-                        <input type="text" value="{{ $material_quantity_request->created_at }}" class="form-control" disabled="true"/>
+                        <label>Created By</label>
+                        <input type="text" value="{{ $material_quantity_request->CreatedByUser()->name }} {{ $material_quantity_request->created_at }}" class="form-control" disabled="true"/>
                     </div>
                 </div>
             </div>
