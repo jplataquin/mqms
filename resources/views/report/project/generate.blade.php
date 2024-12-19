@@ -178,6 +178,11 @@
                     </div>
                 </div>
 
+                <div class="mb-5 row">
+                    <div class="col-lg-12 text-end">
+                        <button class="btn btn-warning">Print</button>
+                    </div>
+                </div>
             </div>
         </div>
 
