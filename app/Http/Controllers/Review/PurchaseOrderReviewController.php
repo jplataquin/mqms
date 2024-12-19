@@ -101,6 +101,7 @@ class PurchaseOrderReviewController extends Controller
 
         $project                = $materialQuantityRequest->Project;
         $section                = $materialQuantityRequest->Section;
+        $contract_item          = $materialQuantityRequest->ContractItem;
         $component              = $materialQuantityRequest->Component;
         $material_reqeust_items = $materialQuantityRequest->Items;
         //TODO compensate for delted items
@@ -167,6 +168,7 @@ class PurchaseOrderReviewController extends Controller
             'remaining_quantity_arr'    => $remaining_quantity_arr,
             'project'                   => $project,
             'section'                   => $section,
+            'contract_item'             => $contract_item,
             'component'                 => $component,
             'supplier'                  => $supplier,
             'payment_term'              => $paymentTerm,
