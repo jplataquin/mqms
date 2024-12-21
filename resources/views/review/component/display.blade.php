@@ -25,6 +25,10 @@
     </div>
     <hr>
        
+        <div id="callout-danger" class="callout callout-danger d-none">
+            <h4 id="callout-danger-p"></h4> 
+        </div>
+
         <div class="folder-form-container">
             <div class="folder-form-tab">
                 Review
@@ -322,8 +326,8 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>Total Quantity</label>
-                                            <input type="text" disabled="true" class="form-control @if($component_arr[$component->id]->total_quantity > $component->quantity) is-invalid @endif" value="{{ number_format($component_arr[$component->id]->total_quantity,2) }} @if(isset($unit_options[$component->unit_id])) {{$unit_options[$component->unit_id]->text}} @endif"/>
+                                            <label>Material Quantity</label>
+                                            <input type="text" disabled="true" class="form-control @if($component_arr[$component->id]->total_quantity > $component->quantity) is-invalid non-conforming @endif" value="{{ number_format($component_arr[$component->id]->total_quantity,2) }} @if(isset($unit_options[$component->unit_id])) {{$unit_options[$component->unit_id]->text}} @endif"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -476,7 +480,7 @@
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label>Cost</label>
+                                <label>Unit Cost</label>
                                 <input type="text" disabled="true" value="Php {{ number_format($component_item->budget_price,2) }}" class="form-control"/>
                             </div>
                         </div>
@@ -530,7 +534,7 @@
                                     <th colspan="3" class="text-end">
                                         Grand Total
                                     </th>
-                                    <td class="@if(round($grand_total,2)  > round($component_item->quantity,2) ) is-invalid text-danger @endif text-center">
+                                    <td class="@if(round($grand_total,2)  > round($component_item->quantity,2) ) is-invalid text-danger non-conforming @endif text-center">
                                        
                                         {{ number_format($grand_total,2) }} {{ $unit_options[ $component_item->unit_id ]->text }}
                                     </td>
@@ -566,13 +570,15 @@
 <script type="module">
     import {$q} from '/adarna.js';
 
-    const approveBtn      = $q('#approveBtn').first();
-    const rejectBtn       = $q('#rejectBtn').first();
-    const cancelBtn       = $q('#cancelBtn').first();
-    const contract_item   = $q('#contract_item').first();
-    const component       = $q('#component').first();
-    const printBtn        = $q('#printBtn').first();
-    const revertPendBtn   = $q('#revertPendBtn').first();
+    const approveBtn        = $q('#approveBtn').first();
+    const rejectBtn         = $q('#rejectBtn').first();
+    const cancelBtn         = $q('#cancelBtn').first();
+    const contract_item     = $q('#contract_item').first();
+    const component         = $q('#component').first();
+    const printBtn          = $q('#printBtn').first();
+    const revertPendBtn     = $q('#revertPendBtn').first();
+    const calloutDanger     = $q('#callout-danger').first();
+    const calloutDangerText = $q('#callout-danger-p').first(); 
     
     window.util.quickNav = {
         title:'Component',
@@ -620,7 +626,7 @@
             e.preventDefault();
 
 
-            if( $q('.is-invalid').items().length ){
+            if( $q('.non-conforming').items().length ){
                 
                 let answer1 = await window.util.prompt('Warning there are quantities that are over the limit, type "ok" to proceed.');
 
@@ -699,6 +705,13 @@
     cancelBtn.onclick = (e)=>{
         e.preventDefault();
         window.util.navTo('/review/components/');
+    }
+
+    let non_conforming_count = $q('.non-conforming').items().length;
+
+    if(non_conforming_count){
+        calloutDanger.classList.remove('d-none');
+        calloutDangerText.innerText = 'Warning: '+non_conforming_count+' items are non-conforming';
     }
 </script>
 </div>
