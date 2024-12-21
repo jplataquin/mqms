@@ -73,7 +73,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Material Budget</label>
-                                        <input type="text" disabled="true" class="form-control @if($budget_grand_total_amount < $contract_grand_total_amount) is-invalid non-conforming @endif" value="P {{ number_format($budget_grand_total_amount,2) }}"/>
+                                        <input type="text" disabled="true" class="form-control @if($budget_grand_total_amount > $contract_grand_total_amount) is-invalid non-conforming @endif" value="P {{ number_format($budget_grand_total_amount,2) }}"/>
                                     </div>
                                 </div>
                             </div>
@@ -711,7 +711,7 @@
 
     if(non_conforming_count){
         calloutDanger.classList.remove('d-none');
-        calloutDangerText.innerText = 'Warning: '+non_conforming_count+' items are non-conforming';
+        calloutDangerText.innerText = 'Warning: '+non_conforming_count+' item(s) are non-conforming';
     }
 </script>
 </div>
