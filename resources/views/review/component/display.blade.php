@@ -137,7 +137,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
                                                             @php
-                                                                if($contract_grand_total_amount >= 0){
+                                                                if($contract_grand_total_amount > 0){
                                                                     $contract_amount_percentage = ( ($contract_amount / $contract_grand_total_amount) * 100);
                                                                     $contract_amount_percentage = number_format($contract_amount_percentage,2);
                                                                 }else{
@@ -178,7 +178,7 @@
 
                                                             $ref_1_amount = $contract_item->ref_1_unit_price * $contract_item->ref_1_quantity;
                                                             @php
-                                                                if($ref_1_grand_total_amount >= 0){
+                                                                if($ref_1_grand_total_amount > 0){
                                                                     $ref_1_amount_percentage = ( ($ref_1_amount / $ref_1_grand_total_amount) * 100);
                                                                     $ref_1_amount_percentage = number_format($ref_1_amount_percentage,2);
                                                                 }else{
@@ -215,7 +215,7 @@
                                                         <div class="form-group">
                                                             
                                                             @php
-                                                                if($budget_grand_total_amount >= 0){
+                                                                if($budget_grand_total_amount > 0){
                                                                     $material_budget_percentage = ( ($contract_item_arr[$contract_item->id]->total_amount / $budget_grand_total_amount) * 100);
                                                                     $material_budget_percentage = number_format($material_budget_percentage,2);
                                                                 }else{
