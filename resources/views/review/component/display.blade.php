@@ -137,7 +137,12 @@
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <label>Total Amount</label>
-                                                            <input type="text" class="form-control" disabled="true" value="P {{ number_format($contract_amount,2) }}"/>
+
+                                                            @php
+                                                                $contract_amount_percentage = ( ($contract_amount / $contract_grand_total_amount) * 100);
+                                                                $contract_amount_percentage = number_format($contract_amount_percentage,2);
+                                                            @endphp
+                                                            <input type="text" class="form-control" disabled="true" value="P {{ number_format($contract_amount,2) }} ({{$contract_amount_percentage}}%)"/>
                                                         </div>
                                                     </div>
                                                 </div>
