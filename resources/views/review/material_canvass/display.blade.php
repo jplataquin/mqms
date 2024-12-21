@@ -86,6 +86,13 @@
     </div>
     <hr>
     <div class="mt-3">
+
+        @if(!$items)
+            <div id="callout-danger" class="callout callout-danger">
+                <h4 id="callout-danger-p">No items found</h4> 
+            </div>
+        @endif
+
         @foreach($items as $item)
 
         <div class="form-container mb-5">
