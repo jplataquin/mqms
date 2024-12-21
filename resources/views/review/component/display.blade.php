@@ -268,7 +268,19 @@
                                                                     {{ number_format($comp->total_quantity,2) }} {{ $unit_options[$comp->data->unit_id]->text }}
                                                                     » 
                                                                     P {{ number_format($comp->total_amount,2) }}
-                                                                    
+                                                                    » 
+
+                                                                    @if($contract_item_arr[$contract_item->id]->total_amount > 0)
+
+                                                                        @php
+                                                                            $comp_amt_percentage = ($comp->total_amount / $contract_item_arr[$contract_item->id]->total_amount) * 100;
+                                                                            $comp_amt_percentage = number_format($comp_amt_percentage,2);
+                                                                        @endphp
+                                                                        ({{$comp_amt_percentage}}%)
+                                                                    @else
+                                                                        0.00%;
+                                                                    @endif
+
                                                                     @if(!$comp->data->sum_flag || $comp->data->unit_id != $contract_item->unit_id)
                                                                     » Excluded
                                                                     @endif
