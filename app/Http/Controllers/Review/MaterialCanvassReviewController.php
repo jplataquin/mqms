@@ -141,8 +141,9 @@ class MaterialCanvassReviewController extends Controller
 
         $items                  = $materialQuantityRequest->Items()->with('MaterialCanvass')->get();
         
-        $component_item_id      = [];
-
+        $component_item_ids      = [];
+        $material_quantity_ids   = [];
+        $material_item_ids       = [];
         //Arrange IDs for easy query
         foreach($items as $k => $item){
             
@@ -151,16 +152,16 @@ class MaterialCanvassReviewController extends Controller
                 continue;
             }
 
-            $component_item_id[]    = $item->component_item_id; 
-            $material_quantity_id[] = $item->material_quantity_id;
-            $material_item_id[]     = $item->material_item_id;
+            $component_item_ids[]    = $item->component_item_id; 
+            $material_quantity_ids[] = $item->material_quantity_id;
+            $material_item_ids[]     = $item->material_item_id;
         }
 
         $suppliers              = Supplier::orderBy('name','ASC')->get();
-        $component_items        = ComponentItem::whereIn('id',$component_item_id)->get();
-        $material_quantities    = MaterialQuantity::whereIn('id',$material_quantity_id)->get();
+        $component_items        = ComponentItem::whereIn('id',$component_item_ids)->get();
+        $material_quantities    = MaterialQuantity::whereIn('id',$material_quantity_ids)->get();
 
-        $material_items = DB::table('material_items')->whereIn('id',$material_item_id)->get();
+        $material_items = DB::table('material_items')->whereIn('id',$material_item_ids)->get();
 
 
         $component_item_arr = [];
