@@ -175,9 +175,9 @@
                                                 <div class="row mb-3">
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
-
-                                                            $ref_1_amount = $contract_item->ref_1_unit_price * $contract_item->ref_1_quantity;
                                                             @php
+                                                                $ref_1_amount = $contract_item->ref_1_unit_price * $contract_item->ref_1_quantity;
+                                                           
                                                                 if($ref_1_grand_total_amount > 0){
                                                                     $ref_1_amount_percentage = ( ($ref_1_amount / $ref_1_grand_total_amount) * 100);
                                                                     $ref_1_amount_percentage = number_format($ref_1_amount_percentage,2);
