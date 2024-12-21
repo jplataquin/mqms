@@ -224,7 +224,7 @@
                                                             @endphp
 
                                                             <label>Total Amount ({{ $material_budget_percentage }}%)</label>
-                                                            <input type="text" class="form-control @if($contract_item_arr[$contract_item->id]->total_amount > $contract_amount) is-invalid @endif" disabled="true" value="P {{ number_format($contract_item_arr[$contract_item->id]->total_amount,2) }}"/>
+                                                            <input type="text" class="form-control @if($contract_item_arr[$contract_item->id]->total_amount > $contract_amount) is-invalid non-conforming @endif" disabled="true" value="P {{ number_format($contract_item_arr[$contract_item->id]->total_amount,2) }}"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -316,7 +316,17 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>Total Amount</label>
+                                            @php
+                                                if($contract_item_arr[$contract_item->id]->total_amount > 0){
+
+                                                    $component_amount_percentage = ($component_arr[$component->id]->total_amount / $contract_item_arr[$contract_item->id]->total_amount) * 100;
+                                                    $component_amount_percentage = number_format($component_amount_percentage,2);
+
+                                                }else{
+                                                    $component_amount_percentage = 0.00;
+                                                }
+                                            @endphp
+                                            <label>Total Amount ({{$component_amount_percentage}}%)</label>
                                             <input type="text" disabled="true" class="form-control" value="P {{ number_format($component_arr[$component->id]->total_amount,2) }}"/>
                                         </div>
                                     </div>
