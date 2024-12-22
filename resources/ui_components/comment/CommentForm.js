@@ -1,7 +1,7 @@
-import {Template,Component} from '/adarna.js';
+import {Template,ComponentV2} from '/adarna.js';
                 
 
-class CommentForm extends Component{
+class CommentForm extends ComponentV2{
 
     state(){
         return {
