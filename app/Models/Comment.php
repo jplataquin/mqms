@@ -10,7 +10,7 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $table = 'components';
+    protected $table = 'comments';
 
     public $deleteException = null;
 
@@ -22,6 +22,6 @@ class Comment extends Model
             return User::defaultAttirbutes();
         }
 
-        return $user;
+        return $user; 
     }
 }
