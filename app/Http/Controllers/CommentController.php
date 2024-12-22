@@ -16,7 +16,6 @@ class CommentController extends Controller
         $record_type  = $request->input('record_type');
         $record_id    = (int) $request->input('record_id');
         
-
         $validator = Validator::make($request->all(),[
             'comment_type' =>[
                 'required',
@@ -47,11 +46,18 @@ class CommentController extends Controller
 
         $comment = new Comment();
 
+        $comment->record_id     = $record_id;
+        $comment->record_type   = $record_type;
+        $comment->comment_type  = $comment_type;
+        $comment->created_by    = $user_id;
+        
+        $comment->save();
+
         return response()->json([
             'status'    => 1,
             'message'   => '',
             'data'      => [
-                'id'=> ''
+                'id'=> $comment->id
             ]
         ]);
     }

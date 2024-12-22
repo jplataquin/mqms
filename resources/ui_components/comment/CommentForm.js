@@ -72,6 +72,8 @@ class CommentForm extends ComponentV2{
                 return false;
             }
 
+            this.setState('content','');
+
         });
     }
 
