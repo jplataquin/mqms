@@ -51,7 +51,7 @@ class CommentController extends Controller
             'status'    => 1,
             'message'   => '',
             'data'      => [
-                'id'=> $component->id
+                'id'=> ''
             ]
         ]);
     }
