@@ -76,8 +76,7 @@ class ComponentController extends Controller
             return response()->json([
                 'status'    => -2,
                 'message'   => 'Failed Validation',
-                'data'      => $validator->messages(),
-                'test'      => Component::where('name',$name)->where('section_id',$section_id)->get()
+                'data'      => $validator->messages()
             ]);
         }
 

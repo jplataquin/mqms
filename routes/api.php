@@ -151,7 +151,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/contract_item/delete', [App\Http\Controllers\ContractItemController::class, '_delete']);
 
 
-    Route::get('/comments/{record_type}/{record_id}', [App\Http\Controllers\CommentController::class, 'list']);
-    Route::post('/comments/{record_type}/{record_id}', [App\Http\Controllers\CommentController::class, 'create']);
+    Route::get('/comment/create', [App\Http\Controllers\CommentController::class, '_create']);
    
 });

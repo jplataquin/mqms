@@ -260,7 +260,11 @@
     };
     
 
-    comment_container.append(CommentForm());
+    comment_container.append(CommentForm({
+        record_id       :'{{$component->id}}',
+        record_type     :'COMPON',
+        comment_type    :'ENTR'
+    }));
     
     editBtn.onclick = ()=>{
 
