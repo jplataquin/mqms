@@ -70,9 +70,6 @@ class CommentForm extends ComponentV2{
                 return false;
             }
 
-            //Component(reply.data.id)).to(component_list)
-            this._model.callback(reply.data.id);
-            window.util.drawerModal.close();
         });
     }
 
