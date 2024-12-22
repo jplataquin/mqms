@@ -151,6 +151,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/contract_item/delete', [App\Http\Controllers\ContractItemController::class, '_delete']);
 
 
-    Route::get('/comment/create', [App\Http\Controllers\CommentController::class, '_create']);
+    Route::post('/comment/create', [App\Http\Controllers\CommentController::class, '_create']);
    
 });
