@@ -8,7 +8,7 @@ class CommentForm extends ComponentV2{
             content:{
                 value: '',
                 target: this.el.textarea,
-                events:['keyup'],
+                events:['keyup','change'],
                 onUpdate: (data)=>{
                     if(!data.event){
                         this.el.textarea.value = data.value;
