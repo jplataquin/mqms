@@ -24,7 +24,7 @@
             </li>
         </ul>
     </div>
-<hr>
+    <hr>
 
 
         <div id="callout-non-conforming" class="callout callout-danger d-none">
@@ -207,12 +207,15 @@
         </div>
     </div>
     <div id="component_item_list" class="mt-3"></div>
+
+    <div id="comment_container"></div>
 </div>
 
 <script type="module">
     import {Template,$q,$el,State,Signal} from '/adarna.js';
     import ComponentItemEl from '/ui_components/ComponentItem.js';
     import CreateComponentItemForm from '/ui_components/create_forms/CreateComponentItemForm.js';
+    import CommentForm from '/ui_components/comment/CommentForm.js';
 
     const materialItemOptions       = @json($materialItems);
     const component                 = $q('#component').first();
@@ -234,6 +237,7 @@
     const add_component_item_button = $q('#addComponentItemBtn').first();
     const reviewLinkBtn             = $q('#reviewLinkBtn').first();
     const callout_non_conforming    = $q('#callout-non-conforming').first();
+    const comment_container         = $q('#comment_container').first();
    
     const t = new Template();
 
@@ -255,7 +259,9 @@
         url: '/project/section/contract_item/component'
     };
     
-   
+
+    comment_container.append(CommentForm());
+    
     editBtn.onclick = ()=>{
 
         $q('.editable_field').apply((el)=>{
