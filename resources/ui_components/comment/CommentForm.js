@@ -19,7 +19,11 @@ class CommentForm extends Component{
 
             t.div(()=>{
                 t.div({class:'form-group'},()=>{
-                    this.el.textarea = t.textarea({class:'w-100'});
+                    this.el.textarea = t.textarea({class:'w-100 form-control',placeholder:'Comment'});
+                });
+
+                t.div({class:'text-end'},()=>{
+                    t.button({class:'btn btn-primary'},'Submit');
                 });
             });
 
