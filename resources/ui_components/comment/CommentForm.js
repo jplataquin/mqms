@@ -20,7 +20,9 @@ class CommentForm extends ComponentV2{
 
     model(){
         return {
-            comment_id:''
+            comment_type:'',
+            record_type:'',
+            record_id:''
         }
     }
 

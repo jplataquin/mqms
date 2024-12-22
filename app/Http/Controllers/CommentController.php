@@ -6,7 +6,7 @@ use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class ComponentController extends Controller
+class CommentController extends Controller
 {
 
     public function _create(Request $request){
