@@ -54,11 +54,11 @@ class CommentList extends ComponentV2{
         data.map(item=>{
 
             this.el.container.append(
-                t.div({class:'mb-3 border border-primary rounded'},()=>{
+                t.div({class:'mb-3 border border-primary rounded p-1'},()=>{
     
                     t.pre(item.content);
                     t.div({class:'text-end'},()=>{
-                        t.p('By '+item.user.name+' '+item.created_at);
+                        t.p({class:'font-weight-light font-italic'},'By '+item.user.name+' '+item.created_at);
                     });
                 })
             );
