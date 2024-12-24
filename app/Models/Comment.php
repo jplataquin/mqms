@@ -13,7 +13,7 @@ class Comment extends Model
     use HasFactory;
 
     protected $casts = [
-        'created_at' => "datetime:Y-m-d\TH:iPZ",
+        'created_at' => "datetime:Y-m-d H:i:s",
     ];
 
     protected $table = 'comments';
