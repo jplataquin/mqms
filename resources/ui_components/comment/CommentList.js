@@ -54,7 +54,7 @@ class CommentList extends ComponentV2{
         data.map(item=>{
 
             this.el.container.append(
-                t.div(()=>{
+                t.div({class:'shadow p-3 mb-5 bg-body rounded'},()=>{
 
                     t.div({class:'mb-3 border border-primary rounded ps-2 pe-1 pt-1'},()=>{
     
@@ -64,7 +64,7 @@ class CommentList extends ComponentV2{
                     t.div({class:'text-end'},()=>{
                         t.p({class:'mb-0 font-weight-light font-italic blockquote-footer'},item.user.name+' '+item.created_at);
                     });
-                    
+
                 })
                 
             );
