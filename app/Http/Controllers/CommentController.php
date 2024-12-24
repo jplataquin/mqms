@@ -41,7 +41,7 @@ class CommentController extends Controller
 
         $comments = Comment::where('record_type',$record_type)
         ->where('record_id',$record_id)->with('User')
-        ->order_by('created_at','DESC')->get();
+        ->orderBy('created_at','DESC')->get();
 
         return response()->json([
             'status'    => 1,
