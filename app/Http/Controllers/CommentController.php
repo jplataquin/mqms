@@ -34,7 +34,8 @@ class CommentController extends Controller
                 'gte:1'
             ],
             'content' => [
-                'required'
+                'required',
+                'max:1500'
             ]
         ]);
          
