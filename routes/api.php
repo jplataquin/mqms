@@ -152,5 +152,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
     Route::post('/comment/create', [App\Http\Controllers\CommentController::class, '_create']);
-    Route::post('/comment/list', [App\Http\Controllers\CommentController::class, '_list']);
+    Route::get('/comment/list', [App\Http\Controllers\CommentController::class, '_list']);
 });
