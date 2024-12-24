@@ -12,6 +12,10 @@ class Comment extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'created_at' => "datetime:Y-m-d\TH:iPZ",
+    ];
+
     protected $table = 'comments';
 
     public $deleteException = null;
@@ -33,8 +37,8 @@ class Comment extends Model
         return $user; 
     }
 
-    public function getCreatedAtAttribute($date)
-    {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('Y-m-d H:i:s');
-    }
+    // public function getCreatedAtAttribute($date)
+    // {
+    //     return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('Y-m-d H:i:s');
+    // }
 }
