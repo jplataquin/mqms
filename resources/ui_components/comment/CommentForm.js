@@ -30,14 +30,16 @@ class CommentForm extends ComponentV2{
 
         const t = new Template();
         
+        this.el.comment_list = CommentList({
+            record_type: this._model.record_type,
+            record_id: this._model.record_id
+        });
+
         return t.div({class:'container'},()=>{
 
-            this.el.comment_list_container = t.div({class:'mb-3'},
-                CommentList({
-                    record_type: this._model.record_type,
-                    record_id: this._model.record_id
-                })
-            );
+            this.el.comment_list_container = t.div({class:'mb-3'},(el)=>{
+                el.append(this.el.comment_list);
+            });
 
             t.div(()=>{
                 t.div({class:'form-group mb-3'},()=>{
