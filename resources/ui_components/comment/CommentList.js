@@ -34,7 +34,6 @@ class CommentList extends ComponentV2{
     getComments(){
 
         window.util.$get('/api/comment/list',{
-            comment_type    : this._model.comment_type,
             record_type     : this._model.record_type,
             record_id       : this._model.record_id
         }).then(reply=>{
