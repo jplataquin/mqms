@@ -66,6 +66,7 @@ class CommentForm extends ComponentV2{
         window.util.blockUI();
 
         window.util.$post('/api/comment/create',{
+            comment_type: 'ENTR',
             record_id   : this._model.record_id,
             record_type : this._model.record_type,
             content     : this.getState('content')
