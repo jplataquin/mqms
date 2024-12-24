@@ -56,9 +56,9 @@ class CommentList extends ComponentV2{
             this.el.container.append(
                 t.div({class:'mb-3'},()=>{
 
-                    t.div({class:'border border-primary rounded ps-2 pe-1 pt-1',style:{minHeight:'50px'}},()=>{
+                    t.div({class:'border border-primary rounded ps-2 pe-1 pt-1'},()=>{
     
-                        t.pre(item.content);
+                        t.pre({style:{minHeight:'50px'}},item.content);
                         
                         
                         t.div({class:'pe-3 mt-3'},()=>{
