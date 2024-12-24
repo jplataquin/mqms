@@ -14,6 +14,12 @@ class Comment extends Model
 
     public $deleteException = null;
 
+    public function User(): BelongsTo
+    {
+        return $this->belongsTo(User::class,'created_by');
+    }
+
+
     public function CreatedByUser(){   
 
         $user = User::find($this->created_by);

@@ -11,7 +11,6 @@ class CommentList extends ComponentV2{
 
     model(){
         return {
-            comment_type:'',
             record_type:'',
             record_id:''
         }
@@ -34,7 +33,7 @@ class CommentList extends ComponentV2{
 
     getComments(){
 
-        window.util.$post('/api/comment/create',{
+        window.util.$get('/api/comment/list',{
             comment_type    : this._model.comment_type,
             record_type     : this._model.record_type,
             record_id       : this._model.record_id

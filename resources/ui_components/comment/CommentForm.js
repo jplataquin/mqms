@@ -1,5 +1,5 @@
 import {Template,ComponentV2} from '/adarna.js';
-                
+import CommentList from '/ui_components/comment/CommentList.js';               
 
 class CommentForm extends ComponentV2{
 
@@ -32,7 +32,12 @@ class CommentForm extends ComponentV2{
         
         return t.div({class:'container'},()=>{
 
-            this.el.comment_list_container = t.div({class:'mb-3'});
+            this.el.comment_list_container = t.div({class:'mb-3'},
+                CommentList({
+                    record_type: this._model.record_type,
+                    record_id: this._model.record_id
+                })
+            );
 
             t.div(()=>{
                 t.div({class:'form-group mb-3'},()=>{
@@ -59,7 +64,6 @@ class CommentForm extends ComponentV2{
         window.util.blockUI();
 
         window.util.$post('/api/comment/create',{
-            comment_type: this._model.comment_type, 
             record_id   : this._model.record_id,
             record_type : this._model.record_type,
             content     : this.getState('content')
