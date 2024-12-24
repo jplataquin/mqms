@@ -54,7 +54,7 @@ class CommentList extends ComponentV2{
         data.map(item=>{
 
             this.el.container.append(
-                t.div({class:'mb-3 border border-primary rounded ps-1 pe-1 pt-1'},()=>{
+                t.div({class:'mb-3 border border-primary rounded ps-2 pe-1 pt-1'},()=>{
     
                     t.pre(item.content);
                     t.div({class:'text-end'},()=>{
