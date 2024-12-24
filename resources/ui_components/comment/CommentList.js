@@ -49,7 +49,7 @@ class CommentList extends ComponentV2{
 
     populateList(data){
         const t = new Template();
-
+        console.log(data);
         data.map(item=>{
 
             this.el.container.append(
