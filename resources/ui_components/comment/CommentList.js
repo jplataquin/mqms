@@ -58,7 +58,7 @@ class CommentList extends ComponentV2{
     
                     t.pre(item.content);
                     t.div({class:'text-end'},()=>{
-                        t.p({class:'font-weight-light font-italic blockquote-footer'},item.user.name+' '+item.created_at);
+                        t.p({class:'mb-0 font-weight-light font-italic blockquote-footer'},item.user.name+' '+item.created_at);
                     });
                 })
             );
