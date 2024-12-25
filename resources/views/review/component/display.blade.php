@@ -546,6 +546,8 @@
             </div>
         @php $i++ @endphp
         @endforeach
+
+        <div class="row mb-3" id="comment-box"></div>
     
         <div class="row mt-5">
             <div class="col-lg-12 text-end shadow bg-white rounded footer-action-menu p-2">
@@ -569,6 +571,7 @@
 
 <script type="module">
     import {$q} from '/adarna.js';
+    import CommengForm from '/ui_components/comment/CommentForm.js';
 
     const approveBtn        = $q('#approveBtn').first();
     const rejectBtn         = $q('#rejectBtn').first();
@@ -579,11 +582,17 @@
     const revertPendBtn     = $q('#revertPendBtn').first();
     const calloutDanger     = $q('#callout-danger').first();
     const calloutDangerText = $q('#callout-danger-p').first(); 
+    const comment_box       = $q('#comment-box').first();
     
     window.util.quickNav = {
         title:'Component',
         url:'/review/component'
     };
+
+    comment_box.append(CommentForm({
+        record_id       :'{{$component->id}}',
+        record_type     :'COMPON'
+    }));
     
     printBtn.onclick = ()=>{
         window.open('/project/section/print/{{$section->id}}','_blank').focus();
