@@ -58,7 +58,7 @@ class CommentList extends ComponentV2{
         
     }
 
-    appendComment(data){
+    appendComment(item){
 
         const t = new Template();
 
