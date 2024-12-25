@@ -167,11 +167,14 @@
         </div>
     </div>
 
+    <div class="row" id="comment_box"></div>
+
 </div>
 
 <script type="module">
     import {$q,$el} from '/adarna.js';
     import RequestMaterialItem from '/ui_components/RequestMaterialItem.js';
+    import CommentForm from '/ui_components/comment/CommentForm.js';
 
     const itemContainer = $q('#itemContainer').first();
     const addBtn        = $q('#addBtn').first();
@@ -181,6 +184,7 @@
     const revertPendBtn = $q('#revertPendBtn').first();
     const reviewLinkBtn = $q('#reviewLinkBtn').first();
     const showPoListBtn = $q('#showPoListBtn').first();
+    const comment_box   = $q('#comment_box').first();
 
       
     let count         = 0;
@@ -191,6 +195,11 @@
     const component_item_options    = @json($component_item_options);
     const material_options          = @json($material_options);
     
+    comment_box.append(CommentForm({
+        record_id       :'{{$material_quantity_request->id}}',
+        record_type     :'MATREQ'
+    }));
+
     window.util.quickNav = {
         title:'Material Request',
         url:'/material_quantity_request'
