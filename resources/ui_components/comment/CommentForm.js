@@ -35,7 +35,7 @@ class CommentForm extends ComponentV2{
             record_id: this._model.record_id
         });
 
-        return t.div({class:'container'},()=>{
+        return t.div({class:'container shadow-lg p-3 mb-5 bg-white rounded'},()=>{
 
             this.el.comment_list_container = t.div({class:'mb-3'},(el)=>{
                 el.append(this.el.comment_list);
@@ -81,6 +81,7 @@ class CommentForm extends ComponentV2{
 
             this.setState('content','');
 
+            this.el.comment_list.handler.appendComment(reply.data);
         });
     }
 

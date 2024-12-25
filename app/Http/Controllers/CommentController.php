@@ -100,12 +100,12 @@ class CommentController extends Controller
         
         $comment->save();
 
+        $comment = Comment::where('id',$comment->id)->with('User')->first();
+        
         return response()->json([
             'status'    => 1,
             'message'   => '',
-            'data'      => [
-                'id'=> $comment->id
-            ]
+            'data'      => $comment
         ]);
     }
 }

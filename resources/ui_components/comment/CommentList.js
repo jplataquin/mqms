@@ -29,6 +29,7 @@ class CommentList extends ComponentV2{
 
         this.getComments();
         
+        this.handler.appendComment = this.appendComment;
     }
 
     getComments(){
@@ -49,27 +50,30 @@ class CommentList extends ComponentV2{
 
     populateList(data){
         const t = new Template();
-        console.log(data);
-        console.log(this.el.container);
+
         data.map(item=>{
-
-            this.el.container.append(
-                t.div({class:'mb-3'},()=>{
-
-                    t.div({class:'border border-secondary rounded ps-2 pe-1 pt-1'},()=>{
-    
-                        t.pre({style:{minHeight:'50px'}},item.content);
-                        
-                        
-                        t.div({class:'pe-3 mt-3'},()=>{
-                            t.p({class:'mb-0 font-weight-light font-italic blockquote-footer'},item.user.name+' '+item.created_at);
-                        });
-                    });
-                })
-                
-            );
+            this.appendComment(item);
         });
         
+    }
+
+    appendComment(data){
+
+        this.el.container.append(
+            t.div({class:'mb-3'},()=>{
+
+                t.div({class:'border border-secondary rounded ps-2 pe-1 pt-1'},()=>{
+
+                    t.pre({style:{minHeight:'50px'}},item.content);
+                    
+                    
+                    t.div({class:'pe-3 mt-3'},()=>{
+                        t.p({class:'mb-0 font-weight-light font-italic blockquote-footer'},item.user.name+' '+item.created_at);
+                    });
+                });
+            })
+            
+        );
     }
 
 }
