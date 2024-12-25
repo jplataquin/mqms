@@ -29,7 +29,7 @@ class CommentList extends ComponentV2{
 
         this.getComments();
         
-        this.handler.appendComment = this.appendComment;
+        this.dom.handler.appendComment = this.appendComment;
     }
 
     getComments(){
