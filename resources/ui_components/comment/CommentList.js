@@ -51,7 +51,6 @@ class CommentList extends ComponentV2{
     }
 
     populateList(data){
-        const t = new Template();
 
         data.map(item=>{
             this.appendComment(item);
@@ -60,6 +59,8 @@ class CommentList extends ComponentV2{
     }
 
     appendComment(data){
+
+        const t = new Template();
 
         this.el.container.append(
             t.div({class:'mb-3'},()=>{
