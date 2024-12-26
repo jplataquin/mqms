@@ -97,10 +97,12 @@ class Section extends Model
             /********************************/
             $components = $contract_item->Components;
 
-            foreach($components as $component){
-                
-                $material_budget_grand_total_amount = $material_budget_grand_total_amount + $component->getGrandTotalAmount();
-                
+            if($components){
+                foreach($components as $component){
+                    
+                    $material_budget_grand_total_amount = $material_budget_grand_total_amount + $component->getGrandTotalAmount();
+                    
+                }
             }
         }
 

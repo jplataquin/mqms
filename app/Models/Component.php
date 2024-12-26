@@ -154,10 +154,12 @@ class Component extends Model
 
         $grand_total_amount = 0;
 
-        $contract_items = $this->ContractItems;
+        $component_items = $this->ComponentItems;
 
-        foreach($contract_items as $contract_item){
-            $grand_total_amount = $grand_total_amount + $contract_item->getGrandTotalAmount();
+        if($component_items){
+            foreach($component_items as $component_item){
+                $grand_total_amount = $grand_total_amount + $component_item->getGrandTotalAmount();
+            }
         }
 
         return $grand_total_amount;
