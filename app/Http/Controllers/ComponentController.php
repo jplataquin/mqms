@@ -160,8 +160,7 @@ class ComponentController extends Controller
 
         $grand_total_amounts = $section->getGrandTotalAmounts();
 
-        print_r($grand_total_amounts);
-        
+
         $materialArr   = [];
         
         foreach(MaterialItem::get() as $mi){
