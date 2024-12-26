@@ -159,6 +159,8 @@ class ComponentController extends Controller
         $componentItems = $component->componentItems()->orderBy('id','ASC')->withCount('materialQuantities')->get();
 
         $grand_total_amounts = $section->getGrandTotalAmounts();
+
+        print_r($grand_total_amounts);
         
         $materialArr   = [];
         
