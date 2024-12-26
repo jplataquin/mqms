@@ -107,9 +107,9 @@ class Section extends Model
         }
 
         return [
-            'contract'  => $contract_grand_total_amount,
-            'reference' => $ref_1_grand_total_amount,
-            'material'  => $material_budget_grand_total_amount
+            'contract'  => round($contract_grand_total_amount,2),
+            'reference' => round($ref_1_grand_total_amount,2),
+            'material'  => round($material_budget_grand_total_amount,2)
         ];
     }
 }
