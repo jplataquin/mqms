@@ -124,4 +124,8 @@ class ComponentItem extends Model
 
 
     }
+
+    public function getGrandTotalAmount(){
+        return ($this->quantity * $this->budget_price);
+    }
 }

@@ -158,7 +158,8 @@ class ComponentController extends Controller
         $materialItems   = MaterialItem::orderBy('name','ASC')->get();
         $componentItems = $component->componentItems()->orderBy('id','ASC')->withCount('materialQuantities')->get();
 
-
+        $grand_total_amounts = $section->getGrandTotalAmounts();
+        
         $materialArr   = [];
         
         foreach(MaterialItem::get() as $mi){

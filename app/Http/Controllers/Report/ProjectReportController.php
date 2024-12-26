@@ -315,8 +315,8 @@ class ProjectReportController extends Controller {
             'as_of_display'         => $as_of_display,
             'url'                   => $url,
 
-            'project_id'                => $project_id,
-            'section_id'                => $section_id,
+            'project_id'                => $project_id ? $project_id : '',
+            'section_id'                => $section_id ? $section_id : '',
             'contract_item_id'          => $contract_item_id ? $contract_item_id : '',
             'component_id'              => $component_id ? $component_id : '',
             'as_of'                     => $as_of ? $as_of : '',

@@ -150,4 +150,16 @@ class Component extends Model
          }
     }
     
+    public function getGrandTotalAmount(){
+
+        $grand_total_amount = 0;
+
+        $contract_items = $this->ContractItems;
+
+        foreach($contract_items as $contract_item){
+            $grand_total_amount = $grand_total_amount + $contract_item->getGrandTotalAmount();
+        }
+
+        return $grand_total_amount;
+    }
 }

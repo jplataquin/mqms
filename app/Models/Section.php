@@ -77,4 +77,37 @@ class Section extends Model
          }
 
     }
+
+    public function getGrandTotalAmounts(){
+
+        $contract_grand_total_amount        = 0;
+        $ref_1_grand_total_amount          = 0;
+        $material_budget_grand_total_amount = 0;
+
+        $contract_items = $this->ContractItems;
+
+        foreach($contract_items as $contract_item){
+
+            //Contract
+            $contract_grand_total_amount = $contract_grand_total_amount + ($contract_item->contract_unit_price * $contract_item->contract_quantity);
+
+            //Reference
+            $ref_1_grand_total_amount = $ref_1_grand_total_amount + ($contract_item->ref_1_quantity * $contract_item->ref_1_unit_price);
+
+            /********************************/
+            $components = $component$contract_item->Components;
+
+            foreach($components as $component){
+                
+                $material_budget_grand_total_amount = $material_budget_grand_total_amount + $component->getGrandTotalAmount();
+                
+            }
+        }
+
+        return [
+            'contract'  => $contract_grand_total_amount,
+            'reference' => $ref_1_grand_total_amount,
+            'material'  => $material_budget_grand_total_amount
+        ];
+    }
 }
