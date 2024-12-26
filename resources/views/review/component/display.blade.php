@@ -573,6 +573,7 @@
     import {$q} from '/adarna.js';
     import CommentForm from '/ui_components/comment/CommentForm.js';
 
+    
     const approveBtn        = $q('#approveBtn').first();
     const rejectBtn         = $q('#rejectBtn').first();
     const cancelBtn         = $q('#cancelBtn').first();
