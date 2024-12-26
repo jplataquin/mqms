@@ -95,7 +95,7 @@ class Section extends Model
             $ref_1_grand_total_amount = $ref_1_grand_total_amount + ($contract_item->ref_1_quantity * $contract_item->ref_1_unit_price);
 
             /********************************/
-            $components = $component$contract_item->Components;
+            $components = $contract_item->Components;
 
             foreach($components as $component){
                 
