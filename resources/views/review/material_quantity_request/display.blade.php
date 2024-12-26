@@ -72,6 +72,8 @@
     </div>
     <div id="itemContainer"></div>
    
+    <div class="row" id="comment-box"></div>
+
     <div class="row mt-5">
         <div class="col-lg-12 text-end shadow bg-white rounded footer-action-menu p-2">
             @if($material_quantity_request->status == 'PEND')
@@ -95,10 +97,14 @@
 <script type="module">
     import {$q,$el} from '/adarna.js';
     import RequestMaterialItem from '/ui_components/RequestMaterialItem.js';
+    import CommentForm from '/ui_components/comment/CommentForm.js';
 
-    let itemContainer = $q('#itemContainer').first();
-    let cancelBtn     = $q('#cancelBtn').first();
-    let description   = $q('#description').first();
+
+    const itemContainer = $q('#itemContainer').first();
+    const cancelBtn     = $q('#cancelBtn').first();
+    const description   = $q('#description').first();
+    const comment_box   = $q('#comment-box').first();
+
     let request_items = @json($request_items);
     let count         = 0;
     let deleteItems   = [];
@@ -106,6 +112,12 @@
     const unit_options              = @json($unit_options);
     const component_item_options    = @json($componentItem_options);
     const material_options          = @json($material_options);
+
+
+    comment_box.append(CommentForm({
+        record_id       : '{{$material_quantity_request->id}}',
+        record_type     : 'MATREQ'
+    }));
 
     window.util.quickNav = {
         title:'Review Material Request',
