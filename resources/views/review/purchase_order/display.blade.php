@@ -238,10 +238,11 @@
 
     <script type="module">
         import {$q} from '/adarna.js';
-        
+        import CommentForm from '/ui_components/comment/CommentForm.js';
+
         const cancelBtn = $q('#cancelBtn').first();
         const comment_box = $q('#comment-box').first();
-        
+
         cancelBtn.onclick = ()=>{
             window.util.navTo('/review/purchase_orders');
         }
