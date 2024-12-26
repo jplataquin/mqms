@@ -113,6 +113,8 @@
     const component_item_options    = @json($componentItem_options);
     const material_options          = @json($material_options);
 
+    //Hack to prevent double comment box when using back button
+    comment_box.innerHTML = '';
 
     comment_box.append(CommentForm({
         record_id       : '{{$material_quantity_request->id}}',

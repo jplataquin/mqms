@@ -216,6 +216,8 @@
             </table>
         </div>
 
+        <div class="row mt-3" id="comment-box"></div>
+
         <div class="row mt-5">
             <div class="col-lg-12 text-end">
             
@@ -238,12 +240,22 @@
 
     <script type="module">
         import {$q,Template} from '/adarna.js';
+        import CommentForm from '/ui_components/comment/CommentForm.js';
 
         const cancelBtn     = $q('#cancelBtn').first();
         const deleteBtn     = $q('#deleteBtn').first();
         const reviewLinkBtn = $q('#reviewLinkBtn').first();
+        const comment_box   = $q('#comment-box').first();
 
-        
+
+        //Hack to prevent double comment box when using back button
+        comment_box.innerHTML = '';
+
+        comment_box.append(CommentForm({
+            record_id       : '{{$purchase_order->id}}',
+            record_type     : 'PURORD'
+        }));
+
         window.util.quickNav = {
             title:'Purchase Order',
             url:'/purchase_order'

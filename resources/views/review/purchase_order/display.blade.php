@@ -210,6 +210,8 @@
             </table>
         </div>
 
+        <div class="row mt-3" id="comment-box"></div>
+
         <div class="row mt-5">
             <div class="col-lg-12 text-end shadow bg-white rounded footer-action-menu p-2">
                 
@@ -237,11 +239,21 @@
     <script type="module">
         import {$q} from '/adarna.js';
         
-        let cancelBtn = $q('#cancelBtn').first();
-
+        const cancelBtn = $q('#cancelBtn').first();
+        const comment_box = $q('#comment-box').first();
+        
         cancelBtn.onclick = ()=>{
             window.util.navTo('/review/purchase_orders');
         }
+
+
+        //Hack to prevent double comment box when using back button
+        comment_box.innerHTML = '';
+
+        comment_box.append(CommentForm({
+            record_id       : '{{$purchase_order->id}}',
+            record_type     : 'PURORD'
+        }));
 
         window.util.quickNav = {
             title:'Review Purchase Order',
@@ -249,7 +261,7 @@
         };
 
         @if($purchase_order->status == 'REVO')
-            let approveVoidBtn = $q('#approveVoidBtn').first();
+            const approveVoidBtn = $q('#approveVoidBtn').first();
 
             approveVoidBtn.onclick = ()=>{
 
@@ -299,47 +311,20 @@
 
         @if($purchase_order->status == 'PEND')
             
-        let rejectBtn = $q('#rejectBtn').first();
-        let approveBtn   = $q('#approveBtn').first();
+            const rejectBtn = $q('#rejectBtn').first();
+            const approveBtn   = $q('#approveBtn').first();
 
-        rejectBtn.onclick = (e)=>{
-                e.preventDefault();
+            rejectBtn.onclick = (e)=>{
+                    e.preventDefault();
 
-                if(!confirm('Are you sure you want to REJECT this PO?')){
+                    if(!confirm('Are you sure you want to REJECT this PO?')){
 
-                    return false;
-                }
-
-                window.util.blockUI();
-
-                window.util.$post('/api/review/purchase_order/reject',{
-                    id: '{{$purchase_order->id}}'
-                }).then(reply=>{
-
-                    window.util.unblockUI();
-
-                    if(reply.status <= 0){
-
-                        window.util.showMsg(reply);
-                        return false;
-                    }
-
-                    window.util.navTo("/review/purchase_orders");
-                });
-        }
-
-        approveBtn.onclick = (e)=>{
-                e.preventDefault();
-
-                window.util.confirm('Are you sure you want to APPROVE this PO?',(answer)=>{
-                    
-                    if(!answer){
                         return false;
                     }
 
                     window.util.blockUI();
 
-                    window.util.$post('/api/review/purchase_order/approve',{
+                    window.util.$post('/api/review/purchase_order/reject',{
                         id: '{{$purchase_order->id}}'
                     }).then(reply=>{
 
@@ -353,9 +338,36 @@
 
                         window.util.navTo("/review/purchase_orders");
                     });
-                });
+            }
 
-        }
+            approveBtn.onclick = (e)=>{
+                    e.preventDefault();
+
+                    window.util.confirm('Are you sure you want to APPROVE this PO?',(answer)=>{
+                        
+                        if(!answer){
+                            return false;
+                        }
+
+                        window.util.blockUI();
+
+                        window.util.$post('/api/review/purchase_order/approve',{
+                            id: '{{$purchase_order->id}}'
+                        }).then(reply=>{
+
+                            window.util.unblockUI();
+
+                            if(reply.status <= 0){
+
+                                window.util.showMsg(reply);
+                                return false;
+                            }
+
+                            window.util.navTo("/review/purchase_orders");
+                        });
+                    });
+
+            }
         @endif
     </script>
 </div>

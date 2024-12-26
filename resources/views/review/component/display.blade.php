@@ -589,6 +589,8 @@
         url:'/review/component'
     };
 
+    //Hack to prevent double comment box when using back button
+    comment_box.innerHTML = '';
     comment_box.append(CommentForm({
         record_id       :'{{$component->id}}',
         record_type     :'COMPON'

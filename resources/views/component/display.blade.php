@@ -208,7 +208,7 @@
     </div>
     <div id="component_item_list" class="mt-3"></div>
 
-    <div id="comment_container"></div>
+    <div id="comment-box"></div>
 </div>
 
 <script type="module">
@@ -237,7 +237,7 @@
     const add_component_item_button = $q('#addComponentItemBtn').first();
     const reviewLinkBtn             = $q('#reviewLinkBtn').first();
     const callout_non_conforming    = $q('#callout-non-conforming').first();
-    const comment_container         = $q('#comment_container').first();
+    const comment_box               = $q('#comment-box').first();
    
     const t = new Template();
 
@@ -259,8 +259,10 @@
         url: '/project/section/contract_item/component'
     };
     
+    //Hack to prevent double comment box when using back button
+    comment_box.innerHTML = '';
 
-    comment_container.append(CommentForm({
+    comment_box.append(CommentForm({
         record_id       :'{{$component->id}}',
         record_type     :'COMPON'
     }));
