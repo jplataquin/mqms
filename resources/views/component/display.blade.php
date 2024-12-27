@@ -68,7 +68,14 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label>Material Budget</label>
+                                        @php 
+                                            $material_grand_total_percentage = 0;
+
+                                            if($grand_total_amounts['contract']){
+                                                $material_grand_total_percentage = ($grand_total_amounts['material'] / $grand_total_amounts['contract']) * 100;
+                                            }
+                                        @endphp
+                                        <label>Material Budget ({{number_format($material_grand_total_percentage)}}%)</label>
                                         <input type="text" disabled="true" class="form-control" value="P {{ number_format($grand_total_amounts['material'],2) }}"/>
                                     </div>
                                 </div>
