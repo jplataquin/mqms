@@ -173,15 +173,16 @@ class ComponentController extends Controller
         $hash = generateComponentHash($project,$section,$component,$componentItems,$materialArr);
 
         return view('component/display',[
-            'project'           => $project,
-            'section'           => $section,
-            'contract_item'     => $contract_item,
-            'component'         => $component,
-            'componentItems'    => $componentItems,
-            'materialItems'     => $materialItems,
-            'hash'              => $hash,
-            'unit_options'      => $unit_options,
-            'back'              => $back
+            'project'               => $project,
+            'section'               => $section,
+            'contract_item'         => $contract_item,
+            'component'             => $component,
+            'componentItems'        => $componentItems,
+            'materialItems'         => $materialItems,
+            'hash'                  => $hash,
+            'unit_options'          => $unit_options,
+            'back'                  => $back,
+            'grand_total_amounts'   => $grand_total_amounts
         ]);
     }
 
