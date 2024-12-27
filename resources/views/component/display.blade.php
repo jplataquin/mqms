@@ -57,19 +57,19 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Contract</label>
-                                        <input type="text" disabled="true" class="form-control" value="P {{ number_format($contract_grand_total_amount,2) }}"/>
+                                        <input type="text" disabled="true" class="form-control" value="P {{ number_format($grand_total_amounts['contract'],2) }}"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>DUPA/POW</label>
-                                        <input type="text" disabled="true" class="form-control" value="P {{ number_format($ref_1_grand_total_amount,2) }}"/>
+                                        <input type="text" disabled="true" class="form-control" value="P {{ number_format($grand_total_amounts['reference'],2) }}"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Material Budget</label>
-                                        <input type="text" disabled="true" class="form-control @if($budget_grand_total_amount > $contract_grand_total_amount) is-invalid non-conforming @endif" value="P {{ number_format($budget_grand_total_amount,2) }}"/>
+                                        <input type="text" disabled="true" class="form-control" value="P {{ number_format($grand_total_amounts['material'],2) }}"/>
                                     </div>
                                 </div>
                             </div>
