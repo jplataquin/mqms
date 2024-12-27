@@ -47,43 +47,52 @@
                 
         </table> 
         <hr>   
-
-            <div class="row mb-3">
-                <div class="col-lg-12">
-                    <div class="form-container">
-                        <div class="form-header">Grand Total</div>
-                        <div class="form-body">
-                            <div class="row mb-3">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label>Contract</label>
-                                        <input type="text" disabled="true" class="form-control" value="P {{ number_format($grand_total_amounts['contract'],2) }}"/>
+        
+        <div class="folder-form-container">
+            <div class="folder-form-tab">
+                Amounts
+            </div>
+            <div class="folder-form-body">
+                            
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        <div class="form-container">
+                            <div class="form-header">Grand Total</div>
+                            <div class="form-body">
+                                <div class="row mb-3">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Contract</label>
+                                            <input type="text" disabled="true" class="form-control" value="P {{ number_format($grand_total_amounts['contract'],2) }}"/>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label>DUPA/POW</label>
-                                        <input type="text" disabled="true" class="form-control" value="P {{ number_format($grand_total_amounts['reference'],2) }}"/>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>DUPA/POW</label>
+                                            <input type="text" disabled="true" class="form-control" value="P {{ number_format($grand_total_amounts['reference'],2) }}"/>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        @php 
-                                            $material_grand_total_percentage = 0;
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            @php 
+                                                $material_grand_total_percentage = 0;
 
-                                            if($grand_total_amounts['contract']){
-                                                $material_grand_total_percentage = ($grand_total_amounts['material'] / $grand_total_amounts['contract']) * 100;
-                                            }
-                                        @endphp
-                                        <label>Material Budget ({{number_format($material_grand_total_percentage)}}%)</label>
-                                        <input type="text" disabled="true" class="form-control" value="P {{ number_format($grand_total_amounts['material'],2) }}"/>
+                                                if($grand_total_amounts['contract']){
+                                                    $material_grand_total_percentage = ($grand_total_amounts['material'] / $grand_total_amounts['contract']) * 100;
+                                                }
+                                            @endphp
+                                            <label>Material Budget ({{number_format($material_grand_total_percentage)}}%)</label>
+                                            <input type="text" disabled="true" class="form-control" value="P {{ number_format($grand_total_amounts['material'],2) }}"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
+         </div>
         
         <hr>
     <div class="form-container" id="component_form" >
