@@ -100,8 +100,11 @@
                             <div class="row mb-3">
                                     <div class="col-lg-4">
                                         <div class="form-group">
+                                            @php 
+                                               $contract_amount = $contract_item->contract_quantity * $contract_item->contract_unit_price;
+                                            @endphp
                                             <label>Contract</label>
-                                            <input type="text" disabled="true" class="form-control" value="P"/>
+                                            <input type="text" disabled="true" class="form-control" value="P {{number_format($contract_amount,2)}}"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
