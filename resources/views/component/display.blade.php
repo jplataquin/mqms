@@ -158,8 +158,8 @@
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
                                                            
-                                                            <label>Total Amount ({{$ref_1_amount_percentage}}%)</label>
-                                                            <input type="text" class="form-control" disabled="true" value="P {{ number_format($ref_1_amount,2) }}"/>
+                                                            <label>Total Amount</label>
+                                                            <input type="text" class="form-control" disabled="true" value="P "/>
                                                         </div>
                                                     </div>
                                                 </div>
