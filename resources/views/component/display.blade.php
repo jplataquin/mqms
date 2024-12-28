@@ -120,7 +120,6 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            
                                             <label>Material Budget</label>
                                             <input type="text" disabled="true" class="form-control" value="P"/>
                                         </div>
