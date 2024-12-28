@@ -341,7 +341,7 @@
     function calculateComponentTotalAmount(){
         
         component_total_amount.value = '';
-        
+
         let total = 0;
         
         $q('.component_item_total_amount').items().map((el)=>{
@@ -350,6 +350,14 @@
         
         component_total_amount.value = 'P '+window.util.numberFormat(total,2);
     }
+
+    signal.recever('component-item-update',()=>{
+        calculateComponentTotalAmount();
+    });
+
+    signal.recever('component-item-add',()=>{
+        calculateComponentTotalAmount();
+    });
 
     signal.receiver('material-total-calculated',(data)=>{
         

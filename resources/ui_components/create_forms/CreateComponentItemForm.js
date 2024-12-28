@@ -1,5 +1,6 @@
-import {Template,ComponentV2} from '/adarna.js';
+import {Template,ComponentV2,Signal} from '/adarna.js';
 
+let signal = new Signal();
 
 class CreateComponentItemForm extends ComponentV2{
 
@@ -527,7 +528,7 @@ class CreateComponentItemForm extends ComponentV2{
 
             this._model.append_component_item(reply.data);
 
-            
+            signal.broadcast('component-item-add');
         });
 
     }
