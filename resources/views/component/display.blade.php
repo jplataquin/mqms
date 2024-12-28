@@ -110,8 +110,12 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
+                                            @php 
+                                                $ref_1_amount = $contract_item->ref_1_quantity * $contract_item->ref_1_unit_price;
+                                                $ref_1_amount = number_format($ref_1_amount,2);
+                                            @endphp
                                             <label>DUPA/POW</label>
-                                            <input type="text" disabled="true" class="form-control" value="P"/>
+                                            <input type="text" disabled="true" class="form-control" value="P {{$ref_1_amount}}"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
