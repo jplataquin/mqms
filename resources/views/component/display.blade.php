@@ -356,10 +356,9 @@
     });
 
     signal.receiver('component-item-add',()=>{
-        setTimeout(()=>{
-            calculateComponentTotalAmount();
-        },0);
     
+        calculateComponentTotalAmount();
+        
     });
 
     signal.receiver('material-total-calculated',(data)=>{
@@ -457,7 +456,7 @@
 
                 item.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
                 
-        
+                signal.broadcast('component-item-add');
             }
         })).open();
     }
@@ -525,7 +524,7 @@
 
     setTimeout(()=>{
         calculateComponentTotalAmount();
-    },500);
+    },100);
 </script>
 </div>
 @endsection
