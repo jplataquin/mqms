@@ -338,6 +338,19 @@
 
     const signal = new Signal();
 
+    function calculateComponentTotalAmount(){
+        
+        component_total_amount.value = '';
+        
+        let total = 0;
+        
+        $q('.component_item_total_amount').items().map((el)=>{
+            total = total + window.util.pureNumber(el.value,2);
+        });
+        
+        component_total_amount.value = 'P '+window.util.numberFormat(total,2);
+    }
+
     signal.receiver('material-total-calculated',(data)=>{
         
         
@@ -497,6 +510,11 @@
         );
 
     @endforeach
+
+
+    setTimeout(()=>{
+        calculateComponentTotalAmount();
+    },500);
 </script>
 </div>
 @endsection
