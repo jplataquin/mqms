@@ -356,7 +356,10 @@
     });
 
     signal.receiver('component-item-add',()=>{
-        calculateComponentTotalAmount();
+        setTimeout(()=>{
+            calculateComponentTotalAmount();
+        },0);
+    
     });
 
     signal.receiver('material-total-calculated',(data)=>{
