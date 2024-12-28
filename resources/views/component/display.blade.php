@@ -351,11 +351,11 @@
         component_total_amount.value = 'P '+window.util.numberFormat(total,2);
     }
 
-    signal.recever('component-item-update',()=>{
+    signal.receiver('component-item-update',()=>{
         calculateComponentTotalAmount();
     });
 
-    signal.recever('component-item-add',()=>{
+    signal.receiver('component-item-add',()=>{
         calculateComponentTotalAmount();
     });
 
