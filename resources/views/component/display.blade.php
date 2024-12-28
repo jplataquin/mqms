@@ -90,7 +90,127 @@
                         </div>
                     </div>
                 </div>
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        <div class="form-container">
+                            <div class="form-header">
+                                Contract Item
+                            </div>
+                            <div class="form-body">
 
+                                <div class="row mb-3">    
+                                    <div class="col-lg-4 mb-3">
+                                        <div class="form-container">
+                                            <div class="form-header">Contract</div>
+                                            <div class="form-body">
+                                                <div class="row mb-3">
+                                                    
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Quantity</label>
+                                                            <input type="text" class="form-control" disabled="true" value=""/>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Unit Price</label>
+                                                            <input type="text" class="form-control" disabled="true" value="P"/>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                           
+                                                            <label>Total Amount</label>
+                                                            <input type="text" class="form-control" disabled="true" value="P"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 mb-3">
+                                        <div class="form-container">
+                                            <div class="form-header">POW/DUPA</div>
+                                            <div class="form-body">
+                                                <div class="row mb-3">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Quantity</label>
+                                                            <input type="text" class="form-control" disabled="true" value=""/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Unit Price</label>
+                                                            <input type="text" class="form-control" disabled="true" value="P"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                           
+                                                            <label>Total Amount ({{$ref_1_amount_percentage}}%)</label>
+                                                            <input type="text" class="form-control" disabled="true" value="P {{ number_format($ref_1_amount,2) }}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 mb-3">
+                                        <div class="form-container">
+                                            <div class="form-header">
+                                                Material Budget
+                                            </div>
+                                            <div class="form-body">
+
+                                                <div class="row mb-3">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label>Total Quantity</label>
+                                                            <input type="text" class="form-control @if($contract_item_arr[$contract_item->id]->total_quantity > $contract_item->contract_quantity) is-invalid non-conforming @endif" disabled="true" value="{{ number_format($contract_item_arr[$contract_item->id]->total_quantity,2) }} @if(isset($unit_options[$contract_item->unit_id])) {{$unit_options[$contract_item->unit_id]->text}} @endif"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            
+                                                            @php
+                                                                if($budget_grand_total_amount > 0){
+                                                                    $material_budget_percentage = ( ($contract_item_arr[$contract_item->id]->total_amount / $budget_grand_total_amount) * 100);
+                                                                    $material_budget_percentage = number_format($material_budget_percentage,2);
+                                                                }else{
+                                                                    $material_budget_percentage = 0.00;
+                                                                }
+                                                            @endphp
+
+                                                            <label>Total Amount ({{ $material_budget_percentage }}%)</label>
+                                                            <input type="text" class="form-control @if($contract_item_arr[$contract_item->id]->total_amount > $contract_amount) is-invalid non-conforming @endif" disabled="true" value="P {{ number_format($contract_item_arr[$contract_item->id]->total_amount,2) }}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div> 
+                </div>
             </div>
          </div>
         

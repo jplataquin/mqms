@@ -54,31 +54,31 @@
 
                 <div class="row mb-3">
                     <div class="col-lg-12">
-                    <div class="form-container">
-                        <div class="form-header">Grand Total</div>
-                        <div class="form-body">
-                            <div class="row mb-3">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label>Contract</label>
-                                        <input type="text" disabled="true" class="form-control" value="P {{ number_format($contract_grand_total_amount,2) }}"/>
+                        <div class="form-container">
+                            <div class="form-header">Grand Total</div>
+                            <div class="form-body">
+                                <div class="row mb-3">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Contract</label>
+                                            <input type="text" disabled="true" class="form-control" value="P {{ number_format($contract_grand_total_amount,2) }}"/>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label>DUPA/POW</label>
-                                        <input type="text" disabled="true" class="form-control" value="P {{ number_format($ref_1_grand_total_amount,2) }}"/>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>DUPA/POW</label>
+                                            <input type="text" disabled="true" class="form-control" value="P {{ number_format($ref_1_grand_total_amount,2) }}"/>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label>Material Budget</label>
-                                        <input type="text" disabled="true" class="form-control @if($budget_grand_total_amount > $contract_grand_total_amount) is-invalid non-conforming @endif" value="P {{ number_format($budget_grand_total_amount,2) }}"/>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Material Budget</label>
+                                            <input type="text" disabled="true" class="form-control @if($budget_grand_total_amount > $contract_grand_total_amount) is-invalid non-conforming @endif" value="P {{ number_format($budget_grand_total_amount,2) }}"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
                             
@@ -93,25 +93,25 @@
                             <div class="form-body">
                                 
                             
-                            <div class="row mb-3">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label>Item Code & Description</label>
+                                <div class="row mb-3">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Item Code & Description</label>
 
-                                        <div class="input-group">
-                                            <span class="input-group-text" id="basic-addon2" onclick="document.querySelector('#contract_item').focus();"><i class="bi bi-list"></i></span>
-                                        
-                                            <select id="contract_item" class="form-select">
-                                                @foreach($contract_item_arr as $con_item)
+                                            <div class="input-group">
+                                                <span class="input-group-text" id="basic-addon2" onclick="document.querySelector('#contract_item').focus();"><i class="bi bi-list"></i></span>
+                                            
+                                                <select id="contract_item" class="form-select">
+                                                    @foreach($contract_item_arr as $con_item)
 
-                                                    <option value="{{$con_item->data->id}}" @if($con_item->data->id == $contract_item->id) selected @endif>{{$con_item->data->item_code}} {{$con_item->data->description}}</option>
+                                                        <option value="{{$con_item->data->id}}" @if($con_item->data->id == $contract_item->id) selected @endif>{{$con_item->data->item_code}} {{$con_item->data->description}}</option>
 
-                                                @endforeach
-                                            </select>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
                                 <div class="row mb-3">    
                                     <div class="col-lg-4 mb-3">
