@@ -156,7 +156,7 @@
                 </div>
             </div>
 
-            <div class="row mb-5">
+            <div class="row mb-3">
                 <div class="col-lg-3">
                     <div class="form-group">
                         <label>Quantity</label>
@@ -189,7 +189,16 @@
                     </div>
                 </div>
             </div>
-
+            
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>Total Amount</label>
+                        <input class="form-control" disabled="true" id="component_total_amount"/>
+                    </div>
+                </div>
+            </div>
+            <!--
             <div class="d-none form-container" id="item_sticky_container">
                 <div class="form-header">Item</div>
                 <div class="form-body">
@@ -255,6 +264,7 @@
 
                 </div>
             </div>
+            -->
 
             <div class="row" id="component_controls">
                 <div class="col-lg-6">
@@ -322,6 +332,7 @@
     const reviewLinkBtn             = $q('#reviewLinkBtn').first();
     const callout_non_conforming    = $q('#callout-non-conforming').first();
     const comment_box               = $q('#comment-box').first();
+    const component_total_amount    = $q('#component_total_amount').first();
    
     const t = new Template();
 

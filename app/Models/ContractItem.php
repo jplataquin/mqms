@@ -117,4 +117,18 @@ class ContractItem extends Model
          }
     }
 
+    public function getTotalAmount(){
+
+        $amount = 0;
+
+        $components = $this->Components;
+
+        if($components){
+            foreach($components as $component){
+
+                //$amount = $amount + ($component->budget_price * $component->);
+            }
+        }
+        
+    }
 }

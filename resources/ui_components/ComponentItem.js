@@ -421,7 +421,7 @@ class ComponentItem extends ComponentV2{
                                 });
                                 
                                 t.td({colspan:5},()=>{
-                                    this.el.component_item_total_amount = t.input({class:'form-control',disabled:true});
+                                    this.el.component_item_total_amount = t.input({class:'form-control component_item_total_amount',disabled:true});
                                 });
                             });
 
