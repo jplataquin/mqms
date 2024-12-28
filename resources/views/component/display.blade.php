@@ -97,107 +97,27 @@
                                 Contract Item
                             </div>
                             <div class="form-body">
-
-                                <div class="row mb-3">    
-                                    <div class="col-lg-4 mb-3">
-                                        <div class="form-container">
-                                            <div class="form-header">Contract</div>
-                                            <div class="form-body">
-                                                <div class="row mb-3">
-                                                    
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label>Quantity</label>
-                                                            <input type="text" class="form-control" disabled="true" value=""/>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label>Unit Price</label>
-                                                            <input type="text" class="form-control" disabled="true" value="P"/>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="row mb-3">
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                           
-                                                            <label>Total Amount</label>
-                                                            <input type="text" class="form-control" disabled="true" value="P"/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
+                            <div class="row mb-3">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Contract</label>
+                                            <input type="text" disabled="true" class="form-control" value="P"/>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 mb-3">
-                                        <div class="form-container">
-                                            <div class="form-header">POW/DUPA</div>
-                                            <div class="form-body">
-                                                <div class="row mb-3">
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label>Quantity</label>
-                                                            <input type="text" class="form-control" disabled="true" value=""/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label>Unit Price</label>
-                                                            <input type="text" class="form-control" disabled="true" value="P"/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row mb-3">
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                           
-                                                            <label>Total Amount</label>
-                                                            <input type="text" class="form-control" disabled="true" value="P "/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>DUPA/POW</label>
+                                            <input type="text" disabled="true" class="form-control" value="P"/>
                                         </div>
                                     </div>
-
-                                    <div class="col-lg-4 mb-3">
-                                        <div class="form-container">
-                                            <div class="form-header">
-                                                Material Budget
-                                            </div>
-                                            <div class="form-body">
-
-                                                <div class="row mb-3">
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <label>Total Quantity</label>
-                                                            <input type="text" class="form-control" disabled="true" value=""/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            
-                                                          
-                                                            <label>Total Amount </label>
-                                                            <input type="text" class="form-control" disabled="true" value="P "/>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
                                             
-                                            </div>
+                                            <label>Material Budget</label>
+                                            <input type="text" disabled="true" class="form-control" value="P"/>
                                         </div>
                                     </div>
-                                </div> <!-- Row -->
+                                </div>
                             </div>
                         </div>
                     </div> 
