@@ -214,8 +214,12 @@ class UserController extends Controller
 
            $password    = $request->input('password') ?? '';
            $repassword  = $request->input('repassword') ?? '';
+           $id          = $request->input('id') ?? 0;
 
            $validator = Validator::make($request->all(),[
+                'id' =>[
+                    'required'
+                ],
                'password' => [
                     'required',
                     'min:6',
@@ -240,7 +244,7 @@ class UserController extends Controller
 
            $user_id = Auth::user()->id;
 
-           $user = User::find($user_id);
+           $user = User::find($id);
 
            if(!$user){
                 return response()->json([

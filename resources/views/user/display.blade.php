@@ -149,7 +149,7 @@
     }
 
     resetBtn.onclick = (e) =>{
-        window.util.prompt('Are you sure you want to initiate reset password?',(e,result)=>{
+        window.util.confirm('Are you sure you want to initiate reset password?',(e,result)=>{
 
             if(!result){
                 return false;

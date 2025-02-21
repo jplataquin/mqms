@@ -246,6 +246,7 @@ class ProjectController extends Controller
        ]);
     }
 
+    /*
     public function _request_void(Request $request){
        
         $id = (int) $request->input('id');
@@ -285,5 +286,5 @@ class ProjectController extends Controller
            'message'   => '',
            'data'      => []
        ]);
-    }
+    }*/
 }

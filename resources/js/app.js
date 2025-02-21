@@ -694,7 +694,6 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
 
     let charCode = (evt.which) ? evt.which : evt.keyCode;
     
-    console.log('charCode',charCode);
 
     //do not allow negative sign at the start
     if(negativeFlag && charCode == 45){
