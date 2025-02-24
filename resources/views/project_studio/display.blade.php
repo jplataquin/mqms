@@ -96,7 +96,7 @@
             mdown = true;
         }
 
-        studio_side.onmousedown = ()=>{
+        studio_side.onmouseup = ()=>{
             
             mdown = false;
                 
