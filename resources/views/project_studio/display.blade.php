@@ -23,13 +23,61 @@
             </ul>
         </div>
 
-        <div>
-            <div id="project_studio_left_window" width="10%" class="d-inline">
-                L
+
+        <style>
+                #studio-container {
+                    background-color: DodgerBlue;
+                    display: flex;
+                }
+
+                #studio-editor {
+                    flex-grow: 1;
+                    height: 100vh;
+                    background:#9999;
+                    text-align: right;
+                }
+
+                #studio-side{
+                    min-width: 130px;
+                    max-width: 260px;
+                    height: 100vh;
+                    background:#708090;
+                    border: 1px solid #696969;
+                    color:yellow;
+                    cursor: move;
+                }
+
+                .item{
+                    border: 1px solid #DCDCDC;
+                    border-radius: .4em;
+                    background-color: white;
+                    color: #000;
+                    padding:12px;
+                    margin:10px;
+                    display: inline-block;
+                }
+
+                .item:hover{
+                    cursor:grab;
+                }
+        </style>
+        <div id="studio-container">
+  
+            <div id="studio-side">
+                 <h3 id="title">I'm resizable</h3>
+                <i class="fa fa-align-center item"> Section 1</i>
+                <i class="fa fa-align-center item"> Section 2</i>
+                <i class="fa fa-align-center item"> Section 3</i>
+                <i class="fa fa-align-center item"> Section 4</i>
+                <i class="fa fa-align-center item"> Section 5</i>
+                <i class="fa fa-align-center item"> Section 6</i>
+
             </div>
-            <div id="project_studio_right_window" class="overflow-scroll d-inline">
-                R
+            
+            <div id="studio-editor" contenteditable="true">
+                <h3 id="title">I'm editable</h3>
             </div>
+
         </div>
     </div>
 </div>
