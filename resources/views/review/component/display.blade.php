@@ -130,27 +130,26 @@
                                 </div>
                                 <div class="row mb-3 d-none d-sm-flex d-md-flex">
                                     <div class="col-lg-12">
-                                        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                        <div id="carouselExample" class="carousel slide">
                                             <div class="carousel-inner">
                                                 <div class="carousel-item active">
-                                                    123
-
+                                                <img src="..." class="d-block w-100" alt="...">
                                                 </div>
                                                 <div class="carousel-item">
-                                                    456
+                                                <img src="..." class="d-block w-100" alt="...">
                                                 </div>
                                                 <div class="carousel-item">
-                                                    789
+                                                <img src="..." class="d-block w-100" alt="...">
                                                 </div>
                                             </div>
-                                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Previous</span>
-                                            </a>
-                                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                                <span class="visually-hidden">Previous</span>
+                                            </button>
+                                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
                                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Next</span>
-                                            </a>
+                                                <span class="visually-hidden">Next</span>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
