@@ -130,7 +130,13 @@
                                 </div>
                                 <div class="row mb-3 d-lg-none d-xl-none d-xs-flex d-sm-flex d-md-flex">
                                     <div class="col-lg-12">
-                                        <div id="contractItemCarousel" class="carousel slide" data-bs-ride="carousel">
+                                        <div id="contractItemCarousel" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                                            <div class="carousel-indicators">
+                                                <button type="button" data-bs-target="#contractItemCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                                <button type="button" data-bs-target="#contractItemCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                                <button type="button" data-bs-target="#contractItemCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                            </div>
+
                                             <div class="carousel-inner">
                                                 <div class="carousel-item active">
                                                     <div class="form-container">
