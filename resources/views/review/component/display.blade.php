@@ -128,6 +128,31 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                @php
+                                    if($contract_grand_total_amount > 0){
+                                        $contract_amount_percentage = ( ($contract_amount / $contract_grand_total_amount) * 100);
+                                        $contract_amount_percentage = number_format($contract_amount_percentage,2);
+                                    }else{
+                                        $contract_amount_percentage = 0.00;
+                                    }
+                            
+                                    $ref_1_amount = $contract_item->ref_1_unit_price * $contract_item->ref_1_quantity;
+                            
+                                    if($ref_1_grand_total_amount > 0){
+                                        $ref_1_amount_percentage = ( ($ref_1_amount / $ref_1_grand_total_amount) * 100);
+                                        $ref_1_amount_percentage = number_format($ref_1_amount_percentage,2);
+                                    }else{
+                                        $ref_1_amount_percentage = 0.00;
+                                    }
+
+                                    if($budget_grand_total_amount > 0){
+                                        $material_budget_percentage = ( ($contract_item_arr[$contract_item->id]->total_amount / $budget_grand_total_amount) * 100);
+                                        $material_budget_percentage = number_format($material_budget_percentage,2);
+                                    }else{
+                                        $material_budget_percentage = 0.00;
+                                    }
+                                @endphp
                                 <div class="row mb-3 d-lg-none d-xl-none d-xs-flex d-sm-flex d-md-flex">
                                     <div class="col-lg-12">
                                         <div id="contractItemCarousel" class="carousel carousel-dark slide" data-bs-ride="carousel">
@@ -164,14 +189,7 @@
                                                             <div class="row mb-3">
                                                                 <div class="col-lg-12">
                                                                     <div class="form-group">
-                                                                        @php
-                                                                            if($contract_grand_total_amount > 0){
-                                                                                $contract_amount_percentage = ( ($contract_amount / $contract_grand_total_amount) * 100);
-                                                                                $contract_amount_percentage = number_format($contract_amount_percentage,2);
-                                                                            }else{
-                                                                                $contract_amount_percentage = 0.00;
-                                                                            }
-                                                                        @endphp
+                                                                        
                                                                         <label>Total Amount ({{$contract_amount_percentage}}%)</label>
                                                                         <input type="text" class="form-control" disabled="true" value="P {{ number_format($contract_amount,2) }}"/>
                                                                     </div>
@@ -203,16 +221,7 @@
                                                             <div class="row mb-3">
                                                                 <div class="col-lg-12">
                                                                     <div class="form-group">
-                                                                        @php
-                                                                            $ref_1_amount = $contract_item->ref_1_unit_price * $contract_item->ref_1_quantity;
                                                                     
-                                                                            if($ref_1_grand_total_amount > 0){
-                                                                                $ref_1_amount_percentage = ( ($ref_1_amount / $ref_1_grand_total_amount) * 100);
-                                                                                $ref_1_amount_percentage = number_format($ref_1_amount_percentage,2);
-                                                                            }else{
-                                                                                $ref_1_amount_percentage = 0.00;
-                                                                            }
-                                                                        @endphp
                                                                         <label>Total Amount ({{$ref_1_amount_percentage}}%)</label>
                                                                         <input type="text" class="form-control" disabled="true" value="P {{ number_format($ref_1_amount,2) }}"/>
                                                                     </div>
@@ -241,14 +250,7 @@
                                                                 <div class="col-lg-12">
                                                                     <div class="form-group">
                                                                         
-                                                                        @php
-                                                                            if($budget_grand_total_amount > 0){
-                                                                                $material_budget_percentage = ( ($contract_item_arr[$contract_item->id]->total_amount / $budget_grand_total_amount) * 100);
-                                                                                $material_budget_percentage = number_format($material_budget_percentage,2);
-                                                                            }else{
-                                                                                $material_budget_percentage = 0.00;
-                                                                            }
-                                                                        @endphp
+                                                                      
 
                                                                         <label>Total Amount ({{ $material_budget_percentage }}%)</label>
                                                                         <input type="text" class="form-control @if($contract_item_arr[$contract_item->id]->total_amount > $contract_amount) is-invalid non-conforming @endif" disabled="true" value="P {{ number_format($contract_item_arr[$contract_item->id]->total_amount,2) }}"/>
@@ -290,14 +292,6 @@
                                                 <div class="row mb-3">
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
-                                                            @php
-                                                                if($contract_grand_total_amount > 0){
-                                                                    $contract_amount_percentage = ( ($contract_amount / $contract_grand_total_amount) * 100);
-                                                                    $contract_amount_percentage = number_format($contract_amount_percentage,2);
-                                                                }else{
-                                                                    $contract_amount_percentage = 0.00;
-                                                                }
-                                                            @endphp
                                                             <label>Total Amount ({{$contract_amount_percentage}}%)</label>
                                                             <input type="text" class="form-control" disabled="true" value="P {{ number_format($contract_amount,2) }}"/>
                                                         </div>
@@ -329,16 +323,6 @@
                                                 <div class="row mb-3">
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
-                                                            @php
-                                                                $ref_1_amount = $contract_item->ref_1_unit_price * $contract_item->ref_1_quantity;
-                                                           
-                                                                if($ref_1_grand_total_amount > 0){
-                                                                    $ref_1_amount_percentage = ( ($ref_1_amount / $ref_1_grand_total_amount) * 100);
-                                                                    $ref_1_amount_percentage = number_format($ref_1_amount_percentage,2);
-                                                                }else{
-                                                                    $ref_1_amount_percentage = 0.00;
-                                                                }
-                                                            @endphp
                                                             <label>Total Amount ({{$ref_1_amount_percentage}}%)</label>
                                                             <input type="text" class="form-control" disabled="true" value="P {{ number_format($ref_1_amount,2) }}"/>
                                                         </div>
@@ -367,16 +351,6 @@
                                                 <div class="row mb-3">
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
-                                                            
-                                                            @php
-                                                                if($budget_grand_total_amount > 0){
-                                                                    $material_budget_percentage = ( ($contract_item_arr[$contract_item->id]->total_amount / $budget_grand_total_amount) * 100);
-                                                                    $material_budget_percentage = number_format($material_budget_percentage,2);
-                                                                }else{
-                                                                    $material_budget_percentage = 0.00;
-                                                                }
-                                                            @endphp
-
                                                             <label>Total Amount ({{ $material_budget_percentage }}%)</label>
                                                             <input type="text" class="form-control @if($contract_item_arr[$contract_item->id]->total_amount > $contract_amount) is-invalid non-conforming @endif" disabled="true" value="P {{ number_format($contract_item_arr[$contract_item->id]->total_amount,2) }}"/>
                                                         </div>
