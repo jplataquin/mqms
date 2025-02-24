@@ -87,12 +87,12 @@
         import {$q} from '/adarna.js';
 
         const studio_side = $q('#studio-side').first();
-        
+        const studio_editor = $q('#studio-editor').first();
+
         let mdown = false;
 
-        console.log(studio_side);
         studio_side.onmousedown = ()=>{
-        
+            
             mdown = true;
         }
 
@@ -106,7 +106,16 @@
             
             if(!mdown) return false;
 
-            console.log(e.movementX);
+            if(e.movementX == -1){
+
+                console.log(studio_side.style.minWidth);
+                console.log(studio_side.style.width);
+                
+                console.log(studio_editor.style.minWidth);
+                console.log(studio_editor.style.width);
+            }else if (e.movementX == 1){
+
+            }
         }
 
     </script>
