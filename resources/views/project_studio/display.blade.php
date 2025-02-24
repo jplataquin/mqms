@@ -24,12 +24,13 @@
         </div>
 
         <div>
-            <div id="project_studio_left_window" width="10%">
+            <div id="project_studio_left_window" width="10%" class="d-inline">
                 L
             </div>
-            <div id="project_studio_right_window" class="overflow-scroll">
+            <div id="project_studio_right_window" class="overflow-scroll d-inline">
                 R
             </div>
         </div>
     </div>
 </div>
+@endsection
