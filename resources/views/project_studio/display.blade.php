@@ -88,10 +88,10 @@
 
         const studio_side = $q('#studio-side').first();
 
-
+        console.log(studio_side);
         studio_side.onmousedown = ()=>{
         
-            
+            console.log('down');
             document.onmousemove = (e) =>{
                 console.log(e.movementX);
             }
