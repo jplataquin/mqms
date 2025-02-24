@@ -35,11 +35,13 @@
                     height: 100vh;
                     background:#9999;
                     text-align: right;
+                    min-width: 90%;
+                    width: 90%;
                 }
 
                 #studio-side{
-                    min-width: 130px;
-                    max-width: 260px;
+                    min-width: 10%;
+                    width: 10%;
                     height: 100vh;
                     background:#708090;
                     border: 1px solid #696969;
