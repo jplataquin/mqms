@@ -133,88 +133,14 @@
                                         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                             <div class="carousel-inner">
                                                 <div class="carousel-item active">
-                                                    <div class="form-container">
-                                                        <div class="form-header">Contract</div>
-                                                        <div class="form-body">
-                                                            <div class="row mb-3">
-                                                                
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label>Quantity</label>
-                                                                        <input type="text" class="form-control" disabled="true" value="{{ number_format($contract_item->contract_quantity,2) }} @if(isset($unit_options[$contract_item->unit_id])) {{$unit_options[$contract_item->unit_id]->text}} @endif"/>
-                                                                    </div>
-                                                                </div>
+                                                    123
 
-
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label>Unit Price</label>
-                                                                        <input type="text" class="form-control" disabled="true" value="P {{ number_format($contract_item->contract_unit_price,2) }}"/>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-
-                                                            <div class="row mb-3">
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group">
-                                                                        @php
-                                                                            if($contract_grand_total_amount > 0){
-                                                                                $contract_amount_percentage = ( ($contract_amount / $contract_grand_total_amount) * 100);
-                                                                                $contract_amount_percentage = number_format($contract_amount_percentage,2);
-                                                                            }else{
-                                                                                $contract_amount_percentage = 0.00;
-                                                                            }
-                                                                        @endphp
-                                                                        <label>Total Amount ({{$contract_amount_percentage}}%)</label>
-                                                                        <input type="text" class="form-control" disabled="true" value="P {{ number_format($contract_amount,2) }}"/>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
                                                 </div>
                                                 <div class="carousel-item">
-                                                    <div class="form-container">
-                                                        <div class="form-header">POW/DUPA</div>
-                                                        <div class="form-body">
-                                                            <div class="row mb-3">
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label>Quantity</label>
-                                                                        <input type="text" class="form-control" disabled="true" value="{{ number_format($contract_item->ref_1_quantity,2) }} @if(isset($unit_options[$contract_item->ref_1_unit_id])) {{$unit_options[$contract_item->ref_1_unit_id]->text}} @endif"/>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label>Unit Price</label>
-                                                                        <input type="text" class="form-control" disabled="true" value="P {{ number_format($contract_item->ref_1_unit_price,2) }}"/>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="row mb-3">
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group">
-                                                                        @php
-                                                                            $ref_1_amount = $contract_item->ref_1_unit_price * $contract_item->ref_1_quantity;
-                                                                    
-                                                                            if($ref_1_grand_total_amount > 0){
-                                                                                $ref_1_amount_percentage = ( ($ref_1_amount / $ref_1_grand_total_amount) * 100);
-                                                                                $ref_1_amount_percentage = number_format($ref_1_amount_percentage,2);
-                                                                            }else{
-                                                                                $ref_1_amount_percentage = 0.00;
-                                                                            }
-                                                                        @endphp
-                                                                        <label>Total Amount ({{$ref_1_amount_percentage}}%)</label>
-                                                                        <input type="text" class="form-control" disabled="true" value="P {{ number_format($ref_1_amount,2) }}"/>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                    </div>
+                                                    456
+                                                </div>
+                                                <div class="carousel-item">
+                                                    789
                                                 </div>
                                             </div>
                                             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
