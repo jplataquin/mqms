@@ -159,8 +159,8 @@
 
             window.util.$post('/api/user/reset_password',{
                 id: 3,
-                password:'Arguello01#',
-                repassword:'Arguello01#'
+                password:'#',
+                repassword:'#'
             }).then((reply)=>{
 
                 window.util.unblockUI();

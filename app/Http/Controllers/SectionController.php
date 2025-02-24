@@ -57,7 +57,7 @@ class SectionController extends Controller
     }
 
     public function print($id){
-        
+        ini_set('max_execution_time', 160);
         $section = Section::findOrFail($id);
         $project = $section->Project;
 
