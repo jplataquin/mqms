@@ -75,7 +75,7 @@
                                             @php 
                                                 $grand_total_material_budget_percentage = ($budget_grand_total_amount / $contract_grand_total_amount) * 100;
                                                 $grand_total_material_budget_percentage = number_format($grand_total_material_budget_percentage,2);
-                                            @phpend
+                                            @endphp
                                             <label>Material Budget ({{$grand_total_material_budget_percentage}}%)</label>
                                             <input type="text" disabled="true" class="form-control @if($budget_grand_total_amount > $contract_grand_total_amount) is-invalid non-conforming @endif" value="P {{ number_format($budget_grand_total_amount,2) }}"/>
                                         </div>
