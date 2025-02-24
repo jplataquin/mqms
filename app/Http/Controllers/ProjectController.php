@@ -28,6 +28,18 @@ class ProjectController extends Controller
     }
 
 
+    public function studio_display($id){
+
+        $id = (int) $id;
+
+        $project = Project::findOrFail($id);
+
+        return view('project_studio/display',[
+            'project' => $project
+        ]);
+    }
+
+
     public function list(){
 
         return view('project/list');
