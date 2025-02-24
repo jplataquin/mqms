@@ -66,15 +66,27 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label>DUPA/POW</label>
+                                            @php 
+                                                if($contract_grand_total_amount > 0){
+                                                    $grand_total_ref_1_percentage = ($ref_1_grand_total_amount / $contract_grand_total_amount) * 100;
+                                                    $grand_total_ref_1_percentage = number_format($grand_total_ref_1_percentage,2);
+                                                }else{
+                                                    $grand_total_ref_1_percentage = 0.00;
+                                                }
+                                            @endphp
+                                            <label>DUPA/POW ({{$grand_total_ref_1_percentage}}%)</label>
                                             <input type="text" disabled="true" class="form-control" value="P {{ number_format($ref_1_grand_total_amount,2) }}"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             @php 
-                                                $grand_total_material_budget_percentage = ($budget_grand_total_amount / $contract_grand_total_amount) * 100;
-                                                $grand_total_material_budget_percentage = number_format($grand_total_material_budget_percentage,2);
+                                                if($contract_grand_total_amount > 0){
+                                                    $grand_total_material_budget_percentage = ($budget_grand_total_amount / $contract_grand_total_amount) * 100;
+                                                    $grand_total_material_budget_percentage = number_format($grand_total_material_budget_percentage,2);
+                                                }else{
+                                                    grand_total_material_budget_percentage = 0.00;
+                                                }
                                             @endphp
                                             <label>Material Budget ({{$grand_total_material_budget_percentage}}%)</label>
                                             <input type="text" disabled="true" class="form-control @if($budget_grand_total_amount > $contract_grand_total_amount) is-invalid non-conforming @endif" value="P {{ number_format($budget_grand_total_amount,2) }}"/>
