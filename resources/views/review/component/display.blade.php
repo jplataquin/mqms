@@ -128,7 +128,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mb-3 d-none d-xs-flex d-sm-flex d-md-flex">
+                                <div class="row mb-3 d-lg-none d-xl-none d-xs-flex d-sm-flex d-md-flex">
                                     <div class="col-lg-12">
                                         <div id="contractItemCarousel" class="carousel slide" data-bs-ride="carousel">
                                             <div class="carousel-inner">
