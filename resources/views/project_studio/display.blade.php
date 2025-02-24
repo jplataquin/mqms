@@ -87,14 +87,26 @@
         import {$q} from '/adarna.js';
 
         const studio_side = $q('#studio-side').first();
+        
+        let mdown = false;
 
         console.log(studio_side);
         studio_side.onmousedown = ()=>{
         
-            console.log('down');
-            document.onmousemove = (e) =>{
-                console.log(e.movementX);
-            }
+            mdown = true;
+        }
+
+        studio_side.onmousedown = ()=>{
+            
+            mdown = false;
+                
+        }
+
+        document.onmousemove = (e) =>{
+            
+            if(!mdown) return false;
+
+            console.log(e.movementX);
         }
 
     </script>
