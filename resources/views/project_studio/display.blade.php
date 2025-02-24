@@ -65,7 +65,7 @@
         </style>
         <div id="studio-container">
   
-            <div id="studio-side">
+            <div id="studio-side" width="30%">
                  <h3 id="title">I'm resizable</h3>
                 <i class="fa fa-align-center item"> Section 1</i>
                 <i class="fa fa-align-center item"> Section 2</i>
@@ -76,7 +76,7 @@
 
             </div>
             
-            <div id="studio-editor" contenteditable="true">
+            <div id="studio-editor" width="70%">
                 <h3 id="title">I'm editable</h3>
             </div>
 
@@ -108,11 +108,10 @@
 
             if(e.movementX == -1){
 
-                console.log(studio_side.style.minWidth);
                 console.log(studio_side.style.width);
                 
-                console.log(studio_editor.style.minWidth);
                 console.log(studio_editor.style.width);
+
             }else if (e.movementX == 1){
 
             }
