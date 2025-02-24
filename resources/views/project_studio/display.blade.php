@@ -35,13 +35,13 @@
                     height: 100vh;
                     background:#9999;
                     text-align: right;
-                    min-width: 90%;
-                    width: 90%;
+                    min-width: 70%;
+                    width: 70%;
                 }
 
                 #studio-side{
-                    min-width: 10%;
-                    width: 10%;
+                    min-width: 30%;
+                    width: 30%;
                     height: 100vh;
                     background:#708090;
                     border: 1px solid #696969;
@@ -82,5 +82,21 @@
 
         </div>
     </div>
+
+    <script type="module">
+        import {$q} from '/adarna.js';
+
+        const studio_side = $q('#studio-side').first();
+
+
+        studio_side.onmousedown = ()=>{
+        
+            
+            document.onmousemove = (e) =>{
+                console.log(e.movementX);
+            }
+        }
+
+    </script>
 </div>
 @endsection
