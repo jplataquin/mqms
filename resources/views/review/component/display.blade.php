@@ -129,7 +129,7 @@
                                     </div>
                                 </div>
 
-                                <div class="row mb-3">    
+                                <div class="row mb-3 d-sm-none">    
                                     <div class="col-lg-4 mb-3">
                                         <div class="form-container">
                                             <div class="form-header">Contract</div>
