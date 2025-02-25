@@ -107,7 +107,7 @@
                 
         }
 
-        studio_side.onmouseout = ()=>{
+        studio_editor.onmousein = ()=>{
             mdown = false;
         }
 
