@@ -108,12 +108,13 @@
 
             if(e.movementX == -1){
 
-                console.log(studio_side.style.width);
+                console.log('left');
                 
-                console.log(studio_editor.style.width);
 
             }else if (e.movementX == 1){
-
+                
+                console.log('right');
+                
             }
         }
 
