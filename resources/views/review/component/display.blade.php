@@ -843,10 +843,24 @@
         window.util.navTo('/review/components/');
     }
 
-    let non_conforming_count = $q('.non-conforming').items().length;
+    let non_conforming_items = $q('.non-conforming').items();
 
-    if(non_conforming_count){
+    if(non_conforming_count.length){
+        
         calloutDanger.classList.remove('d-none');
+
+        let non_confirming_count = 0;
+
+        non_conforming_items.map(item => {
+           
+            if(item.checkVisibility({
+                opacityProperty: true,   // Check CSS opacity property too
+                visibilityProperty: true // Check CSS visibility property too
+            })){
+                non_conforming_count++;
+            }
+        })
+
         calloutDangerText.innerText = 'Warning: '+non_conforming_count+' item(s) are non-conforming';
     }
 </script>
