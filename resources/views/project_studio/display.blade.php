@@ -66,14 +66,6 @@
         <div id="studio-container">
   
             <div id="studio-side">
-                 <h3 id="title">I'm resizable</h3>
-                <i class="fa fa-align-center item"> Section 1</i>
-                <i class="fa fa-align-center item"> Section 2</i>
-                <i class="fa fa-align-center item"> Section 3</i>
-                <i class="fa fa-align-center item"> Section 4</i>
-                <i class="fa fa-align-center item"> Section 5</i>
-                <i class="fa fa-align-center item"> Section 6</i>
-
             </div>
             
             <div id="studio-editor">
