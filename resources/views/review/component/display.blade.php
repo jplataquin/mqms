@@ -849,7 +849,7 @@
         
         calloutDanger.classList.remove('d-none');
 
-        let non_confirming_count = 0;
+        let non_conforming_count = 0;
 
         non_conforming_items.map(item => {
            
