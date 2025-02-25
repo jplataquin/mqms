@@ -852,7 +852,11 @@
         let non_conforming_count = 0;
 
         non_conforming_items.map(item => {
-           
+            
+            console.log(item.checkVisibility({
+                opacityProperty: true,   // Check CSS opacity property too
+                visibilityProperty: true // Check CSS visibility property too
+            }),item);
             if(item.checkVisibility({
                 opacityProperty: true,   // Check CSS opacity property too
                 visibilityProperty: true // Check CSS visibility property too
@@ -861,7 +865,9 @@
             }
         })
 
-        calloutDangerText.innerText = 'Warning: '+non_conforming_count+' item(s) are non-conforming';
+        if(non_conforming_count){
+            calloutDangerText.innerText = 'Warning: '+non_conforming_count+' item(s) are non-conforming';
+        }
     }
 </script>
 </div>
