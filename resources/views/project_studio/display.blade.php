@@ -94,7 +94,7 @@
         let studio_editor_width     = 70;
         let studio_side_width_limit = 10;
         let studio_side_width_max   = 50;
-        let width_increment         = 5;
+        let width_increment         = 1;
 
         studio_side.onmousedown = ()=>{
             
@@ -135,7 +135,21 @@
 
             }else if (e.movementX == 1){
                 
-                console.log('right');
+                studio_side_width = studio_side_width + width_increment;
+
+                if(studio_side_width >= studio_side_width_max){
+                    studio_side_width = studio_side_width_max;
+                }
+
+                studio_editor_width = 100 - studio_side_width;
+
+                studio_side.style.minWidth   = studio_side_width+'%';
+                studio_side.style.width      = studio_side_width+'%';
+                studio_side.style.maxWidth   = studio_side_width+'%';
+
+                studio_editor.style.minWidth    = studio_editor_width+'%';
+                studio_editor.style.width       = studio_editor_width+'%';
+                studio_editor.style.maxWidth    = studio_editor_width+'%';
                 
             }
         }
