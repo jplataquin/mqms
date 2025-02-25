@@ -845,7 +845,7 @@
 
     let non_conforming_items = $q('.non-conforming').items();
 
-    if(non_conforming_count.length){
+    if(non_conforming_items.length){
         
         calloutDanger.classList.remove('d-none');
 
