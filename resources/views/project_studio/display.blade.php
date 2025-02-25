@@ -34,7 +34,7 @@
                     flex-grow: 1;
                     height: 100vh;
                     background:#9999;
-                    text-align: right;
+                    overflow:scroll;
                     min-width: 70%;
                     width: 70%;
                 }
@@ -45,8 +45,8 @@
                     height: 100vh;
                     background:#708090;
                     border: 1px solid #696969;
-                    color:yellow;
-                    cursor: move;
+                    overflow:scroll;
+                    cursor: e-resize;
                 }
 
                 .item{
