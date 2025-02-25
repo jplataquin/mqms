@@ -98,8 +98,9 @@
 
         document.onmousedown = (e)=>{
             
-            console.log(e);
-            mdown = true;
+            if(e.target.id == 'studio-side'){
+                mdown = true;
+            }
         }
 
         document.onmouseup = ()=>{
