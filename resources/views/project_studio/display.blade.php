@@ -65,7 +65,7 @@
         </style>
         <div id="studio-container">
   
-            <div id="studio-side" width="30%">
+            <div id="studio-side">
                  <h3 id="title">I'm resizable</h3>
                 <i class="fa fa-align-center item"> Section 1</i>
                 <i class="fa fa-align-center item"> Section 2</i>
@@ -76,7 +76,7 @@
 
             </div>
             
-            <div id="studio-editor" width="70%">
+            <div id="studio-editor">
                 <h3 id="title">I'm editable</h3>
             </div>
 
@@ -90,6 +90,11 @@
         const studio_editor = $q('#studio-editor').first();
 
         let mdown = false;
+        let studio_side_width       = 30;
+        let studio_editor_width     = 70;
+        let studio_side_width_limit = 10;
+        let studio_side_width_max   = 50;
+        let width_increment         = 5;
 
         studio_side.onmousedown = ()=>{
             
@@ -102,14 +107,31 @@
                 
         }
 
+        studio_side.onmouseout = ()=>{
+            mdown = false;
+        }
+
         document.onmousemove = (e) =>{
             
             if(!mdown) return false;
 
             if(e.movementX == -1){
 
-                console.log('left');
-                
+                studio_side_width = studio_side_width - width_increment;
+
+                if(studio_side_width <= studio_side_width_limit){
+                    studio_side_width = studio_side_width_limit;
+                }
+
+                studio_editor_width = 100 - studio_side_width;
+
+                studio_side.style.minWidth   = studio_side_width+'%';
+                studio_side.style.width      = studio_side_width+'%';
+                studio_side.style.maxWidth   = studio_side_width+'%';
+
+                studio_editor.style.minWidth    = studio_editor_width+'%';
+                studio_editor.style.width       = studio_editor_width+'%';
+                studio_editor.style.maxWidth    = studio_editor_width+'%';
 
             }else if (e.movementX == 1){
                 
