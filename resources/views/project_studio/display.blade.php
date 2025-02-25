@@ -96,12 +96,13 @@
         let studio_side_width_max   = 50;
         let width_increment         = 1;
 
-        studio_side.onmousedown = ()=>{
+        document.onmousedown = (e)=>{
             
+            console.log(e);
             mdown = true;
         }
 
-        studio_side.onmouseup = ()=>{
+        document.onmouseup = ()=>{
             
             mdown = false;
                 
