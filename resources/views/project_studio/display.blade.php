@@ -38,6 +38,7 @@
                     overflow-y:scroll;
                     min-width: 70%;
                     width: 70%;
+                    user-select: none;
                 }
 
                 #size-handle{
