@@ -32,6 +32,12 @@ class Node extends Controller
             
             return $this->_section($parent_id);
         }
+
+        return response()->json([
+            'status' => 0,
+            'message' => 'Unknown Type',
+            'data' => [$type,$project]
+        ]);
     }
 
     private function _section($parent_id){
