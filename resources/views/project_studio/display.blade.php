@@ -160,6 +160,36 @@
         const side   = $q('#studio-side').first();
         const editor = $q('#studio-editor').first();
 
+        async function getChildren(type,id){
+            return new Promise((resolve,reject)=>{
+
+                window.util.$get('/api/project/studio/node/children',{
+                    type:type,
+                    id:id
+                }).then(reply=>{
+
+                    if(reply.status <= 0 ){
+                        resolve(false);
+                        return false;
+                    }
+
+                    let items = [];
+
+                    if(reply.data.type == 'section'){
+                        reply.data.items.map(item=>{
+                            items.push(SectionNode(item));
+                        });
+                    }else if (reply.data.type == 'contract_item'){
+                        reply.data.items.map(item=>{
+                            items.push(ContractItemNode(item));
+                        });
+                    }
+
+                    resolve(items);
+                })
+            });
+        }
+
         function SectionNode(data){
             return new NodeItem({
                 type:'section',
@@ -168,8 +198,22 @@
                 status:data.status,
                 parentContainer: side,
                 onScreen:()=>{},
-                open: ()=>{
-                    
+                open: async ()=>{
+                    return getChildren('section',data.id);
+                }
+            })
+        }
+
+        function SectionNode(data){
+            return new NodeItem({
+                type:'contract_item',
+                id:data.id,
+                name:data.description,
+                status:data.status,
+                parentContainer: side,
+                onScreen:()=>{},
+                open: async ()=>{
+                    return getChildren('contract_item',data.id);
                 }
             })
         }
@@ -182,27 +226,7 @@
             onScreen:()=>{},
             open: async ()=>{
 
-                return new Promise((resolve,reject)=>{
-
-                    window.util.$get('/api/project/studio/node/children',{
-                        type:'project',
-                        id:'{{$project->id}}'
-                    }).then(reply=>{
-
-                        if(reply.status <= 0 ){
-                            resolve(false);
-                            return false;
-                        }
-
-                        let items = [];
-
-                        reply.data.items.map(item=>{
-                            items.push(SectionNode(item));
-                        });
-
-                        resolve(items);
-                    })
-                });
+                return getChildren('project','{{$project->id}}')
                 
             }
         });

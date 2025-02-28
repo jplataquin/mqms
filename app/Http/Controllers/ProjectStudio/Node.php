@@ -31,6 +31,11 @@ class Node extends Controller
         if($type == 'project'){
             
             return $this->_section($parent_id);
+        
+        }else if($type == 'section'){
+
+            return $this->_contract_item($parent_id);
+            
         }
 
         return response()->json([
@@ -49,6 +54,21 @@ class Node extends Controller
             'message' => '',
             'data' => [
                 'type' => 'section',
+                'items' => $rows
+            ]
+        ]);
+    }
+
+
+    private function _contract_item($parent_id){
+
+        $rows = ContractItem::where('section_id',$parent_id)->get();
+
+        return response()->json([
+            'status' => 1,
+            'message' => '',
+            'data' => [
+                'type' => 'contract_item',
                 'items' => $rows
             ]
         ]);
