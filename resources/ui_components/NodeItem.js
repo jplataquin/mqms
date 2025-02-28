@@ -86,7 +86,11 @@ class Item extends ComponentV2 {
             }
         },(el)=>{
             
-            this.el.test = t.div((el)=>{
+            this.el.test = t.div({
+                style:{
+                    maxHeight:'24px'
+                }
+            },(el)=>{
                 el.appendChild(this.el.status);
                 el.appendChild(this.el.indicator);
             
@@ -114,6 +118,7 @@ class Item extends ComponentV2 {
                 backgroundColor:'rgba(81, 83, 100, 0.25)',
                 width:'100%',
                 left:'0px',
+                top:'-26px'
             }
         },);
 
