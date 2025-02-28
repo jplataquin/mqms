@@ -204,7 +204,7 @@
             })
         }
 
-        function SectionNode(data){
+        function ContractItemNode(data){
             return new NodeItem({
                 type:'contract_item',
                 id:data.id,
