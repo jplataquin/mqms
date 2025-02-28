@@ -171,7 +171,7 @@
                 return new Promise((resolve,reject)=>{
 
                     window.util.$get('/api/project/studio/node/children',{
-                        type:'projecct',
+                        type:'project',
                         id:'{{$project->id}}'
                     }).then(reply=>{
 
