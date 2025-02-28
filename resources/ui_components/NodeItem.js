@@ -328,7 +328,8 @@ class Item extends ComponentV2 {
         const path1  = document.createElementNS('http://www.w3.org/2000/svg','path');
         const path2 = document.createElementNS('http://www.w3.org/2000/svg','path');
         const path3 = document.createElementNS('http://www.w3.org/2000/svg','path');
-                        
+        
+        console.log(type);
         switch(type){
 
             case 'project':
