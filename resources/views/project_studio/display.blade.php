@@ -69,7 +69,6 @@
             </div>
             
             <div id="studio-editor">
-                <h3 id="title">I'm editable</h3>
             </div>
 
         </div>
@@ -151,6 +150,19 @@
                 
             }
         }
+
+    </script>
+
+    <script type="module">
+        import {$q} from '/adarna.js';
+        import ProjectTree from '/ui_components/ProjectTree.js';
+
+        const side   = $q('#studio-side').first();
+        const editor = $q('#studio-editor').first();
+
+        ProjectTree({
+            project_id:'{{$project->id}}'
+        });
 
     </script>
 </div>

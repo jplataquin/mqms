@@ -431,7 +431,20 @@ class ProjectTree extends ComponentV2{
 
     controller(){
 
+        window.util.$get('/api/project/studio/node',{
+            type:'project',
+            id:'{{$project->id}}'
         
+        }).then(reply=>{
+
+            if(reply.status <= 0){
+
+                window.util.showMsg(reply);
+                return false;
+            }
+            
+            this.process(reply.data);
+        });
     }
 }
 
