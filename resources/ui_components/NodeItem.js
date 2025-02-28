@@ -133,7 +133,7 @@ class Item extends ComponentV2 {
                 item.style.display = 'none';
             });
 
-            this._model.parentContainer.appendChild(highlight);
+            this._dom.appendChild(highlight);
 
             highlight.style.display = 'block';
            
