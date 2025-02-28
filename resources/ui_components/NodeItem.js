@@ -86,17 +86,17 @@ class Item extends ComponentV2 {
             }
         },(el)=>{
             
-            this.el.test = t.div(()=>{
+            this.el.test = t.div((el)=>{
                 el.appendChild(this.el.status);
                 el.appendChild(this.el.indicator);
             
                 el.appendChild(svg);
                 el.appendChild(this.el.label);
 
-                el.appendChild(this.el.container);
+               
             });
             
-
+            el.appendChild(this.el.container);
         });
 
         return v;
