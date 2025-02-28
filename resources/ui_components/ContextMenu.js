@@ -52,7 +52,7 @@ class ContextMenu extends ComponentV2{
         const t = new Template();
 
         const item = t.div({
-            class:'item',
+            class:'contextmenu-item',
             style:{
                 borderBottom:'1px solid rgba(25,25,25,0.5)',
                 width:'100%',
@@ -92,7 +92,7 @@ class ContextMenu extends ComponentV2{
 
     style(){
         return {
-            '.item:hover' :{
+            '.contextmenu-item:hover' :{
                 backgroundColor: this._model.itemHighlightColor
             }
         }
