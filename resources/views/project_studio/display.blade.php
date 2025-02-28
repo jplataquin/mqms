@@ -160,6 +160,19 @@
         const side   = $q('#studio-side').first();
         const editor = $q('#studio-editor').first();
 
+        function SectionNode(data){
+            return new NodeItem({
+                id:data.id,
+                name:data.name,
+                status:data.status,
+                parentContainer: side,
+                onScreen:()=>{},
+                open: ()=>{
+                    
+                }
+            })
+        }
+
         const root = NodeItem({
             id:'{{$project->id}}',
             name:'{{$project->name}}',
@@ -180,7 +193,13 @@
                             return false;
                         }
 
-                        resolve(reply.data);
+                        let items = [];
+
+                        data.items.map(item=>{
+                            items[] = SectionNode(item);
+                        });
+
+                        resolve(items);
                     })
                 });
                 
