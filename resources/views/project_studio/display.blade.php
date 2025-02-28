@@ -34,9 +34,16 @@
                     flex-grow: 1;
                     height: 100vh;
                     background:#9999;
-                    overflow:hidden;
+                    overflow-x:hidden;
+                    overflow-y:scroll;
                     min-width: 70%;
                     width: 70%;
+                }
+
+                #size-handle{
+                   height:100vh;
+                   background-color:'pink';
+                   min-width:'1px';
                 }
 
                 #studio-side{
@@ -67,7 +74,7 @@
   
             <div id="studio-side">
             </div>
-            
+            <div id="size-handle"></div>
             <div id="studio-editor">
             </div>
 
