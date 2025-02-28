@@ -196,7 +196,7 @@
 
                         let items = [];
 
-                        data.items.map(item=>{
+                        reply.data.items.map(item=>{
                             items.push(SectionNode(item));
                         });
 
