@@ -124,7 +124,7 @@ class Item extends ComponentV2 {
 
             highlight.style.top     = (label_bound.y-2)+'px';
             highlight.style.left    = '0px';
-            highlight.style.width   = parent_bound.width+'px';
+            highlight.style.width   = '100%';//parent_bound.width+'px';
 
             $q('.highlight-o').items().map(item=>{
                 item.style.display = 'none';
