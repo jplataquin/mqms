@@ -218,6 +218,35 @@
             })
         }
 
+        function ComponentNode(data){
+            return new NodeItem({
+                type:'component',
+                id:data.id,
+                name:data.name,
+                status:data.status,
+                parentContainer: side,
+                onScreen:()=>{},
+                open: async ()=>{
+                    return getChildren('component',data.id);
+                }
+            })
+        }
+
+
+        function ComponentItemNode(data){
+            return new NodeItem({
+                type:'component_item',
+                id:data.id,
+                name:data.name,
+                status:data.status,
+                parentContainer: side,
+                onScreen:()=>{},
+                open: async ()=>{
+                    return getChildren('component_item',data.id);
+                }
+            })
+        }
+        
         const root = NodeItem({
             id:'{{$project->id}}',
             name:'{{$project->name}}',

@@ -75,4 +75,33 @@ class Node extends Controller
             ]
         ]);
     }
+
+
+    private function _component($parent_id){
+
+        $rows = Component::where('contract_item_id',$parent_id)->get();
+
+        return response()->json([
+            'status' => 1,
+            'message' => '',
+            'data' => [
+                'type' => 'component',
+                'items' => $rows
+            ]
+        ]);
+    }
+
+    private function _component_item($parent_id){
+
+        $rows = ComponentItem::where('component_id',$parent_id)->get();
+
+        return response()->json([
+            'status' => 1,
+            'message' => '',
+            'data' => [
+                'type' => 'component_item',
+                'items' => $rows
+            ]
+        ]);
+    }
 }
