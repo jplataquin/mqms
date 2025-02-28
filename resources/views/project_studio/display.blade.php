@@ -42,8 +42,9 @@
 
                 #size-handle{
                    height:100vh;
-                   background-color:'pink';
-                   min-width:'1px';
+                   background-color:pink;
+                   min-width:1px;
+                   cursor: e-resize;
                 }
 
                 #studio-side{
@@ -53,7 +54,6 @@
                     background:#708090;
                     border: 1px solid #696969;
                     overflow:scroll;
-                    cursor: e-resize;
                 }
 
                 .item{
@@ -90,6 +90,7 @@
 
         const studio_side = $q('#studio-side').first();
         const studio_editor = $q('#studio-editor').first();
+        const size_handle   = $q('#size-handle').first();
 
         let mdown = false;
         let studio_side_width       = 30;
@@ -100,7 +101,7 @@
 
         document.onmousedown = (e)=>{
             
-            if(e.target.id == 'studio-side'){
+            if(e.target.id == 'size-handle'){
                 mdown = true;
             }
         }
@@ -164,8 +165,8 @@
         import {$q} from '/adarna.js';
         import NodeItem from '/ui_components/NodeItem.js';
 
-        const side   = $q('#studio-side').first();
-        const editor = $q('#studio-editor').first();
+        const side          = $q('#studio-side').first();
+        const editor        = $q('#studio-editor').first();
 
         async function getChildren(type,id){
             return new Promise((resolve,reject)=>{
