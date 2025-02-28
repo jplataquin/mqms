@@ -155,15 +155,40 @@
 
     <script type="module">
         import {$q} from '/adarna.js';
-        import ProjectTree from '/ui_components/ProjectTree.js';
+        import NodeItem from '/ui_components/NodeItem.js';
 
         const side   = $q('#studio-side').first();
         const editor = $q('#studio-editor').first();
 
-        ProjectTree({
-            project_id:'{{$project->id}}'
+        const root = NodeItem({
+            id:'{{$project->id}}',
+            name:'{{$project->name}}',
+            status:'{{$project->status}}',
+            parentContainer: side,
+            onScreen:()=>{},
+            open: async ()=>{
+
+                return new Promise((resolve,reject)=>{
+
+                    window.util.$get('/api/project/studio/node/children',{
+                        type:'projecct',
+                        id:'{{$project->id}}'
+                    }).then(reply=>{
+
+                        if(reply.status <= 0 ){
+                            resolve(false);
+                            return false;
+                        }
+
+                        resolve(reply.data);
+                    })
+                });
+                
+            }
         });
 
+
+        side.appendChild(root);
     </script>
 </div>
 @endsection

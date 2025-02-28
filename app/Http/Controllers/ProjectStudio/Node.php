@@ -8,13 +8,12 @@ use App\Models\Project;
 use App\Models\Section;
 use App\Models\Component;
 
-class ProjectStudioController extends Controller
+class Node extends Controller
 {
 
-    public function node(Request $request){
+    public function data(Request $request){
 
         $type       = $request->input('type');
-        $parent_id  = (int) $request->input('parent_id');
         $id         = (int) $request->input('id');
 
         if($type == 'project'){
@@ -23,6 +22,16 @@ class ProjectStudioController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function children(Request $request){
+        $type       = $request->input('type');
+        $parent_id  = (int) $request->input('parent_id');
+
+        if($type == 'project'){
+            
+            return $this->_section($parent_id);
+        }
     }
 
     private function _project($id){
@@ -40,7 +49,10 @@ class ProjectStudioController extends Controller
         return [
             'status'    => 1,
             'message'   => '',
-            'data'      => $project
+            'data'      => [
+                'type' => 'project',
+                'data' => [$project]
+            ]
         ];
     }
 

@@ -406,61 +406,6 @@ class Item extends ComponentV2 {
     }
 }
 
-function item(data){
+export default function NodeItem(data){
     return new Item(data);
-}
-
-
-class ProjectTree extends ComponentV2{
-
-    model(){
-        return {
-            project_id:''
-        }
-    }
-
-    view(){
-        const t = new Template();
-
-        return t.div({
-            style:{
-                width:'100%'
-            }
-        });
-    }
-
-    controller(){
-
-        window.util.$get('/api/project/studio/node',{
-            type:'project',
-            id:this._model.project_id
-        }).then(reply=>{
-
-            if(reply.status <= 0){
-
-                window.util.showMsg(reply);
-                return false;
-            }
-            
-            this.process(reply.data);
-        });
-    }
-
-    process(data){
-        
-        item({
-            type            :'project',
-            name            : data.name,
-            status          : data.status,
-            id              : data.id,
-            parentContainer : this._dom,
-            open: async ()=>{
-
-            }
-        });
-    }
-}
-
-export default (data)=>{
-    return (new ProjectTree(data));
 }

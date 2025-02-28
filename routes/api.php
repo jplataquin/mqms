@@ -154,6 +154,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/comment/create', [App\Http\Controllers\CommentController::class, '_create']);
     Route::get('/comment/list', [App\Http\Controllers\CommentController::class, '_list']);
 
-
-    Route::get('/project/studio/node',[App\Http\Controllers\ProjectStudio\ProjectStudioController::class, 'node']);
+    //Project Studio
+    Route::get('/project/studio/node',[App\Http\Controllers\ProjectStudio\Node::class, 'data']);
+    Route::get('/project/studio/node/children',[App\Http\Controllers\ProjectStudio\Node::class, 'children']);
 });
