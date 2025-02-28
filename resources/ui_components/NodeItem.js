@@ -107,7 +107,7 @@ class Item extends ComponentV2 {
         const highlight = t.div({
             class:'highlight-o',
             style:{
-                position:'absolute',
+                position:'relative',
                 minHeight:'24px',
                 backgroundColor:'rgba(81, 83, 100, 0.25)',
                 width:'100%',
@@ -130,7 +130,7 @@ class Item extends ComponentV2 {
                 item.style.display = 'none';
             });
 
-            document.body.appendChild(highlight);
+            this._model.parentContainer.appendChild(highlight);
 
             highlight.style.display = 'block';
            
