@@ -260,6 +260,7 @@
             name:'{{$project->name}}',
             status:'{{$project->status}}',
             parentContainer: side,
+            type:'project',
             onScreen:()=>{},
             open: async ()=>{
 
