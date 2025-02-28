@@ -62,6 +62,7 @@ class Item extends ComponentV2 {
         this.el.label = t.label({
             style:{
                 cursor:'pointer',
+                display:'inline'
             }
         },this._model.name);
 
