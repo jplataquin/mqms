@@ -81,19 +81,21 @@ class Item extends ComponentV2 {
             style:{
               position:'relative',
               zIndex:'2',
-              width:'fit-content',
+              width:'max-content',
               minWidth:'max-content'
             }
         },(el)=>{
             
-            el.appendChild(this.el.status);
-            el.appendChild(this.el.indicator);
-        
-            el.appendChild(svg);
-            el.appendChild(this.el.label);
+            this.el.test = t.div(()=>{
+                el.appendChild(this.el.status);
+                el.appendChild(this.el.indicator);
+            
+                el.appendChild(svg);
+                el.appendChild(this.el.label);
 
-            el.appendChild(this.el.container);
-        
+                el.appendChild(this.el.container);
+            });
+            
 
         });
 
@@ -136,6 +138,8 @@ class Item extends ComponentV2 {
             this._dom.appendChild(highlight);
 
             highlight.style.display = 'block';
+
+            this.el.test.style.backgroundColor = 'yellow';
            
         }
 
