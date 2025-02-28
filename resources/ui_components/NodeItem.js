@@ -1,6 +1,8 @@
 import {$q,Template,ComponentV2} from '/adarna.js';
 import contextMenu from '/ui_components/ContextMenu.js';
 
+console.log(contextMenu);
+
 class Item extends ComponentV2 {
 
     state(){
@@ -118,7 +120,8 @@ class Item extends ComponentV2 {
                 backgroundColor:'rgba(255, 2, 2, 0.25)',
                 width:'100%',
                 left:'0px',
-                top:'-26px'
+                top:'-26px',
+                zIndex:'-1'
             }
         },);
 
