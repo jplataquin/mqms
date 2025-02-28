@@ -43,7 +43,7 @@
                 #size-handle{
                    height:100vh;
                    background-color:pink;
-                   min-width:1px;
+                   min-width:2px;
                    cursor: e-resize;
                 }
 
