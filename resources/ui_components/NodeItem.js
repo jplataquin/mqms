@@ -125,7 +125,7 @@ class Item extends ComponentV2 {
             console.log(label_bound.y,parent_bound.y);
             console.log(this.el.label.offsetTop);
             
-            highlight.style.top     = (label_bound.y-2)+'px';
+            //highlight.style.top     = (label_bound.y-2)+'px';
             highlight.style.left    = '0px';
             highlight.style.width   = '100%';//parent_bound.width+'px';
 
