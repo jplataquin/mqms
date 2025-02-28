@@ -135,11 +135,11 @@ class Item extends ComponentV2 {
                 item.style.display = 'none';
             });
 
-            this._dom.appendChild(highlight);
+            this.el.test.appendChild(highlight);
 
             highlight.style.display = 'block';
 
-            this.el.test.style.backgroundColor = 'yellow';
+            //this.el.test.style.backgroundColor = 'yellow';
            
         }
 
