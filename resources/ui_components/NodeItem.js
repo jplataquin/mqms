@@ -80,7 +80,8 @@ class Item extends ComponentV2 {
         const v = t.div({
             style:{
               position:'relative',
-              zIndex:'2'
+              zIndex:'2',
+              width:'500px'
             }
         },(el)=>{
             
