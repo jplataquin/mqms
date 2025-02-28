@@ -119,9 +119,11 @@ class Item extends ComponentV2 {
             
             let label_bound = this.el.label.getBoundingClientRect();
 
-
             let parent_bound = this._model.parentContainer.getBoundingClientRect();
 
+            
+            console.log(label_bound.y,parent_bound.y);
+            
             highlight.style.top     = (label_bound.y-2)+'px';
             highlight.style.left    = '0px';
             highlight.style.width   = '100%';//parent_bound.width+'px';
