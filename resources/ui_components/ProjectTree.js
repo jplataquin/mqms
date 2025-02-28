@@ -433,8 +433,7 @@ class ProjectTree extends ComponentV2{
 
         window.util.$get('/api/project/studio/node',{
             type:'project',
-            id:'{{$project->id}}'
-        
+            id:this._model.project_id
         }).then(reply=>{
 
             if(reply.status <= 0){
