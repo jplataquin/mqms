@@ -179,9 +179,17 @@
                         reply.data.items.map(item=>{
                             items.push(SectionNode(item));
                         });
-                    }else if (reply.data.type == 'contract_item'){
+                    }else if(reply.data.type == 'contract_item'){
                         reply.data.items.map(item=>{
                             items.push(ContractItemNode(item));
+                        });
+                    }else if(reply.data.type == 'component'){
+                        reply.data.items.map(item=>{
+                            items.push(ComponentNode(item));
+                        });
+                    }else if(reply.data.type == 'component_item'){
+                        reply.data.items.map(item=>{
+                            items.push(ComponentItemNode(item));
                         });
                     }
 
@@ -246,7 +254,7 @@
                 }
             })
         }
-        
+
         const root = NodeItem({
             id:'{{$project->id}}',
             name:'{{$project->name}}',
