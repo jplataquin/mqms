@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\Project;
 use App\Models\Section;
+use App\Models\ContractItem;
 use App\Models\Component;
+use App\Models\ComponentItem;
 
 class Node extends Controller
 {
@@ -35,7 +37,7 @@ class Node extends Controller
         }else if($type == 'section'){
 
             return $this->_contract_item($parent_id);
-            
+
         }
 
         return response()->json([
