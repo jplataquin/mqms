@@ -38,13 +38,12 @@
                     overflow-y:scroll;
                     min-width: 70%;
                     width: 70%;
-                    user-select: none;
                 }
 
                 #size-handle{
                    height:100vh;
                    background-color:pink;
-                   min-width:2px;
+                   min-width:3px;
                    cursor: e-resize;
                 }
 
@@ -55,6 +54,7 @@
                     background:#708090;
                     border: 1px solid #696969;
                     overflow:scroll;
+                    user-select: none;
                 }
 
                 .item{
