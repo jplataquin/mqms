@@ -36,7 +36,7 @@ class Node extends Controller
         return response()->json([
             'status' => 0,
             'message' => 'Unknown Type',
-            'data' => [$type,$project]
+            'data' => [$type,$parent_id]
         ]);
     }
 
