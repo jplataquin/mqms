@@ -25,8 +25,8 @@ class Node extends Controller
     }
 
     public function children(Request $request){
-        $type       = $request->input('type');
-        $parent_id  = (int) $request->input('parent_id');
+        $type        = $request->input('type');
+        $parent_id   = (int) $request->input('id');
 
         if($type == 'project'){
             
@@ -34,26 +34,17 @@ class Node extends Controller
         }
     }
 
-    private function _project($id){
+    private function _section($parent_id){
 
-        $project = Project::find($id);
+        $rows = Section::where('project_id',$parent_id)->get();
 
-        if(!$project){
-            return [
-                'status'    => 0,
-                'message'   => 'Record not found',
-                'data'      => []
-            ];
-        }
-
-        return [
-            'status'    => 1,
-            'message'   => '',
-            'data'      => [
-                'type' => 'project',
-                'data' => [$project]
+        return response()->json([
+            'status' => 1,
+            'message' => '',
+            'data' => [
+                'type' => 'section',
+                'items' => $rows
             ]
-        ];
+        ]);
     }
-
 }
