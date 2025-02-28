@@ -34,7 +34,7 @@
                     flex-grow: 1;
                     height: 100vh;
                     background:#9999;
-                    overflow:scroll;
+                    overflow:hidden;
                     min-width: 70%;
                     width: 70%;
                 }
