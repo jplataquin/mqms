@@ -162,6 +162,7 @@
 
         function SectionNode(data){
             return new NodeItem({
+                type:'section',
                 id:data.id,
                 name:data.name,
                 status:data.status,
@@ -196,7 +197,7 @@
                         let items = [];
 
                         data.items.map(item=>{
-                            items[] = SectionNode(item);
+                            items.push(SectionNode(item));
                         });
 
                         resolve(items);
