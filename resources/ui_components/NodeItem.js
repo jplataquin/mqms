@@ -115,7 +115,7 @@ class Item extends ComponentV2 {
             style:{
                 position:'relative',
                 minHeight:'24px',
-                backgroundColor:'rgba(81, 83, 100, 0.25)',
+                backgroundColor:'rgba(255, 2, 2, 0.25)',
                 width:'100%',
                 left:'0px',
                 top:'-26px'
@@ -130,7 +130,7 @@ class Item extends ComponentV2 {
 
           
             //highlight.style.top     = (label_bound.y-2)+'px';
-            highlight.style.left    = '-500px';
+            highlight.style.left    = '-26px';
             highlight.style.width   = '100%';//parent_bound.width+'px';
 
             $q('.highlight-o').items().map(item=>{
