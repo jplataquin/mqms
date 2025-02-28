@@ -123,7 +123,7 @@ class Item extends ComponentV2 {
             let parent_bound = this._model.parentContainer.getBoundingClientRect();
 
             highlight.style.top     = (label_bound.y-2)+'px';
-            highlight.style.left    = (parent_bound.x)+'px';
+            highlight.style.left    = '0px';
             highlight.style.width   = parent_bound.width+'px';
 
             $q('.highlight-o').items().map(item=>{
