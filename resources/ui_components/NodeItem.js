@@ -82,7 +82,7 @@ class Item extends ComponentV2 {
               position:'relative',
               zIndex:'2',
               width:'fit-content',
-              minWidth:'fit-content'
+              minWidth:'max-content'
             }
         },(el)=>{
             
