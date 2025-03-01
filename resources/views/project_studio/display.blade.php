@@ -161,8 +161,9 @@
         }
 
     </script>
+    <div hx-boost="true">
      <a class="d-none" hx-select="#content" hx-target="#sudio-editor" href="/" id="__onscreen"></a>
-                    
+    </div>          
     <script type="module">
         import {$q,Template} from '/adarna.js';
         import NodeItem from '/ui_components/NodeItem.js';
