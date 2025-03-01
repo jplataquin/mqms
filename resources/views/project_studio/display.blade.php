@@ -161,20 +161,19 @@
         }
 
     </script>
-
+     <a class="d-none" hx-select="#content" hx-target="#sudio-editor" href="/" id="__onscreen"></a>
+                    
     <script type="module">
         import {$q,Template} from '/adarna.js';
         import NodeItem from '/ui_components/NodeItem.js';
 
         const side          = $q('#studio-side').first();
         const editor        = $q('#studio-editor').first();
+        const screen_htmx   = $q('#__onscreen').first();
         const t             = new Template();
 
 
         let screen_url      = '';
-        const screen_htmx   = t.a();
-        screen_htmx.setAttribute('hx-target','#studio-editor');
-        screen_htmx.setAttribute('hx-select','#content');
         
         function onScreen(url){
 
