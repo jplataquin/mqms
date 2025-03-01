@@ -188,7 +188,7 @@
             htmx.process(screen_htmx);
 
             screen_htmx.click();
-
+            console.log('on screen');
         }
 
         async function getChildren(type,id){
