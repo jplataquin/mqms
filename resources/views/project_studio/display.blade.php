@@ -168,7 +168,7 @@
 
         const side          = $q('#studio-side').first();
         const editor        = $q('#studio-editor').first();
-        const t             = new Tempalte();
+        const t             = new Template();
 
 
         let screen_url      = '';
