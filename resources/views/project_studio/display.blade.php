@@ -189,6 +189,8 @@
 
             htmx.process(screen_htmx);
 
+            console.log(screen_htmx);
+            
             screen_htmx.click();
             
             console.log('on screen');

@@ -807,20 +807,6 @@ window.util.navReload = function(){
 }
 
 
-// window.util.parseNumber = function(str){
-//     str = str+''.trim();
-//     str = str.replace(/,/g, '');
-//     str = parseFloat(str);
-
-//     if(isNaN(str)) return 0;
-
-//     return str;
-// }
-
-// window.util.roundTwoDecimal = function(num){
-//     num = window.util.parseNumber(num);
-//     return Math.round((num + Number.EPSILON) * 100) / 100;
-// }
 
 
 
