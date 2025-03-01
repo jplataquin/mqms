@@ -185,7 +185,7 @@
 
             if(url == screen_url) return false;
 
-            screen_htmx.setAttribute('href',url);
+            screen_htmx.href = url;
 
             htmx.process(screen_htmx);
 
