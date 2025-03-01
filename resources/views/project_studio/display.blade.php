@@ -163,11 +163,33 @@
     </script>
 
     <script type="module">
-        import {$q} from '/adarna.js';
+        import {$q,Template} from '/adarna.js';
         import NodeItem from '/ui_components/NodeItem.js';
 
         const side          = $q('#studio-side').first();
         const editor        = $q('#studio-editor').first();
+        const t             = new Tempalte();
+
+
+        let screen_url      = '';
+        const screen_htmx   = t.a();
+        screen_htmx.setAttribute('hx-target','#studio-editor');
+        screen_htmx.setAttribute('hx-select','#content');
+        
+        function onScreen(url){
+
+            if(!url){
+                console.error('URL not defined');
+                return false;
+            }
+
+            if(url == screen_url) return false;
+
+            htmx.process(screen_htmx);
+
+            screen_htmx.click();
+
+        }
 
         async function getChildren(type,id){
             return new Promise((resolve,reject)=>{
@@ -214,7 +236,9 @@
                 name:data.name,
                 status:data.status,
                 parentContainer: side,
-                onScreen:()=>{},
+                onScreen:()=>{
+                    onScreen('/project/section/'+data.id);
+                },
                 open: async ()=>{
                     return getChildren('section',data.id);
                 }
@@ -270,7 +294,9 @@
             status:'{{$project->status}}',
             parentContainer: side,
             type:'project',
-            onScreen:()=>{},
+            onScreen:()=>{
+                onScreen('/project/'+data.id);
+            },
             open: async ()=>{
 
                 return getChildren('project','{{$project->id}}')
