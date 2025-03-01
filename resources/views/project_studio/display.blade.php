@@ -295,7 +295,7 @@
             parentContainer: side,
             type:'project',
             onScreen:()=>{
-                onScreen('/project/'+data.id);
+                onScreen('/project/{{$project->id}}');
             },
             open: async ()=>{
 
