@@ -196,6 +196,10 @@
 
                     const newScript = document.createElement('script');
 
+                    forEach(script.attributes, function(attr) {
+                        newScript.setAttribute(attr.name, attr.value)
+                    });
+                    
                     newScript.textContent   = script.textContent
                     newScript.async         = false;
 
@@ -204,7 +208,7 @@
 
                     script.remove();
                 });
-                
+
                 editor.appendChild(content);
             });
             
