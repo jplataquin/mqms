@@ -192,6 +192,19 @@
                 
                 let content = $q('#content',reply.data).first();
 
+                $q('script',content).items().map(script=>{
+
+                    const newScript = document.createElement('script');
+
+                    newScript.textContent   = script.textContent
+                    newScript.async         = false;
+
+                    const parent = script.parentNode;
+                    parent.insertBefore(newScript, script);
+
+                    script.remove();
+                });
+                
                 editor.appendChild(content);
             });
             
