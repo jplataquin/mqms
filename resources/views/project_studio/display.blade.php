@@ -181,6 +181,8 @@
 
             if(url == screen_url) return false;
 
+            editor.innerHTML = '';
+
             window.util.$content(url).then(reply=>{
 
                 if(reply.status <= 0){
@@ -188,7 +190,9 @@
                     return false;
                 }
                 
-                editor.appendChild(reply.data);
+                let content = $q('#content',reply.data).first();
+
+                editor.appendChild(content);
             });
             
             console.log('on screen');
