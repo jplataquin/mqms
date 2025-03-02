@@ -196,10 +196,10 @@
 
                     const newScript = document.createElement('script');
 
-                    forEach(script.attributes, function(attr) {
+                    Array.from(script.attributes).forEach((attr) => {
                         newScript.setAttribute(attr.name, attr.value)
                     });
-                    
+
                     newScript.textContent   = script.textContent
                     newScript.async         = false;
 
