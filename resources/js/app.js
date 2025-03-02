@@ -368,6 +368,75 @@ window.util.alert = ($title,$message,$footer) => {
     window.ui.primaryModal.show();
 }
 
+window.util.$content = async (url,data,headers)=>{
+
+    headers                 = headers ?? {};
+    headers['X-CSRF-Token'] =  document.querySelector('meta[name="csrf-token"]').content;
+
+    let status = '';
+    
+    return fetch(url+'?'+ new URLSearchParams(data),
+    {
+        headers: headers,
+        method: "GET"
+    }).then((response) => {
+        
+        status = response.status;
+
+        //Access Denied
+        if(status == 401){
+            return {
+                    status:-1,
+                    message:'Please sign in',
+                    data:{}
+            }
+        };
+
+        if(status == 404){
+            return {
+                    status:-4,
+                    message:'Resource not found',
+                    data:{}
+            }
+        };
+
+        //Server error
+        if(status == 500){
+
+            console.error(response);
+            return {
+                    status:-5,
+                    message:'Something went wrong',
+                    data:{}
+            }
+        };
+
+        return response.text();
+
+    }).then(text=>{
+
+        let div = document.createElement('div');
+        div.innerHTML = text;
+
+        return {
+            status:1,
+            message:'',
+            data: div
+        }
+
+    }).catch(e=>{
+
+        return {
+            status:-3,
+            message:e.message,
+            data:{
+                httpStatus: status
+            }
+        }
+    });
+
+}
+
 window.util.$get = async (url,data,headers) => {
 
     headers                 = headers ?? {};
@@ -385,7 +454,7 @@ window.util.$get = async (url,data,headers) => {
         status = response.status;
 
         //Access Denied
-        if(response.status == 401){
+        if(status == 401){
             return {
                     status:-1,
                     message:'Please sign in',
@@ -393,7 +462,7 @@ window.util.$get = async (url,data,headers) => {
             }
         };
 
-        if(response.status == 404){
+        if(status == 404){
             return {
                     status:-4,
                     message:'Resource not found',
@@ -402,7 +471,7 @@ window.util.$get = async (url,data,headers) => {
         };
 
         //Server error
-        if(response.status == 500){
+        if(status == 500){
 
             console.error(response);
             return {
@@ -733,20 +802,15 @@ window.util.inputNumber = function(txt,evt,decimalPlaces,negativeFlag){
 
     //if one is true then it's good
     if(decimalPlaces){
-        console.log('a');
+    
         if(txt.value == '-') return true;
-        console.log('b');
+    
         
         let r = "^-?\\d+\\.\\d{0,"+(decimalPlaces)+"}$";
        
         let a = (new RegExp(r,'gi')).test(txt.value);
         let b = /^-?\d+$/.test(txt.value);
         let c = /^-?\d+\.$/.test(txt.value);
-        
-        
-        console.log(txt.value);
-        console.log(a,b,c);
-        
 
         if(!a && !b && !c && txt.value != ''){
 
