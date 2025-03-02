@@ -161,18 +161,14 @@
         }
 
     </script>
-    <div hx-boost="true">
-     <a class="d-none" hx-select="#content" hx-target="#studio-editor" href="/" id="__onscreen"></a>
-    </div>          
+         
     <script type="module">
         import {$q,Template} from '/adarna.js';
         import NodeItem from '/ui_components/NodeItem.js';
 
         const side          = $q('#studio-side').first();
         const editor        = $q('#studio-editor').first();
-        const screen_htmx   = $q('#__onscreen').first();
-        const t             = new Template();
-
+       
 
         let screen_url      = '';
         
@@ -185,13 +181,15 @@
 
             if(url == screen_url) return false;
 
-            screen_htmx.href = url;
+            window.util.$content(url).then(reply=>{
 
-            htmx.process(screen_htmx);
-
-            console.log(screen_htmx);
-
-            screen_htmx.click();
+                if(reply.status <= 0){
+                    window.util.showMsg(reply);
+                    return false;
+                }
+                
+                editor.appendChild(reply.data);
+            });
             
             console.log('on screen');
         }
