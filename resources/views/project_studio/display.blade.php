@@ -13,11 +13,10 @@
                 #studio-editor {
                     flex-grow: 1;
                     height: 100vh;
-                    background:#9999;
                     overflow-x:hidden;
                     overflow-y:scroll;
-                    min-width: 70%;
-                    width: 70%;
+                    min-width: 80%;
+                    width: 80%;
                 }
 
                 #size-handle{
@@ -28,11 +27,10 @@
                 }
 
                 #studio-side{
-                    min-width: 30%;
-                    width: 30%;
+                    min-width: 20%;
+                    width: 20%;
                     height: 100vh;
                     background:#708090;
-                    border: 1px solid #696969;
                     overflow:scroll;
                     user-select: none;
                 }
