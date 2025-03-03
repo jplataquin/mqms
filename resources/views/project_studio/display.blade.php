@@ -3,26 +3,6 @@
 @section('content')
 <div id="content">
     <div class="">
-        <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
-            <ul>
-                <li>
-                    <a href="/projects">
-                        <span>
-                        Projects
-                        </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="active">
-                        <span>
-                            Studio
-                        </span>
-                        <i class="ms-2 bi bi-display"></i>	
-                    </a>
-                </li>
-            </ul>
-        </div>
-
 
         <style>
                 #studio-container {
