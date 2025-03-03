@@ -161,7 +161,7 @@ class Item extends ComponentV2 {
         }
 
         this._dom.handler.prependChild = (item)=>{
-            this.el.container.prependChild(item);
+            this.el.container.prepend(item);
         }
 
         this._dom.handler.focus = ()=>{
