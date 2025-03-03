@@ -9,7 +9,7 @@
                     <table class="w-100 table">
                         <tr>
                             <th>
-                                Project
+                                Project Name
                             </th>
                             <td>
                                 <input type="text" disabled="true" id="project_name" value="{{$project->name}}" class="form-control"/>

@@ -15,13 +15,23 @@ use Illuminate\Support\Fluent;
 
 class ComponentItemController extends Controller
 {   
-    public function display($id){
+    public function display($id,Request $request){
 
         $component_item = ComponentItem::findOrFail($id);
 
         $component       = $component_item->Component;
         $section         = $component->Section;
         $project         = $section->Project;
+
+        if($request->header('X-STUDIO-MODE')){
+            return view('project_studio/screen/component/display',[
+                'project'           => $project,
+                'section'           => $section,
+                'component'         => $component,
+                'component_item'    => $component_item
+            ]);
+        }
+
 
         return view('component/display',[
             'project'           => $project,

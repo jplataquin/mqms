@@ -198,73 +198,7 @@
                     </div>
                 </div>
             </div>
-            <!--
-            <div class="d-none form-container" id="item_sticky_container">
-                <div class="form-header">Item</div>
-                <div class="form-body">
-                    <div class="row mb-3">
-                        
-                        <div class="col-lg-8">
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" id="item_name" class="form-control" disabled="true"/>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label>Sum Flag</label>
-                            
-                                <div class="form-switch text-center">
-                                    <input type="checkbox" id="item_sum_flag" class="form-check-input" disabled="true"/>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="row">
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label>Function Type</label>
-                                <input type="text" disabled="true" id="item_function_type" class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label>Variable</label>
-                                <input type="text" disabled="true" id="item_variable" class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label>Quantity</label>
-                                <input type="text" disabled="true" id="item_quantity" class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label>Equivalent</label>
-                                <input type="text" disabled="true" id="item_equivalent" class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label>Unit</label>
-                                <input type="text" disabled="true" id="item_unit" class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label>Budget Price</label>
-                                <input type="text" disabled="true" id="item_budget_price" class="form-control"/>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            -->
+           
 
             <div class="row" id="component_controls">
                 <div class="col-lg-6">

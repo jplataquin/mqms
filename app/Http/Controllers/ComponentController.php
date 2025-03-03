@@ -170,7 +170,21 @@ class ComponentController extends Controller
 
         $unit_options = Unit::toOptions();
 
-        $hash = generateComponentHash($project,$section,$component,$componentItems,$materialArr);
+        //$hash = generateComponentHash($project,$section,$component,$componentItems,$materialArr);
+
+        if($request->header('X-STUDIO-MODE')){
+            return view('project_studio/screen/component/display',[
+                'project'               => $project,
+                'section'               => $section,
+                'contract_item'         => $contract_item,
+                'component'             => $component,
+                'componentItems'        => $componentItems,
+                'materialItems'         => $materialItems,
+                'unit_options'          => $unit_options,
+                'back'                  => $back,
+                'grand_total_amounts'   => $grand_total_amounts
+            ]);
+        }
 
         return view('component/display',[
             'project'               => $project,
@@ -179,7 +193,6 @@ class ComponentController extends Controller
             'component'             => $component,
             'componentItems'        => $componentItems,
             'materialItems'         => $materialItems,
-            'hash'                  => $hash,
             'unit_options'          => $unit_options,
             'back'                  => $back,
             'grand_total_amounts'   => $grand_total_amounts

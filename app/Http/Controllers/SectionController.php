@@ -29,7 +29,7 @@ class SectionController extends Controller
         ]);
     }
 
-    public function display($id){
+    public function display($id,Request $request){
 
         $id = (int) $id;
 
@@ -41,6 +41,15 @@ class SectionController extends Controller
         
         $unit_options = Unit::toOptions();
 
+
+        if($request->header('X-STUDIO-MODE')){
+            return view('project_studio/screen/section/display',[
+                'section'          => $section,
+                'project'          => $project,
+                'contract_items'   => $contract_items,
+                'unit_options'     => $unit_options
+            ]);
+        }
 
         return view('section/display',[
             'section'          => $section,
