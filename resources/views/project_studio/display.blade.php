@@ -2,7 +2,7 @@
 
 @section('content')
 <div id="content">
-    <div class="container">
+    <div class="">
         <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
             <ul>
                 <li>
@@ -216,13 +216,13 @@
                     script.remove();
                 });
 
-                let first_container = $q('.container',content).first();
+                // let first_container = $q('.container',content).first();
 
-                console.log(first_container);
-                
-                if(first_container){
-                    first_container.classList.remove('container');
-                }
+                // console.log(first_container);
+
+                // if(first_container){
+                //     first_container.classList.remove('container');
+                // }
 
                 editor.appendChild(content);
             });
