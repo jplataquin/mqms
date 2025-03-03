@@ -64,7 +64,7 @@ class CreateProjectForm extends Component{
                 
                 window.util.drawerModal.close();
 
-                this._model.successCallback(reply);
+                this._model.successCallback(reply.data);
             });
         }
     }
