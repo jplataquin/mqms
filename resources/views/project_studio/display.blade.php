@@ -69,8 +69,8 @@
         let mdown = false;
         let studio_side_width       = 30;
         let studio_editor_width     = 70;
-        let studio_side_width_limit = 10;
-        let studio_side_width_max   = 50;
+        let studio_side_width_limit = 100;
+        let studio_side_width_max   = 500;
         let width_increment         = 1;
 
         document.onmousedown = (e)=>{
@@ -103,7 +103,11 @@
                     studio_side_width = studio_side_width_limit;
                 }
 
-                studio_editor_width = 100 - studio_side_width;
+                if(studio_side_width >= studio_side_width_max){
+                    studio_side_width = studio_side_width_max;
+                }
+
+               // studio_editor_width = 100 - studio_side_width;
 
                 studio_side.style.minWidth   = studio_side_width+'px';
                 studio_side.style.width      = studio_side_width+'px';
