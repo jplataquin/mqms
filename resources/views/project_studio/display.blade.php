@@ -65,7 +65,7 @@
     <script type="module">
         import {$q} from '/adarna.js';
 
-        const studio_side = $q('#studio-side').first();
+        const studio_side   = $q('#studio-side').first();
         const studio_editor = $q('#studio-editor').first();
         const size_handle   = $q('#size-handle').first();
 
