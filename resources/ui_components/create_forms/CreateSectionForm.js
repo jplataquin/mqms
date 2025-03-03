@@ -5,7 +5,10 @@ class CreateProjectForm extends Component{
 
     model(){
         return {
-            project_id:''
+            project_id:'',
+            successCallback: ()=>{
+                window.util.navReload();
+            }
         };
     }
 
@@ -60,7 +63,8 @@ class CreateProjectForm extends Component{
                 }
                 
                 window.util.drawerModal.close();
-                window.util.navReload();
+
+                this._model.successCallback();
             });
         }
     }

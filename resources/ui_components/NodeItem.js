@@ -107,6 +107,12 @@ class Item extends ComponentV2 {
         return v;
     }
 
+    refresh(){
+        this._state = this.state();
+        this.setModel('id',this._model.id);
+        this.el.label.click();
+    }
+
     controller(){
 
         const t = new Template();
@@ -126,10 +132,6 @@ class Item extends ComponentV2 {
 
         this.el.label.onclick = ()=>{
             
-            let label_bound = this.el.label.getBoundingClientRect();
-
-            let parent_bound = this._model.parentContainer.getBoundingClientRect();
-
           
             //highlight.style.top     = (label_bound.y-2)+'px';
             highlight.style.left    = '-100px';
@@ -155,6 +157,9 @@ class Item extends ComponentV2 {
             this.el.contextMenu.handler.show(e.clientX,e.clientY);
         }
         
+        this._dom.handler.refresh = ()=>{
+
+        }
     }
 
 
@@ -173,7 +178,10 @@ class Item extends ComponentV2 {
                             onclick:()=>{
                                                                     
                                 let create_section_form = CreateSectionForm({
-                                    project_id:this._model.id
+                                    project_id:this._model.id,
+                                    successCallback: ()=>{
+                                        this._dom.handler.refresh();
+                                    }
                                 });
 
                                 window.util.drawerModal.content('Create Section',create_section_form).open();
