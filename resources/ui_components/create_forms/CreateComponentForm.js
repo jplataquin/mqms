@@ -7,6 +7,9 @@ class CreateComponentForm extends Component{
         return {
             contract_item_id:'',
             section_id:'',
+            successCallback: ()=>{
+                window.util.navReload();
+            },
             unit_options:[]
         }
     }
@@ -140,8 +143,10 @@ class CreateComponentForm extends Component{
             }
 
             //Component(reply.data.id)).to(component_list)
-            this._model.callback(reply.data.id);
+            //this._model.callback(reply.data.id);
             window.util.drawerModal.close();
+
+            this._model.successCallback(reply.data);
         });
 
     }

@@ -6,6 +6,9 @@ class CreateContractItemForm extends Component{
     model(){
         return {
             section_id:'',
+            successCallback: ()=>{
+                window.util.navReload();
+            },
             unit_options:[]
         }
     }
@@ -167,7 +170,7 @@ class CreateContractItemForm extends Component{
             };
             
             window.util.drawerModal.close();
-            window.util.navReload();
+            this._model.successCallback(reply.data);
         
         });
     }
