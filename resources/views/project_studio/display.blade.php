@@ -94,6 +94,7 @@
             
             if(!mdown) return false;
 
+            console.log(e.pageX);
             if(e.movementX == -1){
 
                 studio_side_width = studio_side_width - width_increment;
