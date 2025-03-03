@@ -35,6 +35,9 @@ class Item extends ComponentV2 {
     model(){
         return {
             id:'',
+            studio:{
+                unit_options:[]
+            },
             name: '',
             status: '',
             type:'',
@@ -217,6 +220,7 @@ class Item extends ComponentV2 {
                                                                     
                                 const form = CreateContractItemForm({
                                     section_id:this._model.id,
+                                    unit_options: this._model.studio.unit_options,
                                     successCallback: (data)=>{
                                         this._model.successAddChild('contract_item',data,this._dom);
                                     }

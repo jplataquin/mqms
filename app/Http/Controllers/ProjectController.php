@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\Unit;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -40,8 +41,10 @@ class ProjectController extends Controller
 
         $project = Project::findOrFail($id);
 
+        
         return view('project_studio/display',[
-            'project' => $project
+            'project'           => $project,
+            'unit_options'      => Unit::toOptions()
         ]);
     }
 

@@ -141,7 +141,9 @@
 
         const side          = $q('#studio-side').first();
         const editor        = $q('#studio-editor').first();
-       
+        
+
+        studio.unit_options = @json($unit_options);
 
         let screen_url      = '';
         
@@ -192,7 +194,6 @@
                 editor.appendChild(content);
             });
             
-            console.log('on screen');
         }
 
         async function getChildren(type,id){
@@ -236,6 +237,7 @@
         function SectionNode(data){
             return new NodeItem({
                 type:'section',
+                studio:studio,
                 id:data.id,
                 name:data.name,
                 status:data.status,
@@ -259,6 +261,7 @@
         function ContractItemNode(data){
             return new NodeItem({
                 type:'contract_item',
+                studio:studio,
                 id:data.id,
                 name:data.description,
                 status:data.status,
@@ -275,6 +278,7 @@
         function ComponentNode(data){
             return new NodeItem({
                 type:'component',
+                studio:studio,
                 id:data.id,
                 name:data.name,
                 status:data.status,
@@ -292,6 +296,7 @@
         function ComponentItemNode(data){
             return new NodeItem({
                 type:'component_item',
+                studio:studio,
                 id:data.id,
                 name:data.name,
                 status:data.status,
@@ -305,6 +310,7 @@
 
         const root = NodeItem({
             id:'{{$project->id}}',
+            studio:studio,
             name:'{{$project->name}}',
             status:'{{$project->status}}',
             parentContainer: side,
