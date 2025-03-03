@@ -158,7 +158,7 @@ class Item extends ComponentV2 {
         }
         
         this._dom.handler.refresh = ()=>{
-
+            this.refresh();
         }
     }
 
