@@ -2,7 +2,7 @@
 
 @section('content')
 <div id="content">
-    <div class="">
+    <div class="" id="studio">
 
         <style>
                 #studio-container {
@@ -149,7 +149,7 @@
 
         let screen_url      = '';
         
-        function onScreen(url){
+        studio.onScreen = (url)=>{
 
             if(!url){
                 console.error('URL not defined');
@@ -245,7 +245,7 @@
                 status:data.status,
                 parentContainer: side,
                 onScreen:()=>{
-                    onScreen('/project/section/'+data.id);
+                    studio.onScreen('/project/section/'+data.id);
                 },
                 open: async ()=>{
                     return getChildren('section',data.id);
@@ -261,7 +261,7 @@
                 status:data.status,
                 parentContainer: side,
                 onScreen:()=>{
-                    onScreen('/project/section/contract_item/'+data.id);
+                    studio.onScreen('/project/section/contract_item/'+data.id);
                 },
                 open: async ()=>{
                     return getChildren('contract_item',data.id);
@@ -277,7 +277,7 @@
                 status:data.status,
                 parentContainer: side,
                 onScreen:()=>{
-                    onScreen('/project/section/contract_item/component/'+data.id);
+                    studio.onScreen('/project/section/contract_item/component/'+data.id);
                 },
                 open: async ()=>{
                     return getChildren('component',data.id);
@@ -307,7 +307,7 @@
             parentContainer: side,
             type:'project',
             onScreen:()=>{
-                onScreen('/project/{{$project->id}}');
+                studio.onScreen('/project/{{$project->id}}');
             },
             open: async ()=>{
 
@@ -316,7 +316,7 @@
             }
         });
 
-
+        side.innerHTML = '';
         side.appendChild(root);
     </script>
 </div>
