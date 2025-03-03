@@ -195,9 +195,7 @@ class ContractItemController extends Controller
         return response()->json([
             'status'    => 1,
             'message'   => '',
-            'data'      => [
-                'id'=> $contract_item->id
-            ]
+            'data'      => $contract_item
         ]);
 
     }

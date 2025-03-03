@@ -99,9 +99,7 @@ class ComponentController extends Controller
         return response()->json([
             'status'    => 1,
             'message'   => '',
-            'data'      => [
-                'id'=> $component->id
-            ]
+            'data'      => $component
         ]);
 
     }
