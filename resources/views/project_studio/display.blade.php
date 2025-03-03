@@ -243,7 +243,7 @@
                 status:data.status,
                 parentContainer: side,
                 successAddChild:(type,data,node)=>{
-                    let item = ComponentNode(data);
+                    let item = ContractItemNode(data);
 
                     node.handler.prependChild(item);
 
