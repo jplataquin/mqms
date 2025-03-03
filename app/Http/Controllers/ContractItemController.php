@@ -32,7 +32,7 @@ class ContractItemController extends Controller
         ]);
     }
 
-    public function display($id){
+    public function display($id,Request $request){
 
         $id = (int) $id;
 
@@ -46,6 +46,15 @@ class ContractItemController extends Controller
         
         $unit_options = Unit::toOptions();
 
+        if($request->header('X-STUDIO-MODE')){
+            return view('project_studio/screen/contract_item/display',[
+                'contract_item'    => $contract_item,
+                'section'          => $section,
+                'project'          => $project,
+                'components'       => $components,
+                'unit_options'     => $unit_options
+            ]);
+        }
 
         return view('contract_item/display',[
             'contract_item'    => $contract_item,
