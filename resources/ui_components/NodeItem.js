@@ -86,6 +86,7 @@ class Item extends ComponentV2 {
         this.el.contextMenu = this.createContextMenu(this._model.type);
  
         const v = t.div({
+            id:this._model.type+'_'+this._model.id,
             style:{
               position:'relative',
               zIndex:'2',
