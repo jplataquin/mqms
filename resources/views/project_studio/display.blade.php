@@ -60,9 +60,6 @@
     </div>
     
     <script type="module">
-        
-    </script>
-    <script type="module">
         import {$q} from '/adarna.js';
 
         const studio_side   = $q('#studio-side').first();

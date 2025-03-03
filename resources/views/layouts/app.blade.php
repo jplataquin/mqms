@@ -191,7 +191,7 @@
                 </div>
                 
                 <div class="drawer_modal_background"></div>
-                <div class="drawer_modal">
+                <div class="drawer_modal bg-dark">
                     <div class="drawer_modal_header pe-3 ps-3 d-flex justify-content-between align-items-stretch">
                         <div class="p-2">
                             <h5 class="drawer_modal_title"></h5>
