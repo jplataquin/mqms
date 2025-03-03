@@ -183,7 +183,9 @@
 
             editor.innerHTML = '';
 
-            window.util.$content(url).then(reply=>{
+            window.util.$content(url,{},{
+                'X-STUDIO-MODE':true
+            }).then(reply=>{
 
                 if(reply.status <= 0){
                     window.util.showMsg(reply);

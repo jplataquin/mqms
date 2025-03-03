@@ -16,11 +16,17 @@ class ProjectController extends Controller
         return view('project/create');
     }
 
-    public function display($id){
+    public function display($id,Request $request){
 
         $id = (int) $id;
 
         $project = Project::findOrFail($id);
+
+        if($request->header('X-STUDIO-MODE')){
+            return view('project_studio/screen/project/display',[
+                'project' => $project
+            ]);
+        }
 
         return view('project/display',[
             'project' => $project

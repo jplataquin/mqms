@@ -69,6 +69,7 @@ Route::middleware(['auth',CheckForResetPassword::class])->group(function () {
     Route::get('/project/create', [App\Http\Controllers\ProjectController::class, 'create']);
     Route::get('/project/{id}', [App\Http\Controllers\ProjectController::class, 'display']);
     Route::get('/projects', [App\Http\Controllers\ProjectController::class, 'list']);
+    
     Route::get('/project/studio/{id}', [App\Http\Controllers\ProjectController::class, 'studio_display']);
     
 
