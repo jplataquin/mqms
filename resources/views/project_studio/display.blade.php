@@ -198,7 +198,7 @@
                     window.util.alert('Error','No content found');
                     return false;
                 }
-                
+
                 $q('script',content).items().map(script=>{
 
                     const newScript = document.createElement('script');
@@ -218,6 +218,8 @@
 
                 let first_container = $q('.container',content).first();
 
+                console.log(first_container);
+                
                 if(first_container){
                     first_container.classList.remove('container');
                 }
