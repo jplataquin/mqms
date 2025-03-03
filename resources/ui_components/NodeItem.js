@@ -149,9 +149,10 @@ class Item extends ComponentV2 {
 
         this.el.label.oncontextmenu = (e)=>{
             e.preventDefault();
+            this.setState('skipClose',true);
             this.el.label.click();
             this.el.contextMenu.handler.show(e.clientX,e.clientY);
-            console.log('here');
+          
         }
         
         this._dom.handler.refresh = ()=>{
@@ -281,7 +282,6 @@ class Item extends ComponentV2 {
     toggleContainer(val){
         
         if(this.getState('loading',true)){
-            console.log('Loading');
             return false;
         }
 
