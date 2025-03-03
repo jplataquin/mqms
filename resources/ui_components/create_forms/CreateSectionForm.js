@@ -6,7 +6,7 @@ class CreateProjectForm extends Component{
     model(){
         return {
             project_id:'',
-            successCallback: ()=>{
+            successCallback: (data)=>{
                 window.util.navReload();
             }
         };
@@ -64,7 +64,7 @@ class CreateProjectForm extends Component{
                 
                 window.util.drawerModal.close();
 
-                this._model.successCallback();
+                this._model.successCallback(reply);
             });
         }
     }

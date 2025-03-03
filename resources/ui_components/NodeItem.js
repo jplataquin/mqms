@@ -35,6 +35,7 @@ class Item extends ComponentV2 {
             name: '',
             status: '',
             type:'',
+            successAddChild:()=>{},
             open: ()=>{ return ''; },
             onScreen: ()=>{ console.log('On Screen') },
             parentContainer: null
@@ -152,13 +153,19 @@ class Item extends ComponentV2 {
         this.el.label.oncontextmenu = (e)=>{
             e.preventDefault();
             
-            console.log('context menu',e.clientX,e.clientY);
-
             this.el.contextMenu.handler.show(e.clientX,e.clientY);
         }
         
         this._dom.handler.refresh = ()=>{
             this.refresh();
+        }
+
+        this._dom.handler.prependChild = (item)=>{
+            this.el.container.prependChild(item);
+        }
+
+        this._dom.handler.focus = ()=>{
+            this.el.label.click();
         }
     }
 
@@ -179,12 +186,18 @@ class Item extends ComponentV2 {
                                                                     
                                 let create_section_form = CreateSectionForm({
                                     project_id:this._model.id,
-                                    successCallback: ()=>{
-                                        this._dom.handler.refresh();
+                                    successCallback: (data)=>{
+                                        this._model.successAddChild('section',data,this._dom);
                                     }
                                 });
 
                                 window.util.drawerModal.content('Create Section',create_section_form).open();
+                            }
+                        },
+                        {
+                            name:'Refresh',
+                            onclick:()=>{
+                                this._dom.handler.refresh();
                             }
                         }
                     ]

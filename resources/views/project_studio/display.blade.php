@@ -306,6 +306,13 @@
             status:'{{$project->status}}',
             parentContainer: side,
             type:'project',
+            successAddChild:(type,data,node)=>{
+                let item = SectionNode(data);
+
+                node.handler.prependChild(item);
+
+                item.handler.focus();
+            },
             onScreen:()=>{
                 studio.onScreen('/project/{{$project->id}}');
             },
