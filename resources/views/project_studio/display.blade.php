@@ -196,14 +196,6 @@
                     script.remove();
                 });
 
-                // let first_container = $q('.container',content).first();
-
-                // console.log(first_container);
-
-                // if(first_container){
-                //     first_container.classList.remove('container');
-                // }
-
                 editor.appendChild(content);
             });
             
@@ -271,7 +263,9 @@
                 name:data.description,
                 status:data.status,
                 parentContainer: side,
-                onScreen:()=>{},
+                onScreen:()=>{
+                    onScree('project/section/contract_item/'+data.id);
+                },
                 open: async ()=>{
                     return getChildren('contract_item',data.id);
                 }
@@ -285,7 +279,9 @@
                 name:data.name,
                 status:data.status,
                 parentContainer: side,
-                onScreen:()=>{},
+                onScreen:()=>{
+                    onScreen('project/section/contract_item/component/'+data.id);
+                },
                 open: async ()=>{
                     return getChildren('component',data.id);
                 }
