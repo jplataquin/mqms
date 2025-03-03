@@ -194,6 +194,11 @@
                 
                 let content = $q('#content',reply.data).first();
 
+                if(!content){
+                    window.util.alert('Error','No content found');
+                    return false;
+                }
+                
                 $q('script',content).items().map(script=>{
 
                     const newScript = document.createElement('script');
@@ -210,6 +215,12 @@
 
                     script.remove();
                 });
+
+                let first_container = $q('.container',content).first();
+
+                if(first_container){
+                    first_container.classList.remove('container');
+                }
 
                 editor.appendChild(content);
             });
