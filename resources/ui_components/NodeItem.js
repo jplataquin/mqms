@@ -1,6 +1,9 @@
 import {$q,Template,ComponentV2} from '/adarna.js';
 import contextMenu from '/ui_components/ContextMenu.js';
 import CreateSectionForm from '/ui_components/create_forms/CreateSectionForm.js';
+import CreateContractItemForm from '/ui_components/create_forms/CreateContractItemForm.js';
+import CreateComponentForm from '/ui_components/create_forms/CreateComponentForm.js';
+import CreateComponentItemForm from '/ui_components/create_forms/CreateComponentItemForm.js';
 
 class Item extends ComponentV2 {
 
