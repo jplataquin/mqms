@@ -1,3 +1,4 @@
+<div id="content">
     <div class="form-container">
         <div class="form-header">
             Project
@@ -41,3 +42,4 @@
             </div>
         </div>
     </div>
+</div>
