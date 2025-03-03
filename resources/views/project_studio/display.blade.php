@@ -244,6 +244,13 @@
                 name:data.name,
                 status:data.status,
                 parentContainer: side,
+                successAddChild:(type,data,node)=>{
+                    let item = ComponentNode(data);
+
+                    node.handler.prependChild(item);
+
+                    item.handler.focus();
+                },
                 onScreen:()=>{
                     studio.onScreen('/project/section/'+data.id);
                 },

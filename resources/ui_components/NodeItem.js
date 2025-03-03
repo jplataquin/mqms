@@ -44,7 +44,7 @@ class Item extends ComponentV2 {
 
     view(){
 
-        const t     = new Template();
+        const t   = new Template();
 
         const svg = this.icon(this._model.type);
 
@@ -134,7 +134,6 @@ class Item extends ComponentV2 {
         this.el.label.onclick = ()=>{
             
           
-            //highlight.style.top     = (label_bound.y-2)+'px';
             highlight.style.left    = '-100px';
             highlight.style.width   = '100vh';
 
@@ -145,14 +144,12 @@ class Item extends ComponentV2 {
             this.el.test.appendChild(highlight);
 
             highlight.style.display = 'block';
-
-            //this.el.test.style.backgroundColor = 'yellow';
            
         }
 
         this.el.label.oncontextmenu = (e)=>{
             e.preventDefault();
-            
+            this.el.label.onclick();
             this.el.contextMenu.handler.show(e.clientX,e.clientY);
         }
         

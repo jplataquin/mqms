@@ -400,6 +400,15 @@ window.util.$content = async (url,data,headers)=>{
             }
         };
 
+        //Logout
+        if(status == 302){
+            return {
+                status: -4,
+                message:'Signed out',
+                data:{}
+            }
+        }
+
         //Server error
         if(status == 500){
 
