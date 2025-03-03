@@ -264,7 +264,7 @@
                 status:data.status,
                 parentContainer: side,
                 onScreen:()=>{
-                    onScree('project/section/contract_item/'+data.id);
+                    onScreen('project/section/contract_item/'+data.id);
                 },
                 open: async ()=>{
                     return getChildren('contract_item',data.id);
