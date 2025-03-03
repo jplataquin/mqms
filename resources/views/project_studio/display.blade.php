@@ -6,7 +6,6 @@
 
         <style>
                 #studio-container {
-                    background-color: DodgerBlue;
                     display: flex;
                 }
 
