@@ -152,6 +152,8 @@ class Item extends ComponentV2 {
             
             this.el.label.click();
             this.el.contextMenu.handler.show(e.clientX,e.clientY);
+
+            //Prevent closing after right click
             this.setState('skipClose',true);
         }
         
@@ -183,14 +185,14 @@ class Item extends ComponentV2 {
                             name:'Add Section',
                             onclick:()=>{
                                                                     
-                                let create_section_form = CreateSectionForm({
+                                const form = CreateSectionForm({
                                     project_id:this._model.id,
                                     successCallback: (data)=>{
                                         this._model.successAddChild('section',data,this._dom);
                                     }
                                 });
 
-                                window.util.drawerModal.content('Create Section',create_section_form).open();
+                                window.util.drawerModal.content('Add Section',form).open();
                             }
                         },
                         {
@@ -209,7 +211,21 @@ class Item extends ComponentV2 {
                         {
                             name:'Add Contract Item',
                             onclick:()=>{
-                                console.log('yeah')
+                                                                    
+                                const form = CreateContractItemForm({
+                                    section_id:this._model.id,
+                                    successCallback: (data)=>{
+                                        this._model.successAddChild('contract_item',data,this._dom);
+                                    }
+                                });
+
+                                window.util.drawerModal.content('Add Contract Item',form).open();
+                            }
+                        },
+                        {
+                            name:'Refresh',
+                            onclick:()=>{
+                                this._dom.handler.refresh();
                             }
                         }
                     ]
