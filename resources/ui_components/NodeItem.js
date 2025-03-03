@@ -1,7 +1,6 @@
 import {$q,Template,ComponentV2} from '/adarna.js';
 import contextMenu from '/ui_components/ContextMenu.js';
-
-console.log(contextMenu);
+import CreateSectionForm from '/ui_components/create_forms/CreateSectionForm.js';
 
 class Item extends ComponentV2 {
 
@@ -172,7 +171,12 @@ class Item extends ComponentV2 {
                         {
                             name:'Add Section',
                             onclick:()=>{
-                                console.log('yeah')
+                                                                    
+                                let create_section_form = CreateSectionForm({
+                                    project_id:this._model.id
+                                });
+
+                                window.util.drawerModal.content('Create Section',create_section_form).open();
                             }
                         }
                     ]
