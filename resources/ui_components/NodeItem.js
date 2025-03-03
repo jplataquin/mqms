@@ -149,10 +149,10 @@ class Item extends ComponentV2 {
 
         this.el.label.oncontextmenu = (e)=>{
             e.preventDefault();
-            this.setState('skipClose',true);
+            
             this.el.label.click();
             this.el.contextMenu.handler.show(e.clientX,e.clientY);
-          
+            this.setState('skipClose',true);
         }
         
         this._dom.handler.refresh = ()=>{
