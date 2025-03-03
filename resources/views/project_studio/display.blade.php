@@ -95,9 +95,9 @@
             if(!mdown) return false;
 
             console.log(e.pageX);
-            if(e.movementX == -1){
+            //if(e.movementX == -1){
 
-                studio_side_width = studio_side_width - width_increment;
+                studio_side_width = e.pageX;//studio_side_width - width_increment;
 
                 if(studio_side_width <= studio_side_width_limit){
                     studio_side_width = studio_side_width_limit;
@@ -105,33 +105,33 @@
 
                 studio_editor_width = 100 - studio_side_width;
 
-                studio_side.style.minWidth   = studio_side_width+'%';
-                studio_side.style.width      = studio_side_width+'%';
-                studio_side.style.maxWidth   = studio_side_width+'%';
+                studio_side.style.minWidth   = studio_side_width+'px';
+                studio_side.style.width      = studio_side_width+'px';
+                studio_side.style.maxWidth   = studio_side_width+'px';
 
-                studio_editor.style.minWidth    = studio_editor_width+'%';
-                studio_editor.style.width       = studio_editor_width+'%';
-                studio_editor.style.maxWidth    = studio_editor_width+'%';
+                //studio_editor.style.minWidth    = studio_editor_width+'%';
+                //studio_editor.style.width       = studio_editor_width+'%';
+                //studio_editor.style.maxWidth    = studio_editor_width+'%';
 
-            }else if (e.movementX == 1){
+            // }else if (e.movementX == 1){
                 
-                studio_side_width = studio_side_width + width_increment;
+            //     studio_side_width = studio_side_width + width_increment;
 
-                if(studio_side_width >= studio_side_width_max){
-                    studio_side_width = studio_side_width_max;
-                }
+            //     if(studio_side_width >= studio_side_width_max){
+            //         studio_side_width = studio_side_width_max;
+            //     }
 
-                studio_editor_width = 100 - studio_side_width;
+            //     studio_editor_width = 100 - studio_side_width;
 
-                studio_side.style.minWidth   = studio_side_width+'%';
-                studio_side.style.width      = studio_side_width+'%';
-                studio_side.style.maxWidth   = studio_side_width+'%';
+            //     studio_side.style.minWidth   = studio_side_width+'%';
+            //     studio_side.style.width      = studio_side_width+'%';
+            //     studio_side.style.maxWidth   = studio_side_width+'%';
 
-                studio_editor.style.minWidth    = studio_editor_width+'%';
-                studio_editor.style.width       = studio_editor_width+'%';
-                studio_editor.style.maxWidth    = studio_editor_width+'%';
+            //     studio_editor.style.minWidth    = studio_editor_width+'%';
+            //     studio_editor.style.width       = studio_editor_width+'%';
+            //     studio_editor.style.maxWidth    = studio_editor_width+'%';
                 
-            }
+            // }
         }
 
     </script>
