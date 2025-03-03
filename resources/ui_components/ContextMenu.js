@@ -88,6 +88,10 @@ class ContextMenu extends ComponentV2{
         this.el.backdrop.onclick = ()=>{
             this._dom.handler.hide();
         }
+
+        this.el.backdrop.oncontextmenu = (e)=>{
+            e.preventDefault();
+        }
     }
 
     style(){
