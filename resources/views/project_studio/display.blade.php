@@ -64,7 +64,6 @@
     </script>
     <script type="module">
         import {$q} from '/adarna.js';
-        import ProjectTree from '/ui_components/ProjectTree.js';
 
         const studio_side = $q('#studio-side').first();
         const studio_editor = $q('#studio-editor').first();
