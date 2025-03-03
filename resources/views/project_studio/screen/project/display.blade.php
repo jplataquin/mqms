@@ -90,14 +90,14 @@
         });
     }
 
-    createBtn.onclick = ()=>{
+    // createBtn.onclick = ()=>{
         
-        let create_section_form = CreateSectionForm({
-            project_id:'{{$project->id}}'
-        });
+    //     let create_section_form = CreateSectionForm({
+    //         project_id:'{{$project->id}}'
+    //     });
 
-        window.util.drawerModal.content('Create Section',create_section_form).open();
-    }
+    //     window.util.drawerModal.content('Create Section',create_section_form).open();
+    // }
 
     cancelBtn.onclick = (e)=>{
         studio.onScreen('/project/{{$project->id}}');
