@@ -264,7 +264,7 @@
                 status:data.status,
                 parentContainer: side,
                 onScreen:()=>{
-                    onScreen('project/section/contract_item/'+data.id);
+                    onScreen('/project/section/contract_item/'+data.id);
                 },
                 open: async ()=>{
                     return getChildren('contract_item',data.id);
@@ -280,7 +280,7 @@
                 status:data.status,
                 parentContainer: side,
                 onScreen:()=>{
-                    onScreen('project/section/contract_item/component/'+data.id);
+                    onScreen('/project/section/contract_item/component/'+data.id);
                 },
                 open: async ()=>{
                     return getChildren('component',data.id);
