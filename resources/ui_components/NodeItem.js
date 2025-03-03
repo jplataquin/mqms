@@ -151,6 +151,7 @@ class Item extends ComponentV2 {
             e.preventDefault();
             this.el.label.onclick();
             this.el.contextMenu.handler.show(e.clientX,e.clientY);
+            console.log('here');
         }
         
         this._dom.handler.refresh = ()=>{
