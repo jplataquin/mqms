@@ -354,7 +354,7 @@ html, body {
   padding-right:20px;
   padding-left:20px;
   box-shadow: 16px 16px 48px #2e364330;
-  background-color: #d3dce6;
+  background-color: var(--bs-secondary);
   border-top-right-radius: 25px;
 }
 
@@ -438,7 +438,7 @@ html, body {
 
 .drawer_modal_header{
   min-height: 50px;
-  background-color: RGBA(108,117,125,1) !important;
+  background-color: var(--bs-secondary);
 }
 
 .drawer_modal.drawer_modal_open {
