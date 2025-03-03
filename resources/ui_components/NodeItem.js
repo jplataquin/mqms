@@ -149,8 +149,8 @@ class Item extends ComponentV2 {
 
         this.el.label.oncontextmenu = (e)=>{
             e.preventDefault();
-            this.el.label.onclick();
-            //this.el.contextMenu.handler.show(e.clientX,e.clientY);
+            this.el.label.click();
+            this.el.contextMenu.handler.show(e.clientX,e.clientY);
             console.log('here');
         }
         
