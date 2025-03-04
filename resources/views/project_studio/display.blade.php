@@ -226,7 +226,7 @@
                     rdata.project_id       = '{{$project->id}}';
                     rdata.section_id       = data.id;
                     rdata.contract_item_id = rdata.id;
-
+                  
                     let item = ContractItemNode(rdata);
 
                     node.handler.prependChild(item);
@@ -245,6 +245,9 @@
         function ContractItemNode(data){
             return new NodeItem({
                 type:'contract_item',
+                project_id:'{{$project->id}}',
+                contrac_item_id:data.id,
+                section_id:data.section_id,
                 studio:studio,
                 id:data.id,
                 name:data.description,
@@ -255,7 +258,7 @@
                     rdata.project_id       = '{{$project->id}}';
                     rdata.section_id       = data.section_id;
                     rdata.contract_item_id = data.id;
-
+                  
                     let item = ComponentNode(rdata);
 
                     node.handler.prependChild(item);
@@ -274,7 +277,10 @@
         function ComponentNode(data){
             return new NodeItem({
                 type:'component',
-                contract_item_id: data.contract_item_id,
+                project_id          :'{{$project->id}}',
+                section_id          : data.section_id,
+                contrac_item_id     :data.contract_item_id,
+                component_id        : data.id,
                 studio:studio,
                 id:data.id,
                 name:data.name,
