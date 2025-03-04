@@ -243,12 +243,12 @@
         }
 
         function ContractItemNode(data){
-            console.log('contract_item',data);
+          
             return new NodeItem({
                 type:'contract_item',
                 project_id:'{{$project->id}}',
-                contrac_item_id:data.id,
-                section_id:data.section_id,
+                contract_item_id: data.id,
+                section_id: data.section_id,
                 studio:studio,
                 id:data.id,
                 name:data.description,
