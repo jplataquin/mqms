@@ -94,48 +94,21 @@
             
             if(!mdown) return false;
 
-            console.log(e.pageX);
-            //if(e.movementX == -1){
 
-                studio_side_width = e.pageX;//studio_side_width - width_increment;
+            studio_side_width = e.pageX;//studio_side_width - width_increment;
 
-                if(studio_side_width <= studio_side_width_limit){
-                    studio_side_width = studio_side_width_limit;
-                }
+            if(studio_side_width <= studio_side_width_limit){
+                studio_side_width = studio_side_width_limit;
+            }
 
-                if(studio_side_width >= studio_side_width_max){
-                    studio_side_width = studio_side_width_max;
-                }
+            if(studio_side_width >= studio_side_width_max){
+                studio_side_width = studio_side_width_max;
+            }
 
-               // studio_editor_width = 100 - studio_side_width;
+            studio_side.style.minWidth   = studio_side_width+'px';
+            studio_side.style.width      = studio_side_width+'px';
+            studio_side.style.maxWidth   = studio_side_width+'px';
 
-                studio_side.style.minWidth   = studio_side_width+'px';
-                studio_side.style.width      = studio_side_width+'px';
-                studio_side.style.maxWidth   = studio_side_width+'px';
-
-                //studio_editor.style.minWidth    = studio_editor_width+'%';
-                //studio_editor.style.width       = studio_editor_width+'%';
-                //studio_editor.style.maxWidth    = studio_editor_width+'%';
-
-            // }else if (e.movementX == 1){
-                
-            //     studio_side_width = studio_side_width + width_increment;
-
-            //     if(studio_side_width >= studio_side_width_max){
-            //         studio_side_width = studio_side_width_max;
-            //     }
-
-            //     studio_editor_width = 100 - studio_side_width;
-
-            //     studio_side.style.minWidth   = studio_side_width+'%';
-            //     studio_side.style.width      = studio_side_width+'%';
-            //     studio_side.style.maxWidth   = studio_side_width+'%';
-
-            //     studio_editor.style.minWidth    = studio_editor_width+'%';
-            //     studio_editor.style.width       = studio_editor_width+'%';
-            //     studio_editor.style.maxWidth    = studio_editor_width+'%';
-                
-            // }
         }
 
     </script>
@@ -244,11 +217,17 @@
                 type:'section',
                 studio:studio,
                 id:data.id,
+                section_id: data.id,
                 name:data.name,
                 status:data.status,
                 parentContainer: side,
-                successAddChild:(type,data,node)=>{
-                    let item = ContractItemNode(data);
+                successAddChild:(type,rdata,node)=>{
+                    
+                    rdata.project_id       = '{{$project_id}}';
+                    rdata.section_id       = data.id;
+                    rdata.contract_item_id = rdata.id;
+
+                    let item = ContractItemNode(rdata);
 
                     node.handler.prependChild(item);
 
@@ -271,6 +250,18 @@
                 name:data.description,
                 status:data.status,
                 parentContainer: side,
+                successAddChild:(type,rdata,node)=>{
+
+                    rdata.project_id       = '{{$project_id}}';
+                    rdata.section_id       = data.section_id;
+                    rdata.contract_item_id = data.id;
+
+                    let item = ComponentNode(rdata);
+
+                    node.handler.prependChild(item);
+
+                    item.handler.focus();
+                },
                 onScreen:()=>{
                     studio.onScreen('/project/section/contract_item/'+data.id);
                 },
@@ -283,11 +274,19 @@
         function ComponentNode(data){
             return new NodeItem({
                 type:'component',
+                contract_item_id: data.contract_item_id,
                 studio:studio,
                 id:data.id,
                 name:data.name,
                 status:data.status,
                 parentContainer: side,
+                successAddChild:(type,data,node)=>{
+                    let item = ContractItemNode(data);
+
+                    node.handler.prependChild(item);
+
+                    item.handler.focus();
+                },
                 onScreen:()=>{
                     studio.onScreen('/project/section/contract_item/component/'+data.id);
                 },

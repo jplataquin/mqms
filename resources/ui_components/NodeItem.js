@@ -35,6 +35,11 @@ class Item extends ComponentV2 {
     model(){
         return {
             id:'',
+            project_id:'',
+            section_id:'',
+            contract_item_id:'',
+            component_id:'',
+            component_item_id:'',
             studio:{
                 unit_options:[]
             },
@@ -246,7 +251,17 @@ class Item extends ComponentV2 {
                         {
                             name:'Add Component',
                             onclick:()=>{
-                                console.log('yeah')
+                                                                    
+                                const form = CreateComponentForm({
+                                    section_id          : this._model.section_item_id,
+                                    contract_item_id    : this._model.contract_item_id,
+                                    unit_options        : this._model.studio.unit_options,
+                                    successCallback: (data)=>{
+                                        this._model.successAddChild('component',data,this._dom);
+                                    }
+                                });
+
+                                window.util.drawerModal.content('Add Component',form).open();
                             }
                         }
                     ]
