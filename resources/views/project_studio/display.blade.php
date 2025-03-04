@@ -279,7 +279,7 @@
                 type:'component',
                 project_id          :'{{$project->id}}',
                 section_id          : data.section_id,
-                contrac_item_id     :data.contract_item_id,
+                contrac_item_id     : data.contract_item_id,
                 component_id        : data.id,
                 studio:studio,
                 id:data.id,
