@@ -252,7 +252,7 @@ class Item extends ComponentV2 {
                             name:'Add Component',
                             onclick:()=>{
                                 
-                                console.log(this._model);
+                                console.log('add component',this._model);
                                 const form = CreateComponentForm({
                                     section_id          : this._model.section_item_id,
                                     contract_item_id    : this._model.contract_item_id,
