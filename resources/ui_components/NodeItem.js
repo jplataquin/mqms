@@ -254,7 +254,7 @@ class Item extends ComponentV2 {
                                 
                                 console.log('add component',this._model);
                                 const form = CreateComponentForm({
-                                    section_id          : this._model.section_item_id,
+                                    section_id          : this._model.section_id,
                                     contract_item_id    : this._model.contract_item_id,
                                     unit_options        : this._model.studio.unit_options,
                                     successCallback: (data)=>{
