@@ -252,7 +252,7 @@
                 parentContainer: side,
                 successAddChild:(type,rdata,node)=>{
 
-                    rdata.project_id       = '{{$project_id}}';
+                    rdata.project_id       = '{{$project->id}}';
                     rdata.section_id       = data.section_id;
                     rdata.contract_item_id = data.id;
 
