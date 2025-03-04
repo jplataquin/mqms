@@ -68,7 +68,7 @@ class Item extends ComponentV2 {
         this.el.status = t.label({
             style:{
                 fontSize:'20px',
-                color:'green',
+                color: this.status_color(this._model.status),
             }
         },'•');
 
@@ -124,6 +124,18 @@ class Item extends ComponentV2 {
         this._state = this.state();
         this.setModel('id',this._model.id);
         this.el.label.click();
+    }
+
+    status_color(status){
+
+        if(status == 'APRV'){
+            return '#008000';
+        }else if(status == 'PEND'){
+            return '#FFFF00';
+        }else{
+            return '#FF0000';
+        }
+
     }
 
     controller(){
