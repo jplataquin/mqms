@@ -44,7 +44,7 @@ class Item extends ComponentV2 {
                 unit_options:[]
             },
             name: '',
-            status: '',
+            status: 'APRV',
             type:'',
             successAddChild:()=>{},
             open: ()=>{ return ''; },
