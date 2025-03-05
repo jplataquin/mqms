@@ -44,7 +44,7 @@ class Item extends ComponentV2 {
                 unit_options:[]
             },
             name: '',
-            status: 'APRV',
+            status: '',
             type:'',
             successAddChild:()=>{},
             open: ()=>{ return ''; },
@@ -128,9 +128,9 @@ class Item extends ComponentV2 {
 
     status_color(status){
 
-        if(status == 'APRV'){
+        if(status == 'APRV' || status == 'ACTV'){
             return '#008000';
-        }else if(status == 'PEND'){
+        }else if(status == 'PEND' || status == 'INAC'){
             return '#FFFF00';
         }else{
             return '#FF0000';
