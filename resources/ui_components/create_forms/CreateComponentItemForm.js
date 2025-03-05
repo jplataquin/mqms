@@ -181,7 +181,7 @@ class CreateComponentItemForm extends ComponentV2{
             component_quantity:'',
             component_use_count:'',
             unit_options:[],
-            append_component_item:()=>{}
+            successCallback:(data)=>{}
         }
     }
 
@@ -525,7 +525,8 @@ class CreateComponentItemForm extends ComponentV2{
             
             window.util.drawerModal.close();
 
-            this._model.append_component_item(reply.data);
+
+            this._model.successCallback(reply.data)
 
         });
 

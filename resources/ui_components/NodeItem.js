@@ -128,7 +128,7 @@ class Item extends ComponentV2 {
 
     status_color(status){
 
-        if(status == 'APRV' || status == 'ACTV'){
+        if(status == 'APRV' || status == 'ACTV' || status == ''){
             return '#008000';//green
         }else if(status == 'PEND' || status == 'INAC'){
             return '#FFFF00';//yellow

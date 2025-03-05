@@ -374,7 +374,7 @@
             component_use_count: parseFloat('{{$component->use_count}}'),
             component_unit_text: '{{ $unit_options[$component->unit_id]->text }}',
             unit_options: @json($unit_options),
-            append_component_item:(data)=>{
+            successCallback:(data)=>{
                 
                 let item = ComponentItemEl({
                     id: data.id,
