@@ -41,15 +41,12 @@ class Node extends Controller
 
         }else if($type == 'contract_item'){
 
-            return $this->_contract_item($parent_id);
+            return $this->_component($parent_id);
 
         }else if($type == 'component'){
 
-            return $this->_component($parent_id);
-
-        }else if($type == 'component_item'){
-            
             return $this->_component_item($parent_id);
+
         }
 
         return response()->json([
