@@ -314,6 +314,7 @@
 
 
         function ComponentItemNode(data){
+            console.log(data);
             return new NodeItem({
                 type:'component_item',
                 studio:studio,
