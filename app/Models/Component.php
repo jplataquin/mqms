@@ -43,8 +43,8 @@ class Component extends Model
     }
     
     
-    public function unit_text(){
-        
+    public function getUnitTextAttribute(){
+
         $unit = Unit::find($this->unit_id);
 
         if(!$unit){
