@@ -363,6 +363,8 @@ class CreateComponentItemForm extends ComponentV2{
 
     controller(){
 
+        console.log('herhe',this._model);
+
         this.el.btn_submit.onclick = ()=>{
             this.submit();
           }
