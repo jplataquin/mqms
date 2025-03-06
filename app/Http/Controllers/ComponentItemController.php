@@ -182,9 +182,7 @@ class ComponentItemController extends Controller
         return response()->json([
             'status'    => 1,
             'message'   => '',
-            'data'      => [
-                'id'=> $component_item->id
-            ]
+            'data'      => $component_item
         ]);
     }
 
