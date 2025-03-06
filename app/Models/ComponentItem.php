@@ -19,7 +19,7 @@ class ComponentItem extends Model
     use HasFactory,SoftDeletes;
 
     protected $table = 'component_items';
-
+    protected $appends = ['unit_text','ref_1_unit_text'];
     public $deleteException = null;
 
     public function MaterialQuantities(): HasMany
@@ -36,11 +36,11 @@ class ComponentItem extends Model
         return $this->hasMany(MaterialQuantityRequestItem::class);
     }
 
-    public function ref_1_unit_text(){
+    public function getRef1UnitTextAttribute(){
        return $this->getUnitText($this->ref_1_unit_id);
     }
 
-    public function unit_text(){
+    public function getUnitTextAttribute(){
         return $this->getUnitText($this->unit_id);
     }
 

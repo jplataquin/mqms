@@ -277,7 +277,6 @@
 
         function ComponentNode(data){
 
-            console.log(data);
             return new NodeItem({
                 type:'component',
                 project_id          :'{{$project->id}}',
@@ -317,6 +316,13 @@
                 name:data.name,
                 status:data.status,
                 parentContainer: side,
+                successAddChild:(type,data,node)=>{
+                    let item = ComponentItemNode(data);
+
+                    node.handler.prependChild(item);
+
+                    item.handler.focus();
+                },
                 onScreen:()=>{},
                 open: async ()=>{
                     return getChildren('component_item',data.id);

@@ -90,7 +90,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Unit</label>
-                                            <input type="text" class="form-control" value="{{ $component_item->ref_1_unit_text() }}" disabled="true"/>
+                                            <input type="text" class="form-control" value="{{ $component_item->ref_1_unit_text }}" disabled="true"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -131,7 +131,7 @@
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Quantity</label>
-                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($component_item->quantity,2).' '.$component_item->unit_text() }}"/>
+                                            <input type="text" class="form-control" disabled="true" value="{{ number_format($component_item->quantity,2).' '.$component_item->unit_text }}"/>
                                         </div>
                                     </div>
                                     
@@ -148,7 +148,7 @@
                                                 }
 
                                                 if($equivalent){
-                                                    $equivalent = $equivalent.' '.$component->unit_text();
+                                                    $equivalent = $equivalent.' '.$component->unit_text;
                                                 }
 
                                             @endphp
