@@ -117,7 +117,7 @@ class ComponentItemController extends Controller
             $rules['ref_1_unit_price'] = [
                 'required_with:ref_1_quantity',
                 'numeric',
-                'gt:1'
+                'gte:1'
             ];
         }
 

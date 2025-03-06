@@ -309,6 +309,12 @@ class Item extends ComponentV2 {
 
                                 window.util.drawerModal.content('Add Component Item',form).open();
                             }
+                        },
+                        {
+                            name:'Refresh',
+                            onclick:()=>{
+                                this._dom.handler.refresh();
+                            }
                         }
                     ]
                 });

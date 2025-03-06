@@ -291,8 +291,13 @@
                 name:data.name,
                 status:data.status,
                 parentContainer: side,
-                successAddChild:(type,data,node)=>{
-                    let item = ContractItemNode(data);
+                successAddChild:(type,rdata,node)=>{
+
+                    
+                    rdata.project_id       = '{{$project->id}}';
+                    rdata.component_id     = rdata.component_id;
+
+                    let item = ComponentItemNode(rdata);
 
                     node.handler.prependChild(item);
 
@@ -317,11 +322,7 @@
                 status:data.status,
                 parentContainer: side,
                 successAddChild:(type,data,node)=>{
-                    let item = ComponentItemNode(data);
-
-                    node.handler.prependChild(item);
-
-                    item.handler.focus();
+              
                 },
                 onScreen:()=>{},
                 open: async ()=>{
