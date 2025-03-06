@@ -276,12 +276,17 @@
         }
 
         function ComponentNode(data){
+
+            console.log(data);
             return new NodeItem({
                 type:'component',
                 project_id          :'{{$project->id}}',
                 section_id          : data.section_id,
                 contrac_item_id     : data.contract_item_id,
                 component_id        : data.id,
+                component_unit_text : data.unit_text,
+                component_quantity  : data.quantity,
+                component_use_count : data.use_count,
                 studio:studio,
                 id:data.id,
                 name:data.name,

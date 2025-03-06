@@ -9,6 +9,7 @@ use App\Models\Section;
 use App\Models\ContractItem;
 use App\Models\Component;
 use App\Models\ComponentItem;
+use App\Models\Unit;
 
 class Node extends Controller
 {
@@ -88,6 +89,8 @@ class Node extends Controller
     private function _component($parent_id){
 
         $rows = Component::where('contract_item_id',$parent_id)->get();
+
+        $unit = Unit::toOptions();
 
         return response()->json([
             'status' => 1,

@@ -96,6 +96,7 @@ class ComponentController extends Controller
 
         $component->save();
 
+
         return response()->json([
             'status'    => 1,
             'message'   => '',

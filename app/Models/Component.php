@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use App\Models\Section;
 use App\Models\ComponentItem;
 use App\Models\ContractItem;
@@ -20,6 +21,8 @@ class Component extends Model
     use HasFactory,SoftDeletes;
 
     protected $table = 'components';
+    protected $appends = array('unit_text');
+
 
     public $deleteException = null;
 
@@ -39,8 +42,9 @@ class Component extends Model
         return $this->hasMany(ComponentItem::class);
     }
     
+    
     public function unit_text(){
-
+        
         $unit = Unit::find($this->unit_id);
 
         if(!$unit){
@@ -57,6 +61,8 @@ class Component extends Model
 
         return $text;
     }
+
+    
 
     public function CreatedByUser(){   
 

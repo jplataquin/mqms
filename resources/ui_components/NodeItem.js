@@ -40,6 +40,10 @@ class Item extends ComponentV2 {
             contract_item_id:'',
             component_id:'',
             component_item_id:'',
+            component_id        : '',
+            component_unit_text : '',
+            component_quantity  : '',
+            component_use_count : '',
             studio:{
                 unit_options:[]
             },
@@ -128,7 +132,7 @@ class Item extends ComponentV2 {
 
     status_color(status){
 
-        if(status == 'APRV' || status == 'ACTV' || status == ''){
+        if(status == 'APRV' || status == 'ACTV' || status == ' '){
             return '#008000';//green
         }else if(status == 'PEND' || status == 'INAC'){
             return '#FFFF00';//yellow
@@ -291,7 +295,19 @@ class Item extends ComponentV2 {
                         {
                             name:'Add Component Item',
                             onclick:()=>{
-                                console.log('yeah')
+
+                                const form = CreateComponentItemForm({
+                                    component_id        : this._model.component_id,
+                                    component_unit_text : this._model.component_unit_text,
+                                    component_quantity  : this._model.component_quantity,
+                                    component_use_count : this._model.component_use_count,
+                                    unit_options: this._model.studio.unit_options,
+                                    successCallback: (data)=>{
+                                        this._model.successAddChild('component_item',data,this._dom);
+                                    }
+                                });
+
+                                window.util.drawerModal.content('Add Component Item',form).open();
                             }
                         }
                     ]
