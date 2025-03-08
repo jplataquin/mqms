@@ -478,7 +478,6 @@ class MaterialQuantityRequestController extends Controller
 
         //Arrange Component Items
         foreach($component->ComponentItems as $componentItem){
-            $component_item_ids[] = $componentItem->id;
 
             $component_item_options[$componentItem->id] = (object) [
                 'value'        => $componentItem->id,
@@ -492,6 +491,9 @@ class MaterialQuantityRequestController extends Controller
         $request_item_arr = [];
         $request_item_ids = [];
         foreach($request_items as $rq){
+
+            $component_item_ids[] = $rq->component_item_id;
+
             $request_item_arr[$materialQuantityRequest->id.'-'.$rq->component_item_id.'-'.$rq->material_item_id] = $rq;
             $request_item_ids[] = $rq->material_item_id;
         }
@@ -521,6 +523,7 @@ class MaterialQuantityRequestController extends Controller
             if(!isset($material_options[$row->component_item_id])){
                 $item_options[$row->component_item_id] = [];
             }
+
 
             $item_options[$row->component_item_id][$row->material_item_id] = (object) [
                 'value'                     => $row->material_item_id,
