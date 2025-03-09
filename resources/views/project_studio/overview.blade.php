@@ -47,7 +47,11 @@
             <th>RATE</th>
             <th>AMOUNT</th>
         </tr>
+
+
         @foreach($data as $contract_item_id => $row_1)
+
+            <!-- Contract Item -->
             <tr>
                 <td>{{$row_1->contract_item->item_code}}</td>
                 <td>{{$row_1->contract_item->description}}</td>
