@@ -20,6 +20,10 @@
         @foreach($data as $contract_item_id => $row_1)
             <tr>
                 <td>{{$row_1->contract_item->item_code}}</td>
+                <td>{{$row_1->contract_item->description}}</td>
+
+                <td>{{$row_1->contract_item->contract_quantity}}</td>
+                <td>{{$row_1->contract_item->contract_unit}}</td>
             </tr>
         @endforeach
     </table>
