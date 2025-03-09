@@ -21,7 +21,7 @@
             <tr>
                 <td>{{$row_1->contract_item->item_code}}</td>
             </tr>
-        @foreach
+        @endforeach
     </table>
 </body>
 </html>
