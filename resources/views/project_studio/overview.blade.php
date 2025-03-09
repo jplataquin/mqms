@@ -98,8 +98,8 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{$row_2->component->quantity}}</td>
+                    <td>{{$row_2->component->unit_text}}</td>
                     <td></td>
                     <td></td>
                 </tr>
