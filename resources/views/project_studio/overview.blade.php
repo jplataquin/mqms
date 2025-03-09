@@ -150,10 +150,12 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td><!-- Ref 1 -->
-                    <td></td>
-                    <td></td>
-                    <td></td>
+
+                    <td>{{$component_item->ref_1_quantity}}</td><!-- Ref 1 -->
+                    <td>{{$component_item->ref_1_unit_text}}</td>
+                    <td>P {{ number_format($component_item->ref_1_unit_price,2) }}</td>
+                    <td>P {{ number_format($component_item->ref_1_amount,2) }}</td>
+
                     <td></td><!-- Factor -->
                     
                     <td>{{$component_item->quantity}}</td><!-- Materia; -->

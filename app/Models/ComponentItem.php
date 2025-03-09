@@ -22,7 +22,8 @@ class ComponentItem extends Model
     protected $appends = [
         'unit_text',
         'ref_1_unit_text',
-        'amount'
+        'amount',
+        'ref_1_amount'
     ];
 
     public $deleteException = null;
@@ -55,6 +56,18 @@ class ComponentItem extends Model
 
         $qty    = (float) $this->quantity;
         $price  = (float) $this->budget_price;
+
+        $val = $qty * $price;
+
+        return $val;
+    }
+
+    public function getRef1AmountAttribute(){
+        
+        $val = 0;
+
+        $qty    = (float) $this->ref_1_quantity;
+        $price  = (float) $this->ref_1_unit_price;
 
         $val = $qty * $price;
 
