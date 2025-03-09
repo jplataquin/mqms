@@ -20,7 +20,10 @@ class ContractItem extends Model
     use HasFactory,SoftDeletes;
 
     protected $table = 'contract_items';
-    protected $appends = array('contract_unit_text');
+    protected $appends = [
+        'contract_unit_text',
+        'ref_1_unit_text,'
+    ];
 
     public $deleteException = null;
 
@@ -60,7 +63,7 @@ class ContractItem extends Model
         return $this->item_code.' '.$this->description;
     }
 
-     public function getContractUnitTextAttribute(){
+    public function getContractUnitTextAttribute(){
 
         $unit = Unit::find($this->unit_id);
 
@@ -79,6 +82,24 @@ class ContractItem extends Model
         return $text;
     }
 
+    public function getRef1UnitTextAttribute(){
+
+        $unit = Unit::find($this->ref_1_unit_id);
+
+        if(!$unit){
+            return '';
+        }
+        
+        $text = '';
+
+        $text = $unit->text;
+
+        if($unit->deleted_at){
+            $text = $text.' [Deleted]';
+        }
+
+        return $text;
+    }
 
     public function UpdatedByUser(){   
        

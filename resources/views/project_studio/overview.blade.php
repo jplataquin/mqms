@@ -21,10 +21,16 @@
             <tr>
                 <td>{{$row_1->contract_item->item_code}}</td>
                 <td>{{$row_1->contract_item->description}}</td>
-
+                
+                <!-- Contract -->
                 <td>{{$row_1->contract_item->contract_quantity}}</td>
                 <td>{{$row_1->contract_item->contract_unit_text}}</td>
                 <td>P {{ number_format($row_1->contract_item->contract_unit_price,2) }}</td>
+
+                <!--Reference -->
+                <td>{{$row_1->contract_item->ref_1_quantity}}</td>
+                <td>{{$row_1->contract_item->ref_1_unit_text}}</td>
+                <td>P {{ number_format($row_1->contract_item->ref_1_unit_price,2) }}</td>
             </tr>
         @endforeach
     </table>
