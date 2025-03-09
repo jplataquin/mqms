@@ -117,7 +117,7 @@
                     <td class="material-quantity" data-value="{{$row_2->component->quantity}}">{{$row_2->component->quantity}}</td>
                     <td>{{$row_2->component->unit_text}}</td>
                     <td></td>
-                    <td class="component-material-amount-total" data-target=".belongs_to_component_{{$component_id}} > .component-item-material-amount-total"></td>
+                    <td class="component-material-amount-total" data-target=".belongs_to_component_{{$component_id}}.component-item-material-amount-total"></td>
                 </tr>
                 
                   <!-- Component Item buffer row -->
