@@ -10,14 +10,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Unit;
 use App\Models\Section;
 use App\Models\Component;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class ContractItem extends Model
 {
     use HasFactory,SoftDeletes;
 
     protected $table = 'contract_items';
+    protected $appends = array('contract_unit_text');
 
     public $deleteException = null;
 
@@ -56,6 +59,26 @@ class ContractItem extends Model
     public function name(){
         return $this->item_code.' '.$this->description;
     }
+
+     public function getContractUnitTextAttribute(){
+
+        $unit = Unit::find($this->unit_id);
+
+        if(!$unit){
+            return '';
+        }
+        
+        $text = '';
+
+        $text = $unit->text;
+
+        if($unit->deleted_at){
+            $text = $text.' [Deleted]';
+        }
+
+        return $text;
+    }
+
 
     public function UpdatedByUser(){   
        
