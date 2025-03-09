@@ -164,7 +164,7 @@
                     <td class="material-quantity" data-value="{{$component_item->quantity}}">{{$component_item->quantity}}</td><!-- Materia; -->
                     <td>{{$component_item->unit_text}}</td>
                     <td>P {{ number_format($component_item->budget_price,2) }}</td>
-                    <td class="material-amount" data-value="{{number_format($component_item->amount,2)}}">P {{ number_format($component_item->amount,2) }}</td>
+                    <td class="material-amount" data-value="{{$component_item->amount}}">P {{ number_format($component_item->amount,2) }}</td>
                 </tr>
                 @endforeach
 
