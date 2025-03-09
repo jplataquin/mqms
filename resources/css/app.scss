@@ -303,6 +303,14 @@ html, body {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+@include color-mode(dark) {
+
+  .form-container{
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 8px;
+  }
+}
+
+
 .form-header{
   background-color: var(--bs-secondary);/**RGBA(108,117,125,1) !important;**/
   min-height: 20px;
