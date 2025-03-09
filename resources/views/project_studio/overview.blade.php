@@ -25,9 +25,9 @@
         <tr>
             <th rowspan="2">ITEM CODE</th>
             <th rowspan="2">DESCRIPTION</th>
-            <th colspan="4">>Contract</th>
+            <th colspan="4">Contract</th>
             <th colspan="4">POW/DUPA</th>
-            <th>Factor</th>
+            <th rowspan="2">Factor</th>
             <th colspan="4">Material Budget</th>
         </tr>
         <tr>
@@ -45,8 +45,6 @@
             <th>RATE</th>
             <th>AMOUNT</th>
 
-            <!-- Factor -->
-            <th>Factor</th>
             
             <!-- Material-->
             <th>QTY</th>
