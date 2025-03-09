@@ -19,7 +19,12 @@ class ComponentItem extends Model
     use HasFactory,SoftDeletes;
 
     protected $table = 'component_items';
-    protected $appends = ['unit_text','ref_1_unit_text'];
+    protected $appends = [
+        'unit_text',
+        'ref_1_unit_text',
+        'amount'
+    ];
+
     public $deleteException = null;
 
     public function MaterialQuantities(): HasMany
@@ -42,6 +47,18 @@ class ComponentItem extends Model
 
     public function getUnitTextAttribute(){
         return $this->getUnitText($this->unit_id);
+    }
+
+    public function getAmountAttribute(){
+        
+        $val = 0;
+
+        $qty    = (float) $this->quantity;
+        $price  = (float) $this->budget_price;
+
+        $val = $qty * $price;
+
+        return $val;
     }
 
     public function function_type_text(){

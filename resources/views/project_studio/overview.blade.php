@@ -124,6 +124,7 @@
                 @foreach($row_2->component_items as $component_item_id => $component_item)
                 <tr class="component-item-row"> 
                     <td>{{$component_item->name}}</td><!-- Component Item Name -->
+                    
                     <td></td><!-- Contract -->
                     <td></td>
                     <td></td>
@@ -133,10 +134,11 @@
                     <td></td>
                     <td></td>
                     <td></td><!-- Factor -->
-                    <td></td><!-- Materia; -->
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    
+                    <td>{{$component_item->quantity}}</td><!-- Materia; -->
+                    <td>{{$component_item->unit_text}}</td>
+                    <td>{{$component_item->budget_price}}</td>
+                    <td>{{$component_item->amount}}</td>
                 </tr>
                 @endforeach
 
