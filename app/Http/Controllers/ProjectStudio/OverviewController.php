@@ -40,7 +40,7 @@ class OverviewController extends Controller
                 
                 $component_items = $component->ComponentItems;
 
-                $data[$comtract_item->id]['components'][$component->id] = [
+                $data[$contract_item->id]['components'][$component->id] = [
                     'component'         => $component,
                     'component_items'   => []
                 ];
