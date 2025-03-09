@@ -148,9 +148,9 @@
 
 
     <div class="row mt-5 mb-3">
-        <div class="col-lg-12 text-end shadow rounded footer-action-menu p-2">
+        <div class="col-lg-12 text-end shadow rounded footer-action-menu p-2 ">
 
-        
+
             <button class="btn-primary btn" id="showPoListBtn">PO List</button>
             <button class="btn-warning btn" id="printBtn">Print</button>
             
