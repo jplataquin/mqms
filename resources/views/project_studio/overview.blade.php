@@ -24,6 +24,7 @@
 
                 <td>{{$row_1->contract_item->contract_quantity}}</td>
                 <td>{{$row_1->contract_item->contract_unit_text}}</td>
+                <td>P {{ number_format($row_1->contract_item->contract_unit_price,2) }}</td>
             </tr>
         @endforeach
     </table>
