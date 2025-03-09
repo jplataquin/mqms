@@ -87,7 +87,7 @@
             <!-- Components -->
             @foreach($row_1->components as $component_id => $row_2)
                 <tr>
-                    <td rowspan="{{count($row_2->component_items)}}">{{$row_2->component->name}}</td>
+                    <td rowspan="{{count( (array) $row_2->component_items)}}">{{$row_2->component->name}}</td>
                     <td></td>
                     <td></td>
                     <td></td>
