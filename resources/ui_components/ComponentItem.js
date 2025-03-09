@@ -247,7 +247,7 @@ class ComponentItem extends ComponentV2{
     view(){
         const t = new Template();
 
-        return t.div({class:'form-container mb-5 shadow-lg bg-white rounded'},(el)=>{
+        return t.div({class:'form-container mb-5 shadow-lg rounded'},(el)=>{
             
             t.div({class:'form-header'},'');
 
