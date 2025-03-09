@@ -117,7 +117,7 @@
                     <td class="material-quantity" data-value="{{$row_2->component->quantity}}">{{$row_2->component->quantity}}</td>
                     <td>{{$row_2->component->unit_text}}</td>
                     <td></td>
-                    <td class="material-amount-total" data-target=".belongs_to_component_{{$component_id}} > .material-amount-total"></td>
+                    <td class="component-material-amount-total" data-target=".belongs_to_component_{{$component_id}} > .material-amount-total"></td>
                 </tr>
                 
                   <!-- Component Item buffer row -->
@@ -137,7 +137,7 @@
                     <td></td><!-- Materia; -->
                     <td></td>
                     <td></td>
-                    <td class="material-amount-total belongs_to_component_{{$component_id}}" data-target=".belongs_to_component_{{$component_id}} > .material-amount"></td>
+                    <td class="component-item-material-amount-total belongs_to_component_{{$component_id}}" data-target=".belongs_to_component_{{$component_id}} > .material-amount"></td>
                 </tr>
 
                 <!-- Component Items -->
@@ -176,30 +176,69 @@
     
     <script type="module">
         import {$q} from '/adarna.js';
+        
+        function totalComponentAmount(callback = ()=>{}){
 
-        $q('.material-amount-total').items().map(item=>{
+            $q('.component-material-amount-total').items().map(item=>{
 
-            let target = item.getAttribute('data-target');
+                let target = item.getAttribute('data-target');
 
-            console.log('target',target);
+                console.log('target',target);
 
-            let total = 0;
+                let total = 0;
 
-            $q(target).items().map(sub_item => {
+                $q(target).items().map(sub_item => {
 
-                console.log('sub_item',sub_item);
+                    console.log('sub_item',sub_item);
 
-                let val = parseFloat(sub_item.getAttribute('data-value'));
+                    let val = parseFloat(sub_item.getAttribute('data-value'));
 
-                total = total + val;
+                    total = total + val;
+                });
+
+                console.log('total',total);
+
+                item.setAttribute('data-value', total);
+
+                item.innerText = total;
+
+                callback();
             });
+        }
 
-            console.log('total',total);
+        function totalComponentItemMaterialAmount(callback = ()=>{}) { 
 
-            item.setAttribute('data-value', total);
+            $q('.component-item-material-amount-total').items().map(item=>{
 
-            item.innerText = total;
-        });
+                let target = item.getAttribute('data-target');
+
+                console.log('target',target);
+
+                let total = 0;
+
+                $q(target).items().map(sub_item => {
+
+                    console.log('sub_item',sub_item);
+
+                    let val = parseFloat(sub_item.getAttribute('data-value'));
+
+                    total = total + val;
+                });
+
+                console.log('total',total);
+
+                item.setAttribute('data-value', total);
+
+                item.innerText = total;
+
+                callback();
+            });
+        }
+
+
+        totalComponentItemMaterialAmount(
+            totalComponentAmount()
+        );
     </script>
 </body>
 </html>
