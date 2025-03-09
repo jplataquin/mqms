@@ -82,6 +82,28 @@
                  <td></td>
                  <td></td>
             </tr>
+
+
+            <!-- Components -->
+            @foreach($row_1->components as $component_id => $row_2)
+                <tr>
+                    <td>{{$row_2->component->name}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            @endforeach
         @endforeach
     </table>
 </body>
