@@ -99,7 +99,7 @@
             <!-- Components -->
             @foreach($row_1->components as $component_id => $row_2)
                 <tr class="component-row">
-                    <td rowspan="{{count( (array) $row_2->component_items) + 1}}">{{$row_2->component->name}}</td>
+                    <td rowspan="{{count( (array) $row_2->component_items) + 2}}">{{$row_2->component->name}}</td>
                     <td></td><!-- Description -->
                     
                     <td></td><!-- Contract -->
@@ -122,6 +122,26 @@
 
                 <!-- Component Items -->
                 @foreach($row_2->component_items as $component_item_id => $component_item)
+                <!-- Component Item buffer row -->
+                <tr class="component-item-row"> 
+                    <td></td><!-- Component Item Name -->
+                    
+                    <td></td><!-- Contract -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td><!-- Ref 1 -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td><!-- Factor -->
+                    
+                    <td></td><!-- Materia; -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <!-- Component Item data row -->
                 <tr class="component-item-row"> 
                     <td>{{$component_item->name}}</td><!-- Component Item Name -->
                     
