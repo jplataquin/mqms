@@ -23,7 +23,7 @@
                 <td>{{$row_1->contract_item->description}}</td>
 
                 <td>{{$row_1->contract_item->contract_quantity}}</td>
-                <td>{{$row_1->contract_item->contract_unit}}</td>
+                <td>{{$row_1->contract_item->contract_unit_text}}</td>
             </tr>
         @endforeach
     </table>
