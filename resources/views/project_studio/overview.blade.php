@@ -109,9 +109,9 @@
 
 
                 <!-- Component Items -->
-                @foreach($row_2->component_items as $component_item_id => $row_3)
+                @foreach($row_2->component_items as $component_item_id => $component_item)
                 <tr> 
-                    <td>{{$row_3->component_item->name}}</td><!-- Component Item Name -->
+                    <td>{{$component_item->name}}</td><!-- Component Item Name -->
                     <td></td><!-- Contract -->
                     <td></td>
                     <td></td>
