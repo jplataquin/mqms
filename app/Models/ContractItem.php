@@ -22,7 +22,9 @@ class ContractItem extends Model
     protected $table = 'contract_items';
     protected $appends = [
         'contract_unit_text',
-        'ref_1_unit_text'
+        'ref_1_unit_text',
+        'ref_1_amount',
+        'contract_amount'
     ];
 
     public $deleteException = null;
@@ -80,6 +82,31 @@ class ContractItem extends Model
         }
 
         return $text;
+    }
+
+
+    public function getContractAmountAttribute(){
+
+        $val = 0;
+ 
+        $qty     = (float) $this->contract_quantity;
+        $price   = (float) $this->contract_unit_price;
+ 
+        $val = $qty * $price;
+ 
+        return $val;
+    }
+
+    public function getRef1AmountAttribute(){
+
+       $val = 0;
+
+       $qty     = (float) $this->ref_1_quantity;
+       $price   = (float) $this->ref_1_unit_price;
+
+       $val = $qty * $price;
+
+       return $val;
     }
 
     public function getRef1UnitTextAttribute(){

@@ -20,6 +20,33 @@
 <body>
     
     <table>
+
+        <!--Headers -->
+        <tr>
+            <th>ITEM CODE</th>
+            <th>DESCRIPTION</th>
+
+            <!-- Contract -->
+            <th>QTY</th>
+            <th>UNIT</th>
+            <th>RATE</th>
+            <th>AMOUNT</th>
+
+            <!--Referennce -->
+            <th>QTY</th>
+            <th>UNIT</th>
+            <th>RATE</th>
+            <th>AMOUNT</th>
+
+            <!-- Factor -->
+            <th>Factor</th>
+            
+            <!-- Material-->
+            <th>QTY</th>
+            <th>UNIT</th>
+            <th>RATE</th>
+            <th>AMOUNT</th>
+        </tr>
         @foreach($data as $contract_item_id => $row_1)
             <tr>
                 <td>{{$row_1->contract_item->item_code}}</td>
@@ -29,11 +56,13 @@
                 <td>{{$row_1->contract_item->contract_quantity}}</td>
                 <td>{{$row_1->contract_item->contract_unit_text}}</td>
                 <td>P {{ number_format($row_1->contract_item->contract_unit_price,2) }}</td>
+                <td>P {{ number_format($row_1->contract_item->contract_amount,2) }}</td>
 
                 <!--Reference -->
                 <td>{{$row_1->contract_item->ref_1_quantity}}</td>
                 <td>{{$row_1->contract_item->ref_1_unit_text}}</td>
                 <td>P {{ number_format($row_1->contract_item->ref_1_unit_price,2) }}</td>
+                <td>P {{ number_format($row_1->contract_item->ref_1_amount,2) }}</td>
 
                 <!-- Factor -->
                  <td></td>
