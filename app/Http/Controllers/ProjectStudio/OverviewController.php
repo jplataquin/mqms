@@ -53,8 +53,8 @@ class OverviewController extends Controller
             }
         }
         
-        $data = (object) $data;
-        
+        $data = json_decode(json_encode($data));
+
         return view('/project_studio/overview',[
             'project' => $project,
             'section' => $section,
