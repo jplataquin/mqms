@@ -16,6 +16,7 @@
                     overflow-y:scroll;
                     min-width: 80%;
                     width: 80%;
+                    padding:1em;
                 }
 
                 #size-handle{
@@ -314,7 +315,7 @@
 
 
         function ComponentItemNode(data){
-            console.log(data);
+           
             return new NodeItem({
                 type:'component_item',
                 studio:studio,
@@ -325,7 +326,9 @@
                 successAddChild:(type,data,node)=>{
               
                 },
-                onScreen:()=>{},
+                onScreen:()=>{
+                    studio.onScreen('/project/section/contract_item/component/component_item/'+data.id);
+                },
                 open: async ()=>{
                     return getChildren('component_item',data.id);
                 }

@@ -155,6 +155,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/comment/list', [App\Http\Controllers\CommentController::class, '_list']);
 
     //Project Studio
-    Route::get('/project/studio/node',[App\Http\Controllers\ProjectStudio\Node::class, 'data']);
-    Route::get('/project/studio/node/children',[App\Http\Controllers\ProjectStudio\Node::class, 'children']);
+    Route::get('/project/studio/node',[App\Http\Controllers\ProjectStudio\NodeController::class, 'data']);
+    Route::get('/project/studio/node/children',[App\Http\Controllers\ProjectStudio\NodeController::class, 'children']);
 });

@@ -11,7 +11,7 @@ use App\Models\Component;
 use App\Models\ComponentItem;
 use App\Models\Unit;
 
-class Node extends Controller
+class NodeController extends Controller
 {
 
     public function data(Request $request){
