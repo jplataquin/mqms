@@ -11,7 +11,10 @@
             border: solid 1px #000000;
             border-collapse: collapse;
         }
-
+        
+        table {
+            width:100%;
+        }
     </style>
 </head>
 <body>
@@ -31,6 +34,15 @@
                 <td>{{$row_1->contract_item->ref_1_quantity}}</td>
                 <td>{{$row_1->contract_item->ref_1_unit_text}}</td>
                 <td>P {{ number_format($row_1->contract_item->ref_1_unit_price,2) }}</td>
+
+                <!-- Factor -->
+                 <td></td>
+
+                <!-- Material-->
+                 <td></td>
+                 <td></td>
+                 <td></td>
+                 <td></td>
             </tr>
         @endforeach
     </table>
