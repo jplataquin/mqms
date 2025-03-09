@@ -88,7 +88,7 @@ Route::middleware(['auth',CheckForResetPassword::class])->group(function () {
 
     Route::get('/master_data/supplier/create', [App\Http\Controllers\SupplierController::class, 'create']);
     Route::get('/master_data/supplier/{id}', [App\Http\Controllers\SupplierController::class, 'display']);
-    Route::get('/master_data/suppliers', [App\Http\Controllers\SupplierController::clsass, 'list']);
+    Route::get('/master_data/suppliers', [App\Http\Controllers\SupplierController::class, 'list']);
     
     Route::get('/master_data/material/group/create', [App\Http\Controllers\MaterialGroupController::class, 'create']);
     Route::get('/master_data/material/group/{id}', [App\Http\Controllers\MaterialGroupController::class, 'display']);
