@@ -183,20 +183,17 @@
 
                 let target = item.getAttribute('data-target');
 
-                console.log('target',target);
-
                 let total = 0;
 
                 $q(target).items().map(sub_item => {
 
-                    console.log('sub_item',sub_item);
-
+             
                     let val = parseFloat(sub_item.getAttribute('data-value'));
 
                     total = total + val;
                 });
 
-                console.log('total',total);
+         
 
                 item.setAttribute('data-value', total);
 
@@ -212,21 +209,18 @@
 
                 let target = item.getAttribute('data-target');
 
-                console.log('target',target);
-
+             
                 let total = 0;
 
                 $q(target).items().map(sub_item => {
 
-                    console.log('sub_item',sub_item);
-
+                 
                     let val = parseFloat(sub_item.getAttribute('data-value'));
 
                     total = total + val;
                 });
 
-                console.log('total',total);
-
+            
                 item.setAttribute('data-value', total);
 
                 item.innerText = total;
@@ -237,7 +231,9 @@
 
 
         totalComponentItemMaterialAmount(
-            totalComponentAmount()
+            ()=>{
+                totalComponentAmount();
+            }
         );
     </script>
 </body>
