@@ -469,6 +469,14 @@ html, body {
   background-color:#ffffff;
 }
 
+@include color-mode(dark) {
+
+  .footer-action-menu{
+    background-color:#000000 !important;
+  }
+}
+
+
 
 /*** Callout ***/
 
