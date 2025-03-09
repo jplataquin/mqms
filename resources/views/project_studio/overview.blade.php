@@ -15,6 +15,18 @@
         table {
             width:100%;
         }
+
+        .contract-item-row td{
+            background-color: grey;
+        }
+
+        .component-row td{
+            background-color: green;
+        }
+
+        .component-item-row td{
+            background-color: yellow;
+        }
     </style>
 </head>
 <body>
@@ -57,7 +69,7 @@
         @foreach($data as $contract_item_id => $row_1)
 
             <!-- Contract Item -->
-            <tr>
+            <tr class="contract-item-row">
                 <td>{{$row_1->contract_item->item_code}}</td>
                 <td>{{$row_1->contract_item->description}}</td>
                 
@@ -86,7 +98,7 @@
 
             <!-- Components -->
             @foreach($row_1->components as $component_id => $row_2)
-                <tr>
+                <tr class="component-row">
                     <td rowspan="{{count( (array) $row_2->component_items)}}">{{$row_2->component->name}}</td>
                     <td></td><!-- Description -->
                     
@@ -110,7 +122,7 @@
 
                 <!-- Component Items -->
                 @foreach($row_2->component_items as $component_item_id => $component_item)
-                <tr> 
+                <tr class="component-item-row"> 
                     <td>{{$component_item->name}}</td><!-- Component Item Name -->
                     <td></td><!-- Contract -->
                     <td></td>
