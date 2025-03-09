@@ -185,9 +185,12 @@
 
                 let total = 0;
 
+                console.log(target);
+
                 $q(target).items().map(sub_item => {
 
-             
+                    console.log(sub_item);
+                    
                     let val = parseFloat(sub_item.getAttribute('data-value'));
 
                     total = total + val;
@@ -198,6 +201,8 @@
                 item.setAttribute('data-value', total);
 
                 item.innerText = total;
+
+                console.log(callback);
 
                 callback();
             });
