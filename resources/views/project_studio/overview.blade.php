@@ -23,8 +23,15 @@
 
         <!--Headers -->
         <tr>
-            <th>ITEM CODE</th>
-            <th>DESCRIPTION</th>
+            <th rowspan="2">ITEM CODE</th>
+            <th rowspan="2">DESCRIPTION</th>
+            <th colspan="4">>Contract</th>
+            <th colspan="4">POW/DUPA</th>
+            <th>Factor</th>
+            <th colspan="4">Material Budget</th>
+        </tr>
+        <tr>
+         
 
             <!-- Contract -->
             <th>QTY</th>
