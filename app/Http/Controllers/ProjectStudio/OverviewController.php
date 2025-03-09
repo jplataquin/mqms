@@ -27,10 +27,36 @@ class OverviewController extends Controller
 
         $contract_items = $section->ContractItems;
 
+        foreach($contract_items as $contract_item){
+            
+            $components = $contract_item->Components;
+
+            $data[$contract_item->id] = [
+                'contract_item' => $contract_item,
+                'components'    => []
+            ];
+            
+            foreach($components as $component){
+                
+                $component_items = $component->ComponentItems;
+
+                $data[$comtract_item->id]['components'][$component->id] = [
+                    'component'         => $component,
+                    'component_items'   => []
+                ];
+
+                foreach($component_items as $component_item){
+
+                    $data[$contract_item->id]['components'][$component->id]['component_items'][$component_item->id] = $component_item;
+                    
+                }
+            }
+        }
         
         return view('/project_studio/overview',[
             'project' => $project,
-            'section' => $section
+            'section' => $section,
+            'data'    => $data
         ]);
     }
 }
