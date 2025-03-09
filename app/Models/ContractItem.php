@@ -22,7 +22,7 @@ class ContractItem extends Model
     protected $table = 'contract_items';
     protected $appends = [
         'contract_unit_text',
-        'ref_1_unit_text,'
+        'ref_1_unit_text'
     ];
 
     public $deleteException = null;
