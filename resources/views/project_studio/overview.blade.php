@@ -10,7 +10,7 @@
         table, tr, td, th {
             border: solid 1px #000000;
             border-collapse: collapse;
-            font-size: 10px;
+            font-size: 11px;
         }
         
         table {
@@ -90,19 +90,19 @@
         @foreach($data as $contract_item_id => $row_1)
 
             <!-- Contract Item -->
-            <tr class="contract-item-row" id="contract_item_{{$contract_item_id}}">
+            <tr class="contract-item-row" id="contract_item_{{$contract_item_id}}" data-controller="contractItemController">
                 <td>{{$row_1->contract_item->item_code}}</td>
                 <td>{{$row_1->contract_item->description}}</td>
                 
                 <!-- Contract -->
-                <td>{{$row_1->contract_item->contract_quantity}}</td>
-                <td>{{$row_1->contract_item->contract_unit_text}}</td>
-                <td>P {{ number_format($row_1->contract_item->contract_unit_price,2) }}</td>
-                <td>P {{ number_format($row_1->contract_item->contract_amount,2) }}</td>
+                <td class="text-center">{{$row_1->contract_item->contract_quantity}}</td>
+                <td class="text-center">{{$row_1->contract_item->contract_unit_text}}</td>
+                <td class="text-end">P {{ number_format($row_1->contract_item->contract_unit_price,2) }}</td>
+                <td class="text-end">P {{ number_format($row_1->contract_item->contract_amount,2) }}</td>
 
                 <!--Reference -->
-                <td>{{$row_1->contract_item->ref_1_quantity}}</td>
-                <td>{{$row_1->contract_item->ref_1_unit_text}}</td>
+                <td class="text-center">{{$row_1->contract_item->ref_1_quantity}}</td>
+                <td class="text-center">{{$row_1->contract_item->ref_1_unit_text}}</td>
                 <td class="text-end">P {{ number_format($row_1->contract_item->ref_1_unit_price,2) }}</td>
                 <td class="text-end">P {{ number_format($row_1->contract_item->ref_1_amount,2) }}</td>
 
@@ -119,7 +119,7 @@
 
             <!-- Components -->
             @foreach($row_1->components as $component_id => $row_2)
-                <tr class="component-row" id="component_{{$component_id}}">
+                <tr class="component-row" id="component_{{$component_id}}" data-controller="componentController">
                     <td rowspan="{{ ( count( (array) $row_2->component_items) + 1) }}">{{$row_2->component->name}}</td>
                     <td></td><!-- Description -->
                     
@@ -135,7 +135,7 @@
                     <td></td><!-- Factor -->
                     
                      <!-- Material -->
-                    <td class="text-center material-quantity" data-value="{{$row_2->component->quantity}}">{{$row_2->component->quantity}}</td>
+                    <td class="text-center" >{{$row_2->component->quantity}}</td>
                     <td class="text-center">{{$row_2->component->unit_text}}</td>
                     <td></td>
                     <td class="text-end">P {{ number_format( $total_amount->component[$component_id]->material, 2) }}</td>
@@ -147,7 +147,7 @@
                 @foreach($row_2->component_items as $component_item_id => $component_item)
               
                 <!-- Component Item data row -->
-                <tr class="component-item-row belongs_to_component_{{$component_id}}" id="component_item_{{$component_item_id}}"> 
+                <tr class="component-item-row" id="component_item_{{$component_item_id}}" data-controller="componentItemController"> 
                     <td>{{$component_item->name}}</td><!-- Component Item Name -->
                     
                     <!-- Contract -->
@@ -157,7 +157,7 @@
                     <td></td>
 
                     <!-- Ref 1 -->
-                    <td class="text-center ref-1-quantity" data-value="{{$component_item->ref_1_quantity}}">{{$component_item->ref_1_quantity}}</td>
+                    <td class="text-center">{{$component_item->ref_1_quantity}}</td>
                     <td class="text-center">{{$component_item->ref_1_unit_text}}</td>
                     <td class="text-end">P {{ number_format($component_item->ref_1_unit_price,2) }}</td>
                     <td class="text-end ref-1-amount">P {{ number_format($component_item->ref_1_amount,2) }}</td>
@@ -177,7 +177,7 @@
         @endforeach
 
 
-
+        <!-- Grand Total -->
         <tr>
             <td></td>
             <td></td>
@@ -206,13 +206,6 @@
         import {$q} from '/adarna.js';
         
      
-
-        function totalAmountContractItem(el){
-            let parent = el.parentElement;
-
-
-        }
-
        
         
         $q('[data-controller]').items().map( item => {
