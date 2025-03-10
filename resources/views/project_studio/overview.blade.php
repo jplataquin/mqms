@@ -240,9 +240,15 @@
         );
 
 
+        function contractItemMaterialTotalAmount(el){
+            console.log('hello',el);
+        }
+
+        console.log(this,this['contractItemMaterialTotalAmount']);
+
         $q('[data-controller]').items().map( item => {
 
-            console.log(item);
+           // console.log(item);
         });
     </script>
 </body>
