@@ -92,7 +92,7 @@
                  <td class="material-quantity"></td>
                  <td></td>
                  <td></td>
-                 <td class="material-amount" data-value="0"></td>
+                 <td class="" data-controller="contractItemMaterialTotalAmount" data-value="0"></td>
             </tr>
 
 
@@ -239,6 +239,12 @@
                 totalComponentAmount();
             }
         );
+
+
+        $q('[data-controller]').items().map( item => {
+
+            console.log(item);
+        });
     </script>
 </body>
 </html>
