@@ -35,6 +35,12 @@
                     user-select: none;
                 }
 
+                #studio-overview{
+                    border: none;
+                    width:100%;
+                    height:100%;
+                }
+
                 .item{
                     border: 1px solid #DCDCDC;
                     border-radius: .4em;
@@ -53,10 +59,15 @@
   
             <div id="studio-side">
             </div>
+
             <div id="size-handle"></div>
+
             <div id="studio-editor">
             </div>
-
+            
+            <div id="studio-overview">
+                <iframe src="/project/studio/overview/{{$project->id}}"></iframe>
+            </div>
         </div>
     </div>
     
@@ -120,6 +131,7 @@
 
         const side          = $q('#studio-side').first();
         const editor        = $q('#studio-editor').first();
+        const overview      = $q('#studio-overview').first();
         
 
         studio.unit_options = @json($unit_options);
@@ -174,6 +186,11 @@
             });
             
         }
+
+
+        studio.onOverview = (url)=>{
+            overview.src = url;
+        };
 
         async function getChildren(type,id){
             return new Promise((resolve,reject)=>{
@@ -236,6 +253,7 @@
                 },
                 onScreen:()=>{
                     studio.onScreen('/project/section/'+data.id);
+                    studio.onOverview('/project/studio/overview/{{$project->id}}/'+data.id);
                 },
                 open: async ()=>{
                     return getChildren('section',data.id);
