@@ -27,14 +27,17 @@
 
         .contract-item-row:hover{
             background-color:rgb(177, 184, 227);
+            cursor:pointer;
         }
 
         .component-row:hover{
             background-color:rgb(177, 209, 227);
+            cursor:pointer;
         }
 
-        .component-item-row td{
-           
+        .component-item-row:hover{
+            background-color:rgb(177, 219, 227);
+            cursor:pointer;
         }
 
         .text-end{
