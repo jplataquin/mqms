@@ -10,6 +10,7 @@
         table, tr, td, th {
             border: solid 1px #000000;
             border-collapse: collapse;
+            font-size: 10px;
         }
         
         table {
