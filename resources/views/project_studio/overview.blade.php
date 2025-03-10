@@ -25,15 +25,15 @@
         }
 
         .contract-item-row td{
-            background-color: grey;
+         
         }
 
         .component-row td{
-            background-color: green;
+          
         }
 
         .component-item-row td{
-            background-color: yellow;
+           
         }
 
         .text-end{
@@ -55,7 +55,7 @@
 
         <!--Headers -->
         <tr>
-            <th rowspan="2">ITEM CODE</th>
+            <th rowspan="2" style="min-width:5%;max-width:5%">ITEM CODE</th>
             <th rowspan="2">DESCRIPTION</th>
             <th colspan="4">Contract</th>
             <th colspan="4">POW/DUPA</th>
