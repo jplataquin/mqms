@@ -36,6 +36,17 @@
                 }
 
                 #studio-overview{
+                    flex-grow: 1;
+                    height: 100vh;
+                    overflow-x:hidden;
+                    overflow-y:scroll;
+                    min-width: 80%;
+                    width: 80%;
+                    padding:1em;
+                    display:none;
+                }
+
+                #overview-iframe{
                     border: none;
                     width:100%;
                     height:100%;
@@ -55,6 +66,10 @@
                     cursor:grab;
                 }
         </style>
+        <div>
+                <button id="showEditorBtn">Editor</button>
+                <button id="showOverViewBtn">Overview</button>
+        </div>
         <div id="studio-container">
   
             <div id="studio-side">
@@ -71,6 +86,23 @@
         </div>
     </div>
     
+
+    <script type="module">
+        import {$q} from '/adarna.js';
+        const editor            = $q('#studio-editor').first();
+        const overview          = $q('#studio-overview').first();
+        
+
+        showEditorBtn.onclick = () =>{
+            editor.style.display = 'block';
+            overview.style.display = 'none';
+        }
+
+        showOverViewBtn.onclick = () =>{
+            editor.style.display = 'none';
+            overview.style.display = 'block';
+        }
+    </script>
     <script type="module">
         import {$q} from '/adarna.js';
 
