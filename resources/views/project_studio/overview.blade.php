@@ -248,9 +248,14 @@
         
         $q('[data-controller]').items().map( item => {
 
-            eval('let func = '+item.getAttribute('data-controller'));
+            let func = null;
+            eval('func = '+item.getAttribute('data-controller'));
 
-            func(item);
+            console.log(item.getAttribute('data-controller'));
+            if(func != null){
+                func(item);
+            }
+         
         });
     </script>
 </body>
