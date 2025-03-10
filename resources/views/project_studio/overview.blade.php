@@ -29,8 +29,8 @@
             background-color:rgb(177, 184, 227);
         }
 
-        .component-row td{
-          
+        .component-row:hover{
+            background-color:rgb(177, 209, 227);
         }
 
         .component-item-row td{
