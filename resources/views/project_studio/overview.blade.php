@@ -217,7 +217,7 @@
                 eval('func = (typeof '+func_name+' == "function") ? '+func_name+' : null;');
             }
 
-            if(typeof item._controlled == 'undefined' || item._controlled == false ){
+            if(typeof func === 'function' && (typeof item._controlled == 'undefined' || item._controlled == false) ){
                 
                 func(item);
 
