@@ -57,10 +57,10 @@
         <tr>
             <th rowspan="2" style="min-width:5%;max-width:5%">ITEM CODE</th>
             <th rowspan="2" style="min-width:20%;max-width:20%">DESCRIPTION</th>
-            <th colspan="4">Contract</th>
-            <th colspan="4">POW/DUPA</th>
-            <th rowspan="2">Factor</th>
-            <th colspan="4">Material Budget</th>
+            <th colspan="4" style="min-width:20%;max-width:20%">Contract</th>
+            <th colspan="4" style="min-width:20%;max-width:20%">POW/DUPA</th>
+            <th rowspan="2" style="min-width:10%;max-width:10%">Factor</th>
+            <th colspan="4" style="min-width:25%;max-width:25%">Material Budget</th>
         </tr>
         <tr>
          
