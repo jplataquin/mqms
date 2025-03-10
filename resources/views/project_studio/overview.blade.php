@@ -254,9 +254,12 @@
             if( /^[a-z0-9]+$/i.test(func_name) ){
                 eval('func = '+func_name);
             }
-            
-            if(typeof func === 'function'){
+
+            if(typeof func === 'function' && (typeof item._controlled == 'undefined' || item._controlled == false) ){
+                
                 func(item);
+
+                item._controlled = true;
             }
          
         });
