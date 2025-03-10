@@ -112,7 +112,7 @@
                  <td class="material-quantity"></td>
                  <td></td>
                  <td></td>
-                 <td class="text-end" data-controller="totalAmountContractItem" data-value="0"></td>
+                 <td class="text-end">P {{ number_format($total->contract_item[$contract_item_id]->material,2) }}</td>
             </tr>
 
 
@@ -129,7 +129,7 @@
                     <td></td><!-- Ref 1 -->
                     <td></td>
                     <td></td>
-                    <td class="text-end">P P {{ number_format( $total_amount->component[$component_id]->ref_1, 2) }}</td>
+                    <td class="text-end">P {{ number_format( $total_amount->component[$component_id]->ref_1, 2) }}</td>
 
                     <td></td><!-- Factor -->
                     

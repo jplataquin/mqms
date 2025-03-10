@@ -32,6 +32,9 @@ class OverviewController extends Controller
 
         $contract_items = $section->ContractItems;
 
+        $contract_item_material_total_amount    = 0;
+        $contract_item_ref_1_total_amount       = 0;
+
         //Contract Items
         foreach($contract_items as $contract_item){
             
@@ -67,8 +70,16 @@ class OverviewController extends Controller
                  $total_amount->component[$component->id] = (object) [
                     'material' => $component_item_material_total_amount,
                     'ref_1'    => $component_item_ref_1_total_amount
-                 ];
+                ];
+
+                $contract_item_material_total_amount += $component_item_material_total_amount;
+                $contract_item_ref_1_total_amount    += $component_item_ref_1_total_amount;
             }
+
+            $total_amount->contract_item[$contract_item->id] = (object) [
+                'material' => $contract_item_material_total_amount,
+                'ref_1'    => $contract_item_ref_1_total_amount
+            ];
         }
         
         $data = json_decode(json_encode($data));
