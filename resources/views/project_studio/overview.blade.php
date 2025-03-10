@@ -137,7 +137,7 @@
                     <td class="text-center material-quantity" data-value="{{$row_2->component->quantity}}">{{$row_2->component->quantity}}</td>
                     <td class="text-center">{{$row_2->component->unit_text}}</td>
                     <td></td>
-                    <td class="text-end">P {{ number_format( $total_amount->component[$component->id]->material, 2) }}</td>
+                    <td class="text-end">P {{ number_format( $total_amount->component[$component_id]->material, 2) }}</td>
                 </tr>
                 
          
