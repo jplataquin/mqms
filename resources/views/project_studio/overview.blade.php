@@ -16,6 +16,14 @@
             width:100%;
         }
 
+        th{
+            text-align: center;
+        }
+
+        td, th {
+            padding: 5px;
+        }
+
         .contract-item-row td{
             background-color: grey;
         }
@@ -26,6 +34,18 @@
 
         .component-item-row td{
             background-color: yellow;
+        }
+
+        .text-end{
+            text-align:left !important;
+        }
+
+        .text-start{
+            text-align:right !important;
+        }
+
+        .text-center{
+            text-align:center !important;
         }
     </style>
 </head>
@@ -82,8 +102,8 @@
                 <!--Reference -->
                 <td>{{$row_1->contract_item->ref_1_quantity}}</td>
                 <td>{{$row_1->contract_item->ref_1_unit_text}}</td>
-                <td>P {{ number_format($row_1->contract_item->ref_1_unit_price,2) }}</td>
-                <td>P {{ number_format($row_1->contract_item->ref_1_amount,2) }}</td>
+                <td class="text-end">P {{ number_format($row_1->contract_item->ref_1_unit_price,2) }}</td>
+                <td class="text-end">P {{ number_format($row_1->contract_item->ref_1_amount,2) }}</td>
 
                 <!-- Factor -->
                  <td></td>
@@ -92,7 +112,7 @@
                  <td class="material-quantity"></td>
                  <td></td>
                  <td></td>
-                 <td class="" data-controller="contractItemMaterialTotalAmount" data-value="0"></td>
+                 <td class="text-end" data-controller="totalAmountContractItem" data-value="0"></td>
             </tr>
 
 
@@ -114,10 +134,10 @@
                     <td></td><!-- Factor -->
                     
                      <!-- Material -->
-                    <td class="material-quantity" data-value="{{$row_2->component->quantity}}">{{$row_2->component->quantity}}</td>
-                    <td>{{$row_2->component->unit_text}}</td>
+                    <td class="text-center material-quantity" data-value="{{$row_2->component->quantity}}">{{$row_2->component->quantity}}</td>
+                    <td class="text-center">{{$row_2->component->unit_text}}</td>
                     <td></td>
-                    <td class="component-material-amount-total" data-target=".belongs_to_component_{{$component_id}}.component-item-material-amount-total"></td>
+                    <td class="text-end component-material-amount-total" data-target=".belongs_to_component_{{$component_id}}.component-item-material-amount-total"></td>
                 </tr>
                 
                   <!-- Component Item buffer row -->
@@ -137,7 +157,7 @@
                     <td></td><!-- Materia; -->
                     <td></td>
                     <td></td>
-                    <td class="component-item-material-amount-total belongs_to_component_{{$component_id}}" data-target=".belongs_to_component_{{$component_id}} > .material-amount"></td>
+                    <td class="text-end component-item-material-amount-total belongs_to_component_{{$component_id}}" data-target=".belongs_to_component_{{$component_id}} > .material-amount"></td>
                 </tr>
 
                 <!-- Component Items -->
@@ -154,17 +174,17 @@
                     <td></td>
 
                     <!-- Ref 1 -->
-                    <td class="ref-1-quantity" data-value="{{$component_item->ref_1_quantity}}">{{$component_item->ref_1_quantity}}</td>
-                    <td>{{$component_item->ref_1_unit_text}}</td>
-                    <td>P {{ number_format($component_item->ref_1_unit_price,2) }}</td>
-                    <td class="ref-1-amount">P {{ number_format($component_item->ref_1_amount,2) }}</td>
+                    <td class="text-center ref-1-quantity" data-value="{{$component_item->ref_1_quantity}}">{{$component_item->ref_1_quantity}}</td>
+                    <td class="text-center">{{$component_item->ref_1_unit_text}}</td>
+                    <td class="text-end">P {{ number_format($component_item->ref_1_unit_price,2) }}</td>
+                    <td class="text-end ref-1-amount">P {{ number_format($component_item->ref_1_amount,2) }}</td>
 
                     <td></td><!-- Factor -->
                     
-                    <td class="material-quantity" data-value="{{$component_item->quantity}}">{{$component_item->quantity}}</td><!-- Materia; -->
-                    <td>{{$component_item->unit_text}}</td>
-                    <td>P {{ number_format($component_item->budget_price,2) }}</td>
-                    <td class="material-amount" data-value="{{$component_item->amount}}">P {{ number_format($component_item->amount,2) }}</td>
+                    <td class="text-center material-quantity" data-value="{{$component_item->quantity}}">{{$component_item->quantity}}</td><!-- Materia; -->
+                    <td class="text-center">{{$component_item->unit_text}}</td>
+                    <td class="text-end">P {{ number_format($component_item->budget_price,2) }}</td>
+                    <td class="text-end material-amount" data-value="{{$component_item->amount}}">P {{ number_format($component_item->amount,2) }}</td>
                 </tr>
                 @endforeach
 
@@ -240,8 +260,10 @@
         );
 
 
-        function contractItemMaterialTotalAmount(el){
-            console.log('hello',el);
+        function totalAmountContractItem(el){
+            let parent = el.parentElement;
+
+
         }
 
        
