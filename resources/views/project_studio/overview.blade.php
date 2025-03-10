@@ -248,11 +248,14 @@
         
         $q('[data-controller]').items().map( item => {
 
-            let func = null;
-            eval('func = '+item.getAttribute('data-controller'));
+            let func        = null;
+            let func_name   = item.getAttribute('data-controller');
 
-            console.log(item.getAttribute('data-controller'));
-            if(func != null){
+            if( /^[a-z0-9]+$/i.test(func_name) ){
+                eval('func = '+func_name);
+            }
+            
+            if(typeof func === 'function'){
                 func(item);
             }
          
