@@ -196,7 +196,7 @@
             <td></td>
             <td></td>
             <td></td>
-            <th class="text-end">P {{ number_format( $grand_total_amount->component->material, 2) }}</th>
+            <th class="text-end">P {{ number_format( $grand_total_amount->material, 2) }}</th>
         </tr>
                 
     </table>
