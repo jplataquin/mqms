@@ -25,8 +25,8 @@
             padding: 5px;
         }
 
-        .contract-item-row td{
-         
+        .contract-item-row:hover{
+            background-color:rgb(177, 184, 227);
         }
 
         .component-row td{
