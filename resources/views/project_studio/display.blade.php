@@ -66,7 +66,7 @@
             </div>
             
             <div id="studio-overview">
-                <iframe src=""></iframe>
+                <iframe id="overview-iframe" src=""></iframe>
             </div>
         </div>
     </div>
@@ -129,10 +129,10 @@
         import {$q,Template} from '/adarna.js';
         import NodeItem from '/ui_components/NodeItem.js';
 
-        const side          = $q('#studio-side').first();
-        const editor        = $q('#studio-editor').first();
-        const overview      = $q('#studio-overview').first();
-        
+        const side              = $q('#studio-side').first();
+        const editor            = $q('#studio-editor').first();
+        const overview          = $q('#studio-overview').first();
+        const overview_iframe   = $q('#overview-iframe').first();
 
         studio.unit_options = @json($unit_options);
 
@@ -189,7 +189,7 @@
 
 
         studio.onOverview = (url)=>{
-            overview.setAttribute('src',url);
+            overview_iframe.src = url;
         };
 
         async function getChildren(type,id){
