@@ -214,7 +214,7 @@
             let func_name   = item.getAttribute('data-controller');
 
             if( /^[a-z0-9]+$/i.test(func_name) ){
-                eval('func = '+func_name+' ? null;');
+                eval('func = '+func_name+' || null;');
             }
 
             if(typeof func === 'function' && (typeof item._controlled == 'undefined' || item._controlled == false) ){
