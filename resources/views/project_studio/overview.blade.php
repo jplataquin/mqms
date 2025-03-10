@@ -244,11 +244,13 @@
             console.log('hello',el);
         }
 
-        eval('contractItemMaterialTotalAmount("eh")');
-
+       
+        
         $q('[data-controller]').items().map( item => {
 
-           // console.log(item);
+            eval('let func = '+item.getAttribute('data-controller'));
+
+            func(item);
         });
     </script>
 </body>
