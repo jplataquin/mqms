@@ -37,11 +37,11 @@
         }
 
         .text-end{
-            text-align:left !important;
+            text-align:right !important;
         }
 
         .text-start{
-            text-align:right !important;
+            text-align:left !important;
         }
 
         .text-center{
@@ -119,7 +119,7 @@
             <!-- Components -->
             @foreach($row_1->components as $component_id => $row_2)
                 <tr class="component-row" id="component_{{$component_id}}">
-                    <td rowspan="{{ ( count( (array) $row_2->component_items) + 2) }}">{{$row_2->component->name}}</td>
+                    <td rowspan="{{ ( count( (array) $row_2->component_items) + 1) }}">{{$row_2->component->name}}</td>
                     <td></td><!-- Description -->
                     
                     <td></td><!-- Contract -->
@@ -137,28 +137,10 @@
                     <td class="text-center material-quantity" data-value="{{$row_2->component->quantity}}">{{$row_2->component->quantity}}</td>
                     <td class="text-center">{{$row_2->component->unit_text}}</td>
                     <td></td>
-                    <td class="text-end component-material-amount-total" data-target=".belongs_to_component_{{$component_id}}.component-item-material-amount-total"></td>
+                    <td class="text-end">P {{ number_format( $total_amount->component[$component->id]->material, 2) }}</td>
                 </tr>
                 
-                  <!-- Component Item buffer row -->
-                  <tr class="component-item-row"> 
-                    <td>&nbsp;</td><!-- Component Item Name -->
-                    
-                    <td></td><!-- Contract -->
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td><!-- Ref 1 -->
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td><!-- Factor -->
-                    
-                    <td></td><!-- Materia; -->
-                    <td></td>
-                    <td></td>
-                    <td class="text-end component-item-material-amount-total belongs_to_component_{{$component_id}}" data-target=".belongs_to_component_{{$component_id}} > .material-amount"></td>
-                </tr>
+         
 
                 <!-- Component Items -->
                 @foreach($row_2->component_items as $component_item_id => $component_item)
@@ -184,7 +166,7 @@
                     <td class="text-center material-quantity" data-value="{{$component_item->quantity}}">{{$component_item->quantity}}</td><!-- Materia; -->
                     <td class="text-center">{{$component_item->unit_text}}</td>
                     <td class="text-end">P {{ number_format($component_item->budget_price,2) }}</td>
-                    <td class="text-end material-amount" data-value="{{$component_item->amount}}">P {{ number_format($component_item->amount,2) }}</td>
+                    <td class="text-end" data-value="{{$component_item->amount}}">P {{ number_format($component_item->amount,2) }}</td>
                 </tr>
                 @endforeach
 
@@ -197,68 +179,7 @@
     <script type="module">
         import {$q} from '/adarna.js';
         
-        function totalComponentAmount(callback = ()=>{}){
-
-            $q('.component-material-amount-total').items().map(item=>{
-
-                let target = item.getAttribute('data-target');
-
-                let total = 0;
-
-         
-
-                $q(target).items().map(sub_item => {
-
-                   
-                    let val = parseFloat(sub_item.getAttribute('data-value'));
-
-                    total = total + val;
-                });
-
-         
-
-                item.setAttribute('data-value', total);
-
-                item.innerText = total;
-
-
-                callback();
-            });
-        }
-
-        function totalComponentItemMaterialAmount(callback = ()=>{}) { 
-
-            $q('.component-item-material-amount-total').items().map(item=>{
-
-                let target = item.getAttribute('data-target');
-
-             
-                let total = 0;
-
-                $q(target).items().map(sub_item => {
-
-                 
-                    let val = parseFloat(sub_item.getAttribute('data-value'));
-
-                    total = total + val;
-                });
-
-            
-                item.setAttribute('data-value', total);
-
-                item.innerText = total;
-
-                callback();
-            });
-        }
-
-
-        totalComponentItemMaterialAmount(
-            ()=>{
-                totalComponentAmount();
-            }
-        );
-
+     
 
         function totalAmountContractItem(el){
             let parent = el.parentElement;
