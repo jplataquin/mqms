@@ -66,7 +66,7 @@
                     cursor:grab;
                 }
         </style>
-        <div>
+        <div class="text-end pe-5 pt-3 pb-3">
                 <button id="showEditorBtn">Editor</button>
                 <button id="showOverViewBtn">Overview</button>
         </div>
