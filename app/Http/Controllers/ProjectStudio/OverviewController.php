@@ -30,6 +30,12 @@ class OverviewController extends Controller
             'component'     => []
         ];
 
+        $grand_total_amount = (object) [
+            'contract'     => 0,
+            'ref_1'        => 0,
+            'material'     => 0
+        ];
+
         $contract_items = $section->ContractItems;
 
         $contract_item_material_total_amount    = 0;
@@ -37,6 +43,9 @@ class OverviewController extends Controller
 
         //Contract Items
         foreach($contract_items as $contract_item){
+            
+
+            $grand_total_amount->contract +=  (float) $contract_item->contract_amount;
             
             $components = $contract_item->Components;
 
@@ -80,15 +89,19 @@ class OverviewController extends Controller
                 'material' => $contract_item_material_total_amount,
                 'ref_1'    => $contract_item_ref_1_total_amount
             ];
+
+            $grand_total_amount->material   +=  $contract_item_material_total_amount;
+            $grand_total_amount->ref_1      +=  $contract_item_ref_1_total_amount;
         }
         
         $data = json_decode(json_encode($data));
 
         return view('/project_studio/overview',[
-            'project'       => $project,
-            'section'       => $section,
-            'data'          => $data,
-            'total_amount'  => $total_amount
+            'project'               => $project,
+            'section'               => $section,
+            'data'                  => $data,
+            'total_amount'          => $total_amount,
+            'grand_total_amount'    => $grand_total_amount
         ]);
     }
 }

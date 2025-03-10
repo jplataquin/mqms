@@ -174,6 +174,31 @@
 
         
         @endforeach
+
+
+
+        <tr>
+            <td></td>
+            <td></td>
+            
+            <td></td><!-- Contract -->
+            <td></td>
+            <td></td>
+            <th class="text-end">P {{ number_format( $grand_total_amount->contract, 2) }}</th>
+            <td></td><!-- Ref 1 -->
+            <td></td>
+            <td></td>
+            <th class="text-end">P {{ number_format( $grand_total_amount->ref_1, 2) }}</th>
+
+            <td></td><!-- Factor -->
+            
+            <!-- Material -->
+            <td></td>
+            <td></td>
+            <td></td>
+            <th class="text-end">P {{ number_format( $grand_total_amount->component->material, 2) }}</th>
+        </tr>
+                
     </table>
     
     <script type="module">
