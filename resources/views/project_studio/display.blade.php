@@ -66,7 +66,7 @@
             </div>
             
             <div id="studio-overview">
-                <iframe src="/project/studio/overview/{{$project->id}}"></iframe>
+                <iframe src=""></iframe>
             </div>
         </div>
     </div>
@@ -189,7 +189,7 @@
 
 
         studio.onOverview = (url)=>{
-            overview.src = url;
+            overview.setAttribute('src',url);
         };
 
         async function getChildren(type,id){
