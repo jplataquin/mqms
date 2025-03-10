@@ -205,6 +205,12 @@
                 
     </table>
     
+    <script> type="module">
+
+        window.onmessage = function(e) {
+            alert(e.data);
+        };
+    </script>
     <script type="module">
         import {$q} from '/adarna.js';
         

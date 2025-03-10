@@ -356,6 +356,7 @@
                 },
                 onScreen:()=>{
                     studio.onScreen('/project/section/contract_item/component/'+data.id);
+                    overview_iframe.contentWindow.postMessage('Select Component '+data.id);
                 },
                 open: async ()=>{
                     return getChildren('component',data.id);
