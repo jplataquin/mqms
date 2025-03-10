@@ -44,11 +44,6 @@ class OverviewController extends Controller
             
             //Components
             foreach($components as $component){
-                
-                $total_amount['component'][$component->id] = [
-                    'material' => 0,
-                    'ref_1'    => 0
-                ];
 
                 $component_items = $component->ComponentItems;
 
