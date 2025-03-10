@@ -244,7 +244,7 @@
             console.log('hello',el);
         }
 
-        console.log(this,this['contractItemMaterialTotalAmount']);
+        console.log(window['contractItemMaterialTotalAmount']);
 
         $q('[data-controller]').items().map( item => {
 
