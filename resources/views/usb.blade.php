@@ -73,7 +73,7 @@
 
 
                 navigator.usb.getDevices({ filters: [{ vendorId: vendorId.value }] }).then(devices => {
-
+                    console.log(devices);
                     devices.forEach(device => {
 
                         console.log('Product Name',device.productName); // Access device properties like product name
