@@ -72,12 +72,11 @@
           function connect(){
 
 
-                navigator.usb.requestDevice({ filters: [{ vendorId: vendorId.value }] })
-                    .then(device => {
-                    console.log(device.productName);      // "Arduino Micro"
-                    console.log(device.manufacturerName); // "Arduino LLC"
-                    })
-                    .catch(error => { console.error(error); });
+                navigator.usb.requestDevice({ filters: [{ vendorId: vendorId.value }] }).then(device => {
+                    console.log(device);
+                    console.log('Product Name',device.productName);      // "Arduino Micro"
+                    console.log('Manufacturer',device.manufacturerName); // "Arduino LLC"
+                }).catch(error => { console.error(error); });
             }
             
             connectButton.onclick = () => {
