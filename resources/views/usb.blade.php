@@ -72,21 +72,12 @@
           function connect(){
 
 
-                navigator.usb.getDevices({ filters: [{ vendorId: vendorId.value }] }).then(devices => {
-                    console.log(devices);
-                    devices.forEach(device => {
-
-                        console.log('Product Name',device.productName); // Access device properties like product name
-
-                        console.log('Manufacturer',device.manufacturerName); // Access manufacturer name
-
-                    });
-
-                }).catch(error => {
-
-                    console.error("Error accessing USB devices:", error);
-
-                });
+                navigator.usb.requestDevice({ filters: [{ vendorId: vendorId.value }] })
+                    .then(device => {
+                    console.log(device.productName);      // "Arduino Micro"
+                    console.log(device.manufacturerName); // "Arduino LLC"
+                    })
+                    .catch(error => { console.error(error); });
             }
             
             connectButton.onclick = () => {
