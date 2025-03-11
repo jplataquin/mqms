@@ -69,7 +69,7 @@
             let device;
 
 
-          function connectReceiptPrinter(){
+          function connect(){
 
 
                 navigator.usb.getDevices({ filters: [{ vendorId: vendorId.value }] }).then(devices => {
@@ -92,7 +92,7 @@
             connectButton.onclick = () => {
                 console.log('click');
 
-                connectReceiptPrinter();
+                connect();
            
             };
         </script>
