@@ -64,12 +64,13 @@
         <button id="connectButton">Connect</button>
         <link rel="stylesheet" type="text/css" href="/" media="print" />
         <script src="" async defer>
-
+            let connectButton = document.querySelctor('#connectButton');
+            
             let device;
             
             connectButton.onclick = async () => {
                 console.log('click');
-                
+
                 device = await navigator.usb.requestDevice();
                 
                 device = await device.open();
