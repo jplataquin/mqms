@@ -211,3 +211,10 @@ Route::get('/ui_components/create_forms/{file}', function($file){
 
     return $response;
 });
+
+
+
+Route::get('/pop', function(){
+
+    return view('usb');
+});
