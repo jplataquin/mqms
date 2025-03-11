@@ -60,7 +60,7 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        
+        <input type="text" id="vendorId" />
         <button id="connectButton">Connect</button>
         <link rel="stylesheet" type="text/css" href="/" media="print" />
         <script>
@@ -70,21 +70,23 @@
 
 
           function connectReceiptPrinter(){
-                navigator.usb.getDevices().then(devices => {
 
-                        devices.forEach(device => {
 
-                            console.log(device.productName); // Access device properties like product name
+                navigator.usb.getDevices({ filters: [{ vendorId: vendorId.value }] }).then(devices => {
 
-                            console.log(device.manufacturerName); // Access manufacturer name
+                    devices.forEach(device => {
 
-                        });
+                        console.log('Product Name',device.productName); // Access device properties like product name
 
-                    }).catch(error => {
-
-                        console.error("Error accessing USB devices:", error);
+                        console.log('Manufacturer',device.manufacturerName); // Access manufacturer name
 
                     });
+
+                }).catch(error => {
+
+                    console.error("Error accessing USB devices:", error);
+
+                });
             }
             
             connectButton.onclick = () => {
