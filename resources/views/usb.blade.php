@@ -68,6 +68,8 @@
             let device;
             
             connectButton.onclick = async () => {
+                console.log('click');
+                
                 device = await navigator.usb.requestDevice();
                 
                 device = await device.open();
