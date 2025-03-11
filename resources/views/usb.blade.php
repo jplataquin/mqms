@@ -71,8 +71,8 @@
 
           function connect(){
 
-
-                navigator.usb.requestDevice({filter:[{vendorId:vendorId.value}]}).then(device => {
+//{filters: [{ vendorId: 0x1234, productId: 0x5678 }]}
+                navigator.usb.requestDevice({filters:[{vendorId:vendorId.value}]}).then(device => {
                         console.log(device)
                         console.log('Product Name',device.productName);      // "Arduino Micro"
                         console.log('Manufacturer',device.manufacturerName-); // "Arduino LLC"
