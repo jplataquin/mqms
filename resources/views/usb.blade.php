@@ -63,9 +63,9 @@
         
         <button id="connectButton">Connect</button>
         <link rel="stylesheet" type="text/css" href="/" media="print" />
-        <script src="" async defer>
-            let connectButton = document.querySelctor('#connectButton');
-            
+        <script>
+            //let connectButton = document.querySelctor('#connectButton');
+
             let device;
             
             connectButton.onclick = async () => {
