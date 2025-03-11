@@ -74,7 +74,7 @@
                     if ('usb' in navigator) {
                     // Check if the WebUSB API is available
                     try {
-                        const device = await navigator.usb.requestDevice(); 
+                        const device = await navigator.usb.requestDevice([]); 
                     
                         // Open a connection to the USB device
                         await device.open();
