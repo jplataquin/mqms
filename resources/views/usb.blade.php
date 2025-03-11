@@ -67,17 +67,33 @@
             //let connectButton = document.querySelctor('#connectButton');
 
             let device;
+
+
+            async function connectReceiptPrinter(){
+                // Check if the WebUSB API is available
+                    if ('usb' in navigator) {
+                    // Check if the WebUSB API is available
+                    try {
+                        const device = await navigator.usb.requestDevice(); 
+                    
+                        // Open a connection to the USB device
+                        await device.open();
+                    
+                        console.log('Success! Conne+ction established with USB device:', device);
+                    
+                
+                        } catch (error) {
+                        console.error('Error connecting to your selected USB device:', error);
+                        }
+                    } else {
+                            console.error('WebUSB API is not supported in this browser');
+                        }
+                }
             
             connectButton.onclick = async () => {
                 console.log('click');
 
-                device = await navigator.usb.requestDevice();
-                
-                device = await device.open();
-                
-                console.log(device);
-                //await device.selectConfiguration(1);
-                //await device.claimInterface(0);
+                connectReceiptPrinter();
            
             };
         </script>
