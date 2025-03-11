@@ -69,20 +69,26 @@
             let device;
 
 
-          function connect(){
+          async function connect(){
 
 
-                navigator.usb.requestDevice({ filters: [{ vendorId: vendorId.value }] }).then(device => {
+                device = await navigator.usb.requestDevice({ filters: [{ vendorId: vendorId.value }] }).then(device => {
                     console.log(device);
                     console.log('Product Name',device.productName);      // "Arduino Micro"
                     console.log('Manufacturer',device.manufacturerName); // "Arduino LLC"
+
+                    return device.open();
                 }).catch(error => { console.error(error); });
+
+                return device;
             }
             
-            connectButton.onclick = () => {
+            connectButton.onclick = async () => {
                 console.log('click');
 
-                connect();
+                device = await connect();
+
+                console.log(device);
            
             };
         </script>
