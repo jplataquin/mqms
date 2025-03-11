@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -61,7 +61,22 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         
+        <button id="connectButton">Connect</button>
         <link rel="stylesheet" type="text/css" href="/" media="print" />
-        <script src="" async defer></script>
+        <script src="" async defer>
+
+            let device;
+            
+            connectButton.onclick = async () => {
+                device = await navigator.usb.requestDevice();
+                
+                device = await device.open();
+                
+                console.log(device);
+                //await device.selectConfiguration(1);
+                //await device.claimInterface(0);
+           
+            };
+        </script>
     </body>
 </html>
