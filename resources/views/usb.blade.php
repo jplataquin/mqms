@@ -69,14 +69,14 @@
             let device;
 
 
-            async function connectReceiptPrinter(){
+          function connectReceiptPrinter(){
                 navigator.usb.getDevices().then(devices => {
 
                         devices.forEach(device => {
 
-                        console.log(device.productName); // Access device properties like product name
+                            console.log(device.productName); // Access device properties like product name
 
-                        console.log(device.manufacturerName); // Access manufacturer name
+                            console.log(device.manufacturerName); // Access manufacturer name
 
                         });
 
@@ -87,7 +87,7 @@
                     });
             }
             
-            connectButton.onclick = async () => {
+            connectButton.onclick = () => {
                 console.log('click');
 
                 connectReceiptPrinter();
