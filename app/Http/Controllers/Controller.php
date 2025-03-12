@@ -17,7 +17,7 @@ class Controller extends BaseController
     public function __construct(Request $request){
 
         $this->middleware(function ($request, $next) {
-            print_r($request->accessCodes);
+            print_r($request->accessCodes);exit;
         });
   
         //$this->accessCodes = //$request->accessCodes;
