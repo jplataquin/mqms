@@ -36,8 +36,6 @@ class AccessCodeController extends Controller
         $validator = Validator::make($request->all(),[
             'code' => [
                 'required',
-                'max:6',
-                'min:6',
                 'unique:access_codes'
             ],
             'description' => ['required','max:300']
