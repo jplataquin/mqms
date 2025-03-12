@@ -18,7 +18,7 @@ class Controller extends BaseController
 
         $c = $this;
 
-        $this->middleware(function ($request, $next) use (&$c) {
+        $this->middleware(function ($request, $next) use ($c) {
             $c->accessCodes= $request->accessCodes;
 
             return $next($request);
@@ -26,7 +26,7 @@ class Controller extends BaseController
   
     }
 
-    public function checkAccessCode($asset='',$scope='',$action=''){
+    protected function checkAccessCode($asset='',$scope='',$action=''){
 
         echo 'show access codes <br>';
 
