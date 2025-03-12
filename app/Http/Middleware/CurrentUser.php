@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class CurrentUser
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     */
+    public function handle(Request $request, Closure $next)
+    {
+
+        $user = Auth::user();
+        
+        $currentUser = (object) [
+            'data'          => null,
+            'access_codes'  => []
+        ];
+
+        if($user){
+           $currentUser->data            = $user;
+           $currentUser->access_codes    = $user->getAccessCodes();
+        }
+
+
+        $request->merge(['currentUser' => $currentUser]);
+
+        return $next($request);
+    }
+}

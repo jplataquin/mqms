@@ -12,20 +12,10 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public $currentUser = [
-        'data'          => null,
-        'access_codes'  => []
-    ];
 
-    public function __construct(){
 
-        $user = Auth::user();
-        echo  Auth::user()->id;
-        $this->currentUser = (object) $this->currentUser;
+    protected function checkAccessCode($data){
 
-        if($user){
-            $this->currentUser->data            = $user;
-            $this->currentUser->access_codes    = $user->getAccessCodes();
-        }
-    }   
+        print_r($data);
+    }
 }
