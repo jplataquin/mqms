@@ -20,8 +20,6 @@ class HomeController extends Controller
     public function index(Request $request)
     {   
 
-        $this->checkAccessCode();
-
         $materialQuantityRequestPendCount   = MaterialQuantityRequest::where('status','=','PEND')->count();
         
         $materialCanvassPendCount           = MaterialCanvass::where('status','=','PEND')->groupBy('material_quantity_request_id')->selectRaw('count(*) as total')->count();
