@@ -257,7 +257,7 @@ class RoleController extends Controller
         
     }
 
-    public function _role_access_code_add(Request $request){
+    public function _access_code_add(Request $request){
         $role_id         = (int) $request->input('role_id');
         $access_code_id  = (int) $request->input('access_code_id');
 
