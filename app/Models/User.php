@@ -89,7 +89,7 @@ class User extends Authenticatable
                 }
             }
         }
-
+        
         return $access_codes;
     }
 }

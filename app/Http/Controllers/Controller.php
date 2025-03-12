@@ -16,12 +16,12 @@ class Controller extends BaseController
 
     public function __construct(Request $request){
         echo 'qweqwewqd';
-        
+
         print_r($request->accessCodes);
         $this->accessCodes = $request->accessCodes;
     }
 
-    protected function checkAccessCode($asset='',$scope='',$action=''){
+    public function checkAccessCode($asset='',$scope='',$action=''){
 
         echo 'show access codes <br>';
 
