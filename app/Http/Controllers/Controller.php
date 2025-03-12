@@ -24,7 +24,6 @@ class Controller extends BaseController
             return $next($request);
         });
   
-        //$this->accessCodes = //$request->accessCodes;
     }
 
     public function checkAccessCode($asset='',$scope='',$action=''){
