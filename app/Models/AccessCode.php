@@ -18,6 +18,8 @@ class AccessCode extends Model
 
     protected $table = 'access_codes';
 
+    
+    
     public function RoleList(): HasMany
     {
         return $this->hasMany(RoleAccessCode::class);
@@ -43,7 +45,7 @@ class AccessCode extends Model
     
             }//if
             
-            $this->save();
+
             parent::delete();
                 
             DB::commit();

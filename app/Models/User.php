@@ -63,4 +63,24 @@ class User extends Authenticatable
             'email' => ''
         ];
     }
+
+    public function getAccessCodes(){
+
+        $access_codes = [];
+
+        $roles = $this->Roles;
+
+        foreach($roles as $role){
+            $access_codes = $role->access_codes;
+
+            foreach($access_codes as $code){
+
+                if(!in_array($code,$access_codes)){
+                    $access_codes[] = $code;
+                }
+            }
+        }
+
+        return $access_codes;
+    }
 }
