@@ -17,7 +17,7 @@ class Controller extends BaseController
     public function __construct(Request $request){
         echo 'qweqwewqd';
 
-        print_r($request->accessCodes);
+        print_r($request);
         $this->accessCodes = $request->accessCodes;
     }
 
