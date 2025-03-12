@@ -20,10 +20,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {   
 
-        echo 'ioned';
-        print_r($request->accessCodes);
-        
-        $this->checkAccessCode($request->accessCodes);
+        $this->checkAccessCode();
 
         $materialQuantityRequestPendCount   = MaterialQuantityRequest::where('status','=','PEND')->count();
         

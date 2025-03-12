@@ -15,9 +15,11 @@ class Controller extends BaseController
     public $accessCodes = ['a'];
 
     public function __construct(Request $request){
-        echo 'qweqwewqd';
 
-        echo $request->accessCodes;
+        $this->middleware(function ($request, $next) {
+            print_r($request->accessCodes);
+        });
+  
         //$this->accessCodes = //$request->accessCodes;
     }
 
