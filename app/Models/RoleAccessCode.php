@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\Role;
 use App\Models\AccessCode;
 
@@ -20,8 +20,8 @@ class RoleAccessCode extends Model
         return $this->belongsTo(Role::class);
     }
 
-    public function AccessCodes(): HasMany
+    public function Data(): HasOne
     {
-        return $this->hasMany(AccessCode::class);
+        return $this->hasOne(AccessCode::class,'id','access_code_id');
     }
 }
