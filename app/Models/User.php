@@ -73,7 +73,9 @@ class User extends Authenticatable
         foreach($roles as $role){
 
             $codes = $role->AccessCodeList;
-
+            
+            if(!$codes) continue;
+            
             foreach($codes as $code){
 
                 if(!in_array($code,$access_codes)){
