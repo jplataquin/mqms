@@ -21,6 +21,7 @@ class Controller extends BaseController
 
         $user = Auth::user();
         
+        print_r($user);exit;
         $this->currentUser = (object) $this->currentUser;
 
         if($user){
