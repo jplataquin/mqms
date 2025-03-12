@@ -72,7 +72,7 @@ class User extends Authenticatable
 
         foreach($roles as $role){
 
-            print_r($role);
+            print_r($role->Data);
 
             $codes = $role->AccessCodeList;
             
