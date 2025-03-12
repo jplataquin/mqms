@@ -84,8 +84,6 @@ class User extends Authenticatable
                 
                 $code = $ac->Data->code;
 
-                echo $code.'<br>';
-                
                 if(!in_array($code,$access_codes)){
                     $access_codes[] = $code;
                 }
