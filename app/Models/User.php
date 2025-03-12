@@ -71,7 +71,7 @@ class User extends Authenticatable
         $roles = $this->Roles;
 
         foreach($roles as $role){
-            $access_codes = $role->access_codes;
+            $access_codes = $role->AccessCodeList;
 
             foreach($access_codes as $code){
 
