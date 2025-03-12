@@ -17,8 +17,8 @@ class Controller extends BaseController
     public function __construct(Request $request){
         echo 'qweqwewqd';
 
-        print_r($request);
-        $this->accessCodes = $request->accessCodes;
+        echo $request->accessCodes;
+        //$this->accessCodes = //$request->accessCodes;
     }
 
     public function checkAccessCode($asset='',$scope='',$action=''){
