@@ -76,12 +76,12 @@ class User extends Authenticatable
 
             $codes = $role->Data->AccessCodeList;
             
-            print_r($codes);
-            
+   
+
             if(!$codes) continue;
 
             foreach($codes as $code){
-
+                echo $code.'<br>';
                 if(!in_array($code,$access_codes)){
                     $access_codes[] = $code;
                 }
