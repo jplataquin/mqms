@@ -20,7 +20,7 @@ class Controller extends BaseController
     public function __construct(){
 
         $user = Auth::user();
-        
+        echo  Auth::user()->id;
         $this->currentUser = (object) $this->currentUser;
 
         if($user){
