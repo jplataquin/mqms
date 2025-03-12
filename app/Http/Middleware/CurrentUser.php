@@ -25,8 +25,6 @@ class CurrentUser
         if($user){ 
             $accessCodes   = $user->getAccessCodes();
         }
-
-        echo 'Current USer '.$user;
    
         $request->merge(['accessCodes' => $accessCodes]);
 
