@@ -23,6 +23,6 @@ class UserRole extends Model
 
     public function Data(): HasOne
     {
-        return $this->belongsTo(Role::class);
+        return $this->hasOne(Role::class);
     }
 }
