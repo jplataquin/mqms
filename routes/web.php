@@ -14,7 +14,6 @@ use \App\Http\Middleware\CheckForResetPassword;
 |
 */
 
-Route::view('/peanut', 'peanut');
 
 Route::get('/', function () {
     return view('welcome');
@@ -48,7 +47,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/reset_password',[App\Http\Controllers\UserController::class, 'reset_password']);
 });
 
-Route::middleware(['auth',CheckForResetPassword::class])->group(function () {
+Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(function () {
     
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
