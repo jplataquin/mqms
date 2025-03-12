@@ -12,14 +12,14 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public $accessCodes = ['a'];
+    protected $accessCodes = ['a'];
 
     public function __construct(Request $request){
 
         $c = $this;
 
         $this->middleware(function ($request, $next) use ($c) {
-            $c->accessCodes= $request->accessCodes;
+            $this->accessCodes= $request->accessCodes;
 
             return $next($request);
         });
