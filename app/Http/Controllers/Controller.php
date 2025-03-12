@@ -12,7 +12,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public $accessCodes = [];
+    public $accessCodes = ['a'];
 
     public function __construct(Request $request){
         $this->accessCodes = $request->accessCodes;
