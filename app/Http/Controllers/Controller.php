@@ -18,7 +18,7 @@ class Controller extends BaseController
         $this->accessCodes = $request->accessCodes;
     }
 
-    protected function checkAccessCode($asset,$scope,$action){
+    protected function checkAccessCode($asset='',$scope='',$action=''){
 
         echo 'show access codes <br>';
 
