@@ -26,6 +26,7 @@ class CurrentUser
             $accessCodes   = $user->getAccessCodes();
         }
 
+        echo 'Current USer';
         print_r($user);
         $request->merge(['accessCodes' => $accessCodes]);
 
