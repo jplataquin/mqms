@@ -19,7 +19,7 @@ class Controller extends BaseController
 
     public function __construct(){
         
-        parent::__constuct();
+        parent::__construct();
 
         $user = Auth::user();
         
