@@ -17,6 +17,7 @@ class Controller extends BaseController
     protected function checkAccessCode($data){
 
         echo 'access copdes';
+        
         print_r($data);
     }
 }
