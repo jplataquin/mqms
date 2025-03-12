@@ -80,8 +80,6 @@ class AccessCodeController extends Controller
             ],
             'code' => [
                 'required',
-                'max:6',
-                'min:6',
                 Rule::unique('access_codes')->where(
                 function ($query) use ($code,$id) {
                     return $query
