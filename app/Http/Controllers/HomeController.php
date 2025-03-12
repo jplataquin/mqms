@@ -11,15 +11,6 @@ use App\Models\Component;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     /**
      * Show the application dashboard.
@@ -28,6 +19,9 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {   
+
+        print_r($this->currentUser);
+        
         $materialQuantityRequestPendCount   = MaterialQuantityRequest::where('status','=','PEND')->count();
         
         $materialCanvassPendCount           = MaterialCanvass::where('status','=','PEND')->groupBy('material_quantity_request_id')->selectRaw('count(*) as total')->count();
