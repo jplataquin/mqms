@@ -20,18 +20,14 @@ class CurrentUser
 
         $user = Auth::user();
         
-        $currentUser = (object) [
-            'data'          => null,
-            'access_codes'  => []
-        ];
+        $accessCodes = [];
 
-        if($user){
-           $currentUser->data            = $user;
-           $currentUser->access_codes    = $user->getAccessCodes();
+        if($user){ 
+            $accessCodes   = $user->getAccessCodes();
         }
 
 
-        $request->merge(['currentUser' => $currentUser]);
+        $request->merge(['accessCodes' => $accessCodes]);
 
         return $next($request);
     }
