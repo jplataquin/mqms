@@ -424,7 +424,7 @@ class MaterialQuantityRequestController extends Controller
             return view('permission_denied',[
                 'user'                      => $user,
                 'required_access_codes'     => $codes,
-                'currrent_access_codes'     => $this->accessCodes
+                'current_access_codes'      => $this->accessCodes
             ]);
         }
 
