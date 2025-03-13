@@ -5,13 +5,14 @@
     <div class="container">
         <div class="text-center mb-5">
             <h3>Resitricted Action, no permission(s) granted</h3>
+            <a href="#" onclick="history.back()">>Back</a>
         </div>
 
         <div class="mb-5">
             Required Access Codes: 
             
             @foreach($required_access_codes as $code)
-                <div class="mb-3">{{$code}}</div>
+                <div class="mb-3 ms-3">{{$code}}</div>
             @endforeach
         </div>
 
@@ -19,7 +20,7 @@
             Existing Access Codes: 
             
             @foreach($current_access_codes as $code)
-                <div class="mb-3">{{$code}}</div>
+                <div class="mb-3 ms-3">{{$code}}</div>
             @endforeach
         </div>
     </div>
