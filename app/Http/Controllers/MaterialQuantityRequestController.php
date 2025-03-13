@@ -961,7 +961,12 @@ class MaterialQuantityRequestController extends Controller
 
         $user_id = Auth::user()->id;
         
-       // $materialQuantityRequest = $materialQuantityRequest->where('created_by','=',$user_id);
+
+        //If current user has no permission to view all records only show records they own
+        if(!$this->hasAccess(['material_request:all:view'])){
+            $materialQuantityRequest = $materialQuantityRequest->where('created_by','=',$user_id);
+        }
+    
         
         if($query){
             $materialQuantityRequest = $materialQuantityRequest->where('id','=',$query);
