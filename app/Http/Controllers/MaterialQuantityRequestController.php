@@ -420,7 +420,7 @@ class MaterialQuantityRequestController extends Controller
         //Check if current user does not own the record, then are they allowed to view it?
         $codes = ['material_request:all:view'];
 
-        if($materialQuantityRequest->created_by != $user->id && !$this->checkAccess($codes)){
+        if($materialQuantityRequest->created_by != $user->id && !$this->hasAccess($codes)){
             return view('permission_denied',[
                 'user'                      => $user,
                 'required_access_codes'     => $codes,
