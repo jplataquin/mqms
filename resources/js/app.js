@@ -318,9 +318,15 @@ window.util.showMsg = (reply) => {
             title   = '🚩 Unknown Error';
 
             break;
+
+        case -403:
+
+            message = reply.message ?? 'Unknown';
+            title   = '🚩 Permission Error';
+            break;
         
         //Resource not found
-        case -4:
+        case -404:
 
             message = 'Resource not found';
             title   = '🚩 Error';
@@ -328,10 +334,15 @@ window.util.showMsg = (reply) => {
             break;
         
         //Hard Error
-        case -5:
+        case -500:
 
             message = reply.message ?? 'Something went wrong';
             title   = '🚩 Server Error';
+            break;
+
+        case -302:
+            message = reply.message ?? 'Something went wrong';
+            title   = '🚩 Signed Out';
             break;
 
     }
@@ -392,9 +403,10 @@ window.util.$content = async (url,data,headers)=>{
             }
         };
 
+
         if(status == 404){
             return {
-                    status:-4,
+                    status:-404,
                     message:'Resource not found',
                     data:{}
             }
@@ -403,7 +415,7 @@ window.util.$content = async (url,data,headers)=>{
         //Logout
         if(status == 302){
             return {
-                status: -4,
+                status: -302,
                 message:'Signed out',
                 data:{}
             }
@@ -414,7 +426,7 @@ window.util.$content = async (url,data,headers)=>{
 
             console.error(response);
             return {
-                    status:-5,
+                    status:-500,
                     message:'Something went wrong',
                     data:{}
             }

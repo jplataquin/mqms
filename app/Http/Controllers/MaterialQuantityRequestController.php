@@ -143,7 +143,23 @@ class MaterialQuantityRequestController extends Controller
 
     public function _create(Request $request){
 
-        if(!$this->hasAaccess('material_request','own','add')){
+        $codes = [
+            'material_request:own:create'
+        ];
+
+        $user = auth()->user();
+
+        if(!$this->hasAaccess($codes)){
+            
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Resitricted action, no permission(s) granted',
+                'data'      => [
+                    'user'                      => $user,
+                    'required_access_codes'     => $codes,
+                    'currrent_access_codes'     => $this->accessCodes
+                ]
+            ]);
             
         }
 
@@ -230,7 +246,7 @@ class MaterialQuantityRequestController extends Controller
             ]);
         }
 
-        $user_id    = Auth::user()->id;
+        $user_id    = $user->idl;
         $items      = json_decode($items,true);
 
         if(!count($items)){
@@ -393,9 +409,24 @@ class MaterialQuantityRequestController extends Controller
 
     public function display($id){
         
+
+
         $id = (int) $id;
 
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($id);
+        
+        $user = auth()->user();
+
+        //Check if current user does not own the record, then are they allowed to view it?
+        $codes = ['material_request:all:view'];
+
+        if($materialQuantityRequest->created_by != $user->id && !$this->checkAccess($codes)){
+            return view('permission_denied',[
+                'user'                      => $user,
+                'required_access_codes'     => $codes,
+                'currrent_access_codes'     => $this->accessCodes
+            ]);
+        }
 
         $project         = $materialQuantityRequest->Project;
         $section         = $materialQuantityRequest->Section;
