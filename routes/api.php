@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum','access_codes'])->group(function () {
 
     Route::get('/access_code/list', [App\Http\Controllers\AccessCodeController::class, '_list']);
     Route::post('/access_code/create', [App\Http\Controllers\AccessCodeController::class, '_create']);
