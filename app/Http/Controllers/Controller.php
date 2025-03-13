@@ -25,10 +25,33 @@ class Controller extends BaseController
   
     }
 
-    protected function checkAccessCode($asset='',$scope='',$action=''){
+    protected function hasAccess($asset='',$scope='',$action=''){
 
-        echo 'show access codes <br>';
+        $target_code = $asset.':'.$scope.':'.$action;
 
-        print_r($this->accessCodes);
+        if(!in_array($target_code,$this->checkAccessCode)){
+
+
+            return false;
+            
+            // if (Request::wantsJson()) {
+                
+            //     return response()->json([
+            //         'status'    => 0,
+            //         'message'   => 'Restricted Action',
+            //         'data'      => [
+            //             'need' =>  $target_code 
+            //         ]
+            //     ]);
+
+
+            // } else {
+            //     // return HTML response
+            // }
+
+    
+        }
+
+        return true;
     }
 }

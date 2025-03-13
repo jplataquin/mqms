@@ -34,7 +34,7 @@
                 <div class="col-12 mb-3">
                     <div class="form-group">
                         <label>Code</label>
-                        <input type="text" disabled="true" maxlength="6" value="{{$code}}" id="access_code" class="form-control"/>
+                        <input type="text" disabled="true" maxlength="256" value="{{$code}}" id="access_code" class="form-control"/>
                     </div>
                 </div>
 

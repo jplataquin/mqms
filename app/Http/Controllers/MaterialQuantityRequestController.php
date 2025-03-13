@@ -143,6 +143,10 @@ class MaterialQuantityRequestController extends Controller
 
     public function _create(Request $request){
 
+        if(!$this->hasAaccess('material_request','own','add')){
+            
+        }
+
         $project_id         = (int) $request->input('project_id');
         $section_id         = (int) $request->input('section_id');
         $contract_item_id   = (int) $request->input('contract_item_id'); 
