@@ -30,7 +30,7 @@ class Controller extends BaseController
 
         foreach($codes as $code){
 
-            if(in_array($code,$this->checkAccessCode)){
+            if(in_array($code,$this->accessCodes)){
 
                 return true;
             }
