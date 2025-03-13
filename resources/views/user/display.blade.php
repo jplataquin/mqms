@@ -262,7 +262,7 @@
                             }).onclick = (e)=>{
                                 e.stopPropagation();
                                
-                                window.util.prompt('Are you sure you want to remove this role?',(e,res)=>{
+                                window.util.confirm('Are you sure you want to remove this role?',(e,res)=>{
                                     
                                     if(!res){
                                         return false;
