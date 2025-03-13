@@ -5,7 +5,7 @@
     <div class="container">
         <div class="text-center mb-5">
             <h3>Resitricted Action, no permission(s) granted</h3>
-            <a href="#" onclick="history.back()">>Back</a>
+            <h4>(<a href="#" onclick="history.back()">Back</a>)</h4>
         </div>
 
         <div class="mb-5">
