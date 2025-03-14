@@ -246,7 +246,7 @@ class MaterialQuantityRequestController extends Controller
             ]);
         }
 
-        $user_id    = $user->idl;
+        $user_id    = $user->id;
         $items      = json_decode($items,true);
 
         if(!count($items)){
