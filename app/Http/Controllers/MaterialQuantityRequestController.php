@@ -149,7 +149,7 @@ class MaterialQuantityRequestController extends Controller
 
         $user = auth()->user();
 
-        if(!$this->hasAaccess($codes)){
+        if(!$this->hasAccess($codes)){
             
             return response()->json([
                 'status'    => 0,
