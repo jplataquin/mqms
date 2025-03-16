@@ -96,7 +96,8 @@ class SectionController extends Controller
         //Contract Items
         foreach($contract_items as $contract_item){
             
-           
+            $contract_item_material_total_quantity[$contract_item->id] = 0;
+
             $grand_total_amount->contract +=  (float) $contract_item->contract_amount;
             
             $contract_total_quantity[$contract_item->id] = 0;
@@ -113,14 +114,9 @@ class SectionController extends Controller
             //Components
             foreach($components as $component){
 
-
                 //Total component quantity per contract item
                 if($component->sum_flag && $component->unit_id == $contract_item->unit_id){
-                   
-                    if(!isset($contract_item_material_total_quantity[$contract_item->id])){
-                        $contract_item_material_total_quantity[$contract_item->id] = 0;
-                    }
-                    
+                
                     $contract_item_material_total_quantity[$contract_item->id] += (float) $component->quantity;
                 }
 
