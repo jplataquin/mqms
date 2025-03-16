@@ -71,7 +71,7 @@
             <th>Project</th>
             <td>{{$project->name}}</td>
             <th>Date & Time Generated</th>
-            <td></td>
+            <td>{{Carbon::now()}}</td>
         </tr>
         <tr>
             <th>Section</th>
