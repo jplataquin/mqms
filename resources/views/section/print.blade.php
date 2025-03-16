@@ -197,7 +197,7 @@
 
                     <td></td><!-- Factor -->
                     
-                    <td class="text-center">{{ number_format($component_item->quantity,2) }}</td><!-- Materia; -->
+                    <td class="text-center">{{ number_format( $component_item->quantity,2) }}</td><!-- Material -->
                     <td class="text-center">{{$component_item->unit_text}}</td>
                     <td class="text-end">P {{ number_format($component_item->budget_price,2) }}</td>
                     <td class="text-end">P {{ number_format($component_item->amount,2) }}</td>
