@@ -51,10 +51,23 @@
         .text-center{
             text-align:center !important;
         }
+
+        .mb-5{
+            margin-bottom:5px;
+        }
     </style>
 </head>
 <body>
-    
+    <table class="mb-5">
+        <tr>
+            <td class="text-center">
+                <img src="storage/sys_images/header.png" style="width:500px"/>
+            </td>
+            <td class="text-center">
+                <h2>Material Budget</h2>
+            </td>
+        </tr>
+    </table>
     <table>
 
         <!--Headers -->
@@ -93,7 +106,7 @@
         @foreach($data as $contract_item_id => $row_1)
 
             <!-- Contract Item -->
-            <tr class="contract-item-row" id="contract_item_{{$contract_item_id}}" data-controller="contractItemController">
+            <tr class="contract-item-row">
                 <td>{{$row_1->contract_item->item_code}}</td>
                 <td>{{$row_1->contract_item->description}}</td>
                 
@@ -122,7 +135,7 @@
 
             <!-- Components -->
             @foreach($row_1->components as $component_id => $row_2)
-                <tr class="component-row" id="component_{{$component_id}}" data-controller="componentController">
+                <tr class="component-row">
                     <td rowspan="{{ ( count( (array) $row_2->component_items) + 1) }}">{{$row_2->component->name}}</td>
                     <td></td><!-- Description -->
                     
@@ -150,7 +163,7 @@
                 @foreach($row_2->component_items as $component_item_id => $component_item)
               
                 <!-- Component Item data row -->
-                <tr class="component-item-row" id="component_item_{{$component_item_id}}" data-controller="componentItemController"> 
+                <tr class="component-item-row"> 
                     <td>{{$component_item->name}}</td><!-- Component Item Name -->
                     
                     <!-- Contract -->
@@ -163,14 +176,14 @@
                     <td class="text-center">{{$component_item->ref_1_quantity}}</td>
                     <td class="text-center">{{$component_item->ref_1_unit_text}}</td>
                     <td class="text-end">P {{ number_format($component_item->ref_1_unit_price,2) }}</td>
-                    <td class="text-end ref-1-amount">P {{ number_format($component_item->ref_1_amount,2) }}</td>
+                    <td class="text-end">P {{ number_format($component_item->ref_1_amount,2) }}</td>
 
                     <td></td><!-- Factor -->
                     
-                    <td class="text-center material-quantity" data-value="{{$component_item->quantity}}">{{$component_item->quantity}}</td><!-- Materia; -->
+                    <td class="text-center">{{$component_item->quantity}}</td><!-- Materia; -->
                     <td class="text-center">{{$component_item->unit_text}}</td>
                     <td class="text-end">P {{ number_format($component_item->budget_price,2) }}</td>
-                    <td class="text-end" data-value="{{$component_item->amount}}">P {{ number_format($component_item->amount,2) }}</td>
+                    <td class="text-end">P {{ number_format($component_item->amount,2) }}</td>
                 </tr>
                 @endforeach
 
@@ -208,28 +221,7 @@
 
 
     <script type="module">
-        import {$q} from '/adarna.js';
-        
      
-       
-        
-        $q('[data-controller]').items().map( item => {
-
-            let func        = null;
-            let func_name   = item.getAttribute('data-controller');
-
-            if( /^[a-z0-9]+$/i.test(func_name) ){
-                eval('func = (typeof '+func_name+' == "function") ? '+func_name+' : null;');
-            }
-
-            if(typeof func === 'function' && (typeof item._controlled == 'undefined' || item._controlled == false) ){
-                
-                func(item);
-
-                item._controlled = true;
-            }
-         
-        });
     </script>
 </body>
 </html>
