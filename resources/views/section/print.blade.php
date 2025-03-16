@@ -233,7 +233,10 @@
                     <td class="text-end">P {{ number_format($component_item->ref_1_unit_price,2) }}</td>
                     <td class="text-end">P {{ number_format($component_item->ref_1_amount,2) }}</td>
 
-                    <td></td><!-- Factor -->
+                    <!-- Factor -->
+                    <td>
+                        {{ $component_item->factorTextValue($row_2->component->use_count) }}
+                    </td>
                     
                     <td class="text-center">{{ number_format( $component_item->quantity,2) }}</td><!-- Material -->
                     <td class="text-center">{{$component_item->unit_text}}</td>

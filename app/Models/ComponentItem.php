@@ -74,6 +74,44 @@ class ComponentItem extends Model
         return $val;
     }
 
+
+    public function factorTextValue($use_count){
+
+
+        //As Factor
+        if($this->function_type_id == 1){
+           
+            $answer = $this->function_variable  / $use_count;
+            $answer = round($answer,6);
+            $answer = '↳ Fa: '.$answer;
+        }
+
+        //As Divisor
+        if($this->function_type_id == 2){
+            $answer = (1 / $this->function_variable) / $use_count;
+            $answer = round($answer,6);
+            $answer = '↳ Dv: '.$answer;
+        }
+
+        //As Direct
+        if($this->function_type_id == 3){
+           $answer = $this->function_variable;
+           $answer = 'Dr: '.$answer;
+        }
+
+        //As Equivalent
+        if($this->function_type_id == 4){
+
+            $answer = $this->function_variable * $use_count;
+            $answer = round($answer,6);
+
+            $answer = '↰ Eq: '.$answer;
+        }
+
+
+    }
+    //--------old---------------------
+
     public function function_type_text(){
 
         $text = '';

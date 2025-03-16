@@ -72,15 +72,38 @@
           async function connect(){
 
 
-                device = await navigator.usb.requestDevice({ filters: [{ vendorId: vendorId.value }] }).then(device => {
-                    console.log(device);
-                    console.log('Product Name',device.productName);      // "Arduino Micro"
-                    console.log('Manufacturer',device.manufacturerName); // "Arduino LLC"
+                // device = await navigator.usb.requestDevice({ filters: [{ vendorId: vendorId.value }] }).then(device => {
+                //     console.log(device);
+                //     console.log('Product Name',device.productName);      // "Arduino Micro"
+                //     console.log('Manufacturer',device.manufacturerName); // "Arduino LLC"
 
-                    return device.open();
-                }).catch(error => { console.error(error); });
+                //     return device.open();
+                // }).catch(error => { console.error(error); });
 
-                return device;
+                // return device;
+
+
+                let device;
+
+                navigator.usb.requestDevice({ filters: [{ vendorId: vendorId.value }] })
+                .then(selectedDevice => {
+                    device = selectedDevice;
+                    return device.open(); // Begin a session.
+                })
+                .then(() => device.selectConfiguration(1)) // Select configuration #1 for the device.
+                .then(() => device.claimInterface(2)) // Request exclusive control over interface #2.
+                .then(() => device.controlTransferOut({
+                    requestType: 'class',
+                    recipient: 'interface',
+                    request: 0x22,
+                    value: 0x01,
+                    index: 0x02})) // Ready to receive data
+                .then(() => device.transferIn(5, 64)) // Waiting for 64 bytes of data from endpoint #5.
+                .then(result => {
+                    const decoder = new TextDecoder();
+                    console.log('Received: ' + decoder.decode(result.data));
+                })
+                .catch(error => { console.error(error); });
             }
             
             connectButton.onclick = async () => {
