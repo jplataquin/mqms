@@ -280,7 +280,7 @@
 
         
         <!-- Grand Total -->
-         <tfoot>
+     
             <tr>
                 <td></td>
                 <td></td>
@@ -302,7 +302,7 @@
                 <td></td>
                 <th class="text-end">P {{ number_format( $grand_total_amount->material, 2) }}</th>
             </tr>
-        </tfoot>  
+     
     </table>
     
 
