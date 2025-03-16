@@ -341,12 +341,13 @@
          
         });
 
-
+        let func = null;
+        
         for(let func_name in elem){
 
             eval('func = (typeof '+func_name+' == "function") ? '+func_name+' : null;');
 
-            if(typeof func === 'function'){
+            if(typeof func === 'function' && func != null){
                 
                  func(elem[func_name]);
 
