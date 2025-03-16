@@ -201,6 +201,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
+
                     <td></td><!-- Ref 1 -->
                     <td></td>
                     <td></td>
@@ -216,7 +217,6 @@
                         {{ $row_2->component->unit_text }}
                     </th>
                     <td></td>
-                    <td class="text-end"></td>
                 </tr>
 
 
