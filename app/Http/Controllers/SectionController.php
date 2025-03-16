@@ -67,6 +67,8 @@ class SectionController extends Controller
 
     public function print($id){
         
+        $user = auth()->user();
+        
         $section = Section::findOrFail($id);
         $project = Project::findOrFail($section->project_id);
 
@@ -144,7 +146,9 @@ class SectionController extends Controller
         
         $data = json_decode(json_encode($data));
 
+        
         return view('/section/print',[
+            'user'                  => $user,
             'project'               => $project,
             'section'               => $section,
             'data'                  => $data,
