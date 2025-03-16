@@ -88,7 +88,7 @@
             }
 
             .page-break{
-                break-after:always;
+                break-before:always;
             }
         
         }
@@ -323,7 +323,7 @@
 
                 total_height += item.offsetHeight;
 
-                if(total_height >= 590){
+                if(total_height >= 800){
 
                     console.log(total_height,item_before)
                     item_before.parentElement.classList.add('page-break');
