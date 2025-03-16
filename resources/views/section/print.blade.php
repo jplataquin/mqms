@@ -161,8 +161,8 @@
                  <td></td>
 
                 <!-- Material-->
-                 <td class="material-quantity"></td>
-                 <td></td>
+                 <td>{{ number_format($contract_item_material_total_quantity[$contract_item_id],2) }}</td>
+                 <td>{{$row_1->contract_item->contract_unit_text}}</td>
                  <td></td>
                  <td class="text-end">P {{ number_format($total_amount->contract_item[$contract_item_id]->material,2) }}</td>
             </tr>

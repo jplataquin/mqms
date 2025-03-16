@@ -86,6 +86,8 @@ class SectionController extends Controller
             'material'     => 0
         ];
 
+        $contract_item_material_total_quantity = [];
+
         $contract_items = $section->ContractItems;
 
         $contract_item_material_total_amount    = 0;
@@ -94,18 +96,28 @@ class SectionController extends Controller
         //Contract Items
         foreach($contract_items as $contract_item){
             
-
+           
             $grand_total_amount->contract +=  (float) $contract_item->contract_amount;
             
+            $contract_total_quantity[$contract_item->id] = 0;
+
             $components = $contract_item->Components;
 
             $data[$contract_item->id] = [
                 'contract_item' => $contract_item,
                 'components'    => []
             ];
+
+            
             
             //Components
             foreach($components as $component){
+
+
+                //Total component quantity per contract item
+                if($component->sum_flag && $component->unit_id == $contract_item->unit_id){
+                    $contract_item_material_total_quantity[$contract_item->id] += (float) $component->quantity;
+                }
 
                 $component_items = $component->ComponentItems;
 
@@ -149,13 +161,14 @@ class SectionController extends Controller
         $datetime_generated = Carbon::now();
 
         return view('/section/print',[
-            'datetime_generated'    => $datetime_generated,
-            'user'                  => $user,
-            'project'               => $project,
-            'section'               => $section,
-            'data'                  => $data,
-            'total_amount'          => $total_amount,
-            'grand_total_amount'    => $grand_total_amount
+            'datetime_generated'                        => $datetime_generated,
+            'user'                                      => $user,
+            'project'                                   => $project,
+            'section'                                   => $section,
+            'data'                                      => $data,
+            'total_amount'                              => $total_amount,
+            'grand_total_amount'                        => $grand_total_amount,
+            'contract_item_material_total_quantity'     => $contract_item_material_total_quantity
         ]);
     }
 
