@@ -83,8 +83,8 @@
                 font-size:10px;
             }
 
-            .no-page-break{
-                break-inside: avoid;
+            .component-row{
+                background-color:rgb(177, 209, 227);
             }
 
             .page-break{
