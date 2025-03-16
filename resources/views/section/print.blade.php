@@ -71,7 +71,7 @@
         .text-italic{
             font-style: italic;
         }
-        
+
         @media print {
 
             td, th{
@@ -198,8 +198,8 @@
                 
          
                 <tr class="component-row">
-                    <td></td>
-                    <td></td><!-- Description -->
+           
+                    <td>x</td><!-- Description -->
                     
                     <td></td><!-- Contract -->
                     <td></td>
@@ -209,7 +209,7 @@
                     <td></td><!-- Ref 1 -->
                     <td></td>
                     <td></td>
-                    <td class="text-end"></td>><!-- Factor -->
+                    <td class="text-end"></td><!-- Factor -->
 
         
                     
