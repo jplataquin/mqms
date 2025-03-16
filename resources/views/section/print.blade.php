@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>{{$project->name}} - {{$section->name}} - {{$datetime_generated}}</title>
 
     <style>
 
@@ -60,11 +60,20 @@
             margin-bottom:5px;
         }
 
+        .amount-15{
+            width: 15ch;
+        }
+
+        .amount-13{
+            width: 13ch;
+        }
+        
         @media print {
 
             td, th{
                 font-size:11px;
             }
+        
         }
     </style>
 </head>
@@ -143,8 +152,8 @@
                 <!--Reference -->
                 <td class="text-center">{{ number_format($row_1->contract_item->ref_1_quantity,2) }}</td>
                 <td class="text-center">{{$row_1->contract_item->ref_1_unit_text}}</td>
-                <td class="text-end">P {{ number_format($row_1->contract_item->ref_1_unit_price,2) }}</td>
-                <td class="text-end">P {{ number_format($row_1->contract_item->ref_1_amount,2) }}</td>
+                <td class="text-end amount-13">P {{ number_format($row_1->contract_item->ref_1_unit_price,2) }}</td>
+                <td class="text-end amount-15">P {{ number_format($row_1->contract_item->ref_1_amount,2) }}</td>
 
                 <!-- Factor -->
                  <td></td>
@@ -178,7 +187,7 @@
                     <th class="text-center" >{{ number_format($row_2->component->quantity,2) }}</th>
                     <th class="text-center">{{$row_2->component->unit_text}}</th>
                     <td></td>
-                    <td class="text-end">P {{ number_format( $total_amount->component[$component_id]->material, 2) }}</td>
+                    <td class="text-end amount-15">P {{ number_format( $total_amount->component[$component_id]->material, 2) }}</td>
                 </tr>
                 
          
@@ -199,15 +208,15 @@
                     <!-- Ref 1 -->
                     <td class="text-center">{{ number_format($component_item->ref_1_quantity,2) }}</td>
                     <td class="text-center">{{$component_item->ref_1_unit_text}}</td>
-                    <td class="text-end">P {{ number_format($component_item->ref_1_unit_price,2) }}</td>
-                    <td class="text-end">P {{ number_format($component_item->ref_1_amount,2) }}</td>
+                    <td class="text-end amount-13">P {{ number_format($component_item->ref_1_unit_price,2) }}</td>
+                    <td class="text-end amount-15">P {{ number_format($component_item->ref_1_amount,2) }}</td>
 
                     <td></td><!-- Factor -->
                     
                     <td class="text-center">{{ number_format( $component_item->quantity,2) }}</td><!-- Material -->
                     <td class="text-center">{{$component_item->unit_text}}</td>
-                    <td class="text-end">P {{ number_format($component_item->budget_price,2) }}</td>
-                    <td class="text-end">P {{ number_format($component_item->amount,2) }}</td>
+                    <td class="text-end amount-13">P {{ number_format($component_item->budget_price,2) }}</td>
+                    <td class="text-end amount-15">P {{ number_format($component_item->amount,2) }}</td>
                 </tr>
                 @endforeach
 
