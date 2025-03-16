@@ -315,9 +315,11 @@
             let total_height = 0;
 
             items.map(item => {
-                console.log(item.offsetHeight,item)
+                
                 total_height += item.offsetHeight;
             });
+
+            console.log(total_height);
             
         }
 
