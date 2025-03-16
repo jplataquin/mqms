@@ -342,7 +342,7 @@
                 
             });
 
-            console.log(total_height);
+            window.print();
             
         }
 
