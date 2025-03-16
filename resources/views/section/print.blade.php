@@ -310,7 +310,7 @@
     <script type="module">
       import {$q} from '/adarna.js';
         
-        function pageBreak(items){
+        function pageBreaker(items){
 
             console.log(items);
         }
@@ -325,7 +325,7 @@
             if( /^[a-z0-9]+$/i.test(func_name) ){
                 
                 if(typeof elem[func_name] == 'undefined'){
-                    typeof elem[func_name] = [];
+                    elem[func_name] = [];
                 }
 
                 elem[func_name].push(item);
