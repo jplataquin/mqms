@@ -238,8 +238,8 @@
                     <td class="text-end">P {{ number_format($component_item->ref_1_amount,2) }}</td>
 
                     <!-- Factor -->
-                    <td>
-                        {{ $row_3->factor_text_value}} x
+                    <td class="text-center">
+                        {{ $row_3->factor_text_value}}
                     </td>
                     
                     <td class="text-center">{{ number_format( $component_item->quantity,2) }}</td><!-- Material -->
