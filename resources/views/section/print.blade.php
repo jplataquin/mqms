@@ -75,7 +75,7 @@
         .wrap{
             word-wrap: break-word;
         }
-        
+
         @media print {
 
             td, th{
@@ -218,7 +218,7 @@
                     <td class="text-end"></td><!-- Factor -->
 
                      <!-- Material -->
-                    <td class="text-center text-italic wrap">
+                    <td class="text-center text-italic">
                         {{ number_format( $component_material_total_quantity[$component_id],2) }}
                     </td>
                     <td class="text-center text-italic">
@@ -252,7 +252,7 @@
                     <td class="text-end">P {{ number_format($component_item->ref_1_amount,2) }}</td>
 
                     <!-- Factor -->
-                    <td class="text-center">
+                    <td class="text-center wrap">
                         {{ $row_3->factor_text_value}}
                     </td>
                     
