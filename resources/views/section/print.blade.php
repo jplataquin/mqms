@@ -25,10 +25,10 @@
             padding: 5px;
         }
 
-        .contract-item{
+        .contract-item-row{
             background-color: #a1b2b7;
         }
-        
+
         .contract-item-row:hover{
             background-color:rgb(177, 184, 227);
             cursor:pointer;
@@ -128,13 +128,13 @@
                 <td>{{$row_1->contract_item->description}}</td>
                 
                 <!-- Contract -->
-                <td class="text-center">{{$row_1->contract_item->contract_quantity}}</td>
+                <td class="text-center">{{ nunmber_format($row_1->contract_item->contract_quantity,2)}}</td>
                 <td class="text-center">{{$row_1->contract_item->contract_unit_text}}</td>
                 <td class="text-end">P {{ number_format($row_1->contract_item->contract_unit_price,2) }}</td>
                 <td class="text-end">P {{ number_format($row_1->contract_item->contract_amount,2) }}</td>
 
                 <!--Reference -->
-                <td class="text-center">{{$row_1->contract_item->ref_1_quantity}}</td>
+                <td class="text-center">{{ number_format($row_1->contract_item->ref_1_quantity,2) }}</td>
                 <td class="text-center">{{$row_1->contract_item->ref_1_unit_text}}</td>
                 <td class="text-end">P {{ number_format($row_1->contract_item->ref_1_unit_price,2) }}</td>
                 <td class="text-end">P {{ number_format($row_1->contract_item->ref_1_amount,2) }}</td>
@@ -190,7 +190,7 @@
                     <td></td>
 
                     <!-- Ref 1 -->
-                    <td class="text-center">{{$component_item->ref_1_quantity}}</td>
+                    <td class="text-center">{{ number_format($component_item->ref_1_quantity,2) }}</td>
                     <td class="text-center">{{$component_item->ref_1_unit_text}}</td>
                     <td class="text-end">P {{ number_format($component_item->ref_1_unit_price,2) }}</td>
                     <td class="text-end">P {{ number_format($component_item->ref_1_amount,2) }}</td>
