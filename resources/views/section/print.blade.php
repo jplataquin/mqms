@@ -206,7 +206,7 @@
                     <td></td>
                     <td class="text-end"></td>
 
-                    <td></td><!-- Factor -->
+                    <td class="text-center">x = </td><!-- Factor -->
                     
                      <!-- Material -->
                     <th class="text-center" ></th>
