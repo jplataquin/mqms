@@ -210,7 +210,7 @@
                 </tr>
                 
          
-                <tr class="component-row">
+                <tr>
            
                     <td></td><!-- Description -->
                     
@@ -233,6 +233,7 @@
                     <td class="text-center text-italic">
                         {{ $row_2->component->unit_text }}
                     </td>
+                    <td></td>
                     <td></td>
                 </tr>
 
