@@ -84,7 +84,7 @@
             }
 
             .no-page-break{
-                break-after:avoid-page;
+                break-after:avoid-region;
             }
 
             .page-break{
