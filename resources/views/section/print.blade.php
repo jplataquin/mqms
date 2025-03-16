@@ -71,7 +71,7 @@
         @media print {
 
             td, th{
-                font-size:11px;
+                font-size:10px;
             }
 
 
@@ -109,10 +109,10 @@
         <tr>
             <th rowspan="2" style="min-width:5%;max-width:5%">ITEM CODE</th>
             <th rowspan="2" style="min-width:20%;max-width:20%">DESCRIPTION</th>
-            <th colspan="4" style="min-width:20%;max-width:20%">Contract</th>
-            <th colspan="4" style="min-width:20%;max-width:20%">POW/DUPA</th>
+            <th colspan="4" style="">Contract</th>
+            <th colspan="4" style="">POW/DUPA</th>
             <th rowspan="2" style="min-width:10%;max-width:10%">Factor</th>
-            <th colspan="4" style="min-width:25%;max-width:25%">Material Budget</th>
+            <th colspan="4" style="">Material Budget</th>
         </tr>
         <tr>
          
