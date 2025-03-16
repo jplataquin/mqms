@@ -186,7 +186,7 @@
 
             <!-- Components -->
             @foreach($row_1->components as $component_id => $row_2)
-            <y-page class="no-page-break">
+            <div class="no-page-break">
                 <tr class="component-row">
                     <td class="" rowspan="{{ ( count( (array) $row_2->component_items) + 2) }}">{{$row_2->component->name}}</td>
                     <td></td><!-- Description -->
@@ -271,7 +271,7 @@
                     <td class="text-end">P {{ number_format($component_item->amount,2) }}</td>
                 </tr>
                 @endforeach
-            </y-page>
+            </div>
             @endforeach
 
         
