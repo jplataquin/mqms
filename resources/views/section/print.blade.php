@@ -84,7 +84,7 @@
             }
 
             .no-page-break{
-                break-inside:avoid;
+                break-inside:auto;
             }
 
             .page-break{
