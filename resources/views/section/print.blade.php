@@ -25,6 +25,10 @@
             padding: 5px;
         }
 
+        .contract-item{
+            background-color: #a1b2b7;
+        }
+        
         .contract-item-row:hover{
             background-color:rgb(177, 184, 227);
             cursor:pointer;
