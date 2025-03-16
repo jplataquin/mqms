@@ -76,13 +76,16 @@
             word-wrap: break-word;
         }
 
+        
         @media print {
 
             td, th{
                 font-size:10px;
             }
 
-
+            .no-page-break{
+                break-inside: avoid;
+            }
         
         }
     </style>
@@ -114,38 +117,39 @@
     <table>
 
         <!--Headers -->
-        <tr>
-            <th rowspan="2" style="min-width:5%;max-width:5%">ITEM CODE</th>
-            <th rowspan="2" style="min-width:20%;max-width:20%">DESCRIPTION</th>
-            <th colspan="4" style="">Contract</th>
-            <th colspan="4" style="">POW/DUPA</th>
-            <th rowspan="2" style="min-width:8%;max-width:8%">Factor</th>
-            <th colspan="4" style="">Material Budget</th>
-        </tr>
-        <tr>
+        <thead>
+            <tr>
+                <th rowspan="2" style="min-width:5%;max-width:5%">ITEM CODE</th>
+                <th rowspan="2" style="min-width:20%;max-width:20%">DESCRIPTION</th>
+                <th colspan="4" style="">Contract</th>
+                <th colspan="4" style="">POW/DUPA</th>
+                <th rowspan="2" style="min-width:8%;max-width:8%">Factor</th>
+                <th colspan="4" style="">Material Budget</th>
+            </tr>
+            <tr>
          
 
-            <!-- Contract -->
-            <th>QTY</th>
-            <th>UNIT</th>
-            <th class="amount-13">RATE</th>
-            <th class="amount-15">AMOUNT</th>
+                <!-- Contract -->
+                <th>QTY</th>
+                <th>UNIT</th>
+                <th class="amount-13">RATE</th>
+                <th class="amount-15">AMOUNT</th>
 
-            <!--Referennce -->
-            <th>QTY</th>
-            <th>UNIT</th>
-            <th class="amount-13">RATE</th>
-            <th class="amount-15">AMOUNT</th>
+                <!--Referennce -->
+                <th>QTY</th>
+                <th>UNIT</th>
+                <th class="amount-13">RATE</th>
+                <th class="amount-15">AMOUNT</th>
 
-            
-            <!-- Material-->
-            <th>QTY</th>
-            <th>UNIT</th>
-            <th class="amount-13">RATE</th>
-            <th class="amount-15">AMOUNT</th>
-        </tr>
-
-
+                
+                <!-- Material-->
+                <th>QTY</th>
+                <th>UNIT</th>
+                <th class="amount-13">RATE</th>
+                <th class="amount-15">AMOUNT</th>
+            </tr>
+        </thead>
+        <tbody>
         @foreach($data as $contract_item_id => $row_1)
 
             <!-- Contract Item -->
@@ -178,7 +182,7 @@
 
             <!-- Components -->
             @foreach($row_1->components as $component_id => $row_2)
-                <tr class="component-row">
+                <tr class="component-row no-page-break">
                     <td rowspan="{{ ( count( (array) $row_2->component_items) + 2) }}">{{$row_2->component->name}}</td>
                     <td></td><!-- Description -->
                     
@@ -267,31 +271,33 @@
 
         
         @endforeach
+        </tbody>
 
-
+        
         <!-- Grand Total -->
-        <tr>
-            <td></td>
-            <td></td>
-            
-            <td></td><!-- Contract -->
-            <td></td>
-            <td></td>
-            <th class="text-end">P {{ number_format( $grand_total_amount->contract, 2) }}</th>
-            <td></td><!-- Ref 1 -->
-            <td></td>
-            <td></td>
-            <th class="text-end">P {{ number_format( $grand_total_amount->ref_1, 2) }}</th>
-
-            <td></td><!-- Factor -->
-            
-            <!-- Material -->
-            <td></td>
-            <td></td>
-            <td></td>
-            <th class="text-end">P {{ number_format( $grand_total_amount->material, 2) }}</th>
-        </tr>
+         <tfoot>
+            <tr>
+                <td></td>
+                <td></td>
                 
+                <td></td><!-- Contract -->
+                <td></td>
+                <td></td>
+                <th class="text-end">P {{ number_format( $grand_total_amount->contract, 2) }}</th>
+                <td></td><!-- Ref 1 -->
+                <td></td>
+                <td></td>
+                <th class="text-end">P {{ number_format( $grand_total_amount->ref_1, 2) }}</th>
+
+                <td></td><!-- Factor -->
+                
+                <!-- Material -->
+                <td></td>
+                <td></td>
+                <td></td>
+                <th class="text-end">P {{ number_format( $grand_total_amount->material, 2) }}</th>
+            </tr>
+        </tfoot>  
     </table>
     
 
