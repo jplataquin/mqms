@@ -199,7 +199,7 @@
          
                 <tr class="component-row">
            
-                    <td>x</td><!-- Description -->
+                    <td></td><!-- Description -->
                     
                     <td></td><!-- Contract -->
                     <td></td>
@@ -209,10 +209,10 @@
                     <td></td><!-- Ref 1 -->
                     <td></td>
                     <td></td>
+                    <td></td>
+
                     <td class="text-end"></td><!-- Factor -->
 
-        
-                    
                      <!-- Material -->
                     <td class="text-center text-italic">
                         {{ number_format( $component_material_total_quantity[$component_id],2) }}
