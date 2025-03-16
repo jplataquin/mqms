@@ -72,6 +72,10 @@
             font-style: italic;
         }
 
+        .wrap{
+            word-wrap: break-word;
+        }
+        
         @media print {
 
             td, th{
@@ -214,10 +218,10 @@
                     <td class="text-end"></td><!-- Factor -->
 
                      <!-- Material -->
-                    <td class="text-center text-italic">
+                    <td class="text-center text-italic wrap">
                         {{ number_format( $component_material_total_quantity[$component_id],2) }}
                     </td>
-                    <td class="text-center text-itali">
+                    <td class="text-center text-italic">
                         {{ $row_2->component->unit_text }}
                     </td>
                     <td></td>
