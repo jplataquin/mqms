@@ -312,11 +312,26 @@
         
         function pageBreaker(items){
 
-            let total_height = 0;
+            let total_height    = 0;
+            let item_before     = null;
 
             items.map(item => {
                 
+                if(item_before == null){
+                    item_before = item;
+                }
+
                 total_height += item.offsetHeight;
+
+                if(total_height > 590){
+                    item_before.parentElement.classList.add('page-break');
+                    total_height = 0;
+                    item_before = null;
+
+                    continue;
+                }
+
+                item_before = item;
             });
 
             console.log(total_height);
