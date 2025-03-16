@@ -215,8 +215,12 @@
                     <td class="text-end"></td>
                 </tr>
                 <!-- Component Items -->
-                @foreach($row_2->component_items as $component_item_id => $component_item)
-              
+                @foreach($row_2->component_items as $component_item_id => $row_3)
+
+                @php
+                    $component_item = $row_3->component_item;
+                @endphp
+
                 <!-- Component Item data row -->
                 <tr class="component-item-row"> 
                     <td>{{$component_item->name}}</td><!-- Component Item Name -->
@@ -235,7 +239,7 @@
 
                     <!-- Factor -->
                     <td>
-                        {{ $component_item->factorTextValue($row_2->component->use_count) }}
+                        {{ $row_3->factor_text_value}}
                     </td>
                     
                     <td class="text-center">{{ number_format( $component_item->quantity,2) }}</td><!-- Material -->

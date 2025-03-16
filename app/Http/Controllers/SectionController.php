@@ -133,7 +133,10 @@ class SectionController extends Controller
                 //Component Items
                 foreach($component_items as $component_item){
 
-                    $data[$contract_item->id]['components'][$component->id]['component_items'][$component_item->id] = $component_item;
+                    $data[$contract_item->id]['components'][$component->id]['component_items'][$component_item->id] = [
+                        'component_item'    => $component_item,
+                        'factor_text_value' => $component_item->factorTextValue($component->use_count)
+                    ];
                     
                     $component_item_material_total_amount       += (float) $component_item->amount;
                     $component_item_ref_1_total_amount          += (float) $component_item->ref_1_amount;
