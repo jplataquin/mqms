@@ -239,7 +239,7 @@
 
                     <!-- Factor -->
                     <td>
-                        {{ $row_3->factor_text_value}}
+                        {{ $row_3->factor_text_value}} x
                     </td>
                     
                     <td class="text-center">{{ number_format( $component_item->quantity,2) }}</td><!-- Material -->
