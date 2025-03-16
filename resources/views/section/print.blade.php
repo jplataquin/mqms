@@ -61,7 +61,7 @@
     <table class="mb-5">
         <tr>
             <td class="text-center">
-                <img src="storage/sys_images/header.png" style="width:500px"/>
+                <img src="/storage/sys_images/header.png" style="width:500px"/>
             </td>
             <td class="text-center">
                 <h2>Material Budget</h2>
