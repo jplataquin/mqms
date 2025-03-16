@@ -323,7 +323,7 @@
 
                 total_height += item.offsetHeight;
 
-                if(total_height >= 900){
+                if(total_height >= 965){
 
                     console.log(total_height,item_before)
                     item_before.parentElement.classList.add('page-break');
