@@ -83,14 +83,14 @@ class ComponentItem extends Model
            
             $answer = $this->function_variable  / $use_count;
             $answer = round($answer,6);
-            $answer = 'Fa(x) '.$answer.' '.$this->unit_text.'/'.$component_unit;
+            $answer = 'Fa: '.$answer.' '.$this->unit_text.'/'.$component_unit;
         }
 
         //As Divisor
         if($this->function_type_id == 2){
             $answer = (1 / $this->function_variable) / $use_count;
             $answer = round($answer,6);
-            $answer = 'Dv(x) '.$answer.' '.$this->unit_text.'/'.$component_unit;
+            $answer = 'Dv: '.$answer.' '.$this->unit_text.'/'.$component_unit;
         }
 
         //As Direct
@@ -105,7 +105,7 @@ class ComponentItem extends Model
             $answer = $this->function_variable * $use_count;
             $answer = round($answer,6);
 
-            $answer = 'Eq(x) '.$answer.' '.$component_unit.'/'.$this->unit_text;
+            $answer = 'Eq: '.$answer.' '.$component_unit.'/'.$this->unit_text;
         }
 
         return $answer;

@@ -183,7 +183,7 @@
                     <td></td>
                     <td class="text-end">P {{ number_format( $total_amount->component[$component_id]->ref_1, 2) }}</td>
 
-                    <td class="text-center">x = </td><!-- Factor -->
+                    <td class="text-center"></td><!-- Factor -->
                     
                      <!-- Material -->
                     <th class="text-center" >{{ number_format($row_2->component->quantity,2) }}</th>
@@ -209,11 +209,17 @@
                     <td class="text-center"></td><!-- Factor -->
                     
                      <!-- Material -->
-                    <th class="text-center" ></th>
-                    <th class="text-center"></th>
+                    <th class="text-center">
+                        {{ number_format( $component_material_total_quantity[$component_id],2) }}
+                    </th>
+                    <th class="text-center">
+                        {{ $row_2->component->unit_text }}
+                    </th>
                     <td></td>
                     <td class="text-end"></td>
                 </tr>
+
+
                 <!-- Component Items -->
                 @foreach($row_2->component_items as $component_item_id => $row_3)
 

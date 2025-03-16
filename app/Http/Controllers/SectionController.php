@@ -86,7 +86,8 @@ class SectionController extends Controller
             'material'     => 0
         ];
 
-        $contract_item_material_total_quantity = [];
+        $contract_item_material_total_quantity  = [];
+        $component_material_total_quantity      = [];
 
         $contract_items = $section->ContractItems;
 
@@ -130,6 +131,9 @@ class SectionController extends Controller
 
                 $component_item_material_total_amount   = 0;
                 $component_item_ref_1_total_amount      = 0;
+
+                $component_material_total_quantity[$component->id] = 0;
+
                 //Component Items
                 foreach($component_items as $component_item){
 
@@ -140,6 +144,10 @@ class SectionController extends Controller
                     
                     $component_item_material_total_amount       += (float) $component_item->amount;
                     $component_item_ref_1_total_amount          += (float) $component_item->ref_1_amount;
+
+                    if($component_item->sum_flag && $component_item->unit_id == $component->unit_id){
+                        $component_material_total_quantity[$component->id] += $component_item->quantity;
+                    }
                 }
 
                  $total_amount->component[$component->id] = (object) [
@@ -172,7 +180,8 @@ class SectionController extends Controller
             'data'                                      => $data,
             'total_amount'                              => $total_amount,
             'grand_total_amount'                        => $grand_total_amount,
-            'contract_item_material_total_quantity'     => $contract_item_material_total_quantity
+            'contract_item_material_total_quantity'     => $contract_item_material_total_quantity,
+            'component_material_total_quantity'         => $component_material_total_quantity
         ]);
     }
 
