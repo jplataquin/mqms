@@ -68,6 +68,10 @@
             width: 13ch !important;
         }
         
+        .text-italic{
+            font-style: italic;
+        }
+        
         @media print {
 
             td, th{
@@ -205,17 +209,17 @@
                     <td></td><!-- Ref 1 -->
                     <td></td>
                     <td></td>
-                    <td class="text-end"></td>
+                    <td class="text-end"></td>><!-- Factor -->
 
-                    <td class="text-center"></td><!-- Factor -->
+        
                     
                      <!-- Material -->
-                    <th class="text-center">
+                    <td class="text-center text-italic">
                         {{ number_format( $component_material_total_quantity[$component_id],2) }}
-                    </th>
-                    <th class="text-center">
+                    </td>
+                    <td class="text-center text-itali">
                         {{ $row_2->component->unit_text }}
-                    </th>
+                    </td>
                     <td></td>
                 </tr>
 
