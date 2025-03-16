@@ -60,7 +60,7 @@
 <body>
     <table class="mb-5">
         <tr>
-            <td class="text-center">
+            <td class="text-center" style="width:50%">
                 <img src="/storage/sys_images/header.png" style="width:500px"/>
             </td>
             <td class="text-center">
