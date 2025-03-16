@@ -328,10 +328,12 @@
                     total_height = 0;
                     item_before = null;
 
-                    continue;
+                
+                }else{
+                    item_before = item;
                 }
 
-                item_before = item;
+                
             });
 
             console.log(total_height);
