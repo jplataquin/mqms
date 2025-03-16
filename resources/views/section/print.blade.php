@@ -59,6 +59,13 @@
         .mb-5{
             margin-bottom:5px;
         }
+
+        @media print {
+
+            td, th{
+                font-size:11px;
+            }
+        }
     </style>
 </head>
 <body>
