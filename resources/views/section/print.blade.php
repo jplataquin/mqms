@@ -90,7 +90,10 @@
             .page-break{
                 break-before:always;
             }
-        
+            
+            thead{
+                background-color:silver;
+            }
         }
     </style>
 </head>
