@@ -86,6 +86,10 @@
             .no-page-break{
                 break-after:avoid-page;
             }
+
+            .page-break{
+                break-after:always;
+            }
         
         }
     </style>
@@ -182,8 +186,8 @@
 
             <!-- Components -->
             @foreach($row_1->components as $component_id => $row_2)
-                <tr class="component-row">
-                    <td class="no-page-break" rowspan="{{ ( count( (array) $row_2->component_items) + 2) }}">{{$row_2->component->name}}</td>
+                <tr class="component-row page-break">
+                    <td class="" rowspan="{{ ( count( (array) $row_2->component_items) + 2) }}">{{$row_2->component->name}}</td>
                     <td></td><!-- Description -->
                     
                     <td></td><!-- Contract -->
