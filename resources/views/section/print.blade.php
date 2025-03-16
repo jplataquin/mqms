@@ -119,7 +119,7 @@
             <th rowspan="2" style="min-width:20%;max-width:20%">DESCRIPTION</th>
             <th colspan="4" style="">Contract</th>
             <th colspan="4" style="">POW/DUPA</th>
-            <th rowspan="2" style="min-width:10%;max-width:10%">Factor</th>
+            <th rowspan="2" style="min-width:8%;max-width:8%">Factor</th>
             <th colspan="4" style="">Material Budget</th>
         </tr>
         <tr>
