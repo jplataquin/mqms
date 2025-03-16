@@ -68,7 +68,7 @@ class SectionController extends Controller
     public function print($id){
         
         $user = auth()->user();
-        
+
         $section = Section::findOrFail($id);
         $project = Project::findOrFail($section->project_id);
 
@@ -146,8 +146,10 @@ class SectionController extends Controller
         
         $data = json_decode(json_encode($data));
 
-        
+        $datetime_generated = Carbon::now();
+
         return view('/section/print',[
+            'datetime_generated'    => $datetime_generated,
             'user'                  => $user,
             'project'               => $project,
             'section'               => $section,
