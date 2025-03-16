@@ -108,7 +108,7 @@ class ComponentItem extends Model
             $answer = '↰ Eq: '.$answer;
         }
 
-
+        return $answer;
     }
     //--------old---------------------
 
