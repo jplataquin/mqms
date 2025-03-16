@@ -75,7 +75,7 @@ class ComponentItem extends Model
     }
 
 
-    public function factorTextValue($use_count){
+    public function factorTextValue($use_count,$component_unit){
 
 
         //As Factor
@@ -83,7 +83,7 @@ class ComponentItem extends Model
            
             $answer = $this->function_variable  / $use_count;
             $answer = round($answer,6);
-            $answer = '↳ Fa: '.$answer;
+            $answer = 'Fa: '.$answer.' '.$this->unit_text.'/'.$component_unit;
         }
 
         //As Divisor

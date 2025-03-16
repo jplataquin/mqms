@@ -135,7 +135,7 @@ class SectionController extends Controller
 
                     $data[$contract_item->id]['components'][$component->id]['component_items'][$component_item->id] = [
                         'component_item'    => $component_item,
-                        'factor_text_value' => $component_item->factorTextValue($component->use_count)
+                        'factor_text_value' => $component_item->factorTextValue($component->use_count, $component->unit_text)
                     ];
                     
                     $component_item_material_total_amount       += (float) $component_item->amount;
