@@ -128,7 +128,7 @@
                 <td>{{$row_1->contract_item->description}}</td>
                 
                 <!-- Contract -->
-                <td class="text-center">{{ nunmber_format($row_1->contract_item->contract_quantity,2)}}</td>
+                <td class="text-center">{{ number_format($row_1->contract_item->contract_quantity,2)}}</td>
                 <td class="text-center">{{$row_1->contract_item->contract_unit_text}}</td>
                 <td class="text-end">P {{ number_format($row_1->contract_item->contract_unit_price,2) }}</td>
                 <td class="text-end">P {{ number_format($row_1->contract_item->contract_amount,2) }}</td>
