@@ -182,8 +182,8 @@
 
             <!-- Components -->
             @foreach($row_1->components as $component_id => $row_2)
-                <tr class="component-row no-page-break">
-                    <td rowspan="{{ ( count( (array) $row_2->component_items) + 2) }}">{{$row_2->component->name}}</td>
+                <tr class="component-row">
+                    <td class="no-page-break" rowspan="{{ ( count( (array) $row_2->component_items) + 2) }}">{{$row_2->component->name}}</td>
                     <td></td><!-- Description -->
                     
                     <td></td><!-- Contract -->
