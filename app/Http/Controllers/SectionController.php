@@ -66,6 +66,94 @@ class SectionController extends Controller
     }
 
     public function print($id){
+        
+        $section = Section::findOrFail($id);
+        $project = Project::findOrFail($section->project_id);
+
+
+        $data = [];
+
+        $total_amount = (object) [
+            'contract_item' => [],
+            'component'     => []
+        ];
+
+        $grand_total_amount = (object) [
+            'contract'     => 0,
+            'ref_1'        => 0,
+            'material'     => 0
+        ];
+
+        $contract_items = $section->ContractItems;
+
+        $contract_item_material_total_amount    = 0;
+        $contract_item_ref_1_total_amount       = 0;
+
+        //Contract Items
+        foreach($contract_items as $contract_item){
+            
+
+            $grand_total_amount->contract +=  (float) $contract_item->contract_amount;
+            
+            $components = $contract_item->Components;
+
+            $data[$contract_item->id] = [
+                'contract_item' => $contract_item,
+                'components'    => []
+            ];
+            
+            //Components
+            foreach($components as $component){
+
+                $component_items = $component->ComponentItems;
+
+                $data[$contract_item->id]['components'][$component->id] = [
+                    'component'         => $component,
+                    'component_items'   => []
+                ];
+                
+
+                $component_item_material_total_amount   = 0;
+                $component_item_ref_1_total_amount      = 0;
+                //Component Items
+                foreach($component_items as $component_item){
+
+                    $data[$contract_item->id]['components'][$component->id]['component_items'][$component_item->id] = $component_item;
+                    
+                    $component_item_material_total_amount       += (float) $component_item->amount;
+                    $component_item_ref_1_total_amount          += (float) $component_item->ref_1_amount;
+                }
+
+                 $total_amount->component[$component->id] = (object) [
+                    'material' => $component_item_material_total_amount,
+                    'ref_1'    => $component_item_ref_1_total_amount
+                ];
+
+                $contract_item_material_total_amount += $component_item_material_total_amount;
+                $contract_item_ref_1_total_amount    += $component_item_ref_1_total_amount;
+            }
+
+            $total_amount->contract_item[$contract_item->id] = (object) [
+                'material' => $contract_item_material_total_amount,
+                'ref_1'    => $contract_item_ref_1_total_amount
+            ];
+
+            $grand_total_amount->material   +=  $contract_item_material_total_amount;
+            $grand_total_amount->ref_1      +=  $contract_item_ref_1_total_amount;
+        }
+        
+        $data = json_decode(json_encode($data));
+
+        return view('/section/print',[
+            'project'               => $project,
+            'section'               => $section,
+            'data'                  => $data,
+            'total_amount'          => $total_amount,
+            'grand_total_amount'    => $grand_total_amount
+        ]);
+    }
+
+    public function __print($id){
         ini_set('max_execution_time', 160);
         $section = Section::findOrFail($id);
         $project = $section->Project;
