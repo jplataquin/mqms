@@ -123,7 +123,7 @@
         <!--Headers -->
         <thead>
             <tr>
-                <th rowspan="2" style="min-width:5%;max-width:5%">ITEM CODE</th>
+                <th data-controller="pageBreaker" rowspan="2" style="min-width:5%;max-width:5%">ITEM CODE</th>
                 <th rowspan="2" style="min-width:20%;max-width:20%">DESCRIPTION</th>
                 <th colspan="4" style="">Contract</th>
                 <th colspan="4" style="">POW/DUPA</th>
@@ -158,7 +158,7 @@
 
             <!-- Contract Item -->
             <tr class="contract-item-row">
-                <td>{{$row_1->contract_item->item_code}}</td>
+                <td data-controller="pageBreaker">{{$row_1->contract_item->item_code}}</td>
                 <td>{{$row_1->contract_item->description}}</td>
                 
                 <!-- Contract -->
@@ -308,7 +308,50 @@
 
 
     <script type="module">
-     
+      import {$q} from '/adarna.js';
+        
+        function pageBreak(items){
+
+            console.log(items);
+        }
+
+        let elem = {};
+        
+        $q('[data-controller]').items().map( item => {
+
+            let func        = null;
+            let func_name   = item.getAttribute('data-controller');
+            
+            if( /^[a-z0-9]+$/i.test(func_name) ){
+                
+                if(typeof elem[func_name] == 'undefined'){
+                    typeof elem[func_name] = [];
+                }
+
+                elem[func_name].push(item);
+                //eval('func = (typeof '+func_name+' == "function") ? '+func_name+' : null;');
+            }
+
+            // if(typeof func === 'function' && (typeof item._controlled == 'undefined' || item._controlled == false) ){
+                
+            //     func(item);
+
+            //     item._controlled = true;
+            // }
+         
+        });
+
+
+        for(let func_name in elem){
+
+            eval('func = (typeof '+func_name+' == "function") ? '+func_name+' : null;');
+
+            if(typeof func === 'function'){
+                
+                 func(elem[func_name]);
+
+            }
+        }
     </script>
 </body>
 </html>
