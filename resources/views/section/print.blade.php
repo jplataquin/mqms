@@ -161,8 +161,8 @@
                  <td></td>
 
                 <!-- Material-->
-                 <td>{{ number_format($contract_item_material_total_quantity[$contract_item_id],2) }}</td>
-                 <td>{{$row_1->contract_item->contract_unit_text}}</td>
+                 <td class="text-center">{{ number_format($contract_item_material_total_quantity[$contract_item_id],2) }}</td>
+                 <td class="text-center">{{$row_1->contract_item->contract_unit_text}}</td>
                  <td></td>
                  <td class="text-end">P {{ number_format($total_amount->contract_item[$contract_item_id]->material,2) }}</td>
             </tr>
@@ -171,7 +171,7 @@
             <!-- Components -->
             @foreach($row_1->components as $component_id => $row_2)
                 <tr class="component-row">
-                    <td rowspan="{{ ( count( (array) $row_2->component_items) + 1) }}">{{$row_2->component->name}}</td>
+                    <td rowspan="{{ ( count( (array) $row_2->component_items) + 2) }}">{{$row_2->component->name}}</td>
                     <td></td><!-- Description -->
                     
                     <td></td><!-- Contract -->
@@ -193,7 +193,27 @@
                 </tr>
                 
          
+                <tr class="component-row">
+                    <td></td>
+                    <td></td><!-- Description -->
+                    
+                    <td></td><!-- Contract -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td><!-- Ref 1 -->
+                    <td></td>
+                    <td></td>
+                    <td class="text-end"></td>
 
+                    <td></td><!-- Factor -->
+                    
+                     <!-- Material -->
+                    <th class="text-center" ></th>
+                    <th class="text-center"></th>
+                    <td></td>
+                    <td class="text-end"></td>
+                </tr>
                 <!-- Component Items -->
                 @foreach($row_2->component_items as $component_item_id => $component_item)
               
