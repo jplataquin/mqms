@@ -351,7 +351,7 @@
                     @php
                         $material_total_percentage = 0;
 
-                        if($section->total_gross_amount > 0){
+                        if($section->gross_total_amount > 0){
                             $material_total_percentage = ($grand_total_amount->contract_material / $section->total_gross_amount) * 100;
                         }
 
