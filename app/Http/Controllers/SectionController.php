@@ -94,11 +94,13 @@ class SectionController extends Controller
 
         $contract_items = $section->ContractItems;
 
-        $contract_item_material_total_amount    = 0;
-        $contract_item_ref_1_total_amount       = 0;
+       
 
         //Contract Items
         foreach($contract_items as $contract_item){
+            
+            $contract_item_material_total_amount    = 0;
+            $contract_item_ref_1_total_amount       = 0;
             
             $contract_item_material_total_quantity[$contract_item->id] = 0;
 
