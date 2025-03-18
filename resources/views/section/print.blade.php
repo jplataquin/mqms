@@ -27,11 +27,11 @@
 
         /** Material */
         .contract-item-material-row{
-            background-color: #c9c4c3;
+            background-color: #fcfaf9;
         }
 
         .material-bg{
-            background-color: #c9c4c3;
+            background-color: #fcfaf9;
         }
 
         .component-material-row{
