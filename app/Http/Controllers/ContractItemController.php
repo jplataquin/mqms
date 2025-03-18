@@ -171,6 +171,7 @@ class ContractItemController extends Controller
         $contract_item = new ContractItem();
 
         $contract_item->section_id              = $section_id;
+        $contract_item->item_type               = 'MATR'; //todo fix this
         $contract_item->item_code               = $item_code;
         $contract_item->description             = $description;
         $contract_item->contract_quantity       = $contract_quantity;
