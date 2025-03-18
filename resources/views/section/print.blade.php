@@ -295,7 +295,20 @@
                 <th class="text-end">P {{ number_format( $grand_total_amount->contract, 2) }}</th>
                 <td></td><!-- Ref 1 -->
                 <td></td>
-                <td></td>
+                <td>
+                    @php
+                        $ref_1_grand_percentage = 0;
+
+                        if($grand_total_amount->contract > 0){
+
+                            $ref_1_grand_percentage = ($grand_total_amount->ref_1 / $grand_total_amount->contract) * 100;
+                        }
+
+                        $ref_1_grand_percentage = number_format($ref_1_grand_percentage,2);
+                    @endphp
+
+                    {{$ref_1_grand_percentage}}%
+                </td>
                 <th class="text-end">P {{ number_format( $grand_total_amount->ref_1, 2) }}</th>
 
                 <td></td><!-- Factor -->
@@ -303,7 +316,20 @@
                 <!-- Material -->
                 <td></td>
                 <td></td>
-                <td></td>
+                <td>
+                    @php
+                        $material_grand_percentage = 0;
+
+                        if($grand_total_amount->contract > 0){
+
+                            $material_grand_percentage = ($grand_total_amount->material / $grand_total_amount->contract) * 100;
+                        }
+
+                        $material_grand_percentage = number_format($material_grand_percentage,2);
+                    @endphp
+
+                    {{$material_grand_percentage}}%
+                </td>
                 <th class="text-end">P {{ number_format( $grand_total_amount->material, 2) }}</th>
             </tr>
      
@@ -351,24 +377,23 @@
         $q('[data-controller]').items().map( item => {
 
             let func        = null;
-            let func_name   = item.getAttribute('data-controller');
+            let func_list   = item.getAttribute('data-controller');
             
-            if( /^[a-z0-9]+$/i.test(func_name) ){
+            let func_arr = func_list.split(' ');
+
+            func_arr.map(func_name => {
+
+                if( /^[a-z0-9]+$/i.test(func_name) ){
                 
-                if(typeof elem[func_name] == 'undefined'){
-                    elem[func_name] = [];
+                    if(typeof elem[func_name] == 'undefined'){
+                        elem[func_name] = [];
+                    }
+
+                    elem[func_name].push(item);
+                
                 }
 
-                elem[func_name].push(item);
-                //eval('func = (typeof '+func_name+' == "function") ? '+func_name+' : null;');
-            }
-
-            // if(typeof func === 'function' && (typeof item._controlled == 'undefined' || item._controlled == false) ){
-                
-            //     func(item);
-
-            //     item._controlled = true;
-            // }
+            });
          
         });
 
