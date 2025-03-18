@@ -318,7 +318,33 @@
 
         
         <!-- Grand Total -->
-     
+            
+            <!-- Gross -->
+            <tr>
+                <th colspan="5" class="text-center">Gross Total Amount</th>
+                
+             
+                <th class="text-end">P {{ number_format( $section->gross_total_amount, 2) }}</th>
+                <td></td><!-- Ref 1 -->
+                <td></td>
+                <td class="text-center">
+               
+                </td>
+                <th class="text-end"></th>
+
+                <td></td><!-- Factor -->
+                
+                <!-- Material -->
+                <td></td>
+                <td></td>
+                <td class="text-center">
+                    
+                </td>
+                <th class="text-end"></th>
+            </tr>
+
+
+            <!-- Material -->
             <tr>
                 <th colspan="5" class="text-center material-bg">Material</th>
                 
