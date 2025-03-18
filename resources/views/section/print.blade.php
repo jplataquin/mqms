@@ -453,20 +453,33 @@
                 
                 <!-- Material -->
                 <td></td>
-                <td></td>
-                <td class="text-center">
+                <td>
                     @php
                         $opex_material_grand_percentage = 0;
 
-                        if($grand_total_amount->contract_opex > 0){
+                        if($section->gross_total_amount > 0){
 
-                            $opex_material_grand_percentage = ($grand_total_amount->budget_opex / $grand_total_amount->contract_opex) * 100;
+                            $opex_material_grand_percentage = ($grand_total_amount->budget_opex / $section->gross_total_amount) * 100;
                         }
 
                         $opex_material_grand_percentage = number_format($opex_material_grand_percentage,2);
                     @endphp
 
                     {{$opex_material_grand_percentage}}%
+                </td>
+                <td class="text-center">
+                    @php
+                        $opex_material_total_percentage = 0;
+
+                        if($grand_total_amount->contract_opex > 0){
+
+                            $opex_material_total_percentage = ($grand_total_amount->budget_opex / $grand_total_amount->contract_opex) * 100;
+                        }
+
+                        $opex_material_total_percentage = number_format($opex_material_total_percentage,2);
+                    @endphp
+
+                    {{$opex_material_total_percentage}}%
                 </td>
                 <th class="
                     text-end 
