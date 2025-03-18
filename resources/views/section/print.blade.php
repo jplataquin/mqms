@@ -384,6 +384,9 @@
                 <!-- Material -->
                 <td></td>
                 <td class="text-center">
+                
+                </td>
+                <td class="text-center">
                     @php
                         $budget_material_grand_percentage = 0;
 
@@ -396,20 +399,6 @@
                     @endphp
 
                     {{$budget_material_grand_percentage}}%
-                </td>
-                <td class="text-center">
-                    @php
-                        $budget_material_total_percentage = 0;
-
-                        if($grand_total_amount->contract_material > 0){
-
-                            $budget_material_total_percentage = ($grand_total_amount->budget_material / $grand_total_amount->contract_material) * 100;
-                        }
-
-                        $budget_material_total_percentage = number_format($budget_material_total_percentage,2);
-                    @endphp
-
-                    {{$budget_material_total_percentage}}%
                 </td>
                 <th class="text-end">P {{ number_format( $grand_total_amount->budget_material, 2) }}</th>
             </tr>
@@ -454,6 +443,9 @@
                 <!-- Material -->
                 <td></td>
                 <td class="text-center">
+                 
+                </td>
+                <td class="text-center">
                     @php
                         $opex_material_grand_percentage = 0;
 
@@ -466,20 +458,6 @@
                     @endphp
 
                     {{$opex_material_grand_percentage}}%
-                </td>
-                <td class="text-center">
-                    @php
-                        $opex_material_total_percentage = 0;
-
-                        if($grand_total_amount->contract_opex > 0){
-
-                            $opex_material_total_percentage = ($grand_total_amount->budget_opex / $grand_total_amount->contract_opex) * 100;
-                        }
-
-                        $opex_material_total_percentage = number_format($opex_material_total_percentage,2);
-                    @endphp
-
-                    {{$opex_material_total_percentage}}%
                 </td>
                 <th class="
                     text-end 
