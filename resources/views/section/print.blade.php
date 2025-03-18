@@ -409,7 +409,7 @@
                         $opex_total_percentage = 0;
 
                         if($section->gross_total_amount > 0){
-                            $opex_total_percentage = ($grand_total_amount->opex_material / $section->gross_total_amount) * 100;
+                            $opex_total_percentage = ($grand_total_amount->contract_opex / $section->gross_total_amount) * 100;
                         }
 
                         $opex_total_percentage = number_format($opex_total_percentage,2);
