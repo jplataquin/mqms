@@ -242,7 +242,7 @@
                     <th class="text-center" >{{ number_format($row_2->component->quantity,2) }}</th>
                     <th class="text-center">{{$row_2->component->unit_text}}</th>
                     <td></td>
-                    <td class="text-end">P {{ number_format( $total_amount->component[$component_id]->material, 2) }}</td>
+                    <td class="text-end">P {{ number_format( $total_amount->component[$component_id]->budget, 2) }}</td>
                 </tr>
                 
          
