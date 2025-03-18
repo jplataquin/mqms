@@ -279,11 +279,15 @@
                     t.div({class:'item-header'},res.description);
 
                     t.div({class:'item-body row'},()=>{
-                        t.div({class:'col-6'},()=>{
+                        t.div({class:'col-4'},()=>{
                             t.txt(res.item_code);
                         });
+                        
+                        t.div({class:'col-4'},()=>{
+                            t.txt(res.item_type);
+                        });
 
-                        t.div({class:'col-6'},()=>{
+                        t.div({class:'col-4'},()=>{
 
                             if(typeof unit_options[res.unit_id] != 'undefined'){
                                 t.txt(
