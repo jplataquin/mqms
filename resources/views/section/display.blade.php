@@ -106,10 +106,13 @@
                     </div>
                         
                     <div class="item-body row">
-                        <div class="col-6">
+                        <div class="col-4">
                             {{$contract_item->item_code}}
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
+                            {{$contract_item->item_type}}
+                        </div>
+                        <div class="col-4">
                             @if(isset($unit_options[ $contract_item->unit_id ]))
                                 {{$contract_item->contract_quantity}} {{ $unit_options[ $contract_item->unit_id ]->text }}
                             @endif
@@ -124,6 +127,7 @@
 
 </div>   
 
+<!--
 <template id="create_contract_item_template">
     <div>
         <div class="row mb-3">
@@ -210,7 +214,7 @@
         </div>
     </div>
 </template>
- 
+-->
 <script type="module">
     import {$q,$el, Template} from '/adarna.js';
     import CreateContractItemForm from '/ui_components/create_forms/CreateContractItemForm.js';
@@ -282,7 +286,7 @@
                         t.div({class:'col-4'},()=>{
                             t.txt(res.item_code);
                         });
-                        
+
                         t.div({class:'col-4'},()=>{
                             t.txt(res.item_type);
                         });
@@ -386,7 +390,7 @@
         });
 
         window.util.drawerModal.content('Create Contract Item',create_contract_item_form).open();
-        //window.util.navTo('/project/section/contract_item/create/{{$section->id}}');
+       
     }
 
     
