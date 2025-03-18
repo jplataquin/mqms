@@ -29,6 +29,11 @@
             background-color: #a1b2b7;
         }
 
+        .non-conforming{
+            color:red !important;
+            background-color:#edb4b4 !important;
+        }
+
         .contract-item-opex-row{
             background-color:rgb(205, 220, 120);
         }
@@ -205,7 +210,13 @@
                  <td class="text-center">{{ number_format($contract_item_material_total_quantity[$contract_item_id],2) }}</td>
                  <td class="text-center">{{$row_1->contract_item->contract_unit_text}}</td>
                  <td></td>
-                 <td class="text-end">P {{ number_format($total_amount->contract_item[$contract_item_id]->material,2) }}</td>
+                 <td class="
+                    text-end    
+                    
+                    @if( $total_amount->contract_item[$contract_item_id]->material > $row_1->contract_item->contract_amount)
+                        non-conforming 
+                    @endif
+                ">P {{ number_format($total_amount->contract_item[$contract_item_id]->material,2) }}</td>
             </tr>
 
 
@@ -383,7 +394,13 @@
 
                     {{$opex_material_grand_percentage}}%
                 </td>
-                <th class="text-end">P {{ number_format( $grand_total_amount->budget_opex, 2) }}</th>
+                <th class="
+                    text-end 
+                    
+                    @if( $grand_total_amount->budget_opex > $grand_total_amount->contract_opex)
+                        non-conforming 
+                    @endif
+                ">P {{ number_format( $grand_total_amount->budget_opex, 2) }}</th>
             </tr>
     </table>
     
