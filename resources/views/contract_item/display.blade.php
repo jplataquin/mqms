@@ -58,13 +58,24 @@
             </div>
 
             <div class="row mb-3">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label>Description</label>
                         <input type="text" id="description" class="form-control editable" disabled="true" value="{{$contract_item->description}}"/>
                     </div>
                 </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Item Type</label>
+                        <select class="form-select editable" id="item_type" disabled="true">
+                            <option value="MATR" @if($contract_item->item_type == "MATR") selected @endif>Material</option>
+                            <option value="LABR" @if($contract_item->item_type == "LABR") selected @endif>Labor</option>
+                            <option value="OPEX" @if($contract_item->item_type == "OPEX") selected @endif>Operational Expense</option>
+                        </select>
+                    </div>
+                </div>
             </div>
+            
             
             
             <div class="row mb-3">
@@ -78,7 +89,7 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label>Contract Unit</label>
-                        <select class="form-control editable" id="unit" disabled="true">
+                        <select class="form-select editable" id="unit" disabled="true">
                             @foreach($unit_options as $unit)
                             <option value="{{$unit->id}}" 
                                 @if($unit->deleted) disabled @endif
@@ -112,7 +123,7 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label>POW/DUPA Unit</label>
-                        <select class="form-control editable" id="ref_1_unit" disabled="true">
+                        <select class="form-select editable" id="ref_1_unit" disabled="true">
                             <option value=""> - </option>
                             @foreach($unit_options as $unit)
                             
@@ -200,6 +211,7 @@
     const ref_1_unit_price            = $q('#ref_1_unit_price').first();
     const ref_1_unit                  = $q('#ref_1_unit').first();
     const unit                        = $q('#unit').first();
+    const item_type                   = $q('#item_type').first();
     
     const createComponentBtn          = $q('#createComponentBtn').first();
     
@@ -251,6 +263,7 @@
             id                  : '{{$contract_item->id}}',
             section_id          : '{{$section->id}}',
             item_code           : item_code.value,
+            item_type           : item_type.value,
             description         : description.value,
             contract_quantity   : contract_quantity.value,
             contract_unit_price : contract_unit_price.value,

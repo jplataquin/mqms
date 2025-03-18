@@ -44,7 +44,7 @@ class CreateContractItemForm extends Component{
                
                 t.div({class:'col-lg-12 mb-3'},()=>{
                     t.div({class:'form-group'},()=>{
-                        t.label('Type');
+                        t.label('Item Type');
                         this.el.item_type = t.select({class:'form-select'},()=>{
                             t.option({value:'MATR'},'Material');
                             t.option({value:'LABR'},'Labor');

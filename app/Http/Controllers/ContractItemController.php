@@ -175,7 +175,7 @@ class ContractItemController extends Controller
         $contract_item = new ContractItem();
 
         $contract_item->section_id              = $section_id;
-        $contract_item->item_type               = $item_type; //todo fix this
+        $contract_item->item_type               = $item_type;
         $contract_item->item_code               = $item_code;
         $contract_item->description             = $description;
         $contract_item->contract_quantity       = $contract_quantity;
@@ -210,6 +210,7 @@ class ContractItemController extends Controller
         //todo check role
 
         $item_code                = $request->input('item_code') ?? '';
+        $item_type                = $request->input('item_type') ?? '';
         $description              = $request->input('description') ?? '';
         $contract_quantity        = $request->input('contract_quantity') ?? '';
         $contract_unit_price      = $request->input('contract_unit_price') ?? '';
@@ -234,6 +235,9 @@ class ContractItemController extends Controller
             ],
             'description' => [
                 'required',
+            ],
+            'item_type' => [
+                'required'
             ],
             'section_id' =>[
                 'required',
@@ -297,6 +301,7 @@ class ContractItemController extends Controller
 
         $contract_item->item_code               = $item_code;
         $contract_item->description             = $description;
+        $contract_item->item_type               = $item_type;
         $contract_item->contract_quantity       = $contract_quantity;
         $contract_item->contract_unit_price     = $contract_unit_price;
         $contract_item->unit_id                 = $unit_id;
