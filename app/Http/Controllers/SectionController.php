@@ -89,7 +89,7 @@ class SectionController extends Controller
             'budget_opex'     => 0
         ];
 
-        $contract_item_material_total_quantity  = [];
+        $contract_item_budget_total_quantity  = [];
         $component_material_total_quantity      = [];
 
         $contract_items = $section->ContractItems;
@@ -101,8 +101,8 @@ class SectionController extends Controller
             
             $contract_item_material_total_amount    = 0;
             $contract_item_ref_1_total_amount       = 0;
-            
-            $contract_item_material_total_quantity[$contract_item->id] = 0;
+
+            $contract_item_budget_total_quantity[$contract_item->id] = 0;
 
             if($contract_item->item_type == 'MATR'){
               
@@ -131,7 +131,7 @@ class SectionController extends Controller
                 //Total component quantity per contract item
                 if($component->sum_flag && $component->unit_id == $contract_item->unit_id){
                 
-                    $contract_item_material_total_quantity[$contract_item->id] += (float) $component->quantity;
+                    $contract_item_budget_total_quantity[$contract_item->id] += (float) $component->quantity;
                 }
 
                 $component_items = $component->ComponentItems;
@@ -202,7 +202,7 @@ class SectionController extends Controller
             'data'                                      => $data,
             'total_amount'                              => $total_amount,
             'grand_total_amount'                        => $grand_total_amount,
-            'contract_item_material_total_quantity'     => $contract_item_material_total_quantity,
+            'contract_item_budget_total_quantity'     => $contract_item_budget_total_quantity,
             'component_material_total_quantity'         => $component_material_total_quantity
         ]);
     }
