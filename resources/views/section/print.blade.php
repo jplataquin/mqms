@@ -295,7 +295,7 @@
                 <th class="text-end">P {{ number_format( $grand_total_amount->contract, 2) }}</th>
                 <td></td><!-- Ref 1 -->
                 <td></td>
-                <td>
+                <td class="text-center">
                     @php
                         $ref_1_grand_percentage = 0;
 
@@ -316,7 +316,7 @@
                 <!-- Material -->
                 <td></td>
                 <td></td>
-                <td>
+                <td class="text-center">
                     @php
                         $material_grand_percentage = 0;
 
