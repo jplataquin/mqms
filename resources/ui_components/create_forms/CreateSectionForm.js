@@ -26,6 +26,14 @@ class CreateProjectForm extends Component{
                 });//div col
             });//div row
 
+            t.div({class:'row mb-3'},()=>{
+                t.div({class:'col-lg-12'},()=>{
+                    t.div({class:'form-group'},()=>{
+                        t.label('Gross Total Amount');
+                        this.el.gross_total_amount = t.input({class:'form-control', type:'text'});
+                    });//div
+                });//div col
+            });//div row
 
             t.div({class:'row mb-3'},()=>{
                 t.div({class:'col-lg-12 text-end'},()=>{
@@ -50,8 +58,9 @@ class CreateProjectForm extends Component{
             window.util.blockUI();
 
             window.util.$post('/api/section/create',{
-                name: this.el.section_name.value,
-                project_id: this._model.project_id
+                name                : this.el.section_name.value,
+                gross_total_amount  : window.util.pureNumber(this.el.gross_total_amount.value,2),
+                project_id          : this._model.project_id
             }).then(reply=>{
     
                 window.util.unblockUI();
