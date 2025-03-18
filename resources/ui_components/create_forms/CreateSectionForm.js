@@ -1,7 +1,7 @@
 import {Template,Component} from '/adarna.js';
 
 
-class CreateProjectForm extends Component{
+class CreateSectionForm extends Component{
 
     model(){
         return {
@@ -81,5 +81,5 @@ class CreateProjectForm extends Component{
 }
 
 export default (data)=>{
-    return (new CreateProjectForm(data));
+    return (new CreateSectionForm(data));
 }
