@@ -321,7 +321,7 @@
             
             <!-- Gross -->
             <tr>
-                <th colspan="5" class="text-center">Gross Total Amount</th>
+                <th colspan="5" class="text-end">Gross Total Amount</th>
                 
              
                 <th class="text-end">P {{ number_format( $section->gross_total_amount, 2) }}</th>
@@ -383,20 +383,33 @@
                 
                 <!-- Material -->
                 <td></td>
-                <td></td>
-                <td class="text-center">
+                <td>
                     @php
                         $budget_material_grand_percentage = 0;
 
-                        if($grand_total_amount->contract_material > 0){
+                        if($section->gross_total_amount > 0){
 
-                            $budget_material_grand_percentage = ($grand_total_amount->budget_material / $grand_total_amount->contract_material) * 100;
+                            $budget_material_grand_percentage = ($grand_total_amount->budget_material / $section->gross_total_amount) * 100;
                         }
 
                         $budget_material_grand_percentage = number_format($budget_material_grand_percentage,2);
                     @endphp
 
                     {{$budget_material_grand_percentage}}%
+                </td>
+                <td class="text-center">
+                    @php
+                        $budget_material_total_percentage = 0;
+
+                        if($grand_total_amount->contract_material > 0){
+
+                            $budget_material_total_percentage = ($grand_total_amount->budget_material / $grand_total_amount->contract_material) * 100;
+                        }
+
+                        $budget_material_total_percentage = number_format($budget_material_total_percentage,2);
+                    @endphp
+
+                    {{$budget_material_total_percentage}}%
                 </td>
                 <th class="text-end">P {{ number_format( $grand_total_amount->budget_material, 2) }}</th>
             </tr>
