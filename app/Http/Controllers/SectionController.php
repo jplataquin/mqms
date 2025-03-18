@@ -343,13 +343,13 @@ class SectionController extends Controller
             ],
             'gross_total_amount'   => [
                 'required',
-                'numeric',          
+                'numeric'         
             ],
             'name' => [
                 'required',
                 'max:255',
                 Rule::unique('sections')->where(
-                function ($query) {
+                function ($query) use ($id,$name,$project_id) {
                     return $query
                     ->where('name', $name)
                     ->where('project_id',$project_id)
