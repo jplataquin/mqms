@@ -346,8 +346,19 @@
 
             <!-- Material -->
             <tr>
-                <th colspan="5" class="text-center material-bg">Material</th>
-                
+                <th colspan="4" class="text-center material-bg">Material</th>
+                <th class="text-center">
+                    @php
+                        $material_total_percentage = 0;
+
+                        if($section->total_gross_amount > 0){
+                            $material_total_percentage = ($grand_total_amount->contract_material / $section->total_gross_amount) * 100;
+                        }
+
+                        $material_total_percentage = number_format(material_total_percentage,2);
+                    @endphp
+                    {{$material_total_percentage}}%
+                </th>
              
                 <th class="text-end">P {{ number_format( $grand_total_amount->contract_material, 2) }}</th>
                 <td></td><!-- Ref 1 -->
