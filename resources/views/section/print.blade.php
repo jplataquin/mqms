@@ -403,8 +403,20 @@
 
             <!-- OPEX -->
             <tr>
-                <th colspan="5" class="text-center opex-bg">Operational Expense</th>
-            
+                <th colspan="4" class="text-center opex-bg">Operational Expense</th>
+                <th class="text-center">
+                    @php
+                        $opex_total_percentage = 0;
+
+                        if($section->gross_total_amount > 0){
+                            $opex_total_percentage = ($grand_total_amount->opex_material / $section->gross_total_amount) * 100;
+                        }
+
+                        $opex_total_percentage = number_format($opex_total_percentage,2);
+                    @endphp
+                    {{$opex_total_percentage}}%
+                </th>
+
                 <th class="text-end">P {{ number_format( $grand_total_amount->contract_opex, 2) }}</th>
                 <td></td><!-- Ref 1 -->
                 <td></td>
