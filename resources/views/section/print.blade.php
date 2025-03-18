@@ -384,7 +384,7 @@
                     @php
                         $opex_material_grand_percentage = 0;
 
-                        if($grand_total_amount->contract_material > 0){
+                        if($grand_total_amount->contract_opex > 0){
 
                             $opex_material_grand_percentage = ($grand_total_amount->budget_opex / $grand_total_amount->contract_opex) * 100;
                         }
