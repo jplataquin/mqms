@@ -164,7 +164,7 @@ class SectionController extends Controller
                 }
 
                  $total_amount->component[$component->id] = (object) [
-                    'material' => $component_item_material_total_amount,
+                    'budget' => $component_item_material_total_amount,
                     'ref_1'    => $component_item_ref_1_total_amount
                 ];
 
@@ -173,7 +173,7 @@ class SectionController extends Controller
             }
 
             $total_amount->contract_item[$contract_item->id] = (object) [
-                'material' => $contract_item_material_total_amount,
+                'budget' => $contract_item_material_total_amount,
                 'ref_1'    => $contract_item_ref_1_total_amount
             ];
 

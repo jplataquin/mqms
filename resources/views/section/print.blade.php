@@ -210,13 +210,13 @@
                  <td class="text-center">{{ number_format($contract_item_budget_total_quantity[$contract_item_id],2) }}</td>
                  <td class="text-center">{{$row_1->contract_item->contract_unit_text}}</td>
                  <td></td>
-                 <td class="
+                 <th class="
                     text-end    
                     
-                    @if( $total_amount->contract_item[$contract_item_id]->material > $row_1->contract_item->contract_amount)
+                    @if( $total_amount->contract_item[$contract_item_id]->budget > $row_1->contract_item->contract_amount)
                         non-conforming 
                     @endif
-                ">P {{ number_format($total_amount->contract_item[$contract_item_id]->material,2) }}</td>
+                ">P {{ number_format($total_amount->contract_item[$contract_item_id]->budget,2) }}</th>
             </tr>
 
 
