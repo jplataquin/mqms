@@ -26,7 +26,7 @@
         }
 
         .contract-item-material-row{
-            background-color: #a1b2b7;
+            background-color: #c9c4c3;
         }
 
         .non-conforming{
@@ -39,7 +39,7 @@
         }
 
         .material-bg{
-            background-color: #a1b2b7;
+            background-color: #c9c4c3;
         }
 
         .opex-bg{
