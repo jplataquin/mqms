@@ -33,6 +33,14 @@
             background-color:rgb(205, 220, 120);
         }
 
+        .material-bg{
+            background-color: #a1b2b7;
+        }
+
+        .opex-bg{
+            background-color:rgb(205, 220, 120);
+        }
+
         .contract-item-row:hover{
             background-color:rgb(177, 184, 227);
             cursor:pointer;
@@ -346,7 +354,7 @@
 
             <!-- OPEX -->
             <tr>
-                <td colspan="5" class="text-center opex-bg">Operational Expense</td>
+                <th colspan="5" class="text-center opex-bg">Operational Expense</th>
             
                 <th class="text-end">P {{ number_format( $grand_total_amount->contract_opex, 2) }}</th>
                 <td></td><!-- Ref 1 -->
