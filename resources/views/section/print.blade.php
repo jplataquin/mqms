@@ -35,7 +35,7 @@
         }
 
         .contract-item-opex-row{
-            background-color:rgb(205, 220, 120);
+            background-color: #f4d35e;
         }
 
         .material-bg{
@@ -43,7 +43,7 @@
         }
 
         .opex-bg{
-            background-color:rgb(205, 220, 120);
+            background-color: #f4d35e
         }
 
         .contract-item-row:hover{
