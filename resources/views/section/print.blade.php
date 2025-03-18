@@ -25,40 +25,37 @@
             padding: 5px;
         }
 
+        /** Material */
         .contract-item-material-row{
             background-color: #c9c4c3;
-        }
-
-        .non-conforming{
-            color:red !important;
-            background-color:#edb4b4 !important;
-        }
-
-        .contract-item-opex-row{
-            background-color: #f4d35e;
         }
 
         .material-bg{
             background-color: #c9c4c3;
         }
 
+        .component-material-row{
+            background-color: #edf6f9;
+        }
+
+
+     
+        /** Opex **/
+        .contract-item-opex-row{
+            background-color: #f4d35e;
+        }
+
         .opex-bg{
             background-color: #f4d35e
         }
 
-        .contract-item-row:hover{
-            background-color:rgb(177, 184, 227);
-            cursor:pointer;
+        .component-opex-row{
+           
         }
-
-        .component-row:hover{
-            background-color:rgb(177, 209, 227);
-            cursor:pointer;
-        }
-
-        .component-item-row:hover{
-            background-color:rgb(177, 219, 227);
-            cursor:pointer;
+       
+        .non-conforming{
+            color:red !important;
+            background-color:#edb4b4 !important;
         }
 
         .text-end{
@@ -98,10 +95,6 @@
 
             td, th{
                 font-size:10px;
-            }
-
-            .component-row{
-                background-color:rgb(177, 209, 227);
             }
 
             .page-break{
@@ -223,7 +216,15 @@
             <!-- Components -->
             @foreach($row_1->components as $component_id => $row_2)
         
-                <tr class="component-row">
+                <tr class="
+                    @if($row_1->contract_item->item_type == 'MATR') 
+                        component-material-row 
+                    @endif
+
+                    @if($row_1->contract_item->item_type == 'OPEX') 
+                        component-opex-row 
+                    @endif
+                ">
                     <td data-controller="pageBreaker"  rowspan="{{ ( count( (array) $row_2->component_items) + 2) }}">{{$row_2->component->name}}</td>
                     <td></td><!-- Description -->
                     
