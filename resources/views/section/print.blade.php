@@ -414,7 +414,7 @@
 
                         $opex_total_percentage = number_format($opex_total_percentage,2);
                     @endphp
-                    {{$opex_total_percentage}}%
+                    {{ $opex_total_percentage }}%
                 </th>
 
                 <th class="text-end">P {{ number_format( $grand_total_amount->contract_opex, 2) }}</th>
