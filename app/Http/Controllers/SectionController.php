@@ -84,7 +84,9 @@ class SectionController extends Controller
             'contract_material'     => 0,
             'contract_opex'         => 0,
             'ref_1'        => 0,
-            'material'     => 0
+
+            'budget_material' => 0,
+            'budget_opex'     => 0
         ];
 
         $contract_item_material_total_quantity  = [];
@@ -173,7 +175,16 @@ class SectionController extends Controller
                 'ref_1'    => $contract_item_ref_1_total_amount
             ];
 
-            $grand_total_amount->material   +=  $contract_item_material_total_amount;
+
+            if($contract_item->item_type == 'MATR'){
+              
+                $grand_total_amount->budget_material   +=  $contract_item_material_total_amount;
+            
+            }else if($contract_item->item_type == 'OPEX'){
+                
+                $grand_total_amount->budget_opex   +=  $contract_item_material_total_amount;
+            }
+
             $grand_total_amount->ref_1      +=  $contract_item_ref_1_total_amount;
         }
         

@@ -135,7 +135,7 @@
                 <th colspan="4" style="">Contract</th>
                 <th colspan="4" style="">POW/DUPA</th>
                 <th rowspan="2" style="min-width:8%;max-width:8%">Factor</th>
-                <th colspan="4" style="">Material Budget</th>
+                <th colspan="4" style="">Budget</th>
             </tr>
             <tr>
          
@@ -300,15 +300,9 @@
         <!-- Grand Total -->
      
             <tr>
-                <td colspan="5" class="text-center">Material</td>
+                <th colspan="5" class="text-center">Material</th>
                 
-                <!--
-                <td></td>
-                
-                <td></td> Contract 
-                <td></td>
-                <td></td>
-                -->
+             
                 <th class="text-end">P {{ number_format( $grand_total_amount->contract_material, 2) }}</th>
                 <td></td><!-- Ref 1 -->
                 <td></td>
@@ -335,19 +329,19 @@
                 <td></td>
                 <td class="text-center">
                     @php
-                        $material_grand_percentage = 0;
+                        $budget_material_grand_percentage = 0;
 
                         if($grand_total_amount->contract_material > 0){
 
-                            $material_grand_percentage = ($grand_total_amount->material / $grand_total_amount->contract_material) * 100;
+                            $budget_material_grand_percentage = ($grand_total_amount->budget_material / $grand_total_amount->contract_material) * 100;
                         }
 
-                        $material_grand_percentage = number_format($material_grand_percentage,2);
+                        $budget_material_grand_percentage = number_format($budget_material_grand_percentage,2);
                     @endphp
 
-                    {{$material_grand_percentage}}%
+                    {{$budget_material_grand_percentage}}%
                 </td>
-                <th class="text-end">P {{ number_format( $grand_total_amount->material, 2) }}</th>
+                <th class="text-end">P {{ number_format( $grand_total_amount->budget_material, 2) }}</th>
             </tr>
 
             <!-- OPEX -->
