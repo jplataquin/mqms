@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <div class="form-group">
                         <label>Gross Total Amount</label>
                         <input type="text" id="gross_total_amount" value="{{$section->gross_total_amount}}" disabled="true" class="form-control"/>        
