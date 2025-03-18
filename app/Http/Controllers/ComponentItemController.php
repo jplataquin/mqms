@@ -155,7 +155,7 @@ class ComponentItemController extends Controller
         $component_item = new ComponentItem();
 
         
-
+        $component_item->auto_flag                 = true;
         $component_item->component_id              = $component_id;
         $component_item->name                      = $name;
         $component_item->budget_price              = $budget_price;
