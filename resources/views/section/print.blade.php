@@ -300,7 +300,7 @@
         <!-- Grand Total -->
      
             <tr>
-                <th colspan="5" class="text-center">Material</th>
+                <th colspan="5" class="text-center material-bg">Material</th>
                 
              
                 <th class="text-end">P {{ number_format( $grand_total_amount->contract_material, 2) }}</th>
@@ -346,15 +346,8 @@
 
             <!-- OPEX -->
             <tr>
-                <td colspan="5" class="text-center">Operational Expense</td>
-                
-                <!--
-                <td></td>
-                
-                <td></td> Contract 
-                <td></td>
-                <td></td>
-                -->
+                <td colspan="5" class="text-center opex-bg">Operational Expense</td>
+            
                 <th class="text-end">P {{ number_format( $grand_total_amount->contract_opex, 2) }}</th>
                 <td></td><!-- Ref 1 -->
                 <td></td>
@@ -369,9 +362,20 @@
                 <td></td>
                 <td></td>
                 <td class="text-center">
-                 
+                    @php
+                        $opex_material_grand_percentage = 0;
+
+                        if($grand_total_amount->contract_material > 0){
+
+                            $opex_material_grand_percentage = ($grand_total_amount->budget_opex / $grand_total_amount->contract_opex) * 100;
+                        }
+
+                        $opex_material_grand_percentage = number_format($opex_material_grand_percentage,2);
+                    @endphp
+
+                    {{$opex_material_grand_percentage}}%
                 </td>
-                <th class="text-end"></th>
+                <th class="text-end">P {{ number_format( $grand_total_amount->budget_opex, 2) }}</th>
             </tr>
     </table>
     
