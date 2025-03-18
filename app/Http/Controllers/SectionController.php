@@ -81,7 +81,8 @@ class SectionController extends Controller
         ];
 
         $grand_total_amount = (object) [
-            'contract'     => 0,
+            'contract_material'     => 0,
+            'contract_opex'         => 0,
             'ref_1'        => 0,
             'material'     => 0
         ];
@@ -99,7 +100,15 @@ class SectionController extends Controller
             
             $contract_item_material_total_quantity[$contract_item->id] = 0;
 
-            $grand_total_amount->contract +=  (float) $contract_item->contract_amount;
+            if($contract_item->item_type == 'MATR'){
+              
+                $grand_total_amount->contract_material +=  (float) $contract_item->contract_amount;
+            
+            }else if($contract_item->item_type == 'OPEX'){
+
+                $grand_total_amount->contract_opex +=  (float) $contract_item->contract_amount;
+            }
+           
             
             $contract_total_quantity[$contract_item->id] = 0;
 

@@ -286,22 +286,25 @@
         <!-- Grand Total -->
      
             <tr>
-                <td></td>
+                <td colspan="5" class="text-center">Material</td>
+                
+                <!--
                 <td></td>
                 
-                <td></td><!-- Contract -->
+                <td></td> Contract 
                 <td></td>
                 <td></td>
-                <th class="text-end">P {{ number_format( $grand_total_amount->contract, 2) }}</th>
+                -->
+                <th class="text-end">P {{ number_format( $grand_total_amount->contract_material, 2) }}</th>
                 <td></td><!-- Ref 1 -->
                 <td></td>
                 <td class="text-center">
                     @php
                         $ref_1_grand_percentage = 0;
 
-                        if($grand_total_amount->contract > 0){
+                        if($grand_total_amount->contract_material > 0){
 
-                            $ref_1_grand_percentage = ($grand_total_amount->ref_1 / $grand_total_amount->contract) * 100;
+                            $ref_1_grand_percentage = ($grand_total_amount->ref_1 / $grand_total_amount->contract_material) * 100;
                         }
 
                         $ref_1_grand_percentage = number_format($ref_1_grand_percentage,2);
@@ -320,9 +323,9 @@
                     @php
                         $material_grand_percentage = 0;
 
-                        if($grand_total_amount->contract > 0){
+                        if($grand_total_amount->contract_material > 0){
 
-                            $material_grand_percentage = ($grand_total_amount->material / $grand_total_amount->contract) * 100;
+                            $material_grand_percentage = ($grand_total_amount->material / $grand_total_amount->contract_material) * 100;
                         }
 
                         $material_grand_percentage = number_format($material_grand_percentage,2);
@@ -332,7 +335,36 @@
                 </td>
                 <th class="text-end">P {{ number_format( $grand_total_amount->material, 2) }}</th>
             </tr>
-     
+
+            <!-- OPEX -->
+            <tr>
+                <td colspan="5" class="text-center">Operational Expense</td>
+                
+                <!--
+                <td></td>
+                
+                <td></td> Contract 
+                <td></td>
+                <td></td>
+                -->
+                <th class="text-end">P {{ number_format( $grand_total_amount->contract_opex, 2) }}</th>
+                <td></td><!-- Ref 1 -->
+                <td></td>
+                <td class="text-center">
+               
+                </td>
+                <th class="text-end"></th>
+
+                <td></td><!-- Factor -->
+                
+                <!-- Material -->
+                <td></td>
+                <td></td>
+                <td class="text-center">
+                 
+                </td>
+                <th class="text-end"></th>
+            </tr>
     </table>
     
 
