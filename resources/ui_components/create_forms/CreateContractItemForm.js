@@ -40,6 +40,20 @@ class CreateContractItemForm extends Component{
 
             });
 
+            t.div({class:'row mb-3'},()=>{
+               
+                t.div({class:'col-lg-12 mb-3'},()=>{
+                    t.div({class:'form-group'},()=>{
+                        t.label('Type');
+                        this.el.item_type = t.select({class:'form-select'},()=>{
+                            t.option({value:'MATR'},'Material');
+                            t.option({value:'LABR'},'Labor');
+                            t.option({value:'OPEX'},'Operational Expense');
+                        });
+                    });//div
+                });//div col
+
+            });
 
             t.div({class:'row mb-3'},()=>{
 
@@ -151,6 +165,7 @@ class CreateContractItemForm extends Component{
             section_id                  : this._model.section_id,
             item_code                   : this.el.item_code.value,
             description                 : this.el.description.value,
+            item_type                   : this.el.item_type.value,
             
             contract_quantity           : this.el.contract_quantity.value,
             contract_unit_price         : this.el.contract_unit_price.value,

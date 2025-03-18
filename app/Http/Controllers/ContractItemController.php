@@ -93,6 +93,7 @@ class ContractItemController extends Controller
 
         $item_code                = $request->input('item_code') ?? '';
         $description              = $request->input('description') ?? '';
+        $item_type                = $request->input('item_type') ?? '';
         $contract_quantity        = $request->input('contract_quantity') ?? '';
         $contract_unit_price      = $request->input('contract_unit_price') ?? '';
         $ref_1_quantity           = $request->input('ref_1_quantity') ?? '';
@@ -123,6 +124,9 @@ class ContractItemController extends Controller
             ],
             'description' => [
                 'required',
+            ],
+            'item_type' =>[
+                'required'
             ],
             'unit_id'      =>[
                 'required',
@@ -171,7 +175,7 @@ class ContractItemController extends Controller
         $contract_item = new ContractItem();
 
         $contract_item->section_id              = $section_id;
-        $contract_item->item_type               = 'MATR'; //todo fix this
+        $contract_item->item_type               = $item_type; //todo fix this
         $contract_item->item_code               = $item_code;
         $contract_item->description             = $description;
         $contract_item->contract_quantity       = $contract_quantity;
