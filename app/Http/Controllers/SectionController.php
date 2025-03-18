@@ -322,6 +322,20 @@ class SectionController extends Controller
         $name                       = $request->input('name') ?? '';
         $gross_total_amount         = $request->input('gross_total_amount') ?? 0;
         
+        $section = Section::find($id);
+        
+        if(!$section){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Record not found',
+                'data'      => [
+                    'id' => $id
+                ]
+            ]);
+        }
+
+        $project_id = $section->project_id;
+
         $validator = Validator::make($request->all(),[
             'id'   => [
                 'required',
@@ -329,16 +343,16 @@ class SectionController extends Controller
             ],
             'gross_total_amount'   => [
                 'required',
-                'numeric',
-                'decimal:2'               
+                'numeric',          
             ],
             'name' => [
                 'required',
                 'max:255',
                 Rule::unique('sections')->where(
-                function ($query) use ($id,$name) {
+                function ($query) {
                     return $query
                     ->where('name', $name)
+                    ->where('project_id',$project_id)
                     ->where('id','!=',$id);
                 }),
             ]
@@ -354,17 +368,9 @@ class SectionController extends Controller
         }
 
         $user_id = Auth::user()->id;
-        $section = Section::find($id);
+      
 
-        if(!$section){
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Record not found',
-                'data'      => [
-                    'id' => $id
-                ]
-            ]);
-        }
+    
 
         $section->name                        = $name;
         $section->gross_total_amount          = $gross_total_amount;
