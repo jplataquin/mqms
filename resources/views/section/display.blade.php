@@ -248,8 +248,9 @@
 
         editBtn.classList.add('d-none');
 
-        sectionName.disabled = false;
-     
+        sectionName.disabled        = false;
+        gross_total_amount.disabled = false;
+
         updateBtn.classList.remove('d-none');
         
         cancelBtn.onclick = ()=>{
