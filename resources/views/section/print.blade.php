@@ -328,19 +328,19 @@
                 <td></td>
                 <td class="text-center">
                     @php
-                        $ref_1_grand_percentage = 0;
+                        $ref_1_material_grand_percentage = 0;
 
                         if($grand_total_amount->contract_material > 0){
 
-                            $ref_1_grand_percentage = ($grand_total_amount->ref_1 / $grand_total_amount->contract_material) * 100;
+                            $ref_1_material_grand_percentage = ($grand_total_amount->ref_1_material / $grand_total_amount->contract_material) * 100;
                         }
 
-                        $ref_1_grand_percentage = number_format($ref_1_grand_percentage,2);
+                        $ref_1_material_grand_percentage = number_format($ref_1_material_grand_percentage,2);
                     @endphp
 
-                    {{$ref_1_grand_percentage}}%
+                    {{$ref_1_material_grand_percentage}}%
                 </td>
-                <th class="text-end">P {{ number_format( $grand_total_amount->ref_1, 2) }}</th>
+                <th class="text-end">P {{ number_format( $grand_total_amount->ref_1_material, 2) }}</th>
 
                 <td></td><!-- Factor -->
                 
@@ -372,9 +372,20 @@
                 <td></td><!-- Ref 1 -->
                 <td></td>
                 <td class="text-center">
-               
+                    @php
+                        $ref_1_opex_grand_percentage = 0;
+
+                        if($grand_total_amount->contract_opex > 0){
+
+                            $ref_1_opex_grand_percentage = ($grand_total_amount->ref_1_opex / $grand_total_amount->contract_opex) * 100;
+                        }
+
+                        $ref_1_opex_grand_percentage = number_format($ref_1_opex_grand_percentage,2);
+                    @endphp
+
+                    {{$ref_1_opex_grand_percentage}}%
                 </td>
-                <th class="text-end"></th>
+                <th class="text-end">P {{ number_format( $grand_total_amount->ref_1_opex, 2) }}</th>
 
                 <td></td><!-- Factor -->
                 

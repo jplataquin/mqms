@@ -83,7 +83,9 @@ class SectionController extends Controller
         $grand_total_amount = (object) [
             'contract_material'     => 0,
             'contract_opex'         => 0,
-            'ref_1'        => 0,
+            
+            'ref_1_material'        => 0,
+            'ref_1_opex'        => 0,
 
             'budget_material' => 0,
             'budget_opex'     => 0
@@ -180,14 +182,16 @@ class SectionController extends Controller
 
             if($contract_item->item_type == 'MATR'){
               
-                $grand_total_amount->budget_material   +=  $contract_item_material_total_amount;
+                $grand_total_amount->budget_material     +=  $contract_item_material_total_amount;
+                $grand_total_amount->ref_1_material      +=  $contract_item_ref_1_total_amount;
             
             }else if($contract_item->item_type == 'OPEX'){
                 
-                $grand_total_amount->budget_opex   +=  $contract_item_material_total_amount;
+                $grand_total_amount->budget_opex        +=  $contract_item_material_total_amount;
+                $grand_total_amount->ref_1_opex         +=  $contract_item_ref_1_total_amount;
             }
 
-            $grand_total_amount->ref_1      +=  $contract_item_ref_1_total_amount;
+           
         }
         
         $data = json_decode(json_encode($data));
