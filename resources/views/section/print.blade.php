@@ -27,15 +27,15 @@
 
         /** Material */
         .contract-item-material-row{
-            background-color: #b7d7e8;
+            background-color: #eaece5;
         }
 
         .material-bg{
-            background-color: #b7d7e8;
+            background-color: #eaece5;
         }
 
         .component-material-row{
-            background-color: #cfe0e8;
+            background-color: #f0f0f0;
         }
 
 
