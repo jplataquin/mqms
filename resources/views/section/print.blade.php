@@ -42,11 +42,11 @@
      
         /** Opex **/
         .contract-item-opex-row{
-            background-color: #cab577;
+            background-color: #e3e0cc;
         }
 
         .opex-bg{
-            background-color: #cab577
+            background-color: #e3e0cc
         }
 
         .component-opex-row{
