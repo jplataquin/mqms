@@ -383,7 +383,7 @@
                 
                 <!-- Material -->
                 <td></td>
-                <td>
+                <td class="text-center">
                     @php
                         $budget_material_grand_percentage = 0;
 
@@ -453,7 +453,7 @@
                 
                 <!-- Material -->
                 <td></td>
-                <td>
+                <td class="text-center">
                     @php
                         $opex_material_grand_percentage = 0;
 
