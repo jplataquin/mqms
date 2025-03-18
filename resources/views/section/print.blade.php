@@ -50,7 +50,7 @@
         }
 
         .component-opex-row{
-            background-color: #dbceb0
+            background-color: #fefbd8
         }
        
         .non-conforming{
