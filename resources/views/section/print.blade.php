@@ -25,8 +25,12 @@
             padding: 5px;
         }
 
-        .contract-item-row{
+        .contract-item-material-row{
             background-color: #a1b2b7;
+        }
+
+        .contract-item-opex-row{
+            background-color:rgb(205, 220, 120);
         }
 
         .contract-item-row:hover{
@@ -160,7 +164,17 @@
         @foreach($data as $contract_item_id => $row_1)
 
             <!-- Contract Item -->
-            <tr class="contract-item-row">
+
+            <tr class="
+                @if($row_1->contract_item->item_type == 'MATR') 
+                    contract-item-material-row 
+                @endif
+
+                @if($row_1->contract_item->item_type == 'OPEX') 
+                    contract-item-opex-row 
+                @endif
+            
+            ">
                 <td data-controller="pageBreaker">{{$row_1->contract_item->item_code}}</td>
                 <td>{{$row_1->contract_item->description}}</td>
                 
