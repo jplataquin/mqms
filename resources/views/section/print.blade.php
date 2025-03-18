@@ -355,7 +355,7 @@
                             $material_total_percentage = ($grand_total_amount->contract_material / $section->total_gross_amount) * 100;
                         }
 
-                        $material_total_percentage = number_format(material_total_percentage,2);
+                        $material_total_percentage = number_format($material_total_percentage,2);
                     @endphp
                     {{$material_total_percentage}}%
                 </th>
