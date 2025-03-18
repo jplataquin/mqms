@@ -52,6 +52,10 @@ class CreateSectionForm extends Component{
             window.util.drawerModal.close();
         }
 
+        window.util.numbersOnlyInput([this.el.gross_total_amount],{
+            negative:false,
+            precision:2
+        });
         
         this.el.btn_submit.onclick = ()=>{
             

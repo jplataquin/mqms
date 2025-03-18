@@ -256,8 +256,9 @@ class SectionController extends Controller
 
         //todo check role
 
-        $name           = $request->input('name') ?? '';
-        $project_id     = (int) $request->input('project_id') ?? 0;
+        $name                   = $request->input('name') ?? '';
+        $gross_total_amount     = $request->input('gross_total_amount') ?? 0;
+        $project_id             = (int) $request->input('project_id') ?? 0;
 
         //TODO check if project exists;
 
@@ -271,6 +272,11 @@ class SectionController extends Controller
                     ->where('project_id', $project_id)
                     ->where('name', $name);
                 }),
+            ],
+            'gross_total_amount' =>[
+                'required',
+                'numeric',
+                'decimal:2'
             ],
             'project_id' =>[
                 'required',
@@ -293,9 +299,10 @@ class SectionController extends Controller
 
         $section = new Section();
 
-        $section->project_id    = $project_id;
-        $section->name          = $name;
-        $section->created_by    = $user_id;
+        $section->project_id            = $project_id;
+        $section->name                  = $name;
+        $section->gross_total_amount    = $gross_total_amount;
+        $section->created_by            = $user_id;
 
         $section->save();
 
@@ -311,13 +318,19 @@ class SectionController extends Controller
 
         //todo check role
 
-        $id         = (int) $request->input('id') ?? 0;
-        $name       = $request->input('name') ?? '';
+        $id                         = (int) $request->input('id') ?? 0;
+        $name                       = $request->input('name') ?? '';
+        $gross_total_amount         = $request->input('gross_total_amount') ?? 0;
         
         $validator = Validator::make($request->all(),[
             'id'   => [
                 'required',
                 'integer',               
+            ],
+            'gross_total_amount'   => [
+                'required',
+                'numeric',
+                'decimal:2'               
             ],
             'name' => [
                 'required',
@@ -353,7 +366,8 @@ class SectionController extends Controller
             ]);
         }
 
-        $section->name                         = $name;
+        $section->name                        = $name;
+        $section->gross_total_amount          = $gross_total_amount;
         $section->updated_by                  = $user_id;
 
         $section->save();
