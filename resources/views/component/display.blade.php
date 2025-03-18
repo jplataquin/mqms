@@ -38,7 +38,7 @@
             </tr>
             <tr>
                 <th>Section</th>
-                <td>{{$section->name}} [<a href="#" onclick="window.open('/project/section/print/{{$section->id}}', '_blank', 'toolbar=0,location=0,menubar=0,height=300');">Overview</a>] </td>
+                <td>{{$section->name}} [<a href="#" onclick="window.open('/project/section/print/{{$section->id}}', '_blank', 'toolbar=0,location=0,menubar=0,height=600');">Overview</a>] </td>
             </tr>
             <tr id="component_sticky_trigger">
                 <th>Contract Item</th>
