@@ -66,8 +66,10 @@
                 <th class="text-center">Quantity</th>
             </tr>
             @foreach($per_material as $m)
-                <th>{{$m->MaterialItem->formatted_name}}</th>
-                <th class="text-center">{{ number_format($m->total_quantity,2) }}</th>
+            <tr>
+                <td>{{$m->MaterialItem->formatted_name}}</td>
+                <td class="text-center">{{ number_format($m->total_quantity,2) }}</td>
+            </td>
             @endforeach
         </table>
     </div>
