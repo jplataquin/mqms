@@ -134,7 +134,7 @@ class PurchaseReportController extends Controller{
     public function fix_po_contract_item_id(){
         
         //get all po
-        $purchase_orders = PurchaseOrder::all();
+        $purchase_orders = PurchaseOrder::withTrashed()->all();
 
         //loop 
         foreach($purchase_orders as $po){
