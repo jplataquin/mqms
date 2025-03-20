@@ -179,7 +179,6 @@ class PurchaseReportController extends Controller{
         }
 
         $purchase_order_items = $purchase_order_items
-        ->groupBy('first_name', 'status')
         ->orderBy('id','ASC')
         ->with('MaterialCanvass')->get();
 
