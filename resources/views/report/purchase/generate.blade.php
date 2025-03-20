@@ -23,7 +23,7 @@
         </div>
         <hr>
 
-        <h2>Per Supplier</h2>
+        <h2 class="mb-3">Per Supplier</h2>
         @foreach($per_supplier as $supplier_id => $d)
         <div class="mb-5">
 
@@ -55,27 +55,27 @@
             </table>
         </div>
         @endforeach
-    </div>
+   
 
     <hr>
 
 
-    <h2>Per Material</h2>
-    <div>
-        <table class="table w-100">
-            <tr>
-                <th>Material Item</th>
-                <th class="text-center">Quantity</th>
-            </tr>
-            @foreach($per_material as $m)
-            <tr>
-                <td>{{$m->MaterialItem->formatted_name}}</td>
-                <td class="text-center">{{ number_format($m->total_quantity,2) }}</td>
-            </td>
-            @endforeach
-        </table>
+        <h2 class="mb-3">Per Material</h2>
+        <div>
+            <table class="table w-100">
+                <tr>
+                    <th>Material Item</th>
+                    <th class="text-center">Quantity</th>
+                </tr>
+                @foreach($per_material as $m)
+                <tr>
+                    <td>{{$m->MaterialItem->formatted_name}}</td>
+                    <td class="text-center">{{ number_format($m->total_quantity,2) }}</td>
+                </td>
+                @endforeach
+            </table>
+        </div>
     </div>
-
     <script type="module">
         import {$q,Template,$el,$util} from '/adarna.js';
 
