@@ -23,11 +23,11 @@
         </div>
         <hr>
 
-   
+        <h2>Per Supplier</h2>
         @foreach($per_supplier as $supplier_id => $d)
         <div class="mb-5">
 
-            <h2 class="mb-3">{{$d['supplier']->name}}</h2>
+            <h3 class="mb-3">{{$d['supplier']->name}}</h3>
         
             <table class="table w-100">
                 <tr>
@@ -59,6 +59,8 @@
 
     <hr>
 
+
+    <h2>Per Material</h2>
     <div>
         <table class="table w-100">
             <tr>
