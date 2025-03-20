@@ -134,13 +134,14 @@ class PurchaseReportController extends Controller{
     public function fix_po_contract_item_id(){
         
         //get all po
-        $purchase_orders = PurchaseOrder::withTrashed()->all();
+        $purchase_orders = PurchaseOrder::withTrashed()->get();
 
         //loop 
         foreach($purchase_orders as $po){
 
             echo $po->component_id.'</br>';
-            $component = Component::find($po->component_id);
+            
+            $component = Component::withTrashed()->where('id',$po->component_id)->first();
 
             if(!$component){
                 echo 'Component '.$po->component_id.' not found </br>';
