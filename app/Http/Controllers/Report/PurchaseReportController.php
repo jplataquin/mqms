@@ -175,6 +175,7 @@ class PurchaseReportController extends Controller{
             return $data;
         }
         
+        print_r($data);
         return view('/report/purchase/generate',$data);
     }
 
