@@ -40,8 +40,8 @@ class PurchaseReportController extends Controller{
         
         $url = htmlspecialchars( str_replace(url('').'/','',$request->fullUrl()) );
        
-        $project_id             = $request->input('project_id');
-        $section_id             = $request->input('section_id');
+        $project_id             = (int) $request->input('project_id');
+        $section_id             = (int) $request->input('section_id');
         $contract_item_id       = (int) $request->input('contract_item_id');
         $component_id           = (int) $request->input('component_id');
         $from                   = $request->input('from');
@@ -96,6 +96,7 @@ class PurchaseReportController extends Controller{
             ]);
         }
 
+        echo $project_id.' '.$section_id;exit;
         //Filter Project
         $purchase_orders = PurchaseOrder::where('project_id',$project_id);
 
@@ -128,9 +129,9 @@ class PurchaseReportController extends Controller{
             $purchase_orders = $purchase_orders->where('approved_at','<=', $from.' 59:59:59');
         }
 
-        $purchase_orders = $purchase_orders->get();
+        $purchase_orders = $purchase_orders->where('status','APRV')->get();
 
-        print_r($purchase_orders);exit;
+      
         //Arrange PO ids
         $po_id_arr = [];
 
