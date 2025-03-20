@@ -29,7 +29,7 @@
 
             <h3 class="mb-3">{{$d['supplier']->name}}</h3>
         
-            <table class="table w-100">
+            <table class="table w-100 table-hover ">
                 <tr>
                     <th>Material Item</th>
                     <th class="text-center">Quantity</th>
@@ -62,7 +62,7 @@
 
         <h2 class="mb-3 text-center">-- Per Material --</h2>
         <div>
-            <table class="table w-100">
+            <table class="table w-100 table-hover table-striped">
                 <tr>
                     <th>Material Item</th>
                     <th class="text-center">Quantity</th>
