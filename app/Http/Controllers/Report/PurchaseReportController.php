@@ -123,6 +123,9 @@ class PurchaseReportController extends Controller{
             $purchase_orders = $purchase_orders->whereIn('supplier_id',$supplier_id_arr);
         }
 
+        $purchase_orders = $purchase_orders->where('status','APRV')->get();
+
+        print_r($purchase_orders);exit;
         
         //Filter From
         if($from){
@@ -133,9 +136,7 @@ class PurchaseReportController extends Controller{
             $purchase_orders = $purchase_orders->where('approved_at','<=', $from.' 59:59:59');
         }
 
-        $purchase_orders = $purchase_orders->where('status','APRV')->get();
-
-        print_r($purchase_orders);exit;
+  
         //Arrange PO ids
         $po_id_arr = [];
 
