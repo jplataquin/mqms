@@ -128,7 +128,7 @@ class PurchaseReportController extends Controller{
             $purchase_orders = $purchase_orders->where('approved_at','<=', $from.' 59:59:59');
         }
 
-        $purchase_orders = $purchase_orders->where('status','APRV')->get();
+        $purchase_orders = $purchase_orders->get();
 
         print_r($purchase_orders);exit;
         //Arrange PO ids
