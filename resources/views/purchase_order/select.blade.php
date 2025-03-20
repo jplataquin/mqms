@@ -249,8 +249,9 @@
 
         e.preventDefault();
 
-        sectionSelect.innerHTML = '';
-        componentSelect.innerHTML = '';
+        sectionSelect.innerHTML             = '';
+        contractItemSelect.innerHTML        = '';
+        componentSelect.innerHTML           = '';
 
         window.util.blockUI();
 
