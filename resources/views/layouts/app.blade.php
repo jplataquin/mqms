@@ -101,6 +101,9 @@
                                 <li class="nav-sub-item">
                                     <a href="/report/price/parameters" hx-select="#content" hx-target="#main">Price</a>
                                 </li>
+                                <li class="nav-sub-item">
+                                    <a href="/report/purchase/parameters" hx-select="#content" hx-target="#main">Purchase</a>
+                                </li>
                             </ul>
                         </li>
                        

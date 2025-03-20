@@ -23,14 +23,17 @@ class PurchaseReportController extends Controller{
 
     public function parameters(){
 
-        $projects = Project::where('deleted_at',null)->get();
+        $projects = Project::get();
 
-        $material_groups = MaterialGroup::where('deleted_at',null)->get();
+        $material_groups    = MaterialGroup::get();
+        $suppliers          = Suppliers::get();
 
-        $users = User::where('deleted_at',null)->get();
+        $users = User::get();
 
         return view('report/purchase/parameters',[
-            'projects'          => $projects
+            'projects'          => $projects,
+            'suppliers'         => $suppliers,
+            'material_groups'   => $material_groups
         ]);
     }
 
