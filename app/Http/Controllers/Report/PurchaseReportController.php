@@ -139,6 +139,7 @@ class PurchaseReportController extends Controller{
             $po_id_arr[] = $po->id;
         }
 
+        print_r($po_id_arr);
         $material_item_id_arr = [];
         
 
