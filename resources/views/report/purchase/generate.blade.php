@@ -27,14 +27,14 @@
         @foreach($data as $supplier_id => $d)
         <div class="mb-5">
 
-            <h2>{{$d['supplier']->name}}</h2>
+            <h2 class="mb-3">{{$d['supplier']->name}}</h2>
         
             <table class="table w-100">
                 <tr>
                     <th>Material Item</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Total</th>
+                    <th class="text-center">Quantity</th>
+                    <th class="text-end">Price</th>
+                    <th class="text-end">Total</th>
                 </tr>
                 @foreach($d['items'] as $po_item)
                 <tr>
