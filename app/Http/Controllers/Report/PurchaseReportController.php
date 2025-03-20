@@ -135,7 +135,7 @@ class PurchaseReportController extends Controller{
 
         $purchase_orders = $purchase_orders->where('status','APRV')->get();
 
-      
+        print_r($purchase_orders);exit;
         //Arrange PO ids
         $po_id_arr = [];
 
