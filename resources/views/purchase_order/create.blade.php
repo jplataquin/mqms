@@ -40,6 +40,10 @@
                     <td>{{$section->name}}</td>
                 </tr>
                 <tr>
+                    <th>Contract Item</th>
+                    <td>{{$contract_item->name}}</td>
+                </tr>
+                <tr>
                     <th>Component</th>
                     <td>{{$component->name}}</td>
                 </tr>
@@ -456,7 +460,9 @@
                 material_quantity_request_id    : '{{$material_quantity_request->id}}',
                 project_id                      : '{{$project->id}}',
                 section_id                      : '{{$section->id}}',
-                component_id                    : '{{$component->id}}'
+                contract_item_id                : '{{$contract_item->id}}',
+                component_id                    : '{{$component->id}}',
+                
             }).then(reply=>{
 
                 window.util.unblockUI();

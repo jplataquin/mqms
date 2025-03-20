@@ -47,10 +47,10 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label>Project</label>
-                        <select class="form-control" id="projectSelect">
+                        <select class="form-select" id="projectSelect">
                             <option value=""> - </option>
                             @foreach($projects as $project)
                                 <option value="{{$project->id}}">{{$project->name}}</option>
@@ -59,17 +59,28 @@
                     </div>
                 </div>
             
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label>Section</label>
-                        <select class="form-control" id="sectionSelect">
+                        <select class="form-select" id="sectionSelect">
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-4">
+            </div>
+            <div class="row">
+                    
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Contract Item</label>
+                        <select class="form-select" id="contractItemSelect">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label>Component</label>
-                        <select class="form-control" id="componentSelect">
+                        <select class="form-select" id="componentSelect">
                         </select>
                     </div>
                 </div>
@@ -109,11 +120,12 @@
 <script type="module">
     import {$q,Template,$el,$util} from '/adarna.js';
 
-    let list            = $q('#list').first();
-    let query           = $q('#query').first();
-    let projectSelect   = $q('#projectSelect').first();
-    let sectionSelect   = $q('#sectionSelect').first();
-    let componentSelect = $q('#componentSelect').first();
+    let list                = $q('#list').first();
+    let query               = $q('#query').first();
+    let projectSelect       = $q('#projectSelect').first();
+    let sectionSelect       = $q('#sectionSelect').first();
+    let contractItemSelect  = $q('#contractItemSelect').first();
+    let componentSelect     = $q('#componentSelect').first();
  
     let searchBtn       = $q('#searchBtn').first();
     let showMoreBtn     = $q('#showMoreBtn').first();
@@ -171,6 +183,7 @@
             order: order,
             project_id: projectSelect.value,
             section_id: sectionSelect.value,
+            contract_item_id: contractItemSelect.value,
             component_id: componentSelect.value,
             limit: 10
         }).then(reply=>{
@@ -274,12 +287,49 @@
 
         e.preventDefault();
 
+        contractItemSelect.innerHTML = '';
+
+        window.util.blockUI();
+
+        window.util.$get('/api/contract_item/list',{
+            section_id: sectionSelect.value,
+            orderBy:'name',
+            order:'ASC'
+        }).then(reply=>{
+            
+            window.util.unblockUI();
+
+            if(reply.status <= 0){
+
+                window.util.showMsg(reply);
+                return false;
+            }
+
+            contractItemSelect.append(
+                t.option({value:''},' - ')
+            );
+
+            reply.data.forEach((item)=>{
+
+                contractItemSelect.append(
+                    t.option({value:item.id},item.name)
+                );
+
+            });
+
+        });
+        }
+
+    contractItemSelect.onchange = (e)=>{
+
+        e.preventDefault();
+
         componentSelect.innerHTML = '';
 
         window.util.blockUI();
 
         window.util.$get('/api/component/list',{
-            section_id: sectionSelect.value,
+            section_id: contractItemSelect.value,
             orderBy:'name',
             order:'ASC'
         }).then(reply=>{

@@ -24,7 +24,8 @@ class ContractItem extends Model
         'contract_unit_text',
         'ref_1_unit_text',
         'ref_1_amount',
-        'contract_amount'
+        'contract_amount',
+        'name'
     ];
 
     public $deleteException = null;
@@ -62,6 +63,10 @@ class ContractItem extends Model
     }
 
     public function name(){
+        return $this->item_code.' '.$this->description;
+    }
+
+    public function getNameAttribute(){
         return $this->item_code.' '.$this->description;
     }
 

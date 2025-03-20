@@ -110,14 +110,15 @@ class PurchaseOrderController extends Controller
 
         //todo check role
 
-        $page            = (int) $request->input('page')     ?? 1;
-        $limit           = (int) $request->input('limit')    ?? 10;
-        $project_id      = (int) $request->input('project_id')  ?? 0;
-        $section_id      = (int) $request->input('section_id')  ?? 0;
-        $component_id    = (int) $request->input('component_id')  ?? 0;
-        $query           = (int) $request->input('query')    ?? 0;
-        $orderBy         = $request->input('order_by')       ?? 'id';
-        $order           = $request->input('order')          ?? 'DESC';
+        $page               = (int) $request->input('page')     ?? 1;
+        $limit              = (int) $request->input('limit')    ?? 10;
+        $project_id         = (int) $request->input('project_id')  ?? 0;
+        $section_id         = (int) $request->input('section_id')  ?? 0;
+        $contract_item_id   = (int) $request->input('contract_item_id')  ?? 0;
+        $component_id       = (int) $request->input('component_id')  ?? 0;
+        $query              = (int) $request->input('query')    ?? 0;
+        $orderBy            = $request->input('order_by')       ?? 'id';
+        $order              = $request->input('order')          ?? 'DESC';
         $result = [];
 
         $materialQuantityRequest = new MaterialQuantityRequest();
@@ -137,18 +138,22 @@ class PurchaseOrderController extends Controller
             $materialQuantityRequest = $materialQuantityRequest->where('id','=',$query);
         }
 
-        if($project_id){
-            
+        if($project_id){   
             $materialQuantityRequest = $materialQuantityRequest->where('project_id','=',$project_id);
+        }
 
-            if($section_id){
-                $materialQuantityRequest = $materialQuantityRequest->where('section_id','=',$section_id);
+        if($section_id){
+                
+            $materialQuantityRequest = $materialQuantityRequest->where('section_id','=',$section_id);
+           
+        }
 
-                if($component_id){
-                    $materialQuantityRequest = $materialQuantityRequest->where('component_id','=',$component_id);
+        if($contract_item_id){     
+            $materialQuantityRequest = $materialQuantityRequest->where('contract_item_id','=',$contract_item_id);
+        }
 
-                }
-            }
+        if($component_id){
+            $materialQuantityRequest = $materialQuantityRequest->where('component_id','=',$component_id);
         }
 
         if($limit > 0){
@@ -385,6 +390,7 @@ class PurchaseOrderController extends Controller
         $payment_term_id              = (int) $request->input('payment_term_id');
         $project_id                   = (int) $request->input('project_id');
         $section_id                   = (int) $request->input('section_id');
+        $contract_item_id             = (int) $request->input('contract_item_id');
         $component_id                 = (int) $request->input('component_id');
                     
 
@@ -475,6 +481,10 @@ class PurchaseOrderController extends Controller
                 'integer',
                 'required'
             ],
+            'contract_item_id'=>[
+                'integer',
+                'required'
+            ],
             'component_id' => [
                 'integer',
                 'required'
@@ -554,6 +564,7 @@ class PurchaseOrderController extends Controller
 
             $purchaseOrder->project_id                      = $project_id;
             $purchaseOrder->section_id                      = $section_id;
+            $purchaseOrder->contract_item_id                = $contract_item_id;
             $purchaseOrder->component_id                    = $component_id;
             $purchaseOrder->supplier_id                     = $supplier_id;
             $purchaseOrder->payment_term_id                 = $payment_term_id;
