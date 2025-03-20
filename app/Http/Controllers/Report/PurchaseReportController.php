@@ -23,12 +23,10 @@ class PurchaseReportController extends Controller{
 
     public function parameters(){
 
-        $projects = Project::get();
-
-        $material_groups    = MaterialGroup::get();
-        $suppliers          = Supplier::get();
-
-        $users = User::get();
+        $projects           = Project::orderBy('name','ASC')->get();
+        $material_groups    = MaterialGroup::orderBy('name','ASC')->get();
+        $suppliers          = Supplier::orderBy('name','ASC')->get();
+        $users              = User::orderBy('name','ASC')->get();
 
         return view('report/purchase/parameters',[
             'projects'          => $projects,
