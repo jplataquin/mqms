@@ -370,7 +370,7 @@
                 query>append('to',to_val);
             }
 
-            window.open('/report/price/generate?'+query,'_blank').focus();
+            window.open('/report/purchase/generate?'+query,'_blank').focus();
         }
 
 
