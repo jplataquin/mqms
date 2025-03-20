@@ -178,7 +178,12 @@ class PurchaseReportController extends Controller{
             $purchase_order_items = PurchaseOrderItem::whereIn('material_item_id',$material_item_id_arr);
         }
 
-        $purchase_order_items = $purchase_order_items->orderBy('id','ASC')->with('MaterialCanvass')->get();
+        $purchase_order_items = $purchase_order_items
+        ->groupBy('first_name', 'status')
+        ->orderBy('id','ASC')
+        ->with('MaterialCanvass')->get();
+
+  
 
         return [
             'purchase_order_items' => $purchase_order_items

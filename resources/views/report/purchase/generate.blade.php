@@ -28,11 +28,19 @@
         <table>
             <tr>
                 <th>Material Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
             </tr>
             @foreach($purchase_order_items as $po_item)
             <tr>
                 <td>
                     {{$po_item->MaterialItem->formatted_name}}
+                </td>
+                <td>
+                    {{$po_item->MaterialItem->quantity}}
+                </td>
+                <td>
+                    {{$po_item->MaterialItem->price}}
                 </td>
             </tr>
             @endforeach
