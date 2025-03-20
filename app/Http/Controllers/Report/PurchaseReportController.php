@@ -59,7 +59,7 @@ class PurchaseReportController extends Controller{
         if($suppliers){
             $supplier_id_arr = explode(',',$suppliers);
         }
-        
+
         $project_name       = '';
         $section_name       = '';
         $contract_item_name = '*';
@@ -131,14 +131,10 @@ class PurchaseReportController extends Controller{
         //Filter Supplier
         if(count($supplier_id_arr)){
             $purchase_orders = $purchase_orders->whereIn('supplier_id',$supplier_id_arr);
-            echo count($supplier_id_arr);
         }
 
         
-        $purchase_orders = $purchase_orders->where('status','APRV')->get();
-        print_r($supplier_id_arr);
-        
-        print_r($purchase_orders);exit;
+  
    
         //Filter From
         if($from){
@@ -149,7 +145,10 @@ class PurchaseReportController extends Controller{
             $purchase_orders = $purchase_orders->where('approved_at','<=', $from.' 59:59:59');
         }
 
-  
+        $purchase_orders = $purchase_orders->where('status','APRV')->get();
+        print_r($supplier_id_arr);
+        
+        print_r($purchase_orders);exit;
         //Arrange PO ids
         $po_id_arr = [];
 
