@@ -139,6 +139,7 @@ class PurchaseReportController extends Controller{
         //loop 
         foreach($purchase_orders as $po){
 
+            echo $po->component_id.'</br>';
             $component = Component::find($po->component_id);
 
             if(!$component){
@@ -148,6 +149,7 @@ class PurchaseReportController extends Controller{
             $contract_item_id  = $component->ContractItem->id;
 
             $po->contract_item_id = $contract_item_id;
+            $po->save();
         }
 
 
