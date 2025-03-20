@@ -106,7 +106,7 @@ class PurchaseReportController extends Controller{
             $purchase_orders = $purchase_orders->where('section_id',$section_id);
         }
         
-        print_r($purchase_orders->get());exit;
+      
         //Filter Contract Item
         if($contract_item_id){
             $purchase_orders = $purchase_orders->where('contract_item_id',$contract_item_id);
@@ -122,6 +122,7 @@ class PurchaseReportController extends Controller{
             $purchase_orders = $purchase_orders->whereIn('supplier_id',$supplier_id_arr);
         }
 
+        print_r($purchase_orders->get());exit;
         //Filter From
         if($from){
             $purchase_orders = $purchase_orders->where('approved_at','>=', $from.' 00:00:00');
