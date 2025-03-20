@@ -46,10 +46,20 @@ class PurchaseReportController extends Controller{
         $component_id           = (int) $request->input('component_id');
         $from                   = $request->input('from');
         $to                     = $request->input('to');
+        $material_groups        = $request->input('material_groups');
+        $suppliers              = $request->input('suppliers');
 
-        $material_group_id_arr   = explode(',',$request->input('material_groups'));
-        $supplier_id_arr        = explode(',',$request->input('suppliers'));
+        $material_group_id_arr  = [];
+        $supplier_id_arr        = [];
 
+        if($material_groups){
+            $material_group_id_arr = explode(',',$material_groups);
+        }
+
+        if($suppliers){
+            $supplier_id_arr = explode(',',$suppliers);
+        }
+        
         $project_name       = '';
         $section_name       = '';
         $contract_item_name = '*';
