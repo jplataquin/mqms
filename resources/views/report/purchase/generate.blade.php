@@ -27,22 +27,26 @@
         @foreach($data as $supplier_id => $d)
         <h2>{{$d['supplier']->name}}</h2>
         
-        <table>
+        <table class="table w-100">
             <tr>
                 <th>Material Item</th>
                 <th>Quantity</th>
                 <th>Price</th>
+                <th>Total</th>
             </tr>
             @foreach($d['items'] as $po_item)
             <tr>
                 <td>
                     {{$po_item->MaterialItem->formatted_name}}
                 </td>
-                <td>
-                    {{$po_item->total_quantity}}
+                <td class="text-center">
+                    {{ number_fromat($po_item->total_quantity,2) }}
                 </td>
-                <td>
-                    {{$po_item->price}}
+                <td class="text-end">
+                    P {{$po_item->price}}
+                </td>
+                <td class="text-end">
+                    P {{ number_format( ($po_item->total_quantity * $po_item->price), 2) }}
                 </td>
             </tr>
             @endforeach
