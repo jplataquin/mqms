@@ -37,10 +37,10 @@
                     {{$po_item->MaterialItem->formatted_name}}
                 </td>
                 <td>
-                    {{$po_item->MaterialItem->quantity}}
+                    {{$po_item->quantity}}
                 </td>
                 <td>
-                    {{$po_item->MaterialItem->price}}
+                    {{$po_item->price}}
                 </td>
             </tr>
             @endforeach
