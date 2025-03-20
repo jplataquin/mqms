@@ -121,7 +121,7 @@ class PurchaseReportController extends Controller{
         //Filter Supplier
         if(count($supplier_id_arr)){
             $purchase_orders = $purchase_orders->whereIn('supplier_id',$supplier_id_arr);
-            echo 'TAE';
+            echo count($supplier_id_arr);
         }
 
         
