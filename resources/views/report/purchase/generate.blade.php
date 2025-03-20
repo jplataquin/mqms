@@ -24,14 +24,16 @@
         <hr>
 
    
-
+        @foreach($data as $supplier_id as $d)
+        <h2>$d['supplier']->name</h2>
+        
         <table>
             <tr>
                 <th>Material Item</th>
                 <th>Quantity</th>
                 <th>Price</th>
             </tr>
-            @foreach($purchase_order_items as $po_item)
+            @foreach($d['items'] as $po_item)
             <tr>
                 <td>
                     {{$po_item->MaterialItem->formatted_name}}
@@ -46,6 +48,7 @@
             @endforeach
         </table>
 
+        @endforeach
     </div>
 
     <script type="module">

@@ -147,46 +147,65 @@ class PurchaseReportController extends Controller{
 
         $purchase_orders = $purchase_orders->where('status','APRV')->get();
 
-        //Arrange PO ids
-        $po_id_arr = [];
+
+        $po_by_supplier = [];
 
         foreach($purchase_orders as $po){
 
-            $supplier_data[$po->supplier_id] = Supplier::find($po->supplier_id);
-            $po_id_arr[] = $po->id;
-        }
-
- 
-        $material_item_id_arr = [];
-        
-
-        //Filter Material Group
-        if(count($material_group_id_arr)){
-            $material_items = MaterialItem::whereIn('material_group_id',$material_group_id_arr)->get();
-
-            //Arrange Material Item Ids
-            foreach($material_items as $material_item){
-                $material_item_id_arr[] = $material_item->id;
+            if(!isset($po_by_supplier[$po->supplier_id])){
+                $po_by_supplier[$po->supplier_id] = [];
             }
+
+            $po_by_supplier[$po->supplier_id][] = $po->id;
+
         }
 
+        $data = [];
 
-        $purchase_order_items = PurchaseOrderItem::whereIn('purchase_order_id',$po_id_arr);
+        foreach($po_by_supplier as $sup_id => $po_ids){
+
+            $data[$sup_id] = [
+                'supplier' => Supplier::find($sup_id),
+                'items'    => []
+            ];
+
+            $purchase_order_items = PurchaseOrderItem::whereIn('purchase_order_id',$po_ids)
+            ->selectRaw('SUM(quantity) as total_quantity, material_item_id, price')
+            ->groupBy('material_item_id','price')
+            ->with('MaterialItem')
+            ->get();
+
+
+             $data[$sup_id]['items'] = $purchase_order_items;
+        }
+ 
+        // $material_item_id_arr = [];
         
-        //Filter Material
-        if(count($material_item_id_arr)){
-            $purchase_order_items = PurchaseOrderItem::whereIn('material_item_id',$material_item_id_arr);
-        }
 
-        $purchase_order_items = $purchase_order_items
-        ->selectRaw('SUM(quantity) as total_quantity, material_item_id, price, purchase_order_id')
-        ->groupBy('material_item_id', 'price')
-        ->get();
+        // //Filter Material Group
+        // if(count($material_group_id_arr)){
+        //     $material_items = MaterialItem::whereIn('material_group_id',$material_group_id_arr)->get();
+
+        //     //Arrange Material Item Ids
+        //     foreach($material_items as $material_item){
+        //         $material_item_id_arr[] = $material_item->id;
+        //     }
+        // }
+
+
+
+
+        // //Filter Material
+        // if(count($material_item_id_arr)){
+        //     $purchase_order_items = PurchaseOrderItem::whereIn('material_item_id',$material_item_id_arr);
+        // }
+
+        
 
   
 
         return [
-            'purchase_order_items' => $purchase_order_items
+            'data' => $data
         ];
     }
 
