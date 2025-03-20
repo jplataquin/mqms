@@ -117,10 +117,9 @@ class PurchaseReportController extends Controller{
             $purchase_orders = $purchase_orders->where('component_id',$component_id);
         }
 
-        print_r($purchase_orders->get());exit;
-        
+
         //Filter Supplier
-        if($supplier_id_arr){
+        if(count($supplier_id_arr)){
             $purchase_orders = $purchase_orders->whereIn('supplier_id',$supplier_id_arr);
         }
 
@@ -151,7 +150,7 @@ class PurchaseReportController extends Controller{
         
 
         //Filter Material Group
-        if($material_group_id_arr){
+        if(count($material_group_id_arr)){
             $material_items = MaterialItem::whereIn('material_group_id',$material_group_id_arr)->get();
 
             //Arrange Material Item Ids
@@ -164,7 +163,7 @@ class PurchaseReportController extends Controller{
         $purchase_order_items = PurchaseOrderItem::whereIn('purchase_order_id',$po_id_arr);
         
         //Filter Material
-        if($material_item_id_arr){
+        if(count($material_item_id_arr)){
             $purchase_order_items = PurchaseOrderItem::whereIn('material_item_id',$material_item_id_arr);
         }
 
