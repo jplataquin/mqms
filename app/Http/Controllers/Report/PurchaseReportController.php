@@ -26,7 +26,7 @@ class PurchaseReportController extends Controller{
         $projects = Project::get();
 
         $material_groups    = MaterialGroup::get();
-        $suppliers          = Suppliers::get();
+        $suppliers          = Supplier::get();
 
         $users = User::get();
 
