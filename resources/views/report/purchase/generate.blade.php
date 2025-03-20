@@ -23,7 +23,7 @@
         </div>
         <hr>
 
-        <h2 class="mb-3">Per Supplier</h2>
+        <h2 class="mb-3 text-center">-- Per Supplier --</h2>
         @foreach($per_supplier as $supplier_id => $d)
         <div class="mb-5">
 
@@ -60,7 +60,7 @@
     <hr>
 
 
-        <h2 class="mb-3">Per Material</h2>
+        <h2 class="mb-3 text-center">-- Per Material --</h2>
         <div>
             <table class="table w-100">
                 <tr>
