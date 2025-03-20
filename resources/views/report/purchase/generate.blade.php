@@ -24,7 +24,7 @@
         <hr>
 
    
-        @foreach($data as $supplier_id => $d)
+        @foreach($per_supplier as $supplier_id => $d)
         <div class="mb-5">
 
             <h2 class="mb-3">{{$d['supplier']->name}}</h2>
@@ -55,6 +55,21 @@
             </table>
         </div>
         @endforeach
+    </div>
+
+    <hr>
+
+    <div>
+        <table class="table w-100">
+            <tr>
+                <th>Material Item</th>
+                <th class="text-center">Quantity</th>
+            </tr>
+            @foreach($per_material as $m)
+                <th>{{$m->MaterialItem->formatted_name}}</th>
+                <th class="text-center">{{ number_format($m->total_quantity,2) }}</th>
+            @endforeach
+        </table>
     </div>
 
     <script type="module">

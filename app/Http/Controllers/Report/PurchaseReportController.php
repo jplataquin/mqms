@@ -149,8 +149,11 @@ class PurchaseReportController extends Controller{
 
 
         $po_by_supplier = [];
+        $po_id_arr      = [];
 
         foreach($purchase_orders as $po){
+
+            $po_id_arr[] = $po->id;
 
             if(!isset($po_by_supplier[$po->supplier_id])){
                 $po_by_supplier[$po->supplier_id] = [];
@@ -160,11 +163,11 @@ class PurchaseReportController extends Controller{
 
         }
 
-        $data = [];
+        $per_supplier = [];
 
         foreach($po_by_supplier as $sup_id => $po_ids){
 
-            $data[$sup_id] = [
+            $per_supplier[$sup_id] = [
                 'supplier' => Supplier::find($sup_id),
                 'items'    => []
             ];
@@ -176,36 +179,23 @@ class PurchaseReportController extends Controller{
             ->get();
 
 
-             $data[$sup_id]['items'] = $purchase_order_items;
+             $per_supplier[$sup_id]['items'] = $purchase_order_items;
         }
- 
-        // $material_item_id_arr = [];
         
+        $per_material = [];
 
-        // //Filter Material Group
-        // if(count($material_group_id_arr)){
-        //     $material_items = MaterialItem::whereIn('material_group_id',$material_group_id_arr)->get();
-
-        //     //Arrange Material Item Ids
-        //     foreach($material_items as $material_item){
-        //         $material_item_id_arr[] = $material_item->id;
-        //     }
-        // }
-
-
-
-
-        // //Filter Material
-        // if(count($material_item_id_arr)){
-        //     $purchase_order_items = PurchaseOrderItem::whereIn('material_item_id',$material_item_id_arr);
-        // }
-
-        
-
-  
+        if($po_id_arr){
+            $per_material = PurchaseOrderItem::whereIn('purchase_order_id',$po_id_arr)
+            ->selectRaw('SUM(quantity) as total_quantity, material_item_id')
+            ->groupBy('material_item_id')
+            ->with('MaterialItem')
+            ->get();
+        }
+       
 
         return [
-            'data' => $data
+            'per_supplier' => $per_supplier,
+            'per_material' => $per_material
         ];
     }
 
