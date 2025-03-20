@@ -61,7 +61,7 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label>Material Item</label>
-                            <input type="text" value="{{$material_item->formatted_name()}}" class="form-control" disabled="true"/>
+                            <input type="text" value="{{$material_item->formatted_name}}" class="form-control" disabled="true"/>
                         </div>
                     </div>
                 </div>

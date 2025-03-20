@@ -14,6 +14,9 @@ class MaterialItem extends Model
     use HasFactory,SoftDeletes;
 
     protected $table = 'material_items';
+    protected $appends = [
+        'formatted_name'
+    ];
 
     public function Group(): HasOne
     {
@@ -21,7 +24,7 @@ class MaterialItem extends Model
     }
 
 
-    public function formatted_name(){
+    public function getFormattedNameAttribute(){
         return $this->name.' '.$this->specification_unit_packaging.' '.$this->brand;
     }
 

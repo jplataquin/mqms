@@ -43,8 +43,9 @@ class PurchaseReportController extends Controller{
         $section_id             = $request->input('section_id');
         $contract_item_id       = (int) $request->input('contract_item_id');
         $component_id           = (int) $request->input('component_id');
-        $as_of                  = $request->input('as_of');
-        
+        $from                   = $request->input('from');
+        $to                     = $request->input('to');
+
         $material_group_id_arr   = explode(',',$request->input('material_groups'));
         $supplier_id_arr        = explode(',',$request->input('suppliers'));
 
@@ -75,10 +76,15 @@ class PurchaseReportController extends Controller{
                 'integer',
                 'gte:1'
             ],
-            'as_of' => [
+            'from' => [
+                'nullable',
+                'date_format:Y-m-d'
+            ],
+            'to' => [
                 'nullable',
                 'date_format:Y-m-d'
             ]
+            
         ]);
 
         if ($validator->fails()) {
@@ -112,8 +118,13 @@ class PurchaseReportController extends Controller{
             $purchase_orders = $purchase_orders->whereIn('supplier_id',$supplier_id_arr);
         }
 
-        if($as_of){
-            $purchase_orders = $purchase_orders->where('approved_at','>=', $as_of.' 00:00:00');
+        //Filter From
+        if($from){
+            $purchase_orders = $purchase_orders->where('approved_at','>=', $from.' 00:00:00');
+        }
+
+        if($to){
+            $purchase_orders = $purchase_orders->where('approved_at','<=', $from.' 59:59:59');
         }
 
         $purchase_orders = $purchase_orders->where('status','APRV')->get();
@@ -148,7 +159,7 @@ class PurchaseReportController extends Controller{
             $purchase_order_items = PurchaseOrderItem::whereIn('material_item_id',$material_item_id_arr);
         }
 
-        $purchase_order_items = $purchase_order_items->with('MaterialCanvass')->get();
+        $purchase_order_items = $purchase_order_items->orderBy('created_at','ASC')->with('MaterialCanvass')->get();
 
         return [
             'purchase_order_items' => $purchase_order_items

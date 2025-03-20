@@ -30,7 +30,7 @@
             </div>
             <div class="folder-form-body">
                 <div class="row mb-3">
-                    <div class="col-lg-3 mb-3">
+                    <div class="col-lg-6 mb-3">
                         <div class="form-group">
                             <label>Project</label>
                             <select class="form-select" id="project">
@@ -41,19 +41,21 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-3 mb-3">
+                    <div class="col-lg-6 mb-3">
                         <div class="form-group">
                             <label>Section</label>
                             <select class="form-select" id="section"></select>
                         </div>
                     </div>
-                    <div class="col-lg-3 mb-3">
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-6 mb-3">
                         <div class="form-group">
                             <label>Contract Item</label>
                             <select class="form-select" id="contract_item"></select>
                         </div>
                     </div>
-                    <div class="col-lg-3 mb-3">
+                    <div class="col-lg-6 mb-3">
                         <div class="form-group">
                             <label>Component</label>
                             <select class="form-select" id="component"></select>
