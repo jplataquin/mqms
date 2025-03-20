@@ -42,7 +42,7 @@
                         {{$po_item->MaterialItem->formatted_name}}
                     </td>
                     <td class="text-center">
-                        {{ number_fromat($po_item->total_quantity,2) }}
+                        {{ number_format($po_item->total_quantity,2) }}
                     </td>
                     <td class="text-end">
                         P {{$po_item->price}}
