@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\PurchseOrder;
 use App\Models\MaterialQuantityRequestItem;
+use App\Models\MaterialCanvass;
 
 class PurchaseOrderItem extends Model
 {
@@ -27,6 +28,11 @@ class PurchaseOrderItem extends Model
     public function PurchaseOrder(): BelongsTo
     {
         return $this->belongsTo(PurchaseOrder::class);
+    }
+
+    public function MaterialCanvass(): HasOne
+    {
+        return $this->belongsTo(MaterialCanvass::class);
     }
     
 }

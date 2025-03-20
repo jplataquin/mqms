@@ -44,7 +44,7 @@ class PurchaseReportController extends Controller{
         $component_id           = (int) $request->input('component_id');
         $as_of                  = $request->input('as_of');
         
-        $material_item_id_arr   = explode(',',$request->input('material_items'));
+        $material_group_id_arr   = explode(',',$request->input('material_groups'));
         $supplier_id_arr        = explode(',',$request->input('suppliers'));
 
         $project_name       = '';
@@ -112,15 +112,53 @@ class PurchaseReportController extends Controller{
         }
 
         if($as_of){
-            $purchase_orders = $purchase_orders->where('approved_at','>=', $as_of.' 23:59:59');
+            $purchase_orders = $purchase_orders->where('approved_at','>=', $as_of.' 00:00:00');
         }
+
+        $purchase_orders = $purchase_orders->where('status','APRV')->get();
+
+        //Arrange PO ids
+        $po_id_arr = [];
+
+        foreach($purchase_orders as $po){
+
+            $supplier_data[$po->supplier_id] = Supplier::find($po->supplier_id);
+            $po_id_arr[] = $po->id;
+        }
+
+        $material_item_id_arr = [];
+        
+
+        //Filter Material Group
+        if($material_group_id_arr){
+            $material_items = MaterialItem::whereIn('material_group_id',$material_group_id_arr)->get();
+
+            //Arrange Material Item Ids
+            foreach($material_items as $material_item){
+                $material_item_id_arr[] = $material_item->id;
+            }
+        }
+
+
+        $purchase_order_items = PurchaseOrderItem::whereIn('purchase_order_id',$po_id_arr);
+        
+        //Filter Material
+        if($material_item_id_arr){
+            $purchase_order_items = PurchaseOrderItem::whereIn('material_item_id',$material_item_id_arr);
+        }
+
+        $purchase_order_items = $purchase_order_items->with('MaterialCanvass')->get();
+
+        return [
+            'purchase_order_items' => $purchase_order_items
+        ];
     }
 
     public function generate(Request $request){
 
         $data = $this->_generate($request);
 
-        return view('/report/project/generate',$data);
+        return view('/report/purchase/generate',$data);
     }
 
     public function print(Request $request){
@@ -131,30 +169,30 @@ class PurchaseReportController extends Controller{
     }
 
 
-    public function fix_po_contract_item_id(){
+    // public function fix_po_contract_item_id(){
         
-        //get all po
-        $purchase_orders = PurchaseOrder::withTrashed()->get();
+    //     //get all po
+    //     $purchase_orders = PurchaseOrder::withTrashed()->get();
 
-        //loop 
-        foreach($purchase_orders as $po){
+    //     //loop 
+    //     foreach($purchase_orders as $po){
 
-            echo $po->component_id.'</br>';
-            
-            $component = Component::withTrashed()->where('id',$po->component_id)->first();
+    //         echo $po->component_id.'</br>';
 
-            if(!$component){
-                echo 'Component '.$po->component_id.' not found </br>';
-                continue;
-            }
+    //         $component = Component::withTrashed()->where('id',$po->component_id)->first();
 
-            $contract_item_id  = $component->ContractItem->id;
+    //         if(!$component){
+    //             echo 'Component '.$po->component_id.' not found </br>';
+    //             continue;
+    //         }
 
-            $po->contract_item_id = $contract_item_id;
-            $po->save();
-        }
+    //         $contract_item_id  = $component->ContractItem->id;
+
+    //         $po->contract_item_id = $contract_item_id;
+    //         $po->save();
+    //     }
 
 
-        echo '--DONE--';
-    }
+    //     echo '--DONE--';
+    // }
 }
