@@ -83,16 +83,19 @@ class SectionController extends Controller
         $grand_total_amount = (object) [
             'contract_material'     => 0,
             'contract_opex'         => 0,
+            'contract_nonmaterial'  => 0,
             
             'ref_1_material'        => 0,
-            'ref_1_opex'        => 0,
+            'ref_1_opex'            => 0,
+            'ref_1_nonmaterial'     => 0,
 
-            'budget_material' => 0,
-            'budget_opex'     => 0
+            'budget_material'       => 0,
+            'budget_opex'           => 0,
+            'budget_nonmaterial'    => 0
         ];
 
-        $contract_item_budget_total_quantity  = [];
-        $component_material_total_quantity      = [];
+        $contract_item_budget_total_quantity    = [];
+        $component_budget_total_quantity        = [];
 
         $contract_items = $section->ContractItems;
 
@@ -147,7 +150,7 @@ class SectionController extends Controller
                 $component_item_material_total_amount   = 0;
                 $component_item_ref_1_total_amount      = 0;
 
-                $component_material_total_quantity[$component->id] = 0;
+                $component_budget_total_quantity[$component->id] = 0;
 
                 //Component Items
                 foreach($component_items as $component_item){
@@ -161,7 +164,7 @@ class SectionController extends Controller
                     $component_item_ref_1_total_amount          += (float) $component_item->ref_1_amount;
 
                     if($component_item->sum_flag && $component_item->unit_id == $component->unit_id){
-                        $component_material_total_quantity[$component->id] += $component_item->quantity;
+                        $component_budget_total_quantity[$component->id] += $component_item->quantity;
                     }
                 }
 
@@ -189,6 +192,11 @@ class SectionController extends Controller
                 
                 $grand_total_amount->budget_opex        +=  $contract_item_material_total_amount;
                 $grand_total_amount->ref_1_opex         +=  $contract_item_ref_1_total_amount;
+
+            }else if($contract_item->item_type == 'NMAT'){
+
+                $grand_total_amount->budget_nonmaterial        +=  $contract_item_material_total_amount;
+                $grand_total_amount->ref_1_nonmaterial         +=  $contract_item_ref_1_total_amount;
             }
 
            
@@ -206,8 +214,8 @@ class SectionController extends Controller
             'data'                                      => $data,
             'total_amount'                              => $total_amount,
             'grand_total_amount'                        => $grand_total_amount,
-            'contract_item_budget_total_quantity'     => $contract_item_budget_total_quantity,
-            'component_material_total_quantity'         => $component_material_total_quantity
+            'contract_item_budget_total_quantity'       => $contract_item_budget_total_quantity,
+            'component_budget_total_quantity'           => $component_budget_total_quantity
         ]);
     }
 

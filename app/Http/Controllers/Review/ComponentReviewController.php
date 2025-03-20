@@ -199,7 +199,7 @@ class ComponentReviewController extends Controller
                     'total_amount'      => $component_items_total_amount
                 ];
                     
-                if($comp->unit_id == $con_item->unit_id){
+                if($comp->unit_id == $con_item->unit_id && $comp->sum_flag == true){
                     $contract_item_arr[$con_item->id]['total_quantity'] = $contract_item_arr[$con_item->id]['total_quantity'] + $comp->quantity;
                 } 
                 

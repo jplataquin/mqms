@@ -47,7 +47,7 @@ class CreateContractItemForm extends Component{
                         t.label('Item Type');
                         this.el.item_type = t.select({class:'form-select'},()=>{
                             t.option({value:'MATR'},'Material');
-                            t.option({value:'LABR'},'Labor');
+                            t.option({value:'NMAT'},'Non-Material');
                             t.option({value:'OPEX'},'Operational Expense');
                         });
                     });//div
