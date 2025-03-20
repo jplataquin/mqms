@@ -117,17 +117,17 @@ class PurchaseReportController extends Controller{
             $purchase_orders = $purchase_orders->where('component_id',$component_id);
         }
 
-
-        //Filter Supplier
-        if(count($supplier_id_arr)){
-            $purchase_orders = $purchase_orders->whereIn('supplier_id',$supplier_id_arr);
-        }
-
         $purchase_orders = $purchase_orders->where('status','APRV')->get();
         print_r($supplier_id_arr);
         
         print_r($purchase_orders);exit;
         
+        //Filter Supplier
+        if(count($supplier_id_arr)){
+            $purchase_orders = $purchase_orders->whereIn('supplier_id',$supplier_id_arr);
+        }
+
+   
         //Filter From
         if($from){
             $purchase_orders = $purchase_orders->where('approved_at','>=', $from.' 00:00:00');
