@@ -37,7 +37,7 @@
                     {{$po_item->MaterialItem->formatted_name}}
                 </td>
                 <td>
-                    {{$po_item->quantity}}
+                    {{$po_item->total_quantity}}
                 </td>
                 <td>
                     {{$po_item->price}}
