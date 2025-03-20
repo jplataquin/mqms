@@ -25,7 +25,7 @@
 
    
         @foreach($data as $supplier_id => $d)
-        <h2>$d['supplier']->name</h2>
+        <h2>{{$d['supplier']->name}}</h2>
         
         <table>
             <tr>
