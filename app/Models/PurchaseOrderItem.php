@@ -30,9 +30,9 @@ class PurchaseOrderItem extends Model
         return $this->belongsTo(PurchaseOrder::class);
     }
 
-    public function MaterialCanvass(): HasOne
+    public function MaterialCanvass(): BelongsTo
     {
-        return $this->hasOne(MaterialCanvass::class);
+        return $this->belongsTo(MaterialCanvass::class);
     }
 
     public function MaterialItem(): HasOne
