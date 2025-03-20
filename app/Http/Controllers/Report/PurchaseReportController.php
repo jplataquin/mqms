@@ -179,6 +179,8 @@ class PurchaseReportController extends Controller{
         }
 
         $purchase_order_items = $purchase_order_items
+        ->selectRaw('sum(id) as total_quantity, material_item_id, price, material_canvass_id, purchase_order_id')
+        ->groupBy('material_item_id', 'price')
         ->orderBy('id','ASC')
         ->with('MaterialCanvass')->get();
 
