@@ -144,6 +144,7 @@ class PurchaseReportController extends Controller{
 
             if(!$component){
                 echo 'Component '.$po->component_id.' not found </br>';
+                continue;
             }
 
             $contract_item_id  = $component->ContractItem->id;
