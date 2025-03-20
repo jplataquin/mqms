@@ -96,10 +96,11 @@ class PurchaseReportController extends Controller{
             ]);
         }
 
-        echo $project_id.' '.$section_id;exit;
+     
         //Filter Project
         $purchase_orders = PurchaseOrder::where('project_id',$project_id);
 
+        print_r($purchase_orders->get());exit;
         //Filter Section
         if($section_id){
             $purchase_orders = $purchase_orders->where('section_id',$section_id);
