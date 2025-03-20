@@ -117,16 +117,18 @@ class PurchaseReportController extends Controller{
             $purchase_orders = $purchase_orders->where('component_id',$component_id);
         }
 
-        $purchase_orders = $purchase_orders->where('status','APRV')->get();
-        print_r($supplier_id_arr);
-        
-        print_r($purchase_orders);exit;
         
         //Filter Supplier
         if(count($supplier_id_arr)){
             $purchase_orders = $purchase_orders->whereIn('supplier_id',$supplier_id_arr);
+            echo 'TAE';
         }
 
+        
+        $purchase_orders = $purchase_orders->where('status','APRV')->get();
+        print_r($supplier_id_arr);
+        
+        print_r($purchase_orders);exit;
    
         //Filter From
         if($from){
