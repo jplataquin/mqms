@@ -18,6 +18,7 @@ use App\Models\PurchaseOrderItem;
 use App\Models\MaterialItem;
 use App\Models\MaterialGroup;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class PurchaseReportController extends Controller{
 
