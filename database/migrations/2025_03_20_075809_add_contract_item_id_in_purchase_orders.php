@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('purhcase_orders', function (Blueprint $table) {
+        Schema::table('purchase_orders', function (Blueprint $table) {
             $table->bigInteger('contract_item_id')->after('section_id');
         });
     }
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('purhcase_orders', function (Blueprint $table) {
+        Schema::table('purchase_orders', function (Blueprint $table) {
             $table->dropColumn('contract_item_id');
         });
     }
