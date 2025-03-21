@@ -160,7 +160,7 @@ class PurchaseReportController extends Controller{
 
         
         //Filter Supplier
-        if(count($supplier_id_arr)){
+        if($supplier_id_arr){
             $purchase_orders = $purchase_orders->whereIn('supplier_id',$supplier_id_arr);
         }
 
@@ -210,9 +210,10 @@ class PurchaseReportController extends Controller{
 
             if($purchase_order_items){
 
-                print_r($purchase_order_items);
+                echo $purchase_order_items;
+                //.print_r($purchase_order_items);
                 echo '<br>';
-                
+
                 $per_supplier[$sup_id] = [
                     'supplier' => Supplier::find($sup_id),
                     'items'    => $purchase_order_items
