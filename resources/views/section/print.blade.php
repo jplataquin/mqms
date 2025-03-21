@@ -145,6 +145,7 @@
             </tr>
             <tr>
          
+            
 
                 <!-- Contract -->
                 <th>QTY</th>
@@ -265,7 +266,7 @@
 
                      <!-- Material -->
                     <td class="text-center text-italic">
-                        {{ number_format( $component_material_total_quantity[$component_id],2) }}
+                        {{ number_format( $component_budget_total_quantity[$component_id],2) }}
                     </td>
                     <td class="text-center text-italic">
                         {{ $row_2->component->unit_text }}
