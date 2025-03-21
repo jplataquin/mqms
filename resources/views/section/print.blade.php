@@ -113,7 +113,7 @@
         }
 
         .approved-text{
-            color:rgb(22, 255, 5);
+            color:rgb(11, 152, 1);
         }
 
         .rejected-text{
