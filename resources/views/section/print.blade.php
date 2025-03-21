@@ -219,16 +219,36 @@
                  <td></td>
 
                 <!-- Material-->
-                 <td class="text-center">{{ number_format($contract_item_budget_total_quantity[$contract_item_id],2) }}</td>
-                 <td class="text-center">{{$row_1->contract_item->contract_unit_text}}</td>
-                 <td></td>
-                 <th class="
-                    text-end    
+
+                @if($row_1->contract_item->budget_quantity && $row_1->contract_item->budget_unit_id && $row_1->contract_item->budget_unit_price)
+                    <td class="text-center">{{ number_format($row_1->contract_item->budget_quantity,2) }}</td>
+                    <td class="text-center">{{$row_1->contract_item->budget_unit_text}}</td>
+                    <td class="text-end">P {{ number_format($row_1->contract_item->budget_unit_price,2)}}</td>
                     
-                    @if( $total_amount->contract_item[$contract_item_id]->budget > $row_1->contract_item->contract_amount)
-                        non-conforming 
-                    @endif
-                ">P {{ number_format($total_amount->contract_item[$contract_item_id]->budget,2) }}</th>
+                    @php 
+                        $contract_item_budget_total_amount = $row_1->contract_item->budget_quantity * $row_1->contract_item->budget_unit_price;
+                    @endphp
+                    
+                    <th class="
+                        text-end    
+                        
+                        @if( $contract_item_budget_total_amount > $row_1->contract_item->contract_amount)
+                            non-conforming 
+                        @endif
+                    ">P {{ number_format($contract_item_budget_total_amount,2) }}</th>
+
+                @else
+                    <td class="text-center">{{ number_format($contract_item_budget_total_quantity[$contract_item_id],2) }}</td>
+                    <td class="text-center">{{$row_1->contract_item->contract_unit_text}}</td>
+                    <td></td>
+                    <th class="
+                        text-end    
+                        
+                        @if( $total_amount->contract_item[$contract_item_id]->budget > $row_1->contract_item->contract_amount)
+                            non-conforming 
+                        @endif
+                    ">P {{ number_format($total_amount->contract_item[$contract_item_id]->budget,2) }}</th>
+                @endif
             </tr>
 
 

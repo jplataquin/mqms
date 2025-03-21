@@ -23,6 +23,7 @@ class ContractItem extends Model
     protected $appends = [
         'contract_unit_text',
         'ref_1_unit_text',
+        'budget_unit_text',
         'ref_1_amount',
         'contract_amount',
         'name'
@@ -117,6 +118,25 @@ class ContractItem extends Model
     public function getRef1UnitTextAttribute(){
 
         $unit = Unit::find($this->ref_1_unit_id);
+
+        if(!$unit){
+            return '';
+        }
+        
+        $text = '';
+
+        $text = $unit->text;
+
+        if($unit->deleted_at){
+            $text = $text.' [Deleted]';
+        }
+
+        return $text;
+    }
+
+    public function getBudgetUnitTextAttribute(){
+
+        $unit = Unit::find($this->budget_unit_id);
 
         if(!$unit){
             return '';
