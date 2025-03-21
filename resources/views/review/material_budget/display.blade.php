@@ -1,6 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    .fullscreen{
+        position:absolute;
+        top:0;
+        left:0;
+        zIndex = 900;
+    }
+        
+</style>
 <div id="content">
 <div class="container">
     <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
@@ -43,6 +52,15 @@
         makeFullScreen();
     }
 
+    document.body.onfullscreenchange = (e) => {
+        if (document.fullscreenElement) {
+           
+            overview_iframe.classList.add('fullscreen');
+        } else {
+            overview_iframe.classList.remove('fullscreen');
+        }
+    };
+
     function requestFullScreen(element) {
         // Supports most browsers and their versions.
         let requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullscreen;
@@ -53,10 +71,7 @@
 
     function makeFullScreen() {
         
-        overview_iframe.style.position = 'absolute';
-        overview_iframe.style.top  = 0;
-        overview_iframe.style.left = 0;
-        overview_iframe.style.zIndex = 900;
+      
 
         requestFullScreen(document.body);
     }
