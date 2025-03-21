@@ -40,9 +40,9 @@
     const fullScreenBtn   = $q('#fullScreenBtn').first();
 
     fullScreenBtn.onclick = ()=>{
-        makeFulLScreen();
+        makeFullScreen();
     }
-    
+
     function requestFullScreen(element) {
         // Supports most browsers and their versions.
         let requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullscreen;
