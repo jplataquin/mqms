@@ -519,7 +519,7 @@
 
                     {{$budget_nonmaterial_grand_percentage}}%
                 </td>
-                <th class="text-end">P {{ number_format( $grand_total_amount->budget_material, 2) }}</th>
+                <th class="text-end">P {{ number_format( $grand_total_amount->budget_nonmaterial, 2) }}</th>
             </tr>
 
 

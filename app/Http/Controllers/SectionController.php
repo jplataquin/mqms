@@ -109,17 +109,23 @@ class SectionController extends Controller
 
             $contract_item_budget_total_quantity[$contract_item->id] = 0;
 
+            if($contract_item->budget_overwrite){
+                $contract_amount = ($contract_item->budget_quantity * $contract_item->budget_unit_price);
+            }else{
+                $contract_amount = $contract_item->contract_amount;
+            }
+
             if($contract_item->item_type == 'MATR'){
-              
-                $grand_total_amount->contract_material +=  (float) $contract_item->contract_amount;
+                
+                $grand_total_amount->contract_material +=   $contract_amount;
             
             }else if($contract_item->item_type == 'NMAT'){
 
-                $grand_total_amount->contract_nonmaterial +=  (float) $contract_item->contract_amount;
+                $grand_total_amount->contract_nonmaterial +=  $contract_amount;
 
             }else if($contract_item->item_type == 'OPEX'){
 
-                $grand_total_amount->contract_opex +=  (float) $contract_item->contract_amount;
+                $grand_total_amount->contract_opex +=  $contract_amount;
             }
            
             
