@@ -390,9 +390,9 @@
                     @php
                         $ref_1_material_grand_percentage = 0;
 
-                        if($grand_total_amount->gross_total_amount > 0){
+                        if($section->gross_total_amount > 0){
 
-                            $ref_1_material_grand_percentage = ($grand_total_amount->ref_1_material / $grand_total_amount->gross_total_amount) * 100;
+                            $ref_1_material_grand_percentage = ($grand_total_amount->ref_1_material / $section->gross_total_amount) * 100;
                         }
 
                         $ref_1_material_grand_percentage = number_format($ref_1_material_grand_percentage,2);
@@ -451,9 +451,9 @@
                     @php
                         $ref_1_nonmaterial_grand_percentage = 0;
 
-                        if($grand_total_amount->gross_total_amount > 0){
+                        if($section->gross_total_amount > 0){
 
-                            $ref_1_nonmaterial_grand_percentage = ($grand_total_amount->ref_1_nonmaterial / $grand_total_amount->gross_total_amount) * 100;
+                            $ref_1_nonmaterial_grand_percentage = ($grand_total_amount->ref_1_nonmaterial / $section->gross_total_amount) * 100;
                         }
 
                         $ref_1_nonmaterial_grand_percentage = number_format($ref_1_nonmaterial_grand_percentage,2);
@@ -511,9 +511,9 @@
                     @php
                         $ref_1_opex_grand_percentage = 0;
 
-                        if($grand_total_amount->gross_total_amount > 0){
+                        if($section->gross_total_amount > 0){
 
-                            $ref_1_opex_grand_percentage = ($grand_total_amount->ref_1_opex / $grand_total_amount->gross_total_amount) * 100;
+                            $ref_1_opex_grand_percentage = ($grand_total_amount->ref_1_opex / $section->gross_total_amount) * 100;
                         }
 
                         $ref_1_opex_grand_percentage = number_format($ref_1_opex_grand_percentage,2);
