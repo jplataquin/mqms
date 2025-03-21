@@ -68,7 +68,7 @@ class PurchaseReportController extends Controller{
             ->groupBy('material_group_id')
             ->first();
 
-            if($material_row->ids){
+            if($material_row){
                 $material_item_id_arr = explode(',',$material_row->ids);
             }
 
@@ -81,7 +81,7 @@ class PurchaseReportController extends Controller{
             ->first();
 
      
-            if($material_row->ids){
+            if($material_row){
                 $material_item_id_arr = explode(',',$material_row->ids);
             }
         }
@@ -208,12 +208,8 @@ class PurchaseReportController extends Controller{
             
             $purchase_order_items = $purchase_order_items->with('MaterialItem')->get();
 
-            if($purchase_order_items){
-
-                echo count($purchase_order_items);
-         
-                //.print_r($purchase_order_items);
-                echo '<br>';
+            //Note if you don't use count() empty arrays/result equates to true
+            if(count($purchase_order_items)){
 
                 $per_supplier[$sup_id] = [
                     'supplier' => Supplier::find($sup_id),
