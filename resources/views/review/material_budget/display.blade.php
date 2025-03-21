@@ -75,7 +75,7 @@
     }
 
     function makeFullScreen() {
-        requestFullScreen(document);
+        requestFullScreen(document.body);
     }
 </script>
 </div>
