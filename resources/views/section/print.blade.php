@@ -247,7 +247,10 @@
                         @if( $contract_item_budget_total_amount > $row_1->contract_item->contract_amount)
                             non-conforming 
                         @endif
-                    ">✦ P {{ number_format($contract_item_budget_total_amount,2) }}</th>
+                    ">
+                    <label class="warning-text">✦</label>
+                    P {{ number_format($contract_item_budget_total_amount,2) }}
+                    </th>
 
                 @else
                     <td class="text-center">{{ number_format($contract_item_budget_total_quantity[$contract_item_id],2) }}</td>
