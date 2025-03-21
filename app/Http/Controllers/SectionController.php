@@ -192,7 +192,7 @@ class SectionController extends Controller
 
 
             //If budget has been manually overwritten
-            if($contract_item->budget_overwrite){
+            if($contract_item->budget_total_amount_overwrite){
                 $contract_item_budget_total_amount = $contract_item->budget_quantity * $contract_item->budget_unit_price;
             }
 

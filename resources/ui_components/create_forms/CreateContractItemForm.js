@@ -134,6 +134,45 @@ class CreateContractItemForm extends Component{
             });
 
             t.div({class:'row mb-3'},()=>{
+
+                t.div({class:'col-lg-12'},()=>{
+                    t.div({class:'folder-form-container'},()=>{
+                        t.div({class:'folder-form-tab'},'Budget');
+
+                        t.div({class:'folder-form-body'},()=>{
+                
+                            t.div({class:'row mb-3'},()=>{
+                                
+                                t.div({class:'col-lg-4 mb-3'},()=>{
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Quantity');
+                                        this.el.budget_quantity = t.input({class:'form-control',placeholder:'Auto', type:'text'});
+                                    });//div
+                                });//div col
+
+                                t.div({class:'col-lg-4 mb-3'},()=>{
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Unit');
+                                        this.el.budget_unit = t.select({class:'form-select'});
+                                    });//div
+                                });//div col
+
+
+                                t.div({class:'col-lg-4 mb-3'},()=>{
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Unit Price');
+                                        this.el.budget_unit_price = t.input({class:'form-control', placeholder:'Auto', type:'text'});
+                                    });//div
+                                });//div col
+
+                            });//div row
+                        })//div body
+
+                    })//div container
+                });//div col
+            });
+
+            t.div({class:'row mb-3'},()=>{
                 t.div({class:'col-lg-12 text-end'},()=>{
                     this.el.btn_submit = t.button({class:'btn btn-primary me-3'},'Submit');
                     this.el.btn_cancel = t.button({class:'btn btn-secondary'},'Cancel');
@@ -173,7 +212,11 @@ class CreateContractItemForm extends Component{
 
             ref_1_quantity              : this.el.ref_1_quantity.value,
             ref_1_unit_price            : this.el.ref_1_unit_price.value,
-            ref_1_unit_id               : this.el.ref_1_unit.value
+            ref_1_unit_id               : this.el.ref_1_unit.value,
+
+            budget_quantity              : this.el.budget_quantity.value,
+            budget_unit_price            : this.el.budget_unit_price.value,
+            budget_unit_id               : this.el.budget_unit.value
             
         }).then(reply=>{
             
@@ -208,6 +251,13 @@ class CreateContractItemForm extends Component{
             return window.util.inputNumber(this.el.ref_1_unit_price,e,2,false);
         }
         
+        this.el.budget_quantity.onkeypress = (e)=>{
+            return window.util.inputNumber(this.el.budget_quantity,e,2,false);
+        }
+
+        this.el.budget_unit_price.onkeypress = (e)=>{
+            return window.util.inputNumber(this.el.budget_unit_price,e,2,false);
+        }
 
     }
 
@@ -222,7 +272,10 @@ class CreateContractItemForm extends Component{
         this.el.ref_1_unit.append(
             t.option({value:''},' - ')
         );
-    
+        
+        this.el.budget_unit.append(
+            t.option({value:''},' Auto ')
+        );
 
         for(let key in this._model.unit_options){
 
@@ -231,9 +284,9 @@ class CreateContractItemForm extends Component{
             //Skip if deleted
             if(item.deleted) continue;
 
-            let contract_unit_option    = t.option({value:item.id},item.text);
-            let ref_1_unit_option       = t.option({value:item.id},item.text);
-
+            let contract_unit_option     = t.option({value:item.id},item.text);
+            let ref_1_unit_option        = t.option({value:item.id},item.text);
+            let budget_unit_option       = t.option({value:item.id},item.text);
 
             this.el.contract_unit.append(
                 contract_unit_option
@@ -243,6 +296,9 @@ class CreateContractItemForm extends Component{
                 ref_1_unit_option
             );
 
+            this.el.budget_unit.append(
+                budget_unit_option
+            );
         };
     }
 }

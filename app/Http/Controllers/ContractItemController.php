@@ -99,6 +99,11 @@ class ContractItemController extends Controller
         $ref_1_quantity           = $request->input('ref_1_quantity') ?? '';
         $ref_1_unit_price         = $request->input('ref_1_unit_price') ?? '';
         $ref_1_unit_id            = (int) $request->input('ref_1_unit_id') ?? 0;
+
+        $budget_quantity           = $request->input('budget_quantity') ?? null;
+        $budget_unit_price         = $request->input('budget_unit_price') ?? null;
+        $budget_unit_id            = (int) $request->input('budget_unit_id') ?? null;
+
         $unit_id                  = (int) $request->input('unit_id') ?? 0;
         $section_id               = (int) $request->input('section_id') ?? 0;
        // $parent_contract_item_id  = (int) $request->input('parent_contract_item_id') ?? 0;
@@ -158,6 +163,23 @@ class ContractItemController extends Controller
             'ref_1_unit_price'=>[
                 'nullable',
                 'numeric'
+            ],
+
+            'budget_quantity'=>[
+                'nullable',
+                'numeric',
+                'gt:0',
+                'required_with:ref_1_unit_id'
+            ],
+            'budget_unit_id' =>[
+                'nullable',
+                'numeric',
+                'gte:1',
+                'required_with:ref_1_quantity'
+            ],
+            'budget_unit_price'=>[
+                'nullable',
+                'numeric'
             ]
         ]);
 
@@ -191,6 +213,17 @@ class ContractItemController extends Controller
 
             $contract_item->ref_1_unit_price        = $ref_1_unit_price;
         }
+
+        if($budget_quantity){
+            $contract_item->budget_quantity          = $budget_quantity;
+            $contract_item->budget_unit_id           = $budget_unit_id;
+        }
+
+        if($budget_unit_price){
+
+            $contract_item->budget_unit_price        = $budget_unit_price;
+        }
+
 
         $contract_item->created_by              = $user_id;
 

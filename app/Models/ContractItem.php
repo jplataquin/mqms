@@ -26,7 +26,8 @@ class ContractItem extends Model
         'budget_unit_text',
         'ref_1_amount',
         'contract_amount',
-        'budget_overwrite',
+        'budget_quantity_overwrite',
+        'budget_total_amount_overwrite',
         'name'
     ];
 
@@ -72,8 +73,12 @@ class ContractItem extends Model
         return $this->item_code.' '.$this->description;
     }
 
-    public function getBudgetOverwriteAttribute(){
-        return ($this->budget_quantity && $this->budget_unit_id && $this->budget_unit_price);
+    public function getBudgetTotalAmountOverwriteAttribute(){
+        return ($this->budget_unit_price > 0);
+    }
+
+    public function getBudgetQuantityOverwriteAttribute(){
+        return ($this->budget_quantity && $this->budget_unit_id);
     }
 
     public function getContractUnitTextAttribute(){
