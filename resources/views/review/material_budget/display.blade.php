@@ -56,6 +56,7 @@
         overview_iframe.style.position = 'absolute';
         overview_iframe.style.top  = 0;
         overview_iframe.style.left = 0;
+        overview_iframe.style.zIndex = 100;
 
         requestFullScreen(document.body);
     }
