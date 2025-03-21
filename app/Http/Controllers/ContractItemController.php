@@ -330,8 +330,7 @@ class ContractItemController extends Controller
             ],
             'budget_unit_price'=>[
                 'nullable',
-                'numeric',
-                'required_with:budget_quantity'
+                'numeric'
             ]
 
         ]);
@@ -380,19 +379,19 @@ class ContractItemController extends Controller
             $contract_item->ref_1_unit_price        = null;
         }
 
-        if($budget_quantity && $budget_unit_id && $budget_unit_price){
-          
-            $contract_item->budget_quantity     = $budget_quantity;
-            $contract_item->budget_unit_id      = $budget_unit_id;
-            $contract_item->budget_unit_price   = $budget_unit_price;
-        
+        if($budget_quantity){
+            $contract_item->budget_quantity          = $budget_quantity;
+            $contract_item->budget_unit_id           = $budget_unit_id;
         }else{
+            $contract_item->budget_quantity          = null;
+            $contract_item->budget_unit_id           = null;
+        }
 
-            $contract_item->budget_quantity     = null;
-            $contract_item->budget_unit_id      = null;
-            $contract_item->budget_unit_price   = null;
-
-        }   
+        if($budget_unit_price){
+            $contract_item->budget_unit_price        = $budget_unit_price;
+        }else{
+            $contract_item->budget_unit_price        = null;
+        }
 
         $contract_item->save();
 
