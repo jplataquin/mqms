@@ -86,6 +86,10 @@
         
         <h2 class="mb-3 text-center">-- Per Supplier --</h2>
         @foreach($per_supplier as $supplier_id => $d)
+
+        @php 
+            $supplier_amount_total = 0;
+        @endphp
         <div class="mb-5">
 
             <h3 class="mb-3">{{$d['supplier']->name}}</h3>
@@ -112,7 +116,18 @@
                         P {{ number_format( ($po_item->total_quantity * $po_item->price), 2) }}
                     </td>
                 </tr>
+
+                @php
+                    $supplier_amount_total += ($po_item->total_quantity * $po_item->price);
+                @endphp
+
                 @endforeach
+                <tr>
+                    <td colspan="3"></td>
+                    <th class="text-end">
+                        P {{ number_format($supplier_amount_total,2) }}
+                    </th>
+                </tr>
             </table>
         </div>
         @endforeach
