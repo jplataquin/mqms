@@ -44,20 +44,45 @@ class PurchaseReportController extends Controller{
         $section_id             = (int) $request->input('section_id');
         $contract_item_id       = (int) $request->input('contract_item_id');
         $component_id           = (int) $request->input('component_id');
+        $material_group_id      = (int) $request->input('material_group_id');
         $from                   = $request->input('from');
         $to                     = $request->input('to');
-        $material_groups        = $request->input('material_groups');
+        $material_items         = $request->input('material_items');
         $suppliers              = $request->input('suppliers');
 
-        $material_group_id_arr  = [];
+        //for supplier filter by id
         $supplier_id_arr        = [];
 
-        if($material_groups){
-            $material_group_id_arr = explode(',',$material_groups);
-        }
+        //for material item filter by id
+        $material_item_id_arr   = [];
 
         if($suppliers){
             $supplier_id_arr = explode(',',$suppliers);
+        }
+
+         //If material group id exists but material items list is empty
+         if($material_group_id && !$material_items){
+            
+            $material_row = MaterialItems::where('material_group_id',$material_group_id)
+            ->selectRaw('GROUP_CONCAT(id) as ids')
+            ->groupBy('id')
+            ->first();
+
+            if($material_row->ids){
+                $material_item_id_arr = explode(',',$material_row->ids);
+            }
+
+        }else if($material_group_id && $material_items){
+            
+            $material_row = MaterialItems::where('material_group_id',$material_group_id)
+            ->selectRaw('GROUP_CONCAT(id) as ids')
+            ->whereIn('id',explode(',',$material_items))
+            ->groupBy('id')
+            ->first();
+
+            if($material_row->ids){
+                $material_item_id_arr = explode(',',$material_row->ids);
+            }
         }
 
         $project_name       = '';
@@ -83,6 +108,11 @@ class PurchaseReportController extends Controller{
                 'gte:1'
             ],
             'component_id' =>[
+                'nullable',
+                'integer',
+                'gte:1'
+            ],
+            'material_group_id' =>[
                 'nullable',
                 'integer',
                 'gte:1'
@@ -167,19 +197,26 @@ class PurchaseReportController extends Controller{
 
         foreach($po_by_supplier as $sup_id => $po_ids){
 
-            $per_supplier[$sup_id] = [
-                'supplier' => Supplier::find($sup_id),
-                'items'    => []
-            ];
-
+        
             $purchase_order_items = PurchaseOrderItem::whereIn('purchase_order_id',$po_ids)
             ->selectRaw('SUM(quantity) as total_quantity, material_item_id, price')
-            ->groupBy('material_item_id','price')
-            ->with('MaterialItem')
-            ->get();
+            ->groupBy('material_item_id','price');
+            
+            //Filter material item
+            if($material_item_id_arr){
+                $purchase_order_items = $purchase_order_items->whereIn('material_item_id',$material_item_id_arr);
+            }
+            
+            $purchase_order_items = $purchase_order_items->with('MaterialItem')->get();
 
+            if($purchase_order_items){
 
-             $per_supplier[$sup_id]['items'] = $purchase_order_items;
+                $per_supplier[$sup_id] = [
+                    'supplier' => Supplier::find($sup_id),
+                    'items'    => $purchase_order_items
+                ];
+            }
+             
         }
         
         $per_material = [];
@@ -187,9 +224,14 @@ class PurchaseReportController extends Controller{
         if($po_id_arr){
             $per_material = PurchaseOrderItem::whereIn('purchase_order_id',$po_id_arr)
             ->selectRaw('SUM(quantity) as total_quantity, material_item_id')
-            ->groupBy('material_item_id')
-            ->with('MaterialItem')
-            ->get();
+            ->groupBy('material_item_id');
+            
+             //Filter material item
+            if($material_item_id_arr){
+                $per_material = $per_material->whereIn('material_item_id',$material_item_id_arr);
+            }
+            
+            $per_material = $per_material->with('MaterialItem')->get();
         }
        
 

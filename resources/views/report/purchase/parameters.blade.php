@@ -77,6 +77,9 @@
                         </div>
                     </div>
                 </div>
+
+
+
                 <div class="row mb-3">
                     <div class="col-lg-12 mb-3">
                         <div class="form-group">
@@ -90,6 +93,8 @@
                         </div>
                     </div>
                 </div> <!-- div row -->
+
+
                 <div class="row mb-3">
                     <div class="col-lg-12 mb-3">
                         <div class="form-group">
@@ -109,8 +114,8 @@
 
                 <div class="row mb-3">
                     <div class="col-lg-12 text-end">
-                        <button id="print_btn" class="btn btn-warning">Print</button>
-                        <button id="submit_btn" class="btn btn-primary">Submit</button>
+                        <button id="print_btn" class="btn btn-warning me-3">Print</button>
+                        <button id="submit_btn" class="btn btn-primary m3-3">Generate</button>
                         <button id="cancel_btn" class="btn btn-secondary">Cancel</button>
                     </div>
                 </div>
