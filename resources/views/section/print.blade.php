@@ -108,6 +108,18 @@
             color:rgb(234, 255, 5);
         }
 
+        .pending-text{
+            color:rgb(234, 255, 5);
+        }
+
+        .approved-text{
+            color:rgb(22, 255, 5);
+        }
+
+        .rejected-text{
+            color:rgb(255, 5, 5);
+        }
+
         @media print {
 
             td, th{
@@ -283,7 +295,21 @@
                         component-opex-row 
                     @endif
                 ">
-                    <td data-controller="pageBreaker"  rowspan="{{ ( count( (array) $row_2->component_items) + 2) }}">{{$row_2->component->name}}</td>
+                    <td data-controller="pageBreaker"  rowspan="{{ ( count( (array) $row_2->component_items) + 2) }}">
+                        @if($row_2->component->status == 'PEND')
+                            <label class="pending-text">⦿</label>
+                        @end
+
+                        if($row_2->component->status == 'APRV')
+                            <label class="approved-text">⦿</label>
+                        @end
+
+                        if($row_2->component->status == 'REJC')
+                        <label class="rejected-text">⦿</label>
+                        @end
+
+                        {{$row_2->component->name}}
+                    </td>
                     <td></td><!-- Description -->
                     
                     <td></td><!-- Contract -->
