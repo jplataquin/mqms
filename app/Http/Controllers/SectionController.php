@@ -110,8 +110,9 @@ class SectionController extends Controller
             $contract_item_budget_total_quantity[$contract_item->id] = 0;
 
             if($contract_item->budget_overwrite){
-                echo 'asd';exit;
+              
                 $contract_amount = ($contract_item->budget_quantity * $contract_item->budget_unit_price);
+                echo $contract_amount;exit;
             }else{
                 $contract_amount = $contract_item->contract_amount;
             }
