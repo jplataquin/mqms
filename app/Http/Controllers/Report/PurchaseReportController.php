@@ -165,8 +165,6 @@ class PurchaseReportController extends Controller{
         }
 
         
-  
-   
         //Filter From
         if($from){
             $purchase_orders = $purchase_orders->where('approved_at','>=', $from.' 00:00:00');
@@ -212,6 +210,9 @@ class PurchaseReportController extends Controller{
 
             if($purchase_order_items){
 
+                print_r($purchase_order_items);
+                echo '<br>';
+                
                 $per_supplier[$sup_id] = [
                     'supplier' => Supplier::find($sup_id),
                     'items'    => $purchase_order_items
