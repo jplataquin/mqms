@@ -6,7 +6,7 @@
         position:absolute;
         top:0;
         left:0;
-        zIndex = 900;
+        z-index:900;
     }
         
 </style>
@@ -52,7 +52,7 @@
         makeFullScreen();
     }
 
-    document.body.onfullscreenchange = (e) => {
+    document.onfullscreenchange = (e) => {
         if (document.fullscreenElement) {
            
             overview_iframe.classList.add('fullscreen');
@@ -73,7 +73,7 @@
         
       
 
-        requestFullScreen(document.body);
+        requestFullScreen(document);
     }
 </script>
 </div>
