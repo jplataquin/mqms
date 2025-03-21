@@ -298,15 +298,15 @@
                     <td data-controller="pageBreaker"  rowspan="{{ ( count( (array) $row_2->component_items) + 2) }}">
                         @if($row_2->component->status == 'PEND')
                             <label class="pending-text">⦿</label>
-                        @end
+                        @endif
 
                         if($row_2->component->status == 'APRV')
                             <label class="approved-text">⦿</label>
-                        @end
+                        @endif
 
                         if($row_2->component->status == 'REJC')
                         <label class="rejected-text">⦿</label>
-                        @end
+                        @endif
 
                         {{$row_2->component->name}}
                     </td>
