@@ -25,6 +25,10 @@
             padding: 5px;
         }
 
+        tr:hover {
+            background-color: #94f7b0 !important;
+        }
+
         /** Non-Material */
         .contract-item-nonmaterial-row{
             background-color:#9dccfa;
