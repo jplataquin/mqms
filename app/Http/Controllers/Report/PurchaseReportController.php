@@ -80,6 +80,7 @@ class PurchaseReportController extends Controller{
             ->groupBy('id')
             ->first();
 
+            echo $material_row->ids;exit;
             if($material_row->ids){
                 $material_item_id_arr = explode(',',$material_row->ids);
             }
