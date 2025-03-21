@@ -104,6 +104,9 @@
             word-wrap: break-word;
         }
 
+        .warning-text{
+            color:rgb(234, 255, 5);
+        }
         
         @media print {
 
@@ -221,7 +224,10 @@
                 <!-- Material-->
 
                 @if($row_1->contract_item->budget_quantity && $row_1->contract_item->budget_unit_id && $row_1->contract_item->budget_unit_price)
-                    <td class="text-center">✦ {{ number_format($row_1->contract_item->budget_quantity,2) }}</td>
+                    <td class="text-center">
+                        <label class="warning-text">✦</label>
+                        {{ number_format($row_1->contract_item->budget_quantity,2) }}
+                    </td>
                     <td class="text-center">✦ {{$row_1->contract_item->budget_unit_text}}</td>
                     <td class="text-end">✦ P {{ number_format($row_1->contract_item->budget_unit_price,2)}}</td>
                     
