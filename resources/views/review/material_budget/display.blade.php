@@ -24,7 +24,7 @@
     </div>
     <hr>
 
-    <div class="w-100 h-100 d-inline-block">
+    <div style="height: 100vh">
         <iframe class="w-100 h-100 d-inline-block" src="/review/material_budget/overview/{{$section_id}}"></iframe>
     </div>
   
