@@ -221,9 +221,9 @@
                 <!-- Material-->
 
                 @if($row_1->contract_item->budget_quantity && $row_1->contract_item->budget_unit_id && $row_1->contract_item->budget_unit_price)
-                    <td class="text-center">⁌ {{ number_format($row_1->contract_item->budget_quantity,2) }}</td>
-                    <td class="text-center">⁌ {{$row_1->contract_item->budget_unit_text}}</td>
-                    <td class="text-end">⁌ P {{ number_format($row_1->contract_item->budget_unit_price,2)}}</td>
+                    <td class="text-center">✦ {{ number_format($row_1->contract_item->budget_quantity,2) }}</td>
+                    <td class="text-center">✦ {{$row_1->contract_item->budget_unit_text}}</td>
+                    <td class="text-end">✦ P {{ number_format($row_1->contract_item->budget_unit_price,2)}}</td>
                     
                     @php 
                         $contract_item_budget_total_amount = $row_1->contract_item->budget_quantity * $row_1->contract_item->budget_unit_price;
@@ -235,7 +235,7 @@
                         @if( $contract_item_budget_total_amount > $row_1->contract_item->contract_amount)
                             non-conforming 
                         @endif
-                    ">⁌ P {{ number_format($contract_item_budget_total_amount,2) }}</th>
+                    ">✦ P {{ number_format($contract_item_budget_total_amount,2) }}</th>
 
                 @else
                     <td class="text-center">{{ number_format($contract_item_budget_total_quantity[$contract_item_id],2) }}</td>
