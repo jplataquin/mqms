@@ -390,9 +390,9 @@
                     @php
                         $ref_1_material_grand_percentage = 0;
 
-                        if($grand_total_amount->contract_material > 0){
+                        if($grand_total_amount->gross_total_amount > 0){
 
-                            $ref_1_material_grand_percentage = ($grand_total_amount->ref_1_material / $grand_total_amount->contract_material) * 100;
+                            $ref_1_material_grand_percentage = ($grand_total_amount->ref_1_material / $grand_total_amount->gross_total_amount) * 100;
                         }
 
                         $ref_1_material_grand_percentage = number_format($ref_1_material_grand_percentage,2);
@@ -425,6 +425,68 @@
                 </td>
                 <th class="text-end">P {{ number_format( $grand_total_amount->budget_material, 2) }}</th>
             </tr>
+            
+    
+
+            <!-- Non Material -->
+            <tr>
+                <th colspan="4" class="text-center nonmaterial-bg">Non-Material</th>
+                <th class="text-center">
+                    @php
+                        $nonmaterial_total_percentage = 0;
+
+                        if($section->gross_total_amount > 0){
+                            $nonmaterial_total_percentage = ($grand_total_amount->contract_nonmaterial / $section->gross_total_amount) * 100;
+                        }
+
+                        $nonmaterial_total_percentage = number_format($nonmaterial_total_percentage,2);
+                    @endphp
+                    {{$nonmaterial_total_percentage}}%
+                </th>
+             
+                <th class="text-end">P {{ number_format( $grand_total_amount->contract_nonmaterial, 2) }}</th>
+                <td></td><!-- Ref 1 -->
+                <td></td>
+                <td class="text-center">
+                    @php
+                        $ref_1_nonmaterial_grand_percentage = 0;
+
+                        if($grand_total_amount->gross_total_amount > 0){
+
+                            $ref_1_nonmaterial_grand_percentage = ($grand_total_amount->ref_1_nonmaterial / $grand_total_amount->gross_total_amount) * 100;
+                        }
+
+                        $ref_1_nonmaterial_grand_percentage = number_format($ref_1_nonmaterial_grand_percentage,2);
+                    @endphp
+
+                    {{$ref_1_nonmaterial_grand_percentage}}%
+                </td>
+                <th class="text-end">P {{ number_format( $grand_total_amount->ref_1_nonmaterial, 2) }}</th>
+
+                <td></td><!-- Factor -->
+                
+                <!-- Material -->
+                <td></td>
+                <td class="text-center">
+                
+                </td>
+                <td class="text-center">
+                    @php
+                        $budget_nonmaterial_grand_percentage = 0;
+
+                        if($section->gross_total_amount > 0){
+
+                            $budget_nonmaterial_grand_percentage = ($grand_total_amount->budget_nonmaterial / $section->gross_total_amount) * 100;
+                        }
+
+                        $budget_nonmaterial_grand_percentage = number_format($budget_nonmaterial_grand_percentage,2);
+                    @endphp
+
+                    {{$budget_nonmaterial_grand_percentage}}%
+                </td>
+                <th class="text-end">P {{ number_format( $grand_total_amount->budget_material, 2) }}</th>
+            </tr>
+
 
             <!-- OPEX -->
             <tr>
@@ -449,9 +511,9 @@
                     @php
                         $ref_1_opex_grand_percentage = 0;
 
-                        if($grand_total_amount->contract_opex > 0){
+                        if($grand_total_amount->gross_total_amount > 0){
 
-                            $ref_1_opex_grand_percentage = ($grand_total_amount->ref_1_opex / $grand_total_amount->contract_opex) * 100;
+                            $ref_1_opex_grand_percentage = ($grand_total_amount->ref_1_opex / $grand_total_amount->gross_total_amount) * 100;
                         }
 
                         $ref_1_opex_grand_percentage = number_format($ref_1_opex_grand_percentage,2);
