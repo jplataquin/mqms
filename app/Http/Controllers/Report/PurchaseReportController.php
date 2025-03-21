@@ -86,11 +86,8 @@ class PurchaseReportController extends Controller{
             }
         }
 
-        $project_name       = '';
-        $section_name       = '';
-        $contract_item_name = '*';
-        $component_name     = '*';
-        $as_of_display      = '*';
+
+
 
         $validator = Validator::make($request->all(),[
             'project_id' =>[
@@ -137,24 +134,30 @@ class PurchaseReportController extends Controller{
             ]);
         }
 
-     
+        $project        = Project::findOrFail($project_id);
+        $section        = Section::findOrFail($section_id);
+        $contract_item  = null;
+        $component      = null;
+
         //Filter Project
         $purchase_orders = PurchaseOrder::where('project_id',$project_id);
 
        
         //Filter Section
-        if($section_id){
-            $purchase_orders = $purchase_orders->where('section_id',$section_id);
-        }
+
+        $purchase_orders = $purchase_orders->where('section_id',$section_id);
+        
         
       
         //Filter Contract Item
         if($contract_item_id){
+            $contract_item = ContractItem::findOrFail($contract_item_id);
             $purchase_orders = $purchase_orders->where('contract_item_id',$contract_item_id);
         }
 
         //Filter Component
         if($component_id){
+            $component = Component::findOrFail($component_id);
             $purchase_orders = $purchase_orders->where('component_id',$component_id);
         }
 
@@ -236,8 +239,16 @@ class PurchaseReportController extends Controller{
        
 
         return [
-            'per_supplier' => $per_supplier,
-            'per_material' => $per_material
+            'per_supplier'  => $per_supplier,
+            'per_material'  => $per_material,
+            'project'       => $project,
+            'section'       => $section,
+            'contract_item' => $contract_item,
+            'component'     => $component,
+            'from'          => $from,
+            'to'            => $to,
+            'supplier_filter' => count($supplier_id_arr),
+            'material_filter' => count($material_item_id_arr)
         ];
     }
 

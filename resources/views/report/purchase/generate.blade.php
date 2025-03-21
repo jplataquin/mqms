@@ -22,7 +22,67 @@
             </ul>
         </div>
         <hr>
-
+        <div class="mb-5">
+            <table class="record-table-horizontal">
+                <tbody>
+                    <tr>
+                        <th>Project</th>
+                        <td>{{$project->name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Section</th>
+                        <td>{{$section->name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Contract Item</th>
+                        <td>
+                            @if($contract_item)
+                                {{$contract_item->name}}
+                            @else
+                                *
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Component</th>
+                        <td>
+                            @if($component)
+                                {{$component->name}}
+                            @else
+                                *
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Date Scope</th>
+                        <td>
+                            @if(!$from && !$to)
+                                *
+                            @else
+                                @php 
+                                    $from = $from || '*';
+                                    $to   = $to || '*';
+                                @endphp
+                                (From: {{$from}}) - To: ({{$to}})
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>No. of Supplier Filter</th>
+                        <td>
+                            {{$supplier_filter}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>No. of Material Item</th>
+                        <td>
+                            {{$material_filter}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>    
+        </div>
+        
         <h2 class="mb-3 text-center">-- Per Supplier --</h2>
         @foreach($per_supplier as $supplier_id => $d)
         <div class="mb-5">
