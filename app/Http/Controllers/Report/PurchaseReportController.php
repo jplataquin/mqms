@@ -210,8 +210,8 @@ class PurchaseReportController extends Controller{
 
             if($purchase_order_items){
 
-                echo (boolean) $purchase_order_items;
-                echo (boolean) [];
+                echo count($purchase_order_items);
+         
                 //.print_r($purchase_order_items);
                 echo '<br>';
 
