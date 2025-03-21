@@ -23,6 +23,7 @@
         </div>
         <hr>
         <div class="mb-5">
+            <h1 class="mb-3">Purchase Report</h1>
             <table class="record-table-horizontal">
                 <tbody>
                     <tr>
