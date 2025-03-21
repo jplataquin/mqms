@@ -109,13 +109,9 @@ class SectionController extends Controller
 
             $contract_item_budget_total_quantity[$contract_item->id] = 0;
 
-            if($contract_item->budget_overwrite){
-              
-                $contract_amount = ($contract_item->budget_quantity * $contract_item->budget_unit_price);
-          
-            }else{
-                $contract_amount = $contract_item->contract_amount;
-            }
+         
+            $contract_amount = (float) $contract_item->contract_amount;
+            
 
             if($contract_item->item_type == 'MATR'){
                 
@@ -173,7 +169,7 @@ class SectionController extends Controller
                     ];
                     
                     $component_item_budget_total_amount       += (float) $component_item->amount;
-                    $component_item_ref_1_total_amount          += (float) $component_item->ref_1_amount;
+                    $component_item_ref_1_total_amount        += (float) $component_item->ref_1_amount;
 
                     if($component_item->sum_flag && $component_item->unit_id == $component->unit_id){
                         $component_budget_total_quantity[$component->id] += $component_item->quantity;
@@ -187,13 +183,18 @@ class SectionController extends Controller
 
                 $contract_item_budget_total_amount   += $component_item_budget_total_amount;
                 $contract_item_ref_1_total_amount    += $component_item_ref_1_total_amount;
-            }
+            }//end component
 
             $total_amount->contract_item[$contract_item->id] = (object) [
                 'budget'   => $contract_item_budget_total_amount,
                 'ref_1'    => $contract_item_ref_1_total_amount
             ];
 
+
+            //If budget has been manually overwritten
+            if($contract_item->budget_overwrite){
+                $contract_item_budget_total_amount = $contract_item->budget_quantity * $contract_item->budget_unit_price;
+            }
 
             if($contract_item->item_type == 'MATR'){
               
@@ -212,7 +213,7 @@ class SectionController extends Controller
             }
 
            
-        }
+        }//end contract
         
         $data = json_decode(json_encode($data));
 
