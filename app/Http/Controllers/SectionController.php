@@ -104,7 +104,7 @@ class SectionController extends Controller
         //Contract Items
         foreach($contract_items as $contract_item){
             
-            $contract_item_material_total_amount    = 0;
+            $contract_item_budget_total_amount    = 0;
             $contract_item_ref_1_total_amount       = 0;
 
             $contract_item_budget_total_quantity[$contract_item->id] = 0;
@@ -113,6 +113,10 @@ class SectionController extends Controller
               
                 $grand_total_amount->contract_material +=  (float) $contract_item->contract_amount;
             
+            }else if($contract_item->item_type == 'NMAT'){
+
+                $grand_total_amount->contract_nonmaterial +=  (float) $contract_item->contract_amount;
+
             }else if($contract_item->item_type == 'OPEX'){
 
                 $grand_total_amount->contract_opex +=  (float) $contract_item->contract_amount;
@@ -147,7 +151,7 @@ class SectionController extends Controller
                 ];
                 
 
-                $component_item_material_total_amount   = 0;
+                $component_item_budget_total_amount     = 0;
                 $component_item_ref_1_total_amount      = 0;
 
                 $component_budget_total_quantity[$component->id] = 0;
@@ -160,7 +164,7 @@ class SectionController extends Controller
                         'factor_text_value' => $component_item->factorTextValue($component->use_count, $component->unit_text)
                     ];
                     
-                    $component_item_material_total_amount       += (float) $component_item->amount;
+                    $component_item_budget_total_amount       += (float) $component_item->amount;
                     $component_item_ref_1_total_amount          += (float) $component_item->ref_1_amount;
 
                     if($component_item->sum_flag && $component_item->unit_id == $component->unit_id){
@@ -169,33 +173,33 @@ class SectionController extends Controller
                 }
 
                  $total_amount->component[$component->id] = (object) [
-                    'budget' => $component_item_material_total_amount,
-                    'ref_1'    => $component_item_ref_1_total_amount
+                    'budget'    => $component_item_budget_total_amount,
+                    'ref_1'     => $component_item_ref_1_total_amount
                 ];
 
-                $contract_item_material_total_amount += $component_item_material_total_amount;
+                $contract_item_budget_total_amount   += $component_item_budget_total_amount;
                 $contract_item_ref_1_total_amount    += $component_item_ref_1_total_amount;
             }
 
             $total_amount->contract_item[$contract_item->id] = (object) [
-                'budget' => $contract_item_material_total_amount,
+                'budget'   => $contract_item_budget_total_amount,
                 'ref_1'    => $contract_item_ref_1_total_amount
             ];
 
 
             if($contract_item->item_type == 'MATR'){
               
-                $grand_total_amount->budget_material     +=  $contract_item_material_total_amount;
+                $grand_total_amount->budget_material     +=  $contract_item_budget_total_amount;
                 $grand_total_amount->ref_1_material      +=  $contract_item_ref_1_total_amount;
             
             }else if($contract_item->item_type == 'OPEX'){
                 
-                $grand_total_amount->budget_opex        +=  $contract_item_material_total_amount;
+                $grand_total_amount->budget_opex        +=  $contract_item_budget_total_amount;
                 $grand_total_amount->ref_1_opex         +=  $contract_item_ref_1_total_amount;
 
             }else if($contract_item->item_type == 'NMAT'){
 
-                $grand_total_amount->budget_nonmaterial        +=  $contract_item_material_total_amount;
+                $grand_total_amount->budget_nonmaterial        +=  $contract_item_budget_total_amount;
                 $grand_total_amount->ref_1_nonmaterial         +=  $contract_item_ref_1_total_amount;
             }
 
