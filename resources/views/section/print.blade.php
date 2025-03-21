@@ -300,11 +300,11 @@
                             <label class="pending-text">⦿</label>
                         @endif
 
-                        if($row_2->component->status == 'APRV')
+                        @if($row_2->component->status == 'APRV')
                             <label class="approved-text">⦿</label>
                         @endif
 
-                        if($row_2->component->status == 'REJC')
+                        @if($row_2->component->status == 'REJC')
                         <label class="rejected-text">⦿</label>
                         @endif
 
