@@ -25,7 +25,7 @@
     <hr>
 
     <div>
-        <iframe src="/review/material_budget/overview/{{$section_id}}"></iframe>
+        <iframe class="w-100 h-100" src="/review/material_budget/overview/{{$section_id}}"></iframe>
     </div>
   
 </div>
