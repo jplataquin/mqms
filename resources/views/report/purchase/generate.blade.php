@@ -137,7 +137,7 @@
         </div>
 
         @php 
-            $supplier_amount_total += $supplier_amount_total;
+            $supplier_grand_total += $supplier_amount_total;
         @endphp
         @endforeach
         <div class="mb-3 text-end">
