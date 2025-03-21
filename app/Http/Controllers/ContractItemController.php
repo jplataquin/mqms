@@ -348,11 +348,19 @@ class ContractItemController extends Controller
         }
 
         if($budget_quantity && $budget_unit_id && $budget_unit_price){
+          
             $contract_item->budget_quantity     = $budget_quantity;
             $contract_item->budget_unit_id      = $budget_unit_id;
             $contract_item->budget_unit_price   = $budget_unit_price;
-        }
         
+        }else{
+
+            $contract_item->budget_quantity     = null;
+            $contract_item->budget_unit_id      = null;
+            $contract_item->budget_unit_price   = null;
+
+        }   
+
         $contract_item->save();
 
 
