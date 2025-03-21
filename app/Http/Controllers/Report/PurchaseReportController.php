@@ -63,7 +63,7 @@ class PurchaseReportController extends Controller{
          //If material group id exists but material items list is empty
          if($material_group_id && !$material_items){
             
-            $material_row = MaterialItems::where('material_group_id',$material_group_id)
+            $material_row = MaterialItem::where('material_group_id',$material_group_id)
             ->selectRaw('GROUP_CONCAT(id) as ids')
             ->groupBy('id')
             ->first();
@@ -74,7 +74,7 @@ class PurchaseReportController extends Controller{
 
         }else if($material_group_id && $material_items){
             
-            $material_row = MaterialItems::where('material_group_id',$material_group_id)
+            $material_row = MaterialItem::where('material_group_id',$material_group_id)
             ->selectRaw('GROUP_CONCAT(id) as ids')
             ->whereIn('id',explode(',',$material_items))
             ->groupBy('id')
