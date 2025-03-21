@@ -69,7 +69,7 @@
                         <label>Item Type</label>
                         <select class="form-select editable" id="item_type" disabled="true">
                             <option value="MATR" @if($contract_item->item_type == "MATR") selected @endif>Material</option>
-                            <option value="LABR" @if($contract_item->item_type == "LABR") selected @endif>Labor</option>
+                            <option value="LABR" @if($contract_item->item_type == "NMAT") selected @endif>Non-Material</option>
                             <option value="OPEX" @if($contract_item->item_type == "OPEX") selected @endif>Operational Expense</option>
                         </select>
                     </div>

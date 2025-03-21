@@ -25,6 +25,20 @@
             padding: 5px;
         }
 
+        /** Non-Material */
+        .contract-item-nonmaterial-row{
+            background-color:#9dccfa;
+        }
+
+        .nonmaterial-bg{
+            background-color:#9dccfa;
+        }
+
+        .component-nonmaterial-row{
+            background-color: #b9d9fa;
+        }
+
+
         /** Material */
         .contract-item-material-row{
             background-color: #e0e2e4;
@@ -145,7 +159,7 @@
             </tr>
             <tr>
          
-            
+
 
                 <!-- Contract -->
                 <th>QTY</th>
@@ -173,6 +187,10 @@
             <!-- Contract Item -->
 
             <tr class="
+                @if($row_1->contract_item->item_type == 'NMAT') 
+                    contract-item-nonmaterial-row 
+                @endif
+
                 @if($row_1->contract_item->item_type == 'MATR') 
                     contract-item-material-row 
                 @endif
@@ -218,6 +236,10 @@
             @foreach($row_1->components as $component_id => $row_2)
         
                 <tr class="
+                     @if($row_1->contract_item->item_type == 'NMAT') 
+                        component-nonmaterial-row 
+                    @endif
+
                     @if($row_1->contract_item->item_type == 'MATR') 
                         component-material-row 
                     @endif
