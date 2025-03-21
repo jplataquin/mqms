@@ -26,7 +26,7 @@
 
     <div style="height: 100vh">
          <div class="text-end">
-            <button class="btn btn-secondary" onclick="makeFullScreen()">Full Screen</button>
+            <button class="btn btn-secondary" id="fullScreenBtn">Full Screen</button>
         </div>
         <iframe id="overview_iframe" class="w-100 h-100 d-inline-block" src="/review/material_budget/overview/{{$section_id}}"></iframe>
     </div>
@@ -37,7 +37,12 @@
     import {$q} from '/adarna.js';
     
     const overview_iframe = $q('#overview_iframe').first();
+    const fullScreenBtn   = $q('#fullScreenBtn').first();
 
+    fullScreenBtn.onclick = ()=>{
+        makeFulLScreen();
+    }
+    
     function requestFullScreen(element) {
         // Supports most browsers and their versions.
         let requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullscreen;
