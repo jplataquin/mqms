@@ -112,7 +112,7 @@ class SectionController extends Controller
             if($contract_item->budget_overwrite){
               
                 $contract_amount = ($contract_item->budget_quantity * $contract_item->budget_unit_price);
-                echo $contract_amount;exit;
+          
             }else{
                 $contract_amount = $contract_item->contract_amount;
             }
