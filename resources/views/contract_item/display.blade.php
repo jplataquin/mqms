@@ -147,6 +147,42 @@
                 
             </div>
             
+            <div class="row mb-3 ">
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Budget Quantity</label>
+                        <input type="text" id="budget_quantity" class="form-control editable" disabled="true" value="{{$contract_item->budget_quantity}}"/>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Budget Unit</label>
+                        <select class="form-select editable" id="budget_unit" disabled="true">
+                            <option value=""> - </option>
+                            @foreach($unit_options as $unit)
+                            
+                            <option value="{{$unit->id}}" 
+                                @if($unit->deleted) disabled @endif
+                            
+                                @if($unit->id == $contract_item->budget_unit_id) selected @endif
+                            
+                            >{{$unit->text}} @if($unit->deleted) [Deleted] @endif</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Budget Unit Price (PHP)</label>
+                        <input type="text" id="budget_unit_price" class="form-control editable" disabled="true" value="{{$contract_item->budget_unit_price}}"/>
+                    </div>
+                </div>
+
+                </div>
+
             
 
             <div class="row mb-3">
