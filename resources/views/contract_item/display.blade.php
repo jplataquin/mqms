@@ -243,9 +243,15 @@
     const description                 = $q('#description').first();
     const contract_quantity           = $q('#contract_quantity').first();
     const contract_unit_price         = $q('#contract_unit_price').first();
+    
     const ref_1_quantity              = $q('#ref_1_quantity').first();
     const ref_1_unit_price            = $q('#ref_1_unit_price').first();
     const ref_1_unit                  = $q('#ref_1_unit').first();
+
+    const budget_quantity              = $q('#budget_quantity').first();
+    const budget_unit_price            = $q('#budget_unit_price').first();
+    const budget_unit                  = $q('#budget_unit').first();
+    
     const unit                        = $q('#unit').first();
     const item_type                   = $q('#item_type').first();
     
@@ -306,6 +312,9 @@
             ref_1_quantity      : ref_1_quantity.value,
             ref_1_unit_price    : ref_1_unit_price.value,
             ref_1_unit_id       : ref_1_unit.value,
+            budget_quantity     : budget_quantity.value,
+            budget_unit_price   : budget_unit_price.value,
+            budget_unit_id      : budget_unit.value,
             unit_id             : unit.value,
         }).then(reply=>{
             

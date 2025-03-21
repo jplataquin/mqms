@@ -214,9 +214,15 @@ class ContractItemController extends Controller
         $description              = $request->input('description') ?? '';
         $contract_quantity        = $request->input('contract_quantity') ?? '';
         $contract_unit_price      = $request->input('contract_unit_price') ?? '';
+        
         $ref_1_quantity           = $request->input('ref_1_quantity') ?? '';
         $ref_1_unit_price         = $request->input('ref_1_unit_price') ?? '';
         $ref_1_unit_id            = (int) $request->input('ref_1_unit_id') ?? 0;
+        
+        $budget_quantity           = $request->input('budget_quantity') ?? '';
+        $budget_unit_price         = $request->input('budget_unit_price') ?? '';
+        $budget_unit_id            = (int) $request->input('budget_unit_id') ?? 0;
+        
         $unit_id                  = (int) $request->input('unit_id') ?? 0;
         $id                       = (int) $request->input('id') ?? 0;
         $section_id               = (int) $request->input('section_id') ?? 0;
@@ -258,6 +264,7 @@ class ContractItemController extends Controller
                 'required',
                 'numeric'
             ],
+
             'ref_1_quantity'=>[
                 'nullable',
                 'numeric',
@@ -273,6 +280,25 @@ class ContractItemController extends Controller
             'ref_1_unit_price'=>[
                 'nullable',
                 'numeric'
+            ],
+
+
+            'budget_quantity'=>[
+                'nullable',
+                'numeric',
+                'gt:0',
+                'required_with:budget_unit_id'
+            ],
+            'budget_unit_id' =>[
+                'nullable',
+                'numeric',
+                'gte:1',
+                'required_with:budget_quantity'
+            ],
+            'budget_unit_price'=>[
+                'nullable',
+                'numeric',
+                'required_with:budget_quantity'
             ]
 
         ]);
@@ -321,6 +347,12 @@ class ContractItemController extends Controller
             $contract_item->ref_1_unit_price        = null;
         }
 
+        if($budget_quantity && $budget_unit_id && $budget_unit_price){
+            $contract_item->budget_quantity     = $budget_quantity;
+            $contract_item->budget_unit_id      = $budget_unit_id;
+            $contract_item->budget_unit_price   = $budget_unit_price;
+        }
+        
         $contract_item->save();
 
 
