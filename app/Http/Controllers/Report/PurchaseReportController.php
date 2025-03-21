@@ -268,7 +268,12 @@ class PurchaseReportController extends Controller{
 
         $data = $this->_generate($request);
 
-        return view('/report/project/print',$data);
+        if(!is_array($data)){
+            return $data;
+        }
+        
+ 
+        return view('/report/purchase/print',$data);
     }
 
 
