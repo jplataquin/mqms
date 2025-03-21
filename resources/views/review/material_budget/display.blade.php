@@ -63,7 +63,7 @@
 
     window.util.quickNav = {
         title:'Review Material Budget',
-        url: '/review/material_budget/'
+        url: '/review/material_budget'
     };
     
     function requestFullScreen(element) {
