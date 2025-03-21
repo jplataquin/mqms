@@ -26,7 +26,7 @@
         }
 
         tr:hover {
-            background-color: #94f7b0 !important;
+            background-color: #b5ffca !important;
         }
 
         /** Non-Material */
