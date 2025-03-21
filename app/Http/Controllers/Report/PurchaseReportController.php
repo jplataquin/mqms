@@ -66,7 +66,7 @@ class PurchaseReportController extends Controller{
             $material_row = MaterialItem::where('material_group_id',$material_group_id)
             ->selectRaw('GROUP_CONCAT(id) as ids')
             ->groupBy('id')
-            ->row();
+            ->first();
 
             if($material_row->ids){
                 $material_item_id_arr = explode(',',$material_row->ids);
@@ -78,9 +78,10 @@ class PurchaseReportController extends Controller{
             ->selectRaw('GROUP_CONCAT(id) as ids')
             ->whereIn('id',explode(',',$material_items))
             ->groupBy('id')
-            ->row();
+            ->first();
 
-            echo $material_row->ids;exit;
+            print_r($material_row);
+            exit;
             if($material_row->ids){
                 $material_item_id_arr = explode(',',$material_row->ids);
             }
