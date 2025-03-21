@@ -85,6 +85,11 @@
         </div>
         
         <h2 class="mb-3 text-center">-- Per Supplier --</h2>
+
+        @php 
+            $supplier_grand_total = 0;
+        @endphp
+
         @foreach($per_supplier as $supplier_id => $d)
 
         @php 
@@ -130,8 +135,14 @@
                 </tr>
             </table>
         </div>
+
+        @php 
+            $supplier_amount_total += $supplier_amount_total;
+        @endphp
         @endforeach
-   
+        <div class="mb-3 text-end">
+            <h3>Grand Total: P {{number_format($supplier_grand_total,2)}} </h3>
+        </div>
 
     <hr>
 
