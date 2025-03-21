@@ -152,7 +152,7 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label>Budget Quantity</label>
-                        <input type="text" id="budget_quantity" class="form-control editable" disabled="true" value="{{$contract_item->budget_quantity}}"/>
+                        <input type="text" id="budget_quantity" placeholder="Auto" class="form-control editable" disabled="true" value="{{$contract_item->budget_quantity}}"/>
                     </div>
                 </div>
 
@@ -160,7 +160,7 @@
                     <div class="form-group">
                         <label>Budget Unit</label>
                         <select class="form-select editable" id="budget_unit" disabled="true">
-                            <option value=""> - </option>
+                            <option value=""> Auto </option>
                             @foreach($unit_options as $unit)
                             
                             <option value="{{$unit->id}}" 
@@ -177,7 +177,7 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label>Budget Unit Price (PHP)</label>
-                        <input type="text" id="budget_unit_price" class="form-control editable" disabled="true" value="{{$contract_item->budget_unit_price}}"/>
+                        <input type="text" placeholder="Auto" id="budget_unit_price" class="form-control editable" disabled="true" value="{{$contract_item->budget_unit_price}}"/>
                     </div>
                 </div>
 
