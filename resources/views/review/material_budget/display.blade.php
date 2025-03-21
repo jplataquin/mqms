@@ -61,6 +61,11 @@
         }
     };
 
+    window.util.quickNav = {
+        title:'Review Material Budget',
+        url: '/review/material_budget/'
+    };
+    
     function requestFullScreen(element) {
         // Supports most browsers and their versions.
         let requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullscreen;
@@ -70,9 +75,6 @@
     }
 
     function makeFullScreen() {
-        
-      
-
         requestFullScreen(document);
     }
 </script>
