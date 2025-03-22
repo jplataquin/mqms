@@ -647,15 +647,15 @@
                 id: id
             }).then(reply=>{
 
-                //window.util.unblockUI();
+                parentWindow.util.unblockUI();
 
                 if(reply.status <= 0 ){
                     parentWindow.util.showMsg(reply);
                     return false;
                 };
 
-
-                window.location.relaod();
+                //fix this
+                parentWindow.reloadIframe();
 
             });
         }
@@ -668,7 +668,7 @@
             }).then(reply=>{
 
                 
-                //window.util.unblockUI();
+                parentWindow.util.unblockUI();
 
                 if(reply.status <= 0 ){
                     parentWindow.util.showMsg(reply);
@@ -676,7 +676,8 @@
                 };
 
 
-                window.location.relaod();
+                 //fix this
+                 parentWindow.reloadIframe();
 
             });
         }
@@ -716,7 +717,10 @@
                         onclick:()=>{
                             parentWindow.util.blockUI();
                             setTimeout(()=>{
-                                window.location.relaod();
+
+                                parentWindow.util.unblockUI();
+                                 //fix this
+                                parentWindow.reloadIframe();
                             },1000);
                             
                         }

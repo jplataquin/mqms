@@ -48,6 +48,10 @@
     const overview_iframe = $q('#overview_iframe').first();
     const fullScreenBtn   = $q('#fullScreenBtn').first();
 
+    window.reloadIframe = ()=>{
+        overview_iframe.contentWindow.location.reload();
+    }
+
     fullScreenBtn.onclick = ()=>{
         makeFullScreen();
     }
