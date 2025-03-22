@@ -308,17 +308,17 @@
                         component-opex-row 
                     @endif
                 ">
-                    <td data-controller="pageBreaker componentContextMenu"  rowspan="{{ ( count( (array) $row_2->component_items) + 2) }}">
+                    <td data-controller="pageBreaker componentContextMenu" data-id="{{$row_2->component->id}}" rowspan="{{ ( count( (array) $row_2->component_items) + 2) }}">
                         @if($row_2->component->status == 'PEND')
-                            <div class="pending-text text-center">⦿</div>
+                            <div class="pending-text text-center mb-3">⦿</div>
                         @endif
 
                         @if($row_2->component->status == 'APRV')
-                            <div class="approved-text text-center">⦿</div>
+                            <div class="approved-text text-center mb-3">⦿</div>
                         @endif
 
                         @if($row_2->component->status == 'REJC')
-                        <div class="rejected-text text-center">⦿</div>
+                        <div class="rejected-text text-center mb-3">⦿</div>
                         @endif
 
                         {{$row_2->component->name}}
@@ -635,6 +635,8 @@
         import {$q} from '/adarna.js';
         
         function componentContextMenu(els){els.map(el => {
+            
+            let component_id = el.getAttribute('data-id');
 
             let cm = contextMenu({
                 items:[
@@ -642,13 +644,13 @@
                         name:'Approve',
                         onclick:()=>{
                                                                 
-                           alert('Approve');
+                           alert('Approve '+component_id);
                         }
                     },
                     {
                         name:'Reject',
                         onclick:()=>{
-                            alert('Reject');
+                            alert('Reject '+component_id);
                         }
                     }
                 ]
