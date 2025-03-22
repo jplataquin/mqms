@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{$project->name}} - {{$section->name}} - {{$datetime_generated}}</title>
 
+     <!-- Scripts -->
+     <script src="https://unpkg.com/htmx.org@2.0.0"></script>
+     @vite(['resources/js/app.js'])
+
     <style>
 
         table, tr, td, th {
