@@ -708,6 +708,7 @@
                     {
                         name:'Refresh',
                         onclick:()=>{
+                            console.log(window);
                             window.util.navReload();
                         }
                     }
