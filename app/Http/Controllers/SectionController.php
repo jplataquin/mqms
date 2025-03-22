@@ -94,7 +94,7 @@ class SectionController extends Controller
         $contract_item_budget_total_quantity    = [];
         $component_budget_total_quantity        = [];
 
-        $contract_items = $section->ContractItems;
+        $contract_items = $section->ContractItems()->orderBy('item_code','ASC');
 
        
 
