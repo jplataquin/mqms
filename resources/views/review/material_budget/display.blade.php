@@ -56,6 +56,7 @@
         makeFullScreen();
     }
 
+    
     document.onfullscreenchange = (e) => {
        
         if (document.fullscreenElement) {
