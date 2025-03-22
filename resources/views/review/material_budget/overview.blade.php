@@ -25,7 +25,7 @@
             padding: 5px;
         }
 
-        tr:hover {
+        .highlight-row:hover {
             background-color: #b5ffca !important;
         }
 
@@ -204,6 +204,8 @@
             <!-- Contract Item -->
 
             <tr class="
+                highlight-row 
+
                 @if($row_1->contract_item->item_type == 'NMAT') 
                     contract-item-nonmaterial-row 
                 @endif
@@ -293,6 +295,7 @@
             @foreach($row_1->components as $component_id => $row_2)
         
                 <tr class="
+                     highlight-row 
                      @if($row_1->contract_item->item_type == 'NMAT') 
                         component-nonmaterial-row 
                     @endif
@@ -305,7 +308,7 @@
                         component-opex-row 
                     @endif
                 ">
-                    <td data-controller="pageBreaker"  rowspan="{{ ( count( (array) $row_2->component_items) + 2) }}">
+                    <td data-controller="pageBreaker componentContextMenu"  rowspan="{{ ( count( (array) $row_2->component_items) + 2) }}">
                         @if($row_2->component->status == 'PEND')
                             <div class="pending-text text-center">⦿</div>
                         @endif
@@ -341,7 +344,7 @@
                 </tr>
                 
          
-                <tr>
+                <tr class="highlight-row">
            
                     <td></td><!-- Description -->
                     
@@ -377,7 +380,7 @@
                 @endphp
 
                 <!-- Component Item data row -->
-                <tr class="component-item-row"> 
+                <tr class="component-item-row highlight-row"> 
                     <td>{{$component_item->name}}</td><!-- Component Item Name -->
                     
                     <!-- Contract -->
@@ -414,7 +417,7 @@
         <!-- Grand Total -->
             
             <!-- Gross -->
-            <tr>
+            <tr class="highlight-row">
                 <th colspan="5" class="text-end">Gross Total Amount</th>
                 
              
@@ -439,7 +442,7 @@
 
 
             <!-- Material -->
-            <tr>
+            <tr class="highlight-row">
                 <th colspan="4" class="text-center material-bg">Material</th>
                 <th class="text-center">
                     @php
@@ -500,7 +503,7 @@
     
 
             <!-- Non Material -->
-            <tr>
+            <tr class="highlight-row">
                 <th colspan="4" class="text-center nonmaterial-bg">Non-Material</th>
                 <th class="text-center">
                     @php
@@ -560,7 +563,7 @@
 
 
             <!-- OPEX -->
-            <tr>
+            <tr class="highlight-row">
                 <th colspan="4" class="text-center opex-bg">Operational Expense</th>
                 <th class="text-center">
                     @php
@@ -628,8 +631,37 @@
 
 
     <script type="module">
-      import {$q} from '/adarna.js';
+        import contextMenu from '/ui_components/ContextMenu.js';
+        import {$q} from '/adarna.js';
         
+        function componentContextMenu(els){els.map(el => {
+
+            let cm = contextMenu({
+                items:[
+                    {
+                        name:'Approve',
+                        onclick:()=>{
+                                                                
+                           alert('Approve');
+                        }
+                    },
+                    {
+                        name:'Reject',
+                        onclick:()=>{
+                            alert('Reject');
+                        }
+                    }
+                ]
+            });
+
+            el.oncontextmenu = (e)=>{
+                e.preventDefault();
+
+                cm.handler.show(e.clientX,e.clientY);
+            }
+
+        });}
+
         function pageBreaker(items){
 
             let total_height    = 0;
@@ -658,8 +690,6 @@
                 
             });
 
-            
-            
         }
 
         let elem = {};

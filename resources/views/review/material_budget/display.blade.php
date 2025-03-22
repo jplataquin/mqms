@@ -53,7 +53,7 @@
     }
 
     document.onfullscreenchange = (e) => {
-        console.log(document.fullscreenElement);
+       
         if (document.fullscreenElement) {
            
             overview_iframe.classList.add('fullscreen');
