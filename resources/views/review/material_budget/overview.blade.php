@@ -634,6 +634,46 @@
         import contextMenu from '/ui_components/ContextMenu.js';
         import {$q} from '/adarna.js';
         
+        function approveComponent(id){
+            window.util.blockUI();
+
+            window.util.$post('/api/review/component/approve',{
+                id: id
+            }).then(reply=>{
+
+                window.util.unblockUI();
+
+                if(reply.status <= 0 ){
+                    window.util.showMsg(reply);
+                    return false;
+                };
+
+
+                window.util.navReload();
+
+            });
+        }
+
+        function rejectComponent(id){
+            window.util.blockUI();
+
+            window.util.$post('/api/review/component/reject',{
+                id: id
+            }).then(reply=>{
+
+                
+                window.util.unblockUI();
+
+                if(reply.status <= 0 ){
+                    window.util.showMsg(reply);
+                    return false;
+                };
+
+
+                window.util.navReload();
+
+            });
+        }
 
         function getOffsetPos( el ) {
             var _x = 0;
@@ -656,13 +696,19 @@
                         name:'Approve',
                         onclick:()=>{
                                                                 
-                           alert('Approve '+component_id);
+                           approveComponent(component_id);
                         }
                     },
                     {
                         name:'Reject',
                         onclick:()=>{
-                            alert('Reject '+component_id);
+                            rejectComponent(component_id);
+                        }
+                    },
+                    {
+                        name:'Refresh',
+                        onclick:()=>{
+                            window.util.navReload();
                         }
                     }
                 ]
