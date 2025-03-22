@@ -117,9 +117,9 @@
         }
 
         .pending-text{
-            color:rgb(200, 218, 0);
+            color:rgb(251, 201, 6);
         }
-
+        
         .approved-text{
             color:rgb(11, 152, 1);
         }
