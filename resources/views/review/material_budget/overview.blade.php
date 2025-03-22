@@ -638,43 +638,45 @@
         import contextMenu from '/ui_components/ContextMenu.js';
         import {$q} from '/adarna.js';
         
-        function approveComponent(id){
-            window.util.blockUI();
+        let parentWindow = window.parent;
 
-            window.util.$post('/api/review/component/approve',{
+        function approveComponent(id){
+            parentWindow.util.blockUI();
+
+            parentWindow.util.$post('/api/review/component/approve',{
                 id: id
             }).then(reply=>{
 
-                window.util.unblockUI();
+                //window.util.unblockUI();
 
                 if(reply.status <= 0 ){
-                    window.util.showMsg(reply);
+                    parentWindow.util.showMsg(reply);
                     return false;
                 };
 
 
-                window.util.navReload();
+                window.location.relaod();
 
             });
         }
 
         function rejectComponent(id){
-            window.util.blockUI();
+            parentWindow.util.blockUI();
 
-            window.util.$post('/api/review/component/reject',{
+            parentWindow.util.$post('/api/review/component/reject',{
                 id: id
             }).then(reply=>{
 
                 
-                window.util.unblockUI();
+                //window.util.unblockUI();
 
                 if(reply.status <= 0 ){
-                    window.util.showMsg(reply);
+                    parentWindow.util.showMsg(reply);
                     return false;
                 };
 
 
-                window.util.navReload();
+                window.location.relaod();
 
             });
         }
@@ -712,8 +714,11 @@
                     {
                         name:'Refresh',
                         onclick:()=>{
-                            console.log(window);
-                            window.util.navReload();
+                            parentWindow.util.blockUI();
+                            setTimeout(()=>{
+                                window.location.relaod();
+                            },1000);
+                            
                         }
                     }
                 ]
