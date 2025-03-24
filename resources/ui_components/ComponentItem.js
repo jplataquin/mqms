@@ -300,13 +300,13 @@ class ComponentItem extends ComponentV2{
 
                             
                             t.tr(()=>{
-                                t.th({colspan:5,class:'text-center bg-divider'},'POW/DUPA')
+                                t.th({colspan:5,class:'text-center'},'POW/DUPA')
                             });
 
                             t.tr(()=>{
-                                t.th({colspan:2},'Quantity');
-                                t.th({colspan:1},'Unit');
-                                t.th({colspan:2},'Unit Price');
+                                t.td({colspan:2},'Quantity');
+                                t.td({colspan:1},'Unit');
+                                t.td({colspan:2},'Unit Price');
                             });
                     
                             t.tr(()=>{
@@ -340,11 +340,11 @@ class ComponentItem extends ComponentV2{
                             });
 
                             t.tr(()=>{
-                                t.th({colspan:5,class:'text-center bg-divider'},'Material Budget')
+                                t.th({colspan:5,class:'text-center'},'Material Budget')
                             });
             
                             t.tr(()=>{
-                                t.th('Function Type');
+                                t.td();
                                 t.th('Variable');
                                 t.th('Quantity');
                                 t.th('Unit');
@@ -354,13 +354,15 @@ class ComponentItem extends ComponentV2{
                             t.tr(()=>{
                                 
                                 t.td({class:''},(el)=>{
-                                    
-                                    this.el.component_item_function_type = t.select({class:'form-control function_type',disabled:true},()=>{
-                                        t.option({value:3},'As Direct');
-                                        t.option({value:4},'As Equivalent');
-                                        t.option({value:1},'As Factor');
-                                        t.option({value:2},'As Divisor');
-                                        
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Function Type')
+                                        this.el.component_item_function_type = t.select({class:'form-select function_type',disabled:true},()=>{
+                                            t.option({value:3},'As Direct');
+                                            t.option({value:4},'As Equivalent');
+                                            t.option({value:1},'As Factor');
+                                            t.option({value:2},'As Divisor');
+                                            
+                                        });
                                     });
             
                                 });
