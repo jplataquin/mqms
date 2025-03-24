@@ -400,6 +400,15 @@ class ComponentItem extends ComponentV2{
                                     style:{
                                         borderBottom:'none'
                                     }
+                                },()=>{
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Approximation');
+                                        this.el.component_item_approximation = t.select({class:'form-select'},()=>{
+                                            t.option({value:'NONE'},'None');
+                                            t.option({value:'ROUP'},'Round Up');
+                                            t.option({value:'RDOW'},'Round Down');
+                                        });
+                                    });
                                 });
                             });
                             t.tr(()=>{
