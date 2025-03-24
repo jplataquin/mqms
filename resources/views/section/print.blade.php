@@ -364,7 +364,7 @@
                     <th class="text-end">P {{ number_format( $total_amount->component[$component_id]->budget, 2) }}</th>
                     
                     <!--Component Percent -->
-                    <td class="text-center italic">
+                    <td class="text-center text-italic">
 
                         @php
                             $component_budget_amount_percentage = 0;
