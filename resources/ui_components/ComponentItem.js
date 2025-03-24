@@ -418,7 +418,11 @@ class ComponentItem extends ComponentV2{
             
                             
             
-                                t.td({class:''},(el)=>{
+                                t.td({
+                                    style:{
+                                        borderBottom:'none'
+                                    }
+                                },(el)=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('Unit');
                                         this.el.component_item_unit = t.select({class:'form-select unit',disabled:true},()=>{
@@ -437,7 +441,11 @@ class ComponentItem extends ComponentV2{
                                 });
             
 
-                                t.td({class:''},(el)=>{
+                                t.td({
+                                    style:{
+                                        borderBottom:'none'
+                                    }
+                                },(el)=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('Equivalent');
                                         this.el.component_item_equivalent = t.input({class:'form-control equivalent', type:'text', placeholder:'Equivalent',disabled:true,value:'Loading...'});
@@ -460,7 +468,7 @@ class ComponentItem extends ComponentV2{
                                 
                                 t.td({},()=>{
                                     t.div({class:'form-group'},()=>{
-                                        t.label('Unit Price');
+                                        t.label('Total Amount');
                                         this.el.component_item_total_amount = t.input({class:'form-control component_item_total_amount',disabled:true});
                                     });
                                 });
