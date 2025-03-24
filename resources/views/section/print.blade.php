@@ -360,7 +360,20 @@
                     <th class="text-end">P {{ number_format( $total_amount->component[$component_id]->budget, 2) }}</th>
                     
                     <!--Component Percent -->
-                    <th class="text-center"></th>
+                    <td class="text-center italic">
+
+                        @php
+                            $component_budget_amount_percentage = 0;
+
+                            if($contract_item_budget_total_amount > 0){
+                                $component_budget_amount_percentage = ($total_amount->component[$component_id]->budget / $contract_item_budget_total_amount) * 100;
+                                $component_budget_amount_percentage = number_format($component_budget_amount_percentage,2);
+                            }
+
+                        @endphp
+
+                        {{$component_budget_amount_percentage}}%
+                    </td>
                 </tr>
                 
          
