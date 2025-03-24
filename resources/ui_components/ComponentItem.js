@@ -35,12 +35,7 @@ class ComponentItem extends ComponentV2{
                 getValue: (val)=>{
                     return val;
                 },
-                onEvent:function(val){
-                    return val;
-                },
                 onUpdate: (data)=>{
-
-                    console.log(data);
 
                     if(!data.event){
                         this.el.component_item_approximation.value = data.value;
@@ -776,9 +771,12 @@ class ComponentItem extends ComponentV2{
 
                     quantity = window.util.pureNumber(variable,2);
 
+                    console.log(quantity);
                     if(component_item_approximation == 'CEIL'){
+                        console.log('Ceil',quantity)
                         quantity = Math.ceil(quantity);
                     }else if(component_item_approximation = 'FLOR'){
+                        console.log('Floor',quantity);
                         quantity = Math.floor(quantity);
                     }
 
