@@ -302,10 +302,10 @@
                             $contract_item_budget_percentage = ($contract_item_budget_total_amount / $section->gross_total_amount) / 100;
                           
                         }
-
+                        echo $contract_item_budget_percentage;
                         $contract_item_budget_percentage = number_format($contract_item_budget_percentage,2);
 
-                        echo $contract_item_budget_percentage;
+                 
                     @endphp
                  
                     {{$contract_item_budget_percentage}}%
