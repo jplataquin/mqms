@@ -731,7 +731,16 @@ class ComponentItem extends ComponentV2{
                         quantity = 0;
                     }
 
-             
+                    if(component_item_approximation == 'CEIL'){
+                        quantity = Math.ceil(quantity);
+                    }else if(component_item_approximation = 'FLOR'){
+                        quantity = Math.floor(quantity);
+                    }
+            
+                    this.setState('component_item_quantity',quantity);
+                    
+                    this.setState('component_item_equivalent','');
+
                 break;
 
             case 2: //As Divisor
@@ -748,6 +757,16 @@ class ComponentItem extends ComponentV2{
                         quantity = 0;
                     }
 
+                    if(component_item_approximation == 'CEIL'){
+                        quantity = Math.ceil(quantity);
+                    }else if(component_item_approximation = 'FLOR'){
+                        quantity = Math.floor(quantity);
+                    }
+
+                    
+                    this.setState('component_item_quantity',quantity);
+                    this.setState('component_item_equivalent','');
+
                 break;
 
             case 3: //Direct
@@ -758,6 +777,16 @@ class ComponentItem extends ComponentV2{
                     }
 
                     quantity = window.util.pureNumber(variable,2);
+
+                    if(component_item_approximation == 'CEIL'){
+                        quantity = Math.ceil(quantity);
+                    }else if(component_item_approximation = 'FLOR'){
+                        quantity = Math.floor(quantity);
+                    }
+
+                    
+                    this.setState('component_item_quantity',variable);
+                    this.setState('component_item_equivalent','');
 
                     
                 break;
@@ -774,23 +803,18 @@ class ComponentItem extends ComponentV2{
                 if(equivalent !== Infinity){
 
                     equivalent = window.util.roundUp(equivalent,2);
+
+                    this.setState('component_item_equivalent',equivalent);
                 
                 }else{
-                    equivalent = 0;
+
+                    this.setState('component_item_equivalent','');
+                
                 }
                 
                 
                 break;
         }
-
-        if(component_item_approximation == 'CEIL'){
-            quantity = Math.ceil(quantity);
-        }else if(component_item_approximation = 'FLOR'){
-            quantity = Math.floor(quantity);
-        }
-
-        this.setState('component_item_quantity',quantity);  
-        this.setState('component_item_equivalent',equivalent);
 
 
         this.calculateTotalAmount();
