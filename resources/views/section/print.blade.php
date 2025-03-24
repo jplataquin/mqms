@@ -196,6 +196,7 @@
                 <th>UNIT</th>
                 <th class="amount-13">RATE</th>
                 <th class="amount-15">AMOUNT</th>
+                <th class="text-center">%</th>
             </tr>
         </thead>
         <tbody>
@@ -286,6 +287,9 @@
                         @endif
                     ">P {{ number_format($total_amount->contract_item[$contract_item_id]->budget,2) }}</th>
                 @endif
+
+                <!-- Contract Item Percent -->
+                <td></td>
             </tr>
 
 
@@ -338,6 +342,9 @@
                     <th class="text-center">{{$row_2->component->unit_text}}</th>
                     <td></td>
                     <th class="text-end">P {{ number_format( $total_amount->component[$component_id]->budget, 2) }}</th>
+                    
+                    <!--Component Percent -->
+                    <th class="text-center"></th>
                 </tr>
                 
          
@@ -364,6 +371,7 @@
                     <td class="text-center text-italic">
                         {{ $row_2->component->unit_text }}
                     </td>
+                    <td></td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -401,6 +409,7 @@
                     <td class="text-center">{{$component_item->unit_text}}</td>
                     <td class="text-end">P {{ number_format($component_item->budget_price,2) }}</td>
                     <td class="text-end">P {{ number_format($component_item->amount,2) }}</td>
+                    <td></td>
                 </tr>
                 @endforeach
        
@@ -435,6 +444,7 @@
                     
                 </td>
                 <th class="text-end"></th>
+                <th class="text-center"></th>
             </tr>
 
 
@@ -481,6 +491,10 @@
                 
                 </td>
                 <td class="text-center">
+                  
+                </td>
+                <th class="text-end">P {{ number_format( $grand_total_amount->budget_material, 2) }}</th>
+                <th class="text-center">
                     @php
                         $budget_material_grand_percentage = 0;
 
@@ -493,8 +507,7 @@
                     @endphp
 
                     {{$budget_material_grand_percentage}}%
-                </td>
-                <th class="text-end">P {{ number_format( $grand_total_amount->budget_material, 2) }}</th>
+                </th>
             </tr>
             
     
@@ -542,6 +555,10 @@
                 
                 </td>
                 <td class="text-center">
+                   
+                </td>
+                <th class="text-end">P {{ number_format( $grand_total_amount->budget_nonmaterial, 2) }}</th>
+                <th class="text-center">
                     @php
                         $budget_nonmaterial_grand_percentage = 0;
 
@@ -554,8 +571,7 @@
                     @endphp
 
                     {{$budget_nonmaterial_grand_percentage}}%
-                </td>
-                <th class="text-end">P {{ number_format( $grand_total_amount->budget_nonmaterial, 2) }}</th>
+                </th>
             </tr>
 
 
@@ -602,6 +618,16 @@
                  
                 </td>
                 <td class="text-center">
+                   
+                </td>
+                <th class="
+                    text-end 
+                    
+                    @if( $grand_total_amount->budget_opex > $grand_total_amount->contract_opex)
+                        non-conforming 
+                    @endif
+                ">P {{ number_format( $grand_total_amount->budget_opex, 2) }}</th>
+                <th class="text-center">
                     @php
                         $opex_material_grand_percentage = 0;
 
@@ -614,14 +640,7 @@
                     @endphp
 
                     {{$opex_material_grand_percentage}}%
-                </td>
-                <th class="
-                    text-end 
-                    
-                    @if( $grand_total_amount->budget_opex > $grand_total_amount->contract_opex)
-                        non-conforming 
-                    @endif
-                ">P {{ number_format( $grand_total_amount->budget_opex, 2) }}</th>
+                </th>
             </tr>
     </table>
     

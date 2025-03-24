@@ -126,7 +126,7 @@ class SectionController extends Controller
             
             $contract_total_quantity[$contract_item->id] = 0;
 
-            $components = $contract_item->Components;
+            $components = $contract_item->Components()->orderBy('name','ASC')->get();
 
             $data[$contract_item->id] = [
                 'contract_item' => $contract_item,
@@ -144,7 +144,7 @@ class SectionController extends Controller
                     $contract_item_budget_total_quantity[$contract_item->id] += (float) $component->quantity;
                 }
 
-                $component_items = $component->ComponentItems;
+                $component_items = $component->ComponentItems()->orderBy('name','ASC')->get();
 
                 $data[$contract_item->id]['components'][$component->id] = [
                     'component'         => $component,
