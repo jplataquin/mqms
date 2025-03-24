@@ -268,9 +268,9 @@ class ComponentItem extends ComponentV2{
                                         borderBottom:'none'
                                     }
                                 },()=>{
-                                    t.div({class:'row shadow-lg p-3 bg-body rounded border mb-3'},()=>{
+                                    t.div({class:'row shadow-lg p-3 bg-body rounded border'},()=>{
                                         
-                                        t.div({class:'col-lg-10 col-sm-10 mb-3'},()=>{
+                                        t.div({class:'col-lg-10 col-sm-10'},()=>{
                                             t.div({class:'form-group'},()=>{
                                                 t.label('Name');
                                                 this.el.component_item_name = t.input({class:'form-control name',type:'text', placeholder:'Item',disabled:true,value:'Loading...'}); 
@@ -318,14 +318,14 @@ class ComponentItem extends ComponentV2{
                     
                             t.tr(()=>{
                                 
-                                t.td({colspan:2},()=>{
+                                t.td(()=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('Quantity');
                                         this.el.component_item_ref_1_quantity = t.input({class:'form-control',disabled:true});
                                     });
                                 });
                     
-                                t.td({colspan:1},()=>{
+                                t.td(()=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('Unit');
                                         this.el.component_item_ref_1_unit_id = t.select({class:'form-select',disabled:true},()=>{
@@ -364,9 +364,7 @@ class ComponentItem extends ComponentV2{
                                 },'Material Budget')
                             });
             
-                            
                             t.tr(()=>{
-                                
                                 t.td({class:''},(el)=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('Function Type');
@@ -390,6 +388,11 @@ class ComponentItem extends ComponentV2{
                                     });
                                 });
 
+                                t.td();
+                            });
+                            t.tr(()=>{
+                                
+                              
                                 t.td({class:''},(el)=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('Quantity');
