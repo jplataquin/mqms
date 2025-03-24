@@ -99,6 +99,11 @@ class ComponentItemController extends Controller
                 'required',
                 'integer',
                 'gte:1'
+            ],
+            'approximation' =>[
+                'required',
+                'max:4',
+                'min:4'
             ]
         ];
 
@@ -168,6 +173,7 @@ class ComponentItemController extends Controller
         $component_item->ref_1_quantity            = $ref_1_quantity;
         $component_item->ref_1_unit_id             = $ref_1_unit_id;
         $component_item->ref_1_unit_price          = $ref_1_unit_price;
+        $component_item->approximation             = $approximation;
 
         $component_item->save();
 
@@ -234,6 +240,7 @@ class ComponentItemController extends Controller
          $budget_price      = $request->input('budget_price') ?? '';
          $quantity          = $request->input('quantity') ?? '';
          $function_variable = $request->input('function_variable');
+         $approximation     = $request->input('approximation');
          $id                = (int) $request->input('id');
          $component_id      = (int) $request->input('component_id');
          $function_type_id  = (int) $request->input('function_type_id');
@@ -288,6 +295,11 @@ class ComponentItemController extends Controller
            'function_variable' =>[
                'required',
                'numeric'
+           ],
+           'approximation' =>[
+                'required',
+                'max:4',
+                'min:4'
            ]
          ];
 
@@ -373,6 +385,7 @@ class ComponentItemController extends Controller
          $component_item->ref_1_quantity         = $ref_1_quantity;
          $component_item->ref_1_unit_id          = $ref_1_unit_id;
          $component_item->ref_1_unit_price       = $ref_1_unit_price;
+         $component_item->approximation          = $approximation;
          $component_item->updated_by             = $user_id;
  
          $component_item->save();

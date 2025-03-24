@@ -28,6 +28,23 @@ class ComponentItem extends ComponentV2{
                     this.updateComponentItemValues();     
                 }
             },
+            component_item_approximation: {
+                value: 'NONE',
+                target: this.el.component_item_approximation,
+                events:['change'],
+                getValue: (val)=>{
+                    return val;
+                },
+                onUpdate: (data)=>{
+
+                    if(!data.event){
+                        this.el.component_item_approximation.value = data.value;
+                    }
+
+                    
+                    this.updateComponentItemValues();     
+                }
+            },
             component_item_unit:{
                 value:'',
                 target:this.el.component_item_unit,
@@ -408,8 +425,8 @@ class ComponentItem extends ComponentV2{
                                             disabled:true
                                         },()=>{
                                             t.option({value:'NONE'},'None');
-                                            t.option({value:'ROUP'},'Round Up');
-                                            t.option({value:'RDOW'},'Round Down');
+                                            t.option({value:'CEIL'},'↑ Ceil');
+                                            t.option({value:'FLOR'},'↓ Floor');
                                         });
                                     });
                                 });
@@ -652,7 +669,8 @@ class ComponentItem extends ComponentV2{
             sum_flag                : (this.getState('component_item_sum_flag') == true) ? 1 : 0,
             ref_1_quantity          : this.getState('component_item_ref_1_quantity'),
             ref_1_unit_id           : this.getState('component_item_ref_1_unit_id'),
-            ref_1_unit_price        : this.getState('component_item_ref_1_unit_price')
+            ref_1_unit_price        : this.getState('component_item_ref_1_unit_price'),
+            approximation           : this.getState('component_item_approximation')
 
         };
 
@@ -687,8 +705,8 @@ class ComponentItem extends ComponentV2{
         let variable                        = this.getState('component_item_variable');
         let use_count                       = parseInt(this._model.component_use_count);
         let component_item_quantity         = this.getState('component_item_quantity'); 
-        let component_item_function_type    = this.getState('component_item_function_type')
-
+        let component_item_function_type    = this.getState('component_item_function_type');
+        let component_item_approximation    = this.getState('component_item_approximation');
 
         switch(component_item_function_type){
             case 1: //As Factor
@@ -705,10 +723,7 @@ class ComponentItem extends ComponentV2{
                         quantity = 0;
                     }
 
-                    this.setState('component_item_quantity',quantity);
-                    
-                    this.setState('component_item_equivalent','');
-
+             
                 break;
 
             case 2: //As Divisor
@@ -725,9 +740,6 @@ class ComponentItem extends ComponentV2{
                         quantity = 0;
                     }
 
-                    this.setState('component_item_quantity',quantity);
-                    this.setState('component_item_equivalent','');
-
                 break;
 
             case 3: //Direct
@@ -737,10 +749,7 @@ class ComponentItem extends ComponentV2{
                         this.el.component_item_quantity.disabled = true;
                     }
 
-                    variable = window.util.pureNumber(variable,2);
-
-                    this.setState('component_item_quantity',variable);
-                    this.setState('component_item_equivalent','');
+                    quantity = window.util.pureNumber(variable,2);
 
                     
                 break;
@@ -757,19 +766,23 @@ class ComponentItem extends ComponentV2{
                 if(equivalent !== Infinity){
 
                     equivalent = window.util.roundUp(equivalent,2);
-
-                    this.setState('component_item_equivalent',equivalent);
                 
                 }else{
-
-                    this.setState('component_item_equivalent','');
-                
+                    equivalent = 0;
                 }
                 
                 
                 break;
         }
 
+        if(component_item_approximation == 'CEIL'){
+            quantity = Math.ceil(quantity);
+        }else if(component_item_approximation = 'FLOR'){
+            quantity = Math.floor(quantity);
+        }
+
+        this.setState('component_item_quantity',quantity);  
+        this.setState('component_item_equivalent',equivalent);
 
 
         this.calculateTotalAmount();
@@ -800,7 +813,8 @@ class ComponentItem extends ComponentV2{
                 component_item_sum_flag            :reply.data.sum_flag,
                 component_item_ref_1_quantity      :reply.data.ref_1_quantity,
                 component_item_ref_1_unit_id       :reply.data.ref_1_unit_id,
-                component_item_ref_1_unit_price    :reply.data.ref_1_unit_price
+                component_item_ref_1_unit_price    :reply.data.ref_1_unit_price,
+                component_item_approximation       :reply.data.approximation
             });
 
             this.el.material_quantity_list = MaterialQuantityList({
