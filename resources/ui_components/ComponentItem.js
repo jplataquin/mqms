@@ -403,7 +403,10 @@ class ComponentItem extends ComponentV2{
                                 },()=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('Approximation');
-                                        this.el.component_item_approximation = t.select({class:'form-select'},()=>{
+                                        this.el.component_item_approximation = t.select({
+                                            class:'form-select',
+                                            disabled:true
+                                        },()=>{
                                             t.option({value:'NONE'},'None');
                                             t.option({value:'ROUP'},'Round Up');
                                             t.option({value:'RDOW'},'Round Down');
