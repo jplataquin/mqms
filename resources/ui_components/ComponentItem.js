@@ -365,7 +365,11 @@ class ComponentItem extends ComponentV2{
                             });
             
                             t.tr(()=>{
-                                t.td({class:''},(el)=>{
+                                t.td({
+                                    style:{
+                                        borderBottom:'none'
+                                    }
+                                },(el)=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('Function Type');
                                         this.el.component_item_function_type = t.select({class:'form-select function_type',disabled:true},()=>{
@@ -380,7 +384,11 @@ class ComponentItem extends ComponentV2{
                                 });
             
                                 
-                                t.td({class:''},(el)=>{
+                                t.td({
+                                    style:{
+                                        borderBottom:'none'
+                                    }
+                                },(el)=>{
                                     
                                     t.div({class:'form-group'},()=>{
                                         t.label('Variable');
@@ -393,7 +401,11 @@ class ComponentItem extends ComponentV2{
                             t.tr(()=>{
                                 
                               
-                                t.td({class:''},(el)=>{
+                                t.td({
+                                    style:{
+                                        borderBottom:'none'
+                                    }
+                                },(el)=>{
                                     t.div({class:'form-group'},()=>{
                                         t.label('Quantity');
                                         this.el.component_item_quantity = t.input({class:'form-control quantity', type:'text', placeholder:'Quantity',disabled:true,value:'Loading...'});
