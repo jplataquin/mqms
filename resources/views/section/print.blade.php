@@ -253,6 +253,7 @@
  
                 @endif
 
+          
 
                 @if($row_1->contract_item->budget_total_amount_overwrite)
 
@@ -278,6 +279,10 @@
 
                 @else
 
+                    @php 
+                        $contract_item_budget_total_amount = $total_amount->contract_item[$contract_item_id]->budget
+                    @endphp
+
                     <td></td>
                     <th class="
                         text-end    
@@ -289,7 +294,18 @@
                 @endif
 
                 <!-- Contract Item Percent -->
-                <td></td>
+                <th class="text-center">
+                    @php 
+                        $contract_item_budget_percentage = 0;
+
+                        if($section->gross_total_amount > 0){
+                            $contract_item_budget_percentage = ($contract_item_budget_total_amount / $section->gross_total_amount) / 100;
+                        }
+
+                        $contract_item_budget_percentage = number_format($contract_item_budget_percentage,2);
+                    @endphp
+                    {{$contract_item_budget_percentage}}%
+                </th>
             </tr>
 
 
