@@ -262,7 +262,12 @@ class ComponentItem extends ComponentV2{
 
                             t.tr(()=>{
 
-                                t.td({colspan:5},()=>{
+                                t.td({
+                                    colspan:5,
+                                    style:{
+                                        borderBottom:'none'
+                                    }
+                                },()=>{
                                     t.div({class:'row shadow-lg p-3 bg-body rounded border mb-3'},()=>{
                                         
                                         t.div({class:'col-lg-10 col-sm-10 mb-3'},()=>{
