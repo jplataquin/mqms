@@ -303,39 +303,43 @@ class ComponentItem extends ComponentV2{
                                 t.th({colspan:5,class:'text-center'},'POW/DUPA')
                             });
 
-                            t.tr(()=>{
-                                t.td({colspan:2},'Quantity');
-                                t.td({colspan:1},'Unit');
-                                t.td({colspan:2},'Unit Price');
-                            });
+                
                     
                             t.tr(()=>{
                                 
                                 t.td({colspan:2},()=>{
-                                    this.el.component_item_ref_1_quantity = t.input({class:'form-control',disabled:true});
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Quantity');
+                                        this.el.component_item_ref_1_quantity = t.input({class:'form-control',disabled:true});
+                                    });
                                 });
                     
                                 t.td({colspan:1},()=>{
-                    
-                                    this.el.component_item_ref_1_unit_id = t.select({class:'form-control',disabled:true},()=>{
-                                        
-                                        t.option({value:''},' - ');
-                    
-                                        for(let i in this._model.unitOptions){
-                    
-                                            if(this._model.unitOptions[i].deleted){
-                                                t.option({value:i,disabled:true},this._model.unitOptions[i].text+' [Deleted]');
-                                            }else{
-                                                t.option({value:i}, this._model.unitOptions[i].text );
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Unit');
+                                        this.el.component_item_ref_1_unit_id = t.select({class:'form-select',disabled:true},()=>{
+                                            
+                                            t.option({value:''},' - ');
+                        
+                                            for(let i in this._model.unitOptions){
+                        
+                                                if(this._model.unitOptions[i].deleted){
+                                                    t.option({value:i,disabled:true},this._model.unitOptions[i].text+' [Deleted]');
+                                                }else{
+                                                    t.option({value:i}, this._model.unitOptions[i].text );
+                                                }
+                                            
                                             }
-                                        
-                                        }
+                                        });
                                     });
                     
                                 });
                     
                                 t.td({colspan:2},()=>{
-                                    this.el.component_item_ref_1_unit_price = t.input({class:'form-control',disabled:true});
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Unit Price');
+                                        this.el.component_item_ref_1_unit_price = t.input({class:'form-control',disabled:true});
+                                    });
                                 });
                             });
 
