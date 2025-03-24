@@ -343,19 +343,12 @@ class ComponentItem extends ComponentV2{
                                 t.th({colspan:5,class:'text-center'},'Material Budget')
                             });
             
-                            t.tr(()=>{
-                                t.td();
-                                t.th('Variable');
-                                t.th('Quantity');
-                                t.th('Unit');
-                                t.th('Equivalent');
-                            })
                             
                             t.tr(()=>{
                                 
                                 t.td({class:''},(el)=>{
                                     t.div({class:'form-group'},()=>{
-                                        t.label('Function Type')
+                                        t.label('Function Type');
                                         this.el.component_item_function_type = t.select({class:'form-select function_type',disabled:true},()=>{
                                             t.option({value:3},'As Direct');
                                             t.option({value:4},'As Equivalent');
@@ -370,39 +363,45 @@ class ComponentItem extends ComponentV2{
                                 
                                 t.td({class:''},(el)=>{
                                     
-                                    this.el.component_item_variable = t.input({class:'form-control variable', type:'text', placeholder:'Variable',disabled:true,value:'Loading...'});
-            
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Variable');
+                                        this.el.component_item_variable = t.input({class:'form-control variable', type:'text', placeholder:'Variable',disabled:true,value:'Loading...'});
+                                    });
                                 });
 
                                 t.td({class:''},(el)=>{
-                                    
-                                    this.el.component_item_quantity = t.input({class:'form-control quantity', type:'text', placeholder:'Quantity',disabled:true,value:'Loading...'});
-            
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Quantity');
+                                        this.el.component_item_quantity = t.input({class:'form-control quantity', type:'text', placeholder:'Quantity',disabled:true,value:'Loading...'});
+                                    });
                                 });
             
                             
             
                                 t.td({class:''},(el)=>{
-            
-                                    this.el.component_item_unit = t.select({class:'form-control unit',disabled:true},()=>{
-                                        
-                                        for(let i in this._model.unitOptions){
-            
-                                            if(this._model.unitOptions[i].deleted){
-                                                t.option({value:i,disabled:true},this._model.unitOptions[i].text+' [Deleted]');
-                                            }else{
-                                                t.option({value:i}, this._model.unitOptions[i].text );
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Unit');
+                                        this.el.component_item_unit = t.select({class:'form-select unit',disabled:true},()=>{
+                                            
+                                            for(let i in this._model.unitOptions){
+                
+                                                if(this._model.unitOptions[i].deleted){
+                                                    t.option({value:i,disabled:true},this._model.unitOptions[i].text+' [Deleted]');
+                                                }else{
+                                                    t.option({value:i}, this._model.unitOptions[i].text );
+                                                }
                                             }
-                                        }
+                                        });
                                     });
                 
                                 });
             
 
                                 t.td({class:''},(el)=>{
-                                    
-                                    this.el.component_item_equivalent = t.input({class:'form-control equivalent', type:'text', placeholder:'Equivalent',disabled:true,value:'Loading...'});
-            
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Equivalent');
+                                        this.el.component_item_equivalent = t.input({class:'form-control equivalent', type:'text', placeholder:'Equivalent',disabled:true,value:'Loading...'});
+                                    });
                                 });
             
                             
