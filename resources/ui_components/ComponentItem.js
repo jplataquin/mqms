@@ -84,7 +84,7 @@ class ComponentItem extends ComponentV2{
                     this.el.component_item_ref_1_quantity.disabled     = !newVal;
                     this.el.component_item_ref_1_unit_id.disabled      = !newVal;
                     this.el.component_item_ref_1_unit_price.disabled   = !newVal;
-
+                    this.el.component_item_approximation.disabled      = !newVal;
 
 
                     if(this.el.component_item_function_type.value == 4){
