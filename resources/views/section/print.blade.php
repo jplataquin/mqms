@@ -305,6 +305,7 @@
                         $contract_item_budget_percentage = number_format($contract_item_budget_percentage,2);
                     @endphp
                     {{ $contract_item_budget_total_amount }}
+                    {{$section->gross_total_amount }}
                     {{$contract_item_budget_percentage}}%
                 </th>
             </tr>
