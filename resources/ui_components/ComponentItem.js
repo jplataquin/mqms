@@ -22,12 +22,10 @@ class ComponentItem extends ComponentV2{
 
                     if(!data.event){
                         this.el.component_item_quantity.value = data.value;
-                    }else{
-                        this.updateComponentItemValues();  
                     }
-
-                    
-                       
+                        
+                    this.updateComponentItemValues();  
+                           
                 }
             },
             component_item_approximation: {
@@ -41,11 +39,9 @@ class ComponentItem extends ComponentV2{
 
                     if(!data.event){
                         this.el.component_item_approximation.value = data.value;
-                    }else{
-                        this.updateComponentItemValues();  
                     }
-
-                    
+                        this.updateComponentItemValues();  
+                
                       
                 }
             },
@@ -141,11 +137,9 @@ class ComponentItem extends ComponentV2{
 
                     if(!data.event){
                         this.el.component_item_function_type.value = data.value;
-                    }else{
-                        this.updateComponentItemValues();
                     }
-                    
-                    
+
+                    this.updateComponentItemValues();
                 }
             },
             component_item_variable:{
@@ -159,12 +153,10 @@ class ComponentItem extends ComponentV2{
 
                     if(!data.event){
                         this.el.component_item_variable.value = window.util.pureNumber(data.value);
-                    }else{
-                        this.updateComponentItemValues();
                     }
-
-
-                    
+                        
+                    this.updateComponentItemValues();
+ 
                 }
             },
 
