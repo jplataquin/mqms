@@ -726,7 +726,7 @@ class ComponentItem extends ComponentV2{
 
                     if(component_item_approximation == 'CEIL'){
                         quantity = Math.ceil(quantity);
-                    }else if(component_item_approximation = 'FLOR'){
+                    }else if(component_item_approximation == 'FLOR'){
                         quantity = Math.floor(quantity);
                     }
             
@@ -752,7 +752,7 @@ class ComponentItem extends ComponentV2{
 
                     if(component_item_approximation == 'CEIL'){
                         quantity = Math.ceil(quantity);
-                    }else if(component_item_approximation = 'FLOR'){
+                    }else if(component_item_approximation == 'FLOR'){
                         quantity = Math.floor(quantity);
                     }
 
@@ -771,12 +771,13 @@ class ComponentItem extends ComponentV2{
 
                     quantity = window.util.pureNumber(variable,2);
 
-                    console.log(quantity);
+                 
                     if(component_item_approximation == 'CEIL'){
-                        console.log('Ceil',quantity)
+                
                         quantity = Math.ceil(quantity);
-                    }else if(component_item_approximation = 'FLOR'){
-                        console.log('Floor',quantity);
+
+                    }else if(component_item_approximation == 'FLOR'){
+               
                         quantity = Math.floor(quantity);
                     }
 
