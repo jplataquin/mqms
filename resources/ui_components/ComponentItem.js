@@ -41,7 +41,7 @@ class ComponentItem extends ComponentV2{
                 onUpdate: (data)=>{
 
                     console.log(data);
-                    
+
                     if(!data.event){
                         this.el.component_item_approximation.value = data.value;
                     }
@@ -783,7 +783,7 @@ class ComponentItem extends ComponentV2{
                     }
 
                     
-                    this.setState('component_item_quantity',variable);
+                    this.setState('component_item_quantity',quantity);
                     this.setState('component_item_equivalent','');
 
                     
