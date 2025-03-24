@@ -22,10 +22,12 @@ class ComponentItem extends ComponentV2{
 
                     if(!data.event){
                         this.el.component_item_quantity.value = data.value;
+                    }else{
+                        this.updateComponentItemValues();  
                     }
 
                     
-                    this.updateComponentItemValues();     
+                       
                 }
             },
             component_item_approximation: {
@@ -814,7 +816,7 @@ class ComponentItem extends ComponentV2{
                 component_item_ref_1_quantity      :reply.data.ref_1_quantity,
                 component_item_ref_1_unit_id       :reply.data.ref_1_unit_id,
                 component_item_ref_1_unit_price    :reply.data.ref_1_unit_price,
-               // component_item_approximation       :reply.data.approximation
+                component_item_approximation       :reply.data.approximation
             });
 
             this.el.material_quantity_list = MaterialQuantityList({
