@@ -300,7 +300,13 @@ class ComponentItem extends ComponentV2{
 
                             
                             t.tr(()=>{
-                                t.th({colspan:5,class:'text-center'},'POW/DUPA')
+                                t.th({
+                                    colspan:5,
+                                    class:'text-center',
+                                    style:{
+                                        borderBottom:'none'
+                                    }
+                                },'POW/DUPA')
                             });
 
                 
@@ -344,7 +350,13 @@ class ComponentItem extends ComponentV2{
                             });
 
                             t.tr(()=>{
-                                t.th({colspan:5,class:'text-center'},'Material Budget')
+                                t.th({
+                                    colspan:5,
+                                    class:'text-center',
+                                    style:{
+                                        borderBottom:'none'
+                                    }
+                                },'Material Budget')
                             });
             
                             
