@@ -35,12 +35,16 @@ class ComponentItem extends ComponentV2{
                 getValue: (val)=>{
                     return val;
                 },
+                onEvent:function(val){
+                    return val;
+                },
                 onUpdate: (data)=>{
 
                     if(!data.event){
                         this.el.component_item_approximation.value = data.value;
                     }
-                        this.updateComponentItemValues();  
+
+                    this.updateComponentItemValues();  
                 
                       
                 }
