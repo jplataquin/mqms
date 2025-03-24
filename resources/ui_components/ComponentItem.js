@@ -396,7 +396,11 @@ class ComponentItem extends ComponentV2{
                                     });
                                 });
 
-                                t.td();
+                                t.td({
+                                    style:{
+                                        borderBottom:'none'
+                                    }
+                                });
                             });
                             t.tr(()=>{
                                 
@@ -443,22 +447,22 @@ class ComponentItem extends ComponentV2{
                             
                             });
                             
-                            t.tr(()=>{
-                                t.th({colspan:2},'Unit Price');
-                                t.th({colspan:5},'Total Amount');
-                            });
-            
+                       
                             t.tr(()=>{
 
                                 
                                 t.td({colspan:2},(el)=>{
-                                    
-                                    this.el.component_item_budget_price = t.input({class:'form-control budget_price', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
-                                    
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Unit Price');
+                                        this.el.component_item_budget_price = t.input({class:'form-control budget_price', type:'text', placeholder:'Budget Price',disabled:true,value:'Loading...'});
+                                    });
                                 });
                                 
-                                t.td({colspan:5},()=>{
-                                    this.el.component_item_total_amount = t.input({class:'form-control component_item_total_amount',disabled:true});
+                                t.td({},()=>{
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Unit Price');
+                                        this.el.component_item_total_amount = t.input({class:'form-control component_item_total_amount',disabled:true});
+                                    });
                                 });
                             });
 
