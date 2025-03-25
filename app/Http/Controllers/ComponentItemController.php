@@ -49,6 +49,7 @@ class ComponentItemController extends Controller
         $quantity          = $request->input('quantity') ?? '';
         $budget_price      = $request->input('budget_price') ?? '';
         $function_variable = $request->input('function_variable');
+        $approximation     = $request->input('approximation');
         $unit_id           = (int) $request->input('unit_id') ?? 0;
         $component_id      = (int) $request->input('component_id');
         $function_type_id  = (int) $request->input('function_type_id');
