@@ -216,7 +216,7 @@ class CreateComponentItemForm extends ComponentV2{
                         });
                         
                         t.tr(()=>{
-                            t.th({colspan:3,class:'text-center bg-divider'},'POW/DUPA')
+                            t.th({colspan:3,class:'text-center'},'POW/DUPA')
                         });
 
                 
