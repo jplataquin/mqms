@@ -256,7 +256,14 @@ class CreateComponentItemForm extends ComponentV2{
                         });
 
                         t.tr(()=>{
-                            t.th({colspan:5,class:'text-center bg-divider'},'Material Budget')
+                            t.th({
+                                colspan:5,
+                                class:'text-center',
+                                style:{
+                                    borderBottom:'none'
+                                }
+                            },
+                                'Material Budget')
                         });
         
                         t.tr(()=>{
@@ -269,54 +276,107 @@ class CreateComponentItemForm extends ComponentV2{
                         
                         t.tr(()=>{
                             
-                            t.td({class:''},(el)=>{
+                            t.td({
+                                style:{
+                                    borderBottom:'none'
+                                }
+                            },(el)=>{
                                 
-                                this.el.function_type = t.select({class:'form-control function_type'},()=>{
-                                    t.option({value:3,selected:true},'As Direct');
-                                    t.option({value:4},'As Equivalent');
-                                    t.option({value:1},'As Factor');
-                                    t.option({value:2},'As Divisor');
-                                    
-                                });
+                                t.div({class:'form-group'},()=>{
+                                    t.label('Function Type');
+
+                                    this.el.function_type = t.select({class:'form-control function_type'},()=>{
+                                        t.option({value:3,selected:true},'As Direct');
+                                        t.option({value:4},'As Equivalent');
+                                        t.option({value:1},'As Factor');
+                                        t.option({value:2},'As Divisor');
+                                        
+                                    });
+                                })
+                             
         
                             });
         
                             
-                            t.td({class:''},(el)=>{
-                                
-                                this.el.variable = t.input({class:'form-control variable', type:'text'});
+                            t.td({
+                                style:{
+                                    borderBottom:'none'
+                                }
+                            },(el)=>{
+                                t.div({class:'form-group'},()=>{
+                                    t.label('Variable');
+                                    this.el.variable = t.input({class:'form-control variable', type:'text'});
+                                });
         
                             });
 
-                            t.td({class:''},(el)=>{
-                                
-                                this.el.quantity = t.input({class:'form-control quantity', type:'text'});
-        
+                            t.td({
+                                style:{
+                                    borderBottom:'none'
+                                }
+                            },()=>{
+                                t.div({class:'form-group'},()=>{
+                                    t.label('Approximation');
+                                    
+                                    this.el.approximation = t.select({
+                                        class:'form-select',
+                                        disabled:true
+                                    },()=>{
+                                        t.option({value:'NONE'},'None');
+                                        t.option({value:'CEIL'},'↑ Ceil');
+                                        t.option({value:'FLOR'},'↓ Floor');
+                                    });
+                                });
+                            });
+                        });
+
+                        t.tr(()=>{
+
+                            t.td({
+                                style:{
+                                    borderBottom:'none'
+                                }
+                            },(el)=>{
+                                t.div({class:'form-group'},()=>{
+                                    t.label('Quantity');
+                                    this.el.quantity = t.input({class:'form-control quantity', type:'text'});
+                                });
                             });
         
                         
         
-                            t.td({class:''},(el)=>{
-        
-                                this.el.unit = t.select({class:'form-control unit'},()=>{
-                                    
-                                    for(let i in this._model.unit_options){
-        
-                                        if(this._model.unit_options[i].deleted){
-                                            t.option({value:i,disabled:true},this._model.unit_options[i].text+' [Deleted]');
-                                        }else{
-                                            t.option({value:i}, this._model.unit_options[i].text );
+                            t.td({
+                                style:{
+                                    borderBottom:'none'
+                                }
+                            },(el)=>{
+                                t.div({class:'form-group'},()=>{
+                                    t.label('Unit');
+                                    this.el.unit = t.select({class:'form-select unit'},()=>{
+                                        
+                                        for(let i in this._model.unit_options){
+            
+                                            if(this._model.unit_options[i].deleted){
+                                                t.option({value:i,disabled:true},this._model.unit_options[i].text+' [Deleted]');
+                                            }else{
+                                                t.option({value:i}, this._model.unit_options[i].text );
+                                            }
                                         }
-                                    }
+                                    });
                                 });
             
                             });
         
 
-                            t.td({class:''},(el)=>{
-                                
-                                this.el.equivalent = t.input({class:'form-control equivalent', type:'text'});
-        
+                            t.td({
+                                style:{
+                                    borderBottom:'none'
+                                }
+                            },(el)=>{
+                                t.div({class:'form-group'},()=>{
+                                    t.label('Unit');
+                                    this.el.equivalent = t.input({class:'form-control equivalent', type:'text'});
+                                });
                             });
         
                         
