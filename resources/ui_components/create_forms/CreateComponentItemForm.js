@@ -219,39 +219,58 @@ class CreateComponentItemForm extends ComponentV2{
                             t.th({colspan:3,class:'text-center bg-divider'},'POW/DUPA')
                         });
 
-                        t.tr(()=>{
-                            t.th('Quantity');
-                            t.th('Unit');
-                            t.th('Unit Price');
-                        });
                 
                         t.tr(()=>{
                             
-                            t.td({},()=>{
-                                this.el.ref_1_quantity = t.input({class:'form-control'});
+                            t.td({
+                                style:{
+                                    borderBottom:'none'
+                                }
+                            },()=>{
+                                t.div({class:'form-group'},()=>{
+                                    t.label('Quantity');
+
+                                    this.el.ref_1_quantity = t.input({class:'form-control'});
+                                });
                             });
                 
-                            t.td({},()=>{
-                
-                                this.el.ref_1_unit_id = t.select({class:'form-control'},()=>{
-                                    
-                                    t.option({value:''},' - ');
-                
-                                    for(let i in this._model.unit_options){
-                
-                                        if(this._model.unit_options[i].deleted){
-                                            t.option({value:i,disabled:true},this._model.unit_options[i].text+' [Deleted]');
-                                        }else{
-                                            t.option({value:i}, this._model.unit_options[i].text );
+                            t.td({
+                                style:{
+                                    borderBottom:'none'
+                                }
+                            },()=>{
+                                
+                                t.div({class:'form-group'},()=>{
+                                    t.label('Unit');
+
+                                    this.el.ref_1_unit_id = t.select({class:'form-control'},()=>{
+                                        
+                                        t.option({value:''},' - ');
+                    
+                                        for(let i in this._model.unit_options){
+                    
+                                            if(this._model.unit_options[i].deleted){
+                                                t.option({value:i,disabled:true},this._model.unit_options[i].text+' [Deleted]');
+                                            }else{
+                                                t.option({value:i}, this._model.unit_options[i].text );
+                                            }
+                                        
                                         }
-                                    
-                                    }
+                                    });
                                 });
                 
                             });
                 
-                            t.td({},()=>{
-                                this.el.ref_1_unit_price = t.input({class:'form-control'});
+                            t.td({
+                                style:{
+                                    borderBottom:'none'
+                                }
+                            },()=>{
+                                t.div({class:'form-group'},()=>{
+                                    t.label('Unit Price');
+
+                                    this.el.ref_1_unit_price = t.input({class:'form-control'});
+                                });
                             });
                         });
 
