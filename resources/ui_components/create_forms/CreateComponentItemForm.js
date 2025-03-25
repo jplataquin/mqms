@@ -516,7 +516,7 @@ class CreateComponentItemForm extends ComponentV2{
 
                     if(approximation == 'CEIL'){
                         quantity_value = Math.ceil(quantity_value);
-                    }else{
+                    }else if(approximation == 'FLOR'){
                         quantity_value = Math.floor(quantity_value);
                     }
 
@@ -541,7 +541,7 @@ class CreateComponentItemForm extends ComponentV2{
 
                     if(approximation == 'CEIL'){
                         quantity_value = Math.ceil(quantity_value);
-                    }else{
+                    }else if(approximation == 'FLOR'){
                         quantity_value = Math.floor(quantity_value);
                     }
 
@@ -560,7 +560,7 @@ class CreateComponentItemForm extends ComponentV2{
 
                     if(approximation == 'CEIL'){
                         quantity_value = Math.ceil(quantity_value);
-                    }else{
+                    }else if(approximation == 'FLOR'){
                         quantity_value = Math.floor(quantity_value);
                     }
 
