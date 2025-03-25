@@ -22,6 +22,24 @@ class CreateComponentItemForm extends ComponentV2{
                     this.updateComponentItemValues();
                 }
             },
+            approximation: {
+                value: 'NONE',
+                target: this.el.approximation,
+                events:['change'],
+                getValue: (val)=>{
+                    return val;
+                },
+                onUpdate: (data)=>{
+
+                    if(!data.event){
+                        this.el.approximation.value = data.value;
+                    }
+
+                    this.updateComponentItemValues();  
+                
+                      
+                }
+            },
             unit:{
                 value:'',
                 target:this.el.unit,
@@ -435,8 +453,7 @@ class CreateComponentItemForm extends ComponentV2{
 
     controller(){
 
-        console.log('herhe',this._model);
-
+       
         this.el.btn_submit.onclick = ()=>{
             this.submit();
           }
@@ -479,7 +496,8 @@ class CreateComponentItemForm extends ComponentV2{
         
         let variable         = this.getState('variable');
         let quantity         = this.getState('quantity'); 
-        let function_type    = this.getState('function_type')
+        let function_type    = this.getState('function_type');
+        let approximation    = this.getState('approximation');
 
 
         switch(function_type){
@@ -494,6 +512,12 @@ class CreateComponentItemForm extends ComponentV2{
                     
                     if(quantity_value === Infinity){
                         quantity_value = 0;
+                    }
+
+                    if(approximation == 'CEIL'){
+                        quantity_value = Math.ceil(quantity_value);
+                    }else{
+                        quantity_value = Math.floor(quantity_value);
                     }
 
                     this.setState('quantity',quantity_value);
@@ -515,6 +539,12 @@ class CreateComponentItemForm extends ComponentV2{
                         quantity_value = 0;
                     }
 
+                    if(approximation == 'CEIL'){
+                        quantity_value = Math.ceil(quantity_value);
+                    }else{
+                        quantity_value = Math.floor(quantity_value);
+                    }
+
                     this.setState('quantity',quantity_value);
                     this.setState('equivalent','');
 
@@ -526,9 +556,15 @@ class CreateComponentItemForm extends ComponentV2{
                     this.el.quantity.disabled = true;
                     
 
-                    variable = window.util.pureNumber(variable,2);
+                    quantity_value = window.util.pureNumber(variable,2);
 
-                    this.setState('quantity',variable);
+                    if(approximation == 'CEIL'){
+                        quantity_value = Math.ceil(quantity_value);
+                    }else{
+                        quantity_value = Math.floor(quantity_value);
+                    }
+
+                    this.setState('quantity',quantity_value);
                     this.setState('equivalent','');
 
                     
@@ -586,7 +622,8 @@ class CreateComponentItemForm extends ComponentV2{
             sum_flag                        : this.getState('sum_flag'),
             ref_1_quantity                  : this.getState('ref_1_quantity'),
             ref_1_unit_id                   : this.getState('ref_1_unit_id'),
-            ref_1_unit_price                : this.getState('ref_1_unit_price')
+            ref_1_unit_price                : this.getState('ref_1_unit_price'),
+            approximation                   : this.getState('approximation')
         }).then(reply=>{
 
             window.util.unblockUI();
