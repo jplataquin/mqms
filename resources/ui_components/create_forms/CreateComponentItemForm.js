@@ -198,12 +198,12 @@ class CreateComponentItemForm extends ComponentV2{
 
                     t.tbody(()=>{
                         t.tr(()=>{
-                            t.th({colspan:4},'Name');
+                            t.th({colspan:2},'Name');
                             t.th({colspan:1},'Sum Flag');
                         });
         
                         t.tr(()=>{
-                            t.td({colspan:4},()=>{
+                            t.td({colspan:2},()=>{
                                 this.el.name = t.input({class:'form-control name',type:'text'}); 
                             });
         
@@ -216,22 +216,22 @@ class CreateComponentItemForm extends ComponentV2{
                         });
                         
                         t.tr(()=>{
-                            t.th({colspan:5,class:'text-center bg-divider'},'POW/DUPA')
+                            t.th({colspan:3,class:'text-center bg-divider'},'POW/DUPA')
                         });
 
                         t.tr(()=>{
-                            t.th({colspan:2},'Quantity');
-                            t.th({colspan:1},'Unit');
-                            t.th({colspan:2},'Unit Price');
+                            t.th('Quantity');
+                            t.th('Unit');
+                            t.th('Unit Price');
                         });
                 
                         t.tr(()=>{
                             
-                            t.td({colspan:2},()=>{
+                            t.td({},()=>{
                                 this.el.ref_1_quantity = t.input({class:'form-control'});
                             });
                 
-                            t.td({colspan:1},()=>{
+                            t.td({},()=>{
                 
                                 this.el.ref_1_unit_id = t.select({class:'form-control'},()=>{
                                     
@@ -250,14 +250,14 @@ class CreateComponentItemForm extends ComponentV2{
                 
                             });
                 
-                            t.td({colspan:2},()=>{
+                            t.td({},()=>{
                                 this.el.ref_1_unit_price = t.input({class:'form-control'});
                             });
                         });
 
                         t.tr(()=>{
                             t.th({
-                                colspan:5,
+                                colspan:3,
                                 class:'text-center',
                                 style:{
                                     borderBottom:'none'
