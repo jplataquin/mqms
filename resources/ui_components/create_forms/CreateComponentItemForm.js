@@ -266,13 +266,7 @@ class CreateComponentItemForm extends ComponentV2{
                                 'Material Budget')
                         });
         
-                        t.tr(()=>{
-                            t.th('Function Type');
-                            t.th('Variable');
-                            t.th('Quantity');
-                            t.th('Unit');
-                            t.th('Equivalent');
-                        })
+                     
                         
                         t.tr(()=>{
                             
@@ -317,10 +311,9 @@ class CreateComponentItemForm extends ComponentV2{
                             },()=>{
                                 t.div({class:'form-group'},()=>{
                                     t.label('Approximation');
-                                    
+
                                     this.el.approximation = t.select({
-                                        class:'form-select',
-                                        disabled:true
+                                        class:'form-select'
                                     },()=>{
                                         t.option({value:'NONE'},'None');
                                         t.option({value:'CEIL'},'↑ Ceil');
