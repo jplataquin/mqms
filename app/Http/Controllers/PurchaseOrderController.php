@@ -561,7 +561,7 @@ class PurchaseOrderController extends Controller
 
         try {  
 
-
+            $purchaseOrder->status                          = 'DRFT';
             $purchaseOrder->project_id                      = $project_id;
             $purchaseOrder->section_id                      = $section_id;
             $purchaseOrder->contract_item_id                = $contract_item_id;
@@ -615,6 +615,38 @@ class PurchaseOrderController extends Controller
             'data'      => ['id'=>$purchaseOrder->id]
         ]);
 
+    }
+
+    public function _submit_for_review(Request $request){
+        $id = (int) $request->input('id');
+
+        $purchase_order = PurchaseOrder::find($id);
+
+        if(!$purchase_order){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Record not found',
+                'data'      => []
+            ]);
+        }
+
+        if($purchase_order->status != 'DRFT'){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Record is not in status: DRFT',
+                'data'      => []
+            ]);
+        }
+
+        $purchase_order->status = 'PEND';
+
+        $purchase_order->save();
+
+        return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data'      => []
+        ]);
     }
 
 

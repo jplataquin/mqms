@@ -95,10 +95,12 @@
         </table>
         
         <div class="w-100 text-end mt-3">
+            @if($purchase_order->status == 'PEND')
             <button class="btn btn-outline-primary" id="reviewLinkBtn">
                 Review Link
                 <i class="bi bi-copy"></i>
             </button>
+            @endif
         </div>
 
         <div class="folder-form-container">
@@ -220,9 +222,14 @@
 
         <div class="row mt-5">
             <div class="col-lg-12 text-end">
-            
-                @if($purchase_order->status == 'PEND')
+
+
+                @if($purchase_order->status == 'PEND' || $purchase_order->status == 'DRFT')
                     <button id="deleteBtn" class="btn btn-danger">Delete</button>
+                @endif
+                
+                @if($purchase_order->status == 'DRFT')
+                    <button id="submitPendingBtn" class="btn btn-warning">For Review</button>
                 @endif
 
                 @if($purchase_order->status == 'APRV')
@@ -242,10 +249,11 @@
         import {$q,Template} from '/adarna.js';
         import CommentForm from '/ui_components/comment/CommentForm.js';
 
-        const cancelBtn     = $q('#cancelBtn').first();
-        const deleteBtn     = $q('#deleteBtn').first();
-        const reviewLinkBtn = $q('#reviewLinkBtn').first();
-        const comment_box   = $q('#comment-box').first();
+        const cancelBtn         = $q('#cancelBtn').first();
+        const deleteBtn         = $q('#deleteBtn').first();
+        const reviewLinkBtn     = $q('#reviewLinkBtn').first();
+        const comment_box       = $q('#comment-box').first();
+        const submitReviewBtn   = $q('#submitForReviewBtn').frist();
 
 
         //Hack to prevent double comment box when using back button
@@ -275,7 +283,32 @@
         cancelBtn.onclick = ()=>{
             window.util.navTo('/purchase_orders');
         }
-            
+        
+        if(submitReviewBtn){
+            submitReviewBtn.onclick = async (e)=>{
+                e.preventDefault();
+    
+                if(! await window.util.confirm('Submit PO for review?')){
+
+                    return false;
+                }
+
+                window.util.$post('/api/purchase_order/submit_for_review',{
+                    id: '{{$purchase_order->id}}'
+                }).then(reply=>{
+
+                    window.util.unblockUI();
+
+                    if(reply.status <= 0){
+
+                        window.util.showMsg(reply);
+                        return false;
+                    }
+
+                    window.util.reload();
+                });
+            }
+        }
         
         if(deleteBtn){
 
