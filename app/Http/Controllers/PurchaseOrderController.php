@@ -32,7 +32,7 @@ class PurchaseOrderController extends Controller
 
         $projects = Project::orderBy('name','ASC')->where('status','=','ACTV')->get();
 
-        $material_items = MaterialItem::orderBy('name','ASC')->all();
+        $material_items = MaterialItem::orderBy('name','ASC')->get();
 
         return view('purchase_order/list',[
             'projects'          => $projects,
