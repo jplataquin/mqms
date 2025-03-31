@@ -161,8 +161,8 @@
 
             <div class="row mt-5">
                 <div class="col-12 text-end">
-                    <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
                     <button id="createBtn" class="btn btn-primary">Create</button>
+                    <button id="cancelBtn" class="btn btn-secondary">Cancel</button>   
                 </div>
             </div>
         

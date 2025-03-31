@@ -95,6 +95,20 @@
                 </div>
 
                 <div class="row">
+                    <div class="col-lg-12 mt-3 mb-3">
+                        <div class="form-group">
+                            <label>Contains</label>
+                            <select class="form-select" id="materialSelect">
+                                <option value=""> - </option>
+                                @foreach($material_items as $material_item)
+                                    <option value="{{$material_item->id}}">{{$material_item->formattedName}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
                         <div class="col-lg-12 text-end">    
                             
                                 
