@@ -253,7 +253,7 @@
         const deleteBtn         = $q('#deleteBtn').first();
         const reviewLinkBtn     = $q('#reviewLinkBtn').first();
         const comment_box       = $q('#comment-box').first();
-        const submitReviewBtn   = $q('#submitForReviewBtn').frist();
+        const submitReviewBtn   = $q('#submitForReviewBtn').first();
 
 
         //Hack to prevent double comment box when using back button
