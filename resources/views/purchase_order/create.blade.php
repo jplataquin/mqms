@@ -403,10 +403,10 @@
             };
         }
 
-        cancelBtn.onclick = (e)=>{
+        // cancelBtn.onclick = (e)=>{
             
-            window.location.href = '/home';
-        }
+        //     window.location.href = '/home';
+        // }
 
 
         function getData(){
@@ -486,7 +486,7 @@
         }
 
         cancelBtn.onclick = (e)=>{
-            window.util.navTo('/purchase_orders');
+            window.util.navTo('/purchase_orders/create/select');
         }
 
 
