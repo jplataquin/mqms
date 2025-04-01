@@ -44,15 +44,17 @@ class PurchaseOrderController extends Controller
     public function _list(Request $request){
          //todo check role
 
-         $page            = (int) $request->input('page')     ?? 1;
-         $limit           = (int) $request->input('limit')    ?? 10;
-         $project_id      = (int) $request->input('project_id')  ?? 0;
-         $section_id      = (int) $request->input('section_id')  ?? 0;
-         $component_id    = (int) $request->input('component_id')  ?? 0;
-         $query           = (int) $request->input('query')    ?? 0;
-         $status          = $request->input('status')         ?? '';
-         $orderBy         = $request->input('order_by')       ?? 'id';
-         $order           = $request->input('order')          ?? 'DESC';
+         $page              = (int) $request->input('page')     ?? 1;
+         $limit             = (int) $request->input('limit')    ?? 10;
+         $project_id        = (int) $request->input('project_id')  ?? 0;
+         $section_id        = (int) $request->input('section_id')  ?? 0;
+         $component_id      = (int) $request->input('component_id')  ?? 0;
+         $query             = (int) $request->input('query')    ?? 0;
+         $material_item_id  = (int) $request->input('material_item_id');
+         $status            = $request->input('status')         ?? '';
+         $orderBy           = $request->input('order_by')       ?? 'id';
+         $order             = $request->input('order')          ?? 'DESC';
+         
          $result = [];
         
          $purchaseOrder = new PurchaseOrder();
@@ -79,6 +81,23 @@ class PurchaseOrderController extends Controller
          
          if($status){
             $purchaseOrder = $purchaseOrder->where('status','=',$status);           
+         }
+
+
+         if($material_item_id){
+
+            
+            $po_id_filter = [];
+            
+            $purchase_order_items = PurchaseOrderItem::select('purchase_order_id')->where('material_item_id',$material_item_id)->groupBy('purchase_order_id')->get();
+
+            foreach($purchase_order_items as $po_item){
+                $po_id_filter[] = $po_item->purchase_order_id;
+            }
+
+            if($po_id_filter){
+                $purchaseOrder = $purchaseOrder->whereIn('id',$po_id_filter);
+            }
          }
 
          if($limit > 0){
