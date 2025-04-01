@@ -180,7 +180,7 @@
             };
 
 
-            window.util.showMsg('/role/'+reply.data.id);
+            window.util.navReload();
 
 
         });
