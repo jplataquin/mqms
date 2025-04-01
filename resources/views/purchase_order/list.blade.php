@@ -64,7 +64,7 @@
 
                 <div class="row mb-3">
                         
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         
                         <div class="form-group">
                             <label>Project</label>
@@ -77,14 +77,26 @@
                             
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <div class="form-group">
                             <label>Section</label>
                             <select class="form-control" id="sectionSelect">
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Contract Item</label>
+                            <select class="form-control" id="contractItemSelect">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
                         <div class="form-group">
                             <label>Component</label>
                             <select class="form-control" id="componentSelect">
@@ -146,17 +158,18 @@
 <script type="module">
     import {$q,Template,$el} from '/adarna.js';
 
-    const list            = $q('#list').first();
-    const query           = $q('#query').first();
-    const searchBtn       = $q('#searchBtn').first();
-    const createBtn       = $q('#createBtn').first();
-    const showMoreBtn     = $q('#showMoreBtn').first();
-    const sortSelect      = $q('#sortSelect').first();
-    const projectSelect   = $q('#projectSelect').first();
-    const sectionSelect   = $q('#sectionSelect').first();
-    const componentSelect = $q('#componentSelect').first();
-    const statusSelect    = $q('#statusSelect').first();
-    const materialSelect  = $q('#materialSelect').first();
+    const list                  = $q('#list').first();
+    const query                 = $q('#query').first();
+    const searchBtn             = $q('#searchBtn').first();
+    const createBtn             = $q('#createBtn').first();
+    const showMoreBtn           = $q('#showMoreBtn').first();
+    const sortSelect            = $q('#sortSelect').first();
+    const projectSelect         = $q('#projectSelect').first();
+    const sectionSelect         = $q('#sectionSelect').first();
+    const componentSelect       = $q('#componentSelect').first();
+    const contractItemSelect    = $q('#contractItemSelect').first();
+    const statusSelect          = $q('#statusSelect').first();
+    const materialSelect        = $q('#materialSelect').first();
 
     window.util.quickNav = {
         title:'Purchase Order',
@@ -208,15 +221,15 @@
         window.util.blockUI();
 
         window.util.$get('/api/purchase_order/list',{
-            query: query.value,
-            page: page,
-            order: order,
-            order_by: orderBy,
-            project_id: projectSelect.value,
-            section_id: sectionSelect.value,
-            component_id: componentSelect.value,
-            status: statusSelect.value,
-            material_item_id: materialSelect.value,   
+            query               : query.value,
+            page                : page,
+            order               : order,
+            order_by            : orderBy,
+            project_id          : projectSelect.value,
+            section_id          : sectionSelect.value,
+            component_id        : componentSelect.value,
+            status              : statusSelect.value,
+            material_item_id    : materialSelect.value,   
             limit: 10
         }).then(reply=>{
 
@@ -283,8 +296,9 @@
 
         e.preventDefault();
 
-        sectionSelect.innerHTML = '';
-        componentSelect.innerHTML = '';
+        sectionSelect.innerHTML         = '';
+        contractItemSelect.innerHTML    = '';
+        componentSelect.innerHTML       = '';
 
         window.util.blockUI();
 
@@ -294,10 +308,11 @@
             order:'ASC'
         }).then(reply=>{
             
-            window.util.unblockUI();
+           
 
             if(reply.status <= 0){
 
+                window.util.unblockUI();
                 window.util.showMsg(reply);
                 return false;
             }
@@ -314,44 +329,46 @@
 
             });
 
-            window.util.unblockUI();
+            searchBtn.onclick();
         });
-        }
+    }
 
-        sectionSelect.onchange = (e)=>{
+    sectionSelect.onchange = (e)=>{
 
         e.preventDefault();
 
-        componentSelect.innerHTML = '';
+        contractItemSelect.innerHTML    = '';
+        componentSelect.innerHTML       = '';
 
         window.util.blockUI();
 
-        window.util.$get('/api/component/list',{
+        window.util.$get('/api/contract_item/list',{
             section_id: sectionSelect.value,
-            orderBy:'name',
+            orderBy:'code',
             order:'ASC'
         }).then(reply=>{
             
-            window.util.unblockUI();
+            
 
             if(reply.status <= 0){
-
+                window.util.unblockUI();
                 window.util.showMsg(reply);
                 return false;
             }
 
-            componentSelect.append(
+            contractItemSelect.append(
                 t.option({value:''},' - ')
             );
 
             reply.data.forEach((item)=>{
 
-                componentSelect.append(
+                contractItemSelect.append(
                     t.option({value:item.id},item.name)
                 );
 
             });
 
+            searchBtn.onclick();
         });
     }               
     
