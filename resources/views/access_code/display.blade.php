@@ -51,9 +51,9 @@
                     <button class="btn btn-danger" id="deleteBtn">Delete</button>
                 </div>
                 <div class="col-6 text-end">
-                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
                     <button class="btn btn-primary" id="editBtn">Edit</button>
                     <button class="btn btn-warning d-none" id="updateBtn">Update</button>
+                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
                 </div>
             </div>
         </div>
@@ -64,12 +64,16 @@
 <script type="module">
     import {$q} from '/adarna.js';
 
-    let cancelBtn       = $q('#cancelBtn').first();
-    let access_code     = $q('#access_code').first();
-    let description     = $q('#description').first();
-    let editBtn         = $q('#editBtn').first();
-    let updateBtn       = $q('#updateBtn').first();
-    let deleteBtn       = $q('#deleteBtn').first();
+    const cancelBtn       = $q('#cancelBtn').first();
+    const access_code     = $q('#access_code').first();
+    const description     = $q('#description').first();
+    const editBtn         = $q('#editBtn').first();
+    const updateBtn       = $q('#updateBtn').first();
+    const deleteBtn       = $q('#deleteBtn').first();
+
+    let backUrl = '{{request(}->get("b")}}';
+
+    console.log(backUrl);
 
     deleteBtn.onclick = (e) =>{
         e.preventDefault();
