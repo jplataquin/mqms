@@ -189,7 +189,7 @@
     deleteBtn.onclick = (e) =>{
         e.preventDefault();
 
-        let answer = prompt('To delete record type in "{{$role->name}}"');
+        let answer = window.util.promot('To delete record type in "{{$role->name}}"');
 
         if(answer != '{{$role->name}}'){
             alert('Invalid input');
@@ -247,7 +247,7 @@
                             }).onclick = (e)=>{
                                 e.stopPropagation();
                                
-                                window.util.prompt('Are you sure you want to remove this role?',(e,res)=>{
+                                window.util.confirm('Are you sure you want to remove this role?',(e,res)=>{
                                     
                                     if(!res){
                                         return false;
