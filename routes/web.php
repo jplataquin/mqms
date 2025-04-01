@@ -198,6 +198,14 @@ Route::get('adarna.js.map', function(){
     return $response;
 });
 
+Route::get('/htmx.min.js', function(){
+
+    $response = Response::make(File::get(base_path('resources/js/htmx.min.js')), 200);
+    $response->header("Content-Type", 'text/javascript');
+
+    return $response;
+});
+
 Route::get('/ui_components/{file}', function($file){
 
     $response = Response::make(File::get(base_path('resources/ui_components/'.$file)), 200);
