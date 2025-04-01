@@ -221,7 +221,7 @@ class RoleController extends Controller
          
     }
 
-    public function _acccess_code_remove(Request $request){
+    public function _access_code_remove(Request $request){
     
         $role_id           = (int) $request->input('role_id');
         $access_code_id    = (int) $request->input('access_code_id');
