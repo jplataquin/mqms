@@ -51,6 +51,7 @@
                             <label>Status</label>
                             <select class="form-control" id="statusSelect">
                                 <option value=""> - </option>
+                                <option value="DRFT">Draft</option>
                                 <option value="PEND">Pending</option>
                                 <option value="APRV">Approved</option>
                                 <option value="DPRV">Disapproved</option>
