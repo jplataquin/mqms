@@ -71,7 +71,7 @@
     const updateBtn       = $q('#updateBtn').first();
     const deleteBtn       = $q('#deleteBtn').first();
 
-    let backUrl = '{{request(}->get("b")}}';
+    let backUrl = '{{request()->get("b") }}';
 
     console.log(backUrl);
 
