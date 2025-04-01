@@ -68,7 +68,7 @@
                         
                         <div class="form-group">
                             <label>Project</label>
-                            <select class="form-control" id="projectSelect">
+                            <select class="form-select" id="projectSelect">
                                 <option value=""> - </option>
                                 @foreach($projects as $project)
                                     <option value="{{$project->id}}">{{$project->name}}</option>
@@ -80,7 +80,7 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label>Section</label>
-                            <select class="form-control" id="sectionSelect">
+                            <select class="form-select" id="sectionSelect">
                             </select>
                         </div>
                     </div>
@@ -92,14 +92,14 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label>Contract Item</label>
-                            <select class="form-control" id="contractItemSelect">
+                            <select class="form-select" id="contractItemSelect">
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label>Component</label>
-                            <select class="form-control" id="componentSelect">
+                            <select class="form-select" id="componentSelect">
                             </select>
                         </div>
                     </div>
