@@ -22,7 +22,7 @@ class RoleController extends Controller
 
         $id             = (int) $id;
         $role           = Role::findOrFail($id); 
-        $accessCodes    = AccessCode::orderBy('name','ASC')->get();
+        $accessCodes    = AccessCode::orderBy('code','ASC')->get();
 
         return view('role/display',[
             'role'          => $role,
