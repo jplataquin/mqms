@@ -18,7 +18,9 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
+     <!-- 
     <script src="https://unpkg.com/htmx.org@2.0.0"></script>
+-->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     
     

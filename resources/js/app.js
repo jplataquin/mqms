@@ -1,5 +1,5 @@
 import './bootstrap';
-import 'https://unpkg.com/htmx.org@2.0.0';
+import './htmx.min.js';
 import { Modal } from 'bootstrap';
 import {Template,$util} from '/node_modules/adarna/build/adarna.min.js';
 import Datepicker from '/node_modules/vanillajs-datepicker/js/Datepicker';
