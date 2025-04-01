@@ -305,7 +305,7 @@
                         return false;
                     }
 
-                    window.util.reload();
+                    window.util.navReload();
                 });
             }
         }
