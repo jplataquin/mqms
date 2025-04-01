@@ -73,7 +73,6 @@
 
     let backUrl = '{{request()->get("b") }}';
 
-    console.log(backUrl);
 
     deleteBtn.onclick = (e) =>{
         e.preventDefault();
