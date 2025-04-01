@@ -278,7 +278,7 @@
             });
 
             row.onclick = ()=>{
-                window.util.navTo('/access_code/'+item.id);
+                window.util.navTo('/access_code/'+item.id+'?b={{url()->current()}}');
             };
 
             $el.append(row).to(list);
@@ -291,7 +291,7 @@
 
         window.util.blockUI();
 
-        window.util.$get('/api/role/access_codes/{{$role->id}}?b={{url()->current()}}',{}).then(reply=>{
+        window.util.$get('/api/role/access_codes/{{$role->id}}',{}).then(reply=>{
 
             window.util.unblockUI();
                 
