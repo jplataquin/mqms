@@ -21,9 +21,10 @@
      <!-- 
     <script src="https://unpkg.com/htmx.org@2.0.0"></script>
 -->
+    
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     
-    
+    <script src="/htmx.min.js"></script>
 </head>
 <body>
     <div id="bar" class="w-100 d-flex justify-content-between">
