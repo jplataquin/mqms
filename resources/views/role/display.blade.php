@@ -291,7 +291,7 @@
 
         window.util.blockUI();
 
-        window.util.$get('/api/role/access_codes/{{$role->id}}',{}).then(reply=>{
+        window.util.$get('/api/role/access_codes/{{$role->id}}?b={{url()->current()}}',{}).then(reply=>{
 
             window.util.unblockUI();
                 
