@@ -669,7 +669,7 @@ class PurchaseOrderController extends Controller
             ]);
         }
 
-        if($purchaseOrder->status != 'PEND'){
+        if($purchaseOrder->status != 'PEND' || $purchaseOrder->status != 'DRFT'){
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Record cannot be deleted, status is not pending',

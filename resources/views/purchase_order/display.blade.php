@@ -229,7 +229,7 @@
                 @endif
                 
                 @if($purchase_order->status == 'DRFT')
-                    <button id="submitPendingBtn" class="btn btn-warning">For Review</button>
+                    <button id="submitForReviewBtn" class="btn btn-warning">For Review</button>
                 @endif
 
                 @if($purchase_order->status == 'APRV')

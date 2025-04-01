@@ -155,6 +155,7 @@
     const sectionSelect   = $q('#sectionSelect').first();
     const componentSelect = $q('#componentSelect').first();
     const statusSelect    = $q('#statusSelect').first();
+    const materialSelect  = $q('#materialSelect').first();
 
     window.util.quickNav = {
         title:'Purchase Order',
@@ -214,6 +215,7 @@
             section_id: sectionSelect.value,
             component_id: componentSelect.value,
             status: statusSelect.value,
+            material_item_id: materialSelect.value
             limit: 10
         }).then(reply=>{
 
