@@ -137,7 +137,13 @@
     }
 
     cancelBtn.onclick = (e) => {
-        document.location.href = '/access_codes';
+
+        if(backUrl){
+            window.util.navTo(backUrl);
+        }else{
+            window.util.navTo('/access_codes');
+        }
+      
 
     }
 
