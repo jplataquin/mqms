@@ -215,7 +215,7 @@
             section_id: sectionSelect.value,
             component_id: componentSelect.value,
             status: statusSelect.value,
-            material_item_id: materialSelect.value   
+            material_item_id: materialSelect.value,   
             limit: 10
         }).then(reply=>{
 
