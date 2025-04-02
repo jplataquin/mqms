@@ -227,6 +227,7 @@
             order_by            : orderBy,
             project_id          : projectSelect.value,
             section_id          : sectionSelect.value,
+            contract_item_id    : contractItemSelect.value,
             component_id        : componentSelect.value,
             status              : statusSelect.value,
             material_item_id    : materialSelect.value,   

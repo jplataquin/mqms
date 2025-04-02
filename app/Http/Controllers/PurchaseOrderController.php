@@ -48,9 +48,10 @@ class PurchaseOrderController extends Controller
          $limit             = (int) $request->input('limit')    ?? 10;
          $project_id        = (int) $request->input('project_id')  ?? 0;
          $section_id        = (int) $request->input('section_id')  ?? 0;
+         $contract_item_id  = (int) $request->input('contract_item_id') ?? 0;
          $component_id      = (int) $request->input('component_id')  ?? 0;
          $query             = (int) $request->input('query')    ?? 0;
-         $material_item_id  = (int) $request->input('material_item_id');
+         $material_item_id  = (int) $request->input('material_item_id') ?? 0;
          $status            = $request->input('status')         ?? '';
          $orderBy           = $request->input('order_by')       ?? 'id';
          $order             = $request->input('order')          ?? 'DESC';
@@ -70,10 +71,14 @@ class PurchaseOrderController extends Controller
  
              if($section_id){
                  $purchaseOrder = $purchaseOrder->where('section_id','=',$section_id);
- 
-                 if($component_id){
-                     $purchaseOrder = $purchaseOrder->where('component_id','=',$component_id);
- 
+                
+                 if($contract_item_id){
+
+                    $purchaseOrder = $purchaseOrder->where('contract_item_id','=',$contract_item_id);
+                    if($component_id){
+                        $purchaseOrder = $purchaseOrder->where('component_id','=',$component_id);
+    
+                    }
                  }
              }
          }
