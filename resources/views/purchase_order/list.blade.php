@@ -372,6 +372,49 @@
         });
     }               
     
+
+    contractItemSelect.onchange = (e)=>{
+
+        e.preventDefault();
+
+        componentSelect.innerHTML       = '';
+
+        window.util.blockUI();
+
+        window.util.$get('/api/component/list',{
+            section_id: contractItemSelect.value,
+            orderBy:'name',
+            order:'ASC'
+        }).then(reply=>{
+            
+            
+
+            if(reply.status <= 0){
+                window.util.unblockUI();
+                window.util.showMsg(reply);
+                return false;
+            }
+
+            componentSelect.append(
+                t.option({value:''},' - ')
+            );
+
+            reply.data.forEach((item)=>{
+
+                componentSelect.append(
+                    t.option({value:item.id},item.name)
+                );
+
+            });
+
+            searchBtn.onclick();
+        });
+    }
+
+    componentSelect.onchange = ()=>{
+        searchBtn.onclick();
+    }
+
     createBtn.onclick = ()=>{
        window.util.navTo('/purchase_order/create/select');
     }
