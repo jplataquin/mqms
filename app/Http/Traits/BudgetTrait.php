@@ -18,7 +18,7 @@ trait BudgetTrait{
         $user = auth()->user();
 
         $section = Section::findOrFail($section_id);
-        
+
         $project = Project::findOrFail($section->project_id);
 
 
@@ -42,6 +42,11 @@ trait BudgetTrait{
             'budget_opex'           => 0,
             'budget_nonmaterial'    => 0
         ];
+        
+        $hide = [
+            'contract_item' => [],
+            'component'     => []
+        ];
 
         $contract_item_budget_total_quantity    = [];
         $component_budget_total_quantity        = [];
@@ -52,9 +57,18 @@ trait BudgetTrait{
 
         //Contract Items
         foreach($contract_items as $contract_item){
-            
+
+            $hide_contract_item = false;
+
+            if($contrac_item_id != null && $contract_item_id != $contract_item->id){
+                $hide_contract_item = true;
+                $hide['contract_item'][$contract_item->id] = true;
+            }else if($contract_item_id != null && $contract_item_id == $contract_item->id){
+                $hide['contract_item'][$contract_item->id] = false;
+            }
+              
             $contract_item_budget_total_amount    = 0;
-            $contract_item_ref_1_total_amount       = 0;
+            $contract_item_ref_1_total_amount     = 0;
 
             $contract_item_budget_total_quantity[$contract_item->id] = 0;
 
@@ -90,6 +104,16 @@ trait BudgetTrait{
             //Components
             foreach($components as $component){
 
+                $hide_component = false;
+
+                if( ($component_id != null && $component->id != $component_id) || $hide_contract_item){
+                    $hide_component = true;
+                    $hide['component'][$component->id] = true;
+                }else if($component_id != null && $component->id == $component_id && !$hide_contract_item){
+                    $hide['component'][$component->id] = false;
+                }
+
+
                 //Total component quantity per contract item
                 if($component->sum_flag && $component->unit_id == $contract_item->unit_id){
                 
@@ -111,6 +135,12 @@ trait BudgetTrait{
 
                 //Component Items
                 foreach($component_items as $component_item){
+
+                    if($hide_component){
+                        $hide['component_item'][$component_item->id] = true;
+                    }else{
+                        $hide['component_item'][$component_item->id] = false;
+                    }
 
                     $data[$contract_item->id]['components'][$component->id]['component_items'][$component_item->id] = [
                         'component_item'    => $component_item,
@@ -168,7 +198,8 @@ trait BudgetTrait{
 
         $datetime_generated = Carbon::now();
 
-        return view('/section/print',[
+        return view('/print/budget',[
+            'hide'                                      => $hide,
             'datetime_generated'                        => $datetime_generated,
             'user'                                      => $user,
             'project'                                   => $project,
