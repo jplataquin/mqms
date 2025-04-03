@@ -208,7 +208,7 @@
         @if($hide['total_contract_item'] > 0 || $hide['total_component'] > 0)
         <tr>
             <th data-controller="pageBreaker" class="text-center rejected-text" colspan="8">
-                Hidden Contract Items: {{ number_format($hide['total_contract_item']) }}, 
+                Hidden Contract Items: {{ number_format($hide['total_contract_item']) }}
             </th>
             <th class="text-center rejected-text" colspan="8">
                 Hidden Components: {{ number_format($hide['total_component']) }}
