@@ -19,6 +19,8 @@ class ContractItemController extends Controller
 
     public function _print($id){
 
+        echo 'Kwak '.$id;
+
         $contract_item = ContractItem::findOrFail($id);
         
         $section_id         = $contract_item->section_id;
