@@ -188,6 +188,7 @@
             <div class="row mb-3">
                 <div class="col-lg-12 text-end">
                     <button class="btn btn-danger" id="deleteBtn">Delete</button>
+                    <button class="btn btn-warning" id="printBtn">Print</button>
                     <button class="btn btn-primary" id="editBtn">Edit</button>
                     <button class="btn btn-warning d-none" id="updateBtn">Update</button>
                     <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
@@ -234,6 +235,7 @@
     import {$q,$el,Template} from '/adarna.js';
     import CreateComponentForm from '/ui_components/create_forms/CreateComponentForm.js';
 
+    const printBtn                    = $q('#printBtn').first();
     const editBtn                     = $q('#editBtn').first();
     const updateBtn                   = $q('#updateBtn').first();
     const cancelBtn                   = $q('#cancelBtn').first();
@@ -280,6 +282,10 @@
         return window.util.inputNumber(ref_1_unit_price,e,2,false);
     }
 
+
+    printBtn.onclick = ()=>{
+        window.open( '/project/section/contract_item/print/{{$contract_item->id}}','_blank').focus();
+    }
 
     editBtn.onclick = (e)=>{
         e.preventDefault();
