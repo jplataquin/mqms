@@ -110,13 +110,17 @@ trait BudgetTrait{
 
                 $hide_component = false;
 
-                echo $component_id.' - '.$component->id.' - '.$hide_contract_item.'<br>';
-
+                //echo $component_id.' - '.$component->id.' - '.$hide_contract_item.'<br>';
+                //null 476 false
                 if( ($component_id != null && $component->id != $component_id) || $hide_contract_item ){
                     $hide_component                     = true;
                     $hide['component'][$component->id]  = true;
                     $hide['total_component']++;
-                }else if( $component_id != null && $component->id == $component_id && !$hide_contract_item ){
+                }else if(!$hide_contract_item){
+                    $hide_component                     = true;
+                    $hide['component'][$component->id]  = true;
+                    $hide['total_component']++;
+                }else if( $component_id != null && $component->id == $component_id ){
                     $hide['component'][$component->id] = false;
                 }
 
