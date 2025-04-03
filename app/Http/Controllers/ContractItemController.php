@@ -87,20 +87,20 @@ class ContractItemController extends Controller
         return view('contract_item/list');
     }
 
-    public function print($id){
+    // public function print($id){
         
-        $section = Section::findOrFail($id);
+    //     $section = Section::findOrFail($id);
 
-        $components = $section->Components;
+    //     $components = $section->Components;
 
-        $unit_options = Unit::toOptions();
+    //     $unit_options = Unit::toOptions();
       
-        return view('section/print',[
-            'section'          => $section,
-            'components'       => $components,
-            'unit_options'     => $unit_options,
-        ]);
-    }
+    //     return view('section/print',[
+    //         'section'          => $section,
+    //         'components'       => $components,
+    //         'unit_options'     => $unit_options,
+    //     ]);
+    // }
 
 
     public function _create(Request $request){
