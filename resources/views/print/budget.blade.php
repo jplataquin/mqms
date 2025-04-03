@@ -167,9 +167,19 @@
     </table>
 
     <table>
-
+        
         <!--Headers -->
         <thead>
+            @if($hide['total_contract_item'] > 0 || $hide['total_component'] > 0)
+            <tr>
+                <th data-controller="pageBreaker" class="text-center rejected-text" colspan="8">
+                    Hidden Contract Items: {{ number_format($hide['total_contract_item']) }}
+                </th>
+                <th class="text-center rejected-text" colspan="8">
+                    Hidden Components: {{ number_format($hide['total_component']) }}
+                </th>
+            </tr>
+            @endif
             <tr>
                 <th data-controller="pageBreaker" rowspan="2" style="min-width:5%;max-width:5%">ITEM CODE</th>
                 <th rowspan="2" style="min-width:20%;max-width:20%">DESCRIPTION</th>
@@ -205,16 +215,7 @@
         </thead>
         <tbody>
         
-        @if($hide['total_contract_item'] > 0 || $hide['total_component'] > 0)
-        <tr>
-            <th data-controller="pageBreaker" class="text-center rejected-text" colspan="8">
-                Hidden Contract Items: {{ number_format($hide['total_contract_item']) }}
-            </th>
-            <th class="text-center rejected-text" colspan="8">
-                Hidden Components: {{ number_format($hide['total_component']) }}
-            </th>
-        </tr>
-        @endif
+       
 
         @foreach($data as $contract_item_id => $row_1)
 
