@@ -24,6 +24,7 @@ class ComponentController extends Controller
     use BudgetTrait;
 
     public function te($id){
+        echo 'haha';
         $this->print($id);
     }
 
