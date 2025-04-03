@@ -75,6 +75,7 @@ class PurchaseOrderController extends Controller
                  if($contract_item_id){
 
                     $purchaseOrder = $purchaseOrder->where('contract_item_id','=',$contract_item_id);
+                    
                     if($component_id){
                         $purchaseOrder = $purchaseOrder->where('component_id','=',$component_id);
     
