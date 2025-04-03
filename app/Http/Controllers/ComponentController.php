@@ -23,6 +23,10 @@ class ComponentController extends Controller
 {
     use BudgetTrait;
 
+    public function print($id){
+        echo $id;
+    }
+    
     public function _create(Request $request){
 
         //todo check role
