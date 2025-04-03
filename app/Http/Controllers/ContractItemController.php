@@ -11,10 +11,16 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
-
+use App\Http\Traits\BudgetTrait;
 
 class ContractItemController extends Controller
 {
+    use BudgetTrait;
+
+    public function _print($id){
+
+    }
+    
     public function create($section_id){
 
         $section_id = (int) $section_id;

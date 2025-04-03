@@ -44,8 +44,11 @@ trait BudgetTrait{
         ];
         
         $hide = [
-            'contract_item' => [],
-            'component'     => []
+            'total_contract_item'   => 0,
+            'total_component'       => 0,
+            'contract_item'         => [],
+            'component'             => [],
+            'component_item'        => []
         ];
 
         $contract_item_budget_total_quantity    = [];
@@ -63,6 +66,7 @@ trait BudgetTrait{
             if($contract_item_id != null && $contract_item_id != $contract_item->id){
                 $hide_contract_item = true;
                 $hide['contract_item'][$contract_item->id] = true;
+                $hide['total_contract_item']++;
             }else if($contract_item_id != null && $contract_item_id == $contract_item->id){
                 $hide['contract_item'][$contract_item->id] = false;
             }
@@ -109,6 +113,7 @@ trait BudgetTrait{
                 if( ($component_id != null && $component->id != $component_id) || $hide_contract_item){
                     $hide_component = true;
                     $hide['component'][$component->id] = true;
+                    $hide['total_component']++;
                 }else if($component_id != null && $component->id == $component_id && !$hide_contract_item){
                     $hide['component'][$component->id] = false;
                 }

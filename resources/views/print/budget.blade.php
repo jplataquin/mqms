@@ -204,6 +204,16 @@
             </tr>
         </thead>
         <tbody>
+        
+        @if($hide['total_contract_item'] > 0 || $hide['total_component'] > 0)
+        <tr>
+            <td class="text-center" colspan="16">
+                Total Hidden Contract Items: {{ number_format($hide['total_contract_item']) }}, 
+                Total Hidden Components: {{ number_format($hide['total_component']) }}
+            </td>
+        </tr>
+        @endif
+
         @foreach($data as $contract_item_id => $row_1)
 
             <!-- Contract Item -->
