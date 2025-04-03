@@ -214,9 +214,10 @@
                     @endif
 
                     <button class="btn btn-warning" id="printBtn">Print</button>
-                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
                     <button class="btn btn-warning d-none" id="updateBtn">Update</button>
                     <button class="btn btn-primary" id="editBtn">Edit</button>
+                    
+                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
                 </div>
             </div>
         </div>
