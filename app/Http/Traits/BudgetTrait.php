@@ -60,7 +60,7 @@ trait BudgetTrait{
 
             $hide_contract_item = false;
 
-            if($contrac_item_id != null && $contract_item_id != $contract_item->id){
+            if($contract_item_id != null && $contract_item_id != $contract_item->id){
                 $hide_contract_item = true;
                 $hide['contract_item'][$contract_item->id] = true;
             }else if($contract_item_id != null && $contract_item_id == $contract_item->id){
