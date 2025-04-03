@@ -19,6 +19,12 @@ class ContractItemController extends Controller
 
     public function _print($id){
 
+        $contract_item = ContractItem::findOrFail($id);
+        
+        $section_id         = $contract_item->section_id;
+        $contract_item_id   = $contract_item->id;
+
+        return $this->print($section_id,$contract_item_id);
     }
     
     public function create($section_id){
