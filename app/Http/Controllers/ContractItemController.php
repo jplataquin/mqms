@@ -24,6 +24,8 @@ class ContractItemController extends Controller
         $section_id         = $contract_item->section_id;
         $contract_item_id   = $contract_item->id;
 
+        echo $section_id;
+
         return $this->print($section_id,$contract_item_id);
     }
     
