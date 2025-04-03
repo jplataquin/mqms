@@ -393,7 +393,11 @@
                 </tr>
                 
          
-                <tr>
+                <tr class="
+                    @if($hide['component'][$component_id])
+                        d-none
+                    @endif
+                ">
            
                     <td></td><!-- Description -->
                     
