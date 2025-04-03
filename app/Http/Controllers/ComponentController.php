@@ -16,11 +16,13 @@ use Illuminate\Validation\Rule;
 use Spipu\Html2Pdf\Html2Pdf;
 use Spipu\Html2Pdf\Exception\Html2PdfException;
 use Spipu\Html2Pdf\Exception\ExceptionFormatter;
-
+use App\Traits\BudgetTrait;
 
 
 class ComponentController extends Controller
 {
+    use BudgetTrait;
+    
     public function _create(Request $request){
 
         //todo check role
@@ -197,6 +199,7 @@ class ComponentController extends Controller
             'grand_total_amounts'   => $grand_total_amounts
         ]);
     }
+
 
     public function preview($id){
 
