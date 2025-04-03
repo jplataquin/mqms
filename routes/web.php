@@ -81,7 +81,7 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/project/section/contract_items', [App\Http\Controllers\ContractItemController::class, 'list']);
     
     Route::get('/project/section/contract_item/component/{id}', [App\Http\Controllers\ComponentController::class, 'display']);
-    Route::get('/project/section/contract_item/component/print/{id}', [App\Http\Controllers\ComponentController::class, 'te']);
+    Route::get('/project/section/contract_item/component/print/{id}', [App\Http\Controllers\ComponentController::class, '_print']);
                 //project/section/contract_item/component/print/
     
     Route::get('/material_budget/report/{id}', [App\Http\Controllers\MaterialQuantityController::class, 'report']);

@@ -23,9 +23,15 @@ class ComponentController extends Controller
 {
     use BudgetTrait;
 
-    public function te($id){
-        echo 'haha';
-        $this->print($id);
+    public function _print($id){
+        
+        $component = Component::findOrFail($id);
+
+        $component_id       = $component->id;
+        $contract_item_id   = $component->contract_item_id;
+        $section_id         = $component->section_id;
+        
+        return $this->print($section_id,$contract_item_id,$component_id);
     }
 
     public function _create(Request $request){

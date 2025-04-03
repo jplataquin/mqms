@@ -13,11 +13,12 @@ use Carbon\Carbon;
 
 trait BudgetTrait{
 
-    public function print($id){
+    public function print($section_id,$contract_item_id = null,$component_id = null){
         
         $user = auth()->user();
 
-        $section = Section::findOrFail($id);
+        $section = Section::findOrFail($section_id);
+        
         $project = Project::findOrFail($section->project_id);
 
 
