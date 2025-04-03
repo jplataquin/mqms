@@ -325,7 +325,7 @@
             @foreach($row_1->components as $component_id => $row_2)
         
                 <tr class="
-                    @if($hide['components'][$component_id])
+                    @if($hide['component'][$component_id])
                         d-none
                     @endif
                     
@@ -431,7 +431,7 @@
 
                 <!-- Component Item data row -->
                 <tr class="
-                
+
                     @if($hide['component_item'][$component_item_id])
                         d-none
                     @endif
