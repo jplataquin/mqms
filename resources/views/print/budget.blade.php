@@ -485,8 +485,9 @@
                         @else
                             {{$component_item->approximation}} X
                         @endif
-
+                            KWAK
                         {{ number_format( $component_item->quantity,2) }}
+                        
                     </td>
                     <td class="text-center">{{$component_item->unit_text}}</td>
                     <td class="text-end">P {{ number_format($component_item->budget_price,2) }}</td>
