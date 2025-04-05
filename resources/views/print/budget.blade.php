@@ -44,7 +44,15 @@
             width:50% !important;
         }
 
-        .material-quantity-table tr, td, th{
+        .material-quantity-table > tr{
+            border: none !important;
+        }
+
+        .material-quantity-table > td{
+            border: none !important;
+        }
+
+        .material-quantity-table > th{
             border: none !important;
         }
 
