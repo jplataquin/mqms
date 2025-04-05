@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Section;
 use App\Models\Unit;
+use App\Models\MaterialItem;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -54,6 +55,8 @@ trait BudgetTrait{
 
         $contract_item_budget_total_quantity    = [];
         $component_budget_total_quantity        = [];
+
+        $material_item_list                     = [];
 
         $contract_items = $section->ContractItems()->orderBy('item_code','ASC')->get();
 
@@ -167,6 +170,9 @@ trait BudgetTrait{
                         $component_budget_total_quantity[$component->id] += $component_item->quantity;
                     }
 
+                    foreach($component_item->MaterialQuantities as $mq){
+                        $material_item_list[] = $mq->material_item_id;
+                    }
                 }
 
                  $total_amount->component[$component->id] = (object) [
@@ -212,6 +218,14 @@ trait BudgetTrait{
 
         $datetime_generated = Carbon::now();
 
+        $material_item = [];
+
+        $material_items = MaterialItem::whereIn('id',$material_item_list)->get();
+
+        foreach($material_items as $mi){
+            $material_item[$mi->id] = $mi;
+        }
+
         return view('/print/budget',[
             'hide'                                      => $hide,
             'datetime_generated'                        => $datetime_generated,
@@ -222,7 +236,8 @@ trait BudgetTrait{
             'total_amount'                              => $total_amount,
             'grand_total_amount'                        => $grand_total_amount,
             'contract_item_budget_total_quantity'       => $contract_item_budget_total_quantity,
-            'component_budget_total_quantity'           => $component_budget_total_quantity
+            'component_budget_total_quantity'           => $component_budget_total_quantity,
+            'material_item'                             => $material_item
         ]);
     }
 

@@ -354,7 +354,7 @@
                         component-opex-row 
                     @endif
                 ">
-                    <td data-controller="pageBreaker"  rowspan="{{ ( count( (array) $row_2->component_items) + 2) }}">
+                    <td data-controller="pageBreaker"  rowspan="{{ ( ( count( (array) $row_2->component_items) * 2) + 2) }}">
                         @if($row_2->component->status == 'PEND')
                             <div class="pending-text text-center">⦿</div>
                         @endif
@@ -491,6 +491,16 @@
                     <td class="text-end">P {{ number_format($component_item->budget_price,2) }}</td>
                     <td class="text-end">P {{ number_format($component_item->amount,2) }}</td>
                     <td></td>
+                </tr>
+
+                <tr>
+                    <td colspan="16">
+                        @foreach($component_item->MaterialQuantities as $mq)
+                            <div>
+                                {{$material_item[$mq->id]->name}}
+                            </div>
+                        @endforeach
+                    </td>
                 </tr>
                 @endforeach
        
