@@ -44,15 +44,15 @@
             width:50% !important;
         }
 
-        .material-quantity-table > tr{
+        .material-quantity-tr{
             border: none !important;
         }
 
-        .material-quantity-table > td{
+        .material-quantity-td{
             border: none !important;
         }
 
-        .material-quantity-table > th{
+        .material-quantity-th{
             border: none !important;
         }
 
@@ -535,29 +535,29 @@
                 <tr>
                     <td colspan="16">
                         <table class="ml-5 material-quantity-table">
-                            <tr>
-                                <th>Material Item</th>
-                                <th>Eqv</th>
-                                <th>Qty</th>
-                                <th>Total</th>
+                            <tr class="material-quantity-tr">
+                                <th class="material-quantity-th">Material Item</th>
+                                <th class="material-quantity-th">Eqv</th>
+                                <th class="material-quantity-th">Qty</th>
+                                <th class="material-quantity-th">Total</th>
                             </tr>
                         @foreach($component_item->material_quantities as $mq)
-                            <tr>
+                            <tr class="material-quantity-tr">
 
-                                <td>
+                                <td class="material-quantity-td">
                                     {{$material_item[$mq->material_item_id]->formattedName}}
                                 </td>
 
-                                <td class="text-center">
+                                <td class="text-center material-quantity-td">
                                     {{ number_format($mq->equivalent) }}
                                 </td>
 
-                                <td class="text-center">
+                                <td class="text-center material-quantity-td">
                                     {{ number_format($mq->quantity) }}
                                 </td>
 
 
-                                <td class="text-center">    
+                                <td class="text-center material-quantity-td">    
                                     {{ number_format($mq->total_equivalent) }} {{$component_item->unit_text}}
                                 </td>
 
