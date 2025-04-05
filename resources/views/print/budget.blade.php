@@ -11,6 +11,11 @@
             display:none;
         }
 
+        .d-inline{
+            display:inline;
+        }
+
+
         table, tr, td, th {
             border: solid 1px #000000;
             border-collapse: collapse;
@@ -92,6 +97,10 @@
             text-align:center !important;
         }
 
+        .ml-3{
+            margin-left: 3px;
+        }
+        
         .mb-5{
             margin-bottom:5px;
         }
@@ -127,6 +136,8 @@
         .rejected-text{
             color:rgb(255, 5, 5);
         }
+
+        
 
         @media print {
 
@@ -497,8 +508,20 @@
                 <tr>
                     <td colspan="16">
                         @foreach($component_item->material_quantities as $mq)
-                            <div>
-                                {{$material_item[$mq->material_item_id]->formattedName}}
+                            <div class="ml-3 mb-3">
+
+                                <span class="d-inline">
+                                    {{$material_item[$mq->material_item_id]->formattedName}}
+                                </span>
+
+                                <span class="ml-5 d-inline">
+                                    Eqv: {{ number_format($mq->equivalent) }}
+                                </span>
+
+                                <span class="ml-5 d-inline">
+                                    Qty: {{ number_format($mq->quantity) }}
+                                </span>
+
                             </div>
                         @endforeach
                     </td>
