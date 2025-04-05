@@ -444,6 +444,8 @@
 
                 @php
                     $component_item = $row_3->component_item;
+
+                    print_r($component_item);
                 @endphp
 
                 <!-- Component Item data row -->
