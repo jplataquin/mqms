@@ -15,6 +15,10 @@
             display:inline;
         }
 
+        .material-quantity-table table{
+            width:50%;
+        }
+        
         .material-quantity-table tr td th{
             border: none !important;
         }
