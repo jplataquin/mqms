@@ -41,7 +41,6 @@
 
         
         .material-quantity-table{
-            width:50% !important;
             border: none !important;
         }
 
