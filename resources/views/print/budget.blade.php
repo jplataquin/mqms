@@ -482,10 +482,8 @@
                         ↑ 
                         @elseif($component_item->approximation == 'FLOR')
                         ↓ 
-                        @else
-                            {{$component_item->approximation}} X
                         @endif
-                            KWAK
+                        
                         {{ number_format( $component_item->quantity,2) }}
                         
                     </td>
