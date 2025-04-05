@@ -133,7 +133,7 @@ trait BudgetTrait{
                     $contract_item_budget_total_quantity[$contract_item->id] += (float) $component->quantity;
                 }
 
-                $component_items = $component->ComponentItems()->orderBy('name','ASC')->with('material_quantities')->get();
+                $component_items = $component->ComponentItems()->orderBy('name','ASC')->with('MaterialQuantities')->get();
 
                 $data[$contract_item->id]['components'][$component->id] = [
                     'component'         => $component,
