@@ -516,31 +516,32 @@
 
                 <tr>
                     <td colspan="16">
+                        <table class="ml-5">
+
                         @foreach($component_item->material_quantities as $mq)
-                            <div class="ml-5 mb-3">
+                            <tr class="">
 
-                                <span class="d-inline">
+                                <td>
                                     {{$material_item[$mq->material_item_id]->formattedName}}
-                                </span>
+                                </td>
 
-                                <span class="ml-5 d-inline">
+                                <td>
                                     Eqv: {{ number_format($mq->equivalent) }}
-                                </span>
+                                </td>
 
-                                <span class="ml-5 d-inline">
+                                <td>
                                     Qty: {{ number_format($mq->quantity) }}
-                                </span>
+                                </td>
 
 
-                                <span class="ml-5 d-inline">
-
-                                    
+                                <td>    
                                     Total: {{ number_format($mq->total_equivalent) }} {{$component_item->unit_text}}
-                                </span>
+                                </td>
 
                                 
-                            </div>
+                            </tr>
                         @endforeach
+                        </table>
                     </td>
                 </tr>
                 @endforeach
