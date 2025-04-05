@@ -445,7 +445,6 @@
                 @php
                     $component_item = $row_3->component_item;
 
-                    print_r($component_item);
                 @endphp
 
                 <!-- Component Item data row -->
@@ -497,7 +496,11 @@
 
                 <tr>
                     <td colspan="16">
-                       x
+                        @foreach($component_item->material_quantities as $mq)
+                            <div>
+                                {{$material_item[$mq->id]->name}}
+                            </div>
+                        @endforeach
                     </td>
                 </tr>
                 @endforeach
