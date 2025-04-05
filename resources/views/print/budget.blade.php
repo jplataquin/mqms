@@ -40,7 +40,7 @@
 
 
         
-        .material-quantity-table table{
+        .material-quantity-table{
             width:50% !important;
         }
 
