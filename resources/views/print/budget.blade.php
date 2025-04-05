@@ -517,7 +517,7 @@
                 <tr>
                     <td colspan="16">
                         @foreach($component_item->material_quantities as $mq)
-                            <div class="ml-3 mb-3">
+                            <div class="ml-5 mb-3">
 
                                 <span class="d-inline">
                                     {{$material_item[$mq->material_item_id]->formattedName}}
@@ -531,6 +531,14 @@
                                     Qty: {{ number_format($mq->quantity) }}
                                 </span>
 
+
+                                <span class="ml-5 d-inline">
+
+                                    
+                                    Total: {{ number_format($mq->total_equivalent) }} {{$component_item->unit_text}}
+                                </span>
+
+                                
                             </div>
                         @endforeach
                     </td>

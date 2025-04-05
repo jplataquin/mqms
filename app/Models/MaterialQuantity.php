@@ -18,9 +18,17 @@ class MaterialQuantity extends Model
     
     public $deleteException = null;
 
+    protected $appends = [
+        'total_equivalent',
+    ];
+
     public function ComponentItem(): BelongsTo
     {
         return $this->belongsTo(ComponentItem::class);
+    }
+
+    public function getTotalEquivalentAttribute(){
+        return ($this->equivalent * $this->quantity);
     }
 
     public function delete(){
