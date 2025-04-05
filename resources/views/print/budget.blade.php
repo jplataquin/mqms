@@ -15,7 +15,10 @@
             display:inline;
         }
 
-
+        .material-quantity-table tr, td, th{
+            border: none !important;
+        }
+        
         table, tr, td, th {
             border: solid 1px #000000;
             border-collapse: collapse;
@@ -516,26 +519,31 @@
 
                 <tr>
                     <td colspan="16">
-                        <table class="ml-5">
-
+                        <table class="ml-5 material-quantity-table">
+                            <tr>
+                                <th>Material Item</th>
+                                <th>Eqv</th>
+                                <th>Qty</th>
+                                <th>Total</th>
+                            </tr>
                         @foreach($component_item->material_quantities as $mq)
-                            <tr class="">
+                            <tr>
 
                                 <td>
                                     {{$material_item[$mq->material_item_id]->formattedName}}
                                 </td>
 
-                                <td>
-                                    Eqv: {{ number_format($mq->equivalent) }}
+                                <td class="text-center">
+                                    {{ number_format($mq->equivalent) }}
                                 </td>
 
-                                <td>
-                                    Qty: {{ number_format($mq->quantity) }}
+                                <td class="text-center">
+                                    {{ number_format($mq->quantity) }}
                                 </td>
 
 
-                                <td>    
-                                    Total: {{ number_format($mq->total_equivalent) }} {{$component_item->unit_text}}
+                                <td class="text-center">    
+                                    {{ number_format($mq->total_equivalent) }} {{$component_item->unit_text}}
                                 </td>
 
                                 
