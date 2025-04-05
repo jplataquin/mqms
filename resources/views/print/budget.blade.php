@@ -15,10 +15,10 @@
             display:inline;
         }
 
-        .material-quantity-table tr, td, th{
+        .material-quantity-table tr td th{
             border: none !important;
         }
-        
+
         table, tr, td, th {
             border: solid 1px #000000;
             border-collapse: collapse;
