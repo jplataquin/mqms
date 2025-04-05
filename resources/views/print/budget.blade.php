@@ -483,7 +483,7 @@
                         @elseif($component_item->approximation == 'FLOR')
                         ↓ 
                         @endif
-                        {{$component_item->approximation}} X
+                        
                         {{ number_format( $component_item->quantity,2) }}
                         
                     </td>
