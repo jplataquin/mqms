@@ -100,7 +100,16 @@
         .ml-3{
             margin-left: 3px;
         }
-        
+
+        .ml-5{
+            margin-left: 5px;
+        }
+
+
+        .mb-3{
+            margin-bottom:3px;
+        }
+
         .mb-5{
             margin-bottom:5px;
         }
