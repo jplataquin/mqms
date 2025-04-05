@@ -711,6 +711,17 @@
                         onclick:()=>{
                             rejectComponent(component_id);
                         }
+                    },{
+                        name:'Revert',
+                        onclick:()=>{
+                              
+                        }
+                    },
+                    {
+                        name:'Open',
+                        onclick:()=>{
+                            window.open('/project/section/contract_item/component/'+component_id,'_blank').focus();
+                        }
                     },
                     {
                         name:'Refresh',
