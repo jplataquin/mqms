@@ -73,7 +73,7 @@ trait BudgetTrait{
                 $hide['contract_item'][$contract_item->id] = false;
             
             }else{
-                
+
                 $hide['contract_item'][$contract_item->id] = false;
             }
               
@@ -133,7 +133,7 @@ trait BudgetTrait{
                     $contract_item_budget_total_quantity[$contract_item->id] += (float) $component->quantity;
                 }
 
-                $component_items = $component->ComponentItems()->orderBy('name','ASC')->get();
+                $component_items = $component->ComponentItems()->orderBy('name','ASC')->with('material_quantities')->get();
 
                 $data[$contract_item->id]['components'][$component->id] = [
                     'component'         => $component,
@@ -166,6 +166,7 @@ trait BudgetTrait{
                     if($component_item->sum_flag && $component_item->unit_id == $component->unit_id){
                         $component_budget_total_quantity[$component->id] += $component_item->quantity;
                     }
+
                 }
 
                  $total_amount->component[$component->id] = (object) [
