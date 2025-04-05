@@ -13,6 +13,7 @@ use Carbon\Carbon;
 
 trait BudgetTrait{
 
+
     public function print($section_id,$contract_item_id = null,$component_id = null){
         
         $user = auth()->user();
@@ -68,6 +69,11 @@ trait BudgetTrait{
                 $hide['contract_item'][$contract_item->id] = true;
                 $hide['total_contract_item']++;
             }else if($contract_item_id != null && $contract_item_id == $contract_item->id){
+            
+                $hide['contract_item'][$contract_item->id] = false;
+            
+            }else{
+                
                 $hide['contract_item'][$contract_item->id] = false;
             }
               
@@ -110,8 +116,6 @@ trait BudgetTrait{
 
                 $hide_component = false;
 
-                //echo $component_id.' - '.$component->id.' - '.$hide_contract_item.'<br>';
-                //null 476 false
                 if( ($component_id != null && $component->id != $component_id) || $hide_contract_item ){
                     $hide_component                     = true;
                     $hide['component'][$component->id]  = true;
