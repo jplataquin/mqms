@@ -497,11 +497,7 @@
 
                 <tr>
                     <td colspan="16">
-                        @foreach($component_item->MaterialQuantity as $mq)
-                            <div>
-                                {{$material_item[$mq->id]->name}}
-                            </div>
-                        @endforeach
+                       x
                     </td>
                 </tr>
                 @endforeach
