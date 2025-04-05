@@ -15,13 +15,6 @@
             display:inline;
         }
 
-        .material-quantity-table table{
-            width:50%;
-        }
-        
-        .material-quantity-table tr td th{
-            border: none !important;
-        }
 
         table, tr, td, th {
             border: solid 1px #000000;
@@ -43,6 +36,16 @@
 
         tr:hover {
             background-color: #b5ffca !important;
+        }
+
+
+        
+        .material-quantity-table table{
+            width:50% !important;
+        }
+
+        .material-quantity-table tr td th{
+            border: none !important;
         }
 
         /** Non-Material */
