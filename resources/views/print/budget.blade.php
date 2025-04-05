@@ -44,7 +44,7 @@
             width:50% !important;
         }
 
-        .material-quantity-table tr td th{
+        .material-quantity-table tr, td, th{
             border: none !important;
         }
 
