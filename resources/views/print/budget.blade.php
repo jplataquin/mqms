@@ -567,17 +567,16 @@
                         @endforeach
                         </table>
                     </td>
-                    <td><td>
-                    <td><td>
-                    <td><td>
-                    <td><td>
-                    <td><td>
-                    <td><td>
-                    <td><td>
-                    <td><td>
-                    <td><td>
-                    <td><td>
-                    <td><td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 @endforeach
        
