@@ -534,7 +534,7 @@
                 </tr>
 
                 <tr>
-                    <td colspan="16">
+                    <td colspan="5">
                         <table class="ml-5 material-quantity-table">
                             <tr class="material-quantity-tr">
                                 <th class="material-quantity-th">Material Item</th>
@@ -567,6 +567,17 @@
                         @endforeach
                         </table>
                     </td>
+                    <td><td>
+                    <td><td>
+                    <td><td>
+                    <td><td>
+                    <td><td>
+                    <td><td>
+                    <td><td>
+                    <td><td>
+                    <td><td>
+                    <td><td>
+                    <td><td>
                 </tr>
                 @endforeach
        
