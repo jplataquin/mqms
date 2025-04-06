@@ -130,9 +130,9 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/review/purchase_order/{id}', [App\Http\Controllers\Review\PurchaseOrderReviewController::class, 'display']);
     Route::get('/review/purchase_orders', [App\Http\Controllers\Review\PurchaseOrderReviewController::class, 'list']);
     
-    Route::get('/review/material_budget', [App\Http\Controllers\Review\MaterialBudgetReviewController::class, 'list']);
-    Route::get('/review/material_budget/{section_id}', [App\Http\Controllers\Review\MaterialBudgetReviewController::class, 'display']);
-    Route::get('/review/material_budget/overview/{section_id}', [App\Http\Controllers\Review\MaterialBudgetReviewController::class, 'overview']);
+    Route::get('/review/budget', [App\Http\Controllers\Review\BudgetReviewController::class, 'list']);
+    Route::get('/review/budget/{section_id}', [App\Http\Controllers\Review\BudgetReviewController::class, 'display']);
+    Route::get('/review/budget/overview/{section_id}', [App\Http\Controllers\Review\BudgetReviewController::class, 'overview']);
    
 
     Route::get('/material_canvass', [App\Http\Controllers\MaterialCanvassController::class, 'list']);

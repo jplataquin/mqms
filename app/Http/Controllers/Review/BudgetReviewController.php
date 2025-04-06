@@ -13,14 +13,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
-class MaterialBudgetReviewController extends Controller
+class BudgetReviewController extends Controller
 {
 
     public function list(){
 
         $projects = Project::orderBy('name','ASC')->get();
 
-        return view('/review/material_budget/list',[
+        return view('/review/budget/list',[
             'projects' => $projects
         ]);
     }
@@ -29,7 +29,7 @@ class MaterialBudgetReviewController extends Controller
 
         $section_id = (int)$section_id;
 
-        return view('/review/material_budget/display',[
+        return view('/review/budget/display',[
             'section_id' => $section_id
         ]);
     }
@@ -187,7 +187,7 @@ class MaterialBudgetReviewController extends Controller
 
         $datetime_generated = Carbon::now();
 
-        return view('/review/material_budget/overview',[
+        return view('/review/budget/overview',[
             'datetime_generated'                        => $datetime_generated,
             'user'                                      => $user,
             'project'                                   => $project,

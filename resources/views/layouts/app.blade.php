@@ -118,7 +118,7 @@
 
                             <ul class="list-unstyled menu-sub-items">
                                 <li class="nav-sub-item">
-                                    <a href="/review/material_budget" hx-select="#content" hx-target="#main">Material Budget</a>
+                                    <a href="/review/budget" hx-select="#content" hx-target="#main">Budget</a>
                                 </li>
                                 <li class="nav-sub-item">
                                     <a href="/review/components" hx-select="#content" hx-target="#main">Component</a>
