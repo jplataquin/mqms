@@ -3,13 +3,6 @@
 @section('content')
 <style>
 
-    @media all and (display-mode: fullscreen) {
-        /* CSS styles to be applied or altered in fullscreen mode */
-        body {
-            background-color: black;
-        }
-    }
-
     .fullscreen{
         position:absolute;
         top:0;
@@ -62,7 +55,7 @@
 
     fullScreenBtn.onclick = ()=>{
         sheet_iframe.classList.add('fullscreen');
-        makeFullScreen();
+        //makeFullScreen();
     }
 
 
