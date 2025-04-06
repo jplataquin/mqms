@@ -15,7 +15,7 @@
                 <li>
                     <a href="#" class="active">
                         <span>
-                        Material Budget
+                        Budget
                         </span>
                         <i class="ms-2 bi bi-list-ul"></i>
                     </a>
@@ -26,7 +26,7 @@
 
         <div class="folder-form-container">
             <div class="folder-form-tab">
-                Review Purchase Orders
+                Review Budget
             </div>
             <div class="folder-form-body">
                 
@@ -53,7 +53,98 @@
             </div>
         </div>
 
-        
+        <div class="container mb-3" id="list"></div>
+    
+        <div class="row">
+            <div class="col-lg-12">
+                <button id="showMoreBtn" class="btn w-100 btn-primary">Show More</button>
+            </div>
+        </div>
     </div>
+
+    <script type="module">
+        import {$q,$el,Template} from '/adarna.js';
+
+        const projectSelect = $q('#projectSelect').first();
+        const searchBtn     = $q('#searchBtn').first();
+        const showMoreBtn   = $q('#showMoreBtn').first();
+        const list          = $q('#list').first();
+
+
+        projectSelect.onchange = ()=>{    
+            reinitalize();
+            showData();
+        }
+
+         /**** LIST ****/
+        let page            = 1;
+        let order           = 'DESC';
+        let orderBy         = 'id';
+        
+        const t = new Template();
+        
+        function reinitalize(){
+            page = 1;
+            $el.clear(list);   
+        }
+
+        function renderRows(data){
+            
+            data.map(item=>{
+
+                let row = t.div({class:'item-container fade-in'},()=>{ 
+                    t.div({class:'item-header'},item.name);
+                    t.div({class:'item-body'});
+                });
+
+                row.onclick = ()=>{
+                    window.util.navTo('/project/section/'+item.id);
+                };
+
+                $el.append(row).to(list);
+                
+            });
+
+        }
+
+        function showData(){
+
+            window.util.blockUI();
+
+            window.util.$get('/api/section/list',{
+                project_id: projectSelect.value,
+                query: '',
+                page: page,
+                order: order,
+                order_by: orderBy,
+                limit: 10
+            }).then(reply=>{
+
+                window.util.unblockUI();
+                
+                if(reply.status <= 0 ){
+                    
+                    window.util.showMsg(reply);
+                    return false;
+                };
+
+                page++;
+
+                if(reply.data.length){
+                    renderRows(reply.data); 
+                }else{
+                    showMoreBtn.style.display = 'none';
+                }
+                
+            });
+        }
+    
+
+        showMoreBtn.onclick = ()=>{
+            showData();
+        }
+
+
+    </script>
 </div>
 @endsection

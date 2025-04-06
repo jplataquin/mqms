@@ -263,43 +263,11 @@
         });
     }
    
-    // searchBtn.onclick = ()=>{
-    //     showMoreBtn.style.display = 'block';
-    //     reinitalize();
-    //     showData();
-    // }
-
     showMoreBtn.onclick = ()=>{
         showData();
     }
 
-    // sortSelect.onchange = ()=>{
-    //     reinitalize();
-
-    //     let select = parseInt(sortSelect.value);
-
-    //     switch(select){
-    //         case 1:
-    //             order   = 'ASC';
-    //             orderBy = 'name';
-    //             break;
-    //         case 2:
-    //             order   = 'DESC';
-    //             orderBy = 'name';
-    //             break;
-    //         case 3:
-    //             order   = 'DESC';
-    //             orderBy = 'id';
-    //             break;
-    //         case 4:
-    //             order   = 'ASC';
-    //             orderBy = 'id';
-    //         break;
-    //     }
-
-    //     showData();
-    // }
-
+   
     reinitalize();
     showData();
 
