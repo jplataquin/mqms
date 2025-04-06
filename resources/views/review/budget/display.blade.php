@@ -37,7 +37,7 @@
          <div class="text-end">
             <button class="btn btn-secondary" id="fullScreenBtn">Full Screen</button>
         </div>
-        <iframe id="overview_iframe" class="w-100 h-100 d-inline-block" src="/review/budget/overview/{{$section_id}}"></iframe>
+        <iframe id="overview_iframe" class="w-100 h-100 d-inline-block" src="/review/budget/sheet/{{$section_id}}"></iframe>
     </div>
   
 </div>

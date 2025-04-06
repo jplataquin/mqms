@@ -132,7 +132,7 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     
     Route::get('/review/budget', [App\Http\Controllers\Review\BudgetReviewController::class, 'list']);
     Route::get('/review/budget/{section_id}', [App\Http\Controllers\Review\BudgetReviewController::class, 'display']);
-    Route::get('/review/budget/overview/{section_id}', [App\Http\Controllers\Review\BudgetReviewController::class, 'overview']);
+    Route::get('/review/budget/sheet/{section_id}', [App\Http\Controllers\Review\BudgetReviewController::class, 'sheet']);
    
 
     Route::get('/material_canvass', [App\Http\Controllers\MaterialCanvassController::class, 'list']);
