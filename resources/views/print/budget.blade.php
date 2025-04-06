@@ -544,6 +544,8 @@
                                 <th class="material-quantity-th">Qty</th>
                                 <th class="material-quantity-th">Total</th>
                             </tr>
+
+                        @php $total_equivalent = 0; @endphp
                         @foreach($component_item->material_quantities as $mq)
                             <tr class="material-quantity-tr">
 
@@ -562,11 +564,21 @@
 
                                 <td class="text-center material-quantity-td">    
                                     {{ number_format($mq->total_equivalent) }} {{$component_item->unit_text}}
-                                </td>
-
-                                
+                                </td>    
                             </tr>
+
+                            @php $total_equivalent = $total_equivalent + $mq->total_equivalent; @endphp
                         @endforeach
+                            <tr>
+                                <td colspan="3"></td>
+                                <td class="
+                                    @if($total_equivalent > $component_item->quantity)
+                                        rejected-text non-conforming
+                                    @endif
+                                " style="border:solid 1px #000000">
+                                    {{ number_format($total_equivalent) }} {{$component_item->unit_text}}
+                                </td>
+                            </tr>
                         </table>
                     </td>
                     <td></td>
