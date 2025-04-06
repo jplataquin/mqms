@@ -420,7 +420,7 @@
 
                     <!-- Factor -->
                     <td class="text-center">
-                        Use Count: {{$row_2->component->use_count}}
+                        Use Count: {{$row_2->component->use_count}} 
                     </td>
                     
                      <!-- Material -->
