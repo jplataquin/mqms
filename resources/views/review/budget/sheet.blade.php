@@ -182,8 +182,8 @@
 
         #actionContainer{
             position:fixed;
-            bottom:10px;
-            right:10px;
+            bottom:50px;
+            right:50px;
         }
 
 
@@ -193,7 +193,7 @@
             border-radius: 50%; /* Creates the circular shape */
             /* Add other styling as needed, e.g., background color, etc. */
             background-color: blue;
-            opacity: 0.3;
+            opacity: 0.1;
         }
 
     </style>

@@ -9,6 +9,11 @@
         left:0;
         z-index:1000;
     }
+
+    .no-scroll{
+        height:100%;
+        overflow:hidden;
+    }
         
 </style>
 <div id="content">
@@ -55,6 +60,7 @@
 
     fullScreenBtn.onclick = ()=>{
         sheet_iframe.classList.add('fullscreen');
+        document.body.classList.add('no-scroll');
         //makeFullScreen();
     }
 
