@@ -181,12 +181,14 @@
 
 
         #actionContainer{
-            position:absolute;
+            position:fixed;
+            bottom:10;
+            right:10;
         }
 
         #actionBtn{
-            width: 100px; /* Or any desired size */
-            height: 100px; /* Must match width for a perfect circle */
+            width: 75px; /* Or any desired size */
+            height: 75px; /* Must match width for a perfect circle */
             border-radius: 50%; /* Creates the circular shape */
             /* Add other styling as needed, e.g., background color, etc. */
             background-color: blue;
