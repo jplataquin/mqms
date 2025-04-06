@@ -60,9 +60,9 @@
             <div class="row mt-5 mb-3">
                 <div class="col-lg-12 text-end">
                     <button class="btn btn-danger" id="deleteBtn">Delete</button>
-          
                     <button class="btn btn-primary" id="editBtn">Edit</button>
                     <button class="btn btn-warning d-none" id="updateBtn">Update</button>
+                    <button class="btn btn-warning" id="studioBtn">Studio</button>
                     <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
           
                 </div>
@@ -100,12 +100,13 @@
     import {$q,$el,Template} from '/adarna.js';
     import CreateSectionForm from '/ui_components/create_forms/CreateSectionForm.js';
 
-    const project_name                 = $q('#project_name').first();
+    const project_name                = $q('#project_name').first();
     const status                      = $q('#status').first();
     const editBtn                     = $q('#editBtn').first();
     const updateBtn                   = $q('#updateBtn').first();
     const cancelBtn                   = $q('#cancelBtn').first();
     const deleteBtn                   = $q('#deleteBtn').first();
+    const studioBtn                   = $q('#studioBtn').first();
     const list                        = $q('#list').first();
     const showMoreBtn                 = $q('#showMoreBtn').first();
     const createBtn                   = $q('#createBtn').first();
@@ -116,6 +117,9 @@
         url:'/project'
     };
     
+    studioBtn.onclick = (e)=>{
+        window.open('/project/studio/{{$project->id}}','_blank').focus();
+    }
     
     editBtn.onclick = (e)=>{
         e.preventDefault();
