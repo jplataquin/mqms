@@ -192,10 +192,13 @@
             height: 75px; /* Must match width for a perfect circle */
             border-radius: 50%; /* Creates the circular shape */
             /* Add other styling as needed, e.g., background color, etc. */
-            background-color: rgb(90, 90, 90,0.3);
-            
+            background-color: rgb(90, 90, 90);
+            opacity: 0.3;
             text-align:center;
+            cursor:pointer;
         }
+
+        
 
         #actionBtn > svg{
             margin-top:16px;
