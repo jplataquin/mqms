@@ -178,6 +178,20 @@
             
         
         }
+
+
+        #actionContainer{
+            position:absolute;
+        }
+
+        #actionBtn{
+            width: 100px; /* Or any desired size */
+            height: 100px; /* Must match width for a perfect circle */
+            border-radius: 50%; /* Creates the circular shape */
+            /* Add other styling as needed, e.g., background color, etc. */
+            background-color: blue;
+        }
+
     </style>
 </head>
 <body>
@@ -828,6 +842,10 @@
     </table>
     
 
+    <div id="actionContainer">
+
+        <div id="actionBtn"></div>
+    </div>
 
     <script type="module">
       import {$q} from '/adarna.js';
@@ -847,7 +865,6 @@
 
                 if(total_height >= 965){
 
-                    console.log(total_height,item_before)
                     item_before.parentElement.classList.add('page-break');
                     total_height = 0;
                     item_before = null;
