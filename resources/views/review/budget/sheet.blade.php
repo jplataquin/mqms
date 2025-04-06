@@ -916,6 +916,7 @@
 
                 let cm = new VanillaContextMenu({
                     scope: item,
+                    normalizePosition:false,
                     menuItems: [
                         {
                             label: 'Approve',
