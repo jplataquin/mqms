@@ -931,7 +931,7 @@
                         },
                     ]);
 
-                    cm.handle.show(e.clientX,e.clientY);
+                    cm.handler.show(e.clientX,e.clientY);
                 }
               
             });
