@@ -933,7 +933,7 @@
                         ]
                     });
 
-                    cm.handler.show(e.clientX,e.clientY);
+                    cm.handler.show(e.screenX,e.screenY);
                 }
               
             });
