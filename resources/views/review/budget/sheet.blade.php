@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{$project->name}} - {{$section->name}} - {{$datetime_generated}}</title>
-    <script src="https://unpkg.com/vanilla-context-menu@1.4.1/dist/vanilla-context-menu.js"></script>
     <style>
 
         .d-none{
@@ -914,26 +913,27 @@
 
             items.map(item=>{
 
-                let cm = new VanillaContextMenu({
-                    scope: item,
-                    normalizePosition:false,
-                    menuItems: [
-                        {
-                            label: 'Approve',
-                            callback: () => {
-                                // your code here
-                            },
-                        },
-                        'hr',
-                        {
-                            label: 'Reject',
-                            callback: ()=>{
+                item.oncontextmenu = (e)=>{
+                    e.preventDefault();
 
-                            },
+                    let cm = contextMenu([
+                        {
+                            name:'Approve',
+                            onclick:(e)=>{
+
+                            }
                         },
-                      
-                    ],
-                });
+                        {
+                            name:'Reject',
+                            onclick:(e)=>{
+
+                            }
+                        },
+                    ]);
+
+                    cm.handle.show(e.clientX,e.clientY);
+                }
+              
             });
         }
 
