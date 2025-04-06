@@ -6,7 +6,7 @@
         position:absolute;
         top:0;
         left:0;
-        z-index:900;
+        z-index:1000;
     }
         
 </style>
@@ -37,7 +37,7 @@
          <div class="text-end">
             <button class="btn btn-secondary" id="fullScreenBtn">Full Screen</button>
         </div>
-        <iframe id="overview_iframe" class="w-100 h-100 d-inline-block" src="/review/budget/sheet/{{$section_id}}"></iframe>
+        <iframe id="sheet_iframe" class="w-100 h-100 d-inline-block" src="/review/budget/sheet/{{$section_id}}"></iframe>
     </div>
   
 </div>
@@ -45,7 +45,7 @@
 <script type="module">
     import {$q} from '/adarna.js';
     
-    const overview_iframe = $q('#overview_iframe').first();
+    const sheet_iframe = $q('#sheet_iframe').first();
     const fullScreenBtn   = $q('#fullScreenBtn').first();
 
     window.reloadIframe = ()=>{
@@ -53,7 +53,8 @@
     }
 
     fullScreenBtn.onclick = ()=>{
-        makeFullScreen();
+        sheet_iframe.classList.add('fullscreen');
+        //makeFullScreen();
     }
 
     
@@ -61,9 +62,9 @@
        
         if (document.fullscreenElement) {
            
-            overview_iframe.classList.add('fullscreen');
+            sheet_iframe.classList.add('fullscreen');
         } else {
-            overview_iframe.classList.remove('fullscreen');
+            sheet_iframe.classList.remove('fullscreen');
         }
     };
 
