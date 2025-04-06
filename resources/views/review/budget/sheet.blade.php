@@ -908,12 +908,44 @@
             
         }
 
+        
+
         function componentMenu(items){
+
             items.map(item=>{
 
                 item.oncontextmenu = (e)=>{
+
                     e.preventDefault();
-                    alert('asdads');
+                    
+                    const cm = contextMenu([
+                        {
+                            name:'Approve',
+                            onclick: (e)=>{
+
+                            }
+                        },
+                        {
+                            name:'Reject',
+                            onclick: (e)=>{
+
+                            }
+                        },
+                        {
+                            name:'Revert to Pending',
+                            onclick: (e)=>{
+
+                            }
+                        },
+                        {
+                            name:'Open',
+                            onclick: (e)=>{
+
+                            }
+                        },
+                    ]);
+
+                    cm.show(e.clientX,e.clientY);
                 }
             });
         }
