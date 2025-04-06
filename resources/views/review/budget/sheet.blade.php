@@ -916,20 +916,22 @@
                 item.oncontextmenu = (e)=>{
                     e.preventDefault();
 
-                    let cm = contextMenu([
-                        {
-                            name:'Approve',
-                            onclick:(e)=>{
+                    let cm = contextMenu({
+                        items:[
+                            {
+                                name:'Approve',
+                                onclick:(e)=>{
 
-                            }
-                        },
-                        {
-                            name:'Reject',
-                            onclick:(e)=>{
+                                }
+                            },
+                            {
+                                name:'Reject',
+                                onclick:(e)=>{
 
-                            }
-                        },
-                    ]);
+                                }
+                            },
+                        ]
+                    });
 
                     cm.handler.show(e.clientX,e.clientY);
                 }
