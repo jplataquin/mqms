@@ -870,7 +870,7 @@
         const actionBtn = $q('#actionBtn').first();
 
         actionBtn.onclick = () =>{
-            window.parent.document.exitFullscreen()
+            window.parent.exitFullscreen()
         }
 
         function pageBreaker(items){
