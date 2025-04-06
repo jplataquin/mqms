@@ -104,7 +104,7 @@
                 });
 
                 row.onclick = ()=>{
-                    window.util.navTo('/project/section/'+item.id);
+                    window.open('/review/budget/'+item.id);
                 };
 
                 $el.append(row).to(list);
