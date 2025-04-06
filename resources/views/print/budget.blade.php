@@ -570,8 +570,10 @@
                             @php $total_equivalent = $total_equivalent + $mq->total_equivalent; @endphp
                         @endforeach
                             <tr>
-                                <td colspan="3"></td>
+                                <td class="material-quantity-td" colspan="3"></td>
                                 <td class="
+                                    text-center
+                                     
                                     @if($total_equivalent > $component_item->quantity)
                                         rejected-text non-conforming
                                     @endif
