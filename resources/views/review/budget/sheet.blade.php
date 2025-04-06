@@ -5,11 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{$project->name}} - {{$section->name}} - {{$datetime_generated}}</title>
 
-     <!-- Scripts -->
-     <script src="https://unpkg.com/htmx.org@2.0.0"></script>
-     @vite(['resources/js/app.js'])
-
     <style>
+
+        .d-none{
+            display:none;
+        }
+
+        .d-inline{
+            display:inline;
+        }
+
 
         table, tr, td, th {
             border: solid 1px #000000;
@@ -29,8 +34,26 @@
             padding: 5px;
         }
 
-        .highlight-row:hover {
+        tr:hover {
             background-color: #b5ffca !important;
+        }
+
+
+        
+        .material-quantity-table{
+            border: none !important;
+        }
+
+        .material-quantity-tr{
+            border: none !important;
+        }
+
+        .material-quantity-td{
+            border: none !important;
+        }
+
+        .material-quantity-th{
+            border: none !important;
         }
 
         /** Non-Material */
@@ -92,6 +115,19 @@
             text-align:center !important;
         }
 
+        .ml-3{
+            margin-left: 3px;
+        }
+
+        .ml-5{
+            margin-left: 5px;
+        }
+
+
+        .mb-3{
+            margin-bottom:3px;
+        }
+
         .mb-5{
             margin-bottom:5px;
         }
@@ -117,9 +153,9 @@
         }
 
         .pending-text{
-            color:rgb(251, 201, 6);
+            color:rgb(234, 255, 5);
         }
-        
+
         .approved-text{
             color:rgb(11, 152, 1);
         }
@@ -127,6 +163,8 @@
         .rejected-text{
             color:rgb(255, 5, 5);
         }
+
+        
 
         @media print {
 
@@ -167,9 +205,19 @@
     </table>
 
     <table>
-
+        
         <!--Headers -->
         <thead>
+            @if($hide['total_contract_item'] > 0 || $hide['total_component'] > 0)
+            <tr>
+                <th data-controller="pageBreaker" class="text-center rejected-text" colspan="8">
+                    Hidden Contract Items: {{ number_format($hide['total_contract_item']) }}
+                </th>
+                <th class="text-center rejected-text" colspan="8">
+                    Hidden Components: {{ number_format($hide['total_component']) }}
+                </th>
+            </tr>
+            @endif
             <tr>
                 <th data-controller="pageBreaker" rowspan="2" style="min-width:5%;max-width:5%">ITEM CODE</th>
                 <th rowspan="2" style="min-width:20%;max-width:20%">DESCRIPTION</th>
@@ -200,15 +248,21 @@
                 <th>UNIT</th>
                 <th class="amount-13">RATE</th>
                 <th class="amount-15">AMOUNT</th>
+                <th class="text-center">%</th>
             </tr>
         </thead>
         <tbody>
+        
+       
+
         @foreach($data as $contract_item_id => $row_1)
 
             <!-- Contract Item -->
 
             <tr class="
-                highlight-row 
+                @if($hide['contract_item'][$row_1->contract_item->id])
+                    d-none
+                @endif
 
                 @if($row_1->contract_item->item_type == 'NMAT') 
                     contract-item-nonmaterial-row 
@@ -258,6 +312,7 @@
  
                 @endif
 
+          
 
                 @if($row_1->contract_item->budget_total_amount_overwrite)
 
@@ -283,6 +338,10 @@
 
                 @else
 
+                    @php 
+                        $contract_item_budget_total_amount = $total_amount->contract_item[$contract_item_id]->budget
+                    @endphp
+
                     <td></td>
                     <th class="
                         text-end    
@@ -292,6 +351,24 @@
                         @endif
                     ">P {{ number_format($total_amount->contract_item[$contract_item_id]->budget,2) }}</th>
                 @endif
+
+                <!-- Contract Item Percent -->
+                <th class="text-center">
+                    @php 
+                        $contract_item_budget_percentage = 0;
+
+                        if($section->gross_total_amount > 0){
+                            $contract_item_budget_percentage = ($contract_item_budget_total_amount / $section->gross_total_amount) * 100;
+                          
+                        }
+                     
+                        $contract_item_budget_percentage = number_format($contract_item_budget_percentage,2);
+
+                 
+                    @endphp
+                 
+                    {{$contract_item_budget_percentage}}%
+                </th>
             </tr>
 
 
@@ -299,8 +376,11 @@
             @foreach($row_1->components as $component_id => $row_2)
         
                 <tr class="
-                     highlight-row 
-                     @if($row_1->contract_item->item_type == 'NMAT') 
+                    @if($hide['component'][$component_id])
+                        d-none
+                    @endif
+                    
+                    @if($row_1->contract_item->item_type == 'NMAT') 
                         component-nonmaterial-row 
                     @endif
 
@@ -312,17 +392,17 @@
                         component-opex-row 
                     @endif
                 ">
-                    <td data-controller="pageBreaker componentContextMenu" data-id="{{$row_2->component->id}}" rowspan="{{ ( count( (array) $row_2->component_items) + 2) }}">
+                    <td data-controller="pageBreaker"  rowspan="{{ ( ( count( (array) $row_2->component_items) * 2) + 2) }}">
                         @if($row_2->component->status == 'PEND')
-                            <div class="pending-text text-center mb-3">⦿</div>
+                            <div class="pending-text text-center">⦿</div>
                         @endif
 
                         @if($row_2->component->status == 'APRV')
-                            <div class="approved-text text-center mb-3">⦿</div>
+                            <div class="approved-text text-center">⦿</div>
                         @endif
 
                         @if($row_2->component->status == 'REJC')
-                        <div class="rejected-text text-center mb-3">⦿</div>
+                        <div class="rejected-text text-center">⦿</div>
                         @endif
 
                         {{$row_2->component->name}}
@@ -338,17 +418,40 @@
                     <td></td>
                     <td class="text-end">P {{ number_format( $total_amount->component[$component_id]->ref_1, 2) }}</td>
 
-                    <td class="text-center"></td><!-- Factor -->
+                    <!-- Factor -->
+                    <td class="text-center">
+                        Use Count: {{$row_2->component->use_count}} 
+                    </td>
                     
                      <!-- Material -->
                     <th class="text-center" >{{ number_format($row_2->component->quantity,2) }}</th>
                     <th class="text-center">{{$row_2->component->unit_text}}</th>
                     <td></td>
                     <th class="text-end">P {{ number_format( $total_amount->component[$component_id]->budget, 2) }}</th>
+                    
+                    <!--Component Percent -->
+                    <td class="text-center text-italic">
+
+                        @php
+                            $component_budget_amount_percentage = 0;
+
+                            if($contract_item_budget_total_amount > 0){
+                                $component_budget_amount_percentage = ($total_amount->component[$component_id]->budget / $contract_item_budget_total_amount) * 100;
+                                $component_budget_amount_percentage = number_format($component_budget_amount_percentage,2);
+                            }
+
+                        @endphp
+
+                        {{$component_budget_amount_percentage}}%
+                    </td>
                 </tr>
                 
          
-                <tr class="highlight-row">
+                <tr class="
+                    @if($hide['component'][$component_id])
+                        d-none
+                    @endif
+                ">
            
                     <td></td><!-- Description -->
                     
@@ -373,6 +476,7 @@
                     </td>
                     <td></td>
                     <td></td>
+                    <td></td>
                 </tr>
 
 
@@ -381,10 +485,20 @@
 
                 @php
                     $component_item = $row_3->component_item;
+
                 @endphp
 
                 <!-- Component Item data row -->
-                <tr class="component-item-row highlight-row"> 
+                <tr class="
+
+                    @if($hide['component_item'][$component_item_id])
+                        d-none
+                    @endif
+                    
+
+                    component-item-row
+                
+                "> 
                     <td>{{$component_item->name}}</td><!-- Component Item Name -->
                     
                     <!-- Contract -->
@@ -404,10 +518,81 @@
                         {{ $row_3->factor_text_value}}
                     </td>
                     
-                    <td class="text-center">{{ number_format( $component_item->quantity,2) }}</td><!-- Material -->
+                    <!-- Material -->
+                    <td class="text-center">
+                        @if($component_item->approximation == 'CEIL')
+                        ↑ 
+                        @elseif($component_item->approximation == 'FLOR')
+                        ↓ 
+                        @endif
+
+                        {{ number_format( $component_item->quantity,2) }}
+                        
+                    </td>
                     <td class="text-center">{{$component_item->unit_text}}</td>
                     <td class="text-end">P {{ number_format($component_item->budget_price,2) }}</td>
                     <td class="text-end">P {{ number_format($component_item->amount,2) }}</td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td colspan="5">
+                        <table class="ml-5 material-quantity-table">
+                            <tr class="material-quantity-tr">
+                                <th class="material-quantity-th text-start" width="50%">Material Item</th>
+                                <th class="material-quantity-th">Eqv</th>
+                                <th class="material-quantity-th">Qty</th>
+                                <th class="material-quantity-th" width="20%">Total</th>
+                            </tr>
+
+                        @php $total_equivalent = 0; @endphp
+                        @foreach($component_item->material_quantities as $mq)
+                            <tr class="material-quantity-tr">
+
+                                <td class="material-quantity-td">
+                                    {{$material_item[$mq->material_item_id]->formattedName}}
+                                </td>
+
+                                <td class="text-center material-quantity-td">
+                                    {{ number_format($mq->equivalent) }}
+                                </td>
+
+                                <td class="text-center material-quantity-td">
+                                    {{ number_format($mq->quantity) }}
+                                </td>
+
+
+                                <td class="text-center material-quantity-td">    
+                                    {{ number_format($mq->total_equivalent) }} {{$component_item->unit_text}}
+                                </td>    
+                            </tr>
+
+                            @php $total_equivalent = $total_equivalent + $mq->total_equivalent; @endphp
+                        @endforeach
+                            <tr class="material-quantity-tr">
+                                <td class="material-quantity-td" colspan="3"></td>
+                                <td class="
+                                    text-center
+                                     
+                                    @if($total_equivalent > $component_item->quantity)
+                                        rejected-text non-conforming
+                                    @endif
+                                " style="border:solid 1px #000000">
+                                    {{ number_format($total_equivalent) }} {{$component_item->unit_text}}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 @endforeach
        
@@ -421,7 +606,7 @@
         <!-- Grand Total -->
             
             <!-- Gross -->
-            <tr class="highlight-row">
+            <tr>
                 <th colspan="5" class="text-end">Gross Total Amount</th>
                 
              
@@ -442,11 +627,12 @@
                     
                 </td>
                 <th class="text-end"></th>
+                <th class="text-center"></th>
             </tr>
 
 
             <!-- Material -->
-            <tr class="highlight-row">
+            <tr>
                 <th colspan="4" class="text-center material-bg">Material</th>
                 <th class="text-center">
                     @php
@@ -488,6 +674,10 @@
                 
                 </td>
                 <td class="text-center">
+                  
+                </td>
+                <th class="text-end">P {{ number_format( $grand_total_amount->budget_material, 2) }}</th>
+                <th class="text-center">
                     @php
                         $budget_material_grand_percentage = 0;
 
@@ -500,14 +690,13 @@
                     @endphp
 
                     {{$budget_material_grand_percentage}}%
-                </td>
-                <th class="text-end">P {{ number_format( $grand_total_amount->budget_material, 2) }}</th>
+                </th>
             </tr>
             
     
 
             <!-- Non Material -->
-            <tr class="highlight-row">
+            <tr>
                 <th colspan="4" class="text-center nonmaterial-bg">Non-Material</th>
                 <th class="text-center">
                     @php
@@ -549,6 +738,10 @@
                 
                 </td>
                 <td class="text-center">
+                   
+                </td>
+                <th class="text-end">P {{ number_format( $grand_total_amount->budget_nonmaterial, 2) }}</th>
+                <th class="text-center">
                     @php
                         $budget_nonmaterial_grand_percentage = 0;
 
@@ -561,13 +754,12 @@
                     @endphp
 
                     {{$budget_nonmaterial_grand_percentage}}%
-                </td>
-                <th class="text-end">P {{ number_format( $grand_total_amount->budget_nonmaterial, 2) }}</th>
+                </th>
             </tr>
 
 
             <!-- OPEX -->
-            <tr class="highlight-row">
+            <tr>
                 <th colspan="4" class="text-center opex-bg">Operational Expense</th>
                 <th class="text-center">
                     @php
@@ -609,6 +801,16 @@
                  
                 </td>
                 <td class="text-center">
+                   
+                </td>
+                <th class="
+                    text-end 
+                    
+                    @if( $grand_total_amount->budget_opex > $grand_total_amount->contract_opex)
+                        non-conforming 
+                    @endif
+                ">P {{ number_format( $grand_total_amount->budget_opex, 2) }}</th>
+                <th class="text-center">
                     @php
                         $opex_material_grand_percentage = 0;
 
@@ -621,133 +823,15 @@
                     @endphp
 
                     {{$opex_material_grand_percentage}}%
-                </td>
-                <th class="
-                    text-end 
-                    
-                    @if( $grand_total_amount->budget_opex > $grand_total_amount->contract_opex)
-                        non-conforming 
-                    @endif
-                ">P {{ number_format( $grand_total_amount->budget_opex, 2) }}</th>
+                </th>
             </tr>
     </table>
     
 
 
     <script type="module">
-        import contextMenu from '/ui_components/ContextMenu.js';
-        import {$q} from '/adarna.js';
+      import {$q} from '/adarna.js';
         
-        let parentWindow = window.parent;
-
-        function approveComponent(id){
-            parentWindow.util.blockUI();
-
-            parentWindow.util.$post('/api/review/component/approve',{
-                id: id
-            }).then(reply=>{
-
-                parentWindow.util.unblockUI();
-
-                if(reply.status <= 0 ){
-                    parentWindow.util.showMsg(reply);
-                    return false;
-                };
-
-                //fix this
-                parentWindow.reloadIframe();
-
-            });
-        }
-
-        function rejectComponent(id){
-            parentWindow.util.blockUI();
-
-            parentWindow.util.$post('/api/review/component/reject',{
-                id: id
-            }).then(reply=>{
-
-                
-                parentWindow.util.unblockUI();
-
-                if(reply.status <= 0 ){
-                    parentWindow.util.showMsg(reply);
-                    return false;
-                };
-
-
-                 //fix this
-                 parentWindow.reloadIframe();
-
-            });
-        }
-
-        function getOffsetPos( el ) {
-            var _x = 0;
-            var _y = 0;
-            while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
-                _x += el.offsetLeft - el.scrollLeft;
-                _y += el.offsetTop - el.scrollTop;
-                el = el.offsetParent;
-            }
-            return { top: _y, left: _x };
-        }
-
-        function componentContextMenu(els){els.map(el => {
-            
-            let component_id = el.getAttribute('data-id');
-
-            let cm = contextMenu({
-                items:[
-                    {
-                        name:'Approve',
-                        onclick:()=>{
-                                                                
-                           approveComponent(component_id);
-                        }
-                    },
-                    {
-                        name:'Reject',
-                        onclick:()=>{
-                            rejectComponent(component_id);
-                        }
-                    },{
-                        name:'Revert',
-                        onclick:()=>{
-                              
-                        }
-                    },
-                    {
-                        name:'Open',
-                        onclick:()=>{
-                            window.open('/project/section/contract_item/component/'+component_id,'_blank').focus();
-                        }
-                    },
-                    {
-                        name:'Refresh',
-                        onclick:()=>{
-                            parentWindow.util.blockUI();
-                            setTimeout(()=>{
-
-                                parentWindow.util.unblockUI();
-                                 //fix this
-                                parentWindow.reloadIframe();
-                            },1000);
-                            
-                        }
-                    }
-                ]
-            });
-
-            el.oncontextmenu = (e)=>{
-                e.preventDefault();
-
-                let pos = getOffsetPos(el);
-                cm.handler.show(pos.left,pos.top);
-            }
-
-        });}
-
         function pageBreaker(items){
 
             let total_height    = 0;
@@ -776,6 +860,8 @@
                 
             });
 
+            
+            
         }
 
         let elem = {};

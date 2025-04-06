@@ -251,5 +251,5 @@ trait BudgetTrait{
         return view('/print/budget',$data);
     }
 
-
+    
 }
