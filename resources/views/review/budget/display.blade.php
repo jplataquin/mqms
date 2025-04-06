@@ -53,8 +53,8 @@
     }
 
     fullScreenBtn.onclick = ()=>{
-        //sheet_iframe.classList.add('fullscreen');
-        makeFullScreen();
+        sheet_iframe.classList.add('fullscreen');
+        //makeFullScreen();
     }
 
     
