@@ -60,8 +60,10 @@
     
     document.onfullscreenchange = (e) => {
         
+
+        console.log(document.fullscreenElement);
         alert(document.fullscreenElement);
-        
+
         setTimeout(()=>{
 
             if (document.fullscreenElement) {
