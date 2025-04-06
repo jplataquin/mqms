@@ -918,7 +918,7 @@
 
                     e.preventDefault();
                     
-                    const cm = contextMenu([
+                    let cm = contextMenu([
                         {
                             name:'Approve',
                             onclick: (e)=>{
@@ -945,7 +945,7 @@
                         },
                     ]);
 
-                    cm.show(e.clientX,e.clientY);
+                    cm.handler.show(e.clientX,e.clientY);
                 }
             });
         }
