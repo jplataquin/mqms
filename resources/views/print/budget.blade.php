@@ -536,7 +536,7 @@
                     <td colspan="5">
                         <table class="ml-5 material-quantity-table">
                             <tr class="material-quantity-tr">
-                                <th class="material-quantity-th text-start">Material Item</th>
+                                <th class="material-quantity-th text-start" width="50%">Material Item</th>
                                 <th class="material-quantity-th">Eqv</th>
                                 <th class="material-quantity-th">Qty</th>
                                 <th class="material-quantity-th">Total</th>
