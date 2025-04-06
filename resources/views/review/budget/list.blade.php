@@ -85,7 +85,8 @@
         
         function reinitalize(){
             page = 1;
-            $el.clear(list);   
+            $el.clear(list);  
+            showMoreBtn.style.display = 'block'; 
         }
 
         function renderRows(data){
