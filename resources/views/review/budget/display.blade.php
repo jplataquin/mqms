@@ -2,6 +2,14 @@
 
 @section('content')
 <style>
+
+    @media all and (display-mode: fullscreen) {
+        /* CSS styles to be applied or altered in fullscreen mode */
+        body {
+            background-color: black;
+        }
+    }
+
     .fullscreen{
         position:absolute;
         top:0;
@@ -57,23 +65,27 @@
         makeFullScreen();
     }
 
+
+    window.matchMedia('(display-mode: fullscreen)').addListener(({ matches }) => {
+        if (matches) {
+            alert('fullscreen');
+        } else {
+            alert('not fullscreen');
+        }
+    });
     
-    document.body.onfullscreenchange = (e) => {
-        
+    // document.onfullscreenchange = (e) => {
 
-        console.log(document.fullscreenElement);
-        alert(document.fullscreenElement);
+    //     setTimeout(()=>{
 
-        setTimeout(()=>{
-
-            if (document.fullscreenElement) {
+    //         if (document.fullscreenElement) {
             
-                sheet_iframe.classList.add('fullscreen');
-            } else {
-                sheet_iframe.classList.remove('fullscreen');
-            }
-        },500);
-    };
+    //             sheet_iframe.classList.add('fullscreen');
+    //         } else {
+    //             sheet_iframe.classList.remove('fullscreen');
+    //         }
+    //     },500);
+    // };
 
     window.util.quickNav = {
         title:'Review Budget',
