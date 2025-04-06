@@ -29,6 +29,48 @@ class CreateComponentForm extends Component{
 
             t.div({class:'row mb-3'},()=>{
 
+                t.div({class:'col-lg-12'},()=>{
+                    t.div({class:'folder-form-container'},()=>{
+                        t.div({class:'folder-form-tab'},'Reference');
+
+                        t.div({class:'folder-form-body'},()=>{
+                
+                            t.div({class:'row mb-3'},()=>{
+                                
+                                t.div({class:'col-lg-4 mb-3'},()=>{
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Quantity');
+                                        this.el.ref_1_quantity = t.input({class:'form-control', type:'text'});
+                                    });//div
+                                });//div col
+
+                                t.div({class:'col-lg-4 mb-3'},()=>{
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Unit');
+                                        this.el.ref_1_unit = t.select({class:'form-select'});
+                                    });//div
+                                });//div col
+
+
+                                t.div({class:'col-lg-4 mb-3'},()=>{
+                                    t.div({class:'form-group'},()=>{
+                                        t.label('Unit Price');
+                                        this.el.ref_1_unit_price = t.input({class:'form-control', type:'text'});
+                                    });//div
+                                });//div col
+
+                            });//div row
+                        })//div body
+
+                    })//div container
+                });//div col
+            });
+
+
+            
+
+            t.div({class:'row mb-3'},()=>{
+
                 t.div({class:'col-lg-3'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label('Quantity');
@@ -73,23 +115,27 @@ class CreateComponentForm extends Component{
 
     controller(){
 
-        this.el.quantity.onkeypress = (e) =>{
-            return window.util.inputNumber(this.el.quantity,e,2,false);
-        }
 
-        this.el.use_count.onkeypress = (e) =>{
-            return window.util.inputNumber(this.el.use_count,e,2,false);
-        }
+
+        window.util.numbersOnlyInput([
+            this.el.ref_1_quantity,
+            this.el.ref_1_unit_price,
+            this.el.quantity,
+            this.el.use_count
+        ],{
+            negative: false,
+            precision: 2
+        }); 
 
         this.el.submit_btn.onclick = ()=>{
             this.submit();
-          }
+        }
   
-          this.el.cancel_btn.onclick = ()=>{
-              window.util.drawerModal.close();
-          }
+        this.el.cancel_btn.onclick = ()=>{
+            window.util.drawerModal.close();
+        }
   
-          this.setupUnits();
+        this.setupUnits();
   
     }
 
@@ -97,11 +143,15 @@ class CreateComponentForm extends Component{
 
         const t = new Template();
 
+        this.el.ref_1_unit.append(
+            t.option({value:''},' - ')
+        );
+
         this.el.unit.append(
             t.option({value:''},' - ')
         );
 
-    
+        
 
         for(let key in this._model.unit_options){
 
@@ -110,11 +160,18 @@ class CreateComponentForm extends Component{
             //Skip if deleted
             if(item.deleted) continue;
 
-            let unit_option    = t.option({value:item.id},item.text);
+            let unit_option_a    = t.option({value:item.id},item.text);
 
+
+            let unit_option_b    = t.option({value:item.id},item.text);
+
+
+            this.el.ref_1_unit.append(
+                unit_option_b
+            );
 
             this.el.unit.append(
-                unit_option
+                unit_option_b
             );
 
         };
@@ -129,6 +186,11 @@ class CreateComponentForm extends Component{
             section_id          : this._model.section_id,
             contract_item_id    : this._model.contract_item_id,
             name                : this.el.name.value,
+
+            ref_1_quantity      : this.el.ref_1_quantity.value,
+            ref_1_unit_id       : this.el.ref_1_unit.value,
+            ref_1_unit_price    : this.el.ref_1_unit_price.value,
+
             quantity            : this.el.quantity.value,
             use_count           : this.el.use_count.value,
             unit_id             : this.el.unit.value,
@@ -142,8 +204,6 @@ class CreateComponentForm extends Component{
                 return false;
             }
 
-            //Component(reply.data.id)).to(component_list)
-            //this._model.callback(reply.data.id);
             window.util.drawerModal.close();
 
             this._model.successCallback(reply.data);

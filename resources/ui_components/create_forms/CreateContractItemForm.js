@@ -98,7 +98,7 @@ class CreateContractItemForm extends Component{
 
                 t.div({class:'col-lg-12'},()=>{
                     t.div({class:'folder-form-container'},()=>{
-                        t.div({class:'folder-form-tab'},'POW/DUPA');
+                        t.div({class:'folder-form-tab'},'Reference');
 
                         t.div({class:'folder-form-body'},()=>{
                 
