@@ -420,7 +420,7 @@
                         component-opex-row 
                     @endif
                 ">
-                    <td data-controller="pageBreaker"  rowspan="{{ ( ( count( (array) $row_2->component_items) * 2) + 2) }}">
+                    <td data-controller="pageBreaker componentMenu"  rowspan="{{ ( ( count( (array) $row_2->component_items) * 2) + 2) }}">
                         @if($row_2->component->status == 'PEND')
                             <div class="pending-text text-center">⦿</div>
                         @endif
@@ -869,6 +869,7 @@
 
     <script type="module">
         import {$q} from '/adarna.js';
+        import contextMenu from '/ui_components/ContextMenu.js';
         
         const actionBtn = $q('#actionBtn').first();
 
@@ -905,6 +906,16 @@
 
             
             
+        }
+
+        function componentMenu(items){
+            items.map(item=>{
+
+                item.oncontextmenu = (e)=>{
+                    e.preventDefault();
+                    alert('asdads');
+                }
+            });
         }
 
         let elem = {};
