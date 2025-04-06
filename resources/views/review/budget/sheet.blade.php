@@ -193,6 +193,7 @@
             border-radius: 50%; /* Creates the circular shape */
             /* Add other styling as needed, e.g., background color, etc. */
             background-color: blue;
+            opacity: 0.3;
         }
 
     </style>
