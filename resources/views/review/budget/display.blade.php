@@ -37,7 +37,7 @@
          <div class="text-end">
             <button class="btn btn-secondary" id="fullScreenBtn">Full Screen</button>
         </div>
-        <iframe id="overview_iframe" class="w-100 h-100 d-inline-block" src="/review/material_budget/overview/{{$section_id}}"></iframe>
+        <iframe id="overview_iframe" class="w-100 h-100 d-inline-block" src="/review/budget/overview/{{$section_id}}"></iframe>
     </div>
   
 </div>
@@ -68,8 +68,8 @@
     };
 
     window.util.quickNav = {
-        title:'Review Material Budget',
-        url: '/review/material_budget'
+        title:'Review Budget',
+        url: '/review/budget'
     };
     
     function requestFullScreen(element) {
