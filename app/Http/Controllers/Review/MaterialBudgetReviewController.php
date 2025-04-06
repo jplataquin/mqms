@@ -16,6 +16,15 @@ use Carbon\Carbon;
 class MaterialBudgetReviewController extends Controller
 {
 
+    public function list(){
+
+        $projects = Project::orderBy('name','ASC')->get();
+
+        return view('/review/material_budget/list',[
+            'projects' => $projects
+        ]);
+    }
+    
     public function display($section_id){
 
         $section_id = (int)$section_id;

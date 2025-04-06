@@ -15,8 +15,7 @@ use Carbon\Carbon;
 trait BudgetTrait{
 
 
-    public function print($section_id,$contract_item_id = null,$component_id = null){
-        
+    private function prepareData($section_id, $contract_item_id = null, $component_id = null){
         $user = auth()->user();
 
         $section = Section::findOrFail($section_id);
@@ -226,7 +225,7 @@ trait BudgetTrait{
             $material_item[$mi->id] = $mi;
         }
 
-        return view('/print/budget',[
+        return [
             'hide'                                      => $hide,
             'datetime_generated'                        => $datetime_generated,
             'user'                                      => $user,
@@ -238,7 +237,18 @@ trait BudgetTrait{
             'contract_item_budget_total_quantity'       => $contract_item_budget_total_quantity,
             'component_budget_total_quantity'           => $component_budget_total_quantity,
             'material_item'                             => $material_item
-        ]);
+        ];
+    }
+
+    public function print($section_id,$contract_item_id = null,$component_id = null){
+        
+        $data = $this->prepareData(
+            $section_id,
+            $contract_item_id,
+            $component_id
+        );
+
+        return view('/print/budget',$data);
     }
 
 
