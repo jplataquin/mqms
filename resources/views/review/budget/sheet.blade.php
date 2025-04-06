@@ -848,7 +848,9 @@
 
     <div id="actionContainer">
 
-        <div id="actionBtn"></div>
+        <div id="actionBtn">
+            <i class="bi bi-fullscreen-exit"></i>
+        </div>
     </div>
 
     <script type="module">
