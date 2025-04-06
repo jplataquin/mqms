@@ -86,7 +86,7 @@
         function reinitalize(){
             page = 1;
             $el.clear(list);  
-            showMoreBtn.style.display = 'block'; 
+            showMoreBtn.classList.remove('d-none'); 
         }
 
         function renderRows(data){
@@ -134,7 +134,7 @@
                 if(reply.data.length){
                     renderRows(reply.data); 
                 }else{
-                    showMoreBtn.style.display = 'none';
+                    showMoreBtn.classList.add('d-none'); 
                 }
                 
             });
