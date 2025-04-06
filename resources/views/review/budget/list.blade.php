@@ -74,7 +74,12 @@
         projectSelect.onchange = ()=>{    
             reinitalize();
             showData();
-        }
+        };
+
+        searchBtn.onclick = ()=>{
+            reinitalize();
+            showData();
+        };
 
          /**** LIST ****/
         let page            = 1;
