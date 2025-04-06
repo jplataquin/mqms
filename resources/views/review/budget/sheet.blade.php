@@ -198,6 +198,9 @@
             cursor:pointer;
         }
 
+        #actionBtn:hover{
+            opacity: 0.4;
+        }
         
 
         #actionBtn > svg{
