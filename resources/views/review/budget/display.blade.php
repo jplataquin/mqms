@@ -51,17 +51,21 @@
 <script type="module">
     import {$q} from '/adarna.js';
     
-    const sheet_iframe = $q('#sheet_iframe').first();
-    const fullScreenBtn   = $q('#fullScreenBtn').first();
+    const sheet_iframe      = $q('#sheet_iframe').first();
+    const fullScreenBtn     = $q('#fullScreenBtn').first();
 
     window.reloadIframe = ()=>{
         overview_iframe.contentWindow.location.reload();
     }
 
+    window.exitFullscreen = ()=>{
+        sheet_iframe.classList.remove('fullscreen');
+        document.body.classList.remove('no-scroll');
+    }
+
     fullScreenBtn.onclick = ()=>{
         sheet_iframe.classList.add('fullscreen');
         document.body.classList.add('no-scroll');
-        //makeFullScreen();
     }
 
 

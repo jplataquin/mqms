@@ -193,7 +193,7 @@
             border-radius: 50%; /* Creates the circular shape */
             /* Add other styling as needed, e.g., background color, etc. */
             background-color: rgb(90, 90, 90);
-            opacity: 0.3;
+            opacity: 0.2;
             text-align:center;
             cursor:pointer;
         }
@@ -865,8 +865,14 @@
     </div>
 
     <script type="module">
-      import {$q} from '/adarna.js';
+        import {$q} from '/adarna.js';
         
+        const actionBtn = $q('#actionBtn').first();
+
+        actionBtn.onclick = () =>{
+            window.parent.document.exitFullscreen()
+        }
+
         function pageBreaker(items){
 
             let total_height    = 0;
