@@ -58,7 +58,7 @@
     }
 
     
-    document.onfullscreenchange = (e) => {
+    document.body.onfullscreenchange = (e) => {
         
 
         console.log(document.fullscreenElement);
