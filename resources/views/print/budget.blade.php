@@ -569,7 +569,7 @@
 
                             @php $total_equivalent = $total_equivalent + $mq->total_equivalent; @endphp
                         @endforeach
-                            <tr>
+                            <tr class="material-quantity-tr">
                                 <td class="material-quantity-td" colspan="3"></td>
                                 <td class="
                                     text-center
