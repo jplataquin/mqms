@@ -185,6 +185,7 @@
             bottom:10;
             right:10;
         }
+        
 
         #actionBtn{
             width: 75px; /* Or any desired size */
