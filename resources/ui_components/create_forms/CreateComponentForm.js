@@ -167,7 +167,7 @@ class CreateComponentForm extends Component{
 
 
             this.el.ref_1_unit.append(
-                unit_option_b
+                unit_option_a
             );
 
             this.el.unit.append(

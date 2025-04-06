@@ -46,6 +46,10 @@ class ComponentController extends Controller
         $unit_id            = (int) $request->input('unit_id');
         $sum_flag           = (boolean) $request->input('sum_flag');
 
+        $ref_1_quantity     = $request->input('ref_1_quantity');
+        $ref_1_unit_id      = $request->input('ref_1_unit_id');
+        $ref_1_unit_price   = $request->input('ref_1_unit_price');
+
         $validator = Validator::make($request->all(),[
             'name' => [
                 'required',
@@ -57,6 +61,22 @@ class ComponentController extends Controller
                         ->where('name', $name)
                         ->where('deleted_at',null);
                 }),
+            ],
+            'ref_1_quantity'    =>[
+               'nullable',
+                'numeric',
+                'gt:0',
+                'required_with:ref_1_unit_id'
+            ],
+            'ref_1_unit_id'     =>[
+                'nullable',
+                'numeric',
+                'gte:1',
+                'required_with:ref_1_quantity'
+            ],
+            'ref_1_unit_price'  =>[
+                'nullable',
+                'numeric'
             ],
             'quantity' =>[
                 'required',
@@ -105,6 +125,11 @@ class ComponentController extends Controller
         $component->status                 = 'PEND';
         $component->section_id             = $section_id;
         $component->sum_flag               = $sum_flag;
+
+        $component->ref_1_quantity         = $ref_1_quantity;
+        $component->ref_1_unit_id          = $ref_1_unit_id;
+        $component->ref_1_unit_price       = $ref_1_unit_price;
+
         $component->created_by             = $user_id;
 
         $component->save();
