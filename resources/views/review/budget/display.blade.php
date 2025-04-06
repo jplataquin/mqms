@@ -54,7 +54,7 @@
 
     fullScreenBtn.onclick = ()=>{
         sheet_iframe.classList.add('fullscreen');
-        //makeFullScreen();
+        makeFullScreen();
     }
 
     
@@ -82,7 +82,12 @@
     }
 
     function makeFullScreen() {
-        requestFullScreen(document.body);
+
+        setTimeout(()=>{
+
+            requestFullScreen(document.body);
+
+        },500);
     }
 </script>
 </div>
