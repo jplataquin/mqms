@@ -418,7 +418,10 @@
                     <td></td>
                     <td class="text-end">P {{ number_format( $total_amount->component[$component_id]->ref_1, 2) }}</td>
 
-                    <td class="text-center"></td><!-- Factor -->
+                    <!-- Factor -->
+                    <td class="text-center">
+                        Use Count: {{$row_2->component->use_count}}
+                    </td>
                     
                      <!-- Material -->
                     <th class="text-center" >{{ number_format($row_2->component->quantity,2) }}</th>
