@@ -59,13 +59,16 @@
 
     
     document.onfullscreenchange = (e) => {
-       
-        if (document.fullscreenElement) {
-           
-            sheet_iframe.classList.add('fullscreen');
-        } else {
-            sheet_iframe.classList.remove('fullscreen');
-        }
+        
+        setTimeout(()=>{
+
+            if (document.fullscreenElement) {
+            
+                sheet_iframe.classList.add('fullscreen');
+            } else {
+                sheet_iframe.classList.remove('fullscreen');
+            }
+        },500);
     };
 
     window.util.quickNav = {
