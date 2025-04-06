@@ -34,7 +34,7 @@
     <hr>
 
     <div style="height: 100vh">
-         <div class="text-end">
+         <div class="text-end mb-5">
             <button class="btn btn-secondary" id="fullScreenBtn">Full Screen</button>
         </div>
         <iframe id="sheet_iframe" class="w-100 h-100 d-inline-block" src="/review/budget/sheet/{{$section_id}}"></iframe>
@@ -53,8 +53,8 @@
     }
 
     fullScreenBtn.onclick = ()=>{
-        sheet_iframe.classList.add('fullscreen');
-        //makeFullScreen();
+        //sheet_iframe.classList.add('fullscreen');
+        makeFullScreen();
     }
 
     
