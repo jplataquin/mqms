@@ -57,7 +57,7 @@
     
         <div class="row">
             <div class="col-lg-12">
-                <button id="showMoreBtn" class="btn w-100 btn-primary">Show More</button>
+                <button id="showMoreBtn" class="btn w-100 btn-primary d-none">Show More</button>
             </div>
         </div>
     </div>
