@@ -55,7 +55,12 @@
     const fullScreenBtn     = $q('#fullScreenBtn').first();
 
     window.getSheetPos = ()=>{
-        return sheet_iframe.getBoundingClientRect();
+        let data = sheet_iframe.getBoundingClientRect();
+
+        data.scrollTop = sheet_iframe.scrollTop;
+        data.scrollLeft = sheet_iframe.scrollLeft;
+
+        return data;
     };
 
     window.reloadIframe = ()=>{

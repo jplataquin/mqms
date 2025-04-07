@@ -936,8 +936,8 @@
 
                     let sheet_pos = window.parent.getSheetPos();
 
-                    console.log(document.body.scrollTop);
-                    //console.log(sheet_pos);
+
+                    console.log(sheet_pos);
                     // let pos = item.getBoundingClientRect();
                     let posX = e.clientX + sheet_pos.left;
                     let posY = e.clientY + sheet_pos.top;
