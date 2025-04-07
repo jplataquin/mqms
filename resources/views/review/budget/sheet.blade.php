@@ -68,6 +68,10 @@
             background-color: #b9d9fa;
         }
 
+        .component{
+            user-select: none;
+            -moz-user-select: none;
+        }
 
         /** Material */
         .contract-item-material-row{
@@ -419,7 +423,7 @@
                         component-opex-row 
                     @endif
                 ">
-                    <td data-controller="pageBreaker componentMenu" data-id="{{$row_2->component->id}}"  rowspan="{{ ( ( count( (array) $row_2->component_items) * 2) + 2) }}">
+                    <td class="component" data-controller="pageBreaker componentMenu" data-id="{{$row_2->component->id}}"  rowspan="{{ ( ( count( (array) $row_2->component_items) * 2) + 2) }}">
                         @if($row_2->component->status == 'PEND')
                             <div class="pending-text text-center">⦿</div>
                         @endif
