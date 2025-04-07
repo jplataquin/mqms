@@ -909,7 +909,8 @@
             
         }
 
-    
+        
+
         function componentMenu(items){
 
             items.map(item=>{
@@ -920,7 +921,6 @@
                     e.preventDefault();
 
                     let cm = contextMenu({
-                   
                         items:[
                             {
                                 name:'Approve',
