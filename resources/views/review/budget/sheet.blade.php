@@ -952,14 +952,38 @@
                             },
                             {
                                 name:'Reject',
-                                onclick:(e)=>{
-                                    alert('Reject');
+                                onclick: async (e)=>{
+                                    
+                                    let answer = await window.parent.util.confirm('Are you sure you want to REJECT this component?');
+                                    
+                                    if(!answer){
+                                        return false;
+                                    }
+
+                                    window.parent.util.blockUI();
+
+                                    window.parent.util.$post('/api/review/component/reject',{
+                                        id: component_id
+                                    }).then(reply=>{
+
+                                        
+                                        window.parent.util.unblockUI();
+
+                                        if(reply.status <= 0 ){
+                                            window.parent.util.showMsg(reply);
+                                            return false;
+                                        };
+
+
+                                        document.location.reload();
+
+                                    });
                                 }
                             },
                             {
                                 name:'Open',
                                 onclick:(e)=>{
-                                    alert('Open');
+                                    window.parent.util.navTo('/project/section/contract_item/component/'+component_id);
                                 }
                             },
                             {
