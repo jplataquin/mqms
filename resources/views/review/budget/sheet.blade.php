@@ -205,7 +205,7 @@
             opacity: 0.2;
             text-align:center;
             cursor:pointer;
-            display:inline;
+            display:inline-block;
         }
 
         #actionBtn:hover{
@@ -227,7 +227,7 @@
             opacity: 0.2;
             text-align:center;
             cursor:pointer;
-            display:inline;
+            display:inline-block;
         }
 
         #searchBtn:hover{
