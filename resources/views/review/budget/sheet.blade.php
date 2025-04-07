@@ -425,7 +425,7 @@
                         component-opex-row 
                     @endif
                 ">
-                    <td class="component" data-controller="pageBreaker componentMenu" data-id="{{$row_2->component->id}}"  rowspan="{{ ( ( count( (array) $row_2->component_items) * 2) + 2) }}">
+                    <td role="dialog" class="component" data-controller="pageBreaker componentMenu" data-id="{{$row_2->component->id}}"  rowspan="{{ ( ( count( (array) $row_2->component_items) * 2) + 2) }}">
                         @if($row_2->component->status == 'PEND')
                             <div class="pending-text text-center">⦿</div>
                         @endif
