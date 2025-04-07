@@ -1002,6 +1002,9 @@
                     let posX = e.clientX + sheet_pos.left;
                     let posY = e.clientY + sheet_pos.top + document.documentElement.scrollTop;
 
+                    console.log(e.clientY,sheet_pos.top,document.documentElement.scrollTop);
+
+                    console.log(cm);
                     cm.handler.show(posX,posY);
                 }
               
