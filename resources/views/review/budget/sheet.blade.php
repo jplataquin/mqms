@@ -945,7 +945,7 @@
                                     window.parent.util.blockUI();
 
                                     window.parent.util.$post('/api/review/component/approve',{
-                                        id: '{{$component->id}}'
+                                        id: component_id
                                     }).then(reply=>{
 
                                         window.parent.util.unblockUI();
