@@ -921,13 +921,13 @@
                             {
                                 name:'Approve',
                                 onclick:(e)=>{
-
+                                    alert('approve');
                                 }
                             },
                             {
                                 name:'Reject',
                                 onclick:(e)=>{
-
+                                    alert('Reject');
                                 }
                             },
                         ]
@@ -937,8 +937,6 @@
                     let sheet_pos = window.parent.getSheetPos();
 
 
-                    console.log(sheet_pos);
-                    // let pos = item.getBoundingClientRect();
                     let posX = e.clientX + sheet_pos.left;
                     let posY = e.clientY + sheet_pos.top + document.documentElement.scrollTop;
 
