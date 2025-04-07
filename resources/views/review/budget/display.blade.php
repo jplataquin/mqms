@@ -56,10 +56,6 @@
 
     window.getSheetPos = ()=>{
         let data = sheet_iframe.getBoundingClientRect();
-
-        data.scrollTop = sheet_iframe.scrollTop;
-        data.scrollLeft = sheet_iframe.scrollLeft;
-
         return data;
     };
 
@@ -76,52 +72,14 @@
         sheet_iframe.classList.add('fullscreen');
         document.body.classList.add('no-scroll');
     }
-
-
     
-
-    window.matchMedia('(display-mode: fullscreen)').addListener(({ matches }) => {
-        if (matches) {
-            alert('fullscreen');
-        } else {
-            alert('not fullscreen');
-        }
-    });
-    
-    // document.onfullscreenchange = (e) => {
-
-    //     setTimeout(()=>{
-
-    //         if (document.fullscreenElement) {
-            
-    //             sheet_iframe.classList.add('fullscreen');
-    //         } else {
-    //             sheet_iframe.classList.remove('fullscreen');
-    //         }
-    //     },500);
-    // };
 
     window.util.quickNav = {
         title:'Review Budget',
         url: '/review/budget'
     };
     
-    function requestFullScreen(element) {
-        // Supports most browsers and their versions.
-        let requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullscreen;
-
-        requestMethod.call(element);
-      
-    }
-
-    function makeFullScreen() {
-
-        setTimeout(()=>{
-
-            requestFullScreen(document.body);
-
-        },500);
-    }
+    
 </script>
 </div>
 @endsection
