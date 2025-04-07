@@ -995,7 +995,7 @@
             let input = elem.querySelector('input');
             
             input.onkeyup = (e)=>{
-                let data = Array.from(sheet.querySelectorAll('td th'));
+                let data = Array.from( sheet.querySelectorAll('td th') );
 
                 console.log(data);
             }
