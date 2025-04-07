@@ -909,8 +909,7 @@
             
         }
 
-        
-
+    
         function componentMenu(items){
 
             items.map(item=>{
@@ -921,12 +920,7 @@
                     e.preventDefault();
 
                     let cm = contextMenu({
-                        onOpen:()=>{
-                            //document.body.style.overflow = 'hidden';
-                        },
-                        onClose:()=>{
-                            //document.body.style.overflow = '';
-                        },
+                   
                         items:[
                             {
                                 name:'Approve',
