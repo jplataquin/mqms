@@ -917,19 +917,8 @@
 
                 let component_id = item.getAttribute('data-id');
 
-                item.oncontextmenu = (e)=>{
+                item.oncontextmenu = async (e)=>{
                     e.preventDefault();
-
-                    let backdrop = t.div({
-                        style:{
-                            postion:'fixed',
-                            top:'0px',
-                            left:'0px',
-                            minHeight:'100%',
-                            minWidth:'100%',
-                            backgroundColor:'blue'
-                        }
-                    });
 
                     let cm = contextMenu({
                         items:[
@@ -989,7 +978,6 @@
                     let posX = e.clientX + sheet_pos.left;
                     let posY = e.clientY + sheet_pos.top + document.documentElement.scrollTop;
 
-                  //  document.body.appendChild(backdrop);
                     cm.handler.show(posX,posY);
                 }
               
