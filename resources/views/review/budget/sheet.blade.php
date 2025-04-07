@@ -921,6 +921,12 @@
                     e.preventDefault();
 
                     let cm = contextMenu({
+                        onOpen:()=>{
+                            document.body.style.overflow = 'hidden';
+                        },
+                        onClose:()=>{
+                            document.body.style.overflow = '';
+                        },
                         items:[
                             {
                                 name:'Approve',
@@ -1008,8 +1014,7 @@
                         posY = posY + sheet_pos.top;
                     }
 
-                    console.log(e.clientY,sheet_pos.top,document.documentElement.scrollTop);
-
+            
                     cm.handler.show(posX,posY);
                 }
               
