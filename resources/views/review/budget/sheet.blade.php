@@ -1003,7 +1003,6 @@
                 let result = [];
                 let regex  = new RegExp(search);
 
-                console.log(data);
                 data.map( d => {
 
                     if( d.innerText.match(regex) ){
@@ -1011,6 +1010,8 @@
                     }
 
                 });
+
+                console.log(result);
 
             }
         }
