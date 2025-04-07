@@ -933,7 +933,10 @@
                         ]
                     });
 
-                    cm.handler.show(e.screenX,e.screenY);
+                    let posX = e.screenX + document.body.scrollLeft;
+                    let posY = e.screenY + document.body.scrollTop;
+
+                    cm.handler.show(posX,posY);
                 }
               
             });
