@@ -61,7 +61,9 @@ class ContextMenu extends ComponentV2{
             }
         },()=>{
             t.span({
-                marginLeft:'3px'
+                style:{
+                    paddingLeft:'3px'
+                }
             },data.name);
         });
 
