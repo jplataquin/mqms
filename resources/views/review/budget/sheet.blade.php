@@ -921,6 +921,12 @@
                     e.preventDefault();
 
                     let cm = contextMenu({
+                        onOpen:()=>{
+                            document.body.style.overflow = 'hidden';
+                        },
+                        onClose:()=>{
+                            document.body.style.overflow = 'auto';
+                        },
                         items:[
                             {
                                 name:'Approve',
