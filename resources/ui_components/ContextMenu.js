@@ -86,7 +86,7 @@ class ContextMenu extends ComponentV2{
         }
 
         this.el.backdrop.onclick = ()=>{
-            alert('asdasd');
+        
             this._dom.handler.hide();
         }
 

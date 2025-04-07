@@ -419,7 +419,7 @@
                         component-opex-row 
                     @endif
                 ">
-                    <td data-controller="pageBreaker componentMenu"  rowspan="{{ ( ( count( (array) $row_2->component_items) * 2) + 2) }}">
+                    <td data-controller="pageBreaker componentMenu" data-id="{{$row_2->component->id}}"  rowspan="{{ ( ( count( (array) $row_2->component_items) * 2) + 2) }}">
                         @if($row_2->component->status == 'PEND')
                             <div class="pending-text text-center">⦿</div>
                         @endif
@@ -915,6 +915,8 @@
 
             items.map(item=>{
 
+                let component_id = item.getAttribute('data-id');
+
                 item.oncontextmenu = (e)=>{
                     e.preventDefault();
 
@@ -934,7 +936,29 @@
                             {
                                 name:'Approve',
                                 onclick:(e)=>{
-                                    alert('approve');
+                                    let answer = await window.parent.util.confirm('Are you sure you want to APPROVE this component?');
+            
+                                    if(!answer){
+                                        return false;
+                                    }
+
+                                    window.parent.util.blockUI();
+
+                                    window.parent.util.$post('/api/review/component/approve',{
+                                        id: '{{$component->id}}'
+                                    }).then(reply=>{
+
+                                        window.parent.util.unblockUI();
+
+                                        if(reply.status <= 0 ){
+                                            window.parent.util.showMsg(reply);
+                                            return false;
+                                        };
+
+
+                                        window.document.location.reload();
+
+                                    });
                                 }
                             },
                             {
