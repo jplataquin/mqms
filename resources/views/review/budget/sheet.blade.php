@@ -252,11 +252,12 @@
             background-color:grey;
         }
 
-        #searchBar > input{
+        #searchBar > div > input[type="text"]{
             font-size:24px;
+            width:100%;
         }
 
-        #searchBar > button{
+        #searchBar > div > button{
             height:100%;
             width:100%;
         }
