@@ -922,10 +922,10 @@
 
                     let cm = contextMenu({
                         onOpen:()=>{
-                            document.body.style.overflow = 'hidden';
+                            //document.body.style.overflow = 'hidden';
                         },
                         onClose:()=>{
-                            document.body.style.overflow = '';
+                            //document.body.style.overflow = '';
                         },
                         items:[
                             {
