@@ -867,10 +867,12 @@
     </div>
 
     <script type="module">
-        import {$q} from '/adarna.js';
+        import {$q,Template} from '/adarna.js';
         import contextMenu from '/ui_components/ContextMenu.js';
         
         const actionBtn = $q('#actionBtn').first();
+        
+        const t = new Template();
 
         actionBtn.onclick = () =>{
             window.parent.exitFullscreen()
@@ -916,6 +918,17 @@
                 item.oncontextmenu = (e)=>{
                     e.preventDefault();
 
+                    let backdrop = t.div({
+                        style:{
+                            postion:'fixed',
+                            top:'0px',
+                            left:'0px',
+                            minHeight:'100%',
+                            minWidth:'100%',
+                            backgroundColor:'blue'
+                        }
+                    });
+
                     let cm = contextMenu({
                         items:[
                             {
@@ -930,6 +943,18 @@
                                     alert('Reject');
                                 }
                             },
+                            {
+                                name:'Open',
+                                onclick:(e)=>{
+                                    alert('Open');
+                                }
+                            },
+                            {
+                                name:'Revert to Pending',
+                                onclick:(e)=>{
+                                    alert('Revert to pending');
+                                }
+                            },
                         ]
                     });
 
@@ -940,6 +965,7 @@
                     let posX = e.clientX + sheet_pos.left;
                     let posY = e.clientY + sheet_pos.top + document.documentElement.scrollTop;
 
+                    document.body.appendElement(backdrop);
                     cm.handler.show(posX,posY);
                 }
               
