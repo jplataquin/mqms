@@ -253,7 +253,7 @@
 
         #searchBar > div > input[type="text"]{
             font-size:24px;
-            width:100%;
+            width:320px;
         }
 
         #searchBar > div > button{
@@ -918,9 +918,9 @@
             <input type="text"/>
         </div>
         <div class="d-inline-block text-center">
-            <span>12</span>
-            <button>Up</button>
-            <button>Down</button>
+            <span>00</span>
+            <button>▲</button>
+            <button>▼</button>
         </div>
     </div>
 
