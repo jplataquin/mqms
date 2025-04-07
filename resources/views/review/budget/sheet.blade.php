@@ -995,10 +995,23 @@
             let input = elem.querySelector('input');
             
             input.onkeyup = (e)=>{
-                let data_td = Array.from( sheet.querySelectorAll('td') );
-                let data_th = Array.from( sheet.querySelectorAll('th') );
+                let data = Array.from( sheet.querySelectorAll('th, td') );
+              
 
-                console.log(data_td,data_th);
+                let search = input.value;
+                
+                let result = [];
+                let regex  = new RegExp(search);
+
+                console.log(data);
+                data.map( d => {
+
+                    if( d.innerText.match(regex) ){
+                        result.push(td);
+                    }
+
+                });
+
             }
         }
 
