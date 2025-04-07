@@ -205,6 +205,7 @@
             opacity: 0.2;
             text-align:center;
             cursor:pointer;
+            display:'inline';
         }
 
         #actionBtn:hover{
@@ -226,6 +227,7 @@
             opacity: 0.2;
             text-align:center;
             cursor:pointer;
+            display:'inline';
         }
 
         #searchBtn:hover{
@@ -233,8 +235,8 @@
         }
         
 
-        #searchtn > svg{
-            margin-top:16px;
+        #searchBtn > svg{
+            margin-top:29px;
         }
     </style>
 </head>
