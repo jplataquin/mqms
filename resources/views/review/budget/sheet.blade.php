@@ -243,7 +243,7 @@
 
 
         #searchBar{
-            width:60%;
+            width:56%;
             position:fixed;
             top:10px;
             left:20%;
@@ -917,10 +917,12 @@
         <div class="d-inline-block">
             <input type="text"/>
         </div>
-        <div class="d-inline-block text-center">
-            <span>00</span>
-            <button>▲</button>
-            <button>▼</button>
+        <div class="d-inline-block">
+            <div class="text-center">
+                <span>00</span>
+                <button>▲</button>
+                <button>▼</button>
+            </div>
         </div>
     </div>
 
