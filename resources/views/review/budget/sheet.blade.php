@@ -173,7 +173,9 @@
             color:rgb(255, 5, 5);
         }
 
-        
+        .d-inline-block{
+            display:inline-block;
+        }
 
         @media print {
 
@@ -238,6 +240,17 @@
         #searchBtn > svg{
             margin-top:16px;
         }
+
+
+        #searchBar{
+            width:20%;
+            text-align:center;
+            position:fixed;
+            top:10px;
+            left:20%;
+        }
+
+    
     </style>
 </head>
 <body>
@@ -887,6 +900,20 @@
             </tr>
     </table>
     
+    <div id="searchBar">
+        <div class="d-inline-block">
+            <button>X</button>
+        </div>
+        <div class="d-inline-block">
+            <input type="text"/>
+        </div>
+        <div class="d-inline-block">
+            <div>Result</div>
+            <span>12</span>
+            <button>Up</button>
+            <button>Down</button>
+        </div>
+    </div>
 
     <div id="actionContainer">
         
