@@ -995,9 +995,10 @@
             let input = elem.querySelector('input');
             
             input.onkeyup = (e)=>{
-                let data = Array.from( sheet.querySelectorAll('td th') );
+                let data_td = Array.from( sheet.querySelectorAll('td') );
+                let data_th = Array.from( sheet.querySelectorAll('th') );
 
-                console.log(data);
+                console.log(data_td,data_th);
             }
         }
 
