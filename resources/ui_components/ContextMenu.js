@@ -83,7 +83,7 @@ class ContextMenu extends ComponentV2{
         this._dom.handler.show = (x,y)=>{
 
             this._dom.handler.setMenuPos(x,y);
-
+            console.log(this.el.menu);
             document.body.appendChild(this._dom);
         }
 
