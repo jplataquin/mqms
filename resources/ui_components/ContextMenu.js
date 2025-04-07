@@ -8,7 +8,9 @@ class ContextMenu extends ComponentV2{
             menuZIndex:6,
             menuBackgroundColor:'rgb(153, 152, 152)',
             itemHighlightColor:'rgb(223, 220, 220)',
-            items:[]
+            items:[],
+            onOpen: () => {},
+            onClose:() => {}
         }
     }
 
@@ -83,12 +85,16 @@ class ContextMenu extends ComponentV2{
         this._dom.handler.show = (x,y)=>{
 
             this._dom.handler.setMenuPos(x,y);
-            console.log(this.el.menu);
+      
             document.body.appendChild(this._dom);
+
+            this._model.onOpen();
         }
 
         this._dom.handler.hide = ()=>{
             document.body.removeChild(this._dom);
+            
+            this._model.onClose();
         }
 
         this.el.backdrop.onclick = ()=>{
