@@ -922,6 +922,10 @@
 
             items.map(item=>{
 
+                item.addEventListener('mousedown',function(e){
+                    e.preventDefault();
+                });
+
                 item.addEventListener('selectstart',function(e){
                     e.preventDefault();
                 });
