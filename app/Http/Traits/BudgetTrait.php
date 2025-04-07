@@ -248,7 +248,7 @@ trait BudgetTrait{
             $component_id
         );
 
-        return view('/print/budget',$data);
+        return view('print/budget',$data);
     }
 
     
