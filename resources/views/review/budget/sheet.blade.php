@@ -933,8 +933,10 @@
                         ]
                     });
 
-                    let posX = e.screenX + document.body.scrollLeft;
-                    let posY = e.screenY + document.body.scrollTop;
+
+                    let pos = item.getBoundingClientRect();
+                    let posX = pos.left;
+                    let posY = pos.top;
 
                     cm.handler.show(posX,posY);
                 }
