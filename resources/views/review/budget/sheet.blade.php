@@ -1004,7 +1004,7 @@
                 let regex  = new RegExp(search);
 
                 data.map( d => {
-
+                    console.log(d.innerText,search);
                     if( d.innerText.match(regex) ){
                         result.push(d);
                     }
