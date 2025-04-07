@@ -249,6 +249,7 @@
             left:20%;
             padding:10px;
             border-radius:10%;
+            background-color:grey;
         }
 
         #searchBar > input{
