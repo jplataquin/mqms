@@ -924,7 +924,7 @@
                         items:[
                             {
                                 name:'Approve',
-                                onclick:(e)=>{
+                                onclick: async (e)=>{
                                     let answer = await window.parent.util.confirm('Are you sure you want to APPROVE this component?');
             
                                     if(!answer){
