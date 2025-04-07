@@ -25,7 +25,7 @@ class ContextMenu extends ComponentV2{
             top:'0px',
             left:'0px',
             zIndex:this._model.backdropZIndex,
-            backgroundColor:'rgba(255, 255, 255, 0)'
+            backgroundColor:'rgba(255, 255, 255, 0.5)'
         }});
 
         this.el.menu = t.div({
