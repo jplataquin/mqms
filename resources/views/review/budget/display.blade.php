@@ -54,6 +54,10 @@
     const sheet_iframe      = $q('#sheet_iframe').first();
     const fullScreenBtn     = $q('#fullScreenBtn').first();
 
+    window.getSheetPos = ()=>{
+        return sheet_iframe.getBoundingClientRect();
+    };
+
     window.reloadIframe = ()=>{
         overview_iframe.contentWindow.location.reload();
     }
@@ -69,9 +73,7 @@
     }
 
 
-    sheet_iframe.onclick = (e)=>{
-        alert(e.clientX+' '+e.clientY);
-    }
+    
 
     window.matchMedia('(display-mode: fullscreen)').addListener(({ matches }) => {
         if (matches) {

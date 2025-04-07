@@ -934,6 +934,9 @@
                     });
 
 
+                    let sheet_pos = document.parent.getSheetPos();
+
+                    console.log(sheet_pos);
                     // let pos = item.getBoundingClientRect();
                     // let posX = pos.left;
                     // let posY = pos.top;
