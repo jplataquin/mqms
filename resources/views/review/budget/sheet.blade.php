@@ -920,7 +920,6 @@
             <input type="text"/>
         </div>
         <div class="d-inline-block">
-            <div>Result</div>
             <span>12</span>
             <button>Up</button>
             <button>Down</button>
