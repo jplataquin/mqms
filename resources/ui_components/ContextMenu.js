@@ -21,11 +21,11 @@ class ContextMenu extends ComponentV2{
             minHeight:'100%',
             width:'100%',
             height:'100%',
-            position:'absolute',
+            position:'fixed',
             top:'0px',
             left:'0px',
             zIndex:this._model.backdropZIndex,
-            backgroundColor:'rgba(255, 255, 255, 0.5)'
+            backgroundColor:'rgba(255, 255, 255, 0)'
         }});
 
         this.el.menu = t.div({
