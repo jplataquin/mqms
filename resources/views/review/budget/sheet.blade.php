@@ -934,11 +934,11 @@
                     });
 
 
-                    let pos = item.getBoundingClientRect();
-                    let posX = pos.left;
-                    let posY = pos.top;
+                    // let pos = item.getBoundingClientRect();
+                    // let posX = pos.left;
+                    // let posY = pos.top;
 
-                    cm.handler.show(posX,posY);
+                    // cm.handler.show(posX,posY);
                 }
               
             });

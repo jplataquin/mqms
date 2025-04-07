@@ -30,7 +30,7 @@
             <li>
                 <a href="#" class="active">
                     <span>
-                       Material Budget
+                         Budget
                     </span>
                     <i class="ms-2 bi bi-display"></i>
                 </a>
@@ -68,6 +68,10 @@
         document.body.classList.add('no-scroll');
     }
 
+
+    sheet_iframe.onclick = (e)=>{
+        alert(e.clientX+' '+e.clientY);
+    }
 
     window.matchMedia('(display-mode: fullscreen)').addListener(({ matches }) => {
         if (matches) {
