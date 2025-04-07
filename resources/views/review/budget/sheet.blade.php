@@ -1007,7 +1007,7 @@
                 data.map( d => {
 
                     if( d.innerText.match(regex) ){
-                        result.push(td);
+                        result.push(d);
                     }
 
                 });
