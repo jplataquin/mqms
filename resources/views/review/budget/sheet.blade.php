@@ -71,6 +71,8 @@
         .component{
             user-select: none;
             -moz-user-select: none;
+            -webkit-user-select: none; /* Chrome, Opera and Safari*/
+            -ms-user-select: none; /* IE, ms-edge */
         }
 
         /** Material */
@@ -877,7 +879,8 @@
         const actionBtn = $q('#actionBtn').first();
         
         const t = new Template();
-
+        
+   
         actionBtn.onclick = () =>{
             window.parent.exitFullscreen()
         }
