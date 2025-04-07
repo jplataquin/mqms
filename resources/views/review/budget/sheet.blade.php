@@ -264,7 +264,7 @@
     </style>
 </head>
 <body>
-    <table class="mb-5" id="sheet">
+    <table class="mb-5">
         <tr>
             <td data-controller="pageBreaker" class="text-center" style="width:50%" colspan="2">
                 <img src="/storage/sys_images/header.png" style="width:500px"/>
@@ -287,7 +287,7 @@
         </tr>
     </table>
 
-    <table>
+    <table id="sheet">
         
         <!--Headers -->
         <thead>
@@ -995,7 +995,7 @@
             let input = elem.querySelector('input');
             
             input.onkeyup = (e)=>{
-                let data = Array.from(sheet.querySelctorAll('td th'));
+                let data = Array.from(sheet.querySelectorAll('td th'));
 
                 console.log(data);
             }
