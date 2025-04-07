@@ -59,7 +59,11 @@ class ContextMenu extends ComponentV2{
                 marginBottom:'5px',
                 cursor:'pointer'
             }
-        },data.name);
+        },()=>{
+            t.span({
+                marginLeft:'3px'
+            },data.name);
+        });
 
         item.onclick = data.onclick;
 
