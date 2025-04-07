@@ -922,6 +922,10 @@
 
             items.map(item=>{
 
+                item.addEventListener('selectstart',function(e){
+                    e.preventDefault();
+                });
+
                 let component_id = item.getAttribute('data-id');
 
                 item.oncontextmenu = async (e)=>{
