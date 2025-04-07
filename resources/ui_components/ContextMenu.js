@@ -56,7 +56,7 @@ class ContextMenu extends ComponentV2{
             style:{
                 borderBottom:'1px solid rgba(25,25,25,0.5)',
                 width:'100%',
-                padding:'2px',
+                marginBottom:'5px',
                 cursor:'pointer'
             }
         },data.name);
