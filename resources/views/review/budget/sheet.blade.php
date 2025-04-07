@@ -965,7 +965,7 @@
                     let posX = e.clientX + sheet_pos.left;
                     let posY = e.clientY + sheet_pos.top + document.documentElement.scrollTop;
 
-                    document.body.appendChild(backdrop);
+                  //  document.body.appendChild(backdrop);
                     cm.handler.show(posX,posY);
                 }
               
