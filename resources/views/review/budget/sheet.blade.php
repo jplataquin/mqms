@@ -264,7 +264,7 @@
     </style>
 </head>
 <body>
-    <table class="mb-5">
+    <table class="mb-5" id="sheet">
         <tr>
             <td data-controller="pageBreaker" class="text-center" style="width:50%" colspan="2">
                 <img src="/storage/sys_images/header.png" style="width:500px"/>
@@ -910,7 +910,7 @@
             </tr>
     </table>
     
-    <div id="searchBar">
+    <div id="searchBar" data-controller="searchBar">
         <div class="d-inline-block">
             <button>X</button>
         </div>
@@ -948,7 +948,8 @@
         import contextMenu from '/ui_components/ContextMenu.js';
         
         const actionBtn = $q('#actionBtn').first();
-        
+        const sheet     = $q('#sheet').first();
+
         const t = new Template();
         
    
@@ -988,6 +989,17 @@
         }
 
         
+        function searchBar(item){
+            let elem = item[0];
+
+            let input = elem.querySelector('input');
+            
+            input.onkeyup = (e)=>{
+                let data = Array.from(sheet.querySelctorAll('td th'));
+
+                console.log(data);
+            }
+        }
 
         function componentMenu(items){
 
