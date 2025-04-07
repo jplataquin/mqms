@@ -1001,14 +1001,13 @@
 
                     let posX = e.clientX + sheet_pos.left;
                     let posY = e.clientY;
-                    //+ sheet_pos.top + document.documentElement.scrollTop
                     
                     if(sheet_pos.top != 0){
-                        posY = posY + document.documentElement.scrollTop;
+                        posY = posY + sheet_pos.top + document.documentElement.scrollTop;
                     }else{
                         posY = posY + sheet_pos.top;
                     }
-                    
+
                     console.log(e.clientY,sheet_pos.top,document.documentElement.scrollTop);
 
                     cm.handler.show(posX,posY);
