@@ -243,11 +243,21 @@
 
 
         #searchBar{
-            width:20%;
-            text-align:center;
+            width:60%;
             position:fixed;
             top:10px;
             left:20%;
+            padding:10px;
+            border-radius:10%;
+        }
+
+        #searchBar > input{
+            font-size:24px;
+        }
+
+        #searchBar > button{
+            height:100%;
+            width:100%;
         }
 
     
