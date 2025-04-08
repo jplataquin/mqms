@@ -1009,7 +1009,9 @@
                         console.log(d.innerText,search,regex);
                         result.push(d);
                     }
+                     
 
+                    
                 });
 
                 console.log(result);
