@@ -1006,6 +1006,7 @@
                 data.map( d => {
 
                     if( d.innerText.match(regex) ){
+                        console.log(d.innerText,search,regex);
                         result.push(d);
                     }
 
