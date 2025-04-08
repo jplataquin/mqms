@@ -1015,6 +1015,10 @@
                     el.classList.remove('border-highlight');
                 });
 
+                Array.from( document.querySelectorAll('.background-highlight') ).map(el=>{
+                    el.classList.remove('background-highlight');
+                });
+
                 
                 if(input.value.trim() == ''){
                     return false;
