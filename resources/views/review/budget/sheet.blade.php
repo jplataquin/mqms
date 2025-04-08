@@ -993,8 +993,8 @@
         function searchBar(item){
             let elem = item[0];
 
-            const input = elem.querySelector('input');
-            const counter = elem.querySelctor('[data-el="counter"]');
+            const input     = elem.querySelector('input');
+            const counter   = elem.querySelector('[data-el="counter"]');
             
             input.onkeyup = (e)=>{
                 let data = Array.from( sheet.querySelectorAll('.searchable') );
