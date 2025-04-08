@@ -256,10 +256,9 @@
             width:320px;
         }
 
-        #searchBar > div > button{
-      
+        .border-blue{
+            border: solid 1px #0000FF !important;
         }
-
     
     </style>
 </head>
@@ -997,6 +996,11 @@
             const counter   = elem.querySelector('[data-el="counter"]');
             
             input.onkeyup = (e)=>{
+
+                Array(document.querySelectorAll('.border-blue')).map(el=>{
+                    el.classList.remove('border-blue');
+                });
+
                 let data = Array.from( sheet.querySelectorAll('.searchable') );
               
 
@@ -1010,6 +1014,7 @@
                     let text    = d.innerText.toLowerCase();
                
                     if( text.match(regex) ){
+                        d.classList.add('border-blue');
                         result.push(d);
                     }
                 });
