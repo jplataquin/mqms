@@ -999,7 +999,7 @@
             
             let result          = [];
             let index           = 0;
-            let result_counter  = 0;
+            let result_count    = 0;
 
             input.onkeyup = (e)=>{
 
@@ -1037,7 +1037,7 @@
             next.onclick = ()=>{
                 index = index + 1;
 
-                if(index >= result_counter){
+                if(index >= result_count){
                     return false;
                 }
 
