@@ -920,9 +920,9 @@
         </div>
         <div class="d-inline-block">
             <div class="text-center">
-                <span>00</span>
-                <button>▲</button>
-                <button>▼</button>
+                <span data-el="counter">00</span>
+                <button data-el="prev">▲</button>
+                <button data-el="next">▼</button>
             </div>
         </div>
     </div>
@@ -993,7 +993,8 @@
         function searchBar(item){
             let elem = item[0];
 
-            let input = elem.querySelector('input');
+            const input = elem.querySelector('input');
+            const counter = elem.querySelctor('[data-el="counter"]');
             
             input.onkeyup = (e)=>{
                 let data = Array.from( sheet.querySelectorAll('.searchable') );
@@ -1004,7 +1005,6 @@
                 let result  = [];
                 let regex   = new RegExp(search+'.*');
                
-                console.log(regex);
                 data.map( d => {
                
                     let text    = d.innerText.toLowerCase();
@@ -1014,8 +1014,9 @@
                     }
                 });
 
-                console.log(result);
+                let result_count = result.length;
 
+                counter.innerText = result_count;
             }
         }
 
