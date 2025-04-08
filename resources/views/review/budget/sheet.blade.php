@@ -994,8 +994,8 @@
 
             const input     = elem.querySelector('input');
             const counter   = elem.querySelector('[data-el="counter"]');
-            const next      = elem.querySelector('[data-el="next]');
-            const prev      = elem.querySelector('[data-el="prev]');
+            const next      = elem.querySelector('[data-el="next"]');
+            const prev      = elem.querySelector('[data-el="prev"]');
             
             let result          = [];
             let index           = 0;
