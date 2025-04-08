@@ -360,8 +360,8 @@
                 @endif
             
             ">
-                <td data-controller="pageBreaker">{{$row_1->contract_item->item_code}}</td>
-                <td>{{$row_1->contract_item->description}}</td>
+                <td data-controller="pageBreaker" class="searchable">{{$row_1->contract_item->item_code}}</td>
+                <td class="searchable">{{$row_1->contract_item->description}}</td>
                 
                 <!-- Contract -->
                 <td class="text-center">{{ number_format($row_1->contract_item->contract_quantity,2)}}</td>
@@ -487,8 +487,9 @@
                         @if($row_2->component->status == 'REJC')
                         <div class="rejected-text text-center">⦿</div>
                         @endif
-
-                        {{$row_2->component->name}}
+                        <span class="searchable">
+                            {{$row_2->component->name}}
+                        </span>
                     </td>
                     <td></td><!-- Description -->
                     
@@ -582,7 +583,7 @@
                     component-item-row
                 
                 "> 
-                    <td>{{$component_item->name}}</td><!-- Component Item Name -->
+                    <td class="searchable">{{$component_item->name}}</td><!-- Component Item Name -->
                     
                     <!-- Contract -->
                     <td></td>
@@ -995,23 +996,22 @@
             let input = elem.querySelector('input');
             
             input.onkeyup = (e)=>{
-                let data = Array.from( sheet.querySelectorAll('th, td') );
+                let data = Array.from( sheet.querySelectorAll('.searchable') );
               
 
-                let search = input.value;
+                let search = input.value.toLowerCase();;
                 
-                let result = [];
-                let regex  = new RegExp(search+'.*');
-
+                let result  = [];
+                let regex   = new RegExp(search+'.*');
+               
                 data.map( d => {
-
-                    if( d.innerText.match(regex) ){
-                        console.log(d.innerText,search,regex);
+               
+                    let text    = d.innerText.toLowerCase();
+               
+                    if( text.match(regex) ){
                         result.push(d);
                     }
-                     
 
-                    
                 });
 
                 console.log(result);
