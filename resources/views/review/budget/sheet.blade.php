@@ -1028,7 +1028,7 @@
                     let text    = d.innerText.toLowerCase();
                
                     if( text.match(regex) ){
-                        d.classList.add('border-blue');
+                        d.classList.add('border-highlight');
                         result.push(d);
                     }
                 });
@@ -1049,7 +1049,7 @@
                 }
 
                 result[index].scrollIntoView();
-                
+
                 index_count.innerText = index+1;
             }
         }
