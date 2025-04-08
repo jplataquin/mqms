@@ -994,11 +994,19 @@
 
             const input     = elem.querySelector('input');
             const counter   = elem.querySelector('[data-el="counter"]');
+            const next      = elem.querySelector('[data-el="next]');
+            const prev      = elem.querySelector('[data-el="prev]');
             
+            let result          = [];
+            let index           = 0;
+            let result_counter  = 0;
+
             input.onkeyup = (e)=>{
 
+                result  = [];
+                index   = 0;
+
                 Array.from( document.querySelectorAll('.border-blue') ).map(el=>{
-                    console.log(el);
                     el.classList.remove('border-blue');
                 });
 
@@ -1007,7 +1015,6 @@
 
                 let search = RegExp.escape( input.value.toLowerCase() );
             
-                let result  = [];
                 let regex   = new RegExp(search+'.*');
                
                 data.map( d => {
@@ -1020,9 +1027,21 @@
                     }
                 });
 
-                let result_count = result.length;
+                result_count = result.length;
 
                 counter.innerText = result_count;
+
+                result[0].scrollIntoView();
+            }
+
+            next.onclick = ()=>{
+                index = index + 1;
+
+                if(index >= result_counter){
+                    return false;
+                }
+
+                result[index].scrollIntoView();
             }
         }
 
