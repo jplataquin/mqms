@@ -999,11 +999,12 @@
                 let data = Array.from( sheet.querySelectorAll('.searchable') );
               
 
-                let search = input.value.toLowerCase().replace(/\s/g,'\\s');
-                
+                let search = RegExp.escape( input.value.toLowerCase() );
+            
                 let result  = [];
                 let regex   = new RegExp(search+'.*');
                
+                console.log(regex);
                 data.map( d => {
                
                     let text    = d.innerText.toLowerCase();
