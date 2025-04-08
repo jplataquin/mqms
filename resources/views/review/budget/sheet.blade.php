@@ -1001,10 +1001,10 @@
                 let search = input.value;
                 
                 let result = [];
-                let regex  = new RegExp(search);
+                let regex  = new RegExp(search+'.*');
 
                 data.map( d => {
-                    console.log(d.innerText,search);
+
                     if( d.innerText.match(regex) ){
                         result.push(d);
                     }
