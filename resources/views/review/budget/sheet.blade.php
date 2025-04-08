@@ -259,6 +259,10 @@
         .border-highlight{
             border: solid 3px #0000FF !important;
         }
+
+        .background-highlight{
+            background-color:rgb(147, 147, 253) !important;
+        }
     
     </style>
 </head>
@@ -1048,7 +1052,13 @@
                     return false;
                 }
 
+                Array.from( document.querySelectorAll('.background-highlight') ).map(el=>{
+                    el.classList.remove('background-highlight');
+                });
+
+
                 result[index].scrollIntoView();
+                result[index].classList.add('background-highlight');
 
                 index_count.innerText = index+1;
             }
