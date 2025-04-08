@@ -999,7 +999,7 @@
                 let data = Array.from( sheet.querySelectorAll('.searchable') );
               
 
-                let search = input.value.toLowerCase();;
+                let search = input.value.toLowerCase().replace(/\s/g,'\\s');
                 
                 let result  = [];
                 let regex   = new RegExp(search+'.*');
