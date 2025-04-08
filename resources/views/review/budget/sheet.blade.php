@@ -256,8 +256,8 @@
             width:320px;
         }
 
-        .border-blue{
-            border: solid 1px #0000FF !important;
+        .border-highlight{
+            border: solid 3px #0000FF !important;
         }
     
     </style>
@@ -919,7 +919,7 @@
         </div>
         <div class="d-inline-block">
             <div class="text-center">
-                <span data-el="counter">00</span>
+                <span data-el="index_count">0</span>/<span data-el="total_count">0</span>
                 <button data-el="prev">▲</button>
                 <button data-el="next">▼</button>
             </div>
@@ -992,10 +992,11 @@
         function searchBar(item){
             let elem = item[0];
 
-            const input     = elem.querySelector('input');
-            const counter   = elem.querySelector('[data-el="counter"]');
-            const next      = elem.querySelector('[data-el="next"]');
-            const prev      = elem.querySelector('[data-el="prev"]');
+            const input         = elem.querySelector('input');
+            const total_count   = elem.querySelector('[data-el="total_count"]');
+            const index_count   = elem.querySelector('[data-el="index_count"]');
+            const next          = elem.querySelector('[data-el="next"]');
+            const prev          = elem.querySelector('[data-el="prev"]');
             
             let result          = [];
             let index           = 0;
@@ -1006,9 +1007,14 @@
                 result  = [];
                 index   = 0;
 
-                Array.from( document.querySelectorAll('.border-blue') ).map(el=>{
-                    el.classList.remove('border-blue');
+                Array.from( document.querySelectorAll('.border-highlight') ).map(el=>{
+                    el.classList.remove('border-highlight');
                 });
+
+                
+                if(input.value.trim() == ''){
+                    return false;
+                }
 
                 let data = Array.from( sheet.querySelectorAll('.searchable') );
               
@@ -1029,7 +1035,8 @@
 
                 result_count = result.length;
 
-                counter.innerText = result_count;
+                total_count.innerText = result_count;
+                index_count.innerText = index+1;
 
                 result[0].scrollIntoView();
             }
@@ -1042,6 +1049,8 @@
                 }
 
                 result[index].scrollIntoView();
+                
+                index_count.innerText = index+1;
             }
         }
 
