@@ -257,11 +257,11 @@
         }
 
         .border-highlight{
-            border: solid 3px #0000FF !important;
+            border: solid 3pxrgb(18, 18, 255) !important;
         }
 
         .background-highlight{
-            background-color:rgb(147, 147, 253) !important;
+            background-color:rgb(174, 174, 254) !important;
         }
     
     </style>
@@ -1036,19 +1036,41 @@
                         result.push(d);
                     }
                 });
-
+                
                 result_count = result.length;
+
+                if(result_count == 0) return false;
 
                 total_count.innerText = result_count;
                 index_count.innerText = index+1;
 
                 result[0].scrollIntoView();
+                result[0].classList.add('background-highlight');
             }
 
             next.onclick = ()=>{
                 index = index + 1;
 
                 if(index >= result_count){
+                    return false;
+                }
+
+                Array.from( document.querySelectorAll('.background-highlight') ).map(el=>{
+                    el.classList.remove('background-highlight');
+                });
+
+
+                result[index].scrollIntoView();
+                result[index].classList.add('background-highlight');
+
+                index_count.innerText = index+1;
+            }
+
+            prev.onclick = ()=>{
+                index = index - 1;
+
+                if(index < 0){
+                    index = index + 1;
                     return false;
                 }
 
