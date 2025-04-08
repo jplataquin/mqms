@@ -1011,7 +1011,6 @@
                     if( text.match(regex) ){
                         result.push(d);
                     }
-
                 });
 
                 console.log(result);
