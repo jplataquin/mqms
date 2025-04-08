@@ -997,7 +997,7 @@
             
             input.onkeyup = (e)=>{
 
-                Array( document.querySelectorAll('.border-blue') ).map(el=>{
+                Array.from( document.querySelectorAll('.border-blue') ).map(el=>{
                     console.log(el);
                     el.classList.remove('border-blue');
                 });
