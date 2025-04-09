@@ -1012,7 +1012,7 @@
             
             $q('.contract-item').apply(el=>{
                 let id = el.getAttribute('data-id');
-               
+               console.log('.owned-by-contract-item-'+id);
                 $q('.owned-by-contract-item-'+id).apply(el=>{
                     console.log(el);
                     el.classList.add('d-none');
