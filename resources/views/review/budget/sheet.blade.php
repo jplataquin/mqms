@@ -1402,21 +1402,15 @@
 
                 item.style.top = head_height+'px'; 
 
-                console.log(item.offsetHeight,contract_item_height);
+                let td = item.querySelector('td');
 
-                if(item.offsetHeight > contract_item_height){
-                    contract_item_height = item.offsetHeight;
+                if( td.offsetHeight > contract_item_height ){
+                    contract_item_height = td.offsetHeight;
                 }
+
             });
 
             console.log(contract_item_height);
-
-            items.map(item=>{
-
-                console.log(item.firstChild);
-
-                item.querySelector('td').height = contract_item_height+'px';
-            });
         }
 
         let elem = {};
