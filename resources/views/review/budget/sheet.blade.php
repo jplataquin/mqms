@@ -249,7 +249,7 @@
             left:50%;
             padding:10px;
             background-color:grey;
-            opacity: 0.5;
+            opacity: 0.7;
         }
 
         #searchBar > div > input[type="text"]{
