@@ -243,12 +243,13 @@
 
 
         #searchBar{
-            width:56%;
+            width:50%;
             position:fixed;
             top:10px;
-            left:20%;
+            left:25%;
             padding:10px;
             background-color:grey;
+            opacity: 0.4;
         }
 
         #searchBar > div > input[type="text"]{
