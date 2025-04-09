@@ -653,7 +653,9 @@
                     <td></td>
                 </tr>
 
-                <tr>
+                <tr 
+                        class="owned-by-contract-item-{{$row_1->contract_item->id}}"
+                >
                     <td colspan="5">
                         <table class="ml-5 material-quantity-table">
                             <tr class="material-quantity-tr">
