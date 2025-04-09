@@ -1106,6 +1106,11 @@
             let index           = 0;
             let result_count    = 0;
 
+            input.onkeyup = (e) => {
+                
+                console.log(e.keyCode);
+            }
+
             input.oninput = (e)=>{
 
                 openAll();
@@ -1153,7 +1158,6 @@
                 result[0].scrollIntoView();
                 result[0].classList.add('background-highlight');
 
-                console.log(e.charAt,e);
             }
 
             next.onclick = ()=>{
