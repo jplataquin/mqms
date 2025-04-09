@@ -95,6 +95,11 @@
             background-color: #f7f2d6;
         }
 
+
+        .contract-item{
+            cursor:pointer
+        }
+
         .opex-bg{
             background-color: #f7f2d6;
         }
@@ -366,7 +371,7 @@
 
             <!-- Contract Item -->
 
-            <tr data-id="{{$row_1->contract_item->id}}" class="
+            <tr data-id="{{$row_1->contract_item->id}}" data-controller="contractItemController" class="
                 contract-item
                  
                 @if($hide['contract_item'][$row_1->contract_item->id])
@@ -998,6 +1003,7 @@
 
         const t = new Template();
         
+        let toggleCollapseFlag = false;
    
         actionBtn.onclick = () =>{
             window.parent.exitFullscreen()
@@ -1014,10 +1020,17 @@
             
             $q('.contract-item').apply(el=>{
                 let id = el.getAttribute('data-id');
-               console.log('.owned-by-contract-item-'+id);
+               
                 $q('.owned-by-contract-item-'+id).apply(el=>{
-                    console.log(el);
-                    el.classList.add('d-none');
+                    
+                    if(!toggleCollapseFlag){
+                        el.classList.add('d-none');
+                        toggleCollapseFlag = true;
+                    }else{
+                        el.classList.remove('d-none');
+                        toggleCollapseFlag = false;
+                    }
+                    
                 });
             });
         }
@@ -1297,6 +1310,19 @@
                 }
               
             });
+        }
+
+        function contractItemController(items){
+            items.map(item=>{
+
+                let id = item.getAttribute('data-id');
+
+                item.onclick = (e)=>{
+                    $q('.owned-by-contract-item-'+id).apply(el=>{
+                        el.classList.remove('d-none');
+                    });
+                }
+            })
         }
 
         let elem = {};
