@@ -19,7 +19,6 @@
             display:inline;
         }
 
-
         table, tr, td, th {
             border: solid 1px #000000;
             border-collapse: collapse;
@@ -32,7 +31,6 @@
 
         th{
             text-align: center;
-            display:table;
         }
 
         td, th {
