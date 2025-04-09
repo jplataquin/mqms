@@ -358,6 +358,7 @@
                 <th colspan="4" style="">POW/DUPA</th>
                 <th rowspan="2" style="min-width:8%;max-width:8%">Factor</th>
                 <th colspan="4" style="">Budget</th>
+                <th class="text-center" rowspan="2">%</th>
             </tr>
             <tr>
          
@@ -381,7 +382,7 @@
                 <th>UNIT</th>
                 <th class="amount-13">RATE</th>
                 <th class="amount-15">AMOUNT</th>
-                <th class="text-center">%</th>
+                
             </tr>
         </thead>
         <tbody>
