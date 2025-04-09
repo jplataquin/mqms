@@ -1402,14 +1402,15 @@
 
                 item.style.top = head_height+'px'; 
 
-                console.log(item.offsetHeight);
                 if(item.offsetHeight > contract_item_height){
                     contract_item_height = item.offsetHeight;
                 }
             });
 
+            console.log(contract_item_height);
+            
             items.map(item=>{
-                item.style.minHeight = contract_item_height+'px';
+                item.height = contract_item_height+'px';
             });
         }
 
