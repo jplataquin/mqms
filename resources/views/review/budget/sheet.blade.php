@@ -22,12 +22,8 @@
 
         table, tr, td, th {
             border: solid 1px #000000;
-            border-collapse: separate;
+            border-collapse: collapse;
             font-size: 11px;
-        }
-
-        table > thead > th{
-            border-collapse: separate;
         }
         
         table {
