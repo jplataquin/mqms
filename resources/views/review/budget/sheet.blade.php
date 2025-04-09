@@ -979,7 +979,7 @@
         </div>
     </div>
 
-    <div id="actionContainer" style="background-color:red">
+    <div id="actionContainer">
         
         <div id="actionBtn" class="me-10 no-select">
             
