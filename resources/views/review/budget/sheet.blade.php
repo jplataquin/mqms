@@ -21,14 +21,13 @@
 
         table, tr, td, th {
             font-size: 11px;
+            border-collapse:separate;
+            border-color: rgba(255,255,255,0.5);
+            border-spacing:0px;
         }
         
         table {
             width:100%;
-            border-collapse:separate;
-            border-spacing:0px;
-            border-color: rgba(255,255,0.5);
-            border-spacing:1px;
         }
 
         th{
