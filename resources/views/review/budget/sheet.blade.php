@@ -10,6 +10,10 @@
             display:none;
         }
 
+        .d-hide{
+            display:none;
+        }
+
         .d-inline{
             display:inline;
         }
@@ -375,7 +379,7 @@
                 contract-item
                  
                 @if($hide['contract_item'][$row_1->contract_item->id])
-                    d-none
+                    d-hide
                 @endif
 
                 @if($row_1->contract_item->item_type == 'NMAT') 
@@ -494,7 +498,7 @@
                     owned-by-contract-item-{{$row_1->contract_item->id}}
                         
                     @if($hide['component'][$component_id])
-                        d-none
+                        d-hide
                     @endif
                     
                     @if($row_1->contract_item->item_type == 'NMAT') 
@@ -570,7 +574,7 @@
                     owned-by-contract-item-{{$row_1->contract_item->id}}
 
                     @if($hide['component'][$component_id])
-                        d-none
+                        d-hide
                     @endif
                 ">
            
@@ -615,7 +619,7 @@
                     owned-by-contract-item-{{$row_1->contract_item->id}}
 
                     @if($hide['component_item'][$component_item_id])
-                        d-none
+                        d-hide
                     @endif
                     
 
