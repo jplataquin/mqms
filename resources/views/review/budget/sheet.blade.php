@@ -1016,7 +1016,7 @@
             let index           = 0;
             let result_count    = 0;
 
-            input.onkeyup = (e)=>{
+            input.oninput = (e)=>{
 
                 result  = [];
                 index   = 0;
