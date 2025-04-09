@@ -305,6 +305,11 @@
 
         .sticky-top{
             position: sticky;
+            top:0;
+        }
+
+        .bg-white{
+            background-color:#ffffff !important;
         }
     
     </style>
@@ -336,7 +341,7 @@
     <table id="sheet">
         
         <!--Headers -->
-        <thead class="sticky-top">
+        <thead class="sticky-top bg-white">
             @if($hide['total_contract_item'] > 0 || $hide['total_component'] > 0)
             <tr>
                 <th data-controller="pageBreaker" class="text-center rejected-text" colspan="8">
