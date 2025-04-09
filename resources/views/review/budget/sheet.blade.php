@@ -180,7 +180,7 @@
         }
 
         .pending-text{
-            color:rgb(248, 244, 24);
+            color:rgb(255, 227, 0);
         }
 
         .approved-text{
@@ -193,6 +193,10 @@
 
         .d-inline-block{
             display:inline-block;
+        }
+
+        .status{
+            font-size:24px;
         }
 
         @media print {
@@ -531,16 +535,17 @@
                 ">
                     <td role="dialog" class="component" data-controller="pageBreaker componentMenu" data-id="{{$row_2->component->id}}"  rowspan="{{ ( ( count( (array) $row_2->component_items) * 2) + 2) }}">
                         @if($row_2->component->status == 'PEND')
-                            <div class="pending-text text-center">⦿</div>
+                            <div class="pending-text text-center status">⦿</div>
                         @endif
 
                         @if($row_2->component->status == 'APRV')
-                            <div class="approved-text text-center">⦿</div>
+                            <div class="approved-text text-center status">⦿</div>
                         @endif
 
                         @if($row_2->component->status == 'REJC')
-                        <div class="rejected-text text-center">⦿</div>
+                            <div class="rejected-text text-center status">⦿</div>
                         @endif
+
                         <span class="searchable">
                             {{$row_2->component->name}}
                         </span>
