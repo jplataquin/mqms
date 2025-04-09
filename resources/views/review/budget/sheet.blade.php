@@ -1407,8 +1407,12 @@
                 }
             });
 
+            console.log(contract_item_height);
+
             items.map(item=>{
 
+                console.log(item.firstChild);
+                
                 item.firstChild.height = contract_item_height+'px';
             });
         }
