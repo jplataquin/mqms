@@ -1016,8 +1016,9 @@
             let index           = 0;
             let result_count    = 0;
 
-            input.onkeydown = (e)=>{
+            input.oninput = (e)=>{
 
+                console.log('wtf');
                 result  = [];
                 index   = 0;
 
