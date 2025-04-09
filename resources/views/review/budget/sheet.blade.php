@@ -22,7 +22,7 @@
 
         table, tr, td, th {
             border: solid 1px #000000;
-            border-collapse: collapse;
+            border-collapse: separate;
             font-size: 11px;
         }
 
