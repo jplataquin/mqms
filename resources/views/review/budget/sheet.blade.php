@@ -19,6 +19,7 @@
             display:inline;
         }
 
+        /** 
         table, tr, td, th {
             border: solid 1px #000000;
             border-collapse: collapse;
@@ -36,6 +37,35 @@
         td, th {
             padding: 5px;
         }
+        **/
+
+        table {
+        width: 100%;
+        text-align: center;
+        border-collapse: separate; /* Don't collapse */
+        border-spacing: 0;
+        }
+
+        table th {
+        /* Apply both top and bottom borders to the <th> */
+        border-top: 2px solid;
+        border-bottom: 2px solid;
+        border-right: 2px solid;
+        }
+
+        table td {
+        /* For cells, apply the border to one of each side only (right but not left, bottom but not top) */
+        border-bottom: 2px solid;
+        border-right: 2px solid;
+        }
+
+        table th:first-child,
+        table td:first-child {
+        /* Apply a left border on the first <td> or <th> in a row */
+        border-left: 2px solid;
+        }
+
+
 
         tr:hover {
             background-color: #b5ffca !important;
