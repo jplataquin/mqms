@@ -1055,11 +1055,12 @@
             next.onclick = ()=>{
 
                 console.log('next',index);
-                index = index + 1;
-
+           
                 if(index >= result_count){
                     return false;
                 }
+
+                index = index + 1;
 
                 Array.from( document.querySelectorAll('.background-highlight') ).map(el=>{
                     el.classList.remove('background-highlight');
