@@ -6,6 +6,10 @@
     <title>{{$project->name}} - {{$section->name}} - {{$datetime_generated}}</title>
     <style>
 
+        *{
+            border: solid 2px green !important;
+        }
+
         .d-none{
             display:none;
         }
