@@ -241,6 +241,26 @@
             margin-top:16px;
         }
 
+        #collapseBtn{
+            width: 75px; /* Or any desired size */
+            height: 75px; /* Must match width for a perfect circle */
+            border-radius: 50%; /* Creates the circular shape */
+            /* Add other styling as needed, e.g., background color, etc. */
+            background-color: rgb(90, 90, 90);
+            opacity: 0.2;
+            text-align:center;
+            cursor:pointer;
+            display:inline-block;
+        }
+
+        #collapseBtn:hover{
+            opacity: 0.4;
+        }
+        
+
+        #collapseBtn > svg{
+            margin-top:16px;
+        }
 
         #searchBar{
             width:500px;
@@ -346,7 +366,9 @@
 
             <!-- Contract Item -->
 
-            <tr class="
+            <tr data-id="{{$row_1->contract_item->id}}" class="
+                contract-item
+                 
                 @if($hide['contract_item'][$row_1->contract_item->id])
                     d-none
                 @endif
@@ -463,6 +485,9 @@
             @foreach($row_1->components as $component_id => $row_2)
         
                 <tr class="
+
+                    ownded-by-contract-item-{{$row_1->contract_item->id}}
+
                     @if($hide['component'][$component_id])
                         d-none
                     @endif
@@ -536,6 +561,9 @@
                 
          
                 <tr class="
+
+                    ownded-by-contract-item-{{$row_1->contract_item->id}}
+
                     @if($hide['component'][$component_id])
                         d-none
                     @endif
@@ -578,6 +606,8 @@
 
                 <!-- Component Item data row -->
                 <tr class="
+                    
+                    ownded-by-contract-item-{{$row_1->contract_item->id}}
 
                     @if($hide['component_item'][$component_item_id])
                         d-none
@@ -941,6 +971,13 @@
         
         </div>
 
+        <div id="collapseBtn" class="me-10">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrows-collapse" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8m7-8a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 4.293V.5A.5.5 0 0 1 8 0m-.5 11.707-1.146 1.147a.5.5 0 0 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 11.707V15.5a.5.5 0 0 1-1 0z"/>
+            </svg>
+
+        </div>
+
         <div id="searchBtn">
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
@@ -952,9 +989,10 @@
         import {$q,Template} from '/adarna.js';
         import contextMenu from '/ui_components/ContextMenu.js';
         
-        const actionBtn = $q('#actionBtn').first();
-        const searchBtn = $q('#searchBtn').first();
-        const sheet     = $q('#sheet').first();
+        const actionBtn     = $q('#actionBtn').first();
+        const searchBtn     = $q('#searchBtn').first();
+        const collapseBtn   = $q('#collapseBtn').first();
+        const sheet         = $q('#sheet').first();
 
         const t = new Template();
         
@@ -968,6 +1006,17 @@
 
             searchBar.classList.remove('d-none');
             searchBar.querySelector('input').focus();
+        }
+
+        collapseBtn.onclick = ()=>{
+
+            $q('.contract-item').apply(el=>{
+                let id = el.getAttribute('data-id');
+
+                $q('.contract-item-'+id).apply(el=>{
+                    el.classList.add('d-none');
+                });
+            });
         }
 
         function pageBreaker(items){
