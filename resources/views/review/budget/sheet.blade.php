@@ -310,6 +310,10 @@
         .bg-white{
             background-color:#ffffff !important;
         }
+
+        .sheet-header th{
+            border:separate;
+        }
     
     </style>
 </head>
@@ -340,7 +344,7 @@
     <table id="sheet">
         
         <!--Headers -->
-        <thead class="sticky bg-white" style="top:0">
+        <thead class="sticky bg-white sheet-header" style="top:0">
             @if($hide['total_contract_item'] > 0 || $hide['total_component'] > 0)
             <tr class="sticky bg-white" style="top:0">
                 <th data-controller="pageBreaker" class="text-center rejected-text" colspan="8">
