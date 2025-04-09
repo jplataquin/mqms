@@ -1410,7 +1410,13 @@
 
             });
 
-            console.log(contract_item_height);
+
+            items.map(item=>{
+
+                let td = item.querySelector('td');
+
+                td.height = contract_item_height+'px';
+            });
         }
 
         let elem = {};
