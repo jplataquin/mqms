@@ -1025,14 +1025,17 @@
                     
                     if(!toggleCollapseFlag){
                         el.classList.add('d-none');
-                        toggleCollapseFlag = true;
+                        
                     }else{
                         el.classList.remove('d-none');
-                        toggleCollapseFlag = false;
                     }
                     
                 });
+
             });
+
+            
+            toggleCollapseFlag = !toggleCollapseFlag;
         }
 
         function pageBreaker(items){
