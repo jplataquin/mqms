@@ -1163,6 +1163,9 @@
 
                 
                 if(input.value.trim() == ''){
+                    
+                    total_count.innerText = 0;
+                    index_count.innerText = 0;
                     return false;
                 }
 
