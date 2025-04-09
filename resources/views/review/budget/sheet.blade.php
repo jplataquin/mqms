@@ -1053,6 +1053,8 @@
             }
 
             next.onclick = ()=>{
+
+                console.log('next',index);
                 index = index + 1;
 
                 if(index >= result_count){
@@ -1067,10 +1069,13 @@
                 result[index].scrollIntoView();
                 result[index].classList.add('background-highlight');
 
+                console.log('index',index);
                 index_count.innerText = index+1;
             }
 
             prev.onclick = ()=>{
+
+                console.log('prev',index);
                 index = index - 1;
 
                 if(index < 0){
@@ -1086,7 +1091,7 @@
                 result[index].scrollIntoView();
                 result[index].classList.add('background-highlight');
 
-                console.log(index);
+                console.log('prev',index);
                 index_count.innerText = index+1;
             }
         }
