@@ -340,9 +340,9 @@
     <table id="sheet">
         
         <!--Headers -->
-        <thead class="sticky bg-white" style="top:0">
+        <thead>
             @if($hide['total_contract_item'] > 0 || $hide['total_component'] > 0)
-            <tr>
+            <tr class="sticky bg-white" style="top:0">
                 <th data-controller="pageBreaker" class="text-center rejected-text" colspan="8">
                     Hidden Contract Items: {{ number_format($hide['total_contract_item']) }}
                 </th>
@@ -351,7 +351,7 @@
                 </th>
             </tr>
             @endif
-            <tr>
+            <tr class="sticky bg-white" style="top:0">
                 <th data-controller="pageBreaker" rowspan="2" style="min-width:5%;max-width:5%">ITEM CODE</th>
                 <th rowspan="2" style="min-width:20%;max-width:20%">DESCRIPTION</th>
                 <th colspan="4" style="">Contract</th>
@@ -361,9 +361,6 @@
                 <th class="text-center" rowspan="2">%</th>
             </tr>
             <tr>
-         
-
-
                 <!-- Contract -->
                 <th>QTY</th>
                 <th>UNIT</th>
