@@ -1086,6 +1086,7 @@
                 result[index].scrollIntoView();
                 result[index].classList.add('background-highlight');
 
+                console.log(index);
                 index_count.innerText = index+1;
             }
         }
