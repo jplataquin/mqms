@@ -914,9 +914,9 @@
             </tr>
     </table>
     
-    <div id="searchBar" data-controller="searchBar">
+    <div id="searchBar" class="d-none" data-controller="searchBar">
         <div class="d-inline-block">
-            <button>X</button>
+            <button data-el="close">X</button>
         </div>
         <div class="d-inline-block">
             <input type="text"/>
@@ -952,6 +952,7 @@
         import contextMenu from '/ui_components/ContextMenu.js';
         
         const actionBtn = $q('#actionBtn').first();
+        const searchBtn = $q('#searchBtn').first();
         const sheet     = $q('#sheet').first();
 
         const t = new Template();
@@ -959,6 +960,13 @@
    
         actionBtn.onclick = () =>{
             window.parent.exitFullscreen()
+        }
+
+        searchBtn.onclick = ()=>{
+            let searchBar = $q('#searchBar').first();
+
+            searchBar.classList.remove('d-none');
+            searchBar.querySelector('input').focus();
         }
 
         function pageBreaker(items){
@@ -1001,6 +1009,7 @@
             const index_count   = elem.querySelector('[data-el="index_count"]');
             const next          = elem.querySelector('[data-el="next"]');
             const prev          = elem.querySelector('[data-el="prev"]');
+            const close         = elem.querySelector('[data-el="close"]');
             
             let result          = [];
             let index           = 0;
@@ -1054,8 +1063,6 @@
 
             next.onclick = ()=>{
 
-                console.log('next',index);
-                
                 index = index + 1;
 
                 if(index >= result_count){
@@ -1073,13 +1080,11 @@
                 result[index].scrollIntoView();
                 result[index].classList.add('background-highlight');
 
-                console.log('index',index);
                 index_count.innerText = index+1;
             }
 
             prev.onclick = ()=>{
 
-                console.log('prev',index);
                 index = index - 1;
 
                 if(index < 0){
@@ -1095,8 +1100,19 @@
                 result[index].scrollIntoView();
                 result[index].classList.add('background-highlight');
 
-                console.log('prev',index);
                 index_count.innerText = index+1;
+            }
+
+
+            close.onclick = ()=>{
+                result                  = [];
+                result_count            = 0;
+                index                   = 0;
+                input.value             = '';
+                total_count.innerText   = '0';
+                index_count.innerText   = '0';
+
+                elem.classList.add('d-none');
             }
         }
 
