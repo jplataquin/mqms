@@ -635,11 +635,10 @@
                     component-item-row
                 
                 "> 
-                    <td class="searchable">{{$component_item->name}}</td><!-- Component Item Name -->
+                    <td class="searchable" colspan="3">{{$component_item->name}}</td><!-- Component Item Name -->
                     
                     <!-- Contract -->
-                    <td></td>
-                    <td></td>
+                   
                     <td></td>
                     <td></td>
 
