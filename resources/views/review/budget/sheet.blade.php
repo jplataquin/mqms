@@ -25,6 +25,10 @@
             border-collapse: collapse;
             font-size: 11px;
         }
+
+        table > thead > th{
+            border-collapse: separate;
+        }
         
         table {
             width:100%;
@@ -311,10 +315,6 @@
             background-color:#ffffff !important;
         }
 
-        .sheet-header > tr > th{
-            border-collapse:separate;
-        }
-    
     </style>
 </head>
 <body>
