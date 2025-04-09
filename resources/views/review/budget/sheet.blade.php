@@ -6,9 +6,6 @@
     <title>{{$project->name}} - {{$section->name}} - {{$datetime_generated}}</title>
     <style>
 
-        *:hover{
-            border: solid 3px green !important;
-        }
 
         .d-none{
             display:none;
@@ -213,7 +210,7 @@
 
         #actionContainer{
             position:fixed;
-            bottom:50px;
+            bottom:100px;
             right:50px;
         }
 
