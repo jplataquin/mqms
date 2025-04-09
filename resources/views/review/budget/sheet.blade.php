@@ -243,7 +243,7 @@
 
 
         #searchBar{
-            width:460px;
+            width:500px;
             position:fixed;
             top:10px;
             left:50%;
