@@ -1077,6 +1077,21 @@
             return string.replace(/[/\-\\^$*+?.()|[\]{}]/g, '\\$&');
         }
 
+        function openAll(){
+            $q('.contract-item').apply(el=>{
+                let id = el.getAttribute('data-id');
+            
+                $q('.owned-by-contract-item-'+id).apply(el=>{
+                    
+                    el.classList.remove('d-none');
+                    
+                });
+
+            });
+
+            toggleCollapseFlag = false;
+        }
+
         function searchBar(item){
             let elem = item[0];
 
@@ -1093,18 +1108,7 @@
 
             input.oninput = (e)=>{
 
-                $q('.contract-item').apply(el=>{
-                    let id = el.getAttribute('data-id');
-                
-                    $q('.owned-by-contract-item-'+id).apply(el=>{
-                        
-                        el.classList.remove('d-none');
-                        
-                    });
-
-                });
-
-                toggleCollapseFlag = false;
+                openAll();
 
                 result  = [];
                 index   = 0;
@@ -1151,6 +1155,8 @@
             }
 
             next.onclick = ()=>{
+                
+                openAll();
 
                 index = index + 1;
 
@@ -1174,6 +1180,8 @@
 
             prev.onclick = ()=>{
 
+                openAll();
+
                 index = index - 1;
 
                 if(index < 0){
@@ -1194,6 +1202,9 @@
 
 
             close.onclick = ()=>{
+
+                openAll();
+
                 result                  = [];
                 result_count            = 0;
                 index                   = 0;
