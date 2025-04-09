@@ -21,12 +21,13 @@
 
         table, tr, td, th {
             border: solid 1px #000000;
-            border-collapse: collapse;
+            border-collapse: separate;
             font-size: 11px;
         }
         
         table {
             width:100%;
+            border-spacing:1px;
         }
 
         th{
@@ -351,11 +352,7 @@
             </tr>
             @endif
             <tr>
-                <th data-controller="pageBreaker" rowspan="2" style="min-width:5%;max-width:5%">
-                    <div>
-                        ITEM CODE
-                    </div>
-                </th>
+                <th data-controller="pageBreaker" rowspan="2" style="min-width:5%;max-width:5%">ITEM CODE</th>
                 <th rowspan="2" style="min-width:20%;max-width:20%">DESCRIPTION</th>
                 <th colspan="4" style="">Contract</th>
                 <th colspan="4" style="">POW/DUPA</th>
