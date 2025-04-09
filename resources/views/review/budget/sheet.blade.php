@@ -302,6 +302,10 @@
         .background-highlight{
             background-color:rgb(174, 174, 254) !important;
         }
+
+        .sticky-top{
+            position: sticky;
+        }
     
     </style>
 </head>
@@ -329,7 +333,7 @@
         </tr>
     </table>
 
-    <table id="sheet">
+    <table id="sheet" class="sticky-top">
         
         <!--Headers -->
         <thead>
