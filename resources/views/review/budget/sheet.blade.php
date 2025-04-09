@@ -85,6 +85,7 @@
             -moz-user-select: none;
             -webkit-user-select: none; /* Chrome, Opera and Safari*/
             -ms-user-select: none; /* IE, ms-edge */
+            -webkit-tap-highlight-color: transparent;
         }
 
         /** Material */
