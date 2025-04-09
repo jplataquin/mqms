@@ -1387,7 +1387,8 @@
 
             let thead = sheet.querySelector('thead');
             
-            let head_height = thead.offsetHeight;
+            let head_height             = thead.offsetHeight;
+            let contract_item_height    = 0;
 
             items.map(item=>{
 
@@ -1399,10 +1400,18 @@
                     });
                 }
 
-                console.log(head_height);
                 item.style.top = head_height+'px'; 
 
-            })
+                if(item.offsetHeight > contract_item_height){
+                    contract_item_height = item.offsetHeight;
+                }
+            });
+
+            console.log(contract_item_height);
+
+            items.map(item=>{
+                item.style.minHeight = contract_item_height+'px';
+            });
         }
 
         let elem = {};
