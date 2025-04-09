@@ -1190,7 +1190,7 @@
                 total_count.innerText = result_count;
                 index_count.innerText = index+1;
 
-                result[0].scrollIntoView();
+                result[0].scrollIntoView({ block: "center" });
                 result[0].classList.add('background-highlight');
 
             }
@@ -1213,7 +1213,7 @@
                 });
 
 
-                result[index].scrollIntoView();
+                result[index].scrollIntoView({ block: "center" });
                 result[index].classList.add('background-highlight');
 
                 index_count.innerText = index+1;
@@ -1235,7 +1235,7 @@
                 });
 
 
-                result[index].scrollIntoView();
+                result[index].scrollIntoView({ block: "center" });
                 result[index].classList.add('background-highlight');
 
                 index_count.innerText = index+1;
