@@ -243,13 +243,13 @@
 
 
         #searchBar{
-            width:50%;
+            width:460px;
             position:fixed;
             top:10px;
-            left:25%;
+            left:50%;
             padding:10px;
             background-color:grey;
-            opacity: 0.4;
+            opacity: 0.5;
         }
 
         #searchBar > div > input[type="text"]{
@@ -1120,7 +1120,7 @@
                 Array.from( document.querySelectorAll('.background-highlight') ).map(el=>{
                     el.classList.remove('background-highlight');
                 });
-                
+
                 elem.classList.add('d-none');
             }
         }
