@@ -980,7 +980,7 @@
         </div>
     </div>
 
-    <div id="actionContainer">
+    <div id="actionContainer" class="no-select">
         
         <div id="actionBtn" class="me-10 no-select">
             
