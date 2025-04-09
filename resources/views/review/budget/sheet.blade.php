@@ -1001,7 +1001,10 @@
             
         }
 
-        
+        function escapeRegex(string) {
+            return string.replace(/[/\-\\^$*+?.()|[\]{}]/g, '\\$&');
+        }
+
         function searchBar(item){
             let elem = item[0];
 
@@ -1018,7 +1021,7 @@
 
             input.oninput = (e)=>{
 
-                console.log('wtf');
+
                 result  = [];
                 index   = 0;
 
@@ -1038,7 +1041,7 @@
                 let data = Array.from( sheet.querySelectorAll('.searchable') );
               
 
-                let search = RegExp.escape( input.value.toLowerCase() );
+                let search = escapeRegex( input.value.toLowerCase() );
             
                 let regex   = new RegExp(search+'.*');
                
