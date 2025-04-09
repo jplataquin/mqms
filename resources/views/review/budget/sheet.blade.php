@@ -1093,6 +1093,18 @@
 
             input.oninput = (e)=>{
 
+                $q('.contract-item').apply(el=>{
+                    let id = el.getAttribute('data-id');
+                
+                    $q('.owned-by-contract-item-'+id).apply(el=>{
+                        
+                        el.classList.remove('d-none');
+                        
+                    });
+
+                });
+
+                toggleCollapseFlag = false;
 
                 result  = [];
                 index   = 0;
