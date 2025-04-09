@@ -1401,7 +1401,7 @@
                     });
                 }
 
-                item.style.height = head_height+'px'; 
+                item.style.top = head_height; 
 
             })
         }
