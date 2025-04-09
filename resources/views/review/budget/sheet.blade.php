@@ -1113,6 +1113,14 @@
                 total_count.innerText   = '0';
                 index_count.innerText   = '0';
 
+                Array.from( document.querySelectorAll('.border-highlight') ).map(el=>{
+                    el.classList.remove('border-highlight');
+                });
+
+                Array.from( document.querySelectorAll('.background-highlight') ).map(el=>{
+                    el.classList.remove('background-highlight');
+                });
+                
                 elem.classList.add('d-none');
             }
         }
