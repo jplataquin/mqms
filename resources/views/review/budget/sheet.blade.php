@@ -1401,6 +1401,7 @@
                     });
                 }
 
+                console.log(head_height);
                 item.style.top = head_height; 
 
             })
