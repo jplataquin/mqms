@@ -283,7 +283,7 @@
         #searchBar{
             width:500px;
             position:fixed;
-            top:20%;
+            top:50%;
             left:50%;
             padding:10px;
             background-color:grey;
