@@ -20,10 +20,9 @@
         }
 
         table, tr, td, th {
+            border: solid 1px #000000;
+            border-collapse: separate;
             font-size: 11px;
-            border:solid;
-            border-collapse:separate;
-            border-color: rgba(255,255,255,0.5);
             border-spacing:0px;
         }
         
