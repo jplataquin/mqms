@@ -1402,6 +1402,8 @@
 
                 item.style.top = head_height+'px'; 
 
+                console.log(item.offsetHeight,contract_item_height);
+
                 if(item.offsetHeight > contract_item_height){
                     contract_item_height = item.offsetHeight;
                 }
@@ -1412,8 +1414,8 @@
             items.map(item=>{
 
                 console.log(item.firstChild);
-                
-                item.firstChild.height = contract_item_height+'px';
+
+                item.querySelector('td').height = contract_item_height+'px';
             });
         }
 
