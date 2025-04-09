@@ -311,7 +311,7 @@
             background-color:#ffffff !important;
         }
 
-        .sheet-header > th{
+        .sheet-header > tr > th{
             border-collapse:separate;
         }
     
