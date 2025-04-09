@@ -312,7 +312,7 @@
         }
 
         .sheet-header th{
-            border:separate;
+            border-collapse:separate;
         }
     
     </style>
