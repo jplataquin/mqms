@@ -486,8 +486,8 @@
         
                 <tr class="
 
-                    ownded-by-contract-item-{{$row_1->contract_item->id}}
-
+                    owned-by-contract-item-{{$row_1->contract_item->id}}
+                        
                     @if($hide['component'][$component_id])
                         d-none
                     @endif
@@ -562,7 +562,7 @@
          
                 <tr class="
 
-                    ownded-by-contract-item-{{$row_1->contract_item->id}}
+                    owned-by-contract-item-{{$row_1->contract_item->id}}
 
                     @if($hide['component'][$component_id])
                         d-none
@@ -607,7 +607,7 @@
                 <!-- Component Item data row -->
                 <tr class="
                     
-                    ownded-by-contract-item-{{$row_1->contract_item->id}}
+                    owned-by-contract-item-{{$row_1->contract_item->id}}
 
                     @if($hide['component_item'][$component_item_id])
                         d-none
