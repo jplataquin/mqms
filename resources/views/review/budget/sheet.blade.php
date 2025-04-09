@@ -1153,7 +1153,7 @@
                 result[0].scrollIntoView();
                 result[0].classList.add('background-highlight');
 
-                console.log(e.keyCode);
+                console.log(e.charAt,e);
             }
 
             next.onclick = ()=>{
