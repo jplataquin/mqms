@@ -303,9 +303,8 @@
             background-color:rgb(174, 174, 254) !important;
         }
 
-        .sticky-top{
+        .sticky{
             position: sticky;
-            top:0;
         }
 
         .bg-white{
@@ -341,7 +340,7 @@
     <table id="sheet">
         
         <!--Headers -->
-        <thead class="sticky-top bg-white">
+        <thead class="sticky bg-white" style="top:0">
             @if($hide['total_contract_item'] > 0 || $hide['total_component'] > 0)
             <tr>
                 <th data-controller="pageBreaker" class="text-center rejected-text" colspan="8">
@@ -387,13 +386,14 @@
         </thead>
         <tbody>
         
-       
 
         @foreach($data as $contract_item_id => $row_1)
 
             <!-- Contract Item -->
 
             <tr data-id="{{$row_1->contract_item->id}}" data-controller="contractItemController" class="
+                sticky
+
                 contract-item
                  
                 @if($hide['contract_item'][$row_1->contract_item->id])
@@ -1386,6 +1386,11 @@
         }
 
         function contractItemController(items){
+
+            let thead = sheet.querySelector('thead');
+            
+            let head_height = thead.offsetHeight;
+
             items.map(item=>{
 
                 let id = item.getAttribute('data-id');
@@ -1395,6 +1400,9 @@
                         el.classList.remove('d-none');
                     });
                 }
+
+                item.style.height = head_height+'px'; 
+
             })
         }
 
