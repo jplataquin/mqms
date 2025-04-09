@@ -20,7 +20,7 @@
         }
 
         table, tr, td, th {
-            border: solid 1px #000000;
+            border: solid 1px #00000040;
             border-collapse: separate;
             font-size: 11px;
             border-spacing:0px;
