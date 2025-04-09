@@ -180,7 +180,7 @@
         }
 
         .pending-text{
-            color:rgb(234, 255, 5);
+            color:rgb(248, 244, 24);
         }
 
         .approved-text{
@@ -283,7 +283,7 @@
         #searchBar{
             width:500px;
             position:fixed;
-            top:10px;
+            top:20%;
             left:50%;
             padding:10px;
             background-color:grey;
