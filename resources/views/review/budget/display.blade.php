@@ -55,6 +55,8 @@
         
         const sheet_iframe      = $q('#sheet_iframe').first();
         const fullScreenBtn     = $q('#fullScreenBtn').first();
+        
+        document.body.classList.remove('no-scroll');
 
         window.getSheetPos = ()=>{
             let data = sheet_iframe.getBoundingClientRect();

@@ -1366,6 +1366,9 @@
                             {
                                 name:'Open',
                                 onclick:(e)=>{
+                                    
+                                    window.parent.document.body.classList.remove('no-scroll');
+
                                     window.parent.util.navTo('/project/section/contract_item/component/'+component_id+'?b='+encodeURI(window.parent.location.href));
                                 }
                             },
