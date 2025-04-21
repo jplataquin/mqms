@@ -6,7 +6,7 @@
     <style>
 
         .fullscreen{
-            position:absolute;
+            position:fixed;
             top:0;
             left:0;
             z-index:1000;
@@ -58,7 +58,7 @@
         
         document.body.classList.remove('no-scroll');
         sheet_iframe.classList.remove('fullscreen');
-        
+
         window.getSheetPos = ()=>{
             let data = sheet_iframe.getBoundingClientRect();
             return data;
@@ -74,6 +74,7 @@
         }
 
         fullScreenBtn.onclick = ()=>{
+            
             sheet_iframe.classList.add('fullscreen');
             document.body.classList.add('no-scroll');
         }
