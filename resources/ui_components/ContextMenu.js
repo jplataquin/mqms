@@ -59,7 +59,9 @@ class ContextMenu extends ComponentV2{
                 borderBottom:'1px solid rgba(25,25,25,0.5)',
                 width:'100%',
                 marginBottom:'5px',
-                cursor:'pointer'
+                cursor:'pointer',
+                paddingTop:'3px',
+                paddingBottom:'3px'
             }
         },()=>{
             t.span({

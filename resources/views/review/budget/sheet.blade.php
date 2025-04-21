@@ -176,7 +176,7 @@
         }
 
         .warning-text{
-            color:rgb(234, 255, 5);
+            color: rgb(255, 227, 0);
         }
 
         .pending-text{
@@ -1277,6 +1277,8 @@
 
             items.map(item=>{
 
+                const status_indicator = item.querySelector('.status');
+
                 item.addEventListener('mousedown',function(e){
                     e.preventDefault();
                 });
@@ -1320,8 +1322,10 @@
                                             return false;
                                         };
 
-
-                                        window.document.location.reload();
+                                        status_indicator.classList.remove('pending-text');
+                                        status_indicator.classList.remove('rejected-text');
+                                        status_indicator.classList.add('approved-text');
+                                        
 
                                     });
                                 }
@@ -1351,7 +1355,10 @@
                                         };
 
 
-                                        document.location.reload();
+                                        status_indicator.classList.remove('pending-text');
+                                        status_indicator.classList.remove('approved-text');
+                                        status_indicator.classList.add('rejected-text');
+                                        
 
                                     });
                                 }
@@ -1363,9 +1370,36 @@
                                 }
                             },
                             {
-                                name:'Revert to Pending',
-                                onclick:(e)=>{
-                                    alert('Revert to pending');
+                                name:'Revert (Pending)',
+                                onclick: async (e)=>{
+                                    
+                                    let answer = await window.parent.util.confirm('Are you sure you want to REVERT this component?');
+                                    
+                                    if(!answer){
+                                        return false;
+                                    }
+
+                                    window.parent.util.blockUI();
+
+                                    window.parent.util.$post('/api/review/component/revert_to_pending',{
+                                        id: component_id
+                                    }).then(reply=>{
+
+                                        
+                                        window.parent.util.unblockUI();
+
+                                        if(reply.status <= 0 ){
+                                            window.parent.util.showMsg(reply);
+                                            return false;
+                                        };
+
+
+                                        status_indicator.classList.remove('rejected-text');
+                                        status_indicator.classList.remove('approved-text');
+                                        status_indicator.classList.add('pending-text');
+                                        
+
+                                    });
                                 }
                             },
                         ]
