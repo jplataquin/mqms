@@ -60,8 +60,8 @@ class ContextMenu extends ComponentV2{
                 width:'100%',
                 marginBottom:'5px',
                 cursor:'pointer',
-                paddingTop:'3px',
-                paddingBottom:'3px'
+                paddingTop:'5px',
+                paddingBottom:'5px'
             }
         },()=>{
             t.span({
