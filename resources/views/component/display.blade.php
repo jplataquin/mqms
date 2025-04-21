@@ -337,7 +337,7 @@
     cancelBtn.onclick = ()=>{
 
         @if($back)
-            history.back();
+            window.util.navTo('{{$back}}');
         @else
             window.util.navTo('/project/section/contract_item/{{$contract_item->id}}');
         @endif
