@@ -30,6 +30,23 @@
         </div>
         <div class="form-body">
             <div class="row">
+                <div class="col-lg-12 mb-3">
+                    <div class="form-group">
+                        <label>Actions</label>
+
+                        
+                        @foreach(['add','view','update','delete'] as $val)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="{{$val}}">
+                                <label class="form-check-label">
+                                    {{$val}}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="row">
 
                 <div class="col-12 mb-3">
                     <div class="form-group">
