@@ -29,13 +29,19 @@
             Create Access Code
         </div>
         <div class="form-body">
+            
             <div class="row">
                 <div class="col-lg-12 mb-3">
-                    <div class="form-group">
+                    <div class="form-group ps-5">
                         <label>Actions</label>
 
                         
-                        @foreach(['add','view','update','delete'] as $val)
+                        @foreach([
+                            'add',
+                            'view',
+                            'update',
+                            'delete'
+                        ] as $val)
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="{{$val}}">
                                 <label class="form-check-label">
@@ -46,6 +52,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
 
                 <div class="col-12 mb-3">
