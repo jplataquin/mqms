@@ -51,12 +51,14 @@
                                 'revert_to_pending'
                             ] as $val)
                                 <div class="form-check">
-                                    <input class="form-check-input actions" name="actions[]" type="checkbox" value="{{$val}}">
+                                    <input class="form-check-input actions" type="checkbox" value="{{$val}}">
                                     <label class="form-check-label">
                                         {{ str_replace('_',' ',$val) }}
                                     </label>
                                 </div>
                             @endforeach
+                            
+                            Other: <input type="text" class="form-control" class="actions"/>
                         </div>
                     </div>
                 </div>
