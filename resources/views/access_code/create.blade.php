@@ -46,12 +46,14 @@
                                 'add',
                                 'view',
                                 'update',
-                                'delete'
+                                'delete',
+                                'request_void',
+                                'revert_to_pending'
                             ] as $val)
                                 <div class="form-check">
                                     <input class="form-check-input actions" name="actions[]" type="checkbox" value="{{$val}}">
                                     <label class="form-check-label">
-                                        {{$val}}
+                                        {{ str_replace($val,'_',' ') }}
                                     </label>
                                 </div>
                             @endforeach
