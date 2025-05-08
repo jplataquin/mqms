@@ -32,23 +32,30 @@
             
             <div class="row">
                 <div class="col-lg-12 mb-3">
-                    <div class="form-group ps-5">
+                    <div class="form-group">
                         <label>Actions</label>
 
-                        
-                        @foreach([
-                            'add',
-                            'view',
-                            'update',
-                            'delete'
-                        ] as $val)
+                        <div class="ps-5">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="{{$val}}">
+                                <input class="form-check-input" type="checkbox" id="check-all-actions-btn">
                                 <label class="form-check-label">
-                                    {{$val}}
+                                    All
                                 </label>
                             </div>
-                        @endforeach
+                            @foreach([
+                                'add',
+                                'view',
+                                'update',
+                                'delete'
+                            ] as $val)
+                                <div class="form-check">
+                                    <input class="form-check-input actions" name="actions[]" type="checkbox" value="{{$val}}">
+                                    <label class="form-check-label">
+                                        {{$val}}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
@@ -83,10 +90,23 @@
 <script type="module">
     import {$q} from '/adarna.js';
 
-    let createBtn       = $q('#createBtn').first();
-    let cancelBtn       = $q('#cancelBtn').first();
-    let access_code     = $q('#access_code').first();
-    let description     = $q('#description').first();
+    const createBtn           = $q('#createBtn').first();
+    const cancelBtn           = $q('#cancelBtn').first();
+    const access_code         = $q('#access_code').first();
+    const description         = $q('#description').first();
+    const checkAllActionsBtn  = $q('#check-all-actions-btn').first();
+    
+    checkAllActionsBtn.change = (e)=>{
+
+        $q('.actions').apply((elem)=>{
+
+            if(checkAllActionsBtn.checked){
+                elem.checked = true;
+            }else{
+                elem.checked = false;
+            }
+        });
+    }
 
     createBtn.onclick = (e) => {
 
