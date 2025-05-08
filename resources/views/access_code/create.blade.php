@@ -96,7 +96,7 @@
     const description         = $q('#description').first();
     const checkAllActionsBtn  = $q('#check-all-actions-btn').first();
     
-    checkAllActionsBtn.change = (e)=>{
+    checkAllActionsBtn.onchange = (e)=>{
 
         $q('.actions').apply((elem)=>{
 
