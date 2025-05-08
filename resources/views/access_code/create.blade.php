@@ -53,7 +53,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input actions" name="actions[]" type="checkbox" value="{{$val}}">
                                     <label class="form-check-label">
-                                        {{ str_replace($val,'_',' ') }}
+                                        {{ str_replace('_',' ',$val) }}
                                     </label>
                                 </div>
                             @endforeach
