@@ -42,13 +42,14 @@ class CreateMaterialQuantityForm extends ComponentV2{
                     //this.calculateTotal();
                 }
             },
+            /** 
             total:{
                 value:0,
                 target:this.el.total,
                 onUpdate:(data)=>{
                     this.el.total.value = data.value+' '+this._model.component_item_unit_text;
                 }
-            }
+            }**/
         }
     }
 
