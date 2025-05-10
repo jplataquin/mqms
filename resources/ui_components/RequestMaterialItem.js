@@ -206,7 +206,7 @@ class RequestMaterialItem extends Component{
                     t.div({class:'col-lg-6'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Request Equivalent');
-                            t.input({class:'form-control',type:'text',disabled:true});
+                            this.el.requestEquivalent = t.input({class:'form-control',type:'text',disabled:true});
                         });
                     });
 
@@ -461,15 +461,19 @@ class RequestMaterialItem extends Component{
 
         if(prevApprovedQuantity != 'Calculating...'){
 
-            let remaining = window.util.pureNumber(this.el.materialBudgetQuantity.value) - window.util.pureNumber(this.el.prevApprovedQuantity.value);
-            
-            if( window.util.pureNumber(this.el.requestedQuantity.value) > remaining ){
+            let remaining           = window.util.pureNumber(this.el.materialBudgetQuantity.value) - window.util.pureNumber(this.el.prevApprovedQuantity.value);
+            let requested_quantity  = window.util.pureNumber(this.el.requestedQuantity.value);
+            let equivalent          = window.util.pureNumber(this.el.equivalentQuantity.value);
+
+            if( requested_quantity > remaining ){
             
                 window.util.alert('Error','Requested quantity is out of budget');
             
                 this.el.requestedQuantity.value = 0; 
                 this.el.requestedQuantity.blur();
             }
+
+            this.el.requestEquivalent = (requested_quantity * equivalent);
 
         }else{
 
@@ -480,26 +484,6 @@ class RequestMaterialItem extends Component{
         }
 
         
-        /** Parang d na need */
-        /*
-        if(!isNaN(this.el.quantityRemaining.value)){
-           
-            setTimeout(()=>{
-                
-                
-                let balance_quantity            = window.util.roundUp( this.el.quantityRemaining.valueAsNumber - parseFloat(newVal), 2);
-                
-                if(!isNaN(balance_quantity)){
-                    this.el.balanceQuantity.value   = new Intl.NumberFormat().format(balance_quantity);
-                }else{
-                    this.el.balanceQuantity.value = '';
-                }
-
-            },500);
-            
-        }else{
-            this.el.balanceQuantity.value = '';
-        }*/
         
     }
 
