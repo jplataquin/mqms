@@ -52,6 +52,8 @@ class MaterialQuantityRequestController extends Controller
         $component_id = (int) $component_id;
         $component = Component::findOrFail($component_id);
 
+        $unit_options = Unit::toOptions();
+
         //If the project is not active then do not allow
         if($project->status != 'ACTV'){
             return view('material_quantity_request/unavailable',[
@@ -89,6 +91,7 @@ class MaterialQuantityRequestController extends Controller
                 'value'                 => $component_item->id,
                 'text'                  => $component_item->name,
                 'unit_id'               => $component_item->unit_id,
+                'unit_text'             => $unit_options[$component_item->unit_id]['text'],
                 'quantity'              => $component_item->quantity
             ];
         }
@@ -122,7 +125,7 @@ class MaterialQuantityRequestController extends Controller
                 'value'         => $row->material_item_id,
                 'text'          => trim($row->brand.' '.$row->name.' '.$row->specification_unit_packaging),
                 'equivalent'    => $row->equivalent,
-                'quantity'      => 88
+                'quantity'      => $component_item_options[$row->component_item_id]['quantity'].' '.$component_item_options[$row->component_item_id]['unit_text'] 
             ];
         }
 
