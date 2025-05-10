@@ -23,7 +23,7 @@ class MaterialQuantityController extends Controller
         $component_item_id              = $request->input('component_item_id');
         $material_item_id               = $request->input('material_item_id');
         $equivalent                     = $request->input('equivalent');
-        $quantity                       = $request->input('quantity');
+        //$quantity                       = $request->input('quantity');
 
         $validator = Validator::make($request->all(),[
             'material_item_id'               => [
@@ -39,7 +39,7 @@ class MaterialQuantityController extends Controller
             ],
             'component_item_id'         => ['required','integer'],
             'equivalent'                => ['required','numeric'],
-            'quantity'                  => ['required','numeric']
+          //  'quantity'                  => ['required','numeric']
         ]);
 
         if($validator->fails()){
@@ -64,6 +64,7 @@ class MaterialQuantityController extends Controller
         }
 
         //Check if total entries is not more than component item quantity
+        /***
         $entries = MaterialQuantity::where('component_item_id',$component_item_id)->get();
 
         $grand_total = 0;
@@ -81,22 +82,23 @@ class MaterialQuantityController extends Controller
                 'data'      => []
             ]);
         }
+        ***/
 
         //Insert to database
         $user_id = Auth::user()->id;
 
         $materialQuantity = new MaterialQuantity();
 
-        $materialQuantity->version_flag           = 2;
         $materialQuantity->component_item_id      = $component_item_id;
         $materialQuantity->material_item_id       = $material_item_id;
-        $materialQuantity->quantity               = round($quantity,2);
+        $materialQuantity->quantity               = 0;//round($quantity,2);
         $materialQuantity->equivalent             = $equivalent;
        
         $materialQuantity->created_by             = $user_id;
 
         $materialQuantity->save();
 
+        /***
         $component = $materialQuantity->componentItem->component;
         
         //Todo enclosed in a transaction
@@ -104,7 +106,8 @@ class MaterialQuantityController extends Controller
              $component->status = 'PEND';
              $component->save();
          }
-
+        ***/
+        
         return response()->json([
             'status'    => 1,
             'message'   => '',
