@@ -33,6 +33,14 @@
             <div class="row">
                 <div class="col-lg-12 mb-3">
                     <div class="form-group">
+                        <label>Scope</label>
+                        <select class=""></select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 mb-3">
+                    <div class="form-group">
                         <label>Actions</label>
 
                         <div class="ps-5">

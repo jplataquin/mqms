@@ -284,70 +284,25 @@ class MaterialQuantityRequestController extends Controller
             ]);
         }
 
-        $doubleEntry         = [];
-        $doubleComponentItem = [];
 
-        foreach($items as $item){
-
-            $item['component_item_id']      = (int) $item['component_item_id'];
-            $item['material_item_id']       = (int) $item['material_item_id'];
-
-
-            //check for double entry
-            $check_combination = $item['component_item_id'].'-'.$item['material_item_id'];
-
-            if( in_array($check_combination,$doubleEntry) ){
-
-                return response()->json([
-                    'status'    => 0,
-                    'message'   => 'Double entry with the same component item and material item',
-                    'data'      => []
-                ]);
-
-            }else{
-                $doubleEntry[] = $check_combination;
-            }
-
-            if( in_array($item['component_item_id'],$doubleComponentItem) ){
-                
-                return response()->json([
-                    'status'    => 0,
-                    'message'   => 'Cannot have two or more entries with the same component item',
-                    'data'      => []
-                ]);
-
-            }else{
-                $doubleComponentItem[] = $item['component_item_id'];
-            }
-        }
+        $double_entry          = [];
+        $double_component_item = [];
 
 
         //Validate that the request is still within budget 
         foreach($items as $item){
 
-            $item['component_item_id']     = (int) $item['component_item_id'];
-            $item['material_item_id']      = (int) $item['material_item_id'];
-            $item['requested_quantity']    = (float) $item['requested_quantity'];
+            $check_double_entry = $this->checkRequestItemDoubleEntry($item,$double_entry,$double_component_item);
 
-            $requested_quantity_total = MaterialQuantityRequestItem::where('status','=','APRV')
-            ->where('component_item_id','=',$item['component_item_id'])
-            ->where('material_item_id','=',$item['material_item_id'])
-            ->sum('requested_quantity');
-            
-            $materialQuantity = MaterialQuantity::where('component_item_id','=',$item['component_item_id'])
-            ->where('material_item_id','=',$item['material_item_id'])->first();
-           
-            $remaining = $materialQuantity->quantity - $requested_quantity_total;
+            if($check_double_entry['status'] <= 0){
+                return response()->json($check_double_entry);
+            }
 
+            $check_budget = $this->checkRequestItemAgainstBudget($item);
 
-            if($remaining < $item['requested_quantity']){
+            if($check_budget['status'] <= 0){
 
-                return response()->json([
-                    'status'    => 0,
-                    'message'   => 'Out of budget',
-                    'data'      => []
-                ]);
-
+                return response()->json($check_budget);
             }
         }
         
@@ -406,6 +361,145 @@ class MaterialQuantityRequestController extends Controller
          }
     }
 
+    private function checkRequestItemDoubleEntry($item,&$double_entry,&$double_component_item){
+    
+        $item_component_item_id      = (int) $item['component_item_id'];
+        $item_material_item_id       = (int) $item['material_item_id'];
+
+        //check for double entry
+        $check_combination = $item_component_item_id.'-'.$item_material_item_id;
+
+        if( in_array($check_combination,$double_entry) ){
+
+            return [
+                'status'    => 0,
+                'message'   => 'Double entry with the same component item and material item',
+                'data'      => []
+            ];
+
+        }else{
+            $double_entry[] = $check_combination;
+        }
+
+        if( in_array($item_component_item_id,$double_component_item) ){
+            
+            return [
+                'status'    => 0,
+                'message'   => 'Cannot have two or more entries with the same component item',
+                'data'      => []
+            ];
+
+        }else{
+            $double_component_item[] = $item_component_item_id;
+        }
+
+        return [
+            'status'    => 1,
+            'message'   => '',
+            'data'      => []
+        ];
+    }
+
+    private function checkRequestItemAgainstBudget($item){
+
+        $item_component_item_id     = (int) $item['component_item_id'];
+        $item_material_item_id      = (int) $item['material_item_id'];
+        $item_requested_quantity    = (float) $item['requested_quantity'];
+
+
+        $material_quantity = MaterialQuantity::where('component_item_id','=',$item_component_item_id)
+        ->where('material_item_id','=',$item_material_item_id)->first();
+       
+        
+        //Check using method 1
+        if($material_quantity->version_flag == 1){
+
+            $requested_quantity_total = MaterialQuantityRequestItem::where('status','=','APRV')
+            ->where('component_item_id','=',$item_component_item_id)
+            ->where('material_item_id','=',$item_material_item_id)
+            ->sum('requested_quantity');
+          
+        
+            $remaining = $materialQuantity->quantity - $requested_quantity_total;
+
+
+            if($remaining < $item_requested_quantity){
+
+                return [
+                    'status'    => 0,
+                    'message'   => 'Out of budget',
+                    'data'      => []
+                ];
+
+            }
+
+        }else if($material_quantity->version_flag == 2){ //Check using method 2
+
+            $component_item = ComponentItem::find($item_component_item_id);
+            
+            //If none then error
+            if(!$material_quantity){
+                return [
+                    'status'    => 0,
+                    'message'   => 'No maintained budget (a)',
+                    'data'      => []
+                ];
+            }
+
+            if(!$material_quantity->equivalent){
+                return [
+                    'status'    => 0,
+                    'message'   => 'No maintained budget (b)',
+                    'data'      => []
+                ];
+            }
+
+            $requested_quantity_total = MaterialQuantityRequestItem::where(function($query){
+                $query->where('status','=','APRV')
+                ->orWhere('status','=','CLSD');
+            })
+            ->where('component_item_id','=',$item['component_item_id'])
+            ->where('material_item_id','=',$item['material_item_id'])
+            ->sum('requested_quantity');
+            
+
+            //Calculate the total requested quantity as per equivalent
+            $total_equivalent_quantity_requested = $requested_quantity_total * $material_quantity->equivalent;
+
+            //Calculate the remaining budget not requested
+            $remaining_budget_quantity = $component_item->quantity - $total_equivalent_quantity_requested;
+
+            //Calculate equivalent request
+            $equivalent_quantity_request = $item_requested_quantity * $material_quantity->equivalent;
+            
+            //Check if the requeste is within the remaining budget
+            if($remaining_budget_quantity < $equivalent_quantity_request){
+
+                return [
+                    'status'    => 0,
+                    'message'   => 'Out of budget (Request equivalent: '.$equivalent_quantity_request.' Remaining budget: '.$remaining_budget_quantity.')',
+                    'data'      => []
+                ];
+
+            }
+
+        
+        }else{
+            
+            return [
+                'status'    => 0,
+                'message'   => 'Unknown checking method for budget',
+                'data'      => []
+            ]; 
+        }
+
+
+        return [
+            'status'    => 1,
+            'message'   => '',
+            'data'      => []
+        ];
+    }
 
     public function display($id){
         
