@@ -134,7 +134,7 @@ class CreateMaterialQuantityForm extends ComponentV2{
 
                 t.div({class:'col-lg-4'},()=>{
                     t.div({class:'form-group'},()=>{
-                        t.label('Total Equivalent');
+                        t.label('Unit');
                         
                         t.input({class:'form-control',disabled:true,value:this._model.component_item_unit_text});
                     });
