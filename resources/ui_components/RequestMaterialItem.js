@@ -410,12 +410,13 @@ class RequestMaterialItem extends Component{
             this.el.prevApprovedQuantity.value = window.util.numberFormat(reply.data.total_approved_quantity,2) + ' ' +reply.data.unit_text;
 
             let budget                         = window.util.pureNumber(this.el.materialBudgetQuantity.value);
-            let approved                       = reply.data.total_approved_quantity;
+            let approved                       = window.util.pureNumber(reply.data.total_approved_quantity);
             let balance                        = budget - approved;
             let request                        = window.util.pureNumber(this.el.requestedQuantity.value);
+            
             this.el.quantityRemaining.value    = window.util.numberFormat(
                                                     window.util.roundUp(balance,2)
-                                                );
+                                                )+ ' ' +reply.data.unit_text;
 
             //If balance is negative
             if(balance < 0){
