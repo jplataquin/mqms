@@ -174,7 +174,7 @@ class RequestMaterialItem extends Component{
                 t.div({class:'row mb-3'},()=>{
                     t.div({class:'col-lg-12'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Equivalent Quantity Per Material Unit');
+                            t.label('Equivalent Quantity Per Unit Of Material');
                             
                             this.el.equivalentQuantity = t.input({class:'form-control',type:'text',disabled:true});
 
@@ -205,7 +205,7 @@ class RequestMaterialItem extends Component{
 
                     t.div({class:'col-lg-6'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Equivalent Request');
+                            t.label('Request Equivalent');
                             t.input({class:'form-control',type:'text',disabled:true});
                         });
                     });
@@ -516,6 +516,7 @@ class RequestMaterialItem extends Component{
             this.el.materialBudgetQuantity.value    = '';
             this.el.prevApprovedQuantity.value      = '';
             this.el.requestedQuantity.value         = '';
+            this.el.equivalentQuantity.value        = '';
             //this.el.balanceQuantity.value           = '';
             this.el.already_po.value                = '';
 
@@ -529,6 +530,7 @@ class RequestMaterialItem extends Component{
         this.el.materialBudgetQuantity.value    = window.util.numberFormat( material.budget,2) + ' '+material.unit_text; 
         this.el.requestedQuantity.value         = '';
         this.el.prevApprovedQuantity.value      = '';
+        this.el.equivalentQuantity.value        = window.util.numberFormat(material.equivalent,2)+' '+material.unit_text;
         //this.el.balanceQuantity.value           = '';
         this.el.already_po.value                = '';
         
