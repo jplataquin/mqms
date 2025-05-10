@@ -126,7 +126,8 @@ class MaterialQuantityRequestController extends Controller
                 'value'         => $row->material_item_id,
                 'text'          => trim($row->brand.' '.$row->name.' '.$row->specification_unit_packaging),
                 'equivalent'    => $row->equivalent,
-                'budget'        => $component_item_options[$row->component_item_id]['quantity'].' '.$component_item_options[$row->component_item_id]['unit_text'] 
+                'budget'        => $component_item_options[$row->component_item_id]['quantity'],
+                'unit_text'     => $component_item_options[$row->component_item_id]['unit_text'] 
             ];
         }
 

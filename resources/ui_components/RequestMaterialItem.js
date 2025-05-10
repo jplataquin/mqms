@@ -508,7 +508,7 @@ class RequestMaterialItem extends Component{
             return false;
         }
         
-        this.el.materialBudgetQuantity.value    = material.budget; 
+        this.el.materialBudgetQuantity.value    = window.util.numberFormat( material.budget,2) + ' '+material.unit_text; 
         this.el.requestedQuantity.value         = '';
         this.el.prevApprovedQuantity.value      = '';
         //this.el.balanceQuantity.value           = '';
