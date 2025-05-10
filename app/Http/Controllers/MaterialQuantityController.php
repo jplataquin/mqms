@@ -87,6 +87,7 @@ class MaterialQuantityController extends Controller
 
         $materialQuantity = new MaterialQuantity();
 
+        $materialQuantity->version_flag           = 2;
         $materialQuantity->component_item_id      = $component_item_id;
         $materialQuantity->material_item_id       = $material_item_id;
         $materialQuantity->quantity               = round($quantity,2);

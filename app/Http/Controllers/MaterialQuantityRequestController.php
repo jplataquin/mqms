@@ -410,7 +410,7 @@ class MaterialQuantityRequestController extends Controller
         $material_quantity = MaterialQuantity::where('component_item_id','=',$item_component_item_id)
         ->where('material_item_id','=',$item_material_item_id)->first();
        
-        
+        /*** 
         //Check using method 1
         if($material_quantity->version_flag == 1){
 
@@ -434,7 +434,7 @@ class MaterialQuantityRequestController extends Controller
             }
 
         }else if($material_quantity->version_flag == 2){ //Check using method 2
-
+        **/
             $component_item = ComponentItem::find($item_component_item_id);
             
             //If none then error
@@ -483,7 +483,7 @@ class MaterialQuantityRequestController extends Controller
 
             }
 
-        
+        /***
         }else{
             
             return [
@@ -491,7 +491,7 @@ class MaterialQuantityRequestController extends Controller
                 'message'   => 'Unknown checking method for budget',
                 'data'      => []
             ]; 
-        }
+        } ***/
 
 
         return [

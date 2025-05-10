@@ -658,7 +658,9 @@ window.util.pureNumber = function(val,fractionDigits = null){
     }
     
     if(fractionDigits != null){
+        
         val = window.util.roundUp(val,fractionDigits);
+
     }
 
     return val;
