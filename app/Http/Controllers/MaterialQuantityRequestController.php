@@ -147,25 +147,25 @@ class MaterialQuantityRequestController extends Controller
 
     public function _create(Request $request){
 
-        $codes = [
-            'material_request:own:create'
-        ];
+        // $codes = [
+        //     'material_request:own:create'
+        // ];
 
-        $user = auth()->user();
+        // $user = auth()->user();
 
-        if(!$this->hasAccess($codes)){
+        // if(!$this->hasAccess($codes)){
             
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Resitricted action, no permission(s) granted',
-                'data'      => [
-                    'user'                      => $user,
-                    'required_access_codes'     => $codes,
-                    'currrent_access_codes'     => $this->accessCodes
-                ]
-            ]);
+        //     return response()->json([
+        //         'status'    => 0,
+        //         'message'   => 'Resitricted action, no permission(s) granted',
+        //         'data'      => [
+        //             'user'                      => $user,
+        //             'required_access_codes'     => $codes,
+        //             'currrent_access_codes'     => $this->accessCodes
+        //         ]
+        //     ]);
             
-        }
+        // }
 
         $project_id         = (int) $request->input('project_id');
         $section_id         = (int) $request->input('section_id');
