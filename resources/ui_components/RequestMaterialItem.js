@@ -507,7 +507,7 @@ class RequestMaterialItem extends Component{
             return false;
         }
         
-        this.el.materialBudgetQuantity.value    = material.quantity; 
+        this.el.materialBudgetQuantity.value    = material.budget; 
         this.el.requestedQuantity.value         = '';
         this.el.prevApprovedQuantity.value      = '';
         //this.el.balanceQuantity.value           = '';
