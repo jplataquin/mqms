@@ -31,7 +31,7 @@ class RequestMaterialItem extends Component{
             editable                : true,
             componentItemId         : null,
             materialItemId          : null,
-            unit                    :'',
+            unit_text               :'',
             prevApprovedQuantity    :'',
             materialBudgetQuantity  :'',
             requestedQuantity       :'',
@@ -473,7 +473,7 @@ class RequestMaterialItem extends Component{
                 this.el.requestedQuantity.blur();
             }
 
-            this.el.requestEquivalent.value = (requested_quantity * equivalent);
+            this.el.requestEquivalent.value = (requested_quantity * equivalent)+' '+this._state.unit_text;
 
         }else{
 
@@ -521,6 +521,7 @@ class RequestMaterialItem extends Component{
         this.setState('materialBudgetQuantity',material.budget);
         this.setState('requestedQuantity','');
         this.setState('prevApprovedQuantity','');
+        this.setState('unit_text',material.unit_text);
         
         this.calculate_quantities(this._state.componentItemId, material_id);
 
