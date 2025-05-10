@@ -119,7 +119,7 @@ class RequestMaterialItem extends Component{
 
                 t.div({class:'row mb-3'},()=>{
                     
-                    t.div({class:'col-lg-4'},()=>{
+                    t.div({class:'col-lg-3'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Total Budget');
                             this.el.materialBudgetQuantity = t.input({
@@ -131,7 +131,7 @@ class RequestMaterialItem extends Component{
                         });              
                     });
 
-                    t.div({class:'col-lg-4'},()=>{
+                    t.div({class:'col-lg-3'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Approved Request');
                             this.el.prevApprovedQuantity = t.input({
@@ -143,9 +143,9 @@ class RequestMaterialItem extends Component{
                     });
 
 
-                    t.div({class:'col-lg-4'},()=>{
+                    t.div({class:'col-lg-3'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Remaining');
+                            t.label('Available Quantity');
                             this.el.quantityRemaining = t.input({
                                 type:'text',
                                 disabled:true,
@@ -156,12 +156,24 @@ class RequestMaterialItem extends Component{
                     });//div col
 
 
+                    t.div({class:'col-lg-3'},()=>{
+                        t.div({class:'form-group'},()=>{
+                            t.label("Total PO'd");
+                            this.el.already_po = t.input({
+                                type:'text',
+                                disabled:true,
+                                class:'form-control text-center',
+                                value:''
+                            });
+                        });              
+                    });//div col
+                  
                   
                 });//div row
 
                 t.div({class:'row mb-3'},()=>{
                     
-                    t.div({class:'col-lg-6'},()=>{
+                    t.div({class:'col-lg-12'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label('Request');
                            
@@ -179,18 +191,7 @@ class RequestMaterialItem extends Component{
                         });//div form-group
                     });//div col
 
-                    t.div({class:'col-lg-6'},()=>{
-                        t.div({class:'form-group'},()=>{
-                            t.label("PO'd");
-                            this.el.already_po = t.input({
-                                type:'text',
-                                disabled:true,
-                                class:'form-control text-center',
-                                value:''
-                            });
-                        });              
-                    });//div col
-                  
+                    
 
                 });//div row
 
@@ -312,7 +313,7 @@ class RequestMaterialItem extends Component{
             }
 
 
-            this.el.already_po.value =  window.util.numberFormat(reply.data.total,2);
+            this.el.already_po.value =  window.util.numberFormat(reply.data.total,2)+' '+reply.data.unit_text;
 
             //If empty string then 0
             let prev_approved   = window.util.pureNumber(this.el.prevApprovedQuantity.value);
