@@ -93,31 +93,6 @@ class RequestMaterialItem extends Component{
                 })//div row
 
                 t.div({class:'row mb-3'},()=>{
-                    t.div({class:'col-lg-12'},()=>{
-                        t.div({class:'form-group'},()=>{
-                            t.label('Material');
-                            
-                            this.el.materialSelect = t.select({class:'form-control'},()=>{
-                                
-                                t.option({
-                                    value: ''
-                                },'-')
-
-                            });//select
-
-                            if(this._model.editable){
-                                this.el.materialSelect.disabled = false;
-                            }else{
-                                this.el.materialSelect.disabled = true;
-                            }
-
-                        });//div
-                    });//div
-
-                })//div row
-
-
-                t.div({class:'row mb-3'},()=>{
                     
                     t.div({class:'col-lg-3'},()=>{
                         t.div({class:'form-group'},()=>{
@@ -170,6 +145,31 @@ class RequestMaterialItem extends Component{
                   
                   
                 });//div row
+
+                t.div({class:'row mb-3'},()=>{
+                    t.div({class:'col-lg-12'},()=>{
+                        t.div({class:'form-group'},()=>{
+                            t.label('Material');
+                            
+                            this.el.materialSelect = t.select({class:'form-control'},()=>{
+                                
+                                t.option({
+                                    value: ''
+                                },'-')
+
+                            });//select
+
+                            if(this._model.editable){
+                                this.el.materialSelect.disabled = false;
+                            }else{
+                                this.el.materialSelect.disabled = true;
+                            }
+
+                        });//div
+                    });//div
+
+                })//div row
+
 
                 t.div({class:'row mb-3'},()=>{
                     
