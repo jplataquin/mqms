@@ -365,8 +365,7 @@ class CreateComponentItemForm extends ComponentV2{
                             t.td({
                                 style:{
                                     borderBottom:'none'
-                                },
-                                colspan:2
+                                }
                             },(el)=>{
                                 t.div({class:'form-group'},()=>{
                                     t.label('Quantity');
@@ -406,7 +405,7 @@ class CreateComponentItemForm extends ComponentV2{
                             },(el)=>{
                                 t.div({class:'form-group'},()=>{
                                     t.label('Equivalent');
-                                    this.el.equivalent = t.input({class:'form-control equivalent', type:'text'});
+                                    this.el.equivalent = t.input({class:'form-control equivalent', disabled:true, type:'text'});
                                 });
                             });
         
