@@ -1105,9 +1105,21 @@ class MaterialQuantityRequestController extends Controller
 
     public function _total_approved_quantity(Request $request){
         
-        $component_item_id  = (int) $request->input('component_item_id');
-        $material_item_id   = (int) $request->input('material_item_id');
-        $material_quantity_request_item_id = (int) $request->input('material_quantity_request_item_id');
+        $component_item_id                  = (int) $request->input('component_item_id');
+        $material_item_id                   = (int) $request->input('material_item_id');
+        $material_quantity_request_item_id  = (int) $request->input('material_quantity_request_item_id');
+
+        $unit_options = Unit::toOptions();
+
+        $component_item = ComponentItem::find($component_item_id);
+
+        if(!$component_item){
+            return response()->json([
+                'status'    => 0,
+                'message'   =>'Component Item not found',
+                'data'      => []
+            ]);
+        }
 
         $total_approved_quantity = $this->get_total_approved_quantity(
             $material_quantity_request_item_id,
@@ -1119,7 +1131,8 @@ class MaterialQuantityRequestController extends Controller
             'status' => 1,
             'message'=>'',
             'data'=> [
-                'total_approved_quantity' => $total_approved_quantity
+                'total_approved_quantity' => $total_approved_quantity,
+                'unit_text'               => $unit_options[$component_item->unit_id]->text
             ]
         ]);
     }
@@ -1129,18 +1142,25 @@ class MaterialQuantityRequestController extends Controller
         
         $total_approved_quantity = 0;
 
-        if($material_quantity_request_item_id){
-            $total_approved_quantity = MaterialQuantityRequestItem::where('status','=','APRV')
+            $material_quantity_request_item = MaterialQuantityRequestItem::where(function($query){
+                $query->where('status','=','APRV')->orWhere('status','=','CLSD');
+            })
             ->where('component_item_id','=',$component_item_id)
-            ->where('material_item_id','=',$material_item_id)
-            ->where('id','!=',$material_quantity_request_item_id)
-            ->sum('requested_quantity');
-        }else{
-            $total_approved_quantity = MaterialQuantityRequestItem::where('status','=','APRV')
-            ->where('component_item_id','=',$component_item_id)
-            ->where('material_item_id','=',$material_item_id)
-            ->sum('requested_quantity');
-        }
+            ->where('material_item_id','=',$material_item_id);
+            
+        
+            if($material_quantity_request_item_id){
+                
+                $total_approved_quantity = $material_quantity_request_item
+                ->where('id','!=',$material_quantity_request_item_id)
+                ->sum('requested_quantity');
+
+            }else{
+                
+                $total_approved_quantity = $material_quantity_request_item
+                ->sum('requested_quantity');
+                
+            }
         
         
         return $total_approved_quantity;
