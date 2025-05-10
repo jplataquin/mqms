@@ -39,7 +39,7 @@ class CreateMaterialQuantityForm extends ComponentV2{
                         this.el.equivalent.value = data.value;
                     }
                     
-                    this.calculateTotal();
+                    //this.calculateTotal();
                 }
             },
             total:{
