@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Section;
 use App\Models\ContractItem;
 use App\Models\Component;
+use App\Models\ComponentItem;
 use App\Models\PurchaseOrder;
 use App\Models\MaterialQuantityRequest;
 use App\Models\MaterialQuantityRequestItem;
@@ -19,9 +20,9 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Validation\Rule;
 use App\Models\Unit;
 use Carbon\Carbon;
-use Spipu\Html2Pdf\Html2Pdf;
-use Spipu\Html2Pdf\Exception\Html2PdfException;
-use Spipu\Html2Pdf\Exception\ExceptionFormatter;
+// use Spipu\Html2Pdf\Html2Pdf;
+// use Spipu\Html2Pdf\Exception\Html2PdfException;
+// use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 
 
 class MaterialQuantityRequestController extends Controller
@@ -1142,25 +1143,25 @@ class MaterialQuantityRequestController extends Controller
         
         $total_approved_quantity = 0;
 
-            $material_quantity_request_item = MaterialQuantityRequestItem::where(function($query){
-                $query->where('status','=','APRV')->orWhere('status','=','CLSD');
-            })
-            ->where('component_item_id','=',$component_item_id)
-            ->where('material_item_id','=',$material_item_id);
-            
+        $material_quantity_request_item = MaterialQuantityRequestItem::where(function($query){
+            $query->where('status','=','APRV')->orWhere('status','=','CLSD');
+        })
+        ->where('component_item_id','=',$component_item_id)
+        ->where('material_item_id','=',$material_item_id);
         
-            if($material_quantity_request_item_id){
-                
-                $total_approved_quantity = $material_quantity_request_item
-                ->where('id','!=',$material_quantity_request_item_id)
-                ->sum('requested_quantity');
+    
+        if($material_quantity_request_item_id){
+            
+            $total_approved_quantity = $material_quantity_request_item
+            ->where('id','!=',$material_quantity_request_item_id)
+            ->sum('requested_quantity');
 
-            }else{
-                
-                $total_approved_quantity = $material_quantity_request_item
-                ->sum('requested_quantity');
-                
-            }
+        }else{
+            
+            $total_approved_quantity = $material_quantity_request_item
+            ->sum('requested_quantity');
+            
+        }
         
         
         return $total_approved_quantity;
