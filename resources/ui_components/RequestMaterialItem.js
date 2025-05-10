@@ -473,7 +473,7 @@ class RequestMaterialItem extends Component{
                 this.el.requestedQuantity.blur();
             }
 
-            this.el.requestEquivalent = (requested_quantity * equivalent);
+            this.el.requestEquivalent.value = (requested_quantity * equivalent);
 
         }else{
 
