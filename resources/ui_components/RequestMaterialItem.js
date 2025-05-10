@@ -407,7 +407,7 @@ class RequestMaterialItem extends Component{
                 return false;
             }
 
-            this.el.prevApprovedQuantity.value = window.util.numberFormat(reply.data.total_approved_quantity,2);
+            this.el.prevApprovedQuantity.value = window.util.numberFormat(reply.data.total_approved_quantity,2) + ' ' +reply.data.unit_text;
 
             let budget                         = window.util.pureNumber(this.el.materialBudgetQuantity.value);
             let approved                       = reply.data.total_approved_quantity;
