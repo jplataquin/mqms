@@ -151,7 +151,7 @@ class MaterialQuantityRequestController extends Controller
         //     'material_request:own:create'
         // ];
 
-        // $user = auth()->user();
+         $user = auth()->user();
 
         // if(!$this->hasAccess($codes)){
             
