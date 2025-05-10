@@ -43,7 +43,6 @@ class MaterialQuantityRequestController extends Controller
         $project_id = (int) $project_id;
         $project    = Project::findOrFail($project_id);
 
-
         $section_id = (int) $section_id;
         $section = Section::findOrFail($section_id);
 
@@ -123,7 +122,7 @@ class MaterialQuantityRequestController extends Controller
                 'value'         => $row->material_item_id,
                 'text'          => trim($row->brand.' '.$row->name.' '.$row->specification_unit_packaging),
                 'equivalent'    => $row->equivalent,
-                'quantity'      => $row->quantity
+                'quantity'      => 88
             ];
         }
 
