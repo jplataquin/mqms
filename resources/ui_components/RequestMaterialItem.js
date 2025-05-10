@@ -169,13 +169,25 @@ class RequestMaterialItem extends Component{
                     });//div
 
                 })//div row
+    
 
+                t.div({class:'row mb-3'},()=>{
+                    t.div({class:'col-lg-12'},()=>{
+                        t.div({class:'form-group'},()=>{
+                            t.label('Equivalent quantity per unit');
+                            
+                            this.el.equivalentQuantity = t.input({class:'form-control',type:'text',disabled:true});
+
+                        });//div
+                    });//div
+
+                })//div row
 
                 t.div({class:'row mb-3'},()=>{
                     
-                    t.div({class:'col-lg-12'},()=>{
+                    t.div({class:'col-lg-6'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Request');
+                            t.label('Request Quantity');
                            
                             this.el.requestedQuantity = t.input({
                                 type:'text',
@@ -191,7 +203,12 @@ class RequestMaterialItem extends Component{
                         });//div form-group
                     });//div col
 
-                    
+                    t.div({class:'col-lg-6'},()=>{
+                        t.div({class:'form-group'},()=>{
+                            t.label('Equivalent Request');
+                            t.input({class:'form-control',type:'text',disabled:true});
+                        });
+                    });
 
                 });//div row
 
