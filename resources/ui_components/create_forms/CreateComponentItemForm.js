@@ -111,12 +111,13 @@ class CreateComponentItemForm extends ComponentV2{
                 }
             },
 
+            /*** 
             equivalent:{
                 value:'',
                 onUpdate:(data)=>{
                     this.el.equivalent.value = window.util.numberFormat(data.value)+' '+this._model.component_unit_text;
                 }
-            },
+            },***/
            
             ref_1_quantity:{
                 value:'',
@@ -365,7 +366,8 @@ class CreateComponentItemForm extends ComponentV2{
                             t.td({
                                 style:{
                                     borderBottom:'none'
-                                }
+                                },
+                                colspan:2
                             },(el)=>{
                                 t.div({class:'form-group'},()=>{
                                     t.label('Quantity');
@@ -397,7 +399,7 @@ class CreateComponentItemForm extends ComponentV2{
             
                             });
         
-
+                            /***
                             t.td({
                                 style:{
                                     borderBottom:'none'
@@ -408,6 +410,7 @@ class CreateComponentItemForm extends ComponentV2{
                                     this.el.equivalent = t.input({class:'form-control equivalent', type:'text'});
                                 });
                             });
+                            ***/
         
                         
                         });
