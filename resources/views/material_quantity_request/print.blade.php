@@ -100,11 +100,20 @@
             Approved
         </th>
         <th style="width:10%;text-align:center">
-            Remaining
+            Available
         </th>
         <th style="width:10%;text-align:center">
             Requested
         </th>
+        
+        <th style="width:10%;text-align:center">
+            Equivalent/Unit
+        </th>
+
+        <th style="width:10%;text-align:center">
+            Equivalent Request
+        </th>
+        
         <th style="width:10%;text-align:center">
             Balance
         </th>
@@ -154,6 +163,12 @@
         </td>
         <td  class="text-center text-bold" style="font-weight:bold;text-align:center">
             {{$request_item->requested_quantity}}
+        </td>
+        <td class="text-center" style="color:{{$red}};text-align:center">
+            {{ number_format($item->equivalent, 2) }} {{$item->component_unit_text}}
+        </td>
+        <td class="text-center" style="color:{{$red}};text-align:center">
+            {{ number_format($item->equivalent * $request_item->requested_quantity, 2) }} {{$item->component_unit_text}}
         </td>
         @php
             $balance = $remaining - $request_item->requested_quantity;

@@ -664,10 +664,7 @@ class MaterialQuantityRequestController extends Controller
             }
 
             $component_item = ComponentItem::find($row->component_item_id);
-            
-            $material_quantity = MaterialQuantity::where('component_item_id',$row->component_item_id)
-            ->where('material_item_id',$row->material_item_id)
-            ->first();
+        
 
             $item_options[$row->component_item_id][$row->material_item_id] = (object) [
                 'value'                     => $row->material_item_id,
@@ -675,6 +672,7 @@ class MaterialQuantityRequestController extends Controller
                 'equivalent'                => $row->equivalent,
                 'component_unit_text'       => $unit_options[$component_item->unit_id]->text,
                 'budget_quantity'           => $component_item->quantity,
+                
                 'approved_quantity'         => $this->get_total_approved_quantity(
                     $request_item_arr[$materialQuantityRequest->id.'-'.$row->component_item_id.'-'.$row->material_item_id]->id,
                     $row->component_item_id,
