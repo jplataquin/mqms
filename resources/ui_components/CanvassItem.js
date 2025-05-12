@@ -24,7 +24,9 @@ class CanvassItem extends Component{
             price:'',
             quantity:0,
             approvalFlag: false,
-            moneyFormatFlag: false
+            moneyFormatFlag: false,
+            created_by:'',
+            created_at:''
         }
     }
 
@@ -151,14 +153,18 @@ class CanvassItem extends Component{
                     
                     t.div({class:'col-lg-1'},()=>{
                         t.div({class:'form-group'},(el)=>{
-                            t.label('&nbsp;');
-
-                           
-                                                        
+                            t.label('&nbsp;');          
                         });
                     });
                     
                 }//if else
+            });
+
+            t.div(()=>{
+
+                if(this._model.created_by && this._model.created_at){
+                    t.span({class:'small'},this._model.created_by+' ('+this._model.created_at+')');
+                }
             });
 
             t.div(()=>{

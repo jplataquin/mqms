@@ -50,24 +50,7 @@
                     <tr>
                         <th>Component</th>
                         <td>{{$component->name}}</td>
-                    </tr>
-                    <tr>
-                        <th>Created By</th>
-                        <td>{{$material_quantity_request->CreatedByUser()->name}} {{$material_quantity_request->created_at}}</td>
-                    </tr>
-
-                    @if($material_quantity_request->updated_at)
-                    <tr>
-                        <th>Updated By</th>
-                        <td>{{$material_quantity_request->UpdatedByUser()->name}} {{$material_quantity_request->updated_at}}</td>
-                    </tr>
-                    @endif
-
-                    <tr>
-                        <th>Approved By</th>
-                        <td>{{$material_quantity_request->ApprovedByUser()->name}} {{$material_quantity_request->approved_at}}</td>
-                    </tr>
-                    
+                    </tr>                    
                     <tr>
                         <th>Description</th>
                         <td>
@@ -198,7 +181,9 @@
                                     payment_term_text: paymentTermsList.getAttribute('value'),
                                     status:'{{$mcItem->status}}',
                                     price:'{{$mcItem->price}}',
-                                    approvalFlag: true
+                                    approvalFlag: true,
+                                    created_by: '{{$mcItem->createdByUser()->name}}',
+                                    created_at: '{{$mcItem->created_at}}'
                                 })
                             ); 
                         })
