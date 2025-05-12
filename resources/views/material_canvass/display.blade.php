@@ -188,7 +188,9 @@
                     payment_term_id: '{{$item->payment_term_id}}',
                     payment_term_text: paymentTermsList.getAttribute('value'),
                     status:'{{$mcItem->status}}',
-                    price:'{{$mcItem->price}}'
+                    price:'{{$mcItem->price}}',
+                    created_by: '{{$mcItem->createdByUser()->name}}',
+                    created_at: '{{$mcItem->created_at}}'
                 }) ).to($q('#canvass_{{$item->id}}').first());
 
             })();
