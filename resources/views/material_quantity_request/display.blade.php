@@ -124,6 +124,46 @@
         </div>
     </div>
     
+      <div class="folder-form-container">
+        <div class="folder-form-tab">
+            Material Request Review
+        </div>
+        <div class="folder-form-body">
+            <table class="record-table-horizontal" hx-boost="true" hx-select="#content" hx-target="#main">
+                <tbody>
+                    <tr>
+                        <th width="150px">ID</th>
+                        <td>{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Project</th>
+                        <td>{{$project->name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Section</th>
+                        <td>{{$section->name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Component</th>
+                        <td>
+                            <a href="/project/section/contract_item/component/{{$component->id}}">
+                                {{$component->name}}
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>{{$material_quantity_request->status}}</td>
+                    </tr>
+                    <tr>
+                        <th>Requested By</th>
+                        <td>{{$material_quantity_request->CreatedByUser()->name}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
     <div id="itemContainer"></div>
     <div>
         <button class="btn btn-warning w-100 mt-3 d-none" id="addBtn">Add More</button>
@@ -271,7 +311,6 @@
             editable               : false,
             unitOptions            : unit_options,
 
-            materialBudgetQuantity: 'test'
         });
 
         itemForm.handler.deleteCallback(async (dom)=>{
