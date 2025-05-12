@@ -340,7 +340,7 @@ class RequestMaterialItem extends Component{
 
         //Ignore if no id
         if(!this._model.id) {
-            this.el.already_po.value = '';
+            this.el.already_po.value = '0';
             return false;
         }
 
