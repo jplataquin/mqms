@@ -507,7 +507,7 @@ class MaterialQuantityRequestController extends Controller
 
     public function display($id){
         
-
+        //Todo check role
 
         $id = (int) $id;
 
@@ -532,8 +532,11 @@ class MaterialQuantityRequestController extends Controller
         $component       = $materialQuantityRequest->Component;
         $request_items   = $materialQuantityRequest->Items;
 
-        $component_item_ids     = [];
-        $component_item_options  = [];
+        
+        $unit_options               = Unit::toOptions();
+
+        $component_item_ids         = [];
+        $component_item_options     = [];
 
         foreach($component->ComponentItems as $componentItem){
             $component_item_ids[] = $componentItem->id;
@@ -541,19 +544,23 @@ class MaterialQuantityRequestController extends Controller
             $component_item_options[$componentItem->id] = [
                 'value'                  => $componentItem->id,
                 'text'                   => $componentItem->name,
+                'unit_text'              => $unit_options[$componentItem->unit_id]['text'],
                 'unit_id'                => $componentItem->unit_id,
                 'quantity'               => $componentItem->quantity
             ];
         }
         
-        $material_item_result = DB::table('material_quantities')->whereIn('component_item_id',$component_item_ids)
+        $material_item_result = DB::table('material_quantities')
+        ->whereIn('component_item_id',$component_item_ids)
         ->join('material_items','material_quantities.material_item_id','=','material_items.id')
         ->select(
             'material_quantities.material_item_id AS material_item_id',
             'material_quantities.component_item_id AS component_item_id',
-            'material_quantities.quantity AS quantity',
             'material_quantities.equivalent AS equivalent',
             'material_quantities.deleted_at AS deleted_at',
+            
+            
+
             'material_items.name AS name',
             'material_items.specification_unit_packaging AS specification_unit_packaging',
             'material_items.brand AS brand'
@@ -572,7 +579,8 @@ class MaterialQuantityRequestController extends Controller
                 'value'         => $row->material_item_id,
                 'text'          => trim($row->name.' '.$row->specification_unit_packaging.' '.$row->brand),
                 'equivalent'    => $row->equivalent,
-                'budget'        => $row->quantity,
+                'budget'        => $component_item_options[$row->component_item_id]['quantity'],
+                'unit_text'     => $component_item_options[$row->component_item_id]['unit_text'],
                 'deleted_flag'  => ($row->deleted_at) ? true : false
             ];
         }
