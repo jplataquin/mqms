@@ -101,7 +101,7 @@ class RequestMaterialItem extends Component{
                                 type:'text',
                                 disabled:true,
                                 class:'form-control text-center',
-                                value: 'test'
+                                value: ''
                             });
                         });              
                     });
