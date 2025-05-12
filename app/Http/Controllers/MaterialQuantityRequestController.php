@@ -859,19 +859,7 @@ class MaterialQuantityRequestController extends Controller
         //     }
         // }
 
-        //TODO this requires testing
-        //Validate deleted items
-        foreach($existing_items_arr as $ex_id){
-
-            //if existing entry is not in input and not in deleted haystack
-            if(!in_array($ex_id,$items_arr) && !in_array($ex_id,$delete_items)){
-                return response()->json([
-                    'status'    => 0,
-                    'message'   => 'Unaccounted deleted entry',
-                    'data'      => []
-                ]);
-            }
-        }
+        $item_arr = [];
 
         //PO quantity validation for input
         foreach($items as $item){
@@ -882,6 +870,9 @@ class MaterialQuantityRequestController extends Controller
             $item_material_item_id      = (int) $item['material_item_id'];
 
             if(!$item_id) continue;
+
+            //Add to item_arr for conveience later (Checking for unaccounted deleted items)
+            $item_arr[] = $item_id;
 
             $component_item = ComponentItem::find($item_component_item_id);
 
@@ -924,6 +915,20 @@ class MaterialQuantityRequestController extends Controller
             }
         }
 
+        //TODO this requires testing
+        //Validate deleted items
+        foreach($existing_items_arr as $ex_id){
+
+            //if existing entry is not in input and not in deleted haystack
+            if(!in_array($ex_id,$items_arr) && !in_array($ex_id,$delete_items)){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Unaccounted deleted entry',
+                    'data'      => []
+                ]);
+            }
+        }
+
         //PO quantity validation for deleted items
         foreach($delete_items as $del_item_id){
 
@@ -949,8 +954,6 @@ class MaterialQuantityRequestController extends Controller
             }
         }
         
-
-
 
         //Validate that the request is still within budget 
         $double_entry          = [];
