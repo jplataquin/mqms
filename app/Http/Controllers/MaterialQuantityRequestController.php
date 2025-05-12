@@ -20,10 +20,6 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Validation\Rule;
 use App\Models\Unit;
 use Carbon\Carbon;
-use Spipu\Html2Pdf\Html2Pdf;
-use Spipu\Html2Pdf\Exception\Html2PdfException;
-use Spipu\Html2Pdf\Exception\ExceptionFormatter;
-
 
 class MaterialQuantityRequestController extends Controller
 {
@@ -657,7 +653,7 @@ class MaterialQuantityRequestController extends Controller
         $item_options = [];
 
         $unit_options = Unit::toOptions();
-        
+
         foreach($material_item_result as $row){
 
             if(!isset($material_options[$row->component_item_id])){
