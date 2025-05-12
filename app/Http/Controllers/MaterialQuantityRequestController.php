@@ -760,7 +760,7 @@ class MaterialQuantityRequestController extends Controller
         if($materialQuantityRequest->status != 'PEND'){
             return response()->json([
                 'status'    => 0,
-                'message'   => 'This record can no longer be updated (Status: '.$materialQuantityRequest->status.')',
+                'message'   => 'This record can not be updated (Status: '.$materialQuantityRequest->status.')',
                 'data'      => []
             ]);
         }
@@ -768,7 +768,7 @@ class MaterialQuantityRequestController extends Controller
         if($materialQuantityRequest->Project->status != 'ACTV'){
             return response()->json([
                 'status'    => 0,
-                'message'   => 'This record can no longer be updated, because the project status is not active',
+                'message'   => 'This record can not be updated, because the project status is not active',
                 'data'      => []
             ]);
         }
@@ -776,7 +776,7 @@ class MaterialQuantityRequestController extends Controller
         if($materialQuantityRequest->Component->status != 'APRV'){
             return response()->json([
                 'status'    => 0,
-                'message'   => 'This record can no longer be updated, because the component status is not approved',
+                'message'   => 'This record can not be updated, because the component status is not approved',
                 'data'      => []
             ]);
         }
@@ -795,10 +795,6 @@ class MaterialQuantityRequestController extends Controller
 
         
         $itemValidator = Validator::make(['items'=> $items],[
-            'items.*.id' => [
-                'required',
-                'integer'
-            ],
             'items.*.component_item_id' => [
                 'required',
                 'integer'
@@ -864,7 +860,7 @@ class MaterialQuantityRequestController extends Controller
         //PO quantity validation for input
         foreach($items as $item){
         
-            $item_id                    = (int) $item['id'];
+            $item_id                    = (int) $item['id'] ?? 0;
             $item_requested_quantity    = (float) $item['requested_quantity'];
             $item_component_item_id     = (int) $item['component_item_id'];
             $item_material_item_id      = (int) $item['material_item_id'];
