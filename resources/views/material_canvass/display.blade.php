@@ -45,7 +45,7 @@
                     </tr>
                     <tr>
                         <th>Contract Item</th>
-                        <td></td>
+                        <td>{{$contract_item->item_code}} - {{$contract_item->description}}</td>
                     </tr>
                     <tr>
                         <th>Component</th>

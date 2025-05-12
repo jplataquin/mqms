@@ -137,7 +137,7 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::post('/material_canvass/void', [App\Http\Controllers\MaterialCanvassController::class, '_void']);
 
 
-    Route::get('/purchase_order/select/list', [App\Http\Controllers\PurchaseOrderController::class, '_select']);
+    Route::get('/purchase_order/select/list', [App\Http\Controllers\PurchaseOrderController::class, '_select_material_request']);
     Route::get('/purchase_order/list', [App\Http\Controllers\PurchaseOrderController::class, '_list']);
     Route::get('/purchase_order/total_ordered', [App\Http\Controllers\PurchaseOrderController::class, 'total_ordered']);
     Route::post('/purchase_order/create', [App\Http\Controllers\PurchaseOrderController::class, '_create']);

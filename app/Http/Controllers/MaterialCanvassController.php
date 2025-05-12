@@ -156,13 +156,13 @@ class MaterialCanvassController extends Controller
             'material_quantity_request' => $materialQuantityRequest,
             'project'                   => $project,
             'section'                   => $section,
+            'contract_item'             => $contract_item,
             'component'                 => $component,
             'items'                     => $items,
             'component_item_arr'        => $component_item_arr,
             'material_item_arr'         => $material_item_arr,
             'suppliers'                 => $suppliers,
-            'payment_terms'             => $payment_terms,
-            'contract_item'             => $contract_item
+            'payment_terms'             => $payment_terms
         ]);
     }
 

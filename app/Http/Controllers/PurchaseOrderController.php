@@ -132,19 +132,19 @@ class PurchaseOrderController extends Controller
         ]);
     }
 
-    public function _select(Request $request){
+    public function _select_material_request(Request $request){
 
         //todo check role
 
-        $page               = (int) $request->input('page')     ?? 1;
-        $limit              = (int) $request->input('limit')    ?? 10;
-        $project_id         = (int) $request->input('project_id')  ?? 0;
-        $section_id         = (int) $request->input('section_id')  ?? 0;
-        $contract_item_id   = (int) $request->input('contract_item_id')  ?? 0;
-        $component_id       = (int) $request->input('component_id')  ?? 0;
-        $query              = (int) $request->input('query')    ?? 0;
-        $orderBy            = $request->input('order_by')       ?? 'id';
-        $order              = $request->input('order')          ?? 'DESC';
+        $page               = (int) $request->input('page')             ?? 1;
+        $limit              = (int) $request->input('limit')            ?? 10;
+        $project_id         = (int) $request->input('project_id')       ?? 0;
+        $section_id         = (int) $request->input('section_id')       ?? 0;
+        $contract_item_id   = (int) $request->input('contract_item_id') ?? 0;
+        $component_id       = (int) $request->input('component_id')     ?? 0;
+        $query              = (int) $request->input('query')            ?? 0;
+        $orderBy            = $request->input('order_by')               ?? 'id';
+        $order              = $request->input('order')                  ?? 'DESC';
         $result = [];
 
         $materialQuantityRequest = new MaterialQuantityRequest();
