@@ -80,7 +80,7 @@
 
         <div class="form-container mb-5">
             <div class="form-header">
-               &nbsp;
+              {{ $component_item_arr[ $item->component_item_id ]->name }}
             </div>
             <div class="form-body">
                 
