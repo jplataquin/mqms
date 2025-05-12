@@ -328,6 +328,7 @@ class RequestMaterialItem extends Component{
             let requested_quantity = material.equivalent * window.util.pureNumber(this.el.requestedQuantity.value,2);
             let available_quantity  = window.util.pureNumber(this.el.quantityRemaining.value,2);
 
+            console.log(requested_quantity);
             if(requested_quantity > available_quantity){
                 this.el.requestedQuantity.classList.add('is-invalid');
             }
