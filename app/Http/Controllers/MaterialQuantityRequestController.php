@@ -920,7 +920,7 @@ class MaterialQuantityRequestController extends Controller
         foreach($existing_items_arr as $ex_id){
 
             //if existing entry is not in input and not in deleted haystack
-            if(!in_array($ex_id,$items_arr) && !in_array($ex_id,$delete_items)){
+            if(!in_array($ex_id,$item_arr) && !in_array($ex_id,$delete_items)){
                 return response()->json([
                     'status'    => 0,
                     'message'   => 'Unaccounted deleted entry',
