@@ -665,7 +665,7 @@ class MaterialQuantityRequestController extends Controller
 
             $component_item = ComponentItem::find($row->component_item_id);
             
-            $material_quantity = MaterialQuantity::where('component_item_id',$component_item_id)
+            $material_quantity = MaterialQuantity::where('component_item_id',$row->component_item_id)
             ->where('material_item_id',$row->material_item_id)
             ->first();
 
