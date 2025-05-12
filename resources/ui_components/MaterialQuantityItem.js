@@ -125,7 +125,7 @@ class MaterialQuantityItem extends ComponentV2{
                             t.td(this._model.component_item_name);
                         });
                         t.tr(()=>{
-                            t.th('Component Quantity');
+                            t.th('Quantity');
                             t.td( window.util.numberFormat(this._model.component_item_quantity,2)+' '+this._model.component_item_unit_text );
                         });
                  
@@ -133,7 +133,7 @@ class MaterialQuantityItem extends ComponentV2{
                 });
             });
 
-            t.div({class:'row'},()=>{
+            t.div({class:'row mb-3'},()=>{
                 t.div({class:'col-sm-12'},()=>{
                     t.div({class:'form-group'},(el)=>{
                         t.label('Material Item');
