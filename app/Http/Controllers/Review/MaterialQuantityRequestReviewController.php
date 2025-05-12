@@ -35,14 +35,14 @@ class MaterialQuantityRequestReviewController extends Controller
         $component       = $materialQuantityRequest->Component;
         $request_items   = $materialQuantityRequest->Items;
 
-        $unit_options           = Unit::toOptions();
-        $component_item_ids     = [];
-        $componentItem_options  = [];
+        $unit_options               = Unit::toOptions();
+        $component_item_ids         = [];
+        $component_item_options     = [];
 
         foreach($component->ComponentItems as $componentItem){
             $component_item_ids[] = $componentItem->id;
 
-            $componentItem_options[$componentItem->id] = [
+            $component_item_options[$componentItem->id] = [
                 'value'     => $componentItem->id,
                 'text'      => $componentItem->name,
                 'unit_text' => $unit_options[$componentItem->unit_id]->text,
