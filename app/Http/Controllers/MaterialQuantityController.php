@@ -363,6 +363,23 @@ class MaterialQuantityController extends Controller
             ]);
         }
 
+        
+        $component_item = $materialQuantity->componentItem;
+
+        $material_quantity_item_count = MaterialQuantityItem::where('component_item_id',$component_item->id)
+        ->where('material_item_id',$materialQuantity->material_item_id)
+        ->where('deleted_at',null)
+        ->count();
+
+        
+        if($material_quantity_item_count){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Cannot delete record because of dependent material request',
+                'data'      => []
+            ]);
+        }
+
         if(!$materialQuantity->delete()){
             return response()->json([
                 'status'    => 0,
@@ -370,13 +387,13 @@ class MaterialQuantityController extends Controller
                 'data'      => []
             ]);
         }
-         
-        $component = $materialQuantity->componentItem->component;
         
-        if($component->status != 'PEND'){
-            $component->status = 'PEND';
-            $component->save();
-        }
+        // $component = $materialQuantity->componentItem->component;
+        
+        // if($component->status != 'PEND'){
+        //     $component->status = 'PEND';
+        //     $component->save();
+        // }
 
         return response()->json([
             'status'    => 1,
