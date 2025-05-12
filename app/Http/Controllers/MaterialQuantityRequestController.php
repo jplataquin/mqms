@@ -665,7 +665,7 @@ class MaterialQuantityRequestController extends Controller
 
             $item_options[$row->component_item_id][$row->material_item_id] = (object) [
                 'value'                     => $row->material_item_id,
-                'text'                      => trim($row->name.' '.$row->specification_unit_packaging.' '.$row->brand),
+                'text'                      => trim($row->brand.' '.$row->name.' '.$row->specification_unit_packaging),
                 'equivalent'                => $row->equivalent,
                 'budget_quantity'           => $row->quantity,
                 'approved_quantity'         => $this->get_total_approved_quantity(
