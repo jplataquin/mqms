@@ -630,9 +630,6 @@ class ComponentItem extends ComponentV2{
                 component_item_name: this.getState('component_item_name'),
                 component_item_quantity : this.getState('component_item_quantity'),
                 component_item_unit_text: this._model.unitOptions[this.getState('component_item_unit')].text,
-                get_grand_total: ()=>{
-                    return this.el.material_quantity_list.handler.getGrandTotal();
-                },
                 after_add_callback: ()=>{
                     this.el.material_quantity_list.handler.refreshList();
                     signal.broadcast('component-item-update');
