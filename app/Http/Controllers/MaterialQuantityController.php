@@ -366,13 +366,13 @@ class MaterialQuantityController extends Controller
         
         $component_item = $materialQuantity->componentItem;
 
-        $material_quantity_item_count = MaterialQuantityItem::where('component_item_id',$component_item->id)
+        $material_quantity_request_item_count = MaterialQuantityRequestItem::where('component_item_id',$component_item->id)
         ->where('material_item_id',$materialQuantity->material_item_id)
         ->where('status','!=','VOID')
         ->count();
 
 
-        if($material_quantity_item_count){
+        if($material_quantity_request_item_count){
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Cannot delete record because of dependent material request',
