@@ -49,7 +49,7 @@ class CanvassItem extends Component{
         });
         
         
-        return  t.div({},()=>{
+        return  t.div({class:'shadow'},()=>{
         
             t.div({class:'row mb-3'},()=>{
                 
