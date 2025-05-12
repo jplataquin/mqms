@@ -65,7 +65,7 @@
             <div class="row">
                 <div class="col-12 text-end">
                 
-                    <button class="btn btn-outline-primary" id="reviewLinkBtn">
+                    <button class="btn btn-primary" id="reviewLinkBtn">
                         Review Link
                         <i class="bi bi-copy"></i>
                     </button>
@@ -217,7 +217,7 @@
     });
 
 
-    submitBtn.onclick = (e)=>{
+    submitBtn.onclick = async (e)=>{
 
         e.preventDefault();
 
@@ -226,7 +226,9 @@
         if(!canvasItems.length) return false;
 
         
-        if(!confirm('Are you sure you want to submit canvass?')){return false}
+        if(! await window.util.confirm('Are you sure you want to submit canvass?')){
+            return false
+        }
 
         let validateFlag = true;
         let itemData     = [];
