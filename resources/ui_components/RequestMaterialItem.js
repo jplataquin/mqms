@@ -475,7 +475,7 @@ class RequestMaterialItem extends Component{
                 this.el.requestedQuantity.blur();
             }
 
-            this.el.requestEquivalent.value = (requested_quantity * equivalent)+' '+this._state.unit_text;
+            this.el.requestEquivalent.value = window.util.numberFormat((requested_quantity * equivalent),2)+' '+this._state.unit_text;
 
         }else{
 
