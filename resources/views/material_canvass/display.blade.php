@@ -35,6 +35,10 @@
                         <th width="230px">Material Request ID</th>
                         <td>{{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
                     </tr>
+                       <tr>
+                        <th >Requested By</th>
+                        <td>{{$material_quantity_request->createdByUser()->name}} ({{$material_quantity_request->created_at}})</td>
+                    </tr>
                     <tr>
                         <th>Project</th>
                         <td>{{$project->name}}</td>
