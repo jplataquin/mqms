@@ -82,7 +82,7 @@ class MaterialQuantityRequestReviewController extends Controller
             'material_quantity_request' => $materialQuantityRequest,
             'request_items'             => $request_items,
             'material_options'          => $material_options,
-            'componentItem_options'     => $componentItem_options,
+            'componentItem_options'     => $component_item_options,
             'unit_options'              => $unit_options
         ]);
     }
