@@ -88,7 +88,7 @@ class CreateMaterialQuantityForm extends ComponentV2{
                 t.div({class:'col-lg-12'},()=>{
                     t.table({class:'table'},()=>{
                         t.tr(()=>{
-                            t.th({width:'10%'},'Component Name');
+                            t.th({width:'12%'},'Component Name');
                             t.td(this._model.component_item_name);
                         });
                         t.tr(()=>{
