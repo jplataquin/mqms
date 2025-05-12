@@ -53,7 +53,7 @@ class CanvassItem extends Component{
         
             t.div({class:'row mb-3'},()=>{
                 
-                t.div({class:'col-lg-2'},()=>{
+                t.div({class:'col-lg-2 mb-3'},()=>{
                 
                     t.div({class:'form-group'},(el)=>{
                         t.label({class:'mb-3'},'Status');
@@ -64,7 +64,7 @@ class CanvassItem extends Component{
                 });
                 
 
-                t.div({class:'col-lg-3'},()=>{
+                t.div({class:'col-lg-3 mb-3'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label({class:'mb-3'},'Supplier');
 
@@ -74,7 +74,7 @@ class CanvassItem extends Component{
                 });
                 
 
-                t.div({class:'col-lg-2'},()=>{
+                t.div({class:'col-lg-2 mb-3'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label({class:'mb-3'},'Terms');
 
@@ -83,7 +83,7 @@ class CanvassItem extends Component{
                     });
                 });
 
-                t.div({class:'col-lg-2'},()=>{
+                t.div({class:'col-lg-2 mb-3'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label({class:'mb-3'},'Price');
 
@@ -92,7 +92,7 @@ class CanvassItem extends Component{
 
                     });
                 });
-                t.div({class:'col-lg-3'},()=>{
+                t.div({class:'col-lg-3 mb-3'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label({class:'mb-3'},'Total');
                         this.el.total = t.input({class:'form-control',disabled:true});
