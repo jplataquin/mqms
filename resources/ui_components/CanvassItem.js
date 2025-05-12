@@ -109,13 +109,16 @@ class CanvassItem extends Component{
 
             t.div({class:'row mb-3'},()=>{
 
-                 t.div({class:'col-lg-6'},()=>{
+                 t.div({class:'col-lg-6 col-sm-8'},()=>{
 
                     if(this._model.created_by && this._model.created_at){
                         t.span({class:'small'},'Created by: '+this._model.created_by+' ('+this._model.created_at+')');
                     }
+
+                    this.el.errorList = t.ul({class:'text-danger'});
                 });
-                t.div({class:'col-lg-6 text-end'},(el)=>{
+                
+                t.div({class:'col-lg-6 col-sm-4 text-end'},(el)=>{
                     if(this._model.approvalFlag && this._model.status == 'PEND'){
 
                     
@@ -143,9 +146,7 @@ class CanvassItem extends Component{
 
            
 
-            t.div(()=>{
-                this.el.errorList = t.ul({class:'text-danger'});
-            })
+           
         });
     }
 
