@@ -100,7 +100,7 @@
         <th style="width:5%;text-align:center">
             #
         </th>
-        <th style="width:35%;text-align:center">
+        <th style="text-align:center">
             Item
         </th>
         <th style="width:10%;text-align:center">
@@ -142,10 +142,10 @@
             {{$count}}
         </td>
         <td>
-            <div class="text-bold" style="width:450px;font-weight:bold">
+            <div class="text-bold" style="width:400px;font-weight:bold">
                 {{ $component_item_options[$request_item->component_item_id]->text }}
             </div>
-            <div class="ps-20" style="width:450px">
+            <div class="ps-20" style="width:400px">
                 {{ $item->text }}
             </div>
         </td>
