@@ -88,16 +88,12 @@ class CreateMaterialQuantityForm extends ComponentV2{
                 t.div({class:'col-lg-12'},()=>{
                     t.table({class:'table'},()=>{
                         t.tr(()=>{
-                            t.th({width:'10%'},'Comp. Name');
+                            t.th({width:'10%'},'Component Name');
                             t.td(this._model.component_item_name);
                         });
                         t.tr(()=>{
-                            t.th('Comp. Quantity');
+                            t.th('Component Quantity');
                             t.td(this._model.component_item_quantity+' '+this._model.component_item_unit_text);
-                        });
-                        t.tr(()=>{
-                            t.th('Matt. Total');
-                            t.td(this._model.get_grand_total()+' '+this._model.component_item_unit_text);
                         });
                     });
                 });
@@ -106,9 +102,9 @@ class CreateMaterialQuantityForm extends ComponentV2{
 
             t.div({class:'row mb-5'},()=>{
 
-                t.div({class:'col-lg-4'},()=>{
+                t.div({class:'col-lg-4 mb-3'},()=>{
                     t.div({class:'form-group'},(el)=>{
-                        t.label('Material');
+                        t.label({class:'mb-3'},'Material');
 
                         el.append(this.el.material_item_select);
                     });
@@ -123,18 +119,18 @@ class CreateMaterialQuantityForm extends ComponentV2{
                 });
                 **/
 
-                t.div({class:'col-lg-4'},()=>{
+                t.div({class:'col-lg-4 mb-3'},()=>{
                     t.div({class:'form-group'},()=>{
-                        t.label('Equivalent');
+                        t.label({class:'mb-3'},'Equivalent');
 
                         
                         this.el.equivalent = t.input({class:'form-control'});
                     });
                 });
 
-                t.div({class:'col-lg-4'},()=>{
+                t.div({class:'col-lg-4 mb-3'},()=>{
                     t.div({class:'form-group'},()=>{
-                        t.label('Unit');
+                        t.label({class:'mb-3'},'Unit');
                         
                         t.input({class:'form-control',disabled:true,value:this._model.component_item_unit_text});
                     });
@@ -168,7 +164,6 @@ class CreateMaterialQuantityForm extends ComponentV2{
 
         window.util.numbersOnlyInput([
             this.el.equivalent,
-          //  this.el.quantity
         ],{
             negative:false,
             precision:2
@@ -181,7 +176,6 @@ class CreateMaterialQuantityForm extends ComponentV2{
             let data = {
                 component_item_id: this._model.component_item_id,
                 material_item_id: this.getState('material_item_id'),
-               // quantity: this.getState('quantity'),
                 equivalent: this.getState('equivalent')
             };
 
