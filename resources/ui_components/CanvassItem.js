@@ -35,16 +35,16 @@ class CanvassItem extends Component{
 
         this.el.status          = t.input({class:'form-control',disabled:true,value:this._model.status});
 
-        this.el.deleteBtn       = t.button({class:'btn btn-danger form-control'},()=>{
+        this.el.deleteBtn       = t.button({class:'btn btn-danger'},()=>{
             t.i({class:'bi bi-trash'});
         });
-        this.el.disapproveBtn   = t.button({class:'btn btn-danger form-control'},()=>{
+        this.el.disapproveBtn   = t.button({class:'btn btn-danger'},()=>{
             t.i({class:'bi bi-x-square'});
         });
-        this.el.approveBtn      = t.button({class:'btn btn-primary form-control'},()=>{
+        this.el.approveBtn      = t.button({class:'btn btn-primary'},()=>{
             t.i({class:'bi bi-check-square'});
         });
-        this.el.voidBtn         = t.button({class:'btn btn-secondary form-control'},()=>{
+        this.el.voidBtn         = t.button({class:'btn btn-secondary'},()=>{
             t.i({class:'bi bi-exclamation-square'});
         });
         
@@ -53,7 +53,7 @@ class CanvassItem extends Component{
         
             t.div({class:'row mb-3'},()=>{
                 
-                t.div({class:'col-lg-1'},()=>{
+                t.div({class:'col-lg-2'},()=>{
                 
                     t.div({class:'form-group'},(el)=>{
                         t.label({class:'mb-3'},'Status');
@@ -64,7 +64,7 @@ class CanvassItem extends Component{
                 });
                 
 
-                t.div({class:'col-lg-4'},()=>{
+                t.div({class:'col-lg-3'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label({class:'mb-3'},'Supplier');
 
@@ -76,7 +76,7 @@ class CanvassItem extends Component{
 
                 t.div({class:'col-lg-2'},()=>{
                     t.div({class:'form-group'},()=>{
-                        t.label({class:'mb-3'},'Payment Terms');
+                        t.label({class:'mb-3'},'Terms');
 
                         this.el.payment_terms = t.input({class:'form-control',list:'payment_terms_list', value:this._model.payment_term_text});
                         
