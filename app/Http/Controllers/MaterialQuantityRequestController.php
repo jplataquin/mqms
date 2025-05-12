@@ -559,8 +559,6 @@ class MaterialQuantityRequestController extends Controller
             'material_quantities.equivalent AS equivalent',
             'material_quantities.deleted_at AS deleted_at',
             
-            
-
             'material_items.name AS name',
             'material_items.specification_unit_packaging AS specification_unit_packaging',
             'material_items.brand AS brand'
@@ -833,33 +831,33 @@ class MaterialQuantityRequestController extends Controller
         }
 
         //Extra validation for dobule entry, deleted ites and po quantity validation
-        $doubleEntry = [];
-        $items_arr   = [];
+        // $doubleEntry = [];
+        // $items_arr   = [];
 
-        foreach($items as $item){
+        // foreach($items as $item){
 
-            $item['component_item_id']      = (int) $item['component_item_id'];
-            $item['material_item_id']       = (int) $item['material_item_id'];
-            $item['id']                     = (int) $item['id']; 
+        //     $item['component_item_id']      = (int) $item['component_item_id'];
+        //     $item['material_item_id']       = (int) $item['material_item_id'];
+        //     $item['id']                     = (int) $item['id']; 
 
-            $items_arr[] = $item['id'];
+        //     $items_arr[] = $item['id'];
 
 
-            //check for double entry
-            $check = $item['component_item_id'].'-'.$item['material_item_id'];
+        //     //check for double entry
+        //     $check = $item['component_item_id'].'-'.$item['material_item_id'];
 
-            if(in_array($check,$doubleEntry)){
+        //     if(in_array($check,$doubleEntry)){
 
-                return response()->json([
-                    'status'    => 0,
-                    'message'   => 'Double entry with the same component item and material Item',
-                    'data'      => []
-                ]);
+        //         return response()->json([
+        //             'status'    => 0,
+        //             'message'   => 'Double entry with the same component item and material Item',
+        //             'data'      => []
+        //         ]);
 
-            }else{
-                $doubleEntry[] = $check;
-            }
-        }
+        //     }else{
+        //         $doubleEntry[] = $check;
+        //     }
+        // }
 
         //TODO this requires testing
         //Validate deleted items
@@ -877,12 +875,29 @@ class MaterialQuantityRequestController extends Controller
 
         //PO quantity validation for input
         foreach($items as $item){
-            $item['id']                    = (int) $item['id'];
-            $item['requested_quantity']    = (float) $item['requested_quantity'];
+        
+            $item_id                    = (int) $item['id'];
+            $item_requested_quantity    = (float) $item['requested_quantity'];
+            $item_component_item_id     = (int) $item['component_item_id'];
+            $item_material_item_id      = (int) $item['material_item_id'];
 
-            if(!$item['id']) continue;
+            if(!$item_id) continue;
 
-            $po_result = $this->_get_total_po_quantity($item['id']);
+            $component_item = ComponentItem::find($item_component_item_id);
+
+            if(!$component_item){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Record not found (Component Item)',
+                    'data'      => []
+                ]);
+            }
+
+            $material_quantity = MaterialQuantity::where('component_item_id',$item_component_item_id)
+            ->where($item_material_item_id)
+            ->first();
+
+            $po_result = $this->_get_total_po_quantity($item_id);
 
             if($po_result['status'] <= 0){
                 
@@ -893,14 +908,16 @@ class MaterialQuantityRequestController extends Controller
                 ]);
             }
 
+            $item_request_equivalent = $material_quantity->equivalent * $item_requested_quantity;
+
             //Check if new requsted quantity is less than the maintained PO quantity
-            if($item['requested_quantity'] < $po_result['data']['total']){
+            if($item_request_equivalent < $po_result['data']['total']){
                 return response()->json([
                     'status'    => 0,
-                    'message'   => "An item entry quantity cannot be lower than what was already been PO'd",
+                    'message'   => "A requested quantity cannot be lower than the total PO'd quantity",
                     'data'      => [
-                        'item_id'               => $item['id'],
-                        'requested_quantity'    => $item['requested_quantity'],
+                        'item_id'               => $item_id,
+                        'requested_quantity'    => $item_request_equivalent,
                         'po_quantity'           => $po_result['data']['total'] 
                     ]
                 ]);
@@ -931,38 +948,60 @@ class MaterialQuantityRequestController extends Controller
                 ]);
             }
         }
+        
+
+
 
         //Validate that the request is still within budget 
+        $double_entry          = [];
+        $double_component_item = [];
+
         foreach($items as $item){
 
-            $item['component_item_id']     = (int) $item['component_item_id'];
-            $item['material_item_id']      = (int) $item['material_item_id'];
-            $item['requested_quantity']    = (float) $item['requested_quantity'];
+            $check_double_entry = $this->checkRequestItemDoubleEntry($item,$double_entry,$double_component_item);
 
-            $requested_quantity_total = MaterialQuantityRequestItem::where('status','=','APRV')
-            ->where('component_item_id','=',$item['component_item_id'])
-            ->where('material_item_id','=',$item['material_item_id'])
-            ->sum('requested_quantity');
-            
-            $materialQuantity = MaterialQuantity::where('component_item_id','=',$item['component_item_id'])
-            ->where('material_item_id','=',$item['material_item_id'])->first();
-           
-            $remaining = $materialQuantity->quantity - $requested_quantity_total;
+            if($check_double_entry['status'] <= 0){
+                return response()->json($check_double_entry);
+            }
 
+            $check_budget = $this->checkRequestItemAgainstBudget($item);
 
-            if($remaining < $item['requested_quantity']){
+            if($check_budget['status'] <= 0){
 
-                return response()->json([
-                    'status'    => 0,
-                    'message'   => 'Material is out of budget',
-                    'data'      => [
-                        'remaining' => $remaining,
-                        'request' =>  $item['requested_quantity']
-                    ]
-                ]);
-
+                return response()->json($check_budget);
             }
         }
+        
+        // foreach($items as $item){
+
+        //     $item['component_item_id']     = (int) $item['component_item_id'];
+        //     $item['material_item_id']      = (int) $item['material_item_id'];
+        //     $item['requested_quantity']    = (float) $item['requested_quantity'];
+
+        //     $requested_quantity_total = MaterialQuantityRequestItem::where('status','=','APRV')
+        //     ->where('component_item_id','=',$item['component_item_id'])
+        //     ->where('material_item_id','=',$item['material_item_id'])
+        //     ->sum('requested_quantity');
+            
+        //     $materialQuantity = MaterialQuantity::where('component_item_id','=',$item['component_item_id'])
+        //     ->where('material_item_id','=',$item['material_item_id'])->first();
+           
+        //     $remaining = $materialQuantity->quantity - $requested_quantity_total;
+
+
+        //     if($remaining < $item['requested_quantity']){
+
+        //         return response()->json([
+        //             'status'    => 0,
+        //             'message'   => 'Material is out of budget',
+        //             'data'      => [
+        //                 'remaining' => $remaining,
+        //                 'request' =>  $item['requested_quantity']
+        //             ]
+        //         ]);
+
+        //     }
+        // }
 
         DB::beginTransaction();
 
