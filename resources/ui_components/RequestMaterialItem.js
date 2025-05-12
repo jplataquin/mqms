@@ -451,30 +451,17 @@ class RequestMaterialItem extends Component{
 
             this.el.prevApprovedQuantity.value = window.util.numberFormat(reply.data.total_approved_quantity,2) + ' ' +reply.data.unit_text;
 
-            let budget                         = window.util.pureNumber(this.el.materialBudgetQuantity.value);
-            let approved                       = window.util.pureNumber(reply.data.total_approved_quantity);
-            let balance                        = budget - approved;
+            // let budget                         = window.util.pureNumber(this.el.materialBudgetQuantity.value);
+            // let approved                       = window.util.pureNumber(reply.data.total_approved_quantity);
+            // let balance                        = budget - approved;
             
-            let request                        = window.util.pureNumber(this.el.requestedQuantity.value);
+            // let request                        = window.util.pureNumber(this.el.requestedQuantity.value);
             
             this.el.quantityRemaining.value    = window.util.numberFormat(
                                                     window.util.roundUp(balance,2)
                                                 )+ ' ' +reply.data.unit_text;
 
-            //If balance is negative
-            if(balance < 0){
-                this.el.quantityRemaining.addClass('is-invalid');
-            }
-
-            //Highlight over budget of request in review 
-            if(
-                !this._state.editable &&
-                budget > approved &&
-                balance < request
-            ){
-                this.el.requestedQuantity.classList.add('is-invalid');
-            }
-    
+            this.validate();
 
             this.get_total_po_quantity();
         });
