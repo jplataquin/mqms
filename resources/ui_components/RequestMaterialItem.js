@@ -294,6 +294,11 @@ class RequestMaterialItem extends Component{
           
         this.el.requestedQuantity.classList.remove('is-invalid');
         
+        
+        if(!this._model.editable){
+            this.setState('requestedQuantity',this.el.requestedQuantity.value,true);            
+        }
+        
         this.validate();
     }   
 
