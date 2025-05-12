@@ -34,12 +34,25 @@
     }
 
 
+    @media print {
+
+        td, th{
+            font-size:10px;
+        }
+
+        .page-break{
+            break-before:always;
+        }
+        
+    
+    }
+
 </style>
 
 <table class="mb-20">
     <tr>
         <td style="width:50%;text-align:center">
-            <img src="storage/sys_images/header.png" style="width:500px"/>
+              <img src="/storage/sys_images/header.png" style="width:500px"/>
         </td>
         <td class="text-center" style="width:40%;text-align:center">
             <h1>Material Request</h1>
