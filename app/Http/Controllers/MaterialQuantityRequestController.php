@@ -35,7 +35,6 @@ class MaterialQuantityRequestController extends Controller
     }
 
     
-
     public function create($project_id,$section_id,$contract_item_id,$component_id){
         
         $project_id         = (int) $project_id;
@@ -1187,6 +1186,10 @@ class MaterialQuantityRequestController extends Controller
         
         $total_approved_quantity = 0;
 
+        $material_quantity = MaterialQuantity::where('component_item_id',$component_item_id)
+        ->where('material_item_id',$material_item_id)
+        ->first();
+
         $material_quantity_request_item = MaterialQuantityRequestItem::where(function($query){
             $query->where('status','=','APRV')->orWhere('status','=','CLSD');
         })
@@ -1208,7 +1211,7 @@ class MaterialQuantityRequestController extends Controller
         }
         
         
-        return $total_approved_quantity;
+        return $total_approved_quantity * $material_quantity->equivalent;
     }
 
 
