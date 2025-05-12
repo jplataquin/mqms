@@ -269,7 +269,9 @@
             prevApprovedQuantity   : '',
             requestedQuantity      : request_item.requested_quantity,
             editable               : false,
-            unitOptions            : unit_options
+            unitOptions            : unit_options,
+
+            materialBudgetQuantity: 'test'
         });
 
         itemForm.handler.deleteCallback(async (dom)=>{

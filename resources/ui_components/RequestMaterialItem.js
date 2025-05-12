@@ -101,7 +101,7 @@ class RequestMaterialItem extends Component{
                                 type:'text',
                                 disabled:true,
                                 class:'form-control text-center',
-                                value: window.util.numberFormat(this._model.materialBudgetQuantity,2) 
+                                value: this._model.materialBudgetQuantity 
                             });
                         });              
                     });
