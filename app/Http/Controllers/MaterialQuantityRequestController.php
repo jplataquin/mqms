@@ -885,7 +885,7 @@ class MaterialQuantityRequestController extends Controller
             }
 
             $material_quantity = MaterialQuantity::where('component_item_id',$item_component_item_id)
-            ->where($item_material_item_id)
+            ->where('material_item_id', $item_material_item_id)
             ->first();
 
             $po_result = $this->_get_total_po_quantity($item_id);
