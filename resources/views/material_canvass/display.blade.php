@@ -84,11 +84,11 @@
         @foreach($items as $item)
          <div class="form-container mb-5">
             <div class="form-header">
-               &nbsp;
+               {{ $component_item_arr[ $item->component_item_id ]->name }}
             </div>
             <div class="form-body">
                 <div class="row mb-5">
-                <h5>  {{ $component_item_arr[ $item->component_item_id ]->name }}</h5>
+                
                     @php 
                         $component_item = $component_item_arr[ $item->component_item_id ];
                         $material_item = $material_item_arr[$item->material_item_id];
