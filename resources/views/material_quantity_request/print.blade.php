@@ -117,11 +117,11 @@
         </th>
         
         <th style="width:10%;text-align:center">
-            Equivalent/Unit
+            Equivalent
         </th>
 
         <th style="width:10%;text-align:center">
-            Equivalent Request
+           Total Request
         </th>
         
         <th style="width:10%;text-align:center">
@@ -181,7 +181,7 @@
             {{ number_format($item->equivalent * $request_item->requested_quantity, 2) }} {{$item->component_unit_text}}
         </td>
         @php
-            $balance = $remaining - $request_item->requested_quantity;
+            $balance = $remaining - ($item->equivalent * $request_item->requested_quantity);
 
             $red = '#000000';
 
@@ -190,7 +190,7 @@
             }
         @endphp
         <td class="text-center" style="color:{{$red}};text-align:center">
-            {{$balance}}
+            {{ number_format($balance,2) }} {{$item->component_unit_text}}
         </td>
     </tr>
         
