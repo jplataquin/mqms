@@ -163,7 +163,7 @@ class CanvassItem extends Component{
             t.div(()=>{
 
                 if(this._model.created_by && this._model.created_at){
-                    t.span({class:'small'},this._model.created_by+' ('+this._model.created_at+')');
+                    t.span({class:'small'},'Created By: '+this._model.created_by+' ('+this._model.created_at+')');
                 }
             });
 
