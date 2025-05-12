@@ -146,8 +146,9 @@
         $el.clear(list);   
     }
 
+    
     function renderRows(data){
-        console.log(date);
+       
         data.map(item=>{
 
             let row = t.tr({class:'selectable-div'},()=>{
@@ -200,7 +201,6 @@
 
             page++;
 
-            console.log(reply.data);
             if(reply.data.length){
                 renderRows(reply.data); 
             }else{
