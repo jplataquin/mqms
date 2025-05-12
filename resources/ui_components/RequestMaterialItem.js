@@ -298,7 +298,7 @@ class RequestMaterialItem extends Component{
         if(!this._model.editable){
             this.setState('requestedQuantity',this.el.requestedQuantity.value,true);            
         }
-        
+
         this.validate();
     }   
 
@@ -355,12 +355,10 @@ class RequestMaterialItem extends Component{
             this.el.componentItemSelect.disabled    = false;
             this.el.materialSelect.disabled         = false;
             this.el.requestedQuantity.disabled      = false;
-            this.el.requestedQuantity.value         = window.util.numberFormat(this.el.requestedQuantity,2);
         }else{
             this.el.componentItemSelect.disabled    = true;
             this.el.materialSelect.disabled         = true;
             this.el.requestedQuantity.disabled      = true;
-            this.el.requestedQuantity.value         = window.util.pureNumber(this.el.requestedQuantity);
         }
 
         this.el.deleteRow.style.display = (flag) ? 'inline' : 'none';
