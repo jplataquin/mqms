@@ -481,7 +481,7 @@ class MaterialQuantityRequestController extends Controller
 
                 return [
                     'status'    => 0,
-                    'message'   => 'Out of budget (Request equivalent: '.$equivalent_quantity_request.' Remaining budget: '.$remaining_budget_quantity.')',
+                    'message'   => 'Out of budget (Request Equivalent: '.$equivalent_quantity_request.' Available Quantity: '.$remaining_budget_quantity.')',
                     'data'      => []
                 ];
 
