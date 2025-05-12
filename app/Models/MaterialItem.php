@@ -25,7 +25,7 @@ class MaterialItem extends Model
 
 
     public function getFormattedNameAttribute(){
-        return $this->brand.' '.$this->name.' '.$this->specification_unit_packaging;
+        return trim($this->brand.' '.$this->name.' '.$this->specification_unit_packaging);
     }
 
     //To do make this into a callback later on
