@@ -78,7 +78,7 @@
             </table>
             
              @if($material_quantity_request->status == 'PEND')
-            <div class="row mb-3">
+            <div class="row mb-3 mt-3">
                 <div class="col-lg-12 text-end">
                     <button class="btn btn-outline-primary" id="reviewLinkBtn">
                         Review Link
