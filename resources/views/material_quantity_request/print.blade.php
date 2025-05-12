@@ -131,10 +131,10 @@
             </div>
         </td>
         <td class="text-center" style="text-align:center">
-            {{ $item->budget_quantity}}
+            {{ number_format($item->budget_quantity, 2) }} {{$item->component_unit_text}}
         </td>
         <td class="text-center" style="text-align:center">
-            {{ $item->approved_quantity}}
+            {{ number_format($item->approved_quantity,2) }} {{$item->component_unit_text}}
         </td>
 
         
@@ -150,7 +150,7 @@
             @endphp
 
         <td class="text-center" style="color:{{$red}};text-align:center">
-            {{$remaining}}
+            {{ number_format($remaining, 2) }} {{$item->component_unit_text}}
         </td>
         <td  class="text-center text-bold" style="font-weight:bold;text-align:center">
             {{$request_item->requested_quantity}}
