@@ -108,38 +108,40 @@ class CanvassItem extends Component{
             });
 
             t.div({class:'row mb-3'},()=>{
-                t.div({class:'col-lg-12'},(el)=>{
-                if(this._model.approvalFlag && this._model.status == 'PEND'){
 
-                
-                            el.append(this.el.approveBtn); 
-                            el.append(this.el.disapproveBtn);
-                                                        
-                
-                }else if(!this._model.approvalFlag && (this._model.status == 'PEND' || this._model.status == '')){
+                 t.div({class:'col-lg-6'},()=>{
 
-                
-                            el.append(this.el.deleteBtn);
-                                                        
+                    if(this._model.created_by && this._model.created_at){
+                        t.span({class:'small'},'Created by: '+this._model.created_by+' ('+this._model.created_at+')');
+                    }
+                });
+                t.div({class:'col-lg-6 text-end'},(el)=>{
+                    if(this._model.approvalFlag && this._model.status == 'PEND'){
+
                     
-                }else if(this._model.status == 'APRV'){
+                                el.append(this.el.approveBtn); 
+                                el.append(this.el.disapproveBtn);
+                                                            
                     
-                
-                            el.append(this.el.voidBtn);
-                                                        
-                
-                }
+                    }else if(!this._model.approvalFlag && (this._model.status == 'PEND' || this._model.status == '')){
+
+                    
+                                el.append(this.el.deleteBtn);
+                                                            
+                        
+                    }else if(this._model.status == 'APRV'){
+                        
+                    
+                                el.append(this.el.voidBtn);
+                                                            
+                    
+                    }
                 
                 });//div col
 
             });//div row
 
-            t.div(()=>{
-
-                if(this._model.created_by && this._model.created_at){
-                    t.span({class:'small'},'Created by: '+this._model.created_by+' ('+this._model.created_at+')');
-                }
-            });
+           
 
             t.div(()=>{
                 this.el.errorList = t.ul({class:'text-danger'});
