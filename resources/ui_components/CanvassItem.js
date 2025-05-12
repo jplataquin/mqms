@@ -49,7 +49,7 @@ class CanvassItem extends Component{
         });
         
         
-        return  t.div({class:'shadow-lg p-3 bg-body-tertiary rounded '},()=>{
+        return  t.div({class:'shadow-lg p-3 bg-body-tertiary rounded mb-5'},()=>{
         
             t.div({class:'row mb-3'},()=>{
                 
@@ -117,7 +117,7 @@ class CanvassItem extends Component{
 
                     this.el.errorList = t.ul({class:'text-danger'});
                 });
-                
+
                 t.div({class:'col-lg-6 col-sm-4 text-end'},(el)=>{
                     if(this._model.approvalFlag && this._model.status == 'PEND'){
 
