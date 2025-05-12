@@ -35,6 +35,7 @@ class MaterialQuantityRequestReviewController extends Controller
         $component       = $materialQuantityRequest->Component;
         $request_items   = $materialQuantityRequest->Items;
 
+        $unit_options           = Unit::toOptions();
         $component_item_ids     = [];
         $componentItem_options  = [];
 
@@ -44,6 +45,7 @@ class MaterialQuantityRequestReviewController extends Controller
             $componentItem_options[$componentItem->id] = [
                 'value'     => $componentItem->id,
                 'text'      => $componentItem->name,
+                'unit_text' => $unit_options[$componentItem->unit_id]->text,
                 'unit_id'   => $componentItem->unit_id,
                 'quantity'  => $componentItem->quantity
             ];
@@ -65,7 +67,8 @@ class MaterialQuantityRequestReviewController extends Controller
                 'value'         => $row->material_item_id,
                 'text'          => trim($row->name.' '.$row->specification_unit_packaging.' '.$row->brand),
                 'equivalent'    => $row->equivalent,
-                'quantity'      => $row->quantity
+                'budget'        => $component_item_options[$row->component_item_id]['quantity'],
+                'unit_text'     => $component_item_options[$row->component_item_id]['unit_text']
             ];
         }
 
