@@ -657,6 +657,7 @@ class MaterialQuantityRequestController extends Controller
         $item_options = [];
 
         $unit_options = Unit::toOptions();
+        
         foreach($material_item_result as $row){
 
             if(!isset($material_options[$row->component_item_id])){
@@ -681,11 +682,8 @@ class MaterialQuantityRequestController extends Controller
             ];
         }
 
-       // exit;
-        
-        $unit_options = Unit::toOptions();
 
-        $html = view('material_quantity_request/print',[
+        return view('material_quantity_request/print',[
             'project'                   => $project,
             'section'                   => $section,
             'contract_item'             => $contract_item,
@@ -696,24 +694,24 @@ class MaterialQuantityRequestController extends Controller
             'component_item_options'    => $component_item_options,
             'unit_options'              => $unit_options,
             'date_printed'              => Carbon::now()
-        ])->render();
+        ]);
 
 
-        $html2pdf = new Html2Pdf('L','A4','en', false, 'UTF-8', [5, 5, 10, 0]);
+        // $html2pdf = new Html2Pdf('L','A4','en', false, 'UTF-8', [5, 5, 10, 0]);
            
 
-        try {
-            $html2pdf->writeHTML($html);
-            $html2pdf->output('Material Request - '.str_pad($materialQuantityRequest->id,0,6,STR_PAD_LEFT ).'.pdf');
-            $html2pdf->clean();
+        // try {
+        //     $html2pdf->writeHTML($html);
+        //     $html2pdf->output('Material Request - '.str_pad($materialQuantityRequest->id,0,6,STR_PAD_LEFT ).'.pdf');
+        //     $html2pdf->clean();
         
-        }catch(Html2PdfException $e) {
-            $html2pdf->clean();
+        // }catch(Html2PdfException $e) {
+        //     $html2pdf->clean();
         
-            $formatter = new ExceptionFormatter($e);
-            echo $html;
-            echo $formatter->getHtmlMessage();        
-        }
+        //     $formatter = new ExceptionFormatter($e);
+        //     echo $html;
+        //     echo $formatter->getHtmlMessage();        
+        // }
     }
 
     public function _update(Request $request){
