@@ -53,22 +53,20 @@ class CanvassItem extends Component{
         
             t.div({class:'row mb-3'},()=>{
                 
-                if(!this._model.approvalFlag){
-                    
-                    t.div({class:'col-lg-1'},()=>{
-                    
-                        t.div({class:'form-group'},(el)=>{
-                            t.label('Status');
+                t.div({class:'col-lg-1'},()=>{
+                
+                    t.div({class:'form-group'},(el)=>{
+                        t.label({class:'mb-3'},'Status');
 
-                            el.append(this.el.status);
-                        });
-
+                        el.append(this.el.status);
                     });
-                }
 
-                t.div({class:'col-lg-3'},()=>{
+                });
+                
+
+                t.div({class:'col-lg-4'},()=>{
                     t.div({class:'form-group'},()=>{
-                        t.label('Supplier');
+                        t.label({class:'mb-3'},'Supplier');
 
                         this.el.supplier = t.input({class:'form-control',list:'supplier_list', value:this._model.supplier_text});
                         
@@ -76,9 +74,9 @@ class CanvassItem extends Component{
                 });
                 
 
-                t.div({class:'col-lg-3'},()=>{
+                t.div({class:'col-lg-2'},()=>{
                     t.div({class:'form-group'},()=>{
-                        t.label('Payment Terms');
+                        t.label({class:'mb-3'},'Payment Terms');
 
                         this.el.payment_terms = t.input({class:'form-control',list:'payment_terms_list', value:this._model.payment_term_text});
                         
@@ -87,16 +85,16 @@ class CanvassItem extends Component{
 
                 t.div({class:'col-lg-2'},()=>{
                     t.div({class:'form-group'},()=>{
-                        t.label('Price');
+                        t.label({class:'mb-3'},'Price');
 
 
                         this.el.price = t.input({class:'form-control', value:this._model.price, type:'text'});
 
                     });
                 });
-                t.div({class:'col-lg-2'},()=>{
+                t.div({class:'col-lg-3'},()=>{
                     t.div({class:'form-group'},()=>{
-                        t.label('Total');
+                        t.label({class:'mb-3'},'Total');
                         this.el.total = t.input({class:'form-control',disabled:true});
                         
                         let totalVal = (parseFloat(this._model.price) * parseFloat(this._model.quantity));
@@ -106,64 +104,40 @@ class CanvassItem extends Component{
                         }
                     });
                 });
+                
+            });
 
+            t.div({class:'row mb-3'},()=>{
+                t.div({class:'col-lg-12'},(el)=>{
                 if(this._model.approvalFlag && this._model.status == 'PEND'){
 
-                    t.div({class:'col-lg-1'},()=>{
-                        t.div({class:'form-group'},(el)=>{
-                            t.label('&nbsp;');
-
-
+                
                             el.append(this.el.approveBtn); 
-                        });
-                    });
-
-                    t.div({class:'col-lg-1'},()=>{
-                        t.div({class:'form-group'},(el)=>{
-                            t.label('&nbsp;');
-
                             el.append(this.el.disapproveBtn);
                                                         
-                        });
-                    });
-
+                
                 }else if(!this._model.approvalFlag && (this._model.status == 'PEND' || this._model.status == '')){
 
-                    t.div({class:'col-lg-1'},()=>{
-                        t.div({class:'form-group'},(el)=>{
-                            t.label('&nbsp;');
-
+                
                             el.append(this.el.deleteBtn);
                                                         
-                        });
-                    });
                     
                 }else if(this._model.status == 'APRV'){
                     
-                    t.div({class:'col-lg-1'},()=>{
-                        t.div({class:'form-group'},(el)=>{
-                            t.label('&nbsp;');
-
+                
                             el.append(this.el.voidBtn);
                                                         
-                        });
-                    });
+                
+                }
+                
+                });//div col
 
-                }else if(this._model.status == 'DPRV' || this._model.status == 'VOID'){
-                    
-                    t.div({class:'col-lg-1'},()=>{
-                        t.div({class:'form-group'},(el)=>{
-                            t.label('&nbsp;');          
-                        });
-                    });
-                    
-                }//if else
-            });
+            });//div row
 
             t.div(()=>{
 
                 if(this._model.created_by && this._model.created_at){
-                    t.span({class:'small'},'Created By: '+this._model.created_by+' ('+this._model.created_at+')');
+                    t.span({class:'small'},'Created by: '+this._model.created_by+' ('+this._model.created_at+')');
                 }
             });
 
