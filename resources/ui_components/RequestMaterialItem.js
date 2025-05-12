@@ -301,7 +301,6 @@ class RequestMaterialItem extends Component{
             
         }
 
-        this.validate();
     }   
 
     validate(){
@@ -328,8 +327,7 @@ class RequestMaterialItem extends Component{
             let requested_quantity = material.equivalent * window.util.pureNumber(this.el.requestedQuantity.value,2);
             let available_quantity  = window.util.pureNumber(this.el.quantityRemaining.value,2);
 
-            console.log(available_quantity);
-            
+
             if(requested_quantity > available_quantity){
                 this.el.requestedQuantity.classList.add('is-invalid');
             }
@@ -456,6 +454,7 @@ class RequestMaterialItem extends Component{
             let budget                         = window.util.pureNumber(this.el.materialBudgetQuantity.value);
             let approved                       = window.util.pureNumber(reply.data.total_approved_quantity);
             let balance                        = budget - approved;
+            
             let request                        = window.util.pureNumber(this.el.requestedQuantity.value);
             
             this.el.quantityRemaining.value    = window.util.numberFormat(
@@ -542,7 +541,6 @@ class RequestMaterialItem extends Component{
         this.el.requestedQuantity.value         = '';
         this.el.prevApprovedQuantity.value      = '';
         this.el.equivalentQuantity.value        = window.util.numberFormat(material.equivalent,2)+' '+material.unit_text;
-        //this.el.balanceQuantity.value           = '';
         this.el.already_po.value                = '';
         
         this.setState('materialBudgetQuantity',material.budget);
