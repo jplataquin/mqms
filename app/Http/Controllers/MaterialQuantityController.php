@@ -228,11 +228,6 @@ class MaterialQuantityController extends Controller
                 'required',
                 'numeric',
                 'gt:0'
-            ],
-            'quantity' => [
-                'required',
-                'numeric',
-                'gt:0'
             ]
         ]);
 
@@ -255,71 +250,71 @@ class MaterialQuantityController extends Controller
             ]);
         }
 
-        //Get Component Item
-        $component_item = $materialQuantity->ComponentItem;
+        // //Get Component Item
+        // $component_item = $materialQuantity->ComponentItem;
 
         
   
-        //Check if total entries is not more than component item quantity but ignore deleted and current row
-        $entries = MaterialQuantity::where('component_item_id',$component_item->id)
-        ->where('id','!=',$id) //Ignore current row being updated
-        ->where('deleted_at',null) //Ignore deleted
-        ->get();
+        // //Check if total entries is not more than component item quantity but ignore deleted and current row
+        // $entries = MaterialQuantity::where('component_item_id',$component_item->id)
+        // ->where('id','!=',$id) //Ignore current row being updated
+        // ->where('deleted_at',null) //Ignore deleted
+        // ->get();
   
-        $grand_total = 0;
+        // $grand_total = 0;
 
-        foreach($entries as $entry){
-            $grand_total = $grand_total + ($entry->quantity * $entry->equivalent);
-        }
+        // foreach($entries as $entry){
+        //     $grand_total = $grand_total + ($entry->quantity * $entry->equivalent);
+        // }
           
-        $grand_total = $grand_total + ($quantity * $equivalent);
+        // $grand_total = $grand_total + ($quantity * $equivalent);
 
-        if($component_item->quantity < $grand_total){
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'The Grand Total Quantity ('.$grand_total.') should not be more than Component Item Quantity ('.$component_item->quantity.')',
-                'data'      => []
-            ]);
-        }
+        // if($component_item->quantity < $grand_total){
+        //     return response()->json([
+        //         'status'    => 0,
+        //         'message'   => 'The Grand Total Quantity ('.$grand_total.') should not be more than Component Item Quantity ('.$component_item->quantity.')',
+        //         'data'      => []
+        //     ]);
+        // }
         //--------------------------------------------
 
         //Check if there are material request that has been affected by the change in quantity
-        $check_affected = $this->check_affected_material_request($quantity,$materialQuantity);
+        //$check_affected = $this->check_affected_material_request($quantity,$materialQuantity);
 
-        if($check_affected->over_budget){
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'There are "'.number_format($check_affected->total_approved_request,2).'" units of approved material request that already exists',
-                'data'      => $check_affected->mqr_ids
-            ]);
-        }
+        // if($check_affected->over_budget){
+        //     return response()->json([
+        //         'status'    => 0,
+        //         'message'   => 'There are "'.number_format($check_affected->total_approved_request,2).'" units of approved material request that already exists',
+        //         'data'      => $check_affected->mqr_ids
+        //     ]);
+        // }
         //--------------------------------------------
         
         
         $user_id = Auth::user()->id;
 
-        //No change do nothing
-        if($materialQuantity->quantity == $quantity && $materialQuantity == $equivalent){
-            return response()->json([
-                'status'    => 1,
-                'message'   => '',
-                'data'      => []
-            ]);
-        }
+        // //No change do nothing
+        // if($materialQuantity->quantity == $quantity && $materialQuantity == $equivalent){
+        //     return response()->json([
+        //         'status'    => 1,
+        //         'message'   => '',
+        //         'data'      => []
+        //     ]);
+        // }
 
-        $materialQuantity->quantity               = round($quantity,2);
+        //$materialQuantity->quantity               = round($quantity,2);
         $materialQuantity->equivalent             = $equivalent;
         $materialQuantity->updated_by             = $user_id;
 
         $materialQuantity->save();
 
-        $component = $materialQuantity->componentItem->component;
+        // $component = $materialQuantity->componentItem->component;
         
-        //Todo enclosed in a transaction
-         if($component->status != 'PEND'){
-             $component->status = 'PEND';
-             $component->save();
-         }
+        // //Todo enclosed in a transaction
+        //  if($component->status != 'PEND'){
+        //      $component->status = 'PEND';
+        //      $component->save();
+        //  }
 
          return response()->json([
             'status'    => 1,
