@@ -368,10 +368,10 @@ class MaterialQuantityController extends Controller
 
         $material_quantity_item_count = MaterialQuantityItem::where('component_item_id',$component_item->id)
         ->where('material_item_id',$materialQuantity->material_item_id)
-        ->where('deleted_at',null)
+        ->where('status','!=','VOID')
         ->count();
 
-        
+
         if($material_quantity_item_count){
             return response()->json([
                 'status'    => 0,
