@@ -134,9 +134,16 @@ class MaterialQuantityItem extends ComponentV2{
             });
 
             t.div({class:'row'},()=>{
-                
-              
+                t.div({class:'col-sm-12'},()=>{
+                    t.div({class:'form-group'},(el)=>{
+                        t.label('Material Item');
+                        t.input({class:'form-control',value:this._model.name,disabled:true});
+                    });
+                });
+            });
 
+            t.div({class:'row'},()=>{
+                
                 t.div({class:'col-sm-12'},()=>{
                     t.div({class:'form-group'},(el)=>{
                         t.label('Equivalent'),
