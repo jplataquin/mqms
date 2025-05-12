@@ -551,7 +551,7 @@
                                 </td>
 
                                 <td class="text-center material-quantity-td">
-                                    {{ number_format($mq->equivalent) }}
+                                    {{ number_format($mq->equivalent) }}  {{$component_item->unit_text}}
                                 </td>
 
                                   
