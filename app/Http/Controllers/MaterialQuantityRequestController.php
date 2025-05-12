@@ -544,7 +544,7 @@ class MaterialQuantityRequestController extends Controller
             $component_item_options[$componentItem->id] = [
                 'value'                  => $componentItem->id,
                 'text'                   => $componentItem->name,
-                'unit_text'              => $unit_options[$componentItem->unit_id]['text'],
+                'unit_text'              => $unit_options[$componentItem->unit_id]->text,
                 'unit_id'                => $componentItem->unit_id,
                 'quantity'               => $componentItem->quantity
             ];
