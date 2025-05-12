@@ -64,7 +64,7 @@ class RequestMaterialItem extends Component{
                 t.div({class:'row mb-3'},()=>{
                     t.div({class:'col-lg-12'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Component Item');
+                            t.label({class:'mb-3'},'Component Item');
                             
                             this.el.componentItemSelect = t.select({class:'form-control'},()=>{
                                 t.option({
@@ -96,7 +96,7 @@ class RequestMaterialItem extends Component{
                     
                     t.div({class:'col-lg-3'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Total Budget');
+                            t.label({class:'mb-3'},'Total Budget');
                             this.el.materialBudgetQuantity = t.input({
                                 type:'text',
                                 disabled:true,
@@ -107,7 +107,7 @@ class RequestMaterialItem extends Component{
 
                     t.div({class:'col-lg-3'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Approved Request');
+                            t.label({class:'mb-3'},'Approved Request');
                             this.el.prevApprovedQuantity = t.input({
                                 type:'text',
                                 disabled:true,
@@ -119,7 +119,7 @@ class RequestMaterialItem extends Component{
 
                     t.div({class:'col-lg-3'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Available Quantity');
+                            t.label({class:'mb-3'},'Available Quantity');
                             this.el.quantityRemaining = t.input({
                                 type:'text',
                                 disabled:true,
@@ -132,7 +132,7 @@ class RequestMaterialItem extends Component{
 
                     t.div({class:'col-lg-3'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label("Total PO'd");
+                            t.label({class:'mb-3'},"Total PO'd");
                             this.el.already_po = t.input({
                                 type:'text',
                                 disabled:true,
@@ -148,7 +148,7 @@ class RequestMaterialItem extends Component{
                 t.div({class:'row mb-3'},()=>{
                     t.div({class:'col-lg-12'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Material');
+                            t.label({class:'mb-3'},'Material');
                             
                             this.el.materialSelect = t.select({class:'form-control'},()=>{
                                 
@@ -173,7 +173,7 @@ class RequestMaterialItem extends Component{
                 t.div({class:'row mb-3'},()=>{
                     t.div({class:'col-lg-12'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Equivalent Quantity Per Unit Of Material');
+                            t.label({class:'mb-3'},'Equivalent Quantity Per Unit Of Material');
                             
                             this.el.equivalentQuantity = t.input({class:'form-control',type:'text',disabled:true});
 
@@ -186,7 +186,7 @@ class RequestMaterialItem extends Component{
                     
                     t.div({class:'col-lg-6'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Request Quantity');
+                            t.label({class:'mb-3'},'Request Quantity');
                            
                             this.el.requestedQuantity = t.input({
                                 type:'text',
@@ -204,7 +204,7 @@ class RequestMaterialItem extends Component{
 
                     t.div({class:'col-lg-6'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label('Request Equivalent');
+                            t.label({class:'mb-3'},'Request Equivalent');
                             this.el.requestEquivalent = t.input({class:'form-control',type:'text',disabled:true});
                         });
                     });
