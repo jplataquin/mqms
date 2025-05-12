@@ -74,13 +74,7 @@ class MaterialQuantityList extends ComponentV2{
                             
                             this.el.material_quantity_item_container = t.tbody(()=>{});
 
-                            t.tfoot(()=>{
-                                t.td();
-                                t.td();
-                                t.th({class:'text-center'},'Material Total');
-                                this.el.grand_total = t.td({class:'text-center'});
-                                t.td();
-                            });//foot
+                          
                             
                         });
                     });
@@ -144,7 +138,7 @@ class MaterialQuantityList extends ComponentV2{
                     }
                 }));
 
-                grand_total = grand_total + (item.quantity * item.equivalent);
+               // grand_total = grand_total + (item.quantity * item.equivalent);
             });
 
             this.setState('grand_total',grand_total);
