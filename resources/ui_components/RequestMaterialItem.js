@@ -296,7 +296,9 @@ class RequestMaterialItem extends Component{
         
         
         if(!this._model.editable){
-            this.setState('requestedQuantity',this.el.requestedQuantity.value,true);            
+            this.setState('requestedQuantity',this.el.requestedQuantity.value,true);
+            
+            
         }
 
         this.validate();
@@ -304,11 +306,31 @@ class RequestMaterialItem extends Component{
 
     validate(){
         
+        this.el.materialSelect.classList.remove('is-invalid');
+        this.el.requestedQuantity.classList.remove('is-invalid');
+
         //Check if selected material is deleted
         let selected_material_deleted = this.el.materialSelect.options[this.el.materialSelect.selectedIndex].disabled;
 
         if(selected_material_deleted){
             this.el.materialSelect.classList.add('is-invalid');
+        }
+
+
+        let material = this._model.materialList[ this._state.componentItemId ] ?? false;
+
+        if(material){
+            material = this._model.materialList[ this._state.componentItemId ][this._state.materialItemId] ?? false;
+        }
+
+        if(material){
+
+            let requested_quantity = material.equivalent * window.util.pureNumber(this.el.requestedQuantity.value,2);
+            let available_quantity  = window.util.pureNumber(this.el.quantityRemaining.value,2);
+
+            if(requested_quantity > available_quantity){
+                this.el.requestedQuantity.classList.add('is-invalid');
+            }
         }
     }
 
@@ -463,11 +485,12 @@ class RequestMaterialItem extends Component{
 
         if(prevApprovedQuantity != 'Calculating...'){
 
-            let remaining           = window.util.pureNumber(this.el.materialBudgetQuantity.value) - window.util.pureNumber(this.el.prevApprovedQuantity.value);
-            let requested_quantity  = window.util.pureNumber(this.el.requestedQuantity.value);
-            let equivalent          = window.util.pureNumber(this.el.equivalentQuantity.value);
-
-            if( requested_quantity > remaining ){
+            let remaining               = window.util.pureNumber(this.el.materialBudgetQuantity.value) - window.util.pureNumber(this.el.prevApprovedQuantity.value);
+            let requested_quantity      = window.util.pureNumber(this.el.requestedQuantity.value);
+            let equivalent              = window.util.pureNumber(this.el.equivalentQuantity.value);
+            let requested_equivalent    = window.util.numberFormat((requested_quantity * equivalent),2);
+            
+            if( requested_equivalent > remaining ){
             
                 window.util.alert('Error','Requested quantity is out of budget');
             
