@@ -1179,9 +1179,8 @@ class MaterialQuantityRequestController extends Controller
 
     public function get_total_po_quantity(Request $request){
         
-        $material_quantity_request_item_id  = (int) $request->input('material_quantity_request_item_id') ?? 0;
-        
-
+        $material_quantity_request_item_id  = (int) $request->input('material_quantity_request_item_id');
+       
         $result = $this->_get_total_po_quantity($material_quantity_request_item_id);
 
         return response()->json($result);
@@ -1189,30 +1188,48 @@ class MaterialQuantityRequestController extends Controller
 
     public function _get_total_po_quantity($material_quantity_request_item_id){
         
-        
         $material_quantity_request_item = MaterialQuantityRequestItem::find($material_quantity_request_item_id);
-
 
         if(!$material_quantity_request_item){
             return [
                 'status' => 0,
-                'message' => 'Record not found',
+                'message' => 'Record not found (Material Quantity Request Item)',
                 'data' => [] 
             ];
         }
 
- 
+        $component_item = $material_quantity_request_item->ComponentItem;
+
+        $unit_options = Unit::toOptions();
+        
+        $material_quantity = MaterialQuantity::where('component_item_id','=',$component_item->id)
+        ->where('material_item_id','=',$material_quantity_request_item->material_item_id)
+        ->first();
+        
+        if(!$material_quantity){
+            return [
+                'status' => 0,
+                'message' => 'Record not found (Material Quantity)',
+                'data' => [] 
+            ];
+        }
+
         $total = PurchaseOrderItem::where('material_item_id',$material_quantity_request_item->material_item_id)
         ->where('material_quantity_request_item_id',$material_quantity_request_item->id)
         ->where('status','!=','REJC')
         ->where('status','!=','VOID')
         ->sum('quantity');
 
+        
+        $total_equivalent = $total * $material_quantity->equivalent;
+
         return [
             'status' => 1,
             'message' => '',
             'data' => [
-                'total' => $total
+                'total'     => $total_equivalent,
+                'unit_text' => $unit_options[$component_item->unit_id]->text,
+                'unit_id'   => $component_item->unit_id   
             ]
         ];
     }

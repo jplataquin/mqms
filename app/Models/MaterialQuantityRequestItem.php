@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\MaterialQuantityRequest;
 use App\Models\MaterialCanvass;
 use App\Models\PurchaseOrder;
-
+use App\Models\ComponentItem;
 
 class MaterialQuantityRequestItem extends Model
 {
@@ -22,6 +22,11 @@ class MaterialQuantityRequestItem extends Model
     public function Request(): BelongsTo
     {
         return $this->belongsTo(Section::class);
+    }
+
+    public function ComponentItem(): BelongsTo
+    {
+        return $this->belongsTo(ComponentItem::class);
     }
 
     public function MaterialCanvass(): HasMany
