@@ -58,9 +58,6 @@
             <h1>Material Request</h1>
         
         </td>
-        <td style="text-align:center;width:10%">
-            <qrcode value="{{json_encode(['t'=>'MR','id'=>$material_quantity_request->id])}}" ec="H" style="width: 20mm; background-color: white; color: black;"></qrcode>
-        </td>
     </tr>
 </table>
 
