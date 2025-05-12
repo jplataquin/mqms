@@ -24,22 +24,22 @@ class MaterialQuantityList extends ComponentV2{
 
     state(){
         return {
-            grand_total:{
-                value:0,
-                target:this.el.grand_total,
-                onUpdate:(data)=>{
+            // grand_total:{
+            //     value:0,
+            //     target:this.el.grand_total,
+            //     onUpdate:(data)=>{
 
-                    if(data.value > this._model.component_item_quantity){
-                        this.el.grand_total.classList.add('text-danger');
-                        this.el.grand_total.classList.add('non-compliant');
-                    }else{
-                        this.el.grand_total.classList.remove('text-danger');
-                        this.el.grand_total.classList.remove('non-compliant');
-                    }
+            //         if(data.value > this._model.component_item_quantity){
+            //             this.el.grand_total.classList.add('text-danger');
+            //             this.el.grand_total.classList.add('non-compliant');
+            //         }else{
+            //             this.el.grand_total.classList.remove('text-danger');
+            //             this.el.grand_total.classList.remove('non-compliant');
+            //         }
 
-                    this.el.grand_total.innerText = window.util.numberFormat(data.value,2)+' '+this._model.component_item_unit_text;
-                }
-            }
+            //         this.el.grand_total.innerText = window.util.numberFormat(data.value,2)+' '+this._model.component_item_unit_text;
+            //     }
+            // }
         }
     }
 
@@ -92,9 +92,7 @@ class MaterialQuantityList extends ComponentV2{
             this.getMaterialQuantityList();
         }
 
-        this._dom.handler.getGrandTotal = ()=>{
-            return this.getState('grand_total');
-        }
+     
     }
 
     getMaterialQuantityList(){
@@ -113,7 +111,6 @@ class MaterialQuantityList extends ComponentV2{
             }
 
 
-            let grand_total = 0;
             
             reply.data.map(item=>{
 
@@ -128,9 +125,7 @@ class MaterialQuantityList extends ComponentV2{
                     component_item_name     : this._model.component_item_name,
                     component_item_quantity : this._model.component_item_quantity,
                     component_item_unit_text: this._model.component_item_unit_text,
-                    get_grand_total         : ()=>{
-                        return this.getState('grand_total')
-                    },
+             
                     after_action_callback   : ()=>{
                         this.getMaterialQuantityList();
                         
@@ -141,10 +136,9 @@ class MaterialQuantityList extends ComponentV2{
                // grand_total = grand_total + (item.quantity * item.equivalent);
             });
 
-            this.setState('grand_total',grand_total);
+            //this.setState('grand_total',grand_total);
 
             signal.broadcast('material-total-calculated',{
-                value:                      grand_total,
                 component_item_quantity:    this._model.component_item_quantity,
                 component_item_id:          this._model.component_item_id
             });
