@@ -63,7 +63,7 @@
                     <td>{{$purchase_order->CreatedByUser()->name}} {{$purchase_order->created_at}}</td>
                 </tr>
                 
-                @if($purchase_order->updated_at)
+                @if($purchase_order->updated_at && $purchase_order->UpdatedByUser()->name)
                 <tr>
                     <th>Updated By</th>
                     <td>{{$purchase_order->UpdatedByUser()->name}} {{$purchase_order->updated_at}}</td>
