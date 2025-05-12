@@ -23,110 +23,10 @@
         </ul>
     </div>
     <hr>
-    <div class="folder-form-container mb-5">
-        <div class="folder-form-tab">
-            Material Request
-        </div>
-        <div class="folder-form-body">
-            <div class="row mb-3">
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label>Project</label>
-                        <input type="text" value="{{$project->name}}" class="form-control" disabled="true"/>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label>Section</label>
-                        <input type="text" value="{{$section->name}}" class="form-control" disabled="true"/>
-                    </div>
-                </div>
-            </div>
-            <div class="row mb-3">
-
-            
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label>Contract Item</label>
-                        <input type="text" value="{{$contract_item->item_code}} - {{$contract_item->description}}" class="form-control" disabled="true"/>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label>Component</label>
-                        <input type="text" value="{{$component->name}}" class="form-control" disabled="true"/>
-                    </div>
-                </div>
-            </div>
-
-            
-            <div class="row mb-3">
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <label>ID No.</label>
-                        <input type="text" value="{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}" class="form-control" disabled="true"/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <label>Status</label>
-                        <input type="text" value="{{$material_quantity_request->status}}" class="form-control" disabled="true"/>
-                    </div>
-                </div>
-            </div>
-
-            @if($material_quantity_request->status == 'APRV')
-
-            <div class="row mb-3">
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <label>Approved By</label>
-                        <input type="text" value="{{$material_quantity_request->approvedByUser()->name}} ({{$material_quantity_request->approved_at}})" class="form-control" disabled="true"/>
-                    </div>
-                </div>
-            </div>
-
-            @elseif($material_quantity_request->status == 'REJC')
-
-            <div class="row mb-3">
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <label>Rejected By</label>
-                        <input type="text" value="{{$material_quantity_request->rejectedByUser()->name}} ({{$material_quantity_request->rejected_at}})" class="form-control" disabled="true"/>
-                    </div>
-                </div>
-            </div>
-
-            @endif
-            
-            <div class="row mb-3">
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <label>Created By</label>
-                        <input type="text" value="{{ $material_quantity_request->CreatedByUser()->name }} ({{ $material_quantity_request->created_at }})" class="form-control" disabled="true"/>
-                    </div>
-                </div>
-            </div>
-
-            @if($material_quantity_request->status == 'PEND')
-            <div class="row mb-3">
-                <div class="col-lg-12 text-end">
-                    <button class="btn btn-outline-primary" id="reviewLinkBtn">
-                        Review Link
-                        <i class="bi bi-copy"></i>
-                    </button>
-                </div>
-            </div>
-            @endif
-        </div>
-    </div>
     
       <div class="folder-form-container">
         <div class="folder-form-tab">
-            Material Request Review
+            Material Request
         </div>
         <div class="folder-form-body">
             <table class="record-table-horizontal" hx-boost="true" hx-select="#content" hx-target="#main">
@@ -155,13 +55,38 @@
                         <th>Status</th>
                         <td>{{$material_quantity_request->status}}</td>
                     </tr>
+          
                     <tr>
                         <th>Requested By</th>
                         <td>{{$material_quantity_request->CreatedByUser()->name}} ({{ $material_quantity_request->created_at }})</td>
                     </tr>
+          
+                    @if($material_quantity_request->status == 'APRV')
+                        <tr>
+                            <th>Approved By</th>
+                            <td>{{$material_quantity_request->approvedByUser()->name}} ({{$material_quantity_request->approved_at}})</td>
+                        </tr>
+                    @endif
+
+                    @if($material_quantity_request->status == 'REJC')
+                        <tr>
+                            <th>Rejected By</th>
+                            <td>{{$material_quantity_request->rejectedByUser()->name}} ({{$material_quantity_request->rejected_at}})</td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
-
+            
+             @if($material_quantity_request->status == 'PEND')
+            <div class="row mb-3">
+                <div class="col-lg-12 text-end">
+                    <button class="btn btn-outline-primary" id="reviewLinkBtn">
+                        Review Link
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
     <div id="itemContainer"></div>
