@@ -167,27 +167,23 @@
                     
                     $el.append( 
 
-                        t.div({class:'border border-secondary rounded p-3 mb-3'},(el)=>{
-                            el.append(
-                                CanvassItem({
-                                    id:'{{$mcItem->id}}',
-                                    material_quantity_request_item_id:'{{$item->id}}',
-                                    supplier_list:'supplier_list',
-                                    payment_terms_list:'payment_terms_list',
-                                    quantity:'{{$item->requested_quantity}}',
-                                    supplier_id: '{{$mcItem->supplier_id}}',
-                                    supplier_text: supplierList.getAttribute('value'),
-                                    payment_term_id: '{{$item->payment_term_id}}',
-                                    payment_term_text: paymentTermsList.getAttribute('value'),
-                                    status:'{{$mcItem->status}}',
-                                    price:'{{$mcItem->price}}',
-                                    approvalFlag: true,
-                                    created_by: '{{$mcItem->createdByUser()->name}}',
-                                    created_at: '{{$mcItem->created_at}}'
-                                })
-                            ); 
-                        })
-            
+                            CanvassItem({
+                                id:'{{$mcItem->id}}',
+                                material_quantity_request_item_id:'{{$item->id}}',
+                                supplier_list:'supplier_list',
+                                payment_terms_list:'payment_terms_list',
+                                quantity:'{{$item->requested_quantity}}',
+                                supplier_id: '{{$mcItem->supplier_id}}',
+                                supplier_text: supplierList.getAttribute('value'),
+                                payment_term_id: '{{$item->payment_term_id}}',
+                                payment_term_text: paymentTermsList.getAttribute('value'),
+                                status:'{{$mcItem->status}}',
+                                price:'{{$mcItem->price}}',
+                                approvalFlag: true,
+                                created_by: '{{$mcItem->createdByUser()->name}}',
+                                created_at: '{{$mcItem->created_at}}'
+                            })
+                        
                     ).to(container);
                     
                 @else
