@@ -23,39 +23,30 @@
         </ul>
     </div>
     <hr>
-    <div class="folder-form-container mb-5">
+    
+    <div class="folder-form-container">
         <div class="folder-form-tab">
-            Material Quantity Request
+            Material Request
         </div>
         <div class="folder-form-body">
-            <div class="row mb-3">
-                <div class="col-4">
-                    <div class="form-group">
-                        <label>Project</label>
-                        <input type="text" value="{{$project->name}}" class="form-control" disabled="true"/>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="form-group">
-                        <label>Section</label>
-                        <input type="text" value="{{$section->name}}" class="form-control" disabled="true"/>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="form-group">
-                        <label>Contract Item</label>
-                        <input type="text" value="{{$contract_item->item_code}} - {{$contract_item->description}}" class="form-control" disabled="true"/>
-                    </div>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-12">
-                    <div class="form-group">
-                        <label>Component</label>
-                        <input type="text" value="{{$component->name}}" class="form-control" disabled="true"/>
-                    </div>
-                </div>
-            </div>
+            <table class="record-table-horizontal" hx-boost="true" hx-select="#content" hx-target="#main">
+                <tbody>
+                    <tr>
+                        <th>Project</th>
+                        <td>{{$project->name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Section</th>
+                        <td>{{$section->name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Component</th>
+                        <td>
+                             {{$component->name}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     
