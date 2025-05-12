@@ -41,17 +41,17 @@ class MaterialQuantityRequestController extends Controller
 
     public function create($project_id,$section_id,$contract_item_id,$component_id){
         
-        $project_id = (int) $project_id;
-        $project    = Project::findOrFail($project_id);
+        $project_id         = (int) $project_id;
+        $project            = Project::findOrFail($project_id);
 
-        $section_id = (int) $section_id;
-        $section = Section::findOrFail($section_id);
+        $section_id         = (int) $section_id;
+        $section            = Section::findOrFail($section_id);
 
-        $contract_item_id = (int) $contract_item_id;
-        $contract_item = ContractItem::findOrFail($contract_item_id);
+        $contract_item_id   = (int) $contract_item_id;
+        $contract_item      = ContractItem::findOrFail($contract_item_id);
 
-        $component_id = (int) $component_id;
-        $component = Component::findOrFail($component_id);
+        $component_id       = (int) $component_id;
+        $component          = Component::findOrFail($component_id);
 
         $unit_options = Unit::toOptions();
 
@@ -147,25 +147,25 @@ class MaterialQuantityRequestController extends Controller
 
     public function _create(Request $request){
 
-        // $codes = [
-        //     'material_request:own:create'
-        // ];
+        $codes = [
+            'material_request:own:create'
+        ];
 
          $user = auth()->user();
 
-        // if(!$this->hasAccess($codes)){
+        if(!$this->hasAccess($codes)){
             
-        //     return response()->json([
-        //         'status'    => 0,
-        //         'message'   => 'Resitricted action, no permission(s) granted',
-        //         'data'      => [
-        //             'user'                      => $user,
-        //             'required_access_codes'     => $codes,
-        //             'currrent_access_codes'     => $this->accessCodes
-        //         ]
-        //     ]);
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Resitricted action, no permission(s) granted',
+                'data'      => [
+                    'user'                      => $user,
+                    'required_access_codes'     => $codes,
+                    'currrent_access_codes'     => $this->accessCodes
+                ]
+            ]);
             
-        // }
+        }
 
         $project_id         = (int) $request->input('project_id');
         $section_id         = (int) $request->input('section_id');
@@ -572,7 +572,7 @@ class MaterialQuantityRequestController extends Controller
                 'value'         => $row->material_item_id,
                 'text'          => trim($row->name.' '.$row->specification_unit_packaging.' '.$row->brand),
                 'equivalent'    => $row->equivalent,
-                'quantity'      => $row->quantity,
+                'budget'        => $row->quantity,
                 'deleted_flag'  => ($row->deleted_at) ? true : false
             ];
         }

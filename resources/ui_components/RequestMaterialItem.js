@@ -100,8 +100,7 @@ class RequestMaterialItem extends Component{
                             this.el.materialBudgetQuantity = t.input({
                                 type:'text',
                                 disabled:true,
-                                class:'form-control text-center',
-                                value: ''
+                                class:'form-control text-center'
                             });
                         });              
                     });
