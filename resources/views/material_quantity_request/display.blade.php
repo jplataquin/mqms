@@ -157,7 +157,7 @@
                     </tr>
                     <tr>
                         <th>Requested By</th>
-                        <td>{{$material_quantity_request->CreatedByUser()->name}}</td>
+                        <td>{{$material_quantity_request->CreatedByUser()->name}} ({{ $material_quantity_request->created_at }})</td>
                     </tr>
                 </tbody>
             </table>
