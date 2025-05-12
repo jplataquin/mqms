@@ -46,9 +46,7 @@
                     <tr>
                         <th>Component</th>
                         <td>
-                            <a href="/project/section/contract_item/component/{{$component->id}}">
-                                {{$component->name}}
-                            </a>
+                             {{$component->name}}
                         </td>
                     </tr>
                     <tr>
