@@ -662,12 +662,13 @@ class MaterialQuantityRequestController extends Controller
                 $item_options[$row->component_item_id] = [];
             }
 
+            $component_item = ComponentItem::find($row->component_item_id);
 
             $item_options[$row->component_item_id][$row->material_item_id] = (object) [
                 'value'                     => $row->material_item_id,
                 'text'                      => trim($row->brand.' '.$row->name.' '.$row->specification_unit_packaging),
                 'equivalent'                => $row->equivalent,
-                'budget_quantity'           => $row->quantity,
+                'budget_quantity'           => $component_item->quantity,
                 'approved_quantity'         => $this->get_total_approved_quantity(
                     $request_item_arr[$materialQuantityRequest->id.'-'.$row->component_item_id.'-'.$row->material_item_id]->id,
                     $row->component_item_id,
