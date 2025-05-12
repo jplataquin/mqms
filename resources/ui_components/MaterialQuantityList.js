@@ -67,9 +67,7 @@ class MaterialQuantityList extends ComponentV2{
                             t.thead(()=>{
                                 t.tr(()=>{
                                     t.th('Material');
-                                    t.th({class:'text-center'},'Quantity');
                                     t.th({class:'text-center'},'Equivalent');
-                                    t.th({class:'text-center'},'Total');
                                     t.th({class:'text-center'},'Options');
                                 });
                             });

@@ -26,9 +26,7 @@ class MaterialQuantityItem extends ComponentV2{
         return t.tr(()=>{
 
             t.td(this._model.name);
-            t.td({class:'text-center'}, window.util.numberFormat(this._model.quantity,2) );
-            t.td({class:'text-center'}, window.util.numberFormat(this._model.equivalent,2) );
-            t.td({class:'text-center'}, window.util.numberFormat(this._model.equivalent * this._model.quantity,2)+' '+this._model.component_item_unit_text );
+            t.td({class:'text-center'}, window.util.numberFormat(this._model.equivalent,2)+' '+this._model.component_item_unit_text );
             t.td({class:'text-center'},()=>{
                         
                 t.a({class:'me-5',href:'#'},()=>{
