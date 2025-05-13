@@ -170,12 +170,12 @@ class RequestMaterialItem extends Component{
                 })//div row
     
 
-                t.div({class:'row mb-3'},()=>{
+                t.div({class:'row mb-3 d-none'},()=>{
                     t.div({class:'col-lg-12'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label({class:'mb-3'},'Equivalent Quantity Per Unit Of Material');
                             
-                            this.el.equivalentQuantity = t.input({class:'form-control',type:'text',disabled:true});
+                            this.el.equivalentQuantity = t.input({class:'form-control',type:'hidden',disabled:true});
 
                         });//div
                     });//div
@@ -186,11 +186,8 @@ class RequestMaterialItem extends Component{
                     
                     t.div({class:'col-lg-6'},()=>{
                         t.div({class:'form-group'},()=>{
-                            t.label({class:'mb-3'},()=>{
-                                t.txt('Request Quantity ');
-                               
-                           //      this.el.equivalentQuantity = t.span('');
-                            });
+                            
+                           this.el.request_quantity_label =  t.label({class:'mb-3'},'Request Quantity');
                            
                             this.el.requestedQuantity = t.input({
                                 type:'text',
@@ -233,6 +230,12 @@ class RequestMaterialItem extends Component{
         this.el.materialSelect.onchange = ()=>{
             this.setState('materialItemId',this.el.materialSelect.value,true);
 
+        }
+
+        this.el.equivalentQuantity.onchange = ()=>{
+            if(this.el.equivalentQuantity.value){
+                this.el.request_quantity_label.innerText = 'Request Quantity = '+this.el.equivalentQuantity.value;
+            }
         }
 
         this.el.requestedQuantity.onkeyup = ()=>{
