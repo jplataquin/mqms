@@ -63,8 +63,8 @@
 
                 <div class="row mt-3">
                     <div class="col-lg-12 text-end">
-                        <button id="cancelBtn" class="btn btn-secondary me-3">Cancel</button>
                         <button id="createBtn" class="btn btn-warning">Create</button>
+                        <button id="cancelBtn" class="btn btn-secondary me-3">Cancel</button>
                     </div>
                 </div>
             </div>
