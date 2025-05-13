@@ -47,12 +47,12 @@ class RequestMaterialItem extends Component{
 
             t.div({class:'form-header'},()=>{
                 t.div({class:'row'},()=>{
-                    t.div({class:'col-10'},()=>{
+                    t.div({class:'col-10 text-start ps-3'},()=>{
                         this.el.indexNumber = t.label('Item #');
                     });
-                    t.div({class:'col-2'},()=>{
+                    t.div({class:'col-2 text-end pe-3'},()=>{
                         
-                        this.el.deleteRow = t.div({class:'text-end',style:{
+                        this.el.deleteRow = t.div({style:{
                             display: (this._model.editable) ? 'inline' : 'none'
                         }},()=>{
                             
@@ -61,7 +61,7 @@ class RequestMaterialItem extends Component{
                                 });
                             
                         });
-                        
+
                     });
                 });
             });
