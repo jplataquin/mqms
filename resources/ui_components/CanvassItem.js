@@ -121,9 +121,9 @@ class CanvassItem extends Component{
                 t.div({class:'col-lg-6 col-sm-4 text-end'},(el)=>{
                     if(this._model.approvalFlag && this._model.status == 'PEND'){
 
-                    
-                                el.append(this.el.approveBtn); 
+                            
                                 el.append(this.el.disapproveBtn);
+                                el.append(this.el.approveBtn); 
                                                             
                     
                     }else if(!this._model.approvalFlag && (this._model.status == 'PEND' || this._model.status == '')){
