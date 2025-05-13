@@ -234,7 +234,7 @@ class RequestMaterialItem extends Component{
 
         this.el.equivalentQuantity.oninput = ()=>{
             if(this.el.equivalentQuantity.value){
-                this.el.request_quantity_label.innerText = 'Request Quantity = '+this.el.equivalentQuantity.value;
+                this.el.request_quantity_label.innerText = 'Request Quantity x '+this.el.equivalentQuantity.value;
             }
         }
 
