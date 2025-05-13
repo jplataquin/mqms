@@ -94,7 +94,7 @@ class RequestMaterialItem extends Component{
 
                 t.div({class:'row mb-3'},()=>{
                     
-                    t.div({class:'col-lg-3 col-sm-6'},()=>{
+                    t.div({class:'col-lg-3 col-6'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label({class:'mb-3'},'Total Budget');
                             this.el.materialBudgetQuantity = t.input({
@@ -105,7 +105,7 @@ class RequestMaterialItem extends Component{
                         });              
                     });
 
-                    t.div({class:'col-lg-3 col-sm-6'},()=>{
+                    t.div({class:'col-lg-3 col-6'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label({class:'mb-3'},'Approved Request');
                             this.el.prevApprovedQuantity = t.input({
@@ -117,7 +117,7 @@ class RequestMaterialItem extends Component{
                     });
 
 
-                    t.div({class:'col-lg-3'},()=>{
+                    t.div({class:'col-lg-3 col-6'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label({class:'mb-3'},'Available Quantity');
                             this.el.quantityRemaining = t.input({
@@ -130,7 +130,7 @@ class RequestMaterialItem extends Component{
                     });//div col
 
 
-                    t.div({class:'col-lg-3'},()=>{
+                    t.div({class:'col-lg-3 col-6'},()=>{
                         t.div({class:'form-group'},()=>{
                             t.label({class:'mb-3'},"Total PO'd");
                             this.el.already_po = t.input({
