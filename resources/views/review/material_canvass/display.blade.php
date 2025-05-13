@@ -149,6 +149,9 @@
         url: '/review/material_canvass'
     };
 
+    
+    let approvalFlag = false;
+
     @foreach($items as $item)
 
     
@@ -157,7 +160,6 @@
         //This is to prevent duplication of render
         container.innerHTML = '';
         
-        let approvalFlag = false;
 
         @foreach($item->MaterialCanvass as $mcItem)
 
