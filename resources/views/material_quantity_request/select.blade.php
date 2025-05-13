@@ -30,7 +30,7 @@
             </div>
             <div class="folder-form-body">
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-lg-3">
                         <div class="form-group">
                             <label>Project</label>
                             <select id="projectSelect" class="form-control">
@@ -41,19 +41,19 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-lg-3">
                         <div class="form-group">
                             <label>Section</label>
                             <select id="sectionSelect" class="form-control"></select>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-lg-3">
                         <div class="form-group">
                             <label>Contract Item</label>
                             <select id="contractItemSelect" class="form-control"></select>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-lg-3">
                         <div class="form-group">
                             <label>Component</label>
                             <select id="componentSelect" class="form-control"></select>
@@ -62,11 +62,8 @@
                 </div>
 
                 <div class="row mt-3">
-                    <div class="col-8"></div>
-                    <div class="col-2">
-                        <button id="cancelBtn" class="btn w-100 btn-secondary">Cancel</button>
-                    </div>
-                    <div class="col-2">
+                    <div class="col-lg-12 text-end">
+                        <button id="cancelBtn" class="btn w-100 btn-secondary me-3">Cancel</button>
                         <button id="createBtn" class="btn w-100 btn-warning">Create</button>
                     </div>
                 </div>
