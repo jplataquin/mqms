@@ -157,17 +157,21 @@
         //This is to prevent duplication of render
         container.innerHTML = '';
         
+        let approvalFlag = false;
+
         @foreach($item->MaterialCanvass as $mcItem)
 
            
                 supplierList        = $q('#supplier_list > option[data-value="{{$mcItem->supplier_id}}"]').first();
                 paymentTermsList    = $q('#payment_terms_list > option[data-value="{{$mcItem->payment_term_id}}"]').first();
 
-                let approvalFlag = false;
+               
                 @if($mcItem->status == 'PEND')
                     
                     approvalFlag = true;
               
+                @else
+                     approvalFlag = false;
                 @endif
 
                 $el.append( 
