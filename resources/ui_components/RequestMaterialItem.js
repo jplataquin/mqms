@@ -186,7 +186,7 @@ class RequestMaterialItem extends Component{
                     
                     t.div({class:'col-lg-6'},()=>{
                         t.div({class:'form-group'},()=>{
-                            
+
                            this.el.request_quantity_label =  t.label({class:'mb-3'},'Request Quantity');
                            
                             this.el.requestedQuantity = t.input({
@@ -232,7 +232,7 @@ class RequestMaterialItem extends Component{
 
         }
 
-        this.el.equivalentQuantity.onchange = ()=>{
+        this.el.equivalentQuantity.oninput = ()=>{
             if(this.el.equivalentQuantity.value){
                 this.el.request_quantity_label.innerText = 'Request Quantity = '+this.el.equivalentQuantity.value;
             }
