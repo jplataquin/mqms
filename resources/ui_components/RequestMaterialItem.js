@@ -175,7 +175,7 @@ class RequestMaterialItem extends Component{
                         t.div({class:'form-group'},()=>{
                             t.label({class:'mb-3'},'Equivalent Quantity Per Unit Of Material');
                             
-                            this.el.equivalentQuantity = t.input({class:'form-control',type:'text',disabled:true});
+                            this.el.equivalentQuantity = t.input({class:'form-control',type:'hidden',disabled:true});
 
                         });//div
                     });//div
@@ -521,8 +521,8 @@ class RequestMaterialItem extends Component{
             this.el.prevApprovedQuantity.value      = '';
             this.el.requestedQuantity.value         = '';
             this.el.equivalentQuantity.value        = '';
-            //this.el.balanceQuantity.value           = '';
             this.el.already_po.value                = '';
+             this.el.equivalentQuantity.oninput();
 
             this.setState('materialBudgetQuantity','');
             this.setState('prevApprovedQuantity','');
@@ -536,7 +536,8 @@ class RequestMaterialItem extends Component{
         this.el.prevApprovedQuantity.value      = '';
         this.el.equivalentQuantity.value        = window.util.numberFormat(material.equivalent,2)+' '+material.unit_text;
         this.el.already_po.value                = '';
-        
+        this.el.equivalentQuantity.oninput();
+
         this.setState('materialBudgetQuantity',material.budget);
         this.setState('requestedQuantity','');
         this.setState('prevApprovedQuantity','');
