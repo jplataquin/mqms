@@ -87,21 +87,16 @@
             @endif
         </div>
     </div>
-    <div id="itemContainer"></div>
-    <div>
-        <button class="btn btn-warning w-100 mt-3 d-none" id="addBtn">Add More</button>
-    </div>
 
-
-    <div class="form-container mt-5">
+    <div class="form-container mb-3">
         <div class="form-header">
-            &nbsp;
+            Description
         </div>
         <div class="form-body">
             <div class="row">
                 <div class="col-12">
                     <div class="form-group">
-                        <label>Remarks</label>
+                      
                         <textarea id="description" class="form-control" disabled="true">{{$material_quantity_request->description}}</textarea>
                     </div>
                 </div>
@@ -109,6 +104,13 @@
         </div>
     </div>
 
+    <div id="itemContainer"></div>
+    <div>
+        <button class="btn btn-warning w-100 mt-3 d-none" id="addBtn">Add More</button>
+    </div>
+
+
+    
 
     <div class="row mt-5 mb-3">
         <div class="col-lg-12 text-end shadow rounded footer-action-menu p-2 ">
