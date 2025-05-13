@@ -46,20 +46,29 @@ class RequestMaterialItem extends Component{
         let el = t.div({class:'items form-container mb-3'},()=>{
 
             t.div({class:'form-header'},()=>{
-                this.el.indexNumber = t.label('Item #');
+                t.div({class:'row'},()=>{
+                    t.div({class:'col-10'},()=>{
+                        this.el.indexNumber = t.label('Item #');
+                    });
+                    t.div({class:'col-2'},()=>{
+                        
+                        this.el.deleteRow = t.div({class:'text-end',style:{
+                            display: (this._model.editable) ? 'inline' : 'none'
+                        }},()=>{
+                            
+                                this.el.deleteBtn = t.a({href:'#'},()=>{
+                                    t.i({class:'bi bi-x-circle'});
+                                });
+                            
+                        });
+                        
+                    });
+                });
             });
 
             t.div ({class:'form-body'},()=>{
 
-                this.el.deleteRow = t.div({class:'row mb-3',style:{
-                    display: (this._model.editable) ? 'inline' : 'none'
-                }},()=>{
-                    t.div({class:'col-lg-12 text-end'},()=>{
-                        this.el.deleteBtn = t.a({href:'#'},()=>{
-                            t.i({class:'bi bi-x-circle'});
-                        });
-                    });
-                });
+               
 
                 t.div({class:'row mb-3'},()=>{
                     t.div({class:'col-lg-12'},()=>{
