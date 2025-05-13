@@ -175,7 +175,7 @@ class RequestMaterialItem extends Component{
                         t.div({class:'form-group'},()=>{
                             t.label({class:'mb-3'},'Equivalent Quantity Per Unit Of Material');
                             
-                            this.el.equivalentQuantity = t.input({class:'form-control',type:'hidden',disabled:true});
+                            this.el.equivalentQuantity = t.input({class:'form-control',type:'text',disabled:true});
 
                         });//div
                     });//div
