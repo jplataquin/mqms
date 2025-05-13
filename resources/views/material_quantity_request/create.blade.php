@@ -50,26 +50,27 @@
         </div>
     </div>
     
-    <div id="itemContainer"></div>
-    <div>
-        <button class="btn btn-warning w-100 mt-3" id="addBtn">Add More</button>
-    </div>
-
-    <div class="form-container mt-5">
+    
+    <div class="form-container mb-3">
         <div class="form-header">
-            &nbsp;
+           Description
         </div>
         <div class="form-body">
             <div class="row">
                 <div class="col-12">
                     <div class="form-group">
-                        <label>Remarks</label>
                         <textarea id="description" class="form-control"></textarea>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div id="itemContainer"></div>
+    <div>
+        <button class="btn btn-warning w-100 mt-3" id="addBtn">Add More</button>
+    </div>
+
 
     <div class="row mt-5">
         <div class="col-12 text-end">
