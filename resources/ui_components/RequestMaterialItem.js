@@ -170,17 +170,17 @@ class RequestMaterialItem extends Component{
                 })//div row
     
 
-                // t.div({class:'row mb-3'},()=>{
-                //     t.div({class:'col-lg-12'},()=>{
-                //         t.div({class:'form-group'},()=>{
-                //             t.label({class:'mb-3'},'Equivalent Quantity Per Unit Of Material');
+                t.div({class:'row mb-3'},()=>{
+                    t.div({class:'col-lg-12'},()=>{
+                        t.div({class:'form-group'},()=>{
+                            t.label({class:'mb-3'},'Equivalent Quantity Per Unit Of Material');
                             
-                //            // this.el.equivalentQuantity = t.input({class:'form-control',type:'text',disabled:true});
+                            this.el.equivalentQuantity = t.input({class:'form-control',type:'text',disabled:true});
 
-                //         });//div
-                //     });//div
+                        });//div
+                    });//div
 
-                // })//div row
+                })//div row
 
                 t.div({class:'row mb-3'},()=>{
                     
@@ -188,7 +188,8 @@ class RequestMaterialItem extends Component{
                         t.div({class:'form-group'},()=>{
                             t.label({class:'mb-3'},()=>{
                                 t.txt('Request Quantity ');
-                                this.el.equivalentQuantity = t.txt('');
+                               
+                           //      this.el.equivalentQuantity = t.span('');
                             });
                            
                             this.el.requestedQuantity = t.input({
