@@ -140,7 +140,11 @@
         actions.map(item=>{
 
             if(item.checked){
-                action_list.push(item.value);
+
+                action_list.push({
+                    value: item.value,
+                    description: $('#'+item.value+'_description').first().value;
+                });
             }
         });
 
@@ -151,7 +155,7 @@
         window.util.$post('/api/access_code/create',{
             subject: subject.value,
             scope: scope.value,
-            actions: action_list.concat(),
+            actions: JSON.stringify(action_list),
             description: description.value
         }).then(reply=>{
             
