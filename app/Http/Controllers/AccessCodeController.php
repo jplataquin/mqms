@@ -52,7 +52,7 @@ class AccessCodeController extends Controller
             return response()->json([
                 'status'    => -2,
                 'message'   => 'Failed Validation',
-                'data'      => $validator->messages()
+                'data'      => $validator1->messages()
             ]);
         }
 
