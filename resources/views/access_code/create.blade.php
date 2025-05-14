@@ -70,14 +70,16 @@
                                 'request_void',
                                 'revert_to_pending'
                             ] as $val)
-                                <div class="form-check">
-                                    <input class="form-check-input actions" type="checkbox" value="{{$val}}">
-                                    <label class="form-check-label">
-                                        {{ str_replace('_',' ',$val) }}
-                                    </label>
-                                </div>
-                                <div class="form-group">
-                                    <textarea class="form-control"></textarea>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input actions" type="checkbox" value="{{$val}}">
+                                        <label class="form-check-label">
+                                            {{ str_replace('_',' ',$val) }}
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control action_description" id="{{$val}}_description"></textarea>
+                                    </div>
                                 </div>
                             @endforeach
                             
@@ -87,15 +89,7 @@
                 </div>
             </div>
 
-            <div class="row">
-
-                <div class="col-12">
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea id="description" class="form-control"></textarea>
-                    </div>
-                </div>
-            </div>
+         
 
             <div class="row mt-5">
                 <div class="col-12 text-end">
