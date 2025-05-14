@@ -83,7 +83,12 @@
                                 </div>
                             @endforeach
                             
-                            Other: <input type="text" class="form-control" id="action_other"/>
+                            <div class="mb-3">
+                                Other: <input type="text" class="form-control" id="action_other"/>
+                                <div class="form-group">
+                                    <textarea class="form-control action_description" id="other_description"></textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
