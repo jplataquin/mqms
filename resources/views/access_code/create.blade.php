@@ -33,8 +33,8 @@
             <div class="row">
                 <div class="col-lg-12 mb-3">
                     <div class="form-group">
-                        <label>Record</label>
-                        <input type="text" class="form-control"/>
+                        <label>Subject</label>
+                        <input type="text" id="subject" class="form-control"/>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 <div class="col-lg-12 mb-3">
                     <div class="form-group">
                         <label>Scope</label>
-                        <select class="form-select">
+                        <select class="form-select" id="scope" >
                             <option value="own">Own</option>
                             <option value="all">All</option>
                         </select>
@@ -78,20 +78,13 @@
                                 </div>
                             @endforeach
                             
-                            Other: <input type="text" class="form-control" class="actions"/>
+                            Other: <input type="text" class="form-control" id="action_other"/>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="row">
-
-                <div class="col-12 mb-3">
-                    <div class="form-group">
-                        <label>Code</label>
-                        <input type="text" maxlength="255" id="access_code" class="form-control"/>
-                    </div>
-                </div>
 
                 <div class="col-12">
                     <div class="form-group">
@@ -114,10 +107,14 @@
 <script type="module">
     import {$q} from '/adarna.js';
 
+    const subject             = $q('#subject').first();
+    const scope               = $q('#scope').first();
+    const actions             = $q('.actions').items();
+    const action_other        = $q('#action_other').first();
+    const description         = $q('#description').first();
+
     const createBtn           = $q('#createBtn').first();
     const cancelBtn           = $q('#cancelBtn').first();
-    const access_code         = $q('#access_code').first();
-    const description         = $q('#description').first();
     const checkAllActionsBtn  = $q('#check-all-actions-btn').first();
     
     checkAllActionsBtn.onchange = (e)=>{
@@ -136,8 +133,23 @@
 
         window.util.blockUI();
 
+        let action_list = [];
+
+        actions.map(item=>{
+
+            if(item.checked){
+                action_list.push(item.value);
+            }
+        });
+
+        if(action_other.value){
+            action_list.push(action_other.value);
+        }
+
         window.util.$post('/api/access_code/create',{
-            code: access_code.value,
+            subject: subject.value,
+            scope: scope.value,
+            actions: action_list.concat(),
             description: description.value
         }).then(reply=>{
             
@@ -149,7 +161,7 @@
             };
 
 
-            window.util.navTo('/access_code/'+reply.data.id);
+            window.util.navTo('/access_codes');
 
 
         });

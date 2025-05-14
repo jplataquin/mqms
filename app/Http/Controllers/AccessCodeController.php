@@ -30,18 +30,25 @@ class AccessCodeController extends Controller
 
     public function _create(Request $request){
 
-        $code         = $request->input('code');
+        $subject      = $request->input('subject');
+        $scope        = $request->input('scope');
+        $actions      = $request->input('actions');
         $description  = $request->input('description');
 
-        $validator = Validator::make($request->all(),[
-            'code' => [
+        $validator1 = Validator::make($request->all(),[
+            'subject' => [
                 'required',
-                'unique:access_codes'
+            ],
+            'scope' => [
+                'required',
+            ],
+            'action' => [
+                'required',
             ],
             'description' => ['required','max:300']
         ]);
 
-        if ($validator->fails()) {
+        if ($validator1->fails()) {
             return response()->json([
                 'status'    => -2,
                 'message'   => 'Failed Validation',
@@ -49,13 +56,37 @@ class AccessCodeController extends Controller
             ]);
         }
 
-        $accessCode = new AccessCode();
+        $subect     = trim($subject);
+        $subject    = str_replace(' ', '_', $subject);
+        
+        $actions    = explode(',',$actions);
 
-        $accessCode->code                   = $code;
-        $accessCode->description            = $description;
+        if(!$actions){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'No actions defined',
+                'data'      => []
+            ]);
+        }
 
-        $accessCode->save();
+        foreach($actions as $action){
 
+            $access_code = $subject+':'+$scope+':'+$action;
+
+            $exists = AccessCode::where('code', $access_code)->first();
+
+            if($exists) continue;
+
+            $accessCode = new AccessCode();
+
+            $accessCode->code                   = $access_code;
+            $accessCode->description            = $description;
+
+            $accessCode->save();
+
+        }
+
+    
         return response()->json([
             'status'    => 1,
             'message'   => '',
