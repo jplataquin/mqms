@@ -14,7 +14,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="#" class="active">
                     <span>Display</span>
                     <i class="ms-2 bi bi-display"></i>
                 </a>
