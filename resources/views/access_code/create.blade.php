@@ -143,7 +143,7 @@
 
                 action_list.push({
                     value: item.value,
-                    description: $('#'+item.value+'_description').first().value;
+                    description: $q('#'+item.value+'_description').first().value
                 });
             }
         });
