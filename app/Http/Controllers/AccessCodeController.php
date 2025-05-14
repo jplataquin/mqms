@@ -83,7 +83,20 @@ class AccessCodeController extends Controller
             $exists = AccessCode::where('code', $access_code)->first();
 
 
-            if($exists) continue;
+            if($exists){
+                 return response()->json([
+                    'status'    => 0,
+                    'message'   => '"'.$access_code.'" already exists',
+                    'data'      => []
+                ]);
+            }
+
+        }
+
+
+        foreach($actions as $action){
+
+            $access_code = strtolower($subject.':'.$scope.':'.$action->value);
 
             $accessCode = new AccessCode();
 
@@ -92,16 +105,13 @@ class AccessCodeController extends Controller
 
 
             $accessCode->save();
-
         }
 
     
         return response()->json([
             'status'    => 1,
             'message'   => '',
-            'data'      => [
-                'id'=> $accessCode->id
-            ]
+            'data'      => []
         ]);
 
     }
