@@ -71,12 +71,12 @@ class AccessCodeController extends Controller
 
         foreach($actions as $action){
 
-            $access_code = strtolower($subject.':'.$scope+':'.$action);
+            $access_code = strtolower($subject.':'.$scope.':'.$action);
 
 
             $exists = AccessCode::where('code', $access_code)->first();
 
-            
+
             if($exists) continue;
 
             $accessCode = new AccessCode();
