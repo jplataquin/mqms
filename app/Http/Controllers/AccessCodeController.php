@@ -70,9 +70,9 @@ class AccessCodeController extends Controller
 
         foreach($actions as $action){
 
-            $access_code = strtolower($subject.':'.$scope.':'.$action['value']);
+            $access_code = strtolower($subject.':'.$scope.':'.$action->value);
 
-            if(trim($action['description']) == ''){
+            if(trim($action->description) == ''){
                 return response()->json([
                     'status'    => 0,
                     'message'   => '"'.$action['value'].'" description is required',
@@ -88,7 +88,7 @@ class AccessCodeController extends Controller
             $accessCode = new AccessCode();
 
             $accessCode->code                   = $access_code;
-            $accessCode->description            = $description;
+            $accessCode->description            = $action->description;
 
             $accessCode->save();
 
