@@ -28,9 +28,9 @@
         <div class="form-header">
             Create Access Code
         </div>
-        <div class="form-body mb-3">
+        <div class="form-body">
             
-            <div class="row">
+            <div class="row mt-3">
                 <div class="col-lg-12 mb-3">
                     <div class="form-group">
                         <label>Subject</label>
