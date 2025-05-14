@@ -45,7 +45,7 @@
                         <input type="text" id="query" class="form-control"/>
                     </div>
                 </div>
-                <div class="col-lg-2 text-end">
+                <div class="col-lg-4 text-end">
                     <div class="form-group">
                         <label>&nbsp;</label>
                         <button id="searchBtn" class="btn btn-primary">Search</button>
