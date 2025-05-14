@@ -29,8 +29,7 @@
             Create User
         </div>
         <div class="form-body">
-            <div class="row mb-3">
-
+            <div class="row mt-3 mb-3">
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label>Name</label>
@@ -38,7 +37,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+
+            <div class="row mb-3">
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label>Email</label>
@@ -46,7 +46,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+
+            <div class="row mb-3">
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label>Password</label>
@@ -55,7 +56,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label>Retype Password</label>
@@ -65,8 +66,8 @@
             </div>
             <div class="row mt-5">
                 <div class="col-12 text-end">
-                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
                     <button class="btn btn-primary" id="createBtn">Create</button>
+                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
                 </div>
             </div>
         </div>
