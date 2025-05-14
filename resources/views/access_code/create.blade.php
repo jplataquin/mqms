@@ -149,7 +149,10 @@
         });
 
         if(action_other.value){
-            action_list.push(action_other.value);
+            action_list.push({
+                value: action_other.value,
+                description: $q('#other_description').first().value
+            });
         }
 
         window.util.$post('/api/access_code/create',{
