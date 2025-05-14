@@ -99,7 +99,7 @@
         </div>
         <div class="folder-form-body">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="form-group">
                         <label>Role</label>
                         <input list="role-list" id="role" class="form-control" />
@@ -112,11 +112,10 @@
                             
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label>&nbsp</label>
-                        <button class="btn btn-primary form-control" id="addRoleBtn">Add</button>
-                    </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-lg-12 text-end">
+                        <button class="btn btn-primary" id="addRoleBtn">Add</button>   
                 </div>
             </div>
         </div>
