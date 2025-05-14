@@ -146,6 +146,13 @@
         showData();
     }
 
+    query.onkeyup = (e)=>{
+
+        if(e.keyCode == 13){
+            alert('asdasd');
+        }
+    }
+
     showMoreBtn.onclick = ()=>{
         showData();
     }
