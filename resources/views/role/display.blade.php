@@ -290,7 +290,7 @@
         window.util.blockUI();
 
         window.util.$get('/api/role/access_codes/{{$role->id}}',{
-            orderBy:'code',
+            order_by:'code',
             order:'ASC'
         }).then(reply=>{
 
