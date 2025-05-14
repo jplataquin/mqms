@@ -67,7 +67,7 @@
         </div>
         <div class="folder-form-body">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="form-group">
                         <label>Code</label>
                         <input list="access-code-list" id="accessCode" class="form-control" />
@@ -80,11 +80,10 @@
                             
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label>&nbsp</label>
-                        <button class="btn btn-primary form-control" id="addCode">Add</button>
-                    </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-lg-12 text-end">
+                    <button class="btn btn-primary" id="addCode">Add</button>
                 </div>
             </div>
         </div>
@@ -107,8 +106,7 @@
     let addCode         = $q('#addCode').first();
     let accessCode      = $q('#accessCode').first();
     let list            = $q('#list').first();
-    let showMoreBtn     = $q('#showMoreBtn').first(); 
-
+    
 
     function reinitalize(){
         
@@ -305,8 +303,6 @@
 
             if(reply.data.length){
                 renderRows(reply.data); 
-            }else{
-                showMoreBtn.style.display = 'none';
             }
             
         });

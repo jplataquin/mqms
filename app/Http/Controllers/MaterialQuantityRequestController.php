@@ -26,6 +26,11 @@ class MaterialQuantityRequestController extends Controller
     
     public function selectCreate(){
 
+        
+        if(!$this->hasAccess(['material_request:own:create'])){
+            return view('access_denied');
+        }
+
         $projects = Project::where('status','=','ACTV')->orderBy('name','ASC')->get();
 
         return view('material_quantity_request/select',[
@@ -36,6 +41,11 @@ class MaterialQuantityRequestController extends Controller
     
     public function create($project_id,$section_id,$contract_item_id,$component_id){
         
+
+        if(!$this->hasAccess(['material_request:own:create'])){
+            return view('access_denied');
+        }
+
         $project_id         = (int) $project_id;
         $project            = Project::findOrFail($project_id);
 
@@ -146,21 +156,22 @@ class MaterialQuantityRequestController extends Controller
             'material_request:own:create'
         ];
 
-         $user = auth()->user();
+        if(!$this->hasAccess($codes)){
+            
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Resitricted action, no permission(s) granted',
+                'data'      => [
+                    'required_access_codes'     => $codes,
+                    'currrent_access_codes'     => $this->accessCodes
+                ]
+            ]);
+            
+        }
 
-        // if(!$this->hasAccess($codes)){
-            
-        //     return response()->json([
-        //         'status'    => 0,
-        //         'message'   => 'Resitricted action, no permission(s) granted',
-        //         'data'      => [
-        //             'user'                      => $user,
-        //             'required_access_codes'     => $codes,
-        //             'currrent_access_codes'     => $this->accessCodes
-        //         ]
-        //     ]);
-            
-        // }
+        
+        $user = auth()->user();
+
 
         $project_id         = (int) $request->input('project_id');
         $section_id         = (int) $request->input('section_id');
@@ -502,13 +513,23 @@ class MaterialQuantityRequestController extends Controller
 
     public function display($id){
         
-        //Todo check role
-
         $id = (int) $id;
 
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($id);
         
+        
         $user = auth()->user();
+
+        if(!$this->hasAccess(['material_request:all:view'])){
+
+            if( !$this->hasAccess(['material_request:own:view']) ){
+                return view('access_denied');
+            }
+
+            if($materialQuantityRequest->created_by != $user->id){
+                return view('access_denied');
+            }
+        }
 
         //Check if current user does not own the record, then are they allowed to view it?
         $codes = ['material_request:all:view'];
@@ -597,9 +618,24 @@ class MaterialQuantityRequestController extends Controller
 
     public function print($id){
         
+        
         $id = (int) $id;
 
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($id);
+
+         $user = auth()->user();
+
+        if(!$this->hasAccess(['material_request:all:view'])){
+
+            if( !$this->hasAccess(['material_request:own:view']) ){
+                return view('access_denied');
+            }
+
+            if($materialQuantityRequest->created_by != $user->id){
+                return view('access_denied');
+            }
+        }
+
 
         $project         = $materialQuantityRequest->Project;
         $section         = $materialQuantityRequest->Section;
@@ -753,6 +789,17 @@ class MaterialQuantityRequestController extends Controller
                 'message'   => 'Record not found',
                 'data'      => []
             ]);
+        }
+
+        if(!$this->hasAccess(['material_request:all:update'])){
+
+            if( !$this->hasAccess(['material_request:own:update']) ){
+                return view('access_denied');
+            }
+
+            if($materialQuantityRequest->created_by != $user->id){
+                return view('access_denied');
+            }
         }
 
         if($materialQuantityRequest->status != 'PEND'){
@@ -1354,6 +1401,20 @@ class MaterialQuantityRequestController extends Controller
         $id = (int) $id;
         
         $material_request   = MaterialQuantityRequest::findOrFail($id);
+
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['material_request:all:view'])){
+
+            if( !$this->hasAccess(['material_request:own:view']) ){
+                return view('access_denied');
+            }
+
+            if($materialQuantityRequest->created_by != $user->id){
+                return view('access_denied');
+            }
+        }
+
         $project            = $material_request->Project;
         $section            = $material_request->Section;
         $contract_item      = $material_request->ContractItem;

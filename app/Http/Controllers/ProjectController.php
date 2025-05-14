@@ -23,6 +23,19 @@ class ProjectController extends Controller
 
         $project = Project::findOrFail($id);
 
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['project:all:view'])){
+
+            if( !$this->hasAccess(['project:own:view']) ){
+                return view('access_denied');
+            }
+
+            if($project->created_by != $user->id){
+                return view('access_denied');
+            }
+        }
+
         if($request->header('X-STUDIO-MODE')){
             return view('project_studio/screen/project/display',[
                 'project' => $project
@@ -41,7 +54,19 @@ class ProjectController extends Controller
 
         $project = Project::findOrFail($id);
 
-        
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['project:all:view'])){
+
+            if( !$this->hasAccess(['project:own:view']) ){
+                return view('access_denied');
+            }
+
+            if($project->created_by != $user->id){
+                return view('access_denied');
+            }
+        }
+
         return view('project_studio/display',[
             'project'           => $project,
             'unit_options'      => Unit::toOptions()
@@ -57,7 +82,15 @@ class ProjectController extends Controller
 
     public function _create(Request $request){
 
-        //todo check role
+        
+        if(!$this->hasAccess(['project:own:create'])){
+
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         $name   = $request->input('name') ?? '';
         $status = $request->input('status');
@@ -110,7 +143,6 @@ class ProjectController extends Controller
 
     public function _update(Request $request){
 
-        //todo check role
 
         $id       = (int) $request->input('id') ?? 0;
         $name     = $request->input('name') ?? '';
@@ -147,7 +179,8 @@ class ProjectController extends Controller
             ]);
         }
 
-        $user_id = Auth::user()->id;
+        $user    = auth()->user();
+        $user_id = $user->id;
         $project = Project::find($id);
 
         if(!$project){
@@ -158,6 +191,25 @@ class ProjectController extends Controller
                     'id' => $id
                 ]
             ]);
+        }
+
+        if(!$this->hasAccess(['project:all:update'])){
+
+            if(!$this->hasAccess(['project:own:update'])){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+            
+            if($project->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
         }
 
         $project->name                         = $name;
@@ -241,6 +293,27 @@ class ProjectController extends Controller
         }
 
         $project = Project::find($id);
+
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['project:all:delete'])){
+
+            if(!$this->hasAccess(['project:own:delete'])){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+            
+            if($project->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+        }
 
         if(!$project){
             return response()->json([
