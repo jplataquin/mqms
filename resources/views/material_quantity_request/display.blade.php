@@ -118,7 +118,7 @@
 
             <button class="btn-primary btn" id="showPoListBtn">PO List</button>
             <button class="btn-warning btn" id="printBtn">Print</button>
-            
+             
             @if($material_quantity_request->status == 'PEND')
                 <button class="btn btn-primary" id="editBtn">Edit</button>
                 <button class="btn btn-warning d-none" id="updateBtn">Update</button>
