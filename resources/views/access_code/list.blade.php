@@ -149,7 +149,9 @@
     query.onkeyup = (e)=>{
 
         if(e.keyCode == 13){
-            alert('asdasd');
+            showMoreBtn.style.display = 'block';
+            reinitalize();
+            showData();
         }
     }
 
