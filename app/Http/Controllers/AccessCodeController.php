@@ -75,7 +75,7 @@ class AccessCodeController extends Controller
             if(trim($action->description) == ''){
                 return response()->json([
                     'status'    => 0,
-                    'message'   => '"'.$action['value'].'" description is required',
+                    'message'   => '"'.$action->value.'" description is required',
                     'data'      => []
                 ]);
             }
@@ -89,6 +89,7 @@ class AccessCodeController extends Controller
 
             $accessCode->code                   = $access_code;
             $accessCode->description            = $action->description;
+
 
             $accessCode->save();
 
