@@ -42,7 +42,7 @@ class AccessCodeController extends Controller
             'scope' => [
                 'required',
             ],
-            'action' => [
+            'actions' => [
                 'required',
             ],
             'description' => ['required','max:300']
