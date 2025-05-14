@@ -73,9 +73,10 @@ class AccessCodeController extends Controller
 
             $access_code = strtolower($subject.':'.$scope+':'.$action);
 
-            
+
             $exists = AccessCode::where('code', $access_code)->first();
 
+            
             if($exists) continue;
 
             $accessCode = new AccessCode();
