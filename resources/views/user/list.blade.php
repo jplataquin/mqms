@@ -30,7 +30,7 @@
         </div>
         <div class="folder-form-body">
             <div class="row">
-                <div class="col-lg-5">
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label>Sort By</label>
                         <select class="form-control" id="sortSelect">
@@ -41,20 +41,24 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-5">
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label>Query</label>
                         <input type="text" id="query" class="form-control"/>
                     </div>
                 </div>
-                <div class="col-lg-2">
-                    <div class="form-group">
-                        <label>&nbsp;</label>
-                        <button id="searchBtn" class="btn w-100 btn-primary">Search</button>
-                    </div>
-                </div>
-                
             </div>
+
+            <div class="row mt-3">
+                <div class="col-lg-12">
+                    
+                    <button id="searchBtn" class="btn btn-primary me-3">Search</button>
+            
+                    <button id="createBtn" class="btn btn-warning">Create</button>
+                            
+                </div>
+            </div>
+
         </div>
     </div>
     
@@ -75,9 +79,11 @@
 
     const list            = $q('#list').first();
     const query           = $q('#query').first();
+    const createBtn       = $q('#createBtn').first();
     const searchBtn       = $q('#searchBtn').first();
     const showMoreBtn     = $q('#showMoreBtn').first();
     const sortSelect      = $q('#sortSelect').first();
+    
     
     let page            = 1;
     let order           = 'DESC';
@@ -146,6 +152,19 @@
         showMoreBtn.style.display = 'block';
         reinitalize();
         showData();
+    }
+
+    query.onkeyup = (e)=>{
+
+        if(e.keyCode == 13){
+            showMoreBtn.style.display = 'block';
+            reinitalize();
+            showData();
+        }
+    }
+
+    createBtn.onclick = ()=>{
+        window.util.navTo('user/create');
     }
 
     showMoreBtn.onclick = ()=>{
