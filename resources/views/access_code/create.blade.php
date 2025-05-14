@@ -76,6 +76,9 @@
                                         {{ str_replace('_',' ',$val) }}
                                     </label>
                                 </div>
+                                <div class="form-group">
+                                    <textarea class="form-control"></textarea>
+                                </div>
                             @endforeach
                             
                             Other: <input type="text" class="form-control" id="action_other"/>
