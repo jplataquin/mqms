@@ -85,7 +85,7 @@
                             
                             <div class="mb-3">
                                 Other: <input type="text" class="form-control" id="action_other"/>
-                                <div class="form-group">
+                                <div class="form-group mt-3">
                                     <textarea class="form-control action_description" id="other_description"></textarea>
                                 </div>
                             </div>
