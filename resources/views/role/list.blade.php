@@ -30,7 +30,7 @@
         </div>
         <div class="folder-form-body">
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label>Sort By</label>
                         <select class="form-control" id="sortSelect">
@@ -41,25 +41,18 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label>Query</label>
                         <input type="text" id="query" class="form-control"/>
                     </div>
                 </div>
-                <div class="col-lg-2">
-                    <div class="form-group">
-                        <label>&nbsp;</label>
-                        <button id="searchBtn" class="btn w-100 btn-primary">Search</button>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="form-group">
-                        <label>&nbsp;</label>
-                        <button id="createBtn" class="btn w-100 btn-warning">Create</button>
-                    </div>
-                </div>
-                
+            </div>
+            <div class="row mt-3 text-end">
+                    <button id="searchBtn" class="btn btn-primary me-3">Search</button>
+            
+                    <button id="createBtn" class="btn btn-warning">Create</button>
+                 
             </div>
         </div>
     </div>
