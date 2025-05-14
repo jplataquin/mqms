@@ -289,7 +289,10 @@
 
         window.util.blockUI();
 
-        window.util.$get('/api/role/access_codes/{{$role->id}}',{}).then(reply=>{
+        window.util.$get('/api/role/access_codes/{{$role->id}}',{
+            orderBy:'code',
+            order:'ASC'
+        }).then(reply=>{
 
             window.util.unblockUI();
                 
