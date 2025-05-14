@@ -33,8 +33,20 @@
             <div class="row">
                 <div class="col-lg-12 mb-3">
                     <div class="form-group">
+                        <label>Record</label>
+                        <input type="text" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 mb-3">
+                    <div class="form-group">
                         <label>Scope</label>
-                        <select class=""></select>
+                        <select class="form-select">
+                            <option value="own">Own</option>
+                            <option value="all">All</option>
+                        </select>
                     </div>
                 </div>
             </div>
