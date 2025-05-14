@@ -44,8 +44,7 @@ class AccessCodeController extends Controller
             'actions' => [
                 'required',
                 'json'
-            ],
-            'description' => ['required','max:300']
+            ]
         ]);
 
         if ($validator1->fails()) {
