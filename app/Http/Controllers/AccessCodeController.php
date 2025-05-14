@@ -33,7 +33,6 @@ class AccessCodeController extends Controller
         $subject      = $request->input('subject');
         $scope        = $request->input('scope');
         $actions      = $request->input('actions');
-        $description  = $request->input('description');
 
         $validator1 = Validator::make($request->all(),[
             'subject' => [
@@ -44,6 +43,7 @@ class AccessCodeController extends Controller
             ],
             'actions' => [
                 'required',
+                'json'
             ],
             'description' => ['required','max:300']
         ]);
@@ -59,7 +59,7 @@ class AccessCodeController extends Controller
         $subect     = trim($subject);
         $subject    = str_replace(' ', '_', $subject);
         
-        $actions    = explode(',',$actions);
+        $actions    = json_decode($actions);
 
         if(!$actions){
             return response()->json([
@@ -71,8 +71,15 @@ class AccessCodeController extends Controller
 
         foreach($actions as $action){
 
-            $access_code = strtolower($subject.':'.$scope.':'.$action);
+            $access_code = strtolower($subject.':'.$scope.':'.$action['value']);
 
+            if(trim($action['description']) == ''){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => '"'.$action['value'].'" description is required',
+                    'data'      => []
+                ]);
+            }
 
             $exists = AccessCode::where('code', $access_code)->first();
 

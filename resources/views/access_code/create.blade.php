@@ -156,7 +156,6 @@
             subject: subject.value,
             scope: scope.value,
             actions: JSON.stringify(action_list),
-            description: description.value
         }).then(reply=>{
             
             window.util.unblockUI();
