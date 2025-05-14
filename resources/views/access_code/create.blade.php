@@ -28,7 +28,7 @@
         <div class="form-header">
             Create Access Code
         </div>
-        <div class="form-body">
+        <div class="form-body mb-3">
             
             <div class="row">
                 <div class="col-lg-12 mb-3">
@@ -50,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row">   
                 <div class="col-lg-12 mb-3">
                     <div class="form-group">
                         <label>Actions</label>
