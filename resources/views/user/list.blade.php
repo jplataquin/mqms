@@ -50,7 +50,7 @@
             </div>
 
             <div class="row mt-3">
-                <div class="col-lg-12">
+                <div class="col-lg-12 text-end">
                     
                     <button id="searchBtn" class="btn btn-primary me-3">Search</button>
             
