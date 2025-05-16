@@ -818,13 +818,24 @@ class MaterialQuantityRequestController extends Controller
             ]);
         }
 
-        if($materialQuantityRequest->Component->status != 'APRV'){
+        if(!$materialQuantityRequest->Component){
             return response()->json([
                 'status'    => 0,
-                'message'   => 'This record can not be updated, because the component status is not approved',
+                'message'   => 'This record can not be updated, because the component does not exists',
                 'data'      => []
             ]);
         }
+        // if(
+        //     $materialQuantityRequest->Component->status != 'APRV'
+        //     &&
+        //     $materialQuantityRequest->Component->status != 'PEND'
+        // ){
+        //     return response()->json([
+        //         'status'    => 0,
+        //         'message'   => 'This record can not be updated, because the component status is not approved',
+        //         'data'      => []
+        //     ]);
+        // }
 
         $user_id        = Auth::user()->id;
         $items          = json_decode($items,true);
