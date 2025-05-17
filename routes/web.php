@@ -206,7 +206,7 @@ Route::get('adarna.js.map', function(){
 
 Route::get('/vanilla-datepicker.js', function(){
     //node_modules/vanillajs-datepicker/dist/datepicker.min.js.
-    $response = Response::make(File::get(base_path('node_modules/vanillajs-datepicker/dist/js/datepicker.min.js')), 200);
+    $response = Response::make(File::get(base_path('node_modules/vanillajs-datepicker/js/Datepicker.js')), 200);
     $response->header("Content-Type", 'text/javascript');
 
     return $response;
