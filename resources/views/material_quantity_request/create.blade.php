@@ -93,12 +93,18 @@
 <script type="module">
     import {$q,$el} from '/adarna.js';
     import RequestMaterialItem from '/ui_components/RequestMaterialItem.js';
+    import { Datepicker } from '/vanillajs-datepicker';
 
-    let itemContainer = $q('#itemContainer').first();
-    let addBtn        = $q('#addBtn').first();
-    let createBtn     = $q('#createBtn').first();
-    let cancelBtn     = $q('#cancelBtn').first();
-    let description   = $q('#description').first();
+    const itemContainer = $q('#itemContainer').first();
+    const addBtn        = $q('#addBtn').first();
+    const createBtn     = $q('#createBtn').first();
+    const cancelBtn     = $q('#cancelBtn').first();
+    const description   = $q('#description').first();
+    const date_needed   = $q('#date_needed').first();
+
+    const datepicker = new Datepicker(date_needed, {
+    // ...options
+    }); 
 
     let count = 1;
 
