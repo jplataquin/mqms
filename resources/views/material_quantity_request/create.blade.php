@@ -102,7 +102,7 @@
     const description   = $q('#description').first();
     const date_needed   = $q('#date_needed').first();
 
-    const datepicker = new Datepicker(date_needed, {
+    const datepicker = Datepicker(date_needed, {
     // ...options
     }); 
 
