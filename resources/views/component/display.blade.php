@@ -294,6 +294,8 @@
         }
     }
 
+    nonConforming();
+    
     signal.receiver('component-item-update',()=>{
         calculateComponentTotalAmount();
     });
