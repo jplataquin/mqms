@@ -93,7 +93,7 @@
 <script type="module">
     import {$q,$el} from '/adarna.js';
     import RequestMaterialItem from '/ui_components/RequestMaterialItem.js';
-    import { Datepicker } from '/vanillajs-datepicker.js';
+    import { Datepicker } from '/vanilla-datepicker.js';
 
     const itemContainer = $q('#itemContainer').first();
     const addBtn        = $q('#addBtn').first();
