@@ -95,7 +95,6 @@
     import RequestMaterialItem from '/ui_components/RequestMaterialItem.js';
     import '/vanilla-datepicker.js';
 
-    console.log(Datepicker);
 
     const itemContainer = $q('#itemContainer').first();
     const addBtn        = $q('#addBtn').first();
@@ -105,7 +104,7 @@
     const date_needed   = $q('#date_needed').first();
 
     const datepicker = new Datepicker(date_needed, {
-        format: 'mm/dd/yyyy',
+        format: 'M/dd/yyyy',
         language: 'en',
         todayHighlight: true,
         enableOnReadonly: true
