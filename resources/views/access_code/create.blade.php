@@ -63,7 +63,7 @@
                                 </label>
                             </div>
                             @foreach([
-                                'add',
+                                'create',
                                 'view',
                                 'update',
                                 'delete',
