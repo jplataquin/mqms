@@ -100,14 +100,14 @@
         unitOptions:        @json($unit_options)
     });
 
-    itemForm.handler.deleteCallback((dom)=>{
+    itemForm.handler.deleteCallback( async (dom)=>{
         
         if(count == 1){
             alert('At least one item must remain');
             return false;
         }
 
-        if(confirm('Are you sure you want to delete this item?')){
+        if(await window.util.confirm('Are you sure you want to delete this item?')){
             $el.remove(dom);
         }
 
