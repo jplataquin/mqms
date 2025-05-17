@@ -85,6 +85,10 @@ html, body {
   z-index: 100;
 }
 
+/*** Datepicker ***/
+.datepicker-picker{
+  background-color: var(--bs-dark) !important;
+}
 
 /*** Miscellaneous ***/
 .fixed-footer-controls{
