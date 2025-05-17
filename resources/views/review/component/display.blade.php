@@ -622,15 +622,9 @@
 
                                 <tr>
                                     <th style="width:40%" class="text-center bg-divider">Material</th>
-                                    <th style="width:20%" class="text-center bg-divider">Quantity</th>
                                     <th style="width:20%" class="text-center bg-divider">Equivalent</th>
-                                    <th style="width:20%" class="text-center bg-divider">Total</th>
                                 </tr>
                                 
-                                @php 
-                                    $grand_total = 0;
-                                @endphp
-
                                 @foreach($component_item->materialQuantities as $mq)
                                 <tr>
                                     <td>
@@ -638,31 +632,13 @@
                                         {{$materialItems[$mq->material_item_id]->specification_unit_packaging }} 
                                         {{$materialItems[$mq->material_item_id]->brand }} 
                                     </td>
-                                    <td class="text-center">
-                                        {{number_format($mq->quantity,2) }}
-                                    </td>
                                     
                                     <td class="text-center">
                                         {{ number_format($mq->equivalent,2) }} {{ $unit_options[ $component_item->unit_id ]->text }}
                                     </td>
-                                    <td class="text-center">
-                                        {{ number_format($mq->equivalent * $mq->quantity,2) }} {{ $unit_options[ $component_item->unit_id ]->text }}
-                                    </td>
                                 </tr>
 
-                                    @php
-                                        $grand_total = $grand_total + ($mq->equivalent * $mq->quantity);
-                                    @endphp
                                 @endforeach
-                                <tr>
-                                    <th colspan="3" class="text-end">
-                                        Grand Total
-                                    </th>
-                                    <td class="@if(round($grand_total,2)  > round($component_item->quantity,2) ) is-invalid text-danger non-conforming @endif text-center">
-                                       
-                                        {{ number_format($grand_total,2) }} {{ $unit_options[ $component_item->unit_id ]->text }}
-                                    </td>
-                                </tr>
 
                         </table>
                     </div>
