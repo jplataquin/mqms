@@ -290,7 +290,7 @@
         let total = $q('.non-conforming').items().length;
 
         if(total){
-            window.util.alert('Warning',total+' item(s) non-conforming item(s)');
+            window.util.alert('Warning',total+' non-conforming item(s)');
         }
     }
 
