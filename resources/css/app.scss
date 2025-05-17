@@ -86,8 +86,12 @@ html, body {
 }
 
 /*** Datepicker ***/
-.datepicker-picker{
+.datepicker-picker {
   background-color: var(--bs-dark) !important;
+}
+
+.datepicker-cell.focused{
+  background-color: var(--bs-secondary) !important;
 }
 
 /*** Miscellaneous ***/
