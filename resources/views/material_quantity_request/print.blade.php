@@ -1,6 +1,6 @@
 <html>
     <head>
-            
+        <title>Material Request {{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }} ({{$project->name}})</title>
         <style>    
             table, th, td {
                 border: 1px solid black;
