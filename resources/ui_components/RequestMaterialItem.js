@@ -51,7 +51,7 @@ class RequestMaterialItem extends Component{
                         this.el.indexNumber = t.label('Item #');
 
                         this.el.deleteRow = t.div({
-                        class:'float-end me-5',
+                        class:'float-end me-3',
                         style:{
                             display: (this._model.editable) ? 'inline' : 'none'
                         }},()=>{
