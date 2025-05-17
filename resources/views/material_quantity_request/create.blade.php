@@ -63,6 +63,14 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Date Needed</label>
+                        <input type="text" id="date_needed" class="form-control"/>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
