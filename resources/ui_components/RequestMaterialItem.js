@@ -47,7 +47,7 @@ class RequestMaterialItem extends Component{
 
             t.div({class:'form-header'},()=>{
                 t.div({class:'row'},()=>{
-                    t.div({class:'col-10 text-start ps-3'},()=>{
+                    t.div({class:'col-10 text-start ps-3 text-center'},()=>{
                         this.el.indexNumber = t.label('Item #');
                     });
                     t.div({class:'col-2 text-end pe-3'},()=>{
