@@ -82,7 +82,7 @@
                                                 }
                                             @endphp
                                             <label>Material Budget ({{number_format($material_grand_total_percentage)}}%)</label>
-                                            <input type="text" disabled="true" class="form-control @if($grand_total_amounts['contract'] < $grand_total_amounts['material']) @endif" value="P {{ number_format($grand_total_amounts['material'],2) }}"/>
+                                            <input type="text" disabled="true" class="form-control @if($grand_total_amounts['contract'] < $grand_total_amounts['material']) non-conforming @endif" value="P {{ number_format($grand_total_amounts['material'],2) }}"/>
                                         </div>
                                     </div>
                                 </div>
