@@ -121,7 +121,7 @@
         e.preventDefault();
 
         if(count >= 12){
-            window.util.alert('Error','Maximum of 6 items per request');
+            window.util.alert('Error','Maximum of 12 items per request');
             return false;
         }
 
