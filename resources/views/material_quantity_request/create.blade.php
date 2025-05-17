@@ -105,7 +105,10 @@
     const date_needed   = $q('#date_needed').first();
 
     const datepicker = new Datepicker(date_needed, {
-    // ...options
+        format: 'mm/dd/yyyy',
+        language: 'en',
+        todayHighlight: true,
+        enableOnReadonly: true
     }); 
 
     let count = 1;
