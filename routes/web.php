@@ -203,6 +203,16 @@ Route::get('adarna.js.map', function(){
     return $response;
 });
 
+
+Route::get('/vanilla-datepicker.js', function(){
+
+    $response = Response::make(File::get(base_path('node_modules/vanillajs-datepicker/dist/datepicker.min.js')), 200);
+    $response->header("Content-Type", 'text/javascript');
+
+    return $response;
+});
+
+
 Route::get('/htmx.min.js', function(){
 
     $response = Response::make(File::get(base_path('resources/js/htmx.min.js')), 200);
