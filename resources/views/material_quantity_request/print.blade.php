@@ -101,7 +101,7 @@
             #
         </th>
         <th style="text-align:center">
-            Item
+            {{count($request_items)}} Item(s)
         </th>
         <th style="width:10%;text-align:center">
             Budget
