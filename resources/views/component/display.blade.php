@@ -227,7 +227,7 @@
     <hr>
 
    
-    <div class="folder-form-container">
+    <div class="folder-form-container position-sticky" style="top:40px">
         <div class="folder-form-tab">
             Component Items
         </div>
