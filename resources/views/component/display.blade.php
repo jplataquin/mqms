@@ -290,12 +290,12 @@
         let total = $q('.non-conforming').items().length;
 
         if(total){
-            window.util.alert(total+' items are non-conforming');
+            window.util.alert('Warning',total+' item(s) are non-conforming');
         }
     }
 
     nonConforming();
-    
+
     signal.receiver('component-item-update',()=>{
         calculateComponentTotalAmount();
     });
