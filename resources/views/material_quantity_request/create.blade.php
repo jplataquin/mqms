@@ -120,7 +120,7 @@
     addBtn.onclick = (e)=>{
         e.preventDefault();
 
-        if(count >= 6){
+        if(count >= 12){
             window.util.alert('Error','Maximum of 6 items per request');
             return false;
         }
