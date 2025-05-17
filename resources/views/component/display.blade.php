@@ -286,6 +286,14 @@
         component_total_amount.value = 'P '+window.util.numberFormat(total,2);
     }
 
+    function nonConforming(){
+        let total = $q('.non-conforming').items().length;
+
+        if(total){
+            window.util.alert(total+' items are non-conforming');
+        }
+    }
+
     signal.receiver('component-item-update',()=>{
         calculateComponentTotalAmount();
     });
