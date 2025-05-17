@@ -104,6 +104,7 @@ class MaterialQuantityRequestController extends Controller
 
         //Query material quantities of the component item
         $material_item_result = DB::table('material_quantities')
+        ->where('material_quantities.deleted_at',null)
         ->whereIn('component_item_id',$component_item_ids)
         ->join('material_items','material_quantities.material_item_id','=','material_items.id')
         ->get();
@@ -1250,6 +1251,7 @@ class MaterialQuantityRequestController extends Controller
         ->where('material_item_id',$material_item_id)
         ->first();
 
+        
         $material_quantity_request_item = MaterialQuantityRequestItem::where(function($query){
             $query->where('status','=','APRV')->orWhere('status','=','CLSD');
         })
