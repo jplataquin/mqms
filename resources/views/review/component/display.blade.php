@@ -372,7 +372,7 @@
                 <div class="row mb-3">
                     <div class="col-lg-12">
                         <div class="form-container">
-                            <div class="form-header @if(!$component->sum_flag || $component->unit_id != $contract_item->unit_id) bg-excluded-sum-component @endif">Component</div>
+                            <div class="form-header">Component</div>
                             <div class="form-body">
 
                             <div class="row mb-3">
