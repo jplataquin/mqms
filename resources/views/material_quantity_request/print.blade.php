@@ -70,13 +70,17 @@
                 <th style="width:10%">ID No.</th>
                 <td colspan="3">{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}</td>
             </tr>
-            <tr>
-                <th>Status</th>
-                <td colspan="3">{{$material_quantity_request->status}}</td>
-            </tr>
+         
             <tr>
                 <th>Requested By</th>
                 <td colspan="3">{{$material_quantity_request->CreatedByUser()->name}}</td>
+            </tr>
+
+            <tr>
+                <th>Status</th>
+                <td style="width:40%">{{$material_quantity_request->status}}</td>
+                <th style="width:10%">Date Needed</th>
+                <td style="width:40%">{{$material_quantity_request->date_needed}}</td>
             </tr>
             <tr>
                 <th>Date Requested</th>
