@@ -26,9 +26,8 @@ class MaterialQuantityRequest extends Model
    
     public $deleteException = null;
 
-    public function setDateNeededAttribute( $value ) {
-        echo $value; exit;
-        $this->attributes['date_needed'] = (new Carbon($value))->format('d/m/y');
+    public function getDateNeededAttribute( $value ) {
+        return (new Carbon($value))->format('d/m/y');
     }
 
     // protected function casts(): array
