@@ -339,8 +339,8 @@
         const datepicker = new Datepicker(date_needed, {
             format: {
              
-               toValue(date) {
-                    console.log('a',date);
+               toValue(date,format,local) {
+                    console.log(date,format,local);
                     let dateObject = Datepicker.parseDate(date, 'M dd, yyyy')
                     console.log('toValue', dateObject)
                     return dateObject
