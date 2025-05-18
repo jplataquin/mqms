@@ -337,9 +337,9 @@
 
 
         const datepicker = new Datepicker(date_needed, {
-            format: 'M dd, yyyy',
-            todayHighlight: true,
-            updateOnBlur:true 
+            //format: 'M dd, yyyy',
+            //todayHighlight: true,
+            //updateOnBlur:true 
         });
 
         editBtn.onclick = (e)=>{
