@@ -221,7 +221,7 @@ class MaterialQuantityRequestController extends Controller
             ],
             'date_needed' =>[
                 'required',
-                'date_format:M d, Y',
+                'date_format:"M d, Y"',
             ],
             'items' =>[
                 'required',
