@@ -337,7 +337,14 @@
 
 
         const datepicker = new Datepicker(date_needed, {
-            format: 'M dd, yyyy',
+            format: {
+             
+                toDisplay(date, format, locale) {
+                    
+                    console.log(date);
+                    return 'TEST';
+                },
+            },
             //todayHighlight: true,
             //updateOnBlur:true 
         });
