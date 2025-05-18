@@ -1007,8 +1007,10 @@ class MaterialQuantityRequestController extends Controller
 
         try {  
 
+            $dt = DateTime::createFromFormat('M d, Y', $date_needed);
+
             $materialQuantityRequest->description   = $description;
-            $materialQuantityRequest->date_needed   = $date_needed;
+            $materialQuantityRequest->date_needed   = $dt->format('Y-m-d');
             $materialQuantityRequest->updated_by    = $user_id;
 
             $materialQuantityRequest->save();
