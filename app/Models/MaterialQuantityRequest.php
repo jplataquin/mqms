@@ -23,7 +23,7 @@ class MaterialQuantityRequest extends Model
     protected $table = 'material_quantity_requests';
     
     protected $casts = [
-        'date_needed'  => 'date:M d, Y',
+        'date_needed'  => 'date:"M d, Y"',
     ];
 
     public $deleteException = null;
