@@ -339,10 +339,15 @@
         const datepicker = new Datepicker(date_needed, {
             format: {
              
-                toDisplay(date, format, locale) {
-                    
-                    console.log(date);
-                    return 'TEST';
+               toValue(date) {
+                    let dateObject = Datepicker.parseDate(date, 'dd/mm/yyyy')
+                    console.log('toValue', dateObject)
+                    return dateObject
+                },
+                toDisplay(date) {
+                    let dateString = Datepicker.formatDate(date, 'dd/mm/yyyy')
+                    console.log('toDisplay', dateString)
+                    return dateString
                 },
             },
             //todayHighlight: true,
