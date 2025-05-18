@@ -215,8 +215,8 @@
             contract_item_id    : '{{$contract_item->id}}',
             component_id        : '{{$component->id}}',
             description         : description.value,
-            date_needed         : date_needed.value
-            items:JSON.stringify(items)
+            date_needed         : date_needed.value,
+            items               :JSON.stringify(items)
         }).then(reply=>{
 
             
