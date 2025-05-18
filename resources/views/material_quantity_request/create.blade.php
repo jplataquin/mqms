@@ -104,10 +104,20 @@
     const date_needed   = $q('#date_needed').first();
 
     const datepicker = new Datepicker(date_needed, {
-        format: 'M dd, yyyy',
-        language: 'en',
+       format: { 
+            toValue(date,format,local) {
+                
+                let dateObject = Datepicker.parseDate(date_needed.value, 'M dd, yyyy')
+                
+                return dateObject
+            },
+            toDisplay(date) {
+                let dateString = Datepicker.formatDate(date, 'M dd, yyyy')
+        
+                return dateString
+            },
+        },
         todayHighlight: true,
-        enableOnReadonly: true
     }); 
 
     let count = 1;

@@ -342,16 +342,16 @@
                toValue(date,format,local) {
                   
                     let dateObject = Datepicker.parseDate(date_needed.value, 'M dd, yyyy')
-                    console.log('toValue', dateObject)
+                   
                     return dateObject
                 },
                 toDisplay(date) {
                     let dateString = Datepicker.formatDate(date, 'M dd, yyyy')
-                    console.log('toDisplay', dateString)
+            
                     return dateString
                 },
             },
-            //todayHighlight: true,
+            todayHighlight: true,
             //updateOnBlur:true 
         });
 
