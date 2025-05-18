@@ -15,6 +15,7 @@ use App\Models\ContractItem;
 use App\Models\Component;
 use App\Models\ComponentItem;
 use App\Models\User;
+use Carbon\Carbon;
 
 class MaterialQuantityRequest extends Model
 {
@@ -22,12 +23,12 @@ class MaterialQuantityRequest extends Model
 
     protected $table = 'material_quantity_requests';
     
-    protected $casts = [
-        'date_needed'  => 'date:d-m-Y',
-    ];
-
+   
     public $deleteException = null;
 
+    public function setDate_neededAttribute( $value ) {
+        $this->attributes['date_needed'] = (new Carbon($value))->format('d/m/y');
+    }
     // protected function casts(): array
     // {
 
