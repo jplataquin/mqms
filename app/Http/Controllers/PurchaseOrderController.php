@@ -125,6 +125,10 @@ class PurchaseOrderController extends Controller
 
     public function select(){
 
+        if( !$this->hasAccess(['purchase_order:own:create']) ){
+            return view('access_denied');
+        }
+
         $projects = Project::orderBy('name','ASC')->where('status','=','ACTV')->get();
 
         return view('purchase_order/select',[
@@ -135,6 +139,9 @@ class PurchaseOrderController extends Controller
     public function _select_material_request(Request $request){
 
         //todo check role
+        if( !$this->hasAccess(['purchase_order:own:create']) ){
+            return view('access_denied');
+        }
 
         $page               = (int) $request->input('page')             ?? 1;
         $limit              = (int) $request->input('limit')            ?? 10;

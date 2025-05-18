@@ -739,21 +739,6 @@ class MaterialQuantityRequestController extends Controller
         ]);
 
 
-        // $html2pdf = new Html2Pdf('L','A4','en', false, 'UTF-8', [5, 5, 10, 0]);
-           
-
-        // try {
-        //     $html2pdf->writeHTML($html);
-        //     $html2pdf->output('Material Request - '.str_pad($materialQuantityRequest->id,0,6,STR_PAD_LEFT ).'.pdf');
-        //     $html2pdf->clean();
-        
-        // }catch(Html2PdfException $e) {
-        //     $html2pdf->clean();
-        
-        //     $formatter = new ExceptionFormatter($e);
-        //     echo $html;
-        //     echo $formatter->getHtmlMessage();        
-        // }
     }
 
     public function _update(Request $request){
