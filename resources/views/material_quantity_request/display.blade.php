@@ -340,7 +340,7 @@
             format: {
              
                toValue(date) {
-                    let dateObject = Datepicker.parseDate(date, 'dd/mm/yyyy')
+                    let dateObject = Datepicker.parseDate(date, 'M dd, yyyy')
                     console.log('toValue', dateObject)
                     return dateObject
                 },
