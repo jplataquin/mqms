@@ -24,6 +24,17 @@ class MaterialQuantityRequest extends Model
     
     public $deleteException = null;
 
+    protected function casts(): array
+    {
+
+        return [
+
+            'date_needed' => 'datetime:"M d, Y"',
+
+        ];
+
+    }
+
     public function Items(): HasMany
     {
         return $this->hasMany(MaterialQuantityRequestItem::class);
