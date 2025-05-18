@@ -59,17 +59,36 @@
                         <th>Requested By</th>
                         <td>{{$material_quantity_request->CreatedByUser()->name}}</td>
                     </tr>
-                    <tr>
-                        <th>Description</th>
-                        <td>
-                            <textarea disabled="true" class="w-100" id="description">{{$material_quantity_request->description}}</textarea>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
 
         </div>
     </div>
+
+    <div class="form-container mb-3">
+        <div class="form-header">
+            Details
+        </div>
+        <div class="form-body">
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="description" disabled="true" class="form-control">{{$material_quantity_request->description}}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Date Needed</label>
+                        <input type="text" disabled="true" id="date_needed" value="{{$material_quantity_request->date_needed}}" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="itemContainer"></div>
    
     <div class="row" id="comment-box"></div>
