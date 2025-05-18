@@ -221,7 +221,7 @@ class MaterialQuantityRequestController extends Controller
             ],
             'date_needed' =>[
                 'required',
-                Rule::date()->format('M d, Y'),
+                'date_format:M d, Y',
             ],
             'items' =>[
                 'required',
@@ -336,7 +336,7 @@ class MaterialQuantityRequestController extends Controller
             $materialQuantityRequest->contract_item_id  = $contract_item_id;
             $materialQuantityRequest->component_id      = $component_id;
             $materialQuantityRequest->description       = $description;
-            $materialQuantityRequest->date_needed       = $dt->format('Y-m-d');
+            $materialQuantityRequest->date_needed       = $dt->format('Y-m-d'); 
             $materialQuantityRequest->status            = 'PEND';
             $materialQuantityRequest->created_by        = $user_id;
 
