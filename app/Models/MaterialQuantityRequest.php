@@ -22,18 +22,22 @@ class MaterialQuantityRequest extends Model
 
     protected $table = 'material_quantity_requests';
     
+    protected $casts = [
+        'date_needed'  => 'date:M d, Y',
+    ];
+
     public $deleteException = null;
 
-    protected function casts(): array
-    {
+    // protected function casts(): array
+    // {
 
-        return [
+    //     return [
 
-            'date_needed' => 'datetime:M d, Y',
+    //         'date_needed' => 'datetime:M d, Y',
 
-        ];
+    //     ];
 
-    }
+    // }
 
     public function Items(): HasMany
     {
