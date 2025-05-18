@@ -149,6 +149,7 @@
     import {$q,$el} from '/adarna.js';
     import RequestMaterialItem from '/ui_components/RequestMaterialItem.js';
     import CommentForm from '/ui_components/comment/CommentForm.js';
+    import '/vanilla-datepicker.js';
 
     const itemContainer = $q('#itemContainer').first();
     const addBtn        = $q('#addBtn').first();
@@ -334,6 +335,14 @@
         let editBtn       = $q('#editBtn').first();
         let updateBtn     = $q('#updateBtn').first();
 
+
+        const datepicker = new Datepicker(date_needed, {
+            format: 'M dd, yyyy',
+            language: 'en',
+            todayHighlight: true,
+            enableOnReadonly: true
+        });
+         
         editBtn.onclick = (e)=>{
             e.preventDefault();
 
