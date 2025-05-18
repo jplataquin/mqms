@@ -840,18 +840,7 @@ class MaterialQuantityRequestController extends Controller
                 'data'      => []
             ]);
         }
-        // if(
-        //     $materialQuantityRequest->Component->status != 'APRV'
-        //     &&
-        //     $materialQuantityRequest->Component->status != 'PEND'
-        // ){
-        //     return response()->json([
-        //         'status'    => 0,
-        //         'message'   => 'This record can not be updated, because the component status is not approved',
-        //         'data'      => []
-        //     ]);
-        // }
-
+      
         $user_id        = Auth::user()->id;
         $items          = json_decode($items,true);
         $delete_items   = json_decode($delete_items);
@@ -897,35 +886,7 @@ class MaterialQuantityRequestController extends Controller
             $existing_items_arr[] = $ex_item->id;
         }
 
-        //Extra validation for dobule entry, deleted ites and po quantity validation
-        // $doubleEntry = [];
-        // $items_arr   = [];
-
-        // foreach($items as $item){
-
-        //     $item['component_item_id']      = (int) $item['component_item_id'];
-        //     $item['material_item_id']       = (int) $item['material_item_id'];
-        //     $item['id']                     = (int) $item['id']; 
-
-        //     $items_arr[] = $item['id'];
-
-
-        //     //check for double entry
-        //     $check = $item['component_item_id'].'-'.$item['material_item_id'];
-
-        //     if(in_array($check,$doubleEntry)){
-
-        //         return response()->json([
-        //             'status'    => 0,
-        //             'message'   => 'Double entry with the same component item and material Item',
-        //             'data'      => []
-        //         ]);
-
-        //     }else{
-        //         $doubleEntry[] = $check;
-        //     }
-        // }
-
+      
         $item_arr = [];
 
         //PO quantity validation for input
@@ -1042,42 +1003,12 @@ class MaterialQuantityRequestController extends Controller
             }
         }
         
-        // foreach($items as $item){
-
-        //     $item['component_item_id']     = (int) $item['component_item_id'];
-        //     $item['material_item_id']      = (int) $item['material_item_id'];
-        //     $item['requested_quantity']    = (float) $item['requested_quantity'];
-
-        //     $requested_quantity_total = MaterialQuantityRequestItem::where('status','=','APRV')
-        //     ->where('component_item_id','=',$item['component_item_id'])
-        //     ->where('material_item_id','=',$item['material_item_id'])
-        //     ->sum('requested_quantity');
-            
-        //     $materialQuantity = MaterialQuantity::where('component_item_id','=',$item['component_item_id'])
-        //     ->where('material_item_id','=',$item['material_item_id'])->first();
-           
-        //     $remaining = $materialQuantity->quantity - $requested_quantity_total;
-
-
-        //     if($remaining < $item['requested_quantity']){
-
-        //         return response()->json([
-        //             'status'    => 0,
-        //             'message'   => 'Material is out of budget',
-        //             'data'      => [
-        //                 'remaining' => $remaining,
-        //                 'request' =>  $item['requested_quantity']
-        //             ]
-        //         ]);
-
-        //     }
-        // }
-
         DB::beginTransaction();
 
         try {  
 
             $materialQuantityRequest->description   = $description;
+            $materialQuantityRequest->date_needed   = $date_needed;
             $materialQuantityRequest->updated_by    = $user_id;
 
             $materialQuantityRequest->save();
