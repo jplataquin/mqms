@@ -104,7 +104,7 @@
     const date_needed   = $q('#date_needed').first();
 
     const datepicker = new Datepicker(date_needed, {
-        format: 'M/dd/yyyy',
+        format: 'M dd, yyyy',
         language: 'en',
         todayHighlight: true,
         enableOnReadonly: true
@@ -215,6 +215,7 @@
             contract_item_id    : '{{$contract_item->id}}',
             component_id        : '{{$component->id}}',
             description         : description.value,
+            date_needed         : date_needed.value
             items:JSON.stringify(items)
         }).then(reply=>{
 

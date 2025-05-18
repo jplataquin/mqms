@@ -90,14 +90,22 @@
 
     <div class="form-container mb-3">
         <div class="form-header">
-            Description
-        </div> 
+            Details
+        </div>
         <div class="form-body">
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="description" class="form-control">{{$material_quantity_request->description}}</textarea>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-12">
                     <div class="form-group">
-                      
-                        <textarea id="description" class="form-control" disabled="true">{{$material_quantity_request->description}}</textarea>
+                        <label>Date Needed</label>
+                        <input type="text" id="date_needed" value="{{$material_quantity_request->date_needed}}" class="form-control"/>
                     </div>
                 </div>
             </div>
