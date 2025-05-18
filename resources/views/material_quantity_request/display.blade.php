@@ -340,9 +340,9 @@
             format: 'M dd, yyyy',
             language: 'en',
             todayHighlight: true,
-            enableOnReadonly: true
+            enableOnReadonly: false
         });
-         
+
         editBtn.onclick = (e)=>{
             e.preventDefault();
 
