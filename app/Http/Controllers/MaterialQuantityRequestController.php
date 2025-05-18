@@ -760,6 +760,7 @@ class MaterialQuantityRequestController extends Controller
 
         $id             = (int) $request->input('id');
         $description    = $request->input('description');
+        $date_needed    = $request->input('date_needed');
         $items          = $request->input('items');
         $delete_items   = $request->input('delete_items');
         
@@ -771,6 +772,10 @@ class MaterialQuantityRequestController extends Controller
             ],
             'description' => [
                 'required'
+            ],
+            'date_needed' =>[
+                'required',
+                'date_format:"M d, Y"',
             ],
             'items' =>[
                 'required',

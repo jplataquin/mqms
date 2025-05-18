@@ -403,6 +403,7 @@
             window.util.$post('/api/material_quantity_request/update',{
                 id: '{{$material_quantity_request->id}}',
                 description: description.value,
+                date_needed: date_needed.value,
                 items:JSON.stringify(items),
                 delete_items: JSON.stringify(deleteItems)
             }).then(reply=>{
