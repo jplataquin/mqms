@@ -97,7 +97,7 @@
                 <div class="col-12 mb-3">
                     <div class="form-group">
                         <label>Description</label>
-                        <textarea id="description" class="form-control">{{$material_quantity_request->description}}</textarea>
+                        <textarea id="description" disabled="true" class="form-control">{{$material_quantity_request->description}}</textarea>
                     </div>
                 </div>
             </div>
@@ -105,7 +105,7 @@
                 <div class="col-12">
                     <div class="form-group">
                         <label>Date Needed</label>
-                        <input type="text" id="date_needed" value="{{$material_quantity_request->date_needed}}" class="form-control"/>
+                        <input type="text" disabled="true" id="date_needed" value="{{$material_quantity_request->date_needed}}" class="form-control"/>
                     </div>
                 </div>
             </div>
