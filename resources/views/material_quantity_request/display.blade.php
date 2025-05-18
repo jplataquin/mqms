@@ -338,9 +338,7 @@
 
         const datepicker = new Datepicker(date_needed, {
             format: 'M dd, yyyy',
-            language: 'en',
-            todayHighlight: true,
-            enableOnReadonly: false
+            todayHighlight: true
         });
 
         editBtn.onclick = (e)=>{
