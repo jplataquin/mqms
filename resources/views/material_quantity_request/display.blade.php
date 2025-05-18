@@ -154,6 +154,7 @@
     const addBtn        = $q('#addBtn').first();
     const cancelBtn     = $q('#cancelBtn').first();
     const description   = $q('#description').first();
+    const date_needed   = $q('#date_needed').first();
     const printBtn      = $q('#printBtn').first();
     const revertPendBtn = $q('#revertPendBtn').first();
     const reviewLinkBtn = $q('#reviewLinkBtn').first();
@@ -343,6 +344,7 @@
             });
 
             description.disabled = false;
+            date_needed.disabled = false;
 
             editBtn.classList.add('d-none');
             updateBtn.classList.remove('d-none');
