@@ -345,7 +345,7 @@
                     return dateObject
                 },
                 toDisplay(date) {
-                    let dateString = Datepicker.formatDate(date, 'dd/mm/yyyy')
+                    let dateString = Datepicker.formatDate(date, 'M dd, yyyy')
                     console.log('toDisplay', dateString)
                     return dateString
                 },
