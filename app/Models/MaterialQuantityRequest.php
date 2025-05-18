@@ -29,7 +29,7 @@ class MaterialQuantityRequest extends Model
 
         return [
 
-            'date_needed' => 'datetime:"M d, Y"',
+            'date_needed' => 'datetime:M d, Y',
 
         ];
 
