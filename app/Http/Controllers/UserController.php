@@ -367,13 +367,13 @@ class UserController extends Controller
 
     public function _add_role(Request $request){
         
-        if(!$this->hasAccess('user:all:add_user_role')){
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Access Denied',
-                'data'      => [] 
-            ]);
-        }
+        // if(!$this->hasAccess('user:all:add_user_role')){
+        //     return response()->json([
+        //         'status'    => 0,
+        //         'message'   => 'Access Denied',
+        //         'data'      => [] 
+        //     ]);
+        // }
 
         $role_id        = (int) $request->input('role_id');
         $user_id        = (int) $request->input('user_id');
@@ -420,13 +420,13 @@ class UserController extends Controller
 
     public function _remove_role(Request $request){
 
-        if(!$this->hasAccess('user:all:remove_user_role')){
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Access Denied',
-                'data'      => [] 
-            ]);
-        }
+        // if(!$this->hasAccess('user:all:remove_user_role')){
+        //     return response()->json([
+        //         'status'    => 0,
+        //         'message'   => 'Access Denied',
+        //         'data'      => [] 
+        //     ]);
+        // }
         
 
         $role_id    = (int) $request->input('role_id');
@@ -464,14 +464,14 @@ class UserController extends Controller
 
     public function _roles($id){
         
-        if(!$this->hasAccess(['user:all:view'])){
+        // if(!$this->hasAccess(['user:all:view'])){
 
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Access Denied',
-                'data'      => []
-            ]);
-        }
+        //     return response()->json([
+        //         'status'    => 0,
+        //         'message'   => 'Access Denied',
+        //         'data'      => []
+        //     ]);
+        // }
 
         $id = (int) $id;
         
