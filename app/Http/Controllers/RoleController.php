@@ -15,26 +15,19 @@ class RoleController extends Controller
 {
     public function create(){
 
-        if(!$this->hasAccess(['role:all:create'])){
+        // if(!$this->hasAccess(['role:all:create'])){
 
-            return view('access_denied');
-        }
+        //     return view('access_denied');
+        // }
 
         return view('role/create');
     }
 
     public function display($id){
 
-        if(!$this->hasAccess(['role:all:view'])){
-
-        // return response()->json([
-        //     'status'    => 0,
-        //     'message'   => 'Access Denied',
-        //     'data'      => []
-        // ]);
-
-            return view('access_denied');
-        }
+        // if(!$this->hasAccess(['role:all:view'])){
+        //     return view('access_denied');
+        // }
         
 
         $id             = (int) $id;
@@ -53,16 +46,15 @@ class RoleController extends Controller
 
     public function _create(Request $request){
 
-        if(!$this->hasAccess(['role:all:create'])){
+        // if(!$this->hasAccess(['role:all:create'])){
 
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Access Denied',
-                'data'      => []
-            ]);
+        //     return response()->json([
+        //         'status'    => 0,
+        //         'message'   => 'Access Denied',
+        //         'data'      => []
+        //     ]);
 
-            //return view('access_denied');
-        }
+        // }
 
         $name         = $request->input('name');
         $description  = $request->input('description');
@@ -102,16 +94,15 @@ class RoleController extends Controller
 
     public function _update(Request $request){
         
-        if(!$this->hasAccess(['role:all:update'])){
+        // if(!$this->hasAccess(['role:all:update'])){
 
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Access Denied',
-                'data'      => []
-            ]);
+        //     return response()->json([
+        //         'status'    => 0,
+        //         'message'   => 'Access Denied',
+        //         'data'      => []
+        //     ]);
 
-            //return view('access_denied');
-        }
+        // }
 
         $id                  = (int) $request->input('id') ?? 0;
         $name                = $request->input('name') ?? '';
@@ -207,16 +198,15 @@ class RoleController extends Controller
 
     public function _delete(Request $request){
          
-        if(!$this->hasAccess(['role:all:delete'])){
+        // if(!$this->hasAccess(['role:all:delete'])){
 
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Access Denied',
-                'data'      => []
-            ]);
+        //     return response()->json([
+        //         'status'    => 0,
+        //         'message'   => 'Access Denied',
+        //         'data'      => []
+        //     ]);
 
-            //return view('access_denied');
-        }
+        // }
 
         $id = (int) $request->input('id');
 
@@ -270,16 +260,15 @@ class RoleController extends Controller
     public function _access_code_remove(Request $request){
         
 
-        if(!$this->hasAccess(['role:all:remove_user_access_code'])){
+        // if(!$this->hasAccess(['role:all:remove_user_access_code'])){
 
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Access Denied',
-                'data'      => []
-            ]);
+        //     return response()->json([
+        //         'status'    => 0,
+        //         'message'   => 'Access Denied',
+        //         'data'      => []
+        //     ]);
 
-            //return view('access_denied');
-        }
+        // }
 
         $role_id           = (int) $request->input('role_id');
         $access_code_id    = (int) $request->input('access_code_id');
@@ -317,16 +306,15 @@ class RoleController extends Controller
 
     public function _access_code_add(Request $request){
 
-        if(!$this->hasAccess(['role:all:add_user_access_code'])){
+        // if(!$this->hasAccess(['role:all:add_user_access_code'])){
 
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Access Denied',
-                'data'      => []
-            ]);
+        //     return response()->json([
+        //         'status'    => 0,
+        //         'message'   => 'Access Denied',
+        //         'data'      => []
+        //     ]);
 
-            //return view('access_denied');
-        }
+        // }
 
         $role_id         = (int) $request->input('role_id');
         $access_code_id  = (int) $request->input('access_code_id');
@@ -371,16 +359,15 @@ class RoleController extends Controller
 
     public function _access_codes($role_id){
 
-        if(!$this->hasAccess(['role:all:view'])){
+        // if(!$this->hasAccess(['role:all:view'])){
 
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Access Denied',
-                'data'      => []
-            ]);
+        //     return response()->json([
+        //         'status'    => 0,
+        //         'message'   => 'Access Denied',
+        //         'data'      => []
+        //     ]);
 
-            //return view('access_denied');
-        }
+        // }
 
         $role_id    = (int) $role_id;
         
