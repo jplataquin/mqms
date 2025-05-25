@@ -33,8 +33,8 @@
             <div class="row mt-3">
                 <div class="col-lg-12 mb-3">
                     <div class="form-group">
-                        <label>Subject</label>
-                        <input type="text" id="subject" class="form-control"/>
+                        <label>Resource</label>
+                        <input type="text" id="resource" class="form-control"/>
                     </div>
                 </div>
             </div>
@@ -109,7 +109,7 @@
 <script type="module">
     import {$q} from '/adarna.js';
 
-    const subject             = $q('#subject').first();
+    const resource             = $q('#resource').first();
     const scope               = $q('#scope').first();
     const actions             = $q('.actions').items();
     const action_other        = $q('#action_other').first();
@@ -156,7 +156,7 @@
         }
 
         window.util.$post('/api/access_code/create',{
-            subject: subject.value,
+            subject: resource.value,
             scope: scope.value,
             actions: JSON.stringify(action_list),
         }).then(reply=>{

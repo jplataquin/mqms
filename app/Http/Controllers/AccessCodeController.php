@@ -51,12 +51,12 @@ class AccessCodeController extends Controller
 
         // }
 
-        $subject      = $request->input('subject');
+        $resource     = $request->input('resource');
         $scope        = $request->input('scope');
         $actions      = $request->input('actions');
 
         $validator1 = Validator::make($request->all(),[
-            'subject' => [
+            'resource' => [
                 'required',
             ],
             'scope' => [
@@ -76,8 +76,8 @@ class AccessCodeController extends Controller
             ]);
         }
 
-        $subect     = trim($subject);
-        $subject    = str_replace(' ', '_', $subject);
+        $resource     = trim($resource);
+        $resource    = str_replace(' ', '_', $resource);
         
         $actions    = json_decode($actions);
 
@@ -91,7 +91,7 @@ class AccessCodeController extends Controller
 
         foreach($actions as $action){
 
-            $access_code = strtolower($subject.':'.$scope.':'.$action->value);
+            $access_code = strtolower($resource.':'.$scope.':'.$action->value);
 
             if(trim($action->description) == ''){
                 return response()->json([
@@ -117,7 +117,7 @@ class AccessCodeController extends Controller
 
         foreach($actions as $action){
 
-            $access_code = strtolower($subject.':'.$scope.':'.$action->value);
+            $access_code = strtolower($resource.':'.$scope.':'.$action->value);
 
             $accessCode = new AccessCode();
 
