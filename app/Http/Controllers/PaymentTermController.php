@@ -13,7 +13,7 @@ class PaymentTermController extends Controller
 {
     public function create(){
 
-        if(!$this->hasAccess('payment_term:own:create')){
+        if(!$this->hasAccess('payment_term:all:create')){
             return view('access_denied');
         }
 

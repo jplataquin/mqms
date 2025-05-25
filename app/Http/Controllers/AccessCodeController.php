@@ -12,10 +12,10 @@ class AccessCodeController extends Controller
 {
     public function create(){
         
-        // if(!$this->hasAccess(['access_code:all:create'])){
+        if(!$this->hasAccess(['access_code:all:create'])){
 
-        //     return view('access_denied');
-        // }
+            return view('access_denied');
+        }
 
         return view('access_code/create');
     }
@@ -25,12 +25,11 @@ class AccessCodeController extends Controller
         $id = (int) $id;
 
         $accessCode = AccessCode::findOrFail($id);
-        
-            
-        // if(!$this->hasAccess(['access_code:all:view'])){
+                    
+        if(!$this->hasAccess(['access_code:all:view'])){
 
-        //     return view('access_denied');
-        // }
+            return view('access_denied');
+        }
 
         return view('access_code/display',$accessCode);
     }
@@ -41,15 +40,15 @@ class AccessCodeController extends Controller
 
     public function _create(Request $request){
             
-        // if(!$this->hasAccess(['access_code:all:create'])){
+        if(!$this->hasAccess(['access_code:all:create'])){
 
-        //     return response()->json([
-        //         'status'    => 0,
-        //         'message'   => 'Access Denied',
-        //         'data'      => []
-        //     ]);
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
 
-        // }
+        }
 
         $resource     = $request->input('resource');
         $scope        = $request->input('scope');
@@ -140,15 +139,15 @@ class AccessCodeController extends Controller
     public function _update(Request $request){
         
             
-        // if(!$this->hasAccess(['access_code:all:update'])){
+        if(!$this->hasAccess(['access_code:all:update'])){
 
-        //     return response()->json([
-        //         'status'    => 0,
-        //         'message'   => 'Access Denied',
-        //         'data'      => []
-        //     ]);
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
 
-        // }
+        }
 
         $id                  = (int) $request->input('id') ?? 0;
         $code                = $request->input('code') ?? '';
@@ -246,15 +245,15 @@ class AccessCodeController extends Controller
     public function _delete(Request $request){ 
          
             
-        // if(!$this->hasAccess(['access_code:all:delete'])){
+        if(!$this->hasAccess(['access_code:all:delete'])){
 
-        //     return response()->json([
-        //         'status'    => 0,
-        //         'message'   => 'Access Denied',
-        //         'data'      => []
-        //     ]);
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
 
-        // }
+        }
         
         $id = (int) $request->input('id');
 

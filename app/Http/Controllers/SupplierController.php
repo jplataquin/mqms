@@ -12,7 +12,7 @@ class SupplierController extends Controller
 {
     public function create(){
 
-        if(!$this->hasAccess('supplier:own:create')){
+        if(!$this->hasAccess('supplier:all:create')){
             return view('access_denied');
         }
 
@@ -64,7 +64,7 @@ class SupplierController extends Controller
 
     public function _create(Request $request){
 
-        if(!$this->hasAccess('supplier:own:create')){
+        if(!$this->hasAccess('supplier:all:create')){
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Access Denied',

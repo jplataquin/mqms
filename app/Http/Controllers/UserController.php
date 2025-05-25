@@ -18,7 +18,7 @@ class UserController extends Controller
     
     public function create(){
 
-        if(!$this->hasAccess('user:own:create')){
+        if(!$this->hasAccess('user:all:create')){
             return view('access_denied');
         }
 
@@ -27,7 +27,7 @@ class UserController extends Controller
 
     public function _create(Request $request){
         
-            if(!$this->hasAccess('user:own:create')){
+            if(!$this->hasAccess('user:all:create')){
                 return view('access_denied');
             }
 
@@ -97,11 +97,11 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
 
-        // if(!$this->hasAccess(['user:all:view'])){
+        if(!$this->hasAccess(['user:all:view'])){
 
-        //     return view('access_denied');
+            return view('access_denied');
 
-        // }
+        }
 
         $status_options = $user->statusOptions();
 
@@ -367,13 +367,13 @@ class UserController extends Controller
 
     public function _add_role(Request $request){
         
-        // if(!$this->hasAccess('user:all:add_user_role')){
-        //     return response()->json([
-        //         'status'    => 0,
-        //         'message'   => 'Access Denied',
-        //         'data'      => [] 
-        //     ]);
-        // }
+        if(!$this->hasAccess('user:all:add_user_role')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => [] 
+            ]);
+        }
 
         $role_id        = (int) $request->input('role_id');
         $user_id        = (int) $request->input('user_id');
@@ -420,13 +420,13 @@ class UserController extends Controller
 
     public function _remove_role(Request $request){
 
-        // if(!$this->hasAccess('user:all:remove_user_role')){
-        //     return response()->json([
-        //         'status'    => 0,
-        //         'message'   => 'Access Denied',
-        //         'data'      => [] 
-        //     ]);
-        // }
+        if(!$this->hasAccess('user:all:remove_user_role')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => [] 
+            ]);
+        }
         
 
         $role_id    = (int) $request->input('role_id');
@@ -464,14 +464,14 @@ class UserController extends Controller
 
     public function _roles($id){
         
-        // if(!$this->hasAccess(['user:all:view'])){
+        if(!$this->hasAccess(['user:all:view'])){
 
-        //     return response()->json([
-        //         'status'    => 0,
-        //         'message'   => 'Access Denied',
-        //         'data'      => []
-        //     ]);
-        // }
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         $id = (int) $id;
         

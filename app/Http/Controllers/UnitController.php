@@ -14,7 +14,7 @@ class UnitController extends Controller
 {
     public function create(){
 
-        if(!$this->hasAccess('unit:own:create')){
+        if(!$this->hasAccess('unit:all:create')){
             return view('access_denied');
         }
 
@@ -54,7 +54,7 @@ class UnitController extends Controller
 
     public function _create(Request $request){
 
-        if(!$this->hasAccess('unit:own:create')){
+        if(!$this->hasAccess('unit:all:create')){
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Access Denied',
