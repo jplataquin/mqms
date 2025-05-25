@@ -156,7 +156,7 @@
         }
 
         window.util.$post('/api/access_code/create',{
-            subject: resource.value,
+            resource: resource.value,
             scope: scope.value,
             actions: JSON.stringify(action_list),
         }).then(reply=>{
