@@ -142,7 +142,6 @@
     let secondaryContactNo     =  $q('#secondaryContactNo').first();
     let secondaryEmail         =  $q('#secondaryEmail').first();
     
-    let createBtn                   = $q('#createBtn').first();
     let searchBtn                   = $q('#searchBtn').first();
     let editBtn                     = $q('#editBtn').first();
     let updateBtn                   = $q('#updateBtn').first();
@@ -200,9 +199,9 @@
         window.util.navTo('/suppliers');
     }
 
-    createBtn.onclick = (e)=>{
-        window.util.navTo('/supplier/create');
-    }
+    // createBtn.onclick = (e)=>{
+    //     window.util.navTo('/supplier/create');
+    // }
 
     deleteBtn.onclick = (e)=>{
 
