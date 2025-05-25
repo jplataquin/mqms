@@ -33,7 +33,6 @@ class ComponentReviewController extends Controller
 
     public function _list(Request $request){
 
-        //todo check role
 
         $page               = (int) $request->input('page')                     ?? 1;
         $limit              = (int) $request->input('limit')                    ?? 0;
@@ -98,6 +97,10 @@ class ComponentReviewController extends Controller
     }
 
     public function display($contract_item_id, $component_id = null){
+
+        if(!$this->hasAccess('component:all:view')){
+            return view('access_denied');
+        }
 
         $contract_item_id = (int) $contract_item_id;
         $component_id     = (int) $component_id;
@@ -239,7 +242,13 @@ class ComponentReviewController extends Controller
 
     public function _approve(Request $request){
 
-        //todo check role
+        if(!$this->hasAccess('component:all:approve')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         $id = (int) $request->input('id') ?? 0;
 
@@ -295,7 +304,13 @@ class ComponentReviewController extends Controller
 
     public function _reject(Request $request){
 
-        //todo check role
+        if(!$this->hasAccess('component:all:reject')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         $id = (int) $request->input('id') ?? 0;
 
@@ -350,6 +365,14 @@ class ComponentReviewController extends Controller
     }
 
     public function _revert_to_pending(Request $request){
+
+        if(!$this->hasAccess('component:all:revert_to_pending')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         $id = (int) $request->input('id') ?? 0;
 

@@ -12,6 +12,12 @@ class AccessCodeController extends Controller
 {
     public function create(){
 
+        
+        if(!$this->hasAccess(['access_code:all:create'])){
+
+            return view('access_denied');
+        }
+
         return view('access_code/create');
     }
 
@@ -21,6 +27,12 @@ class AccessCodeController extends Controller
 
         $accessCode = AccessCode::findOrFail($id);
         
+            
+        if(!$this->hasAccess(['access_code:all:view'])){
+
+            return view('access_denied');
+        }
+
         return view('access_code/display',$accessCode);
     }
 
@@ -29,6 +41,16 @@ class AccessCodeController extends Controller
     }
 
     public function _create(Request $request){
+            
+        if(!$this->hasAccess(['access_code:all:create'])){
+
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+
+        }
 
         $subject      = $request->input('subject');
         $scope        = $request->input('scope');
@@ -118,6 +140,18 @@ class AccessCodeController extends Controller
 
     public function _update(Request $request){
         
+            
+        if(!$this->hasAccess(['access_code:all:update'])){
+
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+
+            //return view('access_code');
+        }
+
         $id                  = (int) $request->input('id') ?? 0;
         $code                = $request->input('code') ?? '';
         $description         = $request->input('description');
@@ -211,13 +245,24 @@ class AccessCodeController extends Controller
         ]);
     }
 
-    public function _delete(Request $request){
+    public function _delete(Request $request){ 
          
-        //Check role
-         $id = (int) $request->input('id');
+            
+        if(!$this->hasAccess(['access_code:all:delete'])){
+
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+
+            //return view('access_code');
+        }
+        
+        $id = (int) $request->input('id');
 
 
-         $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(),[
              'id' => [
                  'required',
                  'integer',

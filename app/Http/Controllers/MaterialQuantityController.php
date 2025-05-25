@@ -18,7 +18,14 @@ class MaterialQuantityController extends Controller
 
     public function _create(Request $request){
 
-        //Check role
+        if(!$this->hasAccess('material_quantity:own:create')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
+
 
         $component_item_id              = $request->input('component_item_id');
         $material_item_id               = $request->input('material_item_id');
@@ -194,22 +201,22 @@ class MaterialQuantityController extends Controller
         ];
     }
 
-    public function test_mq($id){
+    // public function test_mq($id){
 
         
-        $materialQuantity = MaterialQuantity::find($id);
+    //     $materialQuantity = MaterialQuantity::find($id);
 
-        if(!$materialQuantity){
-            return false;
-        }
+    //     if(!$materialQuantity){
+    //         return false;
+    //     }
 
-        print_r($materialQuantity);
+    //     print_r($materialQuantity);
 
-        $result = $this->check_affected_material_request(10000,$materialQuantity);
+    //     $result = $this->check_affected_material_request(10000,$materialQuantity);
 
-        echo '<br><br>';
-        print_r($result);
-    }
+    //     echo '<br><br>';
+    //     print_r($result);
+    // }
 
     public function _update(Request $request){
 
@@ -250,72 +257,40 @@ class MaterialQuantityController extends Controller
             ]);
         }
 
-        // //Get Component Item
-        // $component_item = $materialQuantity->ComponentItem;
+        $user = auth()->user();
 
-        
-  
-        // //Check if total entries is not more than component item quantity but ignore deleted and current row
-        // $entries = MaterialQuantity::where('component_item_id',$component_item->id)
-        // ->where('id','!=',$id) //Ignore current row being updated
-        // ->where('deleted_at',null) //Ignore deleted
-        // ->get();
-  
-        // $grand_total = 0;
+        if(!$this->hasAccess(['material_quantity:all:update'])){
 
-        // foreach($entries as $entry){
-        //     $grand_total = $grand_total + ($entry->quantity * $entry->equivalent);
-        // }
-          
-        // $grand_total = $grand_total + ($quantity * $equivalent);
+            if( !$this->hasAccess(['material_quantity:own:update']) ){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
 
-        // if($component_item->quantity < $grand_total){
-        //     return response()->json([
-        //         'status'    => 0,
-        //         'message'   => 'The Grand Total Quantity ('.$grand_total.') should not be more than Component Item Quantity ('.$component_item->quantity.')',
-        //         'data'      => []
-        //     ]);
-        // }
-        //--------------------------------------------
+                //return view('access_denied');
+            }
 
-        //Check if there are material request that has been affected by the change in quantity
-        //$check_affected = $this->check_affected_material_request($quantity,$materialQuantity);
+            if($materialQuantity->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
 
-        // if($check_affected->over_budget){
-        //     return response()->json([
-        //         'status'    => 0,
-        //         'message'   => 'There are "'.number_format($check_affected->total_approved_request,2).'" units of approved material request that already exists',
-        //         'data'      => $check_affected->mqr_ids
-        //     ]);
-        // }
-        //--------------------------------------------
+                //return view('access_denied');
+            }
+        }
         
         
-        $user_id = Auth::user()->id;
+        $user_id = $user->id;
 
-        // //No change do nothing
-        // if($materialQuantity->quantity == $quantity && $materialQuantity == $equivalent){
-        //     return response()->json([
-        //         'status'    => 1,
-        //         'message'   => '',
-        //         'data'      => []
-        //     ]);
-        // }
-
-        //$materialQuantity->quantity               = round($quantity,2);
         $materialQuantity->equivalent             = $equivalent;
         $materialQuantity->updated_by             = $user_id;
 
         $materialQuantity->save();
 
-        // $component = $materialQuantity->componentItem->component;
         
-        // //Todo enclosed in a transaction
-        //  if($component->status != 'PEND'){
-        //      $component->status = 'PEND';
-        //      $component->save();
-        //  }
-
          return response()->json([
             'status'    => 1,
             'message'   => '',
@@ -330,7 +305,6 @@ class MaterialQuantityController extends Controller
 
         //Check role
         $id = (int) $request->input('id');
-
 
         $validator = Validator::make($request->all(),[
             'id' => [
@@ -356,6 +330,31 @@ class MaterialQuantityController extends Controller
                 'message'   => 'Record not found',
                 'data'      => []
             ]);
+        }
+
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['material_quantity:all:delete'])){
+
+            if( !$this->hasAccess(['material_quantity:own:delete']) ){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+                //return view('access_denied');
+            }
+
+            if($materialQuantity->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+                //return view('access_denied');
+            }
         }
 
         
@@ -402,6 +401,31 @@ class MaterialQuantityController extends Controller
         $id = (int) $id;
 
         $materialQuantity = MaterialQuantity::findOrFail($id);
+
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['material_quantity:all:view'])){
+
+            if( !$this->hasAccess(['material_quantity:own:view']) ){
+                // return response()->json([
+                //     'status'    => 0,
+                //     'message'   => 'Access Denied',
+                //     'data'      => []
+                // ]);
+
+                return view('access_denied');
+            }
+
+            if($materialQuantity->created_by != $user->id){
+                // return response()->json([
+                //     'status'    => 0,
+                //     'message'   => 'Access Denied',
+                //     'data'      => []
+                // ]);
+
+                return view('access_denied');
+            }
+        }
 
         $material_item_id   = $materialQuantity->material_item_id;
         $component_item_id  = $materialQuantity->component_item_id;

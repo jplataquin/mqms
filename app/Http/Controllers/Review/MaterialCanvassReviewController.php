@@ -22,6 +22,7 @@ use App\Http\Controllers\Controller;
 
 class MaterialCanvassReviewController extends Controller
 {
+
     public function list(){
 
         $projects = Project::orderBy('name','ASC')->where('status','=','ACTV')->get();
@@ -32,8 +33,6 @@ class MaterialCanvassReviewController extends Controller
         ]);
     }
 
- 
- 
     public function _list(Request $request){
 
         //todo check role
@@ -96,7 +95,6 @@ class MaterialCanvassReviewController extends Controller
         ]);
     }
     
-
     public function _test_unavailable($id){
 
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($id);
@@ -122,6 +120,13 @@ class MaterialCanvassReviewController extends Controller
         
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($id);
 
+        if(!$this->hasAccess('material_canvass:all:view')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         $project                = $materialQuantityRequest->Project;
         $section                = $materialQuantityRequest->Section;
@@ -197,6 +202,14 @@ class MaterialCanvassReviewController extends Controller
 
     public function _approve(Request $request){
 
+        if(!$this->hasAccess('material_canvass:all:approve')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
+
         $id = (int) $request->input('id');
 
         $materialCanvass = MaterialCanvass::find($id);
@@ -234,6 +247,14 @@ class MaterialCanvassReviewController extends Controller
     }
 
     public function _reject(Request $request){
+        
+        if(!$this->hasAccess('material_canvass:all:reject')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         $id = (int) $request->input('id');
 
@@ -271,6 +292,4 @@ class MaterialCanvassReviewController extends Controller
         ]);
     }
 
-  
-  
 }

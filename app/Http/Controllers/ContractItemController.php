@@ -21,6 +21,20 @@ class ContractItemController extends Controller
 
         $contract_item = ContractItem::findOrFail($id);
         
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['contract_item:all:view'])){
+
+            if( !$this->hasAccess(['contract_item:own:view']) ){
+                return view('access_denied');
+            }
+
+            if($contract_item->created_by != $user->id){
+                return view('access_denied');
+            }
+        }
+
+        
         $section_id         = $contract_item->section_id;
         $contract_item_id   = $contract_item->id;
         
@@ -28,6 +42,10 @@ class ContractItemController extends Controller
     }
     
     public function create($section_id){
+
+        if(!$this->hasAccess('contract_item:own:create')){
+            return view('access_denied');
+        }
 
         $section_id = (int) $section_id;
 
@@ -52,6 +70,19 @@ class ContractItemController extends Controller
         $section        = $contract_item->Section;
         $project        = $section->project;
         
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['contract_item:all:view'])){
+
+            if( !$this->hasAccess(['contract_item:own:view']) ){
+                return view('access_denied');
+            }
+
+            if($contract_item->created_by != $user->id){
+                return view('access_denied');
+            }
+        }
+
 
         $components = $contract_item->components()->orderBy('id','ASC')->get();
         
@@ -83,25 +114,17 @@ class ContractItemController extends Controller
         return view('contract_item/list');
     }
 
-    // public function print($id){
-        
-    //     $section = Section::findOrFail($id);
-
-    //     $components = $section->Components;
-
-    //     $unit_options = Unit::toOptions();
-      
-    //     return view('section/print',[
-    //         'section'          => $section,
-    //         'components'       => $components,
-    //         'unit_options'     => $unit_options,
-    //     ]);
-    // }
 
 
     public function _create(Request $request){
 
-        //todo check role
+        if(!$this->hasAccess('contract_item:own:create')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         $item_code                = $request->input('item_code') ?? '';
         $description              = $request->input('description') ?? '';
@@ -369,6 +392,29 @@ class ContractItemController extends Controller
             ]);
         }
 
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['contract_item:all:update'])){
+
+            if( !$this->hasAccess(['contract_item:own:update']) ){
+                 return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+
+            if($contract_item->created_by != $user->id){
+                
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+        }
+
+
         $contract_item->item_code               = $item_code;
         $contract_item->description             = $description;
         $contract_item->item_type               = $item_type;
@@ -491,6 +537,29 @@ class ContractItemController extends Controller
                  'data'      => []
              ]);
          }
+
+
+        if(!$this->hasAccess(['contract_item:all:delete'])){
+
+            if( !$this->hasAccess(['contract_item:own:delete']) ){
+                 return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+
+            if($contract_item->created_by != $user->id){
+                
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+        }
+
+
          
          if(!$contract_item->delete()){
             return response()->json([

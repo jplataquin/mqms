@@ -14,6 +14,10 @@ class ProjectController extends Controller
 {
     public function create(){
 
+        if(!$this->hasAccess('project:own:create')){
+            return view('access_denied');
+        }
+
         return view('project/create');
     }
 
@@ -231,9 +235,7 @@ class ProjectController extends Controller
 
     public function _list(Request $request){
 
-        //todo check role
-
-
+      
         $page       = (int) $request->input('page')     ?? 1;
         $limit      = (int) $request->input('limit')    ?? 10;
         $orderBy    = $request->input('order_by')       ?? 'id';
@@ -294,6 +296,14 @@ class ProjectController extends Controller
 
         $project = Project::find($id);
 
+        if(!$project){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Record not found',
+                'data'      => []
+            ]);
+        }
+
         $user = auth()->user();
 
         if(!$this->hasAccess(['project:all:delete'])){
@@ -340,45 +350,5 @@ class ProjectController extends Controller
        ]);
     }
 
-    /*
-    public function _request_void(Request $request){
-       
-        $id = (int) $request->input('id');
-
-        $validator = Validator::make($request->all(),[
-            'id' => [
-                'required',
-                'integer',
-            ]
-        ]);
-
-        if($validator->fails()){
-            
-            return response()->json([
-                'status'    => -2,
-                'message'   => 'Failed Validation',
-                'data'      => $validator->messages()
-            ]);
-        }
-
-        $project = Project::find($id);
-
-        if(!$project){
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Record not found',
-                'data'      => []
-            ]);
-        }
-        
-       
-        $project->status = 'REVO';
-        $project->save();
-
-        return response()->json([
-           'status'    => 1,
-           'message'   => '',
-           'data'      => []
-       ]);
-    }*/
+   
 }

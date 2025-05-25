@@ -13,8 +13,13 @@ class MaterialItemController extends Controller
 {
     public function create(Request $request){
 
+        if(!$this->hasAccess('material_item:own:create')){
+            return view('access_denied');
+        }
+
         $materialGroup = new materialGroup();
 
+        
         $back               = $request->input('b');
         $material_group_id  = (int) $request->input('material_group_id');
 
@@ -35,6 +40,31 @@ class MaterialItemController extends Controller
 
         $materialItem = MaterialItem::findOrFail($id);
         
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['material_item:all:view'])){
+
+            if( !$this->hasAccess(['material_item:own:view']) ){
+                // return response()->json([
+                //     'status'    => 0,
+                //     'message'   => 'Access Denied',
+                //     'data'      => []
+                // ]);
+
+                return view('access_denied');
+            }
+
+            if($materialItem->created_by != $user->id){
+                // return response()->json([
+                //     'status'    => 0,
+                //     'message'   => 'Access Denied',
+                //     'data'      => []
+                // ]);
+
+                return view('access_denied');
+            }
+        }
+
         $materialGroup = new materialGroup();
 
         $materialGroupRows = $materialGroup::orderBy('name','ASC')->get();
@@ -46,10 +76,10 @@ class MaterialItemController extends Controller
         ]);
     }
 
-    public function edit($id){
+    // public function edit($id){
 
-        return view('material_item/edit');
-    }
+    //     return view('material_item/edit');
+    // }
 
     public function list(){
 
@@ -58,7 +88,13 @@ class MaterialItemController extends Controller
 
     public function _create(Request $request){
 
-        //todo check role
+        if(!$this->hasAccess('material_item:own:create')){
+            return response()->json([
+                'status' => 0,
+                'message' => 'Access Denied',
+                'data' => []
+            ]);
+        }
 
         $material_group_id              = $request->input('material_group_id') ?? 0;
         $name                           = $request->input('name') ?? '';
@@ -118,8 +154,6 @@ class MaterialItemController extends Controller
 
     public function _update(Request $request){
 
-        //todo check role
-
         $id                             = $request->input('id') ?? 0;
         $material_group_id              = $request->input('material_group_id') ?? 0;
         $name                           = $request->input('name') ?? '';
@@ -155,7 +189,6 @@ class MaterialItemController extends Controller
             ]);
         }
 
-        $user_id      = Auth::user()->id;
         $materialItem = MaterialItem::find($id);
 
         if(!$materialItem){
@@ -168,11 +201,34 @@ class MaterialItemController extends Controller
             ]);
         }
 
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['material_item:all:update'])){
+
+            if( !$this->hasAccess(['material_item:own:update']) ){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+            }
+
+            if($materialItem->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+            }
+        }
+
         $materialItem->material_group_id            = $material_group_id;
         $materialItem->name                         = $name;
         $materialItem->specification_unit_packaging = $specification_unit_packaging;
         $materialItem->brand                        = $brand;
-        $materialItem->updated_by                   = $user_id;
+        $materialItem->updated_by                   = $user->id;
 
         $materialItem->save();
 
@@ -227,6 +283,6 @@ class MaterialItemController extends Controller
     }
 
     public function _delete(Request $request){
-
+        //Todo
     }
 }

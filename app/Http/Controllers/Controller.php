@@ -25,8 +25,11 @@ class Controller extends BaseController
   
     }
 
-    protected function hasAccess(Array $codes){
+    protected function hasAccess($codes){
 
+        if(!is_array($codes)){
+            $codes = [$codes];
+        }
 
         foreach($codes as $code){
 

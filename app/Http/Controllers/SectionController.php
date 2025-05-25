@@ -20,6 +20,11 @@ class SectionController extends Controller
 
     public function create($project_id){
 
+        
+        if(!$this->hasAccess('section:own:create')){
+            return view('access_denied');
+        }
+
         $project_id = (int) $project_id;
 
         $project = Project::findOrFail($project_id);
@@ -31,9 +36,23 @@ class SectionController extends Controller
 
     public function display($id,Request $request){
 
+         
         $id = (int) $id;
 
         $section        = Section::findOrFail($id);
+
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['section:all:view'])){
+
+            if( !$this->hasAccess(['section:own:view']) ){
+                return view('access_denied');
+            }
+
+            if($section->created_by != $user->id){
+                return view('access_denied');
+            }
+        }
 
         $project        = $section->project;
 
@@ -58,18 +77,21 @@ class SectionController extends Controller
             'unit_options'     => $unit_options
         ]);
     }
-
-
+  
     public function list(){
 
         return view('project/list');
     }
 
-  
-
     public function _create(Request $request){
 
-        //todo check role
+        if(!$this->hasAccess('section:own:create')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => $validator->messages()
+            ]);
+        }
 
         $name                   = $request->input('name') ?? '';
         $gross_total_amount     = $request->input('gross_total_amount') ?? 0;
@@ -148,6 +170,32 @@ class SectionController extends Controller
             ]);
         }
 
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['section:all:view'])){
+
+            if( !$this->hasAccess(['section:own:view']) ){
+                //return view('access_denied');
+
+                 return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+
+            if($section->created_by != $user->id){
+                //return view('access_denied');
+
+                
+                 return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+        }
+
         $project_id = $section->project_id;
 
         $validator = Validator::make($request->all(),[
@@ -205,7 +253,6 @@ class SectionController extends Controller
 
     public function _list(Request $request){
 
-        //todo check role
 
         $project_id = (int) $request->input('project_id') ?? 0;
         $page       = (int) $request->input('page')     ?? 1;
@@ -274,6 +321,33 @@ class SectionController extends Controller
                  'data'      => []
              ]);
          }
+
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['section:all:delete'])){
+
+            if( !$this->hasAccess(['section:own:delete']) ){
+                //return view('access_denied');
+
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+
+            if($section->created_by != $user->id){
+                //return view('access_denied');
+
+                
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+        }
+
          
          if(!$section->delete()){
             return response()->json([

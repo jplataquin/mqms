@@ -245,7 +245,20 @@ class PurchaseOrderController extends Controller
 
     public function display($id){
         
-        $purchaseOrder           = PurchaseOrder::findOrFail($id);
+        $purchaseOrder = PurchaseOrder::findOrFail($id);
+        $user          = auth()->user();
+
+        if(!$this->hasAccess(['purchase_order:all:view'])){
+
+            if( !$this->hasAccess(['purchase_order:own:view']) ){
+                return view('access_denied');
+            }
+
+            if($purchaseOrder->created_by != $user->id){
+               return view('access_denied');
+            }
+        }
+        
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($purchaseOrder->material_quantity_request_id);
 
         $project                = $materialQuantityRequest->Project;
@@ -309,6 +322,10 @@ class PurchaseOrderController extends Controller
 
     public function create($id){
         
+        if(!$this->hasAccess(['purchase_order:own:create'])){
+            return view('access_denied');
+        }
+
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($id);
 
         if($materialQuantityRequest->status != 'APRV'){
@@ -417,6 +434,14 @@ class PurchaseOrderController extends Controller
     }
 
     public function _create(Request $request){
+
+        if(!$this->hasAccess(['purchase_order:own:create'])){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         $material_quantity_request_id = (int) $request->input('material_quantity_request_id');
         $supplier_id                  = (int) $request->input('supplier_id');
@@ -663,6 +688,30 @@ class PurchaseOrderController extends Controller
             ]);
         }
 
+
+        
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['purchase_order:all:update'])){
+
+            if( !$this->hasAccess(['purchase_order:own:update']) ){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+
+            if($purchase_order->created_by != $user->id){
+                 return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+        }
+
+
         if($purchase_order->status != 'DRFT'){
             return response()->json([
                 'status'    => 0,
@@ -671,7 +720,8 @@ class PurchaseOrderController extends Controller
             ]);
         }
 
-        $purchase_order->status = 'PEND';
+        $purchase_order->status     = 'PEND';
+        $purchase_order->updated_by = $user->id; 
 
         $purchase_order->save();
 
@@ -682,11 +732,8 @@ class PurchaseOrderController extends Controller
         ]);
     }
 
-
-
     public function _delete(Request $request){
 
-        //todo check role
 
         $id = (int) $request->input('id');
 
@@ -699,6 +746,27 @@ class PurchaseOrderController extends Controller
                 'message'   => 'Record not found',
                 'data'      => []
             ]);
+        }
+
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['purchase_order:all:delete'])){
+
+            if( !$this->hasAccess(['purchase_order:own:delete']) ){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+
+            if($purchaseOrder->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
         }
 
         if($purchaseOrder->status != 'PEND' && $purchaseOrder->status != 'DRFT'){
@@ -747,6 +815,19 @@ class PurchaseOrderController extends Controller
 
         $purchaseOrder           = PurchaseOrder::findOrFail($id);
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($purchaseOrder->material_quantity_request_id);
+
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['purchase_order:all:view'])){
+
+            if( !$this->hasAccess(['purchase_order:own:view']) ){
+                return view('access_denied');
+            }
+
+            if($purchaseOrder->created_by != $user->id){
+                return view('access_denied');
+            }
+        }
 
         if($purchaseOrder->status != 'APRV'){
             return abort(404);
@@ -836,7 +917,6 @@ class PurchaseOrderController extends Controller
 
     }
 
-
     public function _request_void(Request $request){
 
         //todo check role
@@ -852,6 +932,27 @@ class PurchaseOrderController extends Controller
                 'message'   => 'Record not found',
                 'data'      => []
             ]);
+        }
+
+        $user = auth()->user();
+        
+        if(!$this->hasAccess(['purchase_order:all:request_void'])){
+
+            if( !$this->hasAccess(['purchase_order:own:request_void']) ){
+                 return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+
+            if($purchaseOrder->created_by != $user->id){
+                 return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
         }
 
         if($purchaseOrder->status != 'APRV'){

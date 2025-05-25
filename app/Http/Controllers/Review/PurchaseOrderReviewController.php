@@ -26,6 +26,7 @@ use App\Http\Controllers\Controller;
 
 class PurchaseOrderReviewController extends Controller
 {
+
     public function list(){
 
         $projects = Project::orderBy('name','ASC')->where('status','=','ACTV')->get();
@@ -36,12 +37,9 @@ class PurchaseOrderReviewController extends Controller
         ]);
     }
 
- 
- 
     public function _list(Request $request){
 
-        //todo check role
-
+   
         $page            = (int) $request->input('page')     ?? 1;
         $limit           = (int) $request->input('limit')    ?? 10;
         $project_id      = (int) $request->input('project_id')  ?? 0;
@@ -98,6 +96,10 @@ class PurchaseOrderReviewController extends Controller
         
         $purchaseOrder           = PurchaseOrder::findOrFail($id);
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($purchaseOrder->material_quantity_request_id);
+
+        if(!$this->hasAccess('purchase_order:all:view')){
+            return view('access_denied');
+        }
 
         $project                = $materialQuantityRequest->Project;
         $section                = $materialQuantityRequest->Section;
@@ -180,9 +182,15 @@ class PurchaseOrderReviewController extends Controller
         ]);
     }
 
-   
-
     public function _approve(Request $request){
+
+        if(!$this->hasAccess('purchase_order:all:approve')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         $id = (int) $request->input('id');
 
@@ -196,7 +204,7 @@ class PurchaseOrderReviewController extends Controller
                 'data'      => []
             ]);
         }
-
+        
         if($purchaseOrder->status != 'PEND'){
             return response()->json([
                 'status'    => 0,
@@ -253,6 +261,14 @@ class PurchaseOrderReviewController extends Controller
     }
 
     public function _reject(Request $request){
+
+         if(!$this->hasAccess('purchase_order:all:reject')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         $id = (int) $request->input('id');
 
@@ -324,7 +340,13 @@ class PurchaseOrderReviewController extends Controller
     
     public function _void(Request $request){
 
-        //todo check role
+        if(!$this->hasAccess('purchase_order:all:void')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         $id = (int) $request->input('id');
 
@@ -394,7 +416,13 @@ class PurchaseOrderReviewController extends Controller
 
     public function _reject_void(Request $request){
 
-        //todo check role
+        if(!$this->hasAccess('purchase_order:all:reject_void_request')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         $id = (int) $request->input('id');
 

@@ -11,7 +11,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\UserRole;
 
-class UserRoleController extends Controller
+class _UserRoleController extends Controller
 {
     
     public function display($id){

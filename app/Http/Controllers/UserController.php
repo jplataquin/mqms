@@ -17,12 +17,20 @@ class UserController extends Controller
 {
     
     public function create(){
+
+        if(!$this->hasAccess('user:own:create')){
+            return view('access_denied');
+        }
+
         return view('user/create');
     }
 
     public function _create(Request $request){
-         
-            //todo check role
+        
+            if(!$this->hasAccess('user:own:create')){
+                return view('access_denied');
+            }
+
 
            $name        = $request->input('name') ?? '';
            $email       = $request->input('email') ?? '';
@@ -87,6 +95,13 @@ class UserController extends Controller
 
         $id = (int) $id;
         $user = User::findOrFail($id);
+
+
+        if(!$this->hasAccess(['user:all:view'])){
+
+            return view('access_denied');
+
+        }
 
         $status_options = $user->statusOptions();
 
@@ -242,7 +257,6 @@ class UserController extends Controller
            }
            
 
-           $user_id = Auth::user()->id;
 
            $user = User::find($id);
 
@@ -253,6 +267,18 @@ class UserController extends Controller
                     'data'      => []
                 ]);
            }
+
+
+            if(!$this->hasAccess(['user:all:reset_user_password'])){
+
+                 return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+            }
+
 
            $hash = Hash::make($password);
            
@@ -279,7 +305,14 @@ class UserController extends Controller
     }
 
     public function _enable_reset_password(Request $request){
-        //todo check role
+       
+        if(!$this->hasAccess('user:all:force_user_to_reset_password')){
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Access Denied',
+                'data'    => []
+            ]);
+        }
 
         $id = (int) $request->input('id') ?? 0;
 
@@ -334,6 +367,14 @@ class UserController extends Controller
 
     public function _add_role(Request $request){
         
+        if(!$this->hasAccess('user:all:add_user_role')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => [] 
+            ]);
+        }
+
         $role_id        = (int) $request->input('role_id');
         $user_id        = (int) $request->input('user_id');
 
@@ -379,6 +420,15 @@ class UserController extends Controller
 
     public function _remove_role(Request $request){
 
+        if(!$this->hasAccess('user:all:remove_user_role')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => [] 
+            ]);
+        }
+        
+
         $role_id    = (int) $request->input('role_id');
         $user_id    = (int) $request->input('user_id');
 
@@ -413,6 +463,15 @@ class UserController extends Controller
     }
 
     public function _roles($id){
+        
+        if(!$this->hasAccess(['user:all:view'])){
+
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         $id = (int) $id;
         

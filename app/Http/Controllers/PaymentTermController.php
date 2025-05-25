@@ -13,14 +13,23 @@ class PaymentTermController extends Controller
 {
     public function create(){
 
+        if(!$this->hasAccess('payment_term:own:create')){
+            return view('access_denied');
+        }
+
         return view('payment_term/create');
     }
 
     public function display($id){
 
+        if(!$this->hasAccess('payment_term:all:view')){
+            return view('access_denied');
+        }
+
         $id = (int) $id;
 
         $paymentTerm = PaymentTerm::findOrFail($id);
+
 
         return view('payment_term/display',[
             'paymentTerm' => $paymentTerm
@@ -36,7 +45,13 @@ class PaymentTermController extends Controller
 
     public function _create(Request $request){
 
-        //todo check role
+        if(!$this->hasAccess('payment_term:all:create')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         $text   = $request->input('text') ?? '';
 
@@ -78,7 +93,13 @@ class PaymentTermController extends Controller
 
     public function _update(Request $request){
 
-        //todo check role
+        if(!$this->hasAccess('payment_term:all:update')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         $id       = (int) $request->input('id') ?? 0;
         $text     = $request->input('text') ?? '';
@@ -169,6 +190,14 @@ class PaymentTermController extends Controller
     }
 
     public function _delete(Request $request){
+
+        if(!$this->hasAccess('payment_term:all:delete')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         $id = (int) $request->input('id');
 

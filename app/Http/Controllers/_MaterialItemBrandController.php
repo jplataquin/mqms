@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 
-class MaterialItemBrandController extends Controller
+class _MaterialItemBrandController extends Controller
 {
     
     public function list(Request $request,$material_item_id){

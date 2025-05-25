@@ -1267,25 +1267,45 @@ class MaterialQuantityRequestController extends Controller
     }
 
     public function _revert_to_pending(Request $request){
-
+        
         $id = (int) $request->input('id') ?? 0;
 
         $material_quantity_request = MaterialQuantityRequest::find($id);
 
         if(!$material_quantity_request){
-            return [
+            return response()->json([
                 'status'    => 0,
                 'message'   => 'Record not found',
                 'data'      => []
-            ];
+            ]);
         }
 
         if($material_quantity_request->status != 'APRV'){
-            return [
+            return response()->json([
                 'status'    => 0,
                 'message'   => 'Material Request is not in Approved status',
                 'data'      => []
-            ];
+            ]);
+        }
+
+
+        if(!$this->hasAccess(['material_request:all:revert_to_pending'])){
+
+            if( !$this->hasAccess(['material_request:own:revert_to_pending']) ){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+
+            if($materialQuantityRequest->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
         }
 
         $count_aprv_po = $material_quantity_request->PurchaseOrder()
@@ -1293,11 +1313,11 @@ class MaterialQuantityRequestController extends Controller
         ->whereIn('status',['APRV','PEND'])->count();
 
         if($count_aprv_po){
-            return [
+            return response()->json([
                 'status'    => 0,
                 'message'   => 'Record dependency issue, this Material Request has (APRV,REJC) Purchase Order(s) that are dependent',
                 'data'      => []
-            ];
+            ]);
         }
 
         $user_id    = Auth::user()->id;

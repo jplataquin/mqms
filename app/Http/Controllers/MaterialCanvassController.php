@@ -40,8 +40,6 @@ class MaterialCanvassController extends Controller
  
     public function _list(Request $request){
 
-        //todo check role
-
         $page       = (int) $request->input('page')     ?? 1;
         $limit      = (int) $request->input('limit')    ?? 10;
         $project_id = (int) $request->input('project_id')  ?? 0;
@@ -97,6 +95,36 @@ class MaterialCanvassController extends Controller
     public function display($id){
         
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($id);
+
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['material_canvass:all:view'])){
+
+            return view('access_denied');
+        }
+
+        if(!$this->hasAccess(['material_request:all:view'])){
+
+            if( !$this->hasAccess(['material_request:own:view']) ){
+                // return response()->json([
+                //     'status'    => 0,
+                //     'message'   => 'Access Denied',
+                //     'data'      => []
+                // ]);
+
+                return view('access_denied');
+            }
+
+            if($materialQuantityRequest->created_by != $user->id){
+                // return response()->json([
+                //     'status'    => 0,
+                //     'message'   => 'Access Denied',
+                //     'data'      => []
+                // ]);
+
+                return view('access_denied');
+            }
+        }
 
         if($materialQuantityRequest->status != 'APRV'){
             return abort(404);
@@ -169,6 +197,36 @@ class MaterialCanvassController extends Controller
     public function print($id){
         
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($id);
+
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['material_canvass:all:view'])){
+
+            return view('access_denied');
+        }
+
+        if(!$this->hasAccess(['material_request:all:view'])){
+
+            if( !$this->hasAccess(['material_request:own:view']) ){
+                // return response()->json([
+                //     'status'    => 0,
+                //     'message'   => 'Access Denied',
+                //     'data'      => []
+                // ]);
+
+                return view('access_denied');
+            }
+
+            if($materialQuantityRequest->created_by != $user->id){
+                // return response()->json([
+                //     'status'    => 0,
+                //     'message'   => 'Access Denied',
+                //     'data'      => []
+                // ]);
+
+                return view('access_denied');
+            }
+        }
 
         if($materialQuantityRequest->status != 'APRV'){
             return abort(404);
@@ -259,6 +317,14 @@ class MaterialCanvassController extends Controller
 
     public function _create(Request $request){
         
+        if(!$this->hasAccess('material_canvass')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
+
         $material_quantity_request_id = (int) $request->input('material_quantity_request_id');
 
         
@@ -403,7 +469,6 @@ class MaterialCanvassController extends Controller
         ]);
     }
 
-
     public function _delete(Request $request){
 
         $id = (int) $request->input('id');
@@ -417,6 +482,28 @@ class MaterialCanvassController extends Controller
                 'message'   => 'Record not found',
                 'data'      => []
             ]);
+        }
+
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['material_canvass:all:delete'])){
+
+            if( !$this->hasAccess(['material_canvass:own:delete']) ){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+            }
+
+            if($materialCanvass->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
         }
 
         if($materialCanvass->status == 'APRV' || $materialCanvass->status == 'VOID'){
@@ -451,6 +538,29 @@ class MaterialCanvassController extends Controller
                 'message'   => 'Record not found',
                 'data'      => []
             ]);
+        }
+
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['material_canvass:all:void'])){
+
+            if( !$this->hasAccess(['material_canvass:own:void']) ){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+            }
+
+            if($materialCanvass->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+            }
         }
 
         if($materialCanvass->status != 'APRV'){

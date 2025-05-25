@@ -14,6 +14,10 @@ class UnitController extends Controller
 {
     public function create(){
 
+        if(!$this->hasAccess('unit:own:create')){
+            return view('access_denied');
+        }
+
         return view('unit/create');
     }
 
@@ -23,6 +27,19 @@ class UnitController extends Controller
 
         $unit = Unit::findOrFail($id);
 
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['unit:all:view'])){
+
+            if( !$this->hasAccess(['unit:own:view']) ){
+                return view('access_denied');
+            }
+
+            if($unit->created_by != $user->id){
+                return view('access_denied');
+            }
+        }
+        
         return view('unit/display',[
             'unit' => $unit
         ]);
@@ -37,7 +54,13 @@ class UnitController extends Controller
 
     public function _create(Request $request){
 
-        //todo check role
+        if(!$this->hasAccess('unit:own:create')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => [] 
+            ]);
+        }
 
         $text   = $request->input('text') ?? '';
 
@@ -79,8 +102,6 @@ class UnitController extends Controller
 
     public function _update(Request $request){
 
-        //todo check role
-
         $id       = (int) $request->input('id') ?? 0;
         $text     = $request->input('text') ?? '';
         
@@ -105,7 +126,6 @@ class UnitController extends Controller
             ]);
         }
 
-        $user_id = Auth::user()->id;
         $unit    = Unit::find($id);
 
         if(!$unit){
@@ -116,8 +136,31 @@ class UnitController extends Controller
             ]);
         }
 
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['unit:all:view'])){
+
+            if( !$this->hasAccess(['unit:own:view']) ){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+            }
+
+            if($unit->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+            }
+        }
+
         $unit->text                         = $text;
-        $unit->updated_by                   = $user_id;
+        $unit->updated_by                   = $user->id;
 
         $unit->save();
 
@@ -133,9 +176,6 @@ class UnitController extends Controller
     }
 
     public function _list(Request $request){
-
-        //todo check role
-
 
         $page       = (int) $request->input('page')     ?? 1;
         $limit      = (int) $request->input('limit')    ?? 10;
@@ -171,7 +211,6 @@ class UnitController extends Controller
 
         $id = (int) $request->input('id');
 
-
         $validator = Validator::make($request->all(),[
             'id' => [
                 'required',
@@ -198,13 +237,36 @@ class UnitController extends Controller
             ]);
         }
 
-        $user_id = Auth::user()->id;
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['unit:all:view'])){
+
+            if( !$this->hasAccess(['unit:own:view']) ){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+                //return view('access_denied');
+            }
+
+            if($unit->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+                //return view('access_denied');
+            }
+        }
 
         DB::beginTransaction();
 
         try {
 
-            $unit->deleted_by = $user_id;
+            $unit->deleted_by = $user->id;
             
             $unit->save();
 

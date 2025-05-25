@@ -12,6 +12,10 @@ class SupplierController extends Controller
 {
     public function create(){
 
+        if(!$this->hasAccess('supplier:own:create')){
+            return view('access_denied');
+        }
+
         return view('supplier/create');
     }
 
@@ -20,6 +24,31 @@ class SupplierController extends Controller
         $id = (int) $id;
 
         $supplier = Supplier::findOrFail($id);
+
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['supplier:all:view'])){
+
+            if( !$this->hasAccess(['supplier:own:view']) ){
+                // return response()->json([
+                //     'status'    => 0,
+                //     'message'   => 'Access Denied',
+                //     'data'      => []
+                // ]);
+
+                return view('access_denied');
+            }
+
+            if($supplier->created_by != $user->id){
+                // return response()->json([
+                //     'status'    => 0,
+                //     'message'   => 'Access Denied',
+                //     'data'      => []
+                // ]);
+
+                return view('access_denied');
+            }
+        }
 
         return view('supplier/display',[
             'supplier' => $supplier
@@ -35,7 +64,13 @@ class SupplierController extends Controller
 
     public function _create(Request $request){
 
-        //todo check role
+        if(!$this->hasAccess('supplier:own:create')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         //TODO add city and status
 
@@ -80,7 +115,7 @@ class SupplierController extends Controller
             ]);
         }
 
-        $user_id = Auth::user()->id;
+        $user_id = $user->id;
 
         $supplier = new Supplier();
 
@@ -109,7 +144,6 @@ class SupplierController extends Controller
 
     public function _update(Request $request){
 
-        //todo check role
         //Todo add city and status;
         $id                         = (int) $request->input('id') ?? 0;
         $name                       = $request->input('name') ?? '';
@@ -158,7 +192,6 @@ class SupplierController extends Controller
             ]);
         }
 
-        $user_id = Auth::user()->id;
         $supplier = Supplier::find($id);
 
         if(!$supplier){
@@ -171,6 +204,31 @@ class SupplierController extends Controller
             ]);
         }
 
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['supplier:all:update'])){
+
+            if( !$this->hasAccess(['supplier:own:update']) ){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+                //return view('access_denied');
+            }
+
+            if($supplier->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+                //return view('access_denied');
+            }
+        }
+
         $supplier->name                               = $name;
         $supplier->address                            = $address;
         $supplier->primary_contact_no                 = $primary_contact_no;
@@ -179,7 +237,7 @@ class SupplierController extends Controller
         $supplier->secondary_contact_no               = $secondary_contact_no;
         $supplier->secondary_email                    = $secondary_email;
         $supplier->secondary_contact_person           = $secondary_contact_person;
-        $supplier->updated_by                         = $user_id;
+        $supplier->updated_by                         = $user->id;
 
         $supplier->save();
 
@@ -260,7 +318,31 @@ class SupplierController extends Controller
             ]);
         }
         
-       
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['supplier:all:delete'])){
+
+            if( !$this->hasAccess(['supplier:own:delete']) ){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+                //return view('access_denied');
+            }
+
+            if($supplier->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+                //return view('access_denied');
+            }
+        }
+
         if(!$supplier->delete()){
            
            return response()->json([

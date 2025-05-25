@@ -18,16 +18,18 @@ use App\Http\Controllers\Controller;
 
 class MaterialQuantityRequestReviewController extends Controller
 {
-    public function create(){
 
-        return view('access_code/create');
-    }
 
     public function display($id){
 
+        
         $id = (int) $id;
 
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($id);
+
+        if(!$this->hasAccess('material_request:all:view')){
+            return view('access_denied');
+        }
 
         $project         = $materialQuantityRequest->Project;
         $section         = $materialQuantityRequest->Section;
@@ -152,8 +154,17 @@ class MaterialQuantityRequestReviewController extends Controller
     }
     
     public function _approve(Request $request){
-        $id = (int) $request->input('id');
 
+        if(!$this->hasAccess('material_request:all:view')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
+
+
+        $id = (int) $request->input('id');
 
         $validator = Validator::make($request->all(),[
             'id' => [
@@ -230,8 +241,16 @@ class MaterialQuantityRequestReviewController extends Controller
 
 
     public function _reject(Request $request){
-        $id = (int) $request->input('id');
 
+         if(!$this->hasAccess('material_request:all:reject')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
+
+        $id = (int) $request->input('id');
 
         $validator = Validator::make($request->all(),[
             'id' => [

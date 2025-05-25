@@ -27,6 +27,32 @@ class ComponentController extends Controller
         
         $component = Component::findOrFail($id);
 
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['component:all:view'])){
+
+            if( !$this->hasAccess(['component:own:view']) ){
+                // return response()->json([
+                //     'status'    => 0,
+                //     'message'   => 'Access Denied',
+                //     'data'      => []
+                // ]);
+
+                return view('access_denied');
+            }
+
+            if($component->created_by != $user->id){
+                // return response()->json([
+                //     'status'    => 0,
+                //     'message'   => 'Access Denied',
+                //     'data'      => []
+                // ]);
+
+                return view('access_denied');
+            }
+        }
+
+
         $component_id       = $component->id;
         $contract_item_id   = $component->contract_item_id;
         $section_id         = $component->section_id;
@@ -36,7 +62,13 @@ class ComponentController extends Controller
 
     public function _create(Request $request){
 
-        //todo check role
+        if(!$this->hasAccess('component:own:create')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         $name               = $request->input('name') ?? '';
         $quantity           = $request->input('quantity') ?? 0;
@@ -145,8 +177,6 @@ class ComponentController extends Controller
 
     public function _retrieve(Request $request){
 
-        //Check role
-
         $id = $request->input('id');
 
 
@@ -172,6 +202,28 @@ class ComponentController extends Controller
             ]);
         }
 
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['component:all:view'])){
+
+            if( !$this->hasAccess(['component:own:view']) ){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+
+            if($component->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+        }
+
+
         $component->loadCount('componentItems');
 
         return response()->json([
@@ -187,6 +239,20 @@ class ComponentController extends Controller
         $back = $request->input('b');
         
         $component = Component::findOrFail($id);
+
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['component:all:view'])){
+
+            if( !$this->hasAccess(['component:own:view']) ){
+                return view('access_denied');
+            }
+
+            if($component->created_by != $user->id){
+                return view('access_denied');
+            }
+        }
+
 
         $contract_item   = $component->ContractItem;
         $section         = $component->Section;
@@ -241,6 +307,17 @@ class ComponentController extends Controller
 
         $component = Component::findOrFail($id);
 
+        if(!$this->hasAccess(['component:all:view'])){
+
+            if( !$this->hasAccess(['component:own:view']) ){
+                return view('access_denied');
+            }
+
+            if($component->created_by != $user->id){
+                return view('access_denied');
+            }
+        }
+
         $contract_item   = $component->ContractItem;
         $section         = $component->section;
         $project         = $section->project;
@@ -294,8 +371,6 @@ class ComponentController extends Controller
 
     public function _update(Request $request){
 
-        //todo check role
-
         $id                  = (int) $request->input('id');
         $name                = $request->input('name') ?? '';
         $quantity            = $request->input('quantity');
@@ -306,6 +381,7 @@ class ComponentController extends Controller
 
         $component  = Component::find($id);
 
+
         if(!$component){
             return response()->json([
                 'status'    => 0,
@@ -314,6 +390,27 @@ class ComponentController extends Controller
                     'id' => $id
                 ]
             ]);
+        }
+
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['component:all:update'])){
+
+            if( !$this->hasAccess(['component:own:update']) ){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+
+            if($component->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
         }
 
         $contract_item_id = $component->contract_item_id;
@@ -361,7 +458,7 @@ class ComponentController extends Controller
             ]);
         }
 
-        $user_id    = Auth::user()->id;
+        $user_id    = $user->id;
         
         
 
@@ -437,18 +534,16 @@ class ComponentController extends Controller
 
     public function _delete(Request $request){
          
-        //Check role
-         $id = (int) $request->input('id');
+        $id = (int) $request->input('id');
 
-
-         $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(),[
              'id' => [
                  'required',
                  'integer',
              ]
-         ]);
+        ]);
  
-         if($validator->fails()){
+        if($validator->fails()){
              
              return response()->json([
                  'status'    => -2,
@@ -458,7 +553,7 @@ class ComponentController extends Controller
          }
  
          $component = Component::find($id);
- 
+         
          if(!$component){
              return response()->json([
                  'status'    => 0,
@@ -467,6 +562,27 @@ class ComponentController extends Controller
              ]);
          }
          
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['component:all:delete'])){
+
+            if( !$this->hasAccess(['component:own:delete']) ){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+
+            if($component->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+        }
+
         
         if(!$component->delete()){
 

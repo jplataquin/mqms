@@ -12,6 +12,10 @@ class MaterialGroupController extends Controller
 {
     public function create(){
 
+        if(!$this->hasAccess('material_group:own:create')){
+            return view('access_denied');
+        }
+
         return view('material_group/create');
     }
 
@@ -21,13 +25,39 @@ class MaterialGroupController extends Controller
 
         $materialGroup = MaterialGroup::findOrFail($id);
         
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['material_group:all:view'])){
+
+            if( !$this->hasAccess(['material_group:own:view']) ){
+                // return response()->json([
+                //     'status'    => 0,
+                //     'message'   => 'Access Denied',
+                //     'data'      => []
+                // ]);
+
+                return view('access_denied');
+            }
+
+            if($materialGroup->created_by != $user->id){
+                // return response()->json([
+                //     'status'    => 0,
+                //     'message'   => 'Access Denied',
+                //     'data'      => []
+                // ]);
+
+                return view('access_denied');
+
+            }
+        }
+
         return view('material_group/display',$materialGroup);
     }
 
-    public function edit($id){
+    // public function edit($id){
 
-        return view('material_group/edit');
-    }
+    //     return view('material_group/edit');
+    // }
 
     public function list(){
 
@@ -37,7 +67,13 @@ class MaterialGroupController extends Controller
 
     public function _create(Request $request){
 
-        //todo check role
+        if(!$this->hasAccess('material_group:own:create')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         $name = $request->input('name') ?? '';
         
@@ -81,8 +117,6 @@ class MaterialGroupController extends Controller
 
     public function _update(Request $request){
 
-        //todo check role
-
         $id       = $request->input('id') ?? 0;
         $name     = $request->input('name') ?? '';
         
@@ -104,7 +138,6 @@ class MaterialGroupController extends Controller
             ]);
         }
 
-        $user_id      = Auth::user()->id;
         $materialGroup = MaterialGroup::find($id);
 
         if(!$materialGroup){
@@ -117,8 +150,37 @@ class MaterialGroupController extends Controller
             ]);
         }
 
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['material_group:all:update'])){
+
+            if( !$this->hasAccess(['material_group:own:update']) ){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+//                return view('access_denied');
+            }
+
+            if($materialGroup->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+//                return view('access_denied');
+
+            }
+        }
+
+
+
+
         $materialGroup->name         = $name;
-        $materialGroup->updated_by   = $user_id;
+        $materialGroup->updated_by   = $user->id;
 
         $materialGroup->save();
 
@@ -167,6 +229,6 @@ class MaterialGroupController extends Controller
     }
 
     public function _delete(Request $request){
-
+        //Todo
     }
 }

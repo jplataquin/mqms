@@ -18,6 +18,31 @@ class ComponentItemController extends Controller
     public function display($id,Request $request){
 
         $component_item = ComponentItem::findOrFail($id);
+        
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['component_item:all:view'])){
+
+            if( !$this->hasAccess(['component_item:own:view']) ){
+                // return response()->json([
+                //     'status'    => 0,
+                //     'message'   => 'Access Denied',
+                //     'data'      => []
+                // ]);
+
+                return view('access_denied');
+            }
+
+            if($component_item->created_by != $user->id){
+                // return response()->json([
+                //     'status'    => 0,
+                //     'message'   => 'Access Denied',
+                //     'data'      => []
+                // ]);
+
+                return view('access_denied');
+            }
+        }
 
         $component       = $component_item->Component;
         $section         = $component->Section;
@@ -43,7 +68,13 @@ class ComponentItemController extends Controller
 
     public function _create(Request $request){
 
-        //todo check role
+        if(!$this->hasAccess('component_item:own:create')){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
 
         $name              = $request->input('name') ?? '';
         $quantity          = $request->input('quantity') ?? '';
@@ -196,8 +227,6 @@ class ComponentItemController extends Controller
 
     public function _retrieve(Request $request){
 
-        //Check role
-
         $id = $request->input('id');
 
 
@@ -223,6 +252,31 @@ class ComponentItemController extends Controller
             ]);
         }
 
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['component_item:all:view'])){
+
+            if( !$this->hasAccess(['component_item:own:view']) ){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+                //return view('access_denied');
+            }
+
+            if($component_item->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+                //return view('access_denied');
+            }
+        }
+
         $component_item->loadCount('materialQuantities');
 
         
@@ -234,8 +288,6 @@ class ComponentItemController extends Controller
     }
 
     public function _update(Request $request){
-
-         //todo check role
 
          $name              = $request->input('name') ?? '';
          $budget_price      = $request->input('budget_price') ?? '';
@@ -333,7 +385,6 @@ class ComponentItemController extends Controller
              ]);
          }
  
-         $user_id        = Auth::user()->id;
          $component_item = ComponentItem::find($id);
 
          if(!$component_item){
@@ -344,6 +395,31 @@ class ComponentItemController extends Controller
             ]);
         }
 
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['component_item:all:update'])){
+
+            if( !$this->hasAccess(['component_item:own:update']) ){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+                //return view('access_denied');
+            }
+
+            if($component_item->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+                //return view('access_denied');
+            }
+        }
+
         if($component_item->component_id != $component_id){
             return response()->json([
                 'status'    => 0,
@@ -352,22 +428,7 @@ class ComponentItemController extends Controller
             ]);
         }
 
-        //Get all previous material quantities and check if they are within budget with regards to the new data.
-        // $material_quantities = $component_item->MaterialQuantities;
 
-
-        // foreach($material_quantities as $mq){
-
-        //     if($quantity < ($mq->equivalent * $mq->quantity)){
-                
-        //         return response()->json([
-        //             'status'    => 0,
-        //             'message'   => 'Error: One or more material quantities are not aligned with the new budget',
-        //             'data'      => []
-        //         ]);
-
-        //     }
-        // }
  
         if($ref_1_quantity <= 0){
             $ref_1_quantity     = null;
@@ -376,46 +437,45 @@ class ComponentItemController extends Controller
         }
          
         
-         $component_item->name                   = $name;
-         $component_item->quantity               = $quantity;
-         $component_item->budget_price           = $budget_price;
-         $component_item->unit_id                = $unit_id;
-         $component_item->function_type_id       = $function_type_id;
-         $component_item->function_variable      = $function_variable;
-         $component_item->sum_flag               = $sum_flag;
-         $component_item->ref_1_quantity         = $ref_1_quantity;
-         $component_item->ref_1_unit_id          = $ref_1_unit_id;
-         $component_item->ref_1_unit_price       = $ref_1_unit_price;
-         $component_item->approximation          = $approximation;
-         $component_item->updated_by             = $user_id;
+        $user_id = $user->id;
+
+        $component_item->name                   = $name;
+        $component_item->quantity               = $quantity;
+        $component_item->budget_price           = $budget_price;
+        $component_item->unit_id                = $unit_id;
+        $component_item->function_type_id       = $function_type_id;
+        $component_item->function_variable      = $function_variable;
+        $component_item->sum_flag               = $sum_flag;
+        $component_item->ref_1_quantity         = $ref_1_quantity;
+        $component_item->ref_1_unit_id          = $ref_1_unit_id;
+        $component_item->ref_1_unit_price       = $ref_1_unit_price;
+        $component_item->approximation          = $approximation;
+        $component_item->updated_by             = $user_id;
  
-         $component_item->save();
+        $component_item->save();
  
-         $component = $component_item->component;
+        $component = $component_item->component;
  
-         if($component->status != 'PEND'){
-             $component->status      = 'PEND';
-             $component->updated_by  = $user_id;
-             $component->updated_at  = Carbon::now();
-             $component->save();
-         }
+        if($component->status != 'PEND'){
+            $component->status      = 'PEND';
+            $component->updated_by  = $user_id;
+            $component->updated_at  = Carbon::now();
+            $component->save();
+        }
  
-         return response()->json([
-             'status'    => 1,
-             'message'   => '',
-             'data'      => [
-                 'id'=> $component_item->id
-             ]
-         ]);
+        return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data'      => [
+                'id'=> $component_item->id
+            ]
+        ]);
     }
 
     public function _delete(Request $request){
 
-        //Check role
         $id      = (int) $request->input('id');
-        $user_id = Auth::user()->id;
         
-
         $validator = Validator::make($request->all(),[
             'id' => [
                 'required',
@@ -442,6 +502,32 @@ class ComponentItemController extends Controller
             ]);
         }
         
+
+        $user = auth()->user();
+    
+        if(!$this->hasAccess(['component_item:all:delete'])){
+
+            if( !$this->hasAccess(['component_item:own:delete']) ){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+                return view('access_denied');
+            }
+
+            if($component_item->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+
+                //return view('access_denied');
+            }
+        }
+
         $component = $component_item->component;
 
 
@@ -465,7 +551,7 @@ class ComponentItemController extends Controller
             ]);
         }
 
-        
+        $user_id = $user->id;    
         
         if($component->status != 'PEND'){
             $component->status      = 'PEND';
@@ -487,6 +573,31 @@ class ComponentItemController extends Controller
         $id = (int) $id;
 
         $component_item = ComponentItem::findOrFail($id);
+
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['component_item:all:view'])){
+
+            if( !$this->hasAccess(['component_item:own:view']) ){
+                // return response()->json([
+                //     'status'    => 0,
+                //     'message'   => 'Access Denied',
+                //     'data'      => []
+                // ]);
+
+                return view('access_denied');
+            }
+
+            if($component_item->created_by != $user->id){
+                // return response()->json([
+                //     'status'    => 0,
+                //     'message'   => 'Access Denied',
+                //     'data'      => []
+                // ]);
+
+                return view('access_denied');
+            }
+        }
 
         $component      = $component_item->Component;
         $contract_item  = $component->ContractItem;        

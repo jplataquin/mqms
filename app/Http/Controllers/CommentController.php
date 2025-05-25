@@ -53,6 +53,8 @@ class CommentController extends Controller
 
     public function _create(Request $request){
 
+        
+
         $comment_type = $request->input('comment_type');
         $record_type  = $request->input('record_type');
         $record_id    = (int) $request->input('record_id');
