@@ -155,7 +155,7 @@ class MaterialQuantityRequestReviewController extends Controller
     
     public function _approve(Request $request){
 
-        if(!$this->hasAccess('material_request:all:view')){
+        if(!$this->hasAccess('material_request:all:approve')){
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Access Denied',
