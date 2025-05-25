@@ -97,11 +97,11 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
 
-        if(!$this->hasAccess(['user:all:view'])){
+        // if(!$this->hasAccess(['user:all:view'])){
 
-            return view('access_denied');
+        //     return view('access_denied');
 
-        }
+        // }
 
         $status_options = $user->statusOptions();
 
