@@ -30,90 +30,75 @@
         </div>
 
         <div class="form-body">
-            <div class="row">
 
+             <div class="row mb-3">
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <label>* Supplier Name</label>
+                        <label>Supplier Name</label>
                         <input type="text" id="supplierName" class="form-control"/>
                     </div>
                 </div>
+            </div>
 
-                <div class="col-lg-12 mb-3">
+            <div class="row mb-3">
+                <div class="col-lg-12">
                     <div class="form-group">
-                        <label>* Address</label>
+                        <label>Address</label>
                         <textarea id="address" class="form-control"></textarea>
                     </div>
                 </div>
-
             </div>
 
-            <div class="row">
-
-                <div class="col-lg-6">
-                    
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>* Primary Contact Person</label>
-                                <input type="text" id="primaryContactPerson" class="form-control"/>
-                            </div>
+            <div class="row mb-3">
+                <div class="col-lg-4 mb-3">
+                        <div class="form-group">
+                            <label>Primary Contact Person</label>
+                            <input type="text" id="primaryContactPerson" class="form-control"/>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>* Primary Contact No.</label>
-                                <input type="text" id="primaryContactNo" class="form-control"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>* Primary Email</label>
-                                <input type="email" id="primaryEmail" class="form-control"/>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
-
-                <div class="col-lg-6">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>Secondary Contact Person</label>
-                                <input type="text" id="secondaryContactPerson" class="form-control"/>
-                            </div>
+                <div class="col-lg-4 mb-3">
+                        <div class="form-group">
+                            <label>Primary Contact No.</label>
+                            <input type="text" id="primaryContactNo" class="form-control"/>
                         </div>
+                </div>
+                <div class="col-lg-4 mb-3">
+                    <div class="form-group">
+                        <label>Primary Email</label>
+                        <input type="email" id="primaryEmail" class="form-control"/>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>Secondary Contact No.</label>
-                                <input type="text" id="secondaryContactNo" class="form-control"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>Secondary Email</label>
-                                <input type="text" id="secondary" class="form-control"/>
-                            </div>
-                        </div>
-                    </div>
-                </div> 
-
+                </div>
             </div>
 
-            <div class="row mt-5">
+            <div class="row mb-3">
+                <div class="col-lg-4 mb-3">
+                    <div class="form-group">
+                        <label>Secondary Contact Person</label>
+                        <input type="text" id="secondaryContactPerson" class="form-control"/>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-3">
+                    <div class="form-group">
+                        <label>Secondary Contact No.</label>
+                        <input type="text" id="secondaryContactNo" class="form-control"/>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-3">
+                    <div class="form-group">
+                        <label>Secondary Email</label>
+                        <input type="text" id="secondary" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row mt-3">
                 <div class="col-12 text-end">
                     <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
                     <button class="btn btn-primary" id="createBtn">Create</button>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
