@@ -58,13 +58,13 @@
                 </div>
                 <div class="col-lg-4 mb-3">
                     <div class="form-group">
-                        <label>* Primary Contact No.</label>
+                        <label>Primary Contact No.</label>
                         <input type="text" id="primaryContactNo" value="{{$supplier->primary_contact_no}}" disabled="true" class="form-control"/>
                     </div>
                 </div>
                 <div class="col-lg-4 mb-3">
                     <div class="form-group">
-                        <label>* Primary Email</label>
+                        <label>Primary Email</label>
                         <input type="email" id="primaryEmail" value="{{$supplier->primary_email}}" disabled="true" class="form-control"/>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                 <div class="col-lg-4 mb-3">
                     <div class="form-group">
                         <label>Secondary Email</label>
-                        <input type="text" id="secondaryEmail" value="{{$supplier->secondary_email}}" disabled="true" class="form-control"/>
+                        <input type="text" id="secondaryEmail" value="{{ $supplier->secondary_email }}" disabled="true" class="form-control"/>
                     </div>
                 </div>
             </div>
