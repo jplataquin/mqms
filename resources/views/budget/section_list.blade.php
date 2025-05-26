@@ -60,7 +60,7 @@
     
     let page            = 1;
     let order           = 'ASC';
-    let orderBy         = 'name';
+    let orderBy         = 'item_code';
     
     
     const t = new Template();
