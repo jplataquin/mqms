@@ -61,7 +61,7 @@
     let page            = 1;
     let order           = 'ASC';
     let orderBy         = 'name';
-    
+    let fetching        = false;
     
     const t = new Template();
     
@@ -110,6 +110,7 @@
     function showData(){
 
         window.util.blockUI();
+        fetching = true;
 
         window.util.$get('/api/budget/project/list',{
             query: query.value,
@@ -120,7 +121,7 @@
         }).then(reply=>{
 
             window.util.unblockUI();
-                
+            fetching = false;
 
             if(reply.status <= 0 ){
                 
@@ -147,6 +148,12 @@
 
     query.onkeypress = (e)=>{
         if (e.key === "Enter") {
+            runQuery();
+        }
+    }
+
+    query.onkeyup = (e)=>{
+        if ((query.value.length >= 4 || query.value == '') && fetching == false) {
             runQuery();
         }
     }
