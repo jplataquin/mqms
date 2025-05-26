@@ -34,80 +34,65 @@
 
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <label>* Supplier Name</label>
+                        <label>Supplier Name</label>
                         <input type="text" id="supplierName" value="{{$supplier->name}}" disabled="true" class="form-control"/>
                     </div>
                 </div>
 
                 <div class="col-lg-12 mb-3">
                     <div class="form-group">
-                        <label>* Address</label>
+                        <label>Address</label>
                         <textarea id="address" disabled="true" class="form-control">{{$supplier->address}}</textarea>
                     </div>
                 </div>
 
             </div>
 
-            <div class="row">
+            <div class="row mb-3">
 
-                <div class="col-lg-6">
-                    
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>* Primary Contact Person</label>
-                                <input type="text" id="primaryContactPerson" value="{{$supplier->primary_contact_person}}" disabled="true" class="form-control"/>
-                            </div>
-                        </div>
+                <div class="col-lg-4 mb-3">
+                    <div class="form-group">
+                        <label>Primary Contact Person</label>
+                        <input type="text" id="primaryContactPerson" value="{{$supplier->primary_contact_person}}" disabled="true" class="form-control"/>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>* Primary Contact No.</label>
-                                <input type="text" id="primaryContactNo" value="{{$supplier->primary_contact_no}}" disabled="true" class="form-control"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>* Primary Email</label>
-                                <input type="email" id="primaryEmail" value="{{$supplier->primary_email}}" disabled="true" class="form-control"/>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
+                <div class="col-lg-4 mb-3">
+                    <div class="form-group">
+                        <label>* Primary Contact No.</label>
+                        <input type="text" id="primaryContactNo" value="{{$supplier->primary_contact_no}}" disabled="true" class="form-control"/>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-3">
+                    <div class="form-group">
+                        <label>* Primary Email</label>
+                        <input type="email" id="primaryEmail" value="{{$supplier->primary_email}}" disabled="true" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+                
 
-                <div class="col-lg-6">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>Secondary Contact Person</label>
-                                <input type="text" id="secondaryContactPerson" value="{{$supplier->secondary_contact_person}}" disabled="true" class="form-control"/>
-                            </div>
-                        </div>
+            <div class="row mb-3">
+                <div class="col-lg-4 mb-3">
+                    <div class="form-group">
+                        <label>Secondary Contact Person</label>
+                        <input type="text" id="secondaryContactPerson" value="{{$supplier->secondary_contact_person}}" disabled="true" class="form-control"/>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>Secondary Contact No.</label>
-                                <input type="text" id="secondaryContactNo" value="{{$supplier->secondary_contact_no}}" disabled="true" class="form-control"/>
-                            </div>
-                        </div>
+                </div>
+                <div class="col-lg-4 mb-3">
+                    <div class="form-group">
+                        <label>Secondary Contact No.</label>
+                        <input type="text" id="secondaryContactNo" value="{{$supplier->secondary_contact_no}}" disabled="true" class="form-control"/>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>Secondary Email</label>
-                                <input type="text" id="secondaryEmail" value="{{$supplier->secondary_email}}" disabled="true" class="form-control"/>
-                            </div>
-                        </div>
+                </div>
+                <div class="col-lg-4 mb-3">
+                    <div class="form-group">
+                        <label>Secondary Email</label>
+                        <input type="text" id="secondaryEmail" value="{{$supplier->secondary_email}}" disabled="true" class="form-control"/>
                     </div>
-                </div> 
+                </div>
             </div>
 
-            <div class="row mt-5 mb-3">
+            <div class="row mb-3">
                 <div class="col-6 text-start">
                     <button class="btn btn-danger" id="deleteBtn">Delete</button>
                 </div>
@@ -117,6 +102,7 @@
                     <button class="btn btn-warning d-none" id="updateBtn">Update</button>
                 </div>
             </div>
+            
         </div>
     </div>
 </div>
