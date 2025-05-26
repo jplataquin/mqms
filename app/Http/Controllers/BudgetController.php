@@ -132,7 +132,10 @@ class BudgetController extends Controller
         }
 
         if($query != ''){
-            $contract_item = $contract_item->where('description','LIKE','%'.$query.'%');
+            $contract_item = $contract_item->where(function($condition) use ($query){
+                $condition->where('item_code','LIKE','%'.$query.'%')
+                ->orWhere('description','LIKE','%'.$query.'%');
+            });
         }
 
         //Filter out deleted records
