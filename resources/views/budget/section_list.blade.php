@@ -15,7 +15,7 @@
             <li>
                 <a href="#" class="active">
                     <span>
-                       Project
+                       Section
                     </span>
                     <i class="ms-2 bi bi-list-ul"></i>
                 </a>
@@ -26,7 +26,7 @@
 
     <div class="folder-form-container">
         <div class="folder-form-tab">
-            Project
+            Section
         </div>
         <div class="folder-form-body">
             <div class="row mb-3">
@@ -82,13 +82,13 @@
 
                         t.div({class:'col-lg-6'},()=>{
 
-                            t.span( String(item.id).padStart(6,'0') );
+                           //t.span( String(item.id).padStart(6,'0') );
 
                         });//div col
 
                         t.div({class:'col-lg-6'},()=>{
 
-                            t.span( item.status );
+                            //t.span( item.status );
 
                         });//div col
 
@@ -98,7 +98,7 @@
             });//div
 
             row.onclick = ()=>{
-                window.util.navTo('/budget/project/'+item.id);
+                window.util.navTo('/budget/section/'+item.id);
             };
 
             $el.append(row).to(list);
@@ -111,7 +111,7 @@
 
         window.util.blockUI();
 
-        window.util.$get('/api/budget/project/list',{
+        window.util.$get('/api/budget/section/list',{
             query: query.value,
             page: page,
             order: order,

@@ -22,13 +22,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware(['auth:sanctum','access_codes'])->group(function () {
 
-    Route::get('/budget/list', [App\Http\Controllers\BudgetController::class, '_list']);
-
     Route::get('/access_code/list', [App\Http\Controllers\AccessCodeController::class, '_list']);
     Route::post('/access_code/create', [App\Http\Controllers\AccessCodeController::class, '_create']);
     Route::post('/access_code/update', [App\Http\Controllers\AccessCodeController::class, '_update']);
     Route::post('/access_code/delete', [App\Http\Controllers\AccessCodeController::class, '_delete']);
    
+    Route::get('/budget/project/list', [App\Http\Controllers\BudgetController::class, '_list']);
+    Route::get('/budget/section/list', [App\Http\Controllers\BudgetController::class, '_section_list']);
+    Route::get('/budget/contract_item/list', [App\Http\Controllers\BudgetController::class, '_contract_item_list']);
+
     Route::get('/role/list', [App\Http\Controllers\RoleController::class, '_list']);
     Route::post('/role/create', [App\Http\Controllers\RoleController::class, '_create']);
     Route::post('/role/update', [App\Http\Controllers\RoleController::class, '_update']);

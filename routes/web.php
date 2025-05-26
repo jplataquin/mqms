@@ -60,13 +60,11 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/role/{id}', [App\Http\Controllers\RoleController::class, 'display']);
     Route::get('/roles', [App\Http\Controllers\RoleController::class, 'list']);
     
-    
-    // Route::get('/user_role/create', [App\Http\Controllers\UserRoleCodeController::class, 'create']);
-    // Route::get('/user_role/{id}', [App\Http\Controllers\UserRoleController::class, 'display']);
-    // Route::get('/user_roles', [App\Http\Controllers\UserRoleController::class, 'list']); 
-    
     Route::get('/budget', [App\Http\Controllers\BudgetController::class, 'list']);
+    Route::get('/budget/project/{id}', [App\Http\Controllers\BudgetController::class, 'section_list']);
+    Route::get('/budget/section/{id}', [App\Http\Controllers\BudgetController::class, 'contract_item_list']);
     
+
     Route::get('/project/create', [App\Http\Controllers\ProjectController::class, 'create']);
     Route::get('/project/{id}', [App\Http\Controllers\ProjectController::class, 'display']);
     Route::get('/projects', [App\Http\Controllers\ProjectController::class, 'list']);

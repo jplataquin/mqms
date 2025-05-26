@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\Section;
+use App\Models\ContractItem;
+
 
 class BudgetController extends Controller
 {
@@ -13,7 +16,7 @@ class BudgetController extends Controller
         return view('budget/list');
     }
 
-      public function _list(Request $request){
+    public function _list(Request $request){
 
       
         $page       = (int) $request->input('page')     ?? 1;
@@ -27,6 +30,7 @@ class BudgetController extends Controller
         $project = new Project();
 
         $project = $project->where('deleted_at',null);
+        $project = $project->where('status','ACTV');
 
         if($query != ''){
             $project = $project->where('name','LIKE','%'.$query.'%');
@@ -52,4 +56,59 @@ class BudgetController extends Controller
             'data'      => $result
         ]);
     }
+
+
+    public function section_list($id){
+
+        $project = Project::findOrFail($id);
+
+        return view('budget/section_list',[
+            'project' => $project
+        ]);
+    }
+
+    public function _section_list(Request $request){
+
+
+        $project_id = (int) $request->input('project_id') ?? 0;
+        $page       = (int) $request->input('page')     ?? 1;
+        $limit      = (int) $request->input('limit')    ?? 0;
+        $orderBy    = $request->input('order_by')       ?? 'id';
+        $order      = $request->input('order')          ?? 'DESC';
+        $query      = $request->input('query')          ?? '';
+        $result     = [];
+
+        $section = new Section();
+
+        $section = $section->where('project_id',$project_id);
+
+        if($query != ''){
+            $section = $section->where('name','LIKE','%'.$query.'%');
+        }
+
+        //Filter deleted
+        $section = $section->where('deleted_at','=',null);
+        
+        if($limit > 0){
+            $page   = ($page-1) * $limit;
+            
+            $result = $section->orderBy($orderBy,$order)->skip($page)->take($limit)->get();
+            
+        }else{
+
+            $result = $section->orderBy($orderBy,$order)->get();
+        }
+
+        return response()->json([
+            'status' => 1,
+            'message'=>'',
+            'data'=> $result
+        ]);
+    }
+
+    public function contract_item_list($id){
+
+    }
+
+    public function _contract_item_list(){}
 }
