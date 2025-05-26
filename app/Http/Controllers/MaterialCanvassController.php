@@ -317,7 +317,7 @@ class MaterialCanvassController extends Controller
 
     public function _create(Request $request){
         
-        if(!$this->hasAccess('material_canvass')){
+        if(!$this->hasAccess('material_canvass:all:create')){
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Access Denied',
