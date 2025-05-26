@@ -30,9 +30,9 @@
             Supplier
         </div>
         <div class="form-body">
-            <div class="row">
+            <div class="row mb-3">
 
-                <div class="col-lg-12">
+                <div class="col-lg-12 mb-3">
                     <div class="form-group">
                         <label>Supplier Name</label>
                         <input type="text" id="supplierName" value="{{$supplier->name}}" disabled="true" class="form-control"/>
@@ -102,7 +102,7 @@
                     <button class="btn btn-warning d-none" id="updateBtn">Update</button>
                 </div>
             </div>
-            
+
         </div>
     </div>
 </div>
