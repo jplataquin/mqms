@@ -61,7 +61,7 @@
     let page            = 1;
     let order           = 'ASC';
     let orderBy         = 'item_code';
-    
+    let fetching        = false;
     
     const t = new Template();
     
@@ -110,6 +110,7 @@
     function showData(){
 
         window.util.blockUI();
+        fetching = true;
 
         window.util.$get('/api/budget/contract_item/list',{
             section_id:'{{$section->id}}',
@@ -121,7 +122,7 @@
         }).then(reply=>{
 
             window.util.unblockUI();
-                
+            fetching = false;        
 
             if(reply.status <= 0 ){
                 
@@ -153,9 +154,7 @@
     }
 
     query.onkeyup = (e)=>{
-        if (query.value.length >= 3) {
-            runQuery();
-        }else if(query.value == ''){
+        if ((query.value.length >= 4 || query.value == '') && fetching == false) {
             runQuery();
         }
     }
