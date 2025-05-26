@@ -18,7 +18,7 @@ class Controller extends BaseController
 
         $this->middleware(function ($request, $next) {
             
-            $this->accessCodes= $request->accessCodes;
+            $this->accessCodes = $request->accessCodes;
 
             return $next($request);
         });

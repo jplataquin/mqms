@@ -22,6 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware(['auth:sanctum','access_codes'])->group(function () {
 
+    Route::get('/budget/list', [App\Http\Controllers\BudgetController::class, '_list']);
+
     Route::get('/access_code/list', [App\Http\Controllers\AccessCodeController::class, '_list']);
     Route::post('/access_code/create', [App\Http\Controllers\AccessCodeController::class, '_create']);
     Route::post('/access_code/update', [App\Http\Controllers\AccessCodeController::class, '_update']);
