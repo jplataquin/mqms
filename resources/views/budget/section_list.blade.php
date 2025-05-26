@@ -112,6 +112,7 @@
         window.util.blockUI();
 
         window.util.$get('/api/budget/section/list',{
+            project_id:'{{$project->id}}',
             query: query.value,
             page: page,
             order: order,
