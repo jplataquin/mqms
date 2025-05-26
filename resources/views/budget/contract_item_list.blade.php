@@ -152,6 +152,14 @@
         }
     }
 
+    query.onkeyup = (e)=>{
+        if (query.value.length >= 3) {
+            runQuery();
+        }else if(query.value == ''){
+            runQuery();
+        }
+    }
+
 
     showMoreBtn.onclick = ()=>{
         showData();
