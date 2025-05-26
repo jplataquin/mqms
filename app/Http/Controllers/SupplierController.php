@@ -115,7 +115,7 @@ class SupplierController extends Controller
             ]);
         }
 
-        $user_id = $user->id;
+        $user = auth()->user();
 
         $supplier = new Supplier();
 
@@ -127,7 +127,7 @@ class SupplierController extends Controller
         $supplier->secondary_contact_no               = $secondary_contact_no;
         $supplier->secondary_email                    = $secondary_email;
         $supplier->secondary_contact_person           = $secondary_contact_person;
-        $supplier->created_by                         = $user_id;
+        $supplier->created_by                         = $user->id;
     
 
         $supplier->save();
