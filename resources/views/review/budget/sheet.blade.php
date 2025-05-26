@@ -706,19 +706,8 @@
                             </tr>
 
                         @endforeach
-                        
-                            <tr class="material-quantity-tr">
-                                <td class="material-quantity-td" colspan="3"></td>
-                                <td class="
-                                    text-center
-                                     
-                                    @if($total_equivalent > $component_item->quantity)
-                                        rejected-text non-conforming
-                                    @endif
-                                " style="border:solid 1px #000000">
-                                    {{ number_format($total_equivalent) }} {{$component_item->unit_text}}
-                                </td>
-                            </tr>
+
+                           
                         </table>
                     </td>
                     <td></td>
