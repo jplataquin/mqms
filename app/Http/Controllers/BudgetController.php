@@ -107,8 +107,51 @@ class BudgetController extends Controller
     }
 
     public function contract_item_list($id){
+        
+        $section = Section::findOrFail($id);
 
+        return view('budget/contract_item_list',[
+            'section' => $section
+        ]);
     }
 
-    public function _contract_item_list(){}
+    public function _contract_item_list(Request $request){
+
+        $section_id = (int) $request->input('section_id') ?? 0;
+        $page       = (int) $request->input('page')     ?? 1;
+        $limit      = (int) $request->input('limit')    ?? 0;
+        $orderBy    = $request->input('order_by')       ?? 'id';
+        $order      = $request->input('order')          ?? 'DESC';
+        $query      = $request->input('query')          ?? '';
+        $result     = [];
+
+        $contract_item = new ContractItem();
+
+        if($section_id){
+            $contract_item = $contract_item->where('section_id',$section_id);
+        }
+
+        if($query != ''){
+            $contract_item = $contract_item->where('name','LIKE','%'.$query.'%');
+        }
+
+        //Filter out deleted records
+        $contract_item = $contract_item->where('deleted_at','=',null);
+
+        if($limit > 0){
+            $page   = ($page-1) * $limit;
+            
+            $result = $contract_item->orderBy($orderBy,$order)->skip($page)->take($limit)->get();
+            
+        }else{
+
+            $result = $contract_item->orderBy($orderBy,$order)->get();
+        }
+
+        return response()->json([
+            'status'    => 1,
+            'message'   =>'',
+            'data'      => $result
+        ]);
+    }
 }
