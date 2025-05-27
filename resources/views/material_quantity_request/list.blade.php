@@ -377,10 +377,9 @@
 
             console.log('contract item done');
             
-            window.util.unblockUI();
 
             if(reply.status <= 0){
-
+                window.util.unblockUI();
                 window.util.showMsg(reply);
                 return false;
             }
@@ -396,6 +395,8 @@
                 );
 
             });
+
+            window.util.unblockUI();
 
         });
 
