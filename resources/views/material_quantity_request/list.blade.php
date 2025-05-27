@@ -361,6 +361,8 @@
 
     contractItemSelect.onchange = (e)=>{
 
+        console.log('contract item on change');
+
         e.preventDefault();
 
         componentSelect.innerHTML = '';
@@ -373,6 +375,7 @@
             order:'ASC'
         }).then(reply=>{
 
+            console.log('contract item done');
             
             window.util.unblockUI();
 
