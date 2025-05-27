@@ -104,7 +104,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="form-group">
-                        <label>Date Needed</label>
+                        <label>Date Needed {{$material_quantity_request->date_needed}}</label>
                         <input type="text" disabled="true" id="date_needed" value="{{$material_quantity_request->date_needed}}" class="form-control"/>
                     </div>
                 </div>
