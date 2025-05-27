@@ -373,7 +373,7 @@
         window.util.blockUI();
 
         window.util.$get('/api/component/list',{
-            coontract_item_id: contractItemSelect.value,
+            contract_item_id: contractItemSelect.value,
             orderBy:'name',
             order:'ASC'
         }).then(reply=>{
