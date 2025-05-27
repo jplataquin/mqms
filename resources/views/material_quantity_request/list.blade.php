@@ -175,7 +175,7 @@
     function renderRows(data){
         
         data.map(item=>{
-            console.log(item);
+          
             let row = t.tr({class:'selectable-div'},()=>{
                 t.td(String(item.id).padStart(6,0));
                 t.td(item.status);
@@ -217,11 +217,10 @@
             limit: 10
         }).then(reply=>{
 
-            window.util.unblockUI();
-                
 
             if(reply.status <= 0 ){
                 
+                window.util.unblockUI();
                 window.util.showMsg(reply);
                 return false;
             };
@@ -234,6 +233,8 @@
                 showMoreBtn.style.display = 'none';
             }
             
+            window.util.unblockUI();
+                
         });
     }
 
@@ -280,8 +281,9 @@
 
         e.preventDefault();
 
-        sectionSelect.innerHTML = '';
-        componentSelect.innerHTML = '';
+        sectionSelect.innerHTML         = '';
+        contractItemSelect.innerHTML    = '';
+        componentSelect.innerHTML       = '';
 
         window.util.blockUI();
 
@@ -291,10 +293,9 @@
             order:'ASC'
         }).then(reply=>{
 
-            window.util.unblockUI();
 
             if(reply.status <= 0){
-
+                window.util.unblockUI();
                 window.util.showMsg(reply);
                 return false;
             }
@@ -310,6 +311,9 @@
                 );
 
             });
+
+            window.util.unblockUI();
+                
 
         });
 
@@ -332,10 +336,8 @@
         }).then(reply=>{
 
             
-            window.util.unblockUI();
-
             if(reply.status <= 0){
-
+                window.util.unblockUI();
                 window.util.showMsg(reply);
                 return false;
             }
@@ -352,6 +354,9 @@
 
             });
 
+            window.util.unblockUI();
+
+
         });
 
         reinitalize();
@@ -360,8 +365,6 @@
 
 
     contractItemSelect.onchange = (e)=>{
-
-        console.log('contract item on change');
 
         e.preventDefault();
 
@@ -375,8 +378,6 @@
             order:'ASC'
         }).then(reply=>{
 
-            console.log('contract item done');
-            
 
             if(reply.status <= 0){
                 window.util.unblockUI();
