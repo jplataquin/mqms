@@ -81,7 +81,7 @@
         </div>
         <div class="row mb-3" hx-boost="true" hx-select="#content" hx-target="#main">
             <div class="col-lg-3 mb-3 text-center">
-                <h4>Draft ({{count($pending)}})</h4>
+                <h4>Draft ({{count($draft)}})</h4>
                 <div class="list-group">
                     @foreach($draft as $draft_po)
                        
