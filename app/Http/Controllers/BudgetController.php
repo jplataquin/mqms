@@ -231,7 +231,7 @@ class BudgetController extends Controller
             $component_item_arr[] = (object) [
                 'data'                                  => $component_item,
                 'material_request_pending_quantity'     => $this->getMaterialRequestPendingQuantity($component_item->id),
-                'material_request_approve_quantity'     => $this->getMateriaRequestApproveQuantity($component_item->id),    
+                'material_request_approve_quantity'     => $this->getMaterialRequestApproveQuantity($component_item->id),    
                 'unit_text'                             => $unit_options[$component_item->unit_id]->text
             ];
         }
