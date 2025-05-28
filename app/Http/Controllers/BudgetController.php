@@ -192,6 +192,9 @@ class BudgetController extends Controller
         //Filter out deleted records
         $component = $component->where('deleted_at','=',null);
 
+        //Filter out approved component
+        $component = $component->where('status','APRV');
+
         if($limit > 0){
             $page   = ($page-1) * $limit;
             
@@ -206,6 +209,28 @@ class BudgetController extends Controller
             'status'    => 1,
             'message'   =>'',
             'data'      => $result
+        ]);
+    }
+
+
+    public function component_display($id){
+        
+        $component = Component::findOrFail($id);
+
+        $component_items = ComponentItem::where('component_id',$id)
+        ->where('deleted_at',null);
+
+        $component_item_arr = [];
+
+        foreach($component_items as $component_item){
+            $component_item_arr[] = (object) [
+                'data' => $component_item
+            ];
+        }
+        
+        return view('budget/component_display',[
+            'component'             => $component,
+            'component_item_arr'    => $component_item_arr 
         ]);
     }
 }
