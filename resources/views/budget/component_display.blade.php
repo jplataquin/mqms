@@ -41,7 +41,7 @@
     </div>
     
     <div class="container" id="list">
-        <table class="w-100">
+        <table class="w-100 table">
             <thead>
                 <tr>
                     <th>
