@@ -56,6 +56,12 @@
                     <th>
                         Total
                     </th>
+                    <th>
+                        Pending
+                    </th>
+                    <th>
+                        Approved
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -65,14 +71,23 @@
                         {{$ci->data->name}}
                     </td>
                     <td>
-                        {{ number_format($ci->data->quantity,2) }} {{ $unit_options[$ci->data->unit_id]->text }}
+                        {{ number_format($ci->data->quantity,2) }} {{ $ci->unit_text }}
                     </td>
                     <td>
                          {{ number_format($ci->data->budget_price,2) }}
                     </td>
                     <td>
                     </td>
+
+                    <td>
+                        {{ number_format($ci->material_request_pending_quantity,2) }}
+                    </td>
+                     <td>
+                        {{ number_format($ci->material_request_approve_quantity,2) }}
+                    </td>
                 </tr>
+
+
                 @endforeach
             </tbody>
         </table>

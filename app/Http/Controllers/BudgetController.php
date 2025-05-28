@@ -9,6 +9,8 @@ use App\Models\ContractItem;
 use App\Models\Component;
 use App\Models\ComponentItem;
 use App\Models\Unit;
+use App\Models\MaterialQuantityRequestItem;
+
 
 class BudgetController extends Controller
 {
@@ -222,20 +224,49 @@ class BudgetController extends Controller
         ->where('deleted_at',null)
         ->get();
 
+        $unit_options       = Unit::toOptions(); 
         $component_item_arr = [];
 
         foreach($component_items as $component_item){
             $component_item_arr[] = (object) [
-                'data' => $component_item
+                'data'                                  => $component_item,
+                'material_request_pending_quantity'     => $this->getMaterialRequestPendingQuantity($component_item->id),
+                'material_request_approve_quantity'     => $this->getMateriaRequestApproveQuantity($component_item->id),    
+                'unit_text'                             => $unit_options[$component_item->unit_id]->text
             ];
         }
 
-        $unit_options = Unit::toOptions();
 
         return view('budget/component_display',[
             'component'             => $component,
-            'component_item_arr'    => $component_item_arr,
-            'unit_options'          => $unit_options
+            'component_item_arr'    => $component_item_arr
         ]);
+    }
+
+    private function getMaterialRequestPendingQuantity($component_item_id){
+
+        $mqr_items = MaterialQuantityRequestItem::where('component_item_id',$component_item_id)
+        ->where('status','PEND')
+        ->get();
+
+        $total = 0;
+
+        foreach($mqr_items as $mqri){
+            
+            $material_quantity = MaterialQuantity::where('component_item_id',$component_item_id)
+            ->where('material_item_id',$mqri->material_item_id)
+            ->first();
+
+            if(!$material_quantity) continue;
+
+            $total = $total + ($mqri->requested_quantity * $material_quantity->equivalent);
+        }
+
+        return $total;
+    }
+
+    private function getMaterialRequestApproveQuantity($component_item_id){
+
+        return 0;
     }
 }
