@@ -83,7 +83,7 @@
             <div class="col-lg-3 mb-3 text-center">
                 <h4>Draft ({{count($pending)}})</h4>
                 <div class="list-group">
-                    @foreach($draft as $draft)
+                    @foreach($draft as $draft_po)
                        
                         <a class="list-group-item list-group-item-action" href="/purchase_order/{{$draft_po->id}}">PO{{str_pad($draft->id,6,0,STR_PAD_LEFT)}}</a>
                        
