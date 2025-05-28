@@ -1389,6 +1389,7 @@ class MaterialQuantityRequestController extends Controller
         ->orderBy('created_at','desc')
         ->get();
 
+        $draft    = [];
         $pending  = [];
         $approved = [];
         $rejected = [];
@@ -1399,6 +1400,10 @@ class MaterialQuantityRequestController extends Controller
             if($po->deleted_at != null){
                 
                 $deleted[] = $po;
+
+            }else if($po->status == 'DRFT'){
+                
+                $draft = $po;
 
             }else if($po->status == 'PEND'){
 
@@ -1423,6 +1428,7 @@ class MaterialQuantityRequestController extends Controller
             'approved'          => $approved,
             'rejected'          => $rejected,
             'deleted'           => $deleted,
+            'draft'             => $draft,
             'total_count'       => count($po_list)
         ]);
     }
