@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Section;
 use App\Models\ContractItem;
-
+use App\Models\Component;
+use App\Models\ComponentItem;
 
 class BudgetController extends Controller
 {
@@ -149,6 +150,56 @@ class BudgetController extends Controller
         }else{
 
             $result = $contract_item->orderBy($orderBy,$order)->get();
+        }
+
+        return response()->json([
+            'status'    => 1,
+            'message'   =>'',
+            'data'      => $result
+        ]);
+    }
+
+    public function component_list($id){
+        
+        $contract_item = ContractItem::findOrFail($id);
+
+        return view('budget/component_list',[
+            'contract_item' => $contract_item
+        ]);
+    }
+
+
+    public function _component_list(Request $request){
+
+        $contract_item_id   = (int) $request->input('contract_item_id') ?? 0;
+        $page               = (int) $request->input('page')     ?? 1;
+        $limit              = (int) $request->input('limit')    ?? 0;
+        $orderBy            = $request->input('order_by')       ?? 'id';
+        $order              = $request->input('order')          ?? 'DESC';
+        $query              = $request->input('query')          ?? '';
+        $result             = [];
+
+        $component = new Component();
+
+        if($contract_item_id){
+            $component = $component->where('contract_item_id',$contract_item_id);
+        }
+
+        if($query != ''){
+            $component = $component->where('name','LIKE','%'.$query.'%');
+        }
+
+        //Filter out deleted records
+        $component = $component->where('deleted_at','=',null);
+
+        if($limit > 0){
+            $page   = ($page-1) * $limit;
+            
+            $result = $component->orderBy($orderBy,$order)->skip($page)->take($limit)->get();
+            
+        }else{
+
+            $result = $component->orderBy($orderBy,$order)->get();
         }
 
         return response()->json([
