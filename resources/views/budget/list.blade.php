@@ -15,7 +15,7 @@
             <li>
                 <a href="#" class="active">
                     <span>
-                       Project
+                       Projects
                     </span>
                     <i class="ms-2 bi bi-list-ul"></i>
                 </a>

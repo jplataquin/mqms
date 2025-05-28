@@ -218,7 +218,8 @@ class BudgetController extends Controller
         $component = Component::findOrFail($id);
 
         $component_items = ComponentItem::where('component_id',$id)
-        ->where('deleted_at',null);
+        ->where('deleted_at',null)
+        ->get();
 
         $component_item_arr = [];
 
@@ -227,7 +228,7 @@ class BudgetController extends Controller
                 'data' => $component_item
             ];
         }
-        
+
         return view('budget/component_display',[
             'component'             => $component,
             'component_item_arr'    => $component_item_arr 

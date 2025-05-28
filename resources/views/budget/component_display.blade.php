@@ -15,7 +15,7 @@
             <li>
                 <a href="#" class="active">
                     <span>
-                       Component
+                       Component Items
                     </span>
                     <i class="ms-2 bi bi-list-ul"></i>
                 </a>
@@ -26,7 +26,7 @@
 
     <div class="folder-form-container">
         <div class="folder-form-tab">
-            Component
+            Component Item
         </div>
         <div class="folder-form-body">
             <div class="row mb-3">
