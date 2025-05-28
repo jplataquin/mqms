@@ -85,7 +85,7 @@
                 <div class="list-group">
                     @foreach($draft as $draft_po)
                        
-                        <a class="list-group-item list-group-item-action" href="/purchase_order/{{$draft_po->id}}">PO{{str_pad($draft->id,6,0,STR_PAD_LEFT)}}</a>
+                        <a class="list-group-item list-group-item-action" href="/purchase_order/{{$draft_po->id}}">PO{{str_pad($draft_po->id,6,0,STR_PAD_LEFT)}}</a>
                        
                     @endforeach
                 </div>
