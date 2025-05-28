@@ -1403,7 +1403,7 @@ class MaterialQuantityRequestController extends Controller
 
             }else if($po->status == 'DRFT'){
                 
-                $draft = $po;
+                $draft[] = $po;
 
             }else if($po->status == 'PEND'){
 
