@@ -229,9 +229,12 @@ class BudgetController extends Controller
             ];
         }
 
+        $unit_options = Unit::toOptions();
+
         return view('budget/component_display',[
             'component'             => $component,
-            'component_item_arr'    => $component_item_arr 
+            'component_item_arr'    => $component_item_arr,
+            'unit_options'          => $unit_options
         ]);
     }
 }

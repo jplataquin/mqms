@@ -466,8 +466,6 @@ class ContractItemController extends Controller
 
     public function _list(Request $request){
 
-        //todo check role
-
         $section_id = (int) $request->input('section_id') ?? 0;
         $page       = (int) $request->input('page')     ?? 1;
         $limit      = (int) $request->input('limit')    ?? 0;

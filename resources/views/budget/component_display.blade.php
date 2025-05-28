@@ -65,10 +65,10 @@
                         {{$ci->data->name}}
                     </td>
                     <td>
-                        {{ number_format($ci->data->quantity,2) }}
+                        {{ number_format($ci->data->quantity,2) }} {{ $unit_options[$ci->data->unit_id]->text }}
                     </td>
                     <td>
-                         {{ number_format($ci->data->price,2) }}
+                         {{ number_format($ci->data->budget_price,2) }}
                     </td>
                     <td>
                     </td>
