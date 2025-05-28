@@ -48,19 +48,14 @@
                         Item
                     </th>
                     <th>
-                        Quantity
+                        Budget
+                    </th>
+                
+                    <th>
+                        Pending Request
                     </th>
                     <th>
-                        Price
-                    </th>
-                    <th>
-                        Total
-                    </th>
-                    <th>
-                        Pending
-                    </th>
-                    <th>
-                        Approved
+                        Approved Request
                     </th>
                 </tr>
             </thead>
@@ -73,17 +68,12 @@
                     <td>
                         {{ number_format($ci->data->quantity,2) }} {{ $ci->unit_text }}
                     </td>
+                   
                     <td>
-                         {{ number_format($ci->data->budget_price,2) }}
-                    </td>
-                    <td>
-                    </td>
-
-                    <td>
-                        {{ number_format($ci->material_request_pending_quantity,2) }}
+                        {{ number_format($ci->material_request_pending_quantity,2) }} {{ $ci->unit_text }}
                     </td>
                      <td>
-                        {{ number_format($ci->material_request_approve_quantity,2) }}
+                        {{ number_format($ci->material_request_approve_quantity,2) }} {{ $ci->unit_text }}
                     </td>
                 </tr>
 
