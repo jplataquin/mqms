@@ -267,6 +267,23 @@ class BudgetController extends Controller
 
     private function getMaterialRequestApproveQuantity($component_item_id){
 
-        return 0;
+         $mqr_items = MaterialQuantityRequestItem::where('component_item_id',$component_item_id)
+        ->where('status','APRV')
+        ->get();
+
+        $total = 0;
+
+        foreach($mqr_items as $mqri){
+            
+            $material_quantity = MaterialQuantity::where('component_item_id',$component_item_id)
+            ->where('material_item_id',$mqri->material_item_id)
+            ->first();
+
+            if(!$material_quantity) continue;
+
+            $total = $total + ($mqri->requested_quantity * $material_quantity->equivalent);
+        }
+
+        return $total;
     }
 }
