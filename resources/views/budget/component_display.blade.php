@@ -40,21 +40,40 @@
         </div>
     </div>
     
-    <div class="container" id="list">
-        <table class="w-100 table">
+    <ul>
+        <li>
+            Project
+            <ul>
+                <li>
+                    Section
+                    <ul>
+                        <li>
+                            Contract Item<
+                            <ul>
+                                <li>Component</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    <ul>
+        
+    <div class="container overflow-scroll" id="list">
+        <table class="table">
             <thead>
                 <tr>
-                    <th>
+                    <th style="min-width:300px">
                         Item
                     </th>
-                    <th>
+                    <th style="min-width:100px">
                         Budget
                     </th>
                 
-                    <th>
+                    <th style="min-width:100px">
                         Pending Request
                     </th>
-                    <th>
+                    <th style="min-width:100px">
                         Approved Request
                     </th>
                 </tr>
