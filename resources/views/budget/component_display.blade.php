@@ -48,7 +48,7 @@
                     Section
                     <ul>
                         <li>
-                            Contract Item<
+                            Contract Item
                             <ul>
                                 <li>Component</li>
                             </ul>
@@ -57,8 +57,8 @@
                 </li>
             </ul>
         </li>
-    <ul>
-        
+    </ul>
+
     <div class="container overflow-scroll" id="list">
         <table class="table">
             <thead>
