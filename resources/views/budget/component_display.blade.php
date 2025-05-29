@@ -66,14 +66,14 @@
                     <th style="min-width:300px">
                         Item
                     </th>
-                    <th style="min-width:100px">
+                    <th style="min-width:200px">
                         Budget
                     </th>
                 
-                    <th style="min-width:100px">
+                    <th style="min-width:200px">
                         Pending Request
                     </th>
-                    <th style="min-width:100px">
+                    <th style="min-width:200px">
                         Approved Request
                     </th>
                 </tr>
