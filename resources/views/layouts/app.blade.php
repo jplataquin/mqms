@@ -70,6 +70,12 @@
                         
                         <li class="menu-item">
                             <div class="nav-item">
+                                <a href="/budget" hx-select="#content" hx-target="#main">Budget</a>
+                            </div>          
+                        </li>
+
+                        <li class="menu-item">
+                            <div class="nav-item">
                                 <a href="/projects" hx-select="#content" hx-target="#main">Projects</a>
                             </div>          
                         </li>
