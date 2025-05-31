@@ -24,6 +24,27 @@
     </div>
     <hr>
 
+    <table class="record-table-horizontal">
+        <tbody>
+            <tr>
+                <th>Project</th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Section</th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Contract Item</th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Component</th>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
     <div class="folder-form-container">
         <div class="folder-form-tab">
             Component Item
@@ -39,25 +60,7 @@
             </div>
         </div>
     </div>
-    
-    <ul>
-        <li>
-            Project
-            <ul>
-                <li>
-                    Section
-                    <ul>
-                        <li>
-                            Contract Item
-                            <ul>
-                                <li>Component</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-    </ul>
+
 
     <div class="container overflow-scroll" id="list">
         <table class="table">
