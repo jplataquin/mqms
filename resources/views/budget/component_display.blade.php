@@ -28,19 +28,27 @@
         <tbody>
             <tr>
                 <th>Project</th>
-                <td></td>
+                <td>
+                    <a href="/budget/project/{{$project->id}}">{{$project->name}}</a>
+                </td>
             </tr>
             <tr>
                 <th>Section</th>
-                <td></td>
+                <td>
+                    <a href="/budget/section{{$section->id}}">{{$section->name}}</a>
+                </td>
             </tr>
             <tr>
                 <th>Contract Item</th>
-                <td></td>
+                <td>
+                    <a href="/budget/contract_item/{{$contract_item->id}}">{{$contract_item->name}}</a>
+                </td>
             </tr>
             <tr>
                 <th>Component</th>
-                <td></td>
+                <td>
+                    <a href="/budget/component/{{$component->id}}">{{$component->name}}</a>
+                </td>
             </tr>
         </tbody>
     </table>

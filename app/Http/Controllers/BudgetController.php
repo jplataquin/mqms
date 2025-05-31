@@ -236,10 +236,17 @@ class BudgetController extends Controller
             ];
         }
 
+        $contract_item = $component->ContractItem;
+        $section       = $contract_item->Section;
+        $cproject       = $section->Project;
 
         return view('budget/component_display',[
             'component'             => $component,
-            'component_item_arr'    => $component_item_arr
+            'component_item_arr'    => $component_item_arr,
+            'project'               => $project,
+            'section'               => $section,
+            'contract_item'         => $contract_item,
+            'component'             => $component
         ]);
     }
 
