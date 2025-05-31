@@ -229,12 +229,9 @@ class UserController extends Controller
 
            $password    = $request->input('password') ?? '';
            $repassword  = $request->input('repassword') ?? '';
-           $id          = $request->input('id') ?? 0;
+        
 
            $validator = Validator::make($request->all(),[
-                'id' =>[
-                    'required'
-                ],
                'password' => [
                     'required',
                     'min:6',
@@ -258,7 +255,7 @@ class UserController extends Controller
            
 
 
-           $user = User::find($id);
+           $user = auth()->user();
 
            if(!$user){
                 return response()->json([
@@ -269,15 +266,15 @@ class UserController extends Controller
            }
 
 
-            if(!$this->hasAccess(['user:all:reset_user_password'])){
+            // if(!$this->hasAccess(['user:all:reset_user_password'])){
 
-                 return response()->json([
-                    'status'    => 0,
-                    'message'   => 'Access Denied',
-                    'data'      => []
-                ]);
+            //      return response()->json([
+            //         'status'    => 0,
+            //         'message'   => 'Access Denied',
+            //         'data'      => []
+            //     ]);
 
-            }
+            // }
 
 
            $hash = Hash::make($password);
