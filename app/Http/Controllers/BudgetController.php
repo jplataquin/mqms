@@ -238,8 +238,9 @@ class BudgetController extends Controller
 
         $contract_item = $component->ContractItem;
         $section       = $contract_item->Section;
-        $cproject       = $section->Project;
+        $project       = $section->Project;
 
+        
         return view('budget/component_display',[
             'component'             => $component,
             'component_item_arr'    => $component_item_arr,
