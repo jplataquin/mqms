@@ -64,26 +64,27 @@
                         <div class="container overflow-scroll">
                             <table class="table">
                                 <tr>
-                                    <th style="min-width:200px">
+                                    <th class="text-center" style="min-width:200px">
                                         Budget
                                     </th>
                                 
-                                    <th style="min-width:200px">
+                                    <th class="text-center" style="min-width:200px">
                                         Pending Request
                                     </th>
-                                    <th style="min-width:200px">
+                                    <th class="text-center" style="min-width:200px">
                                         Approved Request
                                     </th>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td class="text-center">
                                         {{ number_format($ci->data->quantity,2) }} {{ $ci->unit_text }}
                                     </td>
                                 
-                                    <td>
+                                    <td class="text-center">
                                         {{ number_format($ci->material_request_pending_quantity,2) }} {{ $ci->unit_text }}
                                     </td>
-                                    <td>
+                                    
+                                    <td class="text-center">
                                         {{ number_format($ci->material_request_approve_quantity,2) }} {{ $ci->unit_text }}
                                     </td>
                                 </tr>
