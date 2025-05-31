@@ -35,7 +35,7 @@
             <tr>
                 <th>Section</th>
                 <td>
-                    <a href="/budget/section/{{$section->id}}">{{$section->name}}</a>
+                    {{$section->name}}
                 </td>
             </tr>
         </tbody>
