@@ -70,11 +70,11 @@
     </div>
 
 
-    <div class="container overflow-scroll" id="list">
+    <div class="container" id="list">
         <table class="table">
             <thead>
                 <tr>
-                    <th style="min-width:300px">
+                    <th>
                         Item
                     </th>
                     <!--
@@ -99,8 +99,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <table>
+                    <td class="overflow-scroll">
+                        
+                        <table class="table">
                             <tr>
                                 <th style="min-width:200px">
                                     Budget
