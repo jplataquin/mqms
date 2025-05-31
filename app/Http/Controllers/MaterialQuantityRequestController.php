@@ -1096,7 +1096,7 @@ class MaterialQuantityRequestController extends Controller
         
 
         //If current user has no permission to view all records only show records they own
-        if(! $this->hasAccess(['material_request:all:view']) ){
+        if(!$this->hasAccess(['material_request:all:view']) && $this->hasAccess(['material_request:own:view'])){
             $materialQuantityRequest = $materialQuantityRequest->where('created_by','=',$user_id);
         }
     
