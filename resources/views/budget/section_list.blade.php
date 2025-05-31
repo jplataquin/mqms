@@ -24,6 +24,18 @@
     </div>
 <hr>
 
+
+    <table class="record-table-horizontal mb-3"  hx-boost="true" hx-select="#content" hx-target="#main">
+        <tbody>
+            <tr>
+                <th>Project</th>
+                <td>
+                    <a href="/budget/project/{{$project->id}}">{{$project->name}}</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
     <div class="folder-form-container">
         <div class="folder-form-tab">
             Section
