@@ -47,7 +47,7 @@
             <tr>
                 <th>Component</th>
                 <td>
-                    <a href="/budget/component/{{$component->id}}">{{$component->name}}</a>
+                   {{$component->name}}
                 </td>
             </tr>
         </tbody>
