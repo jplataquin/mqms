@@ -73,7 +73,7 @@
     <div class="container" id="list">
         
             @foreach($component_item_arr as $ci)
-                <div class="border border-secondary">
+                <div class="border border-secondary mb-3">
                         {{$ci->data->name}}
             
                         <div class="container overflow-scroll">
