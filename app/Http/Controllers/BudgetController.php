@@ -166,8 +166,13 @@ class BudgetController extends Controller
         
         $contract_item = ContractItem::findOrFail($id);
 
+        $section       = $contract_item->Section;
+        $project       = $section->Project;
+
         return view('budget/component_list',[
-            'contract_item' => $contract_item
+            'contract_item' => $contract_item,
+            'section'       => $section,
+            'project'       => $project
         ]);
     }
 
@@ -207,6 +212,7 @@ class BudgetController extends Controller
 
             $result = $component->orderBy($orderBy,$order)->get();
         }
+        
 
         return response()->json([
             'status'    => 1,
@@ -240,7 +246,7 @@ class BudgetController extends Controller
         $section       = $contract_item->Section;
         $project       = $section->Project;
 
-        
+
         return view('budget/component_display',[
             'component'             => $component,
             'component_item_arr'    => $component_item_arr,
