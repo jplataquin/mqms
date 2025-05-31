@@ -53,6 +53,7 @@
         </tbody>
     </table>
 
+    <!--
     <div class="folder-form-container">
         <div class="folder-form-tab">
             Component Item
@@ -68,7 +69,7 @@
             </div>
         </div>
     </div>
-
+-->
 
     <div class="container" id="list">
         
