@@ -71,69 +71,42 @@
 
 
     <div class="container" id="list">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        Item
-                    </th>
-                    <!--
-                    <th style="min-width:200px">
-                        Budget
-                    </th>
-                
-                    <th style="min-width:200px">
-                        Pending Request
-                    </th>
-                    <th style="min-width:200px">
-                        Approved Request
-                    </th>
-                    -->
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($component_item_arr as $ci)
-                <tr>
-                    <td>
+        
+            @foreach($component_item_arr as $ci)
+                <div class="border border-secondary">
                         {{$ci->data->name}}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="overflow-scroll">
-                        
-                        <table class="table">
-                            <tr>
-                                <th style="min-width:200px">
-                                    Budget
-                                </th>
-                            
-                                <th style="min-width:200px">
-                                    Pending Request
-                                </th>
-                                <th style="min-width:200px">
-                                    Approved Request
-                                </th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    {{ number_format($ci->data->quantity,2) }} {{ $ci->unit_text }}
-                                </td>
-                            
-                                <td>
-                                    {{ number_format($ci->material_request_pending_quantity,2) }} {{ $ci->unit_text }}
-                                </td>
-                                <td>
-                                    {{ number_format($ci->material_request_approve_quantity,2) }} {{ $ci->unit_text }}
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-
-                @endforeach
-            </tbody>
-        </table>
+            
+                        <div class="container overflow-scroll">
+                            <table class="table">
+                                <tr>
+                                    <th style="min-width:200px">
+                                        Budget
+                                    </th>
+                                
+                                    <th style="min-width:200px">
+                                        Pending Request
+                                    </th>
+                                    <th style="min-width:200px">
+                                        Approved Request
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {{ number_format($ci->data->quantity,2) }} {{ $ci->unit_text }}
+                                    </td>
+                                
+                                    <td>
+                                        {{ number_format($ci->material_request_pending_quantity,2) }} {{ $ci->unit_text }}
+                                    </td>
+                                    <td>
+                                        {{ number_format($ci->material_request_approve_quantity,2) }} {{ $ci->unit_text }}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                </div>
+            @endforeach
+        
     </div>
 
    
