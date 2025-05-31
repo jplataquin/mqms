@@ -24,7 +24,7 @@
     </div>
     <hr>
 
-    <table class="record-table-horizontal">
+    <table class="record-table-horizontal mb-3">
         <tbody>
             <tr>
                 <th>Project</th>
