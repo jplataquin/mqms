@@ -24,7 +24,7 @@
     </div>
     <hr>
 
-    <table class="record-table-horizontal mb-3">
+    <table class="record-table-horizontal mb-3"  hx-boost="true" hx-select="#content" hx-target="#main">
         <tbody>
             <tr>
                 <th>Project</th>
@@ -53,23 +53,7 @@
         </tbody>
     </table>
 
-    <!--
-    <div class="folder-form-container">
-        <div class="folder-form-tab">
-            Component Item
-        </div>
-        <div class="folder-form-body">
-            <div class="row mb-3">
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <label>Query</label>
-                        <input type="text" id="query" class="form-control"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
--->
+
 
     <div class="container" id="list">
         
