@@ -41,7 +41,7 @@
             <tr>
                 <th>Contract Item</th>
                 <td>
-                    <a href="/budget/contract_item/{{$contract_item->id}}">{{$contract_item->name}}</a>
+                    {{$contract_item->name}}
                 </td>
             </tr>
         </tbody>

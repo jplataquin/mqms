@@ -24,6 +24,23 @@
     </div>
 <hr>
 
+    <table class="record-table-horizontal mb-3">
+        <tbody>
+            <tr>
+                <th>Project</th>
+                <td>
+                    <a href="/budget/project/{{$project->id}}">{{$project->name}}</a>
+                </td>
+            </tr>
+            <tr>
+                <th>Section</th>
+                <td>
+                    <a href="/budget/section/{{$section->id}}">{{$section->name}}</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
     <div class="folder-form-container">
         <div class="folder-form-tab">
             Contract Item

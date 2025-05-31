@@ -112,10 +112,12 @@ class BudgetController extends Controller
 
     public function contract_item_list($id){
         
-        $section = Section::findOrFail($id);
+        $section        = Section::findOrFail($id);
+        $project        = $section->Project;
 
         return view('budget/contract_item_list',[
-            'section' => $section
+            'section' => $section,
+            'project' => $project
         ]);
     }
 
