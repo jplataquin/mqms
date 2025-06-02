@@ -33,7 +33,7 @@
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>Sort By</label>
-                    <select class="form-control" id="sortSelect">
+                    <select class="form-select" id="sortSelect">
                         <option value="1" selected>Latest Entry</option>
                         <option value="2">Oldest Entry</option>
                     </select>
@@ -62,7 +62,7 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label>Date</label>
-                        <select class="form-control" id="dateSelect">
+                        <select class="form-select" id="dateSelect">
                             <option value="created_at" selected>Created At</option>
                             <option value="date_needed">Date Needed</option>
                         </select>
@@ -87,7 +87,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label>Project</label>
-                        <select class="form-control" id="projectSelect">
+                        <select class="form-select" id="projectSelect">
                             <option value=""> - </option>
                             @foreach($projects as $project)
                                 <option value="{{$project->id}}">{{$project->name}}</option>
@@ -99,7 +99,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label>Section</label>
-                        <select class="form-control" id="sectionSelect">
+                        <select class="form-select" id="sectionSelect">
                         </select>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label>Contract Item</label>
-                        <select class="form-control" id="contractItemSelect">
+                        <select class="form-select" id="contractItemSelect">
                         </select>
                     </div>
                 </div>
@@ -117,7 +117,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label>Component</label>
-                        <select class="form-control" id="componentSelect">
+                        <select class="form-select" id="componentSelect">
                         </select>
                     </div>
                 </div>             
