@@ -30,35 +30,58 @@
     </div>
     <div class="folder-form-body">
         <div class="row">
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label>Sort By</label>
-                        <select class="form-control" id="sortSelect">
-                            <option value="1" selected>Latest Entry</option>
-                            <option value="2">Oldest Entry</option>
-                        </select>
-                    </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>Sort By</label>
+                    <select class="form-control" id="sortSelect">
+                        <option value="1" selected>Latest Entry</option>
+                        <option value="2">Oldest Entry</option>
+                    </select>
                 </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label>ID</label>
-                        <input type="text" id="query" class="form-control"/>
-                    </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>ID</label>
+                    <input type="text" id="query" class="form-control"/>
                 </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label>Status</label>
-                        <select class="form-control" id="statusSelect">
-                            <option value=""> - </option>
-                            <option value="PEND">Pending</option>
-                            <option value="APRV">Approved</option>
-                            <option value="DPRV">Disapproved</option>
-                        </select>
-                    </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>Status</label>
+                    <select class="form-control" id="statusSelect">
+                        <option value=""> - </option>
+                        <option value="PEND">Pending</option>
+                        <option value="APRV">Approved</option>
+                        <option value="DPRV">Disapproved</option>
+                    </select>
                 </div>
-                
+            </div>
         </div>
-       
+
+        <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <select class="form-control" id="dateSelect">
+                            <option value="created_at" selected>Created At</option>
+                            <option value="date_needed">Date Needed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>From</label>
+                        <input id="form" class="form-control"/>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>To</label>
+                        <input id="to" class="form-control"/>
+                    </div>
+                </div>
+        </div>
+
         <div class="row">
                 
                 <div class="col-lg-6">
