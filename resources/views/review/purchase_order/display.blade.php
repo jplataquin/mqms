@@ -122,10 +122,11 @@
                                     $remaining_quantity = 0;
 
                                     if(isset($remaining_quantity_arr[$id])){
-                                        if( isset($remaining_quantity_arr[$id][$item->material_item_id]) ){
-                                            $remaining_quantity = $remaining_quantity_arr[$id][$item->material_item_id];
 
-                                            //echo $item->material_item_id.' '.$id.' '.$remaining_quantity;
+                                        if( isset($remaining_quantity_arr[$id][$item->material_item_id]) ){
+
+                                            $remaining_quantity = round( $remaining_quantity_arr[$id][$item->material_item_id], 2);
+
                                         }
                                     }
                                 @endphp
