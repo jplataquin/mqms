@@ -25,30 +25,30 @@ class ObjectivesController extends Controller
         $to         = $request->input('to');
 
 
-        $material_requests = MaterialQuantityRequest::get();
+        $material_requests = MaterialQuantityRequest::where('status','APRV');
 
-        // if($project_id){
+        if($project_id){
 
-        //     $project = Project::find($project_id);
+            $project = Project::find($project_id);
 
-        //     if(!$project){
-        //         return response()->json([
-        //             'status'    => 0,
-        //             'message'   => 'Project not found',
-        //             'data'      => []
-        //         ]);
-        //     }
+            if(!$project){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Project not found',
+                    'data'      => []
+                ]);
+            }
 
-        //     if($project->status != 'ACTV'){
-        //         return response()->json([
-        //             'status'    => 0,
-        //             'message'   => 'Project not in status active',
-        //             'data'      => []
-        //         ]);
-        //     }
+            if($project->status != 'ACTV'){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Project not in status active',
+                    'data'      => []
+                ]);
+            }
 
-        //     $material_requests = $material_requests->where('project_id',$project_id);
-        // }
+            $material_requests = $material_requests->where('project_id',$project_id);
+        }
         
         if($from == '' && $to == ''){
             $from = Carbon::now();
@@ -59,15 +59,15 @@ class ObjectivesController extends Controller
             
         }
 
-        // $material_requests = $material_requests->where('date_needed','!=',null);
+        $material_requests = $material_requests->where('date_needed','!=',null);
 
-        // $material_requests = $material_requests->where('date_needed','>=',$from->format('Y-m-d'));
+        $material_requests = $material_requests->where('date_needed','>=',$from->format('Y-m-d'));
                 
-        // $material_requests = $material_requests->where('date_needed','<=',$to->format('Y-m-d'));
+        $material_requests = $material_requests->where('date_needed','<=',$to->format('Y-m-d'));
 
-        // $material_requests = $material_requests->orderBy('date_needed','DESC');
+        $material_requests = $material_requests->orderBy('date_needed','DESC');
 
-        //$material_requests = $material_requests->get();
+        $material_requests = $material_requests->get();
 
         $project_arr = [];
 
