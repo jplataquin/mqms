@@ -121,8 +121,7 @@ class ObjectivesController extends Controller
                 'result'        => $result,
                 'project_arr'   => $project_arr,
                 'from'          => $from->format('Y-m-d'),
-                'to'            => $to->format('Y-m-d'),
-                'material_requests' => $material_requests
+                'to'            => $to->format('Y-m-d')
             ]
         ]);
     }
