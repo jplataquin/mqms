@@ -22,9 +22,7 @@
             </li>
         </ul>
     </div>
-<hr>
-
-    <div class="row">
+    <hr>
 
     <div class="row">
         <div class="col-lg-12">
@@ -47,7 +45,7 @@
         </div>
     </div>
 
-   
+</div>
     
 <script type="module">
     import {$q,$el,Template} from '/adarna.js';

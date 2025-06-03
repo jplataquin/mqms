@@ -164,4 +164,7 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     //Project Studio
     Route::get('/project/studio/node',[App\Http\Controllers\ProjectStudio\NodeController::class, 'data']);
     Route::get('/project/studio/node/children',[App\Http\Controllers\ProjectStudio\NodeController::class, 'children']);
+
+    //Objectives
+    Route::get('/objectives/material', [App\Http\Controllers\ObjectivesController::class, '_material']);
 });

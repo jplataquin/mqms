@@ -69,10 +69,20 @@ class ObjectivesController extends Controller
 
         $material_requests = $material_requests->get();
 
+        $project_arr = [];
+
         $result = [];
 
         foreach($material_requests as $mr){
-           $proj = Project::find($mr->project_id);
+
+            if(!isset($project_arr[$mr->project_id])){
+
+                $proj = Project::find($mr->project_id);
+
+                $project_arr[$mr->project_id] = $proj;
+            }
+
+           
 
            if(!isset($result[$mr->project_id])){
                 $result[$mr->project_id] = [];
@@ -97,9 +107,19 @@ class ObjectivesController extends Controller
                 }
            }
 
+
+           $result[$mr->project_id][$mr->id]['material_request'] = $mr;
         
         }
 
 
+        return response()->json([
+            'status' => 1,
+            'message' => '',
+            'data' => [
+                'result'        => $result,
+                'project_arr'   => $project_arr
+            ]
+        ]);
     }
 }

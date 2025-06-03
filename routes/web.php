@@ -169,11 +169,15 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/report/purchase/print', [App\Http\Controllers\Report\PurchaseReportController::class, 'print']);
     Route::get('/report/purchase/fix', [App\Http\Controllers\Report\PurchaseReportController::class, 'fix_po_contract_item_id']);
 
+    //Objectives
+    Route::get('/objectives/material', [App\Http\Controllers\Report\ObjectivesController::class, 'material']);
+    
 
     Route::get('/users', [App\Http\Controllers\UserController::class, 'list']);
     Route::get('/user/create', [App\Http\Controllers\UserController::class, 'create']);
     Route::get('/user/{id}', [App\Http\Controllers\UserController::class, 'display']);
     Route::get('/me',[App\Http\Controllers\UserController::class, 'me']);
+
 
     Route::get('/test_mq/{id}',[App\Http\Controllers\MaterialQuantityController::class, 'test_mq']);
 });
