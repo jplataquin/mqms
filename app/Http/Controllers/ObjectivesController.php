@@ -96,7 +96,7 @@ class ObjectivesController extends Controller
                 $result[$mr->project_id][$mr->id]['items'] = [];
            }
 
-           $items = MaterialQuantityRequestItem::where('material_quantity_request_id',$mr->id)->with('material_item')->get();
+           $items = MaterialQuantityRequestItem::where('material_quantity_request_id',$mr->id)->get();
            
            foreach($items as $item){
                 
