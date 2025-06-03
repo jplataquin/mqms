@@ -25,7 +25,7 @@ class ObjectivesController extends Controller
         $to         = $request->input('to');
 
 
-        $material_requests = MaterialQuantityRequest::where('status','ACTV');
+        $material_requests = MaterialQuantityRequest::get();
 
         // if($project_id){
 
@@ -67,7 +67,7 @@ class ObjectivesController extends Controller
 
         // $material_requests = $material_requests->orderBy('date_needed','DESC');
 
-        $material_requests = $material_requests->get();
+        //$material_requests = $material_requests->get();
 
         $project_arr = [];
 
