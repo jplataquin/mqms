@@ -118,7 +118,9 @@ class ObjectivesController extends Controller
             'message' => '',
             'data' => [
                 'result'        => $result,
-                'project_arr'   => $project_arr
+                'project_arr'   => $project_arr,
+                'from'          => $from,
+                'to'            => $to
             ]
         ]);
     }
