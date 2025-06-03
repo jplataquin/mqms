@@ -104,7 +104,7 @@ class ObjectivesController extends Controller
                 $material_item = MaterialItem::find($item->material_item_id);
 
                 if($material_item){
-                    $result[$mr->project_id][$mr->id]['items'][] = $material_item->formatedName + 'x' + number_format($item->quantity,2); 
+                    $result[$mr->project_id][$mr->id]['items'][] = $material_item->formatted_name. 'x' .number_format($item->quantity,2); 
                 }
            }
 
