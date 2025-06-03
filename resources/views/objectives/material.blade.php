@@ -34,7 +34,7 @@
     function showData(){
         window.util.blockUI();
 
-        window.util.$post('/api/objectives/material',{
+        window.util.$get('/api/objectives/material',{
         
         }).then(reply=>{
 
@@ -51,7 +51,7 @@
 
 
     showData();
-    
+
 </script>
 </div>
 @endsection
