@@ -61,9 +61,9 @@ class ObjectivesController extends Controller
 
         $material_requests = $material_requests->where('date_needed','!=',null);
 
-        $material_requests = $material_requests->where('date_needed','>=',$from->format('Y-m-d'));
+        //$material_requests = $material_requests->where('date_needed','>=',$from->format('Y-m-d'));
                 
-        $material_requests = $material_requests->where('date_needed','<=',$to->format('Y-m-d'));
+        //$material_requests = $material_requests->where('date_needed','<=',$to->format('Y-m-d'));
 
         $material_requests = $material_requests->orderBy('date_needed','DESC');
 
