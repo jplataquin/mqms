@@ -52,18 +52,18 @@ class ObjectivesController extends Controller
         
         if($from == '' && $to == ''){
             $from = Carbon::now();
-            $from->format('Y-m-d');
+          
             
             $to = Carbon::now();
             $to->addDays(5);
-            $to->format('Y-m-d');
+            
         }
 
         $material_requests = $material_requests->where('date_needed','!=',null);
 
-        $material_requests = $material_requests->where('date_needed','>=',$from);
+        $material_requests = $material_requests->where('date_needed','>=',$from->format('Y-m-d'));
                 
-        $material_requests = $material_requests->where('date_needed','<=',$to);
+        $material_requests = $material_requests->where('date_needed','<=',$to->format('Y-m-d'));
 
         $material_requests = $material_requests->orderBy('date_needed','DESC');
 
@@ -119,8 +119,8 @@ class ObjectivesController extends Controller
             'data' => [
                 'result'        => $result,
                 'project_arr'   => $project_arr,
-                'from'          => $from,
-                'to'            => $to
+                'from'          => $from->format('Y-m-d'),
+                'to'            => $to->format('Y-m-d')
             ]
         ]);
     }
