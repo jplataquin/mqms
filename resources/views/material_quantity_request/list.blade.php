@@ -201,7 +201,7 @@
        format: { 
             toValue(date,format,local) {
                 
-                let dateObject = Datepicker.parseDate(date_needed.value, 'M dd, yyyy')
+                let dateObject = Datepicker.parseDate(from.value, 'M dd, yyyy')
                 
                 return dateObject
             },
@@ -219,7 +219,7 @@
         format: { 
             toValue(date,format,local) {
                 
-                let dateObject = Datepicker.parseDate(date_needed.value, 'M dd, yyyy')
+                let dateObject = Datepicker.parseDate(to.value, 'M dd, yyyy')
                 
                 return dateObject
             },
