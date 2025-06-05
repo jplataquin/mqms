@@ -281,6 +281,9 @@
             section_id: sectionSelect.value,
             contract_item_id: contractItemSelect.value,
             component_id: componentSelect.value,
+            from: from.value,
+            to: to.value,
+            date_filter: dateSelect.value,
             limit: 10
         }).then(reply=>{
 

@@ -1083,11 +1083,16 @@ class MaterialQuantityRequestController extends Controller
         $section_id         = (int) $request->input('section_id')  ?? 0;
         $contract_item_id   = (int) $request->input('contract_item_id') ?? 0;
         $component_id       = (int) $request->input('component_id')  ?? 0;
-    
+        
         $query              = (int) $request->input('query')    ?? 0;
         $status             = $request->input('status')    ?? '';
         $orderBy            = $request->input('order_by')       ?? 'id';
         $order              = $request->input('order')          ?? 'DESC';
+        
+        $date_filter        = $request->input('date_filter');
+        $from               = $request->input('from');
+        $to                 = $request->input('to');
+
         $result             = [];
 
         $materialQuantityRequest = new MaterialQuantityRequest();
@@ -1121,6 +1126,20 @@ class MaterialQuantityRequestController extends Controller
 
         if($status){
             $materialQuantityRequest = $materialQuantityRequest->where('status','=',$status);
+        }
+
+        if( $from && in_array($date_filter,['date_needed','created_at']) ){
+
+            $dt_from = DateTime::createFromFormat('M d, Y', $from);
+            
+            $materialQuantityRequest = $materialQuantityRequest->where($date_filter,'>=', $dt_from->format('Y-m-d 00:00:00'));
+        }
+
+        if( $to && in_array($date_filter,['date_needed','created_at']) ){
+
+            $dt_to = DateTime::createFromFormat('M d, Y', $to);
+            
+            $materialQuantityRequest = $materialQuantityRequest->where($date_filter,'<=', $dt_from->format('Y-m-d 23:59:59'));
         }
 
         if($limit > 0){
