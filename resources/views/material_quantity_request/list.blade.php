@@ -167,6 +167,7 @@
 
 <script type="module">
     import {$q,Template,$el,$util} from '/adarna.js';
+    import '/vanilla-datepicker.js';
 
     const list                  = $q('#list').first();
     const query                 = $q('#query').first();
@@ -180,6 +181,9 @@
     const sortSelect            = $q('#sortSelect').first();
     const cancelBtn             = $q('#cancelBtn').first();
     const createBtn             = $q('#createBtn').first();
+    const from                  = $q('#from').first();
+    const to                    = $q('#to').first();
+    const dateSelect            = $q('#dateSelect').first();
     
     let page            = 1;
     let order           = 'DESC';
@@ -191,6 +195,44 @@
         title:'Material Request',
         url:'/material_quantity_request'
     };
+    
+    const datepicker_from = new Datepicker(from, {
+       clearButton:true,
+       format: { 
+            toValue(date,format,local) {
+                
+                let dateObject = Datepicker.parseDate(date_needed.value, 'M dd, yyyy')
+                
+                return dateObject
+            },
+            toDisplay(date) {
+                let dateString = Datepicker.formatDate(date, 'M dd, yyyy')
+        
+                return dateString
+            },
+        },
+        todayHighlight: true,
+    }); 
+
+     const datepicker_to = new Datepicker(to, {
+        clearButton:true,
+        format: { 
+            toValue(date,format,local) {
+                
+                let dateObject = Datepicker.parseDate(date_needed.value, 'M dd, yyyy')
+                
+                return dateObject
+            },
+            toDisplay(date) {
+                let dateString = Datepicker.formatDate(date, 'M dd, yyyy')
+        
+                return dateString
+            },
+        },
+        todayHighlight: true,
+    }); 
+
+
 
     function reinitalize(){
         page = 1;
