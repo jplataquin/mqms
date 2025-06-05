@@ -1139,7 +1139,7 @@ class MaterialQuantityRequestController extends Controller
 
             $dt_to = DateTime::createFromFormat('M d, Y', $to);
             
-            $materialQuantityRequest = $materialQuantityRequest->where($date_filter,'<=', $dt_from->format('Y-m-d 23:59:59'));
+            $materialQuantityRequest = $materialQuantityRequest->where($date_filter,'<=', $dt_to->format('Y-m-d 23:59:59'));
         }
 
         if($limit > 0){
