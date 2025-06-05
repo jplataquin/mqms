@@ -138,7 +138,7 @@
 </div>
 
 
-<div class="container">
+            <div class="container">
                 <div class="table-responsive">
                     <table class="table border">
                         <thead>
@@ -149,7 +149,8 @@
                                 <th>Section</th>
                                 <th>Contract Item</th>
                                 <th>Component</th>
-                                <th>Date</th>
+                                <th>Date Needed</th>
+                                <th>Created At</th>
                             </tr>
                         </thead>
                         <tbody  id="list">
@@ -250,6 +251,7 @@
                 t.td(item.section.name);
                 t.td(item.contract_item.item_code+' '+item.contract_item.description);
                 t.td(item.component.name);
+                t.td(item.date_needed);
                 t.td(
                     $util.dateTime(
                         new Date(item.created_at)
