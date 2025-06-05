@@ -71,7 +71,7 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label>From</label>
-                        <input id="form" class="form-control"/>
+                        <input id="form" type="text" class="form-control"/>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -196,6 +196,7 @@
         url:'/material_quantity_request'
     };
     
+    console.log(from,to);
     const datepicker_from = new Datepicker(from, {
        clearButton:true,
        format: { 
