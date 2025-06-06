@@ -1067,7 +1067,7 @@ class MaterialQuantityRequestController extends Controller
     public function list(){
 
         $projects = Project::where('status','ACTV')->orderBy('name','ASC')->get();
-        $users    = Users::orderBy('name','ASC')->get();
+        $users    = User::orderBy('name','ASC')->get();
 
         return view('material_quantity_request/list',[
             'projects' => $projects,
