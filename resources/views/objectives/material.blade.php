@@ -71,7 +71,7 @@
         </div>
     </div>
 
-    <div class="container" id="list"></div>
+    <div class="container" id="list" hx-boost="true" hx-select="#content" hx-target="#main"></div>
     
 <script type="module">
     import {$q,$el,Template} from '/adarna.js';
@@ -140,7 +140,7 @@
                         t.h6(()=>{            
                             t.span(()=>{
                                 
-                                t.a({href:'#'},'MR'+material_request_id);
+                                t.a({href:'/material_request/'+material_request_id},'MR'+material_request_id);
 
                             });
 
@@ -150,7 +150,7 @@
                        
 
                         items.map(item=>{
-                            t.div({class:'ms-5 mb-3'},item);
+                            t.div({class:'ms-5 mt-3'},item);
                         });
 
                     });
