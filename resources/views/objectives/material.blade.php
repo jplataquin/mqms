@@ -126,7 +126,7 @@
         for(let project_id in result){
             
             let entry = t.div({class:'mb-5 pt-3'},()=>{
-                t.h6(project[project_id].name);
+                t.h4(project[project_id].name);
 
                 
                 let group_date = result[project_id];
