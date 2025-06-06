@@ -71,14 +71,18 @@
         </div>
     </div>
 
+    <div class="container" id="list"></div>
     
 <script type="module">
     import {$q,$el,Template} from '/adarna.js';
     import '/vanilla-datepicker.js';
 
+    const t = new Template();
+
     const from              = $q('#from').first();
     const to                = $q('#to').first();
     const projectSelect     = $q('#projectSelect').first();
+    const list              = $q('#list').first();
     
     const datepicker_from = new Datepicker(from, {
        clearButton:true,
@@ -115,6 +119,19 @@
         },
         todayHighlight: true,
     }); 
+
+
+    function render(result,project){
+
+        for(let project_id in result){
+
+            let entry = t.div({class:'mb-5'},()=>{
+                t.h6(project[project_id].name);
+            });
+
+            list.appendChild(entry);
+        }
+    }
 
     function showData(){
         window.util.blockUI();
