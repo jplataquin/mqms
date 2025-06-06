@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Validation\Rule;
 use App\Models\Unit;
+use App\Models\Users;
 use Carbon\Carbon;
 use DateTime;
 
@@ -1066,9 +1067,11 @@ class MaterialQuantityRequestController extends Controller
     public function list(){
 
         $projects = Project::where('status','ACTV')->orderBy('name','ASC')->get();
+        $users    = Users::orderBy('name','ASC')->get();
 
         return view('material_quantity_request/list',[
-            'projects' => $projects
+            'projects' => $projects,
+            'users'    => $users
         ]);
     }
 

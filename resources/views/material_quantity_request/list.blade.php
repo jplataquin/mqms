@@ -83,6 +83,20 @@
         </div>
 
         <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label>Requested By</labeL>
+                    <select class="form-select" id="requestedBy">
+                        <option value=""> - </option>
+                        @foreach($users as $user)
+                            <option value="{{$user->id}}">{{$user->naem}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
                 
                 <div class="col-lg-6">
                     <div class="form-group">
