@@ -89,7 +89,7 @@
                     <select class="form-select" id="requestedBy">
                         <option value=""> - </option>
                         @foreach($users as $user)
-                            <option value="{{$user->id}}">{{$user->naem}}</option>
+                            <option value="{{$user->id}}">{{$user->name}}</option>
                         @endforeach
                     </select>
                 </div>
