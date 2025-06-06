@@ -12,7 +12,7 @@ use Carbon\Carbon;
 class ObjectivesController extends Controller
 {
     public function material(){
-        $projects = Project::where('status','ACTV')->get();
+        $projects = Project::where('status','ACTV')->orderBy('name','ASC')->get();
 
         return view('objectives/material',[
             'projects' => $projects
