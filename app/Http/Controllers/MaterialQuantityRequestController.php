@@ -1086,7 +1086,8 @@ class MaterialQuantityRequestController extends Controller
         $section_id         = (int) $request->input('section_id')  ?? 0;
         $contract_item_id   = (int) $request->input('contract_item_id') ?? 0;
         $component_id       = (int) $request->input('component_id')  ?? 0;
-        
+        $requested_by       = (int) $request->input('requested_by') ?? null;
+
         $query              = (int) $request->input('query')    ?? 0;
         $status             = $request->input('status')    ?? '';
         $orderBy            = $request->input('order_by')       ?? 'id';
@@ -1143,6 +1144,10 @@ class MaterialQuantityRequestController extends Controller
             $dt_to = DateTime::createFromFormat('M d, Y', $to);
             
             $materialQuantityRequest = $materialQuantityRequest->where($date_filter,'<=', $dt_to->format('Y-m-d 23:59:59'));
+        }
+
+        if($requested_by){
+            $materialQuantityRequest = $materialQuantityRequest->where('created_by',$requested_by);
         }
 
         if($limit > 0){

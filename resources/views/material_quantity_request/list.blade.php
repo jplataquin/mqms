@@ -199,6 +199,7 @@
     const from                  = $q('#from').first();
     const to                    = $q('#to').first();
     const dateSelect            = $q('#dateSelect').first();
+    const requestedBy           = $q('#requestedBy').first();
     
     let page            = 1;
     let order           = 'DESC';
@@ -300,6 +301,7 @@
             from: from.value,
             to: to.value,
             date_filter: dateSelect.value,
+            requested_by: requestedBy.value,
             limit: 10
         }).then(reply=>{
 
