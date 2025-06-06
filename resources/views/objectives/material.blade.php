@@ -133,7 +133,7 @@
                 
                 for(let date_needed in group_date){
 
-                    t.div({class:'mb-5 pt'},()=>{
+                    t.div({class:'ms-5 mb-5 pt'},()=>{
 
                         t.h6(date_needed);
 
