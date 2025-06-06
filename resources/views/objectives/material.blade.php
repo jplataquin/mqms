@@ -124,43 +124,53 @@
     function render(result,project){
 
         for(let project_id in result){
-
+            
             let entry = t.div({class:'mb-5 pt-3'},()=>{
                 t.h6(project[project_id].name);
 
-                let material_requests = result[project_id];
+                
+                let group_date = result[project_id];
+                
+                for(let date_needed in group_date){
 
-                for(let material_request_id in material_requests){
-                    
-                    let material_request = material_requests[material_request_id].material_request;
-                    let items = material_requests[material_request_id].items;
+                    t.div({class:'mb-5 pt'},()=>{
 
-                    t.div({class:'ms-5 mb-3'},()=>{
-                    
-                        t.h6(()=>{            
-                            t.span(()=>{
-                                
-                                t.a({href:'/material_request/'+material_request_id},'MR'+material_request_id);
+                        t.h6({date_needed});
+
+                        let material_requests = group_date[date_needed];
+
+                        for(let material_request_id in material_requests){
+                            
+                            let items = material_requests[material_request_id].items;
+
+                            t.div({class:'ms-5 mb-3'},()=>{
+                            
+                                t.h6(()=>{            
+                                    t.span(()=>{
+                                        
+                                        t.a({href:'/material_request/'+material_request_id},'MR'+material_request_id);
+
+                                    });
+
+                                });               
+
+                                items.map(item=>{
+                                    t.div({class:'ms-5 mt-3'},item);
+                                });
 
                             });
-
-                            t.span(' • '+ material_request.date_needed);
-                        });
-
-                       
-
-                        items.map(item=>{
-                            t.div({class:'ms-5 mt-3'},item);
-                        });
-
+                        }//for
                     });
-                }
+                    
                 
+                
+                }//for
+        
 
             });
 
             list.appendChild(entry);
-        }
+        }//for
     }
 
     function showData(){

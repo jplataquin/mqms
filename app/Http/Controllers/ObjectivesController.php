@@ -89,13 +89,19 @@ class ObjectivesController extends Controller
            if(!isset($result[$mr->project_id])){
                 $result[$mr->project_id] = [];
            }
+            
            
-            if(!isset($result[$mr->project_id][$mr->id])){
-                $result[$mr->project_id][$mr->id] = [];
+           if(!isset($result[$mr->project_id][$mr->date_needed])){
+                $result[$mr->project_id][$mr->date_needed] = [];
            }
 
-           if(!isset($result[$mr->project_id][$mr->id]['items'])){
-                $result[$mr->project_id][$mr->id]['items'] = [];
+           if(!isset($result[$mr->project_id][$mr->date_needed][$mr->id])){
+                $result[$mr->project_id][$mr->date_needed][$mr->id] = [];
+           }
+
+
+           if(!isset($result[$mr->project_id][$mr->date_needed][$mr->id]['items'])){
+                $result[$mr->project_id][$mr->date_needed][$mr->id]['items'] = [];
            }
 
            $items = MaterialQuantityRequestItem::where('material_quantity_request_id',$mr->id)->get();
@@ -105,13 +111,11 @@ class ObjectivesController extends Controller
                 $material_item = MaterialItem::find($item->material_item_id);
 
                 if($material_item){
-                    $result[$mr->project_id][$mr->id]['items'][] = $material_item->formatted_name. ' x ' .number_format($item->requested_quantity,2); 
+                    $result[$mr->project_id][$mr->date_needed][$mr->id]['items'][] = $material_item->formatted_name. ' x ' .number_format($item->requested_quantity,2); 
                 }
            }
 
 
-           $result[$mr->project_id][$mr->id]['material_request'] = $mr;
-        
         }
 
 
