@@ -83,6 +83,7 @@
     const to                = $q('#to').first();
     const projectSelect     = $q('#projectSelect').first();
     const list              = $q('#list').first();
+    const searchBtn         = $q('#searchBtn').first();
     
     const datepicker_from = new Datepicker(from, {
        clearButton:true,
@@ -120,6 +121,14 @@
         todayHighlight: true,
     }); 
 
+    searchBtn.onclick = ()=>{
+        reinitalize();
+        showData();
+    }
+
+    function reinitalize(){
+        list.innerHTML = '';
+    }
 
     function render(result,project){
 
@@ -194,6 +203,7 @@
     }
 
 
+    reinitalize();
     showData();
 
 </script>
