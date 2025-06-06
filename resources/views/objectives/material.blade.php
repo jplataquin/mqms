@@ -143,8 +143,8 @@
                                 t.a({href:'#'},'MR'+material_request_id);
 
                             });
-                            
-                            t.span(material_request.date_needed);
+
+                            t.span(' • '+ material_request.date_needed);
                         });
 
                        
