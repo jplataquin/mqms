@@ -148,7 +148,7 @@
                                 t.h6(()=>{            
                                     t.span(()=>{
                                         
-                                        t.a({href:'/material_request/'+material_request_id},'MR'+material_request_id);
+                                        t.a({href:'/material_quantity_request/'+material_request_id},'MR'+material_request_id);
 
                                     });
 
