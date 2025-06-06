@@ -133,7 +133,7 @@
                 
                 for(let date_needed in group_date){
 
-                    t.div({class:'ms-5 mb-5 pt'},()=>{
+                    t.div({class:'ms-3 mb-5 pt'},()=>{
 
                         t.h6(date_needed);
 
@@ -143,7 +143,7 @@
                             
                             let items = material_requests[material_request_id].items;
 
-                            t.div({class:'ms-5 mb-3'},()=>{
+                            t.div({class:'ms-3 mb-3'},()=>{
                             
                                 t.h6(()=>{            
                                     t.span(()=>{
@@ -155,7 +155,7 @@
                                 });               
 
                                 items.map(item=>{
-                                    t.div({class:'ms-5 mt-3'},item);
+                                    t.div({class:'ms-3 mt-3'},item);
                                 });
 
                             });
