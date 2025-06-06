@@ -132,16 +132,19 @@
 
                 for(let material_request_id in material_requests){
                     
-                    t.div({class:'ms-5 ms-3'},()=>{
+                    let material_request = material_requests[material_request_id].material_request;
+                    let items = material_requests[material_request_id].items;
+
+                    t.div({class:'ms-5 mb-3'},()=>{
                     
                         t.h6(()=>{            
-                            t.a({href:'#'},'MR'+material_request_id);
+                            t.a({href:'#'},'MR'+material_request_id + ' ' + material_request.date_needed);
                         });
 
-                        let items = material_requests[material_request_id].items;
+                       
 
                         items.map(item=>{
-                            t.div({class:'ms-5 ms-3'},item);
+                            t.div({class:'ms-5 mb-3'},item);
                         });
 
                     });
