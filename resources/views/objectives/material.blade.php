@@ -155,7 +155,7 @@
                                 });               
 
                                 items.map(item=>{
-                                    t.div({class:'ms-3 mt-3'},'• '+item);
+                                    t.div({class:'ms-3 mt-3 fst-italic'},'• '+item);
                                 });
 
                             });
