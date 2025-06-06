@@ -127,6 +127,22 @@
 
             let entry = t.div({class:'mb-5'},()=>{
                 t.h6(project[project_id].name);
+
+                let material_requests = result[project_id];
+
+                for(let material_request_id in material_requests){
+                    
+                    t.div({class:'ms-5 ms-3'},()=>{
+                    
+                        t.h6(()=>{            
+                            t.a({href:'#'},''+material_request_id);
+                        });
+
+                
+                    });
+                }
+                
+
             });
 
             list.appendChild(entry);
