@@ -135,10 +135,15 @@
                     t.div({class:'ms-5 ms-3'},()=>{
                     
                         t.h6(()=>{            
-                            t.a({href:'#'},''+material_request_id);
+                            t.a({href:'#'},'MR'+material_request_id);
                         });
 
-                
+                        let items = material_requests[material_request_id].items;
+
+                        items.map(item=>{
+                            t.div({class:'ms-5 ms-3'},item);
+                        });
+
                     });
                 }
                 

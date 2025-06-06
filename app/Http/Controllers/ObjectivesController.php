@@ -12,7 +12,7 @@ use Carbon\Carbon;
 class ObjectivesController extends Controller
 {
     public function material(){
-        
+
         $projects = Project::where('status','ACTV')->orderBy('name','ASC')->get();
 
         return view('objectives/material',[
@@ -105,7 +105,7 @@ class ObjectivesController extends Controller
                 $material_item = MaterialItem::find($item->material_item_id);
 
                 if($material_item){
-                    $result[$mr->project_id][$mr->id]['items'][] = $material_item->formatted_name. 'x' .number_format($item->quantity,2); 
+                    $result[$mr->project_id][$mr->id]['items'][] = $material_item->formatted_name. ' x ' .number_format($item->requested_quantity,2); 
                 }
            }
 
