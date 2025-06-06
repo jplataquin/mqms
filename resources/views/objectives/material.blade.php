@@ -135,7 +135,7 @@
 
                     t.div({class:'mb-5 pt'},()=>{
 
-                        t.h6({date_needed});
+                        t.h6(date_needed);
 
                         let material_requests = group_date[date_needed];
 
