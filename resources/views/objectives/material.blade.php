@@ -61,26 +61,6 @@
                     </div>
             </div>
 
-
-
-            <div class="row">    
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>Contract Item</label>
-                            <select class="form-select" id="contractItemSelect">
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>Component</label>
-                            <select class="form-select" id="componentSelect">
-                            </select>
-                        </div>
-                    </div>             
-            </div>
-
             <div class="row mt-5">
                 <div class="col-lg-12 text-end">
                     
@@ -140,7 +120,7 @@
         window.util.blockUI();
 
         window.util.$get('/api/objectives/material',{
-            project_id: project.value,
+            project_id: projectSelect.value,
             from: from.value,
             to: to.value
         }).then(reply=>{
