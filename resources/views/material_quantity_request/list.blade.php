@@ -30,7 +30,7 @@
     </div>
     <div class="folder-form-body">
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-12 col-lg-4">
                 <div class="form-group">
                     <label>Sort By</label>
                     <select class="form-select" id="sortSelect">
@@ -39,13 +39,13 @@
                     </select>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-6 col-lg-4">
                 <div class="form-group">
                     <label>ID</label>
                     <input type="text" id="query" class="form-control"/>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-6 col-lg-4">
                 <div class="form-group">
                     <label>Status</label>
                     <select class="form-control" id="statusSelect">
