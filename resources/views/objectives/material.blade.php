@@ -149,7 +149,7 @@
                 return false;
             }
 
-            console.log(reply.data);
+            render(reply.data.result,reply.data.project_arr);
         });
     }
 
