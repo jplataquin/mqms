@@ -125,7 +125,7 @@
 
         for(let project_id in result){
             
-            let entry = t.div({class:'mb-5 pt-3'},()=>{
+            let entry = t.div({class:'border border-primary p-3 mb-5'},()=>{
                 t.h4(project[project_id].name);
 
                 
