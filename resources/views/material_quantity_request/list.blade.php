@@ -150,7 +150,7 @@
                                 <th style="min-width:300px">Contract Item</th>
                                 <th style="min-width:300px">Component</th>
                                 <th style="min-width:150px">Date Needed</th>
-                                <th style="min-width:150px">Created At</th>
+                                <th style="min-width:300px">Created At</th>
                             </tr>
                         </thead>
                         <tbody  id="list">
