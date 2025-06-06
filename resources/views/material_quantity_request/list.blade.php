@@ -59,7 +59,7 @@
         </div>
 
         <div class="row">
-                <div class="col-lg-4">
+                <div class="col-sm-12 col-lg-4">
                     <div class="form-group">
                         <label>Date</label>
                         <select class="form-select" id="dateSelect">
@@ -68,13 +68,13 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-4 col-lg-4">
+                <div class="col-sm-6 col-lg-4">
                     <div class="form-group">
                         <label>From</label>
                         <input id="from" type="text" class="form-control"/>
                     </div>
                 </div>
-                <div class="col-sm-4 col-lg-4">
+                <div class="col-sm-6 col-lg-4">
                     <div class="form-group">
                         <label>To</label>
                         <input id="to" class="form-control"/>
