@@ -125,7 +125,7 @@
 
         for(let project_id in result){
 
-            let entry = t.div({class:'mb-5'},()=>{
+            let entry = t.div({class:'mb-5 pt-3'},()=>{
                 t.h6(project[project_id].name);
 
                 let material_requests = result[project_id];
@@ -138,7 +138,13 @@
                     t.div({class:'ms-5 mb-3'},()=>{
                     
                         t.h6(()=>{            
-                            t.a({href:'#'},'MR'+material_request_id + ' ' + material_request.date_needed);
+                            t.span(()=>{
+                                
+                                t.a({href:'#'},'MR'+material_request_id);
+
+                            });
+                            
+                            t.span(material_request.date_needed);
                         });
 
                        
