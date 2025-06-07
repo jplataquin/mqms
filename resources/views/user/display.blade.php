@@ -222,10 +222,8 @@
                 window.util.showMsg(reply);
                 return false;
             };
-
-            reinitalize();
-            showData();
-
+            
+            window.util.navReload();
         });
     }
 
