@@ -158,7 +158,6 @@ class UserController extends Controller
            }
            
 
-           $user_id = Auth::user()->id;
 
            $user = User::find($user_id);
 
@@ -173,7 +172,7 @@ class UserController extends Controller
            $user->name              = $name;
            $user->email             = $email;
            $user->status            = $status;
-           $user->updated_by        = $user_id;
+           $user->updated_by        = Auth::user()->id;
           
            $user->save();
 
