@@ -61,7 +61,7 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label>Status</label>
-                        <select class="form-control editable" id="status" disabled="true">
+                        <select class="form-select editable" id="status" disabled="true">
                             @foreach($status_options as $val=>$text)
                                 <option value="{{$val}}" @if($user->status == $val) selected @endif>{{$text}}</option>
                             @endforeach
@@ -137,6 +137,7 @@
     const role                 = $q('#role').first();
     const addRoleBtn           = $q('#addRoleBtn').first();
     const list                 = $q('#list').first();
+    const status               = $q('#status').first();
 
     const t = new Template();
 

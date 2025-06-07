@@ -124,7 +124,7 @@ class UserController extends Controller
            $user_id     = (int) $request->input('user_id') ?? 0;
            $name        = $request->input('name') ?? '';
            $email       = $request->input('email') ?? '';
-           $password    = $request->input('status') ?? '';
+           $status    = $request->input('status') ?? '';
 
            $validator = Validator::make($request->all(),[
                'name' => [
