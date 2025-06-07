@@ -33,7 +33,7 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label>ID No.</label>
-                        <input type="text" id="name" value="{{str_pad($user->id,6,0,STR_PAD_LEFT)}}" class="form-control" disabled="true"/>
+                        <input type="text" value="{{str_pad($user->id,6,0,STR_PAD_LEFT)}}" class="form-control" disabled="true"/>
                     </div>
                 </div>
             </div>
