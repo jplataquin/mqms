@@ -204,6 +204,29 @@
         updateBtn.classList.remove('d-none');
     }
     
+    updateBtn.onclick = ()=>{
+        window.util.blockUI();
+
+        window.util.$post('/api/user/update',{
+            name: name.value,
+            email: email.value,
+            status: status.value,
+            user_id: '{{$user->id}}'
+        }).then(reply=>{
+
+            window.util.unblockUI();
+
+            if(reply.status <= 0 ){
+            
+                window.util.showMsg(reply);
+                return false;
+            };
+
+            reinitalize();
+            showData();
+
+        });
+    }
 
     addRoleBtn.onclick = (e) => {
 

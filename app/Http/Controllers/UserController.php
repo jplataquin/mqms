@@ -115,6 +115,77 @@ class UserController extends Controller
         ]);
     }
 
+    public function _update(Request $request){
+        
+            if(!$this->hasAccess('user:all:update')){
+                return view('access_denied');
+            }
+
+           $user_id     = (int) $request->input('user_id') ?? 0;
+           $name        = $request->input('name') ?? '';
+           $email       = $request->input('email') ?? '';
+           $password    = $request->input('status') ?? '';
+
+           $validator = Validator::make($request->all(),[
+               'name' => [
+                   'required',
+                   'max:255'
+               ],
+               'email' => [
+                   'required',
+                   'email',
+                    Rule::unique('users','email')->ignore($user_id),
+               ],
+               'status' => [
+                    'required'
+               ]
+           ]);
+   
+           if ($validator->fails()) {
+               return response()->json([
+                   'status'    => -2,
+                   'message'   => 'Failed Validation',
+                   'data'      => $validator->messages()
+               ]);
+           }
+
+           if(!in_array($status,['ACTV','DCTV'])){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Invalid Status',
+                    'data'      => []
+                ]);
+           }
+           
+
+           $user_id = Auth::user()->id;
+
+           $user = User::find($user_id);
+
+           if(!$user){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Record not found',
+                    'data'      => []
+                ]);
+           }
+
+           $user->name              = $name;
+           $user->email             = $email;
+           $user->status            = $status;
+           $user->updated_by        = $user_id;
+          
+           $user->save();
+
+           return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data'      => [
+                'id' => $user->id
+            ]
+        ]);
+    }
+
     public function me(){
 
         $user = Auth::user();
