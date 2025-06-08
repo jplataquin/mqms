@@ -61,20 +61,29 @@ class ObjectivesController extends Controller
         
         if($from){
             $from = DateTime::createFromFormat('M d, Y', $from);
+        
+        }else{
+            
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'From date is required',
+                'data'      => []
+            ]);
         }
 
         if($to){
+        
             $to = DateTime::createFromFormat('M d, Y', $to);
+        
+        }else{
+
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'To date is required',
+                'data'      => []
+            ]);
         }
         
-        if($from == '' && $to == ''){
-            $from   = Carbon::now();
-            $to     = Carbon::now();
-            $to->addDays(5);
-        }
-
-        
-
         $material_requests = $material_requests->where('date_needed','!=',null);
 
         if($from){
