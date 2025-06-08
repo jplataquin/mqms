@@ -142,7 +142,7 @@ class ObjectivesController extends Controller
                 }
            }
 
-
+            $result[$mr->project_id][$mr->date_needed][$mr->id]['material_request'] = $mr;
         }
 
 

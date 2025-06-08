@@ -151,6 +151,7 @@
                         for(let material_request_id in material_requests){
                             
                             let items = material_requests[material_request_id].items;
+                            let mr    = material_requests[material_request_id].material_request;
 
                             t.div({class:'ms-3 mb-3'},()=>{
                             
@@ -160,6 +161,8 @@
                                         t.a({href:'/material_quantity_request/'+material_request_id},'MR'+material_request_id);
 
                                     });
+
+                                    t.span(' ('+mr.status+') ');
 
                                 });               
 
