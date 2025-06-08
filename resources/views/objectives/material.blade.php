@@ -50,13 +50,13 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label>From</label>
-                            <input id="from" type="text" class="form-control"/>
+                            <input id="from" value="{{$from}}" type="text" class="form-control"/>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label>To</label>
-                            <input id="to" class="form-control"/>
+                            <input id="to" value="{{$to}}" class="form-control"/>
                         </div>
                     </div>
             </div>

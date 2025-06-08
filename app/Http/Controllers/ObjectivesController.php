@@ -8,6 +8,7 @@ use App\Models\MaterialQuantityRequest;
 use App\Models\MaterialQuantityRequestItem;
 use App\Models\MaterialItem;
 use Carbon\Carbon;
+use DateTime;
 
 class ObjectivesController extends Controller
 {
@@ -15,8 +16,14 @@ class ObjectivesController extends Controller
 
         $projects = Project::where('status','ACTV')->orderBy('name','ASC')->get();
 
+        $from   = Carbon::now();
+        $to     = Carbon::now();
+        $to->addDays(5);
+        
         return view('objectives/material',[
-            'projects' => $projects
+            'projects'  => $projects,
+            'from'      => $from->format('M d, Y'),
+            'to'        => $to->format('M d, Y')
         ]);
     }
 
@@ -52,20 +59,31 @@ class ObjectivesController extends Controller
             $material_requests = $material_requests->where('project_id',$project_id);
         }
         
-        if($from == '' && $to == ''){
-            $from = Carbon::now();
-          
-            
-            $to = Carbon::now();
-            $to->addDays(5);
-            
+        if($from){
+            $from = DateTime::createFromFormat('M d, Y', $from);
         }
+
+        if($to){
+            $to = DateTime::createFromFormat('M d, Y', $to);
+        }
+        
+        if($from == '' && $to == ''){
+            $from   = Carbon::now();
+            $to     = Carbon::now();
+            $to->addDays(5);
+        }
+
+        
 
         $material_requests = $material_requests->where('date_needed','!=',null);
 
-        $material_requests = $material_requests->where('date_needed','>=',$from->format('Y-m-d'));
-                
-        $material_requests = $material_requests->where('date_needed','<=',$to->format('Y-m-d'));
+        if($from){
+            $material_requests = $material_requests->where('date_needed','>=',$from->format('Y-m-d'));
+        }
+
+        if($to){
+            $material_requests = $material_requests->where('date_needed','<=',$to->format('Y-m-d'));
+        }
 
         $material_requests = $material_requests->orderBy('date_needed','DESC');
 
