@@ -162,7 +162,25 @@
 
                                     });
 
-                                    t.span(' ('+mr.status+') ');
+                                    let status_span = t.span(' ('+mr.status+') ');
+
+                                    if(mr.status == 'APRV'){
+
+                                        status_span.style.color = 'green';
+
+                                    }else if(mr.status == 'REJC'){
+                                       
+                                        status_span.style.color = 'red';
+                                        
+                                    }else if(mr.status == 'PEND'){
+
+                                        status_span.style.color = 'yellow';
+                                        
+                                    }else{
+                                        
+                                        status_span.style.color = 'violet';
+                                        
+                                    }
 
                                 });               
 
