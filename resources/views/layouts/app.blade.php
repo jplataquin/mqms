@@ -74,11 +74,6 @@
                             </div>          
                         </li>
 
-                        <li class="menu-item">
-                            <div class="nav-item">
-                                <a href="/objectives/material" hx-select="#content" hx-target="#main">Material Objectives</a>
-                            </div>          
-                        </li>
 
                         <li class="menu-item">
                             <div class="nav-item">
@@ -138,6 +133,7 @@
                                 <li class="nav-sub-item">
                                     <a href="/review/budget" hx-select="#content" hx-target="#main">Budget</a>
                                 </li>
+                                
                                 <li class="nav-sub-item">
                                     <a href="/review/components" hx-select="#content" hx-target="#main">Component</a>
                                 </li>
