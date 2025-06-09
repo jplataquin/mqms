@@ -2,33 +2,29 @@
 
 @section('content')
 <div id="content">
+<div class="container">
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
+        <ul>
+            <li>
+                <a href="/master_data/material/groups">
+                    <span>
+                        Material Group
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <span>
+                        Create
+                    </span>	
+                    <i class="ms-2 bi bi-file-earmark-plus"></i>	
+                </a>
+            </li>
+        </ul>
+    </div>
+    <hr>
 
-    <div class="container">
-        
-        <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
-            <ul>
-                <li>
-                    <a href="/master_data/material/groups">
-                        <span>
-                        Material Groups
-                        </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="active">
-                        <span>
-                            Create
-                        </span>	
-                        <i class="ms-2 bi bi-file-earmark-plus"></i>	
-                    </a>
-                </li>
-            </ul>
-        <div>
-        
-        <hr>
-
-        
-        <div class="form-container">
+     <div class="form-container">
                 <div class="form-header">
                     Create Material Group
                 </div>
@@ -53,10 +49,10 @@
                     </div>
                 </div>
         </div>
-       
-    </div>
 
-    <script type="module">
+</div>
+
+   <script type="module">
         import {$q} from '/adarna.js';
 
         let createBtn       = $q('#createBtn').first();
