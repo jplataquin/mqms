@@ -26,27 +26,29 @@
     
     <hr>
 
-    <div class="form-container">
-        <div class="form-header">
-            Create Material Group
-        </div>
-
-        <div class="form-body">
-            <div class="row">
-
-                <div class="col-12">
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" id="materialGroup" class="form-control"/>
-                    </div>
-                </div>
-
+    <div class="container">
+        <div class="form-container">
+            <div class="form-header">
+                Create Material Group
             </div>
 
-            <div class="row mt-5">
-                <div class="col-12 text-end">
-                <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
-                <button class="btn btn-primary" id="createBtn">Create</button>
+            <div class="form-body">
+                <div class="row">
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" id="materialGroup" class="form-control"/>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-12 text-end">
+                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                    <button class="btn btn-primary" id="createBtn">Create</button>
+                    </div>
                 </div>
             </div>
         </div>
