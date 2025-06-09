@@ -67,7 +67,7 @@ class MaterialGroupController extends Controller
 
     public function _create(Request $request){
 
-        if(!$this->hasAccess('material_group:own:create')){
+        if(!$this->hasAccess('material_group:all:create')){
             return response()->json([
                 'status'    => 0,
                 'message'   => 'Access Denied',
