@@ -12,7 +12,7 @@ class MaterialGroupController extends Controller
 {
     public function create(){
 
-        if(!$this->hasAccess('material_group:own:create')){
+        if(!$this->hasAccess('material_group:all:create')){
             return view('access_denied');
         }
 
