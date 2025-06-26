@@ -79,7 +79,7 @@
                         -->
                         <select class="form-select editable" id="reset_password"  disabled="true">
                             <option value="0" @if(!$user->reset_password) selected @endif >No</option>
-                            <option value="1" @if(!$user->reset_password) selected @endif >Yes</option>
+                            <option value="1" @if($user->reset_password) selected @endif >Yes</option>
                         </select>
                     </div>
                 </div>
