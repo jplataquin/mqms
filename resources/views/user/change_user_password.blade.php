@@ -112,6 +112,10 @@
                 });
 
             }
+
+            cancelBtn.onclick = (e) =>{
+                window.util.navTo('/user/{{$user->id}}');
+            }
         </script>
     </div>
 </div>
