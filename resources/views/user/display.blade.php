@@ -139,6 +139,7 @@
     const editBtn              = $q('#editBtn').first();  
     const name                 = $q('#name').first();
     const email                = $q('#email').first();
+    const reset_password       = $q('#reset_password').first();
     const changeBtn            = $q('#changeBtn').first();
     const role                 = $q('#role').first();
     const addRoleBtn           = $q('#addRoleBtn').first();
@@ -197,6 +198,7 @@
             name: name.value,
             email: email.value,
             status: status.value,
+            reset_password: reset_password.value,
             user_id: '{{$user->id}}'
         }).then(reply=>{
 

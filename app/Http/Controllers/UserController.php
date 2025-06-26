@@ -121,10 +121,12 @@ class UserController extends Controller
                 return view('access_denied');
             }
 
-           $user_id     = (int) $request->input('user_id') ?? 0;
-           $name        = $request->input('name') ?? '';
-           $email       = $request->input('email') ?? '';
-           $status      = $request->input('status') ?? '';
+           $user_id         = (int) $request->input('user_id') ?? 0;
+           $name            = $request->input('name') ?? '';
+           $email           = $request->input('email') ?? '';
+           $status          = $request->input('status') ?? '';
+           $reset_password  = $request->input('reset_password') ?? 0;
+
 
            $validator = Validator::make($request->all(),[
                 'user_id' => [
@@ -142,6 +144,10 @@ class UserController extends Controller
                ],
                'status' => [
                     'required'
+               ],
+               'reset_password' => [
+                    'required',
+                    'boolean'
                ]
            ]);
    
@@ -176,6 +182,7 @@ class UserController extends Controller
            $user->name              = $name;
            $user->email             = $email;
            $user->status            = $status;
+           $user->reset_password    = (boolean) $reset_password;
            $user->updated_by        = Auth::user()->id;
           
            $user->save();
