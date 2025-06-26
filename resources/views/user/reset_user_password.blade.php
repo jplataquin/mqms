@@ -1,7 +1,28 @@
-@extends('layouts.reset_password')
+@extends('layouts.app')
 
 @section('content')
-<div class="container text-align mt-5">
+<div class="container">
+
+    <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
+        <ul>
+            <li>
+                <a href="/users">
+                    <span>
+                       Users
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <span>
+                        Reset Password
+                    </span>	
+                    <i class="ms-2 bi bi-display"></i>	
+                </a>
+            </li>
+        </ul>
+    </div>
+    <hr>
 
     <div class="form-container">
         <div class="form-header">
