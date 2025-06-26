@@ -179,7 +179,7 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/me',[App\Http\Controllers\UserController::class, 'me']);
 
 
-    Route::get('/reset_user_password/{id}', [App\Http\Controllers\UserController::class, 'reset_user_password']);
+    Route::get('/change_user_password/{id}', [App\Http\Controllers\UserController::class, 'change_user_password']);
     
     Route::get('/test_mq/{id}',[App\Http\Controllers\MaterialQuantityController::class, 'test_mq']);
 });

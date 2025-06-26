@@ -22,7 +22,7 @@
             </li>
         </ul>
     </div>
-<hr>
+    <hr>
     <div class="form-container">
         <div class="form-header">
             User
@@ -81,7 +81,7 @@
 
             <div class="row mt-5">
                 <div class="col-lg-12 text-end">
-                    <button class="btn btn-warning" id="resetBtn">Reset Password</button>
+                    <button class="btn btn-warning" id="changeBtn">Change Password</button>
                 
                     <button class="btn btn-primary" id="editBtn">Edit</button>
                     <button class="btn btn-warning d-none" id="updateBtn">Update</button>
@@ -133,7 +133,7 @@
     const editBtn              = $q('#editBtn').first();  
     const name                 = $q('#name').first();
     const email                = $q('#email').first();
-    const resetBtn             = $q('#resetBtn').first();
+    const changeBtn            = $q('#changeBtn').first();
     const role                 = $q('#role').first();
     const addRoleBtn           = $q('#addRoleBtn').first();
     const list                 = $q('#list').first();
@@ -148,37 +148,10 @@
         $el.clear(list);
     }
 
-    resetBtn.onclick = (e) =>{
+    changeBtn.onclick = (e) =>{
         
-        window.util.navTo('/reset_user_password/{{$user->id}}');
+        window.util.navTo('/change_user_password/{{$user->id}}');
 
-        /**** 
-        window.util.confirm('Are you sure you want to initiate reset password?',(e,result)=>{
-
-            if(!result){
-                return false;
-            }
-
-            
-            window.util.blockUI();
-
-            window.util.$post('/api/user/reset_password',{
-                id: "{{$user->id}}",
-                password:'#',
-                repassword:'#'
-            }).then((reply)=>{
-
-                window.util.unblockUI();
-
-                if(reply <= 0){
-                    window.util.showMsg(reply);
-                    return false;
-                }
-
-                window.util.navReload();
-            });
-        });
-        ***/
     }
 
     cancelBtn.onclick = (e) => {

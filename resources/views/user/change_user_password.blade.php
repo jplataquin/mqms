@@ -16,7 +16,7 @@
                 <li>
                     <a href="#" class="active">
                         <span>
-                            Reset Password
+                            Change Password
                         </span>	
                         <i class="ms-2 bi bi-display"></i>	
                     </a>
@@ -27,7 +27,7 @@
 
         <div class="form-container">
             <div class="form-header">
-                Reset User Password
+                Change Password
             </div>
             <div class="form-body">
 
@@ -72,6 +72,7 @@
                         <div class="col-12 text-end">
                             
                             <button class="btn btn-primary" id="submitBtn">Submit</button>
+                            <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
                         </div>
                     </div>
             </div>
@@ -79,6 +80,36 @@
         <script type="module">
             import {$q} from '/adarna.js';
 
+            const submitBtn = $q('#submitBtn').first();
+            const cancelBtn = $q('#cancelBtn').first();
+
+            submitBtn.onclick = async (e)=>{
+
+                let answer = await window.util.confirm("Are you sure you want to change the user's password?");
+
+                if(!answer){
+                    return false;
+                }
+
+                window.util.blockUI();
+
+                window.util.$post('/api/user/change_password',{
+                    id: "{{$user->id}}",
+                    password: password.value,
+                    repassword: repassword.value
+                }).then((reply)=>{
+
+                    window.util.unblockUI();
+
+                    if(reply <= 0){
+                        window.util.showMsg(reply);
+                        return false;
+                    }
+
+                    window.util.navTo('/user/{{$user->id}}');
+                });
+
+            }
         </script>
     </div>
 </div>

@@ -480,13 +480,13 @@ class UserController extends Controller
     }
 
 
-    public function reset_user_password($id){
+    public function change_user_password($id){
 
         $id = (int) $id;
-        
+
         $user = User::findOrFail($id);
 
-        return view('/user/reset_user_password',[
+        return view('/user/change_user_password',[
             'user' => $user
         ]);
     }
