@@ -149,16 +149,21 @@
     }
 
     resetBtn.onclick = (e) =>{
+        
+        window.util.navTo('/reset_user_password/{{$user->id}}');
+
+        /**** 
         window.util.confirm('Are you sure you want to initiate reset password?',(e,result)=>{
 
             if(!result){
                 return false;
             }
 
+            
             window.util.blockUI();
 
             window.util.$post('/api/user/reset_password',{
-                id: 3,
+                id: "{{$user->id}}",
                 password:'#',
                 repassword:'#'
             }).then((reply)=>{
@@ -173,6 +178,7 @@
                 window.util.navReload();
             });
         });
+        ***/
     }
 
     cancelBtn.onclick = (e) => {
