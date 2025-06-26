@@ -42,7 +42,7 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::post('/role/access_code/remove', [App\Http\Controllers\RoleController::class, '_access_code_remove']);
     
 
-    Route::get('/user/list', [App\Http\Controllers\UserControlluser_change_passworder::class, '_list']);
+    Route::get('/user/list', [App\Http\Controllers\UserController::class, '_list']);
     Route::get('/user/roles/{id}', [App\Http\Controllers\UserController::class, '_roles']);
     Route::post('/user/create', [App\Http\Controllers\UserController::class, '_create']);
     Route::post('/user/update', [App\Http\Controllers\UserController::class, '_update']);
