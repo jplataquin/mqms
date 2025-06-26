@@ -74,7 +74,13 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label>Reset Password</label>
+                        <!--
                         <input type="text" id="reset_password" value="{{$user->reset_password}}" class="form-control" disabled="true"/>
+                        -->
+                        <select class="form-select editable" id="reset_password"  disabled="true">
+                            <option value="0" @if(!$user->reset_password) selected @endif >No</option>
+                            <option value="1" @if(!$user->reset_password) selected @endif >Yes</option>
+                        </select>
                     </div>
                 </div>
             </div>
