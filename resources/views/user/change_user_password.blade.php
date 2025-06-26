@@ -80,8 +80,10 @@
         <script type="module">
             import {$q} from '/adarna.js';
 
-            const submitBtn = $q('#submitBtn').first();
-            const cancelBtn = $q('#cancelBtn').first();
+            const submitBtn     = $q('#submitBtn').first();
+            const cancelBtn     = $q('#cancelBtn').first();
+            const password      = $q('#password').first();
+            const repassword    = $q('#repassword').first();
 
             submitBtn.onclick = async (e)=>{
 
@@ -94,14 +96,14 @@
                 window.util.blockUI();
 
                 window.util.$post('/api/user/change_password',{
-                    id: "{{$user->id}}",
+                    user_id: "{{$user->id}}",
                     password: password.value,
                     repassword: repassword.value
                 }).then((reply)=>{
 
                     window.util.unblockUI();
 
-                    if(reply <= 0){
+                    if(reply.status <= 0){
                         window.util.showMsg(reply);
                         return false;
                     }

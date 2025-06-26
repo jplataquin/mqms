@@ -127,6 +127,10 @@ class UserController extends Controller
            $status      = $request->input('status') ?? '';
 
            $validator = Validator::make($request->all(),[
+                'user_id' => [
+                    'required',
+                    'gt:0'
+                ],
                'name' => [
                    'required',
                    'max:255'
@@ -491,6 +495,71 @@ class UserController extends Controller
         ]);
     }
 
+    public function _change_user_password(Request $request){
+        
+        $user_id     = (int) $request->input('user_id');
+        $password    = $request->input('password') ?? '';
+        $repassword  = $request->input('repassword') ?? '';
+        
+
+        $validator = Validator::make($request->all(),[
+            'user_id' =>[
+                'required',
+                'gt:0'
+            ],
+            'password' => [
+                'required',
+                'min:6',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'
+            ],
+            'repassword' => [
+                'required_with:password',
+                'same:password'
+            ]
+        ],[
+            'password.regex' => 'The password must contain 1 lowercase AND 1 uppercase AND 1 number AND 1 symbol'
+        ]);
+   
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => $validator->messages()
+            ]);
+        }
+           
+        $user = User::find($user_id);
+
+        if(!$user){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'User not found',
+                'data'      => []
+            ]);
+        }
+
+        
+        $hash = Hash::make($password);
+        
+        if($user->password == $hash){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'The password must not be the same as old password',
+                'data'      => []
+            ]);
+        }
+
+         $user->password = $hash;
+         $user->save();
+
+        return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data'      => []
+        ]);
+
+    }
+
     public function reset_password(){
 
         return view('/user/reset_password',[
@@ -555,12 +624,12 @@ class UserController extends Controller
            $user->save();
 
            return response()->json([
-            'status'    => 1,
-            'message'   => '',
-            'data'      => [
-                'id' => $user->id
-            ]
-        ]);
+                'status'    => 1,
+                'message'   => '',
+                'data'      => [
+                    'id' => $user->id
+                ]
+            ]);
     }
    
 }
