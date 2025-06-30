@@ -37,7 +37,7 @@ class HomeController extends Controller
             'materialCanvassPendCount'          => $materialCanvassPendCount,
             'purchaseOrderPendCount'            => $purchaseOrderPendCount,
             'componentPendCount'                => $componentPendCount,
-            'current_time'                      => $current_datetime
+            'current_datetime'                  => $current_datetime
         ]);
     }
 }
