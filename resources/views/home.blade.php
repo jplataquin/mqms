@@ -3,6 +3,11 @@
 @section('content')
 <div id="content">
     <div class="container">
+
+        <div class="text-center">
+            <h3>{{$current_datetime}}</h3>
+        </div>
+
         <div class="row justify-content-center">
             <div class="col-md-8">
                     

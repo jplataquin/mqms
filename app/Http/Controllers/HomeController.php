@@ -8,6 +8,7 @@ use App\Models\MaterialQuantityRequest;
 use App\Models\MaterialCanvass;
 use App\Models\PurchaseOrder;
 use App\Models\Component;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -19,6 +20,9 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {   
+
+        $mytime         = Carbon::now();
+        $current_datetime   = $mytime->toDateTimeString();
 
         $materialQuantityRequestPendCount   = MaterialQuantityRequest::where('status','=','PEND')->count();
         
@@ -32,7 +36,8 @@ class HomeController extends Controller
             'materialQuantityRequestPendCount'  => $materialQuantityRequestPendCount,
             'materialCanvassPendCount'          => $materialCanvassPendCount,
             'purchaseOrderPendCount'            => $purchaseOrderPendCount,
-            'componentPendCount'                => $componentPendCount
+            'componentPendCount'                => $componentPendCount,
+            'current_time'                      => $current_datetime
         ]);
     }
 }
