@@ -49,8 +49,9 @@
 
         <div class="row">
             <div class="col-sm-12">
-
-</div>
+                <h2>Percentage</h2>
+                <h2>{{$percentage}}%</h2>
+            </div>
         </div>
 
     </div>
