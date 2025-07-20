@@ -38,13 +38,13 @@
         
 
         <div>
-            <h6>KPI: Material Request to Material Purchase within 7 days (95% Target)</h6>
+            <h4>KPI: Material Request to Material Purchase within 7 days (Target: 95%)</h4>
         </div>
 
         <div class="container border border-primary p-5">
             <div class="row">
                 <div class="col-sm-4 text-center">
-                    <h3>Target</h3>
+                    <h3>Request</h3>
                     <h3>
                         {{ number_format($request_count,2) }}
                     </h3>
