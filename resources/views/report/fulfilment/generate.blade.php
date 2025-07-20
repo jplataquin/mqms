@@ -23,7 +23,23 @@
         </div>
         <hr>
         
+
+        <div class="folder-form-container mb-3">
+            <div class="folder-form-tab">Price Report</div>
+            <div class="folder-form-body">
+                <table class="record-table-horizontal">
+                    <tr>
+                        <th>Date Scope</th>
+                        <td>{{$from}} - {{$to}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
         
+
+        <div>
+
+</div>
 
         <div class="container border border-primary p-5">
             <div class="row">

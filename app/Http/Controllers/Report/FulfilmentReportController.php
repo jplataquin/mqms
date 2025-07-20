@@ -19,11 +19,11 @@ class FulfilmentReportController extends Controller
 
     public function generate(Request $request){
 
-        $from = $request->input('from');
-        $to   = $request->input('to');
+        $from_input = $request->input('from');
+        $to_input   = $request->input('to');
 
-        $from = $from.' 00:00:00';
-        $to   = $to.' 23:59:59';
+        $from = $from_input.' 00:00:00';
+        $to   = $to_input.' 23:59:59';
 
         $material_quantity_request = MaterialQuantityRequest::where('status','APRV')->where('approved_at','>=',$from)->where('approved_at','<=',$to)->get();
 
@@ -72,7 +72,9 @@ class FulfilmentReportController extends Controller
             'request_count' => $request_count,
             'target_hit'    => $target_hit,
             'target_missed' => $target_missed,
-            'percentage'    => $percentage
+            'percentage'    => $percentage,
+            'from'          => $from,
+            'to'            => $to
         ]);
     }
 }
