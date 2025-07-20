@@ -23,37 +23,39 @@
         </div>
         <hr>
         
+        
 
-        <div class="row">
-            <div class="col-sm-4 text-center">
-                <h3>Target</h3>
-                <h3>
-                    {{ number_format($request_count,2) }}
-                </h3>
-            </div>   
-            
-            <div class="col-sm-4 text-center">
-                <h3>Hit</h3>
-                <h3>
-                   {{ number_format($target_hit,2) }}
-                </h3>
+        <div class="container border border-primary">
+            <div class="row">
+                <div class="col-sm-4 text-center">
+                    <h3>Target</h3>
+                    <h3>
+                        {{ number_format($request_count,2) }}
+                    </h3>
+                </div>   
+                
+                <div class="col-sm-4 text-center">
+                    <h3>Hit</h3>
+                    <h3>
+                    {{ number_format($target_hit,2) }}
+                    </h3>
+                </div>
+                
+                <div class="col-sm-4 text-center">
+                    <h3>Missed</h3>
+                    <h3>
+                        {{ number_format($target_missed,2) }}
+                    </h3>
+                </div>
             </div>
-            
-            <div class="col-sm-4 text-center">
-                <h3>Missed</h3>
-                <h3>
-                    {{ number_format($target_missed,2) }}
-                </h3>
+
+            <div class="row mt-5">
+                <div class="col-sm-12 text-center">
+                    <h2>Percentage</h2>
+                    <h2>{{$percentage}}%</h2>
+                </div>
             </div>
         </div>
-
-        <div class="row mt-5">
-            <div class="col-sm-12 text-center">
-                <h2>Percentage</h2>
-                <h2>{{$percentage}}%</h2>
-            </div>
-        </div>
-
     </div>
 
     <script type="module">
