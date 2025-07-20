@@ -25,7 +25,7 @@
         
 
         <div class="folder-form-container mb-3">
-            <div class="folder-form-tab">Price Report</div>
+            <div class="folder-form-tab">Fulfilment Report</div>
             <div class="folder-form-body">
                 <table class="record-table-horizontal">
                     <tr>
@@ -38,8 +38,8 @@
         
 
         <div>
-
-</div>
+            <h6>KPI: Material Request to Material Purchase within 7 days (95% Target)</h6>
+        </div>
 
         <div class="container border border-primary p-5">
             <div class="row">
