@@ -47,6 +47,7 @@ class FulfilmentReportController extends Controller
                 
                 $days = $start->diffInDays($end);
 
+                echo $days.'<br>';
                 if($days > 7){
                    
                     $hit_flag = false;
