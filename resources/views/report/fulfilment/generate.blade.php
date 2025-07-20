@@ -6,7 +6,7 @@
         <div class="breadcrumbs">
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="/report/fulfilment/parameters">
                         <span>
                         Report
                         </span>
@@ -37,7 +37,7 @@
         </div>
         
 
-        <div>
+        <div class="mb-3">
             <h4>KPI: Material Request to Material Purchase within 7 days (Target: 95%)</h4>
         </div>
 
