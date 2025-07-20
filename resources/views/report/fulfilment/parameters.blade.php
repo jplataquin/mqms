@@ -66,7 +66,7 @@
         const date_config = {
             autohide:true,
         };
-c
+
         let from_dp = new window.util.Datepicker(from, date_config); 
 
         let to_dp = new window.util.Datepicker(to, date_config); 
