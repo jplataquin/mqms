@@ -40,17 +40,23 @@ class FulfilmentReportController extends Controller
 
             $purchase_order = PurchaseOrder::where('status','APRV')->where('material_quantity_request_id',$mqr->id)->get();
             
+            $hit_flag = true;
 
             foreach($purchase_order as $po){
                 $end = Carbon::parse($po->approved_at);
                 
                 $days = $start->diffInDays($end);
 
-                if($days <= 7){
-                    $target_hit++;
-                }else{
-                    $target_missed++;
+                if($days > 7){
+                   
+                    $hit_flag = false;
                 }
+            }
+
+            if($hit_flag){
+                $target_hit++;
+            }else{
+                $target_missed++;
             }
         }
 
