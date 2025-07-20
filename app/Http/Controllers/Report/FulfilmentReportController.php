@@ -60,10 +60,19 @@ class FulfilmentReportController extends Controller
             }
         }
 
+        $percentage = 0;
+
+        if($request_count > 0){
+            $percentage = ($target_hit / $request_count) * 100;
+
+            $percentage = ceil($percentage);
+        }
+
         return view('report/fulfilment/generate',[
             'request_count' => $request_count,
             'target_hit'    => $target_hit,
-            'target_missed' => $target_missed
+            'target_missed' => $target_missed,
+            'percentage'    => $percentage
         ]);
     }
 }
