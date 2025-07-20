@@ -49,7 +49,7 @@ class FulfilmentReportController extends Controller
 
                 if($days > 7){
                     
-                    echo $days.' '.$po->id.'<br>';
+                    //echo $days.' '.$po->id.'<br>';
                     $hit_flag = false;
                 }
             }
