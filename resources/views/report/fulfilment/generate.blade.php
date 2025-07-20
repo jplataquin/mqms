@@ -23,7 +23,19 @@
         </div>
         <hr>
 
-        
+         <table>
+            <tr>
+                <td>
+                    {{ number_format($request_count,2) }}
+                </td>
+                <td>
+                    {{ number_format($target_hit,2) }}
+                </td>
+                <td>
+                    {{ number_format($target_missed,2) }}
+                </td>
+            </tr>
+        </table>   
 
     </div>
 
