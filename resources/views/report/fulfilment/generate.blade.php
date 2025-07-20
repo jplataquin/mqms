@@ -25,7 +25,7 @@
         
         
 
-        <div class="container border border-primary">
+        <div class="container border border-primary p-5">
             <div class="row">
                 <div class="col-sm-4 text-center">
                     <h3>Target</h3>
