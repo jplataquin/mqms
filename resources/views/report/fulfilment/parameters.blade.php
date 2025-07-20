@@ -84,9 +84,10 @@
                 to   : to_val,
             });
 
+            
+            window.open('/report/fulfilment/generate?'+query,'_blank').focus();
         }
 
-        window.open('/report/fulfilment/generate?'+query,'_blank').focus();
     </script>
 </div>
 @endsection
