@@ -22,20 +22,30 @@
             </ul>
         </div>
         <hr>
+        
 
-         <table>
-            <tr>
-                <td>
+        <div class="row">
+            <div class="col-sm-4 text-center">
+                <h3>Target</h3>
+                <h3>
                     {{ number_format($request_count,2) }}
-                </td>
-                <td>
-                    {{ number_format($target_hit,2) }}
-                </td>
-                <td>
+                </h3>
+            </div>   
+            
+            <div class="col-sm-4 text-center">
+                <h3>Hit</h3>
+                <h3>
+                   {{ number_format($target_hit,2) }}
+                </h3>
+            </div>
+            
+            <div class="col-sm-4 text-center">
+                <h3>Missed</h3>
+                <h3>
                     {{ number_format($target_missed,2) }}
-                </td>
-            </tr>
-        </table>   
+                </h3>
+            </div>
+        </div>
 
     </div>
 
