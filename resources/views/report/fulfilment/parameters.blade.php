@@ -62,14 +62,31 @@
 
         const from                  = $q('#from').first();
         const to                    = $q('#to').first();
+        const submitBtn            = $q('#submit_btn').first();
 
         const date_config = {
             autohide:true,
         };
 
-        let from_dp = new window.util.Datepicker(from, date_config); 
+        const from_dp = new window.util.Datepicker(from, date_config); 
 
-        let to_dp = new window.util.Datepicker(to, date_config); 
+        const to_dp = new window.util.Datepicker(to, date_config);
+        
+        submitBtn.onclick = (e)=>{
+            e.preventDefault();
+
+            let from_val  = from_dp.getDate('yyyy-mm-dd') ?? '';
+            let to_val    = to_dp.getDate('yyyy-mm-dd') ?? '';
+        
+            
+            let query = new URLSearchParams({
+                from : from_val,
+                to   : to_val,
+            });
+
+        }
+
+        window.open('/report/fulfilment/generate?'+query,'_blank').focus();
     </script>
 </div>
 @endsection

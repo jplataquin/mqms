@@ -13,4 +13,12 @@ class FulfilmentReportController extends Controller
 
         return view('report/fulfilment/parameters');
     }
+
+    public function generate(Request $request){
+
+        $from = $request->input('from');
+        $to   = $request->input('to');
+        
+        return view('report/fulfilment/generate');
+    }
 }
