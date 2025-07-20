@@ -167,8 +167,13 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/report/purchase/parameters', [App\Http\Controllers\Report\PurchaseReportController::class, 'parameters']);
     Route::get('/report/purchase/generate', [App\Http\Controllers\Report\PurchaseReportController::class, 'generate']);
     Route::get('/report/purchase/print', [App\Http\Controllers\Report\PurchaseReportController::class, 'print']);
-    Route::get('/report/purchase/fix', [App\Http\Controllers\Report\PurchaseReportController::class, 'fix_po_contract_item_id']);
+    //Route::get('/report/purchase/fix', [App\Http\Controllers\Report\PurchaseReportController::class, 'fix_po_contract_item_id']);
 
+    //Fulfilment Report
+    Route::get('/report/fulfilment/print', [App\Http\Controllers\Report\FulfilmentReportController::class, 'print']);
+    Route::get('/report/fulfilment/parameters', [App\Http\Controllers\Report\FulfilmentReportController::class, 'parameters']);
+    Route::get('/report/fulfilment/generate', [App\Http\Controllers\Report\FulfilmentReportController::class, 'generate']);
+    
     //Objectives
     Route::get('/objectives/material', [App\Http\Controllers\ObjectivesController::class, 'material']);
     
