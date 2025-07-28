@@ -82,7 +82,7 @@
             <table class="table">
                 <tr>
                     <th colspan="2">
-                         <img src="storage/sys_images/header.png" style="width:500px"/>
+                        <img src="/storage/sys_images/header.png" style="width:500px"/>
                     </th>
                 </tr>
                 <tr>
