@@ -82,7 +82,7 @@ class FulfilmentReportController extends Controller
 
             $percentage = ($target_hit / $request_count) * 100;
 
-            $percentage = ceil($percentage);
+            $percentage = round($percentage,2);
         }
 
         // $percentage = $percentage + 20;
