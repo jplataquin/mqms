@@ -70,8 +70,8 @@ class FulfilmentReportController extends Controller
         
         }else if($target_missed >= 40){
             
-            $target_missed  = $target_missed - 100;
-            $target_hit     = $target_hit + 100;
+            $target_missed  = $target_missed - 40;
+            $target_hit     = $target_hit + 40;
         
         }
 
