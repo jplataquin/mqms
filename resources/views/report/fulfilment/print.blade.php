@@ -128,7 +128,25 @@
                         <h1>{{$percentage}}%</h1>
                     </td>
                 </tr>
-            </table>    
+            </table> 
+            
+            
+            <table class="table mt-5">
+                <tr>
+                    <td class="text-center">
+
+                        ___________________________
+                        <br>
+                        Prepared By
+                    </td>
+                    <td>
+                        
+                        ___________________________
+                        <br>
+                        Validated By
+                    </td>
+                </tr>
+            </table>
         </div>
         
 
