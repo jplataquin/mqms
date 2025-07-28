@@ -82,23 +82,23 @@
             <h1 class="mb-3">Request To Purchase Timeframe KPI</h1>
             <table class="table">
                 <tr>
-                    <td>
-                        <h3>Request</h3>
-                        <h3>
+                    <td class="text-center">
+                        <h2>Request</h2>
+                        <h2>
                             {{ number_format($request_count,2) }}
-                        </h3>
+                        </h2>
                     </td>
-                    <td>
-                        <h3>Hit</h3>
-                        <h3>
+                    <td class="text-center">
+                        <h2>Hit</h2>
+                        <h2>
                         {{ number_format($target_hit,2) }}
-                        </h3>
+                        </h2>
                     </td>
-                    <td>
-                        <h3>Missed</h3>
-                        <h3>
+                    <td class="text-center">
+                        <h2>Missed</h2>
+                        <h2>
                             {{ number_format($target_missed,2) }}
-                        </h3>
+                        </h2>
                 
                     </td>
                 </tr>
