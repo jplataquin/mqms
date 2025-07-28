@@ -38,7 +38,7 @@
         
 
         <div class="mb-3">
-            <h4>KPI: Material Request to Material Purchase within 7 days (Target: 95%)</h4>
+            <h4>KPI: Material Request to Material Purchase within 7 days (Target: 90%)</h4>
         </div>
 
         <div class="container border border-primary p-5">
