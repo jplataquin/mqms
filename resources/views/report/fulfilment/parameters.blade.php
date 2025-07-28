@@ -62,7 +62,8 @@
 
         const from                  = $q('#from').first();
         const to                    = $q('#to').first();
-        const submitBtn            = $q('#submit_btn').first();
+        const submitBtn             = $q('#submit_btn').first();
+        const printBtn              = $q('#print_btn').first();
 
         const date_config = {
             autohide:true,
@@ -87,6 +88,23 @@
             
             window.open('/report/fulfilment/generate?'+query,'_blank').focus();
         }
+
+        printBtn.onclick = (e)=>{
+            e.preventDefault();
+
+            let from_val  = from_dp.getDate('yyyy-mm-dd') ?? '';
+            let to_val    = to_dp.getDate('yyyy-mm-dd') ?? '';
+        
+            
+            let query = new URLSearchParams({
+                from : from_val,
+                to   : to_val,
+            });
+
+            
+            window.open('/report/fulfilment/print?'+query,'_blank').focus();
+        }
+
 
     </script>
 </div>
