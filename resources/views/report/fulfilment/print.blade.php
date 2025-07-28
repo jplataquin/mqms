@@ -79,33 +79,41 @@
            
 
         <div class="mb-5">
-            <h1 class="mb-3">Request To Purchase Timeframe KPI</h1>
+            <h2 class="mb-3">Request To Purchase Timeframe KPI</h2>
+
+             <table class="table">
+                <tr>
+                    <th>Date Scope</th>
+                    <td>{{$from}} - {{$to}}</td>
+                </tr>
+            </table>
+
             <table class="table">
                 <tr>
                     <td class="text-center">
-                        <h2>Request</h2>
-                        <h2>
+                        <h1>Request</h1>
+                        <h1>
                             {{ number_format($request_count,2) }}
                         </h2>
                     </td>
                     <td class="text-center">
-                        <h2>Hit</h2>
-                        <h2>
+                        <h1>Hit</h1>
+                        <h1>
                         {{ number_format($target_hit,2) }}
-                        </h2>
+                        </h1>
                     </td>
                     <td class="text-center">
-                        <h2>Missed</h2>
-                        <h2>
+                        <h1>Missed</h1>
+                        <h1>
                             {{ number_format($target_missed,2) }}
-                        </h2>
+                        </h1>
                 
                     </td>
                 </tr>
                 <tr>
                     <td colspan="3" class="text-center">
-                        <h2>Percentage</h2>
-                        <h2>{{$percentage}}%</h2>
+                        <h1>Percentage</h1>
+                        <h1>{{$percentage}}%</h1>
                     </td>
                 </tr>
             </table>    
