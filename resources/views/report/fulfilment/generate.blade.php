@@ -15,7 +15,7 @@
                 <li>
                     <a href="#" class="active">
                         <span>
-                        Fulfilment
+                        Request to Purchase Timeframe KPI
                         </span>
                     </a>
                 </li>
@@ -25,7 +25,7 @@
         
 
         <div class="folder-form-container mb-3">
-            <div class="folder-form-tab">Fulfilment Report</div>
+            <div class="folder-form-tab">Request to Purchase Timeframe KPI</div>
             <div class="folder-form-body">
                 <table class="record-table-horizontal">
                     <tr>

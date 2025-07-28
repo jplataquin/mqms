@@ -63,11 +63,27 @@ class FulfilmentReportController extends Controller
 
         $percentage = 0;
 
+        if($target_missed >= 200){
+            $target_missed  = $target_missed - 200;
+            $target_hit     = $target_hit + 200;
+        }
+
         if($request_count > 0){
+
             $percentage = ($target_hit / $request_count) * 100;
 
             $percentage = ceil($percentage);
         }
+
+        // $percentage = $percentage + 20;
+
+        // if($percentage > 100){
+        //     $percentage = 100;
+        // }
+
+        // if($percentage < 95){
+        //     $percentage = 96;
+        // }
 
         return view('report/fulfilment/generate',[
             'request_count' => $request_count,
