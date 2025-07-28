@@ -85,7 +85,7 @@
                         <img src="/storage/sys_images/header.png" style="width:500px"/>
                     </th>
                     <th>
-                        <h2>Request To Purchase Timeframe KPI</h2>
+                        <h1>Request To Purchase Timeframe KPI</h1>
                     </th>
                 </tr>
                 <tr>
