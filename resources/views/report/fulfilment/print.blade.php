@@ -139,7 +139,7 @@
                         <br>
                         Prepared By
                     </td>
-                    <td>
+                    <td class="text-center">
                         
                         ___________________________
                         <br>
