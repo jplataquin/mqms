@@ -96,7 +96,7 @@
                 <tr>
                     <th colspan="2">
                         <h3>Date Scope: {{$from}} - {{$to}}</h3>
-                    </td>
+                    </th>
                 </tr>
             </table>
 
