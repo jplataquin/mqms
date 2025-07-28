@@ -94,8 +94,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Date Scope</th>
-                    <td>{{$from}} - {{$to}}</td>
+                    <th colspan="2">
+                        <h3>Date Scope: {{$from}} - {{$to}}</h3>
+                    </td>
                 </tr>
             </table>
 
