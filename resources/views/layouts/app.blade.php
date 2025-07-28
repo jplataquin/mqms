@@ -118,7 +118,7 @@
                                     <a href="/report/price/parameters" hx-select="#content" hx-target="#main">Price</a>
                                 </li>
                                 <li class="nav-sub-item">
-                                    <a href="/report/fulfilment/parameters" hx-select="#content" hx-target="#main">RPTF KPI</a>
+                                    <a href="/report/fulfilment/parameters" hx-select="#content" hx-target="#main">RPT KPI</a>
                                 </li>
                                 <li class="nav-sub-item">
                                     <a href="/report/purchase/parameters" hx-select="#content" hx-target="#main">Purchase Summary</a>
