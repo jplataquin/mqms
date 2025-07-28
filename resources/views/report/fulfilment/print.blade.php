@@ -79,16 +79,25 @@
            
 
         <div class="mb-5">
-            <h2 class="mb-3">Request To Purchase Timeframe KPI</h2>
-
-             <table class="table">
+            <table class="table">
+                <tr>
+                    <th colspan="2">
+                         <img src="storage/sys_images/header.png" style="width:500px"/>
+                    </th>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h2 class="mb-3">Request To Purchase Timeframe KPI</h2>
+                        <h2>Material Request to Material Purchase within 7 days (Target: 90%)</h2>           
+                    </td>
+                </tr>
                 <tr>
                     <th>Date Scope</th>
                     <td>{{$from}} - {{$to}}</td>
                 </tr>
             </table>
 
-            <table class="table">
+            <table class="table mt-5">
                 <tr>
                     <td class="text-center">
                         <h1>Request</h1>
