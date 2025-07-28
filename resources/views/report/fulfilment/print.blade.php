@@ -88,7 +88,7 @@
                 <tr>
                     <td colspan="2">
                         <h2 class="mb-3">Request To Purchase Timeframe KPI</h2>
-                        <h2>Material Request to Material Purchase within 7 days (Target: 90%)</h2>           
+                        <h3>Material Request to Material Purchase within 7 days (Target: 90%)</h3>           
                     </td>
                 </tr>
                 <tr>
