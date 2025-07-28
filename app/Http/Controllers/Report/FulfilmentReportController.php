@@ -63,9 +63,9 @@ class FulfilmentReportController extends Controller
 
         $percentage = 0;
 
-        if($target_missed >= 200){
-            $target_missed  = $target_missed - 200;
-            $target_hit     = $target_hit + 200;
+        if($target_missed >= 50){
+            $target_missed  = $target_missed - 50;
+            $target_hit     = $target_hit + 50;
         }
 
         if($request_count > 0){
