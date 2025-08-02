@@ -560,7 +560,9 @@ class MaterialQuantityRequestController extends Controller
         $request_items   = $materialQuantityRequest->Items;
 
         if($component == null){
-            print_r($materialQuantityRequest);
+           //TODO fix error display
+           echo 'Error: Component is Null';
+           return false;
         }
 
         $unit_options               = Unit::toOptions();
