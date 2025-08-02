@@ -23,11 +23,10 @@ class QrCodeController extends Controller{
         // Create a Writer instance
         $writer = new Writer($renderer);
 
-        // Set the Content-Type header
-        header('Content-Type: image/png');
+     
 
-        // Output the QR code image directly to the browser
-        echo $writer->writeString($data);
+
+        return response($writer->writeString($data))->header('Content-type','image/png');
 
     }
 }
