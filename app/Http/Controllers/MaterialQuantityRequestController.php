@@ -559,7 +559,10 @@ class MaterialQuantityRequestController extends Controller
         $component       = $materialQuantityRequest->Component;
         $request_items   = $materialQuantityRequest->Items;
 
-        
+        if($component == null){
+            print_r($materialQuantityRequest);
+        }
+
         $unit_options               = Unit::toOptions();
 
         $component_item_ids         = [];
