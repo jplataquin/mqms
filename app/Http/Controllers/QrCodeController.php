@@ -10,18 +10,23 @@ use BaconQrCode\Writer;
 
 class QrCodeController extends Controller{
 
-    public function index(){
+    public function index(Request $request){
 
         $renderer = new ImageRenderer(
             new RendererStyle(
                 400, //size px
-                0.5 //margin
+                0 //margin
             ),
             new ImagickImageBackEnd()
         );
 
-       // Data to encode in the QR code
-        $data = 'https://www.example.com';
+        //Data to encode in the QR code
+        $data = $request->input('d') ?? null;
+
+        if($data == null){
+            $data = '{message:"No Data"}';
+        }
+        
         
         // Create a Writer instance
         $writer = new Writer($renderer);
