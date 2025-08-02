@@ -35,6 +35,10 @@
                 font-weight: bold !important;
             }
 
+            .qr_code{
+                width:200px;
+                height:200px;
+            }
 
             @media print {
 
@@ -58,9 +62,12 @@
                 <td style="width:50%;text-align:center">
                     <img src="/storage/sys_images/header.png" style="width:500px"/>
                 </td>
-                <td class="text-center" style="width:40%;text-align:center">
+                <td class="text-center" style="width:35%;text-align:center">
                     <h1>Material Request</h1>
-                
+
+                </td>
+                <td class="text-center" style="width:10%;text-align:center">
+                    <img class="img" src="/qrcode?=www.google.com"/>
                 </td>
             </tr>
         </table>
