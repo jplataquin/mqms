@@ -67,7 +67,7 @@
 
                 </td>
                 <td class="text-center" style="width:10%;text-align:center">
-                    <img class="img" src="/qrcode?=www.google.com"/>
+                    <img class="img" src="/qrcode?d=www.google.com"/>
                 </td>
             </tr>
         </table>
