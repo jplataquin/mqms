@@ -187,6 +187,8 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/change_user_password/{id}', [App\Http\Controllers\UserController::class, 'change_user_password']);
     
     Route::get('/test_mq/{id}',[App\Http\Controllers\MaterialQuantityController::class, 'test_mq']);
+
+    Route::get('/qrcode',[App\Http\Controllers\QrCodeController::class, 'index']);
 });
 
 
