@@ -17,7 +17,8 @@ class QrCodeController extends Controller{
             new ImagickImageBackEnd()
         );
 
-        $writer = new Writer($renderer);
+       // Data to encode in the QR code
+        $data = 'https://www.example.com';
         
         // Create a Writer instance
         $writer = new Writer($renderer);
@@ -26,7 +27,7 @@ class QrCodeController extends Controller{
         header('Content-Type: image/png');
 
         // Output the QR code image directly to the browser
-        echo $writer->writeString($qrData);
+        echo $writer->writeString($data);
 
     }
 }
