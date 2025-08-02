@@ -18,6 +18,15 @@ class QrCodeController extends Controller{
         );
 
         $writer = new Writer($renderer);
-        $writer->writeFile('Hello World!', 'qrcode.png');
+        
+        // Create a Writer instance
+        $writer = new Writer($renderer);
+
+        // Set the Content-Type header
+        header('Content-Type: image/png');
+
+        // Output the QR code image directly to the browser
+        echo $writer->writeString($qrData);
+
     }
 }
