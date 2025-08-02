@@ -12,20 +12,27 @@ class QrCodeController extends Controller{
 
     public function index(Request $request){
 
-        $renderer = new ImageRenderer(
-            new RendererStyle(
-                400, //size px
-                0 //margin
-            ),
-            new ImagickImageBackEnd()
-        );
-
         //Data to encode in the QR code
         $data = $request->input('d') ?? null;
 
         if($data == null){
             $data = '{message:"No Data"}';
         }
+
+        $size = (int) $request->input('s') ?? 0;
+
+        if(!$size){
+            $size = 400;
+        }
+
+        $renderer = new ImageRenderer(
+            new RendererStyle(
+                $size, //size px
+                0 //margin
+            ),
+            new ImagickImageBackEnd()
+        );
+
         
         
         // Create a Writer instance
