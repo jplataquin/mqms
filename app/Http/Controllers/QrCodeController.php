@@ -21,7 +21,7 @@ class QrCodeController extends Controller{
 
         $size = (int) $request->input('s') ?? 0;
 
-        if(!$size){
+        if(!$size || $size < 400){
             $size = 400;
         }
 
