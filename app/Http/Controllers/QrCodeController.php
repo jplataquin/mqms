@@ -13,7 +13,10 @@ class QrCodeController extends Controller{
     public function index(){
 
         $renderer = new ImageRenderer(
-            new RendererStyle(400),
+            new RendererStyle(
+                400, //size px
+                0.5 //margin
+            ),
             new ImagickImageBackEnd()
         );
 
