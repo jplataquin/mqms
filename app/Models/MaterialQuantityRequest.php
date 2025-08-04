@@ -147,7 +147,7 @@ class MaterialQuantityRequest extends Model
         $item_str   = join(':',$item_arr);
         $header_str = join('|',$header_arr);
 
-        $secret_text = $header_str.'='.$item_str.'secret';
+        $secret_text = $header_str.'='.$item_str.'='.env('APP_KEY','');
 
         $hash = hash('sha256',$secret_text);
 
