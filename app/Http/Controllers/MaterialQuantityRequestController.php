@@ -1465,9 +1465,9 @@ class MaterialQuantityRequestController extends Controller
         ]);
     }
 
-    public function test_hash(Request $request){
+    public function test_hash($id){
 
-        $id = (int) $request->input('id');
+        $id = (int) $id;
 
         $material_quantity_request = MaterialQuantityRequest::findOrFail($id);
 
