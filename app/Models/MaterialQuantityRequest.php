@@ -16,6 +16,7 @@ use App\Models\Component;
 use App\Models\ComponentItem;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class MaterialQuantityRequest extends Model
 {
@@ -43,6 +44,22 @@ class MaterialQuantityRequest extends Model
     //     ];
 
     // }
+
+
+    public function getHashCode(){
+
+        $request    = print_r($this,true);
+        $items      = print_r($this->Items,true);
+        
+        $secret_text = $request.$items.'secret';
+
+        $hash = Hash::make($secret_text);
+
+        return [
+            'hash' => $hash,
+            'secret_text' => $secret_text
+        ];
+    }
 
     public function Items(): HasMany
     {

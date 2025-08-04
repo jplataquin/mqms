@@ -558,7 +558,7 @@ class MaterialQuantityRequestController extends Controller
         $contract_item   = $materialQuantityRequest->ContractItem;
         $component       = $materialQuantityRequest->Component;
         $request_items   = $materialQuantityRequest->Items;
-
+    
         if($component == null){
            //TODO fix error display
            echo 'Error: Component is Null';
@@ -1463,5 +1463,18 @@ class MaterialQuantityRequestController extends Controller
             'draft'             => $draft,
             'total_count'       => count($po_list)
         ]);
+    }
+
+    public function test_hash(Request $request){
+
+        $id = (int) $request->input('id');
+
+        $material_quantity_request = MaterialQuantityRequest::findOrFail($id);
+
+        $data = $material_quantity_request->getHashCode();
+
+        echo $data['hash'];
+        echo '<br>';
+        echo $data['secret_text'];
     }
 }

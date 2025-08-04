@@ -119,10 +119,13 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/material_quantity_requests', [App\Http\Controllers\MaterialQuantityRequestController::class, 'list']);
     Route::get('/material_quantity_request/select/create', [App\Http\Controllers\MaterialQuantityRequestController::class, 'selectCreate']);
     Route::get('/material_quantity_request/po_list/{id}', [App\Http\Controllers\MaterialQuantityRequestController::class, 'po_list']);
-   
+    
+    Route::get('/test_hash/{id}', [App\Http\Controllers\MaterialQuantityRequestController::class, 'test_hash']);
+  
 
     Route::get('/review/material_quantity_request/{id}', [App\Http\Controllers\Review\MaterialQuantityRequestReviewController::class, 'display']);
     Route::get('/review/material_quantity_requests', [App\Http\Controllers\Review\MaterialQuantityRequestReviewController::class, 'list']);
+    Route::get('/review/material_quantity_requests/qr/approve', [App\Http\Controllers\Review\MaterialQuantityRequestReviewController::class, 'qr_approve']);
    
     Route::get('/review/material_canvass', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, 'list']);
     Route::get('/review/material_canvass/{id}', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, 'display']);

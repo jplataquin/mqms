@@ -153,6 +153,88 @@ class MaterialQuantityRequestReviewController extends Controller
         ]);
     }
     
+    public function qr_approve(Request $request){
+
+        $id = (int) $request->input('id');
+
+        if(!$this->hasAccess('material_request:all:approve')){
+            return view('review/material_quantity_request/qr/access_denied',[
+                'id' => $id
+            ]);
+        }
+
+        
+        $validator = Validator::make($request->all(),[
+            'id' => [
+                'required',
+                'integer'
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return view('review/material_quantity_request/qr/error',[
+                'message' => 'Validation Failed',
+                'data'    => $validator->messages(),
+                'id'      => $id
+            ]);
+        }
+
+        $material_quantity_request = MaterialQuantityRequest::find($id);
+
+        if(!$material_quantity_request){
+            return view('review/material_quantity_request/qr/error',[
+                'message' => 'Record not found',
+                'data'    => [],
+                'id'      => $id
+            ]);
+        }
+
+        if($material_quantity_request->status != 'PEND'){
+           return view('review/material_quantity_request/qr/error',[
+                'message' => 'Record is no longer in pending status',
+                'data'    => [],
+                'id'      => $id
+            ]);
+        }
+
+
+        $user_id = Auth::user()->id;
+
+        DB::beginTransaction();
+
+        try {
+
+
+            $material_quantity_request->status        = 'APRV';
+            $material_quantity_request->approved_by   = $user_id;
+            $material_quantity_request->approved_at   = Carbon::now();
+            $material_quantity_request->save();
+
+            $affected = DB::table('material_quantity_request_items')
+                ->where('material_quantity_request_id', $id)
+                ->update(['status' => 'APRV']);
+
+            DB::commit();
+
+            return view('review/material_quantity_request/qr/approve',[
+                'id'      => $id
+            ]);
+
+        }catch(\Exception $e){
+
+            return view('review/material_quantity_request/qr/error',[
+                'message' => 'Record update failed',
+                'data'    => $e->getMessage(),
+                'id'      => $id
+            ]);
+
+            DB::rollback();
+
+            return false;
+            
+         }
+    }
+
     public function _approve(Request $request){
 
         if(!$this->hasAccess('material_request:all:approve')){
