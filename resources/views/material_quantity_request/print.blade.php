@@ -36,12 +36,17 @@
             }
 
             .qr_code{
-                width:200px;
-                height:200px;
+                width:100px;
+                height:100px;
             }
 
             @media print {
 
+                .qr_code{
+                    width:100px;
+                    height:100px;
+                }
+                
                 td, th{
                     font-size:10px;
                 }
@@ -67,7 +72,7 @@
 
                 </td>
                 <td class="text-center" style="width:10%;text-align:center">
-                    <img class="img" src="/qrcode?d=www.google.com"/>
+                    <img class="qr_code" src="/qrcode?d=www.google.com"/>
                 </td>
             </tr>
         </table>
