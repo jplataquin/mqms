@@ -151,7 +151,7 @@ class MaterialQuantityRequest extends Model
 
         $hash = hash('sha256',$secret_text);
 
-        $hashx = substr($hash,7).substr($hash,14).substr($hash,21).substr($hash,28);
+        $hashx = substr($hash,7,1).substr($hash,14,1).substr($hash,21,1).substr($hash,28,1);
 
         return [
             
