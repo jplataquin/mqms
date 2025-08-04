@@ -15,6 +15,7 @@ use App\Models\Section;
 use App\Models\ContractItem;
 use App\Models\Component;
 use App\Models\ComponentItem;
+use App\Models\MaterialItem;
 use App\Models\User;
 use Carbon\Carbon;
 
@@ -99,9 +100,13 @@ class MaterialQuantityRequest extends Model
 
     public function getHashCode(){
 
-        $item_str = '';
+        $item_arr = [];
         
         foreach($this->Items as $item){
+
+            $material_item = MaterialItem::find($item->id);
+            
+            if(!$material_item) continue;
 
             $total_approved_component_item_quantity = $this->get_total_approved_component_item_quantity($item->component_item_id);
             
@@ -111,10 +116,38 @@ class MaterialQuantityRequest extends Model
                 $item->material_item_id
             );
 
-            $item_str = $item_str.':'.$total_approved_component_item_quantity.'-'.$total_approved_request_item_quantity.'-'.$item->material_item_id.'-'.$item->requested_quantity;
+        
+            $item_arr[] = join('-',[
+                $total_approved_component_item_quantity,
+                $total_approved_request_item_quantity,
+                $material_item->formatted_name,
+                $item->requested_quantity
+            ]);
         }
 
-        $secret_text = $item_str.'secret';
+        $project        = $this->Project;
+        $section        = $this->Section;
+        $contract_item  = $this->ContractItem;
+        $component      = $this->Component;
+
+        $header_arr = [
+            $project->name,
+            $project->status,
+            $section->name,
+            $contract_item->name,
+            $component->name,
+            $component->status,
+            $this->created_by,
+            $this->created_at,
+            $this->status,
+            $this->date_needed,
+        ];
+
+
+        $item_str   = join(':',$item_arr);
+        $header_str = join('|',$header);
+
+        $secret_text = $header_str.'='.$item_str.'secret';
 
         $hash = hash('sha256',$secret_text);
 
