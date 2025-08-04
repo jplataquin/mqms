@@ -104,7 +104,7 @@ class MaterialQuantityRequest extends Model
         
         foreach($this->Items as $item){
 
-            $total_approved_component_item_quantity = get_total_approved_component_item_quantity($item->component_item_id);
+            $total_approved_component_item_quantity = $this->get_total_approved_component_item_quantity($item->component_item_id);
             
             $total_approved_request_item_quantity = $this->get_total_approved_request_item_quantity(
                 $item->id,
