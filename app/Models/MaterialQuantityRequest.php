@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\MaterialQuantityRequestItem;
+use App\Models\MaterialQuantity;
 use App\Models\PurchaseOrder;
 use App\Models\Project;
 use App\Models\Section;
@@ -45,13 +46,76 @@ class MaterialQuantityRequest extends Model
 
     // }
 
+    private function get_total_approved_component_item_quantity($component_item_id){
+        
+        $component_item = ComponentItem::find($component_item_id);
+
+        if(!$component_item) return 0;
+
+        $component = $component_item->Component;
+
+        if($component->status != 'APRV') return 0;
+
+       return  $component_item->quantity;
+    }
+
+    private function get_total_approved_request_item_quantity(
+        $material_quantity_request_item_id,
+        $component_item_id,
+        $material_item_id
+    ){
+
+        
+        $total_approved_quantity = 0;
+
+
+        $material_quantity = MaterialQuantity::where('component_item_id',$component_item_id)
+        ->where('material_item_id',$material_item_id)
+        ->first();
+
+        
+        $material_quantity_request_item = MaterialQuantityRequestItem::where(function($query){
+            $query->where('status','=','APRV')->orWhere('status','=','CLSD');
+        })
+        ->where('component_item_id','=',$component_item_id)
+        ->where('material_item_id','=',$material_item_id);
+        
+    
+        if($material_quantity_request_item_id){
+            
+            $total_approved_quantity = $material_quantity_request_item
+            ->where('id','!=',$material_quantity_request_item_id)
+            ->sum('requested_quantity');
+
+        }else{
+            
+            $total_approved_quantity = $material_quantity_request_item
+            ->sum('requested_quantity');
+            
+        }
+        
+        
+        return $total_approved_quantity * $material_quantity->equivalent;
+    }
 
     public function getHashCode(){
 
-        $request    = print_r($this,true);
-        $items      = print_r($this->Items,true);
+        $item_str = '';
         
-        $secret_text = $request.$items.'secret';
+        foreach($this->Items as $item){
+
+            $total_approved_component_item_quantity = get_total_approved_component_item_quantity($item->component_item_id);
+            
+            $total_approved_request_item_quantity = $this->get_total_approved_request_item_quantity(
+                $item->id,
+                $item->component_item_id,
+                $item->material_item_id
+            );
+
+            $item_str = $item_str.':'.$total_approved_component_item_quantity.'-'.$total_approved_request_item_quantity.'-'.$item->material_item_id.'-'.$item->requested_quantity;
+        }
+
+        $secret_text = $item_str.'secret';
 
         $hash = Hash::make($secret_text);
 
