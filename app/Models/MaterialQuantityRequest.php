@@ -17,7 +17,6 @@ use App\Models\Component;
 use App\Models\ComponentItem;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Hash;
 
 class MaterialQuantityRequest extends Model
 {
@@ -117,7 +116,7 @@ class MaterialQuantityRequest extends Model
 
         $secret_text = $item_str.'secret';
 
-        $hash = Hash::make($secret_text);
+        $hash = hash('sha256',$secret_text);
 
         return [
             'hash' => $hash,
