@@ -104,7 +104,7 @@ class MaterialQuantityRequest extends Model
         
         foreach($this->Items as $item){
 
-            $material_item = MaterialItem::find($item->id);
+            $material_item = MaterialItem::find($item->material_item_id);
             
             if(!$material_item) continue;
 
