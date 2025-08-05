@@ -174,7 +174,7 @@ class MaterialQuantityRequestReviewController extends Controller
 
 
         $material_quantity_request = MaterialQuantityRequest::find($id);
-
+        
         if(!$material_quantity_request){
             return view('review/material_quantity_request/qr/error',[
                 'message' => 'Record not found',
