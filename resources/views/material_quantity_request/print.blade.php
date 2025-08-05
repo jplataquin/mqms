@@ -72,7 +72,7 @@
 
                 </td>
                 <td class="text-center" style="width:10%;text-align:center">
-                    <img class="qr_code" src="/qrcode?d=www.google.com"/>
+                    <img class="qr_code" src="/qrcode?d={{ url('/review/material_quantity_requests/qr/approve/'.$material_quantity_request->id) }}"/>
                     <div class="text-bold">{{$hash_code}}</div>
                 </td>
             </tr>
