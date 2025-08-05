@@ -163,6 +163,7 @@ class MaterialQuantityRequestReviewController extends Controller
             'hash_code'  => $hash_code 
         ]);
         
+        
         if(!$hash_code){
             return view('review/material_quantity_request/qr/error',[
                 'message' => 'Hash Code not found',
