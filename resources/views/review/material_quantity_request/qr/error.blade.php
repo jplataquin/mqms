@@ -19,7 +19,7 @@
             @endif
 
             <div class="mt-5">
-                <button class="btn btn-primary" onclick="window.util.navTo('/material_quantity_requests/{{$id}}');">View Record</button>
+                <button class="btn btn-primary" onclick="window.util.navTo('/material_quantity_request/{{$id}}');">View Record</button>
             </div>
         </div>
     </div>
