@@ -153,7 +153,7 @@ class MaterialQuantityRequest extends Model
 
         $hash = substr($raw_hash,0,3).substr($raw_hash,61,3);
 
-        return $hash;
+        return strtoupper($hash);
     }
 
     public function Items(): HasMany
