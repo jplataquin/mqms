@@ -544,6 +544,13 @@ window.util.$post = async (url,data,headers) => {
                         data:{}
                 }
             break;
+             case 401:
+                return {
+                        status:-1,
+                        message:'Method not allowed',
+                        data:{}
+                }
+            break;
             case 500:
                 return {
                         status:-5,
