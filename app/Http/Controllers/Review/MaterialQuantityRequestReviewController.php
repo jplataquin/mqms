@@ -153,9 +153,23 @@ class MaterialQuantityRequestReviewController extends Controller
         ]);
     }
     
-    public function qr_approve(Request $request){
+    public function qr_approve($id,$hash_code){
 
-        $id = (int) $request->input('id');
+        $id = (int) $id;
+
+        
+        return view('review/material_quantity_request/qr/approve',[
+            'id'         => $id,
+            'hash_code'  => $hash_code 
+        ]);
+        
+        if(!$hash_code){
+            return view('review/material_quantity_request/qr/error',[
+                'message' => 'Hash Code not found',
+                'data'    => [],
+                'id'      => $id
+            ]);
+        }
 
         if(!$this->hasAccess('material_request:all:approve')){
             return view('review/material_quantity_request/qr/access_denied',[
@@ -163,21 +177,6 @@ class MaterialQuantityRequestReviewController extends Controller
             ]);
         }
 
-        
-        $validator = Validator::make($request->all(),[
-            'id' => [
-                'required',
-                'integer'
-            ]
-        ]);
-
-        if ($validator->fails()) {
-            return view('review/material_quantity_request/qr/error',[
-                'message' => 'Validation Failed',
-                'data'    => $validator->messages(),
-                'id'      => $id
-            ]);
-        }
 
         $material_quantity_request = MaterialQuantityRequest::find($id);
 
@@ -189,9 +188,19 @@ class MaterialQuantityRequestReviewController extends Controller
             ]);
         }
 
+        $current_hash_code = $material_quantity_request->getHashCode();
+
+        if($hash_code != $current_hash_code){
+            return view('review/material_quantity_request/qr/error',[
+                'message' => 'The printed copy is not updated',
+                'data'    => [],
+                'id'      => $id
+            ]);
+        }
+
         if($material_quantity_request->status != 'PEND'){
            return view('review/material_quantity_request/qr/error',[
-                'message' => 'Record is no longer in pending status',
+                'message' => 'The record is no longer in pending status',
                 'data'    => [],
                 'id'      => $id
             ]);
@@ -217,14 +226,15 @@ class MaterialQuantityRequestReviewController extends Controller
             DB::commit();
 
             return view('review/material_quantity_request/qr/approve',[
-                'id'      => $id
+                'id'         => $id,
+                'hash_code'  => $hash_code 
             ]);
 
         }catch(\Exception $e){
 
             return view('review/material_quantity_request/qr/error',[
                 'message' => 'Record update failed',
-                'data'    => $e->getMessage(),
+                'data'    => [$e->getMessage()],
                 'id'      => $id
             ]);
 
