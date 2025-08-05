@@ -28,7 +28,9 @@
             if(ans){
                 window.util.blockUI();
 
-                window.util.$post('/material_quantity_request/revert_to_pending').then(reply=>{
+                window.util.$post('/api/material_quantity_request/revert_to_pending',{
+
+                }).then(reply=>{
                     window.util.unblockUI();
 
                     if(reply.status <= 0){
