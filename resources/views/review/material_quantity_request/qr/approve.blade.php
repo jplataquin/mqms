@@ -31,7 +31,7 @@
                 window.util.$post('/material_quantity_request/revert_to_pending').then(reply=>{
                     window.util.unblockUI();
 
-                    if(replyl.status <= 0){
+                    if(reply.status <= 0){
                         window.util.showMsg(reply);
                         return false;
                     }
