@@ -29,7 +29,7 @@
                 window.util.blockUI();
 
                 window.util.$post('/api/material_quantity_request/revert_to_pending',{
-
+                    id: '{{$id}}'
                 }).then(reply=>{
                     window.util.unblockUI();
 
