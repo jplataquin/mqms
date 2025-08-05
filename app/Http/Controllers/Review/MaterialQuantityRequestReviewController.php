@@ -158,13 +158,6 @@ class MaterialQuantityRequestReviewController extends Controller
         $id = (int) $id;
 
         
-          return view('review/material_quantity_request/qr/error',[
-                'message' => 'Hash code not found',
-                'data'    => [],
-                'id'      => $id
-            ]);
-
-        
         if(!$hash_code){
             return view('review/material_quantity_request/qr/error',[
                 'message' => 'Hash code not found',
