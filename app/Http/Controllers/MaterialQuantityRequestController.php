@@ -730,6 +730,7 @@ class MaterialQuantityRequestController extends Controller
             ];
         }
 
+        $hash_code = $materialQuantityRequest->getHashCode();
 
         return view('material_quantity_request/print',[
             'project'                   => $project,
@@ -741,6 +742,7 @@ class MaterialQuantityRequestController extends Controller
             'item_options'              => $item_options,
             'component_item_options'    => $component_item_options,
             'unit_options'              => $unit_options,
+            'hash_code'                 => $hash_code,
             'date_printed'              => Carbon::now()
         ]);
 
@@ -1465,16 +1467,5 @@ class MaterialQuantityRequestController extends Controller
         ]);
     }
 
-    public function test_hash($id){
-
-        $id = (int) $id;
-
-        $material_quantity_request = MaterialQuantityRequest::findOrFail($id);
-
-        $data = $material_quantity_request->getHashCode();
-
-        echo $data['hash'];
-        echo '<br>';
-        echo $data['secret_text'];
-    }
+   
 }

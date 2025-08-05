@@ -149,15 +149,11 @@ class MaterialQuantityRequest extends Model
 
         $secret_text = $header_str.'='.$item_str.'='.env('APP_KEY','');
 
-        $hash = hash('sha256',$secret_text);
+        $raw_hash = hash('sha256',$secret_text);
 
-        $hashx = substr($hash,0,3).substr($hash,61,3);
+        $hash = substr($raw_hash,0,3).substr($raw_hash,61,3);
 
-        return [
-            
-            'hash' => strtoupper($hashx).' '.$hash,
-            'secret_text' => $secret_text
-        ];
+        return $hash;
     }
 
     public function Items(): HasMany

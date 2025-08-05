@@ -73,6 +73,7 @@
                 </td>
                 <td class="text-center" style="width:10%;text-align:center">
                     <img class="qr_code" src="/qrcode?d=www.google.com"/>
+                    <div class="text-bold">{{$hash_code}}</div>
                 </td>
             </tr>
         </table>
