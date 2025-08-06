@@ -894,6 +894,74 @@ class PurchaseOrderController extends Controller
         
 
     }
+
+
+    public function _print($id){
+
+        $purchaseOrder           = PurchaseOrder::findOrFail($id);
+        $materialQuantityRequest = MaterialQuantityRequest::findOrFail($purchaseOrder->material_quantity_request_id);
+
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['purchase_order:all:view'])){
+
+            if( !$this->hasAccess(['purchase_order:own:view']) ){
+                return view('access_denied');
+            }
+
+            if($purchaseOrder->created_by != $user->id){
+                return view('access_denied');
+            }
+        }
+
+        if($purchaseOrder->status != 'APRV'){
+            return abort(404);
+        }
+
+        $project                = $materialQuantityRequest->Project;
+        $section                = $materialQuantityRequest->Section;
+        $component              = $materialQuantityRequest->Component;
+        
+        $componentItems                 = $component->ComponentItems;
+        $paymentTerm                    = $purchaseOrder->PaymentTerm;
+        $supplier                       = $purchaseOrder->Supplier;
+        $materialQuantityRequestItems   = $purchaseOrder->Items;
+                            
+        $material_id_arr                = [];
+
+        foreach($materialQuantityRequestItems as $item){
+
+            $material_id_arr[] = $item->material_item_id;
+        }
+                   
+
+        $materialItems      = MaterialItem::whereIn('id',$material_id_arr)->get();
+        $materialItemArr    =        [];
+
+
+        foreach($materialItems as $materialItem){
+            $materialItemArr[$materialItem->id] = $materialItem;
+        }
+
+        $extras = json_decode($purchaseOrder->extras);
+        
+    
+        return view('purchase_order/_',[
+            'purchase_order'                    => $purchaseOrder,
+            'material_quantity_request'         => $materialQuantityRequest,
+            'project'                           => $project,
+            'section'                           => $section,
+            'component'                         => $component,
+            'supplier'                          => $supplier,
+            'payment_term'                      => $paymentTerm,
+            'items'                             => $materialQuantityRequestItems,
+            'extras'                            => $extras,
+            'materialItemArr'                   => $materialItemArr,
+            'current_datetime'                  => Carbon::now()
+            
+        ]);
+            
+    }
     
     public function total_ordered(Request $request){
 
