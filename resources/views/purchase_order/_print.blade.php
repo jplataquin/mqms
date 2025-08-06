@@ -29,6 +29,8 @@
 
             .table{
                 border-collapse:collapse;
+                width:100%;
+                min-width:100%;
             }
 
             td{
