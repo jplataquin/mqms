@@ -42,28 +42,45 @@ class PurchaseOrderController extends Controller
 
  
     public function _list(Request $request){
-         //todo check role
 
-         $page              = (int) $request->input('page')     ?? 1;
-         $limit             = (int) $request->input('limit')    ?? 10;
-         $project_id        = (int) $request->input('project_id')  ?? 0;
-         $section_id        = (int) $request->input('section_id')  ?? 0;
-         $contract_item_id  = (int) $request->input('contract_item_id') ?? 0;
-         $component_id      = (int) $request->input('component_id')  ?? 0;
-         $query             = (int) $request->input('query')    ?? 0;
-         $material_item_id  = (int) $request->input('material_item_id') ?? 0;
-         $status            = $request->input('status')         ?? '';
-         $orderBy           = $request->input('order_by')       ?? 'id';
-         $order             = $request->input('order')          ?? 'DESC';
-         
-         $result = [];
+
+        $user = auth()->user();
+
+        $page              = (int) $request->input('page')     ?? 1;
+        $limit             = (int) $request->input('limit')    ?? 10;
+        $project_id        = (int) $request->input('project_id')  ?? 0;
+        $section_id        = (int) $request->input('section_id')  ?? 0;
+        $contract_item_id  = (int) $request->input('contract_item_id') ?? 0;
+        $component_id      = (int) $request->input('component_id')  ?? 0;
+        $query             = (int) $request->input('query')    ?? 0;
+        $material_item_id  = (int) $request->input('material_item_id') ?? 0;
+        $status            = $request->input('status')         ?? '';
+        $orderBy           = $request->input('order_by')       ?? 'id';
+        $order             = $request->input('order')          ?? 'DESC';
         
-         $purchaseOrder = new PurchaseOrder();
+        $result = [];
+    
+        $purchaseOrder = new PurchaseOrder();
         
          
-         if($query){
-             $purchaseOrder = $purchaseOrder->where('id','=',$query);
-         }
+        if($query){
+            $purchaseOrder = $purchaseOrder->where('id','=',$query);
+        }
+
+
+        //Check roles
+        if($this->hasAccess(['purchase_order:own:list']) && !$this->hasAccess(['purchase_order:all:list'])){
+
+            $purchaseOrder->where('created_by','=',$user->id);
+        
+        }else if(!$this->hasAccess(['purchase_order:own:list']) && !$this->hasAccess(['purchase_order:all:list'])){
+
+            return response()->json([
+                'status'    => 0,
+                'message'   =>'Access Denied',
+                'data'      => []
+            ]);
+        }
  
          if($project_id){
              
