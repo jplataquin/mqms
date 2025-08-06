@@ -227,6 +227,24 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td class="text-left bold">Section</td>
+                                <td colspan="3">
+                                    {{$section->name}}
+                                </td>
+                            </tr>
+                                 <tr>
+                                <td class="text-left bold">Contract Item</td>
+                                <td colspan="3">
+                                    {{$contract_item->name}}
+                                </td>
+                            </tr>
+                                 <tr>
+                                <td class="text-left bold">Component</td>
+                                <td colspan="3">
+                                    {{$component->name}}
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="text-left bold">Datetime</td>
                                 <td colspan="3" style="font-size:12px">
                                     

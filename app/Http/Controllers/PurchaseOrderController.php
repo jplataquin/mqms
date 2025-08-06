@@ -919,6 +919,7 @@ class PurchaseOrderController extends Controller
         }
 
         $project                = $materialQuantityRequest->Project;
+        $contract_item          = $materialQuantityRequest->ContractItem;
         $section                = $materialQuantityRequest->Section;
         $component              = $materialQuantityRequest->Component;
         
@@ -951,6 +952,7 @@ class PurchaseOrderController extends Controller
             'material_quantity_request'         => $materialQuantityRequest,
             'project'                           => $project,
             'section'                           => $section,
+            'contract_item'                     => $contract_item,
             'component'                         => $component,
             'supplier'                          => $supplier,
             'payment_term'                      => $paymentTerm,
