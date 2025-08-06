@@ -41,6 +41,10 @@
                 margin-bottom:10px;
             }
 
+            .header{
+                font-size:
+            }
+
             @media print {
                 .whole {
                     break-inside: avoid;
@@ -284,19 +288,11 @@
                         <br>
                         <label class="bold">Created By</label>
                     </td>
-                    <td class="text-center">
-                        
-                        {{$purchase_order->ApprovedByUser()->name}}
-                        <br>
-                        __________________________
-                        <br>
-                        <label class="bold">Approved By</label>
-                    </td>
                     <td class="text-center" style="padding-left:30px">
                         <br>
                         __________________________
                         <br>
-                        <label class="bold">Received By</label>
+                        <label class="bold">Validated By</label>
                     </td>
                 </tr>
             </table>
