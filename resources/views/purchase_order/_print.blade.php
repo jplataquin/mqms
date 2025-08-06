@@ -212,14 +212,13 @@
                             <tr>
                                 <td class="text-left bold" style="width:15%">PO#</td>
                                 <td style="width:20%">{{ str_pad($purchase_order->id,6,0,STR_PAD_LEFT) }}</td>
-                                <td class="text-left bold"  style="width:15%">Supplier</td>
-                                <td style="width:48%">{{$supplier->name}}</td>
+                                <td class="text-left bold" rowspan="2"  style="width:15%">Supplier</td>
+                                <td style="width:48%" rowspan="2"> {{$supplier->name}}</td>
                             </tr>
                             <tr>
                                 <td class="text-left bold">Mat. Req #</td>
                                 <td>{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}</td>
-                                <td class="text-left bold" >Payment Terms</td>
-                                <td>{{$payment_term->text}}</td>
+                              
                             </tr>
                             <tr>
                                 <td class="text-left bold">Project</td>
