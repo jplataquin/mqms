@@ -946,7 +946,7 @@ class PurchaseOrderController extends Controller
         $extras = json_decode($purchaseOrder->extras);
         
     
-        return view('purchase_order/_',[
+        return view('purchase_order/_print',[
             'purchase_order'                    => $purchaseOrder,
             'material_quantity_request'         => $materialQuantityRequest,
             'project'                           => $project,
