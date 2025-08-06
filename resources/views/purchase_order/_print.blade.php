@@ -59,7 +59,7 @@
                 <table class="table" border="1">
                     <tr>
                         <td colspan="3" class="text-center bold" style="">
-                            <img src="storage/sys_images/header.png" style="width:500px"/>
+                            <img src="/storage/sys_images/header.png" style="width:500px"/>
                         </td>
                         <td class="text-center" valign="middle">
                             <qrcode value="{{json_encode(['t'=>'PO','id'=>$purchase_order->id])}}" ec="H" style="width: 20mm; background-color: white; color: black;"></qrcode>
@@ -196,7 +196,7 @@
              <table class="table" border="1">
                 <tr>
                     <td colspan="3" class="text-center bold" style="">
-                        <img src="storage/sys_images/header.png" style="width:500px"/>
+                        <img src="/storage/sys_images/header.png" style="width:500px"/>
                     </td>
                     <td class="text-center" valign="middle">
                         <qrcode value="{{json_encode(['t'=>'PO','id'=>$purchase_order->id])}}" ec="H" style="width: 20mm; background-color: white; color: black;"></qrcode>
