@@ -45,6 +45,11 @@
                 font-size:
             }
 
+
+            .bg-grey{
+                background-color:#ccc;
+            }
+
             @media print {
                 .whole {
                     break-inside: avoid;
@@ -302,7 +307,7 @@
 
                         <tr>
                             <th></td>
-                            <td class="text-right">Total</th>
+                            <td class="text-center bg-grey bold">Total</th>
                             <td class="text-right">&nbsp;</td>
                             <td class="text-right">&nbsp;</td>
                             <td class="text-right">&nbsp;</td>
