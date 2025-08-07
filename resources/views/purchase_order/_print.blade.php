@@ -293,12 +293,20 @@
                     @for($i = 1; $i < 4; $i++)
                         <tr>
                             <td></td>
-                            <td class="text-center">Delivery {{$i}} </td>
+                            <td class="text-center"></td>
                             <td class="text-right">&nbsp;</td>
                             <td class="text-right">&nbsp;</td>
                             <td class="text-right">&nbsp;</td>
                         </tr>
                     @endfor
+
+                        <tr>
+                            <th></td>
+                            <td class="text-right">Total</th>
+                            <td class="text-right">&nbsp;</td>
+                            <td class="text-right">&nbsp;</td>
+                            <td class="text-right">&nbsp;</td>
+                        </tr>
 
                 @endforeach    
               
