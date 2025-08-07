@@ -71,7 +71,7 @@ class PurchaseOrderController extends Controller
         //Check roles
         if($this->hasAccess(['purchase_order:own:list']) && !$this->hasAccess(['purchase_order:all:list'])){
 
-            $purchaseOrder->where('created_by','=',$user->id);
+            $purchaseOrder = $purchaseOrder->where('created_by','=',$user->id);
         
         }else if(!$this->hasAccess(['purchase_order:own:list']) && !$this->hasAccess(['purchase_order:all:list'])){
 

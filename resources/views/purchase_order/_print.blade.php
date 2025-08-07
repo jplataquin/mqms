@@ -274,7 +274,7 @@
                     <td class="text-center bold">Received</td>
                     <td class="text-center bold">Rejected</td>
                 </tr>
-                @php $subtotal = 0; @endphp
+                
                 @foreach($items as $item)
                     <tr>
                         @php 
@@ -283,13 +283,21 @@
                             $item_name = Str::wordWrap($item_name, 50, "<br>", false);
 
                         @endphp
-                        <td>{!! $item_name !!}</td>
+                        <td style="font-size:10px">{!! $item_name !!}</td>
                         <td class="text-center">{{number_format($item->quantity,2)}}</td>
                         <td class="text-right">&nbsp;</td>
                         <td class="text-right">&nbsp;</td>
                     </tr>
-                
-               
+
+                    @for($i = 1; $i < 4; $i++)
+                        <tr>
+                            <td></td>
+                            <td class="text-center">Delivery {{$i}} </td>
+                            <td class="text-right">&nbsp;</td>
+                            <td class="text-right">&nbsp;</td>
+                        </tr>
+                    @endfor
+
                 @endforeach    
               
        
