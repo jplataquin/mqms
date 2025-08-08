@@ -50,6 +50,10 @@
                 background-color:#ccc;
             }
 
+            .font-10{
+                font-size:10px;
+            }
+
             @media print {
                 .whole {
                     break-inside: avoid;
@@ -308,9 +312,9 @@
 
                         <tr>
                             <td class=""></th>
-                            <td class="bold">Total: </td>
-                            <td class="bold">Total: </td>
-                            <td class="bold">Diff: </td>
+                            <td class="bold font-10">Total: </td>
+                            <td class="bold font-10">Total: </td>
+                            <td class="bold font-10">Diff: </td>
                         </tr>
                         <tr>
                             <td class="bg-grey" colspan="4">&nbsp;</td>
