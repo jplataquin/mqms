@@ -63,10 +63,7 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         
-        @php 
-            $locale = 'en_US'; // Or your desired locale
-            $nf = new NumberFormatter($locale, NumberFormatter::ORDINAL);
-        @endphp
+     
 
          @foreach(['Supplier','Site','Accounting'] as $copy)
             <div class="whole mb-10">
