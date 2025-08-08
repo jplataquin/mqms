@@ -307,12 +307,14 @@
                     @endfor
 
                         <tr>
-                            <td class="text-center bg-grey bold">Total</th>
+                            <td class="text-center">Total</th>
                             <td class="text-right">&nbsp;</td>
                             <td class="text-right">&nbsp;</td>
                             <td class="text-right">&nbsp;</td>
                         </tr>
-
+                        <tr>
+                            <td class="bg-grey bold"></td>
+                        </tr>
                 @endforeach    
               
        
