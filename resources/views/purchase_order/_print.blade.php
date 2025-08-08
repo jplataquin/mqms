@@ -299,10 +299,10 @@
 
                     @for($i = 0; $i <= 2; $i++)
                         <tr>
-                            <td class="text-center">{{ $ordinal[$i] }} Delivery</td>
-                            <td class="text-right">&nbsp;</td>
-                            <td class="text-right">&nbsp;</td>
-                            <td class="text-right">&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
                         </tr>
                     @endfor
 
