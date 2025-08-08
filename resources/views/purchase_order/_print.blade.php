@@ -202,17 +202,17 @@
         <div class="whole mb-10">
              <table class="table" border="1">
                 <tr>
-                    <td colspan="5" class="text-center bold" style="">
+                    <td colspan="4" class="text-center bold" style="">
                         <img src="/storage/sys_images/header.png" style="width:500px"/>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="5" class="text-center bold" style="background-color:#ccc">
+                    <td colspan="4" class="text-center bold" style="background-color:#ccc">
                         Purchase Order ( Warehouse Copy )
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="5" style="padding:3px">
+                    <td colspan="4" style="padding:3px">
                         <table class="table" style="margin:auto" border="1">
                             <tr>
                                 <td class="text-left bold" style="width:15%">PO#</td>
@@ -269,21 +269,21 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="text-center bold" colspan="5" style="background-color:#ccc;width:100%">
+                    <th class="text-center bold" colspan="4" style="background-color:#ccc;width:100%">
                         Items
                     </th>
                 </tr>
-                <tr>
-                    
-                    <td class="text-center bold">Quantity</td>
-                    <td class="text-center bold">Received</td>
-                    <td class="text-center bold">Rejected</td>
-                    <td class="text-center bold">Date</td>
-                </tr>
+                
                 
                 @foreach($items as $i => $item)
                     <tr>
-                        <td colspan="4">{{$i}}.) {!! $item_name !!}</td>
+                        <td colspan="4">{{$i+1}}.) {!! $item_name !!}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center bold">Quantity</td>
+                        <td class="text-center bold">Received</td>
+                        <td class="text-center bold">Rejected</td>
+                        <td class="text-center bold">Date</td>
                     </tr>
                     <tr>
                         @php 
