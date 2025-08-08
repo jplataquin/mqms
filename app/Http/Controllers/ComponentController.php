@@ -302,7 +302,6 @@ class ComponentController extends Controller
         ]);
     }
 
-
     public function preview($id){
 
         $component = Component::findOrFail($id);
