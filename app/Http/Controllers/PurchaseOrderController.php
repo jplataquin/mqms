@@ -25,7 +25,7 @@ use Spipu\Html2Pdf\Html2Pdf;
 use Spipu\Html2Pdf\Exception\Html2PdfException;
 use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 use Illuminate\Support\Str;
-use \NumberFormatter;
+
 
 class PurchaseOrderController extends Controller
 {
@@ -965,7 +965,11 @@ class PurchaseOrderController extends Controller
         $extras = json_decode($purchaseOrder->extras);
         
         
-        $nf = new NumberFormatter('en_US', NumberFormatter::ORDINAL);
+        $ordinal = [
+            '2nd',
+            '3rd',
+            '4th'
+        ];
 
         return view('purchase_order/_print',[
             'purchase_order'                    => $purchaseOrder,
@@ -979,7 +983,7 @@ class PurchaseOrderController extends Controller
             'items'                             => $materialQuantityRequestItems,
             'extras'                            => $extras,
             'materialItemArr'                   => $materialItemArr,
-            'nf'                                => $nf,
+            'ordinal'                           => $ordinal,
             'current_datetime'                  => Carbon::now()
             
         ]);

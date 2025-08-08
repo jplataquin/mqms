@@ -299,7 +299,7 @@
 
                     @for($i = 1; $i < 4; $i++)
                         <tr>
-                            <td class="text-center">{{$nf->format($i+1)}}</td>
+                            <td class="text-center">{{$ordinal[$i+1]}}</td>
                             <td class="text-right">&nbsp;</td>
                             <td class="text-right">&nbsp;</td>
                             <td class="text-right">&nbsp;</td>
