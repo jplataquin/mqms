@@ -313,7 +313,7 @@
                             <td class="text-right">&nbsp;</td>
                         </tr>
                         <tr>
-                            <td class="bg-grey bold"></td>
+                            <td class="bg-grey bold" colspan="4">&nbsp;</td>
                         </tr>
                 @endforeach    
               
