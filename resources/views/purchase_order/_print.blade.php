@@ -307,10 +307,13 @@
                     @endfor
 
                         <tr>
-                            <td class="text-center bold bg-grey">Total</th>
-                            <td class="text-right bg-grey">&nbsp;</td>
-                            <td class="text-right bg-grey">&nbsp;</td>
-                            <td class="text-right">Diff: </td>
+                            <td class=""></th>
+                            <td class="text-bold">Total: </td>
+                            <td class="text-bold">Total: </td>
+                            <td class="text-bold">Diff: </td>
+                        </tr>
+                        <tr>
+                            <td class="bg-grey" colspan="4"></td>
                         </tr>
                 @endforeach    
               
