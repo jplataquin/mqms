@@ -297,9 +297,9 @@
                         <td class="text-right">&nbsp;</td>
                     </tr>
 
-                    @for($i = 0; $i <= 3; $i++)
+                    @for($i = 0; $i <= 2; $i++)
                         <tr>
-                            <td class="text-center">{{$ordinal[$i]}}</td>
+                            <td class="text-center">{{ $ordinal[$i] }}</td>
                             <td class="text-right">&nbsp;</td>
                             <td class="text-right">&nbsp;</td>
                             <td class="text-right">&nbsp;</td>
