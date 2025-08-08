@@ -308,12 +308,12 @@
 
                         <tr>
                             <td class=""></th>
-                            <td class="text-bold">Total: </td>
-                            <td class="text-bold">Total: </td>
-                            <td class="text-bold">Diff: </td>
+                            <td class="bold">Total: </td>
+                            <td class="bold">Total: </td>
+                            <td class="bold">Diff: </td>
                         </tr>
                         <tr>
-                            <td class="bg-grey" colspan="4"></td>
+                            <td class="bg-grey" colspan="4">&nbsp;</td>
                         </tr>
                 @endforeach    
               
