@@ -311,7 +311,7 @@
                     @endfor
 
                         <tr>
-                            <td class="text-right bold bg-grey">Total</th>
+                            <td class="text-right bold bg-grey">Total:</th>
                             <td class="">&nbsp;</td>
                             <td class="bg-grey bold text-right">Diff:</td>
                             <td class="">&nbsp;</td>
