@@ -311,10 +311,10 @@
                     @endfor
 
                         <tr>
-                            <td class=""></th>
-                            <td class="bold font-10">Total: </td>
-                            <td class="bold font-10">Total: </td>
-                            <td class="bold font-10">Diff: </td>
+                            <td class="text-right bold bg-grey">Total</th>
+                            <td class="">&nbsp;</td>
+                            <td class="bg-grey bold text-right">Diff:</td>
+                            <td class="">&nbsp;</td>
                         </tr>
                         <tr>
                             <td class="bg-grey" colspan="4">&nbsp;</td>
