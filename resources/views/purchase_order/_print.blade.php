@@ -207,17 +207,17 @@
         <div class="whole mb-10">
             <table class="table" border="1">
                 <tr>
-                    <td colspan="4" class="text-center bold" style="">
+                    <td colspan="2" class="text-center bold" style="">
                         <img src="/storage/sys_images/header.png" style="width:500px"/>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4" class="text-center bold" style="background-color:#ccc">
+                    <td colspan="2" class="text-center bold" style="background-color:#ccc">
                         Purchase Order ( Site Copy )
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4" style="padding:3px">
+                    <td colspan="2" style="padding:3px">
                          <table class="table" style="margin:auto" border="1">
                             <tr>
                                 <td class="text-left bold" style="width:15%">PO#</td>
@@ -274,55 +274,30 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="text-center bold" colspan="4" style="background-color:#ccc;width:100%">
+                    <th class="text-center bold" colspan="2" style="background-color:#ccc;width:100%">
                         Items
                     </th>
                 </tr>
                 <tr>
                     <td class="text-center bold">Material</td>
                     <td class="text-center bold">Quantity</td>
-                    <td class="text-center bold">Price</td>
-                    <td class="text-center bold">Total</td>
                 </tr>
-                @php $subtotal = 0; @endphp
                 @foreach($items as $item)
                     <tr>
-                        @php 
                         
-                        $item_name = $materialItemArr[ $item->material_item_id]->brand.' '.$materialItemArr[ $item->material_item_id]->name.' '.$materialItemArr[ $item->material_item_id]->specification_unit_packaging;
-                        $item_name = Str::wordWrap($item_name, 50, "<br>", false);
+                        @php 
+                            
+                            $item_name = $materialItemArr[ $item->material_item_id]->formatted_name;
+                            $item_name = Str::wordWrap($item_name, 50, "<br>", false);
 
                         @endphp
+                    
                         <td>{!! $item_name !!}</td>
                         <td class="text-center">{{number_format($item->quantity,2)}}</td>
-                        <td class="text-right">P {{number_format($item->price,2)}}</td>
-                        <td class="text-right">P {{number_format($item->quantity*$item->price,2)}}</td>
                     </tr>
                 
-                @php $subtotal = $subtotal + ($item->quantity*$item->price); @endphp
                 @endforeach    
-                <tr>
-                    <td colspan="2"></td>
-                    <th class="text-right" style="padding-right:5px;padding-top:3px">Sub Total</th>
-                    <td class="text-right">P {{number_format($subtotal,2)}}</td>
-                </tr>
-                @php $grandtotal = $subtotal; @endphp
-                @foreach($extras as $extra)
-
-                    <tr>
-                        <td colspan="2"></td>
-                        <th class="text-right" style="padding-right:5px;padding-top:3px">{{$extra->text}}</th>
-                        <td class="text-right">P {{ number_format($extra->value,2) }}</td>
-                    </tr>
-                        
-                            
-                    @php $grandtotal = $grandtotal + $extra->value; @endphp
-                @endforeach
-                <tr>
-                    <td colspan="2"></td>
-                    <th class="text-right" style="padding-right:5px;padding-top:3px">Grand Total</th>
-                    <td class="text-right">P {{number_format($grandtotal,2)}}</td>
-                </tr>
+            
             </table>
         
             <table class="table" style="margin-left:50px; margin-top:40px; margin-bottom:20px">
@@ -432,6 +407,14 @@
                 
                 
                 @foreach($items as $i => $item)
+
+                    @php 
+                        
+                        $item_name = $materialItemArr[ $item->material_item_id]->formatted_name;
+                        $item_name = Str::wordWrap($item_name, 50, "<br>", false);
+
+                    @endphp
+
                     <tr>
                         <td colspan="4">{{$i+1}}.) {!! $item_name !!}</td>
                     </tr>
@@ -442,12 +425,7 @@
                         <td class="text-center bold">Date</td>
                     </tr>
                     <tr>
-                        @php 
-                        
-                            $item_name = $materialItemArr[ $item->material_item_id]->formatted_name;
-                            $item_name = Str::wordWrap($item_name, 50, "<br>", false);
-
-                        @endphp
+                      
                         <td class="text-center">{{number_format($item->quantity,2)}}</td>
                         <td class="text-right">&nbsp;</td>
                         <td class="text-right">&nbsp;</td>
