@@ -154,9 +154,9 @@
         </div>
 
       
-          <div> 
+          <div class="table-responsive"> 
        
-            <table class="table border">
+            <table class="table border" style="width:width:200%">
                 <thead>
                        
                     <tr>
