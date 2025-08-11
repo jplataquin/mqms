@@ -25,7 +25,7 @@
         </div>
         
         <hr>
-
+        <!--
         <div class="folder-form-container">
             <div class="folder-form-tab">
                 Materail Quantity Request
@@ -180,9 +180,10 @@
                 <button id="showMoreBtn" class="btn w-100 btn-primary">Show More</button>
             </div>
         </div>
-
+        -->
     </div>
 
+    <!--
     <script type="module">
         import {$q,Template,$el,$util} from '/adarna.js';
         import '/vanilla-datepicker.js';
@@ -509,6 +510,6 @@
         reinitalize();
         showData();
     </script>
-    
+    -->
 </div>
 @endsection
