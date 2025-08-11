@@ -162,9 +162,10 @@
                     <tr>
                         
                         <th style="min-width:50px">ID</th>
-                          <!--
+                      
                         <th style="min-width:50px">Status</th>
                         <th style="min-width:300px">Requested By</th>
+                            <!--
                         <th style="min-width:150px">Date Needed</th>
                         <th style="min-width:300px">Project</th>
                         <th style="min-width:200px">Section</th>
