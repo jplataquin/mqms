@@ -25,7 +25,7 @@
         </div>
         
         <hr>
-        <!--
+        
         <div class="folder-form-container">
             <div class="folder-form-tab">
                 Materail Quantity Request
@@ -153,7 +153,7 @@
             </div>
         </div>
 
-
+        <!--
         <div class="table-responsive">
             <table class="table border">
                 <thead>
