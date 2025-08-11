@@ -161,7 +161,6 @@
                        
                     <tr>
 
-                        <!--
                         <th style="min-width:50px">ID</th>
                       
                         <th style="min-width:50px">Status</th>
@@ -177,8 +176,7 @@
                         <th style="min-width:300px">Component</th>
                         <th style="min-width:300px">Created At</th>
 
-                        -->
-
+<!--
                         <th>ID</th>
                       
                         <th>Status</th>
@@ -193,7 +191,7 @@
                         
                         <th>Component</th>
                         <th>Created At</th>
-                        
+-->
                
                         
                     </tr>
@@ -205,16 +203,14 @@
            
         </div> 
            
-          <!--
         <div class="row">
             <div class="col-lg-12">
                 <button id="showMoreBtn" class="btn w-100 btn-primary">Show More</button>
             </div>
         </div>
-        -->
+        
     </div>
 
-    <!--
     <script type="module">
         import {$q,Template,$el,$util} from '/adarna.js';
         import '/vanilla-datepicker.js';
@@ -541,6 +537,6 @@
         reinitalize();
         showData();
     </script>
-    -->
+    
 </div>
 @endsection
