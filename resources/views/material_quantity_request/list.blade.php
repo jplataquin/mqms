@@ -312,7 +312,7 @@
                 
 
                 row.onclick = (e)=>{
-                    window.util.navTo('/material_quantity_request/'+item.id,e);
+                    window.util.navTo('/material_quantity_request/'+item.id);
                 };
 
                 $el.append(row).to(list);
