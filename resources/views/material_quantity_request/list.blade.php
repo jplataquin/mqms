@@ -160,7 +160,7 @@
                 <thead>
                        
                     <tr>
-                   
+                        <!--
                         <th style="min-width:50px">ID</th>
                       
                         <th style="min-width:50px">Status</th>
@@ -175,7 +175,23 @@
                         
                         <th style="min-width:300px">Component</th>
                         <th style="min-width:300px">Created At</th>
-                       
+                        -->
+
+                        <th>ID</th>
+                      
+                        <th>Status</th>
+                        <th>Requested By</th>
+                          
+                        <th>Date Needed</th>
+                        <th>Project</th>
+                         
+                        <th>Section</th>
+                      
+                        <th>Contract Item</th>
+                        
+                        <th>Component</th>
+                        <th>Created At</th>
+                        
                     </tr>
                     
                 </thead>
