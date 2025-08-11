@@ -153,7 +153,7 @@
             </div>
         </div>
 
-        <!--
+      
         <div class="table-responsive">
             <table class="table border">
                 <thead>
@@ -174,7 +174,7 @@
             </table>
         </div>
            
-
+          <!--
         <div class="row">
             <div class="col-lg-12">
                 <button id="showMoreBtn" class="btn w-100 btn-primary">Show More</button>
