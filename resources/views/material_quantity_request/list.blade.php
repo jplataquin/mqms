@@ -154,7 +154,8 @@
         </div>
 
       
-         <!-- <div class="table-responsive"> 
+          <div class="table-responsive"> 
+            <!--
             <table class="table border">
                 <thead>
                     <tr>
@@ -172,7 +173,8 @@
                 <tbody  id="list">
                 </tbody>
             </table>
-        </div> -->
+            -->
+        </div> 
            
           <!--
         <div class="row">
