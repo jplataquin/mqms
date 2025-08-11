@@ -319,7 +319,7 @@
     function setIndexNumber(){
         
         let i = 1;
-
+        return false;
         $q('.items').apply(item=>{
 
             item.handler.setIndexNumber(i);
