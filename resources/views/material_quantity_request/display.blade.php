@@ -144,7 +144,7 @@
         <div class="row" id="comment_box"></div>
 
     </div>
-<!--
+
     <script type="module">
         import {$q,$el} from '/adarna.js';
         import RequestMaterialItem from '/ui_components/RequestMaterialItem.js';
@@ -422,6 +422,6 @@
 
         @endif
     </script>
-                -->
+    
 </div>
 @endsection
