@@ -971,7 +971,7 @@ class PurchaseOrderController extends Controller
             '4th'
         ];
 
-        return view('purchase_order/_print',[
+        return view('purchase_order/print',[
             'purchase_order'                    => $purchaseOrder,
             'material_quantity_request'         => $materialQuantityRequest,
             'project'                           => $project,
