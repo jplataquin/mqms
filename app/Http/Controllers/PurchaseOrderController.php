@@ -829,7 +829,7 @@ class PurchaseOrderController extends Controller
         }
     }
     
-    public function print($id){
+    public function __print($id){
 
         $purchaseOrder           = PurchaseOrder::findOrFail($id);
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($purchaseOrder->material_quantity_request_id);
@@ -914,7 +914,7 @@ class PurchaseOrderController extends Controller
     }
 
 
-    public function _print($id){
+    public function print($id){
 
         $purchaseOrder           = PurchaseOrder::findOrFail($id);
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($purchaseOrder->material_quantity_request_id);
