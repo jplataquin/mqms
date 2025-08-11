@@ -155,9 +155,10 @@
 
       
           <div class="table-responsive"> 
-            <!--
+       
             <table class="table border">
                 <thead>
+                         <!--
                     <tr>
                         <th style="min-width:50px">ID</th>
                         <th style="min-width:50px">Status</th>
@@ -169,11 +170,12 @@
                         <th style="min-width:300px">Component</th>
                         <th style="min-width:300px">Created At</th>
                     </tr>
+                     -->
                 </thead>
                 <tbody  id="list">
                 </tbody>
             </table>
-            -->
+           
         </div> 
            
           <!--
