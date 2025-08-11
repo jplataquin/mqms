@@ -158,8 +158,9 @@
        
             <table class="table border">
                 <thead>
-                         <!--
+                       
                     <tr>
+                          <!--
                         <th style="min-width:50px">ID</th>
                         <th style="min-width:50px">Status</th>
                         <th style="min-width:300px">Requested By</th>
@@ -169,8 +170,9 @@
                         <th style="min-width:300px">Contract Item</th>
                         <th style="min-width:300px">Component</th>
                         <th style="min-width:300px">Created At</th>
+                         -->
                     </tr>
-                     -->
+                    
                 </thead>
                 <tbody  id="list">
                 </tbody>
