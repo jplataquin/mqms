@@ -374,10 +374,16 @@
                                     {{$contract_item->name}}
                                 </td>
                             </tr>
-                                 <tr>
+                            <tr>
                                 <td class="text-left bold">Component</td>
                                 <td colspan="3">
                                     {{$component->name}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left bold">Date Needed</td>
+                                <td colspan="3">
+                                    {{$date_needed}}
                                 </td>
                             </tr>
                             <tr>

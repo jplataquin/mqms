@@ -940,7 +940,8 @@ class PurchaseOrderController extends Controller
         $contract_item          = $materialQuantityRequest->ContractItem;
         $section                = $materialQuantityRequest->Section;
         $component              = $materialQuantityRequest->Component;
-        
+        $date_needed            = $materialQuantityRequest->date_needed;
+       
         $componentItems                 = $component->ComponentItems;
         $paymentTerm                    = $purchaseOrder->PaymentTerm;
         $supplier                       = $purchaseOrder->Supplier;
@@ -965,11 +966,6 @@ class PurchaseOrderController extends Controller
         $extras = json_decode($purchaseOrder->extras);
         
         
-        $ordinal = [
-            '2nd',
-            '3rd',
-            '4th'
-        ];
 
         return view('purchase_order/print',[
             'purchase_order'                    => $purchaseOrder,
@@ -983,7 +979,7 @@ class PurchaseOrderController extends Controller
             'items'                             => $materialQuantityRequestItems,
             'extras'                            => $extras,
             'materialItemArr'                   => $materialItemArr,
-            'ordinal'                           => $ordinal,
+            'date_needed'                       => $date_needed,
             'current_datetime'                  => Carbon::now()
             
         ]);
