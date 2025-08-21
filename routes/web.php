@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('testlng', [App\Http\Controllers\Auth\HomeController::class,'test']);
+Route::get('testlng', [App\Http\Controllers\HomeController::class,'test']);
 
 //Auth::routes();
 // Authentication Routes...
