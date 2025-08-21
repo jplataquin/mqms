@@ -540,7 +540,7 @@ html, body {
     max-height: 300px;
     overflow-y: auto;
   }
-  
+
   .record-table-horizontal th {
     width: 50%;
   }
@@ -575,6 +575,11 @@ html, body {
     width: 50%;
   }
 
+  .folder-form-body{
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
   .folder-form-tab{
     width: 80%;
     min-width: 80%;
@@ -606,6 +611,11 @@ html, body {
   .record-table-horizontal th {
    
     width: 50%;
+  }
+
+  .folder-form-body{
+    max-height: 300px;
+    overflow-y: auto;
   }
 
   .folder-form-tab{
