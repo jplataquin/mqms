@@ -23,6 +23,6 @@ class FolderDetails extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.folder-details');
+        return view('app-components.folder-details');
     }
 }
