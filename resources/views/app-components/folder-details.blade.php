@@ -7,7 +7,7 @@
             <tbody>
                 @foreach($items as $label => $value)
                 <tr>
-                    <th width="150px">{{$label}}</th>
+                    <th width="150px">{{ucwords($label)}}</th>
                     <td>{{$value}}</td>
                 </tr>
                 @endforeach
