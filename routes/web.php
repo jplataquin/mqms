@@ -19,6 +19,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('testlng', [App\Http\Controllers\Auth\HomeController::class,'test']);
+
 //Auth::routes();
 // Authentication Routes...
 Route::get('login', [App\Http\Controllers\Auth\LoginController::class,'showLoginForm'])->name('login');

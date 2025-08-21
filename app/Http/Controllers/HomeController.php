@@ -40,4 +40,8 @@ class HomeController extends Controller
             'current_datetime'                  => $current_datetime
         ]);
     }
+
+    public function test(){
+        return view('test');
+    }
 }
