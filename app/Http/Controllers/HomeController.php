@@ -45,7 +45,31 @@ class HomeController extends Controller
         return view('test',[
             'items' => [
                 'apple' => 'kwak',
-                'tae'   => 'ok'
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                'apple' => 'kwak',
+                
+
             ]
         ]);
     }

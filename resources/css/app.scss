@@ -536,6 +536,11 @@ html, body {
     display:inline;
   }
 
+  .folder-form-body{
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
   .record-table-horizontal th {
     width: 50%;
   }
