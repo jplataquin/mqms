@@ -2,5 +2,5 @@
 
 @section('content')
 
-    <x-folder-details title="TEST LNG"></x-folder-details>
+    <x-folder-details title="TEST LNG" :items="$items"></x-folder-details>
 @endsection

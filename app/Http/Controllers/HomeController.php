@@ -42,6 +42,11 @@ class HomeController extends Controller
     }
 
     public function test(){
-        return view('test');
+        return view('test',[
+            'items' => [
+                'apple' => 'kwak',
+                'tae'   => 'ok'
+            ]
+        ]);
     }
 }
