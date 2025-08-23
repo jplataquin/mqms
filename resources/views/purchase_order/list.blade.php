@@ -138,17 +138,19 @@
                 </div>
         </div>
 
-        <table class="table border">
-            <thead>
-                <th>Project</th>
-                <th>PO #</th>
-                <th>Status</th>
-                <th>Date Created</th>
-            <thead>
-            <tbody id="list">
-            </tbody>
-        </table>
-
+        <div class="table-responsive"> 
+            <table class="table border" style="width:200%">
+                <thead>
+                    <th>Project</th>
+                    <th>PO #</th>
+                    <th>Status</th>
+                    <th>Date Created</th>
+                <thead>
+                <tbody id="list">
+                </tbody>
+            </table>
+        </div>
+        
         <div class="row mt-3">
             <div class="col-lg-12">
                 <button id="showMoreBtn" class="btn w-100 btn-primary">Show More</button>
