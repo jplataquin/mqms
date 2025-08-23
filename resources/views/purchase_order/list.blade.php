@@ -141,7 +141,7 @@
         <div class="table-responsive"> 
             <table class="table border" style="width:150%">
                 <thead>
-                    <th style="width:200px">Project</th>
+                    <th style="width:300px">Project</th>
                     <th>PO #</th>
                     <th>Status</th>
                     <th>Date Created</th>
