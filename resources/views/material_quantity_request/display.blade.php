@@ -25,70 +25,18 @@
         <hr>
         
         <x-folder-details title="Material Request" :items="$mr_details"></x-folder-details>
-        
-        <div class="folder-form-container">
-            <div class="folder-form-tab">
-                Material Request
-            </div>
-            <div class="folder-form-body">
-                <table class="record-table-horizontal" hx-boost="true" hx-select="#content" hx-target="#main">
-                    <tbody>
-                        <tr>
-                            <th width="150px">ID</th>
-                            <td>{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}</td>
-                        </tr>
-                        <tr>
-                            <th>Project</th>
-                            <td>{{$project->name}}</td>
-                        </tr>
-                        <tr>
-                            <th>Section</th>
-                            <td>{{$section->name}}</td>
-                        </tr>
-                        <tr>
-                            <th>Component</th>
-                            <td>
-                                {{$component->name}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Status</th>
-                            <td>{{$material_quantity_request->status}}</td>
-                        </tr>
-            
-                        <tr>
-                            <th>Requested By</th>
-                            <td>{{$material_quantity_request->CreatedByUser()->name}} ({{ $material_quantity_request->created_at }})</td>
-                        </tr>
-            
-                        @if($material_quantity_request->status == 'APRV')
-                            <tr>
-                                <th>Approved By</th>
-                                <td>{{$material_quantity_request->approvedByUser()->name}} ({{$material_quantity_request->approved_at}})</td>
-                            </tr>
-                        @endif
 
-                        @if($material_quantity_request->status == 'REJC')
-                            <tr>
-                                <th>Rejected By</th>
-                                <td>{{$material_quantity_request->rejectedByUser()->name}} ({{$material_quantity_request->rejected_at}})</td>
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
-                
-                @if($material_quantity_request->status == 'PEND')
-                <div class="row mb-3 mt-3">
-                    <div class="col-lg-12 text-end">
-                        <button class="btn btn-primary" id="reviewLinkBtn">
-                            Review Link
-                            <i class="bi bi-copy"></i>
-                        </button>
-                    </div>
+        @if($material_quantity_request->status == 'PEND')
+            <div class="row mb-3 mt-3">
+                <div class="col-lg-12 text-end">
+                    <button class="btn btn-primary" id="reviewLinkBtn">
+                        Review Link
+                        <i class="bi bi-copy"></i>
+                    </button>
                 </div>
-                @endif
             </div>
-        </div>
+        @endif
+
 
         <div class="form-container mb-3">
             <div class="form-header">
