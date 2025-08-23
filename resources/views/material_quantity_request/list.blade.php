@@ -265,7 +265,7 @@
 
 
         $q('.form-control').apply(el=>{
-            el.addEventListiner((e)=>{
+            el.addEventListener('keyup',(e)=>{
                 
                 if(e.keyCode == '13'){
                     alert('test');
