@@ -112,11 +112,12 @@
                         </td>
                     </tr>
 
-                    
+                    @if($extras)
                     <tr>
                         <th colspan="2"></th>
                         <th colspan="2" class="text-center">Additional Charges / Discounts</th>
                     </tr>
+                    @endif
 
                     @php $grand_total = $sub_total; @endphp
 
