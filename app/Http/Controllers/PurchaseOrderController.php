@@ -321,6 +321,14 @@ class PurchaseOrderController extends Controller
 
         $extras = json_decode($purchaseOrder->extras);
 
+        $po_details = [
+            "PO Number"             => str_pad($purchase_order->id,6,0,STR_PAD_LEFT),
+            "Material Request ID"   => str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT),
+            "Project"               => $project->name,
+            "Section"               => $section->name,
+            "Contract Item"         => $contract_item->name
+        ];
+
         return view('purchase_order/display',[
             'purchase_order'                => $purchaseOrder,
             'material_quantity_request'     => $materialQuantityRequest,
@@ -334,7 +342,8 @@ class PurchaseOrderController extends Controller
             'extras'                        => $extras,
             'materialItemArr'               => $materialItemArr,
             'componentItemArr'              => $componentItemArr,
-            'componentItemMaterialsArr'     => $componentItemMaterialsArr
+            'componentItemMaterialsArr'     => $componentItemMaterialsArr,
+            'po_details'                    => $po_details
         ]);
     }
 

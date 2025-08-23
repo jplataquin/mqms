@@ -25,6 +25,7 @@
         </div>
         <hr>
 
+        <x-folder-details title="Purchase Order" :items="$po_details"></x-folder-details>
         <table class="record-table-horizontal">
             <tbody>
                 <tr>
