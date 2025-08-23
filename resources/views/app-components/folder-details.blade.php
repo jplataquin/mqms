@@ -8,7 +8,16 @@
                 @foreach($items as $label => $value)
                 <tr>
                     <th width="150px">{{ucwords($label)}}</th>
-                    <td>{{$value}}</td>
+
+                    @if(isset($value['text']))
+
+                        <td>{{$value['text']}}</td>
+
+                    @else
+
+                        <td>{{$value}}</td>
+
+                    @endif
                 </tr>
                 @endforeach
             </tbody>
