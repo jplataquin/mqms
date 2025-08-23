@@ -327,7 +327,10 @@ class PurchaseOrderController extends Controller
             "Section"               => $section->name,
             "Contract Item"         => $contract_item->name,
             "Component"             => $component->name,
-            "Material Request ID"   => str_pad($materialQuantityRequest->id,6,0,STR_PAD_LEFT),
+            "Material Request ID"   => [
+                'text' => str_pad($materialQuantityRequest->id,6,0,STR_PAD_LEFT),
+                'href' => "\/material_request\/".$materialQuantityRequest->id
+            ],
             "Status"                => $purchaseOrder->status,
             "Description"           => $materialQuantityRequest->description,
             "Created By"            => $purchaseOrder->CreatedByUser()->name.' '.$purchaseOrder->created_at            

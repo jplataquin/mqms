@@ -11,7 +11,13 @@
 
                     @if(isset($value['text']))
 
-                        <td>{{$value['text']}}</td>
+                        <td>
+                            @if($value['href'])
+                                <a href="{{$value['href']}}">$value['text']</a>
+                            @else
+                                {{$value['text']}}
+                            @endif
+                        </td>
 
                     @else
 
