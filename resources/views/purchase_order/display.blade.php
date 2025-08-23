@@ -64,10 +64,10 @@
         
  
         <div class="table-responsive" id="item_container">
-            <table class="table" style="width:120%">    
+            <table class="table">    
                 <thead>
                     <tr>
-                        <th style="width:300px">Material Item</th>
+                        <th style="width:600px">Material Item</th>
                         <th style="width:200px">Price</th>
                         <th style="width:200px">Qantity</th>
                         <th style="width:200px">Total</th>
