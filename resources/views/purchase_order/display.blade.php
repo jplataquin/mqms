@@ -74,25 +74,25 @@
             
                     @foreach($items as $item)
                         <div class="mb-3">
-                            <div style="300px">
+                            <div class="d-inline" style="300px">
                                 <div class="form-group">
                                     <label>Material Item</label>
                                     <input type="text" class="form-control" disabled="true" value="{{ $materialItemArr[ $item->material_item_id ]->brand }} {{ $materialItemArr[ $item->material_item_id ]->name }} {{ $materialItemArr[ $item->material_item_id]->specification_unit_packaging }}"/>
                                 </div>
                             </div>
-                            <div style="100px">
+                            <div class="d-inline" style="100px">
                                 <div class="form-group">
                                     <label>Price</label>
                                     <input type="text" class="form-control" disabled="true" value="{{ number_format($item->price,2) }}"/>
                                 </div>
                             </div>
-                            <div style="100px">
+                            <div class="d-inline" style="100px">
                                 <div class="form-group">
                                     <label>Order Quantity</label>
                                     <input type="text" class="form-control" disabled="true" value="{{$item->quantity}}"/>
                                 </div>
                             </div>
-                            <div style="100px">
+                            <div class="d-inline" style="100px">
                                 <div class="form-group">
                                     <label>Total</label>
                                     <input type="text" class="form-control" disabled="true" value="{{ number_format( $item->quantity * $item->price ) }}"/>
