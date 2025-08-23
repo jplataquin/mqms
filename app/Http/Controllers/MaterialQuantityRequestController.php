@@ -622,7 +622,7 @@ class MaterialQuantityRequestController extends Controller
             "Project"           => $project->name,
             "Section"           => $section->name,
             "Contract Item"     => $contract_item->name,
-            "Component"         => $compontent->name,
+            "Component"         => $component->name,
             "Status"            => $material_quantity_request->status,
             "Requested By"      => $material_quantity_request->CreatedByUser()->name.'  '.$material_quantity_request->created_at
         ];
