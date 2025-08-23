@@ -326,8 +326,25 @@ class PurchaseOrderController extends Controller
             "Material Request ID"   => str_pad($materialQuantityRequest->id,6,0,STR_PAD_LEFT),
             "Project"               => $project->name,
             "Section"               => $section->name,
-            "Contract Item"         => $contract_item->name
+            "Contract Item"         => $contract_item->name,
+            "Component"             => $component->name,
+            "Status"                => $purchaseOrder->status,
+            "Description"           => $material_quantity_request->description,
+            "Created By"            => $purchaseOrder->CreatedByUser()->name.' '.$purchaseOrder->created_at            
         ];
+
+
+        if($purchaseOrder->updated_at && $purchaseOrder->UpdatedByUser()->name){
+            $po_details["Updated By"] = $purchaseOrder->UpdatedByUser()->name.' '.$purchaseOrder->updated_at;
+        }
+
+        if($purchaseOrder->approved_at && $purchaseOrder->ApprovedByUser()->name){
+            $po_details["Approved By"] = $purchaseOrder->ApprovedByUser()->name.' '.$purchaseOrder->approved_at;
+        }
+
+        if($purchaseOrder->rejected_at && $purchaseOrder->RejectedByUser()->name){
+            $po_details["Rejected By"] = $purchaseOrder->RejectedByUser()->name.' '.$purchaseOrder->rejected_at;
+        }
 
         return view('purchase_order/display',[
             'purchase_order'                => $purchaseOrder,
