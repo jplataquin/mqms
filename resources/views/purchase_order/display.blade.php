@@ -69,30 +69,30 @@
 
             @foreach($componentItemMaterialsArr as $id => $items)
 
-                <div class="mb-3 border rounded p-3" style="width:110%">
+                <div class="mb-3 border rounded p-3">
                   
             
                     @foreach($items as $item)
-                        <div class="row mb-3">
-                            <div class="col-6">
+                        <div class="mb-3">
+                            <div style="300px">
                                 <div class="form-group">
                                     <label>Material Item</label>
                                     <input type="text" class="form-control" disabled="true" value="{{ $materialItemArr[ $item->material_item_id ]->brand }} {{ $materialItemArr[ $item->material_item_id ]->name }} {{ $materialItemArr[ $item->material_item_id]->specification_unit_packaging }}"/>
                                 </div>
                             </div>
-                            <div class="col-2">
+                            <div style="100px">
                                 <div class="form-group">
                                     <label>Price</label>
                                     <input type="text" class="form-control" disabled="true" value="{{ number_format($item->price,2) }}"/>
                                 </div>
                             </div>
-                            <div class="col-2">
+                            <div style="100px">
                                 <div class="form-group">
                                     <label>Order Quantity</label>
                                     <input type="text" class="form-control" disabled="true" value="{{$item->quantity}}"/>
                                 </div>
                             </div>
-                            <div class="col-2">
+                            <div style="100px">
                                 <div class="form-group">
                                     <label>Total</label>
                                     <input type="text" class="form-control" disabled="true" value="{{ number_format( $item->quantity * $item->price ) }}"/>
