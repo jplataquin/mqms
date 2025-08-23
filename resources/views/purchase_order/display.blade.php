@@ -26,6 +26,8 @@
         <hr>
 
         <x-folder-details title="Purchase Order" :items="$po_details"></x-folder-details>
+        
+        <!--
         <table class="record-table-horizontal">
             <tbody>
                 <tr>
@@ -94,6 +96,8 @@
 
             </tbody>
         </table>
+        -->
+
         
         <div class="w-100 text-end mt-3">
             @if($purchase_order->status == 'PEND')

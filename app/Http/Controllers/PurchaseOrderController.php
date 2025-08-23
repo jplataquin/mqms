@@ -323,11 +323,11 @@ class PurchaseOrderController extends Controller
 
         $po_details = [
             "PO Number"             => str_pad($purchaseOrder->id,6,0,STR_PAD_LEFT),
-            "Material Request ID"   => str_pad($materialQuantityRequest->id,6,0,STR_PAD_LEFT),
             "Project"               => $project->name,
             "Section"               => $section->name,
             "Contract Item"         => $contract_item->name,
             "Component"             => $component->name,
+            "Material Request ID"   => str_pad($materialQuantityRequest->id,6,0,STR_PAD_LEFT),
             "Status"                => $purchaseOrder->status,
             "Description"           => $materialQuantityRequest->description,
             "Created By"            => $purchaseOrder->CreatedByUser()->name.' '.$purchaseOrder->created_at            
