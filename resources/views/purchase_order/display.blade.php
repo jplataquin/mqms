@@ -69,7 +69,7 @@
 
             @foreach($componentItemMaterialsArr as $id => $items)
 
-                <div class="mb-3 border rounded p-3">
+                <div class="mb-3 border rounded p-3" style="width:110%">
                   
             
                     @foreach($items as $item)
