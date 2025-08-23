@@ -98,7 +98,7 @@
         </table>
         -->
 
-        
+
         <div class="w-100 text-end mt-3">
             @if($purchase_order->status == 'PEND')
             <button class="btn btn-outline-primary" id="reviewLinkBtn">
@@ -108,6 +108,32 @@
             @endif
         </div>
 
+
+            
+        <div class="form-container mb-3">
+            <div class="form-header">
+                &nbsp;
+            </div>
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-lg-6 mb-3">
+                         <div class="form-group">
+                            <label>Supplier</label>
+                            <input type="text" class="form-control" value="{{$supplier->name}}" id="supplier" disabled="true"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Payment Terms</label>
+                            <input type="text" class="form-control" value="{{$payment_term->text}}" id="payment_term" disabled="true"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="folder-form-container">
             <div class="folder-form-tab">
                 Purchase Order
