@@ -50,7 +50,7 @@
                     <div class="col-6 col-lg-4">
                         <div class="form-group">
                             <label>Status</label>
-                            <select class="form-control" id="statusSelect">
+                            <select class="form-select" id="statusSelect">
                                 <option value=""> - </option>
                                 <option value="PEND">Pending</option>
                                 <option value="APRV">Approved</option>
@@ -160,23 +160,7 @@
                 <thead>
                        
                     <tr>
-<!--
-                        <th style="min-width:50px">ID</th>
-                      
-                        <th style="min-width:50px">Status</th>
-                        <th style="min-width:300px">Requested By</th>
-                          
-                        <th style="min-width:150px">Date Needed</th>
-                        <th style="min-width:300px">Project</th>
-                         
-                        <th style="min-width:200px">Section</th>
-                      
-                        <th style="min-width:300px">Contract Item</th>
-                        
-                        <th style="min-width:300px">Component</th>
-                        <th style="min-width:300px">Created At</th>
 
--->
                         <th>ID</th>
                       
                         <th>Status</th>
@@ -280,6 +264,14 @@
         }); 
 
 
+        $q('.form-control').apply(el=>{
+            el.addEventListiner((e)=>{
+                
+                if(e.keyCode == '13'){
+                    alert('test');
+                }
+            });
+        });
 
         function reinitalize(){
             page = 1;
