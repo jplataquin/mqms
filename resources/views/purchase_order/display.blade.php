@@ -110,7 +110,7 @@
 
 
             
-        <div class="form-container mb-3">
+        <div class="form-container mt-3">
             <div class="form-header">
                 &nbsp;
             </div>
@@ -122,8 +122,6 @@
                             <input type="text" class="form-control" value="{{$supplier->name}}" id="supplier" disabled="true"/>
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label>Payment Terms</label>
@@ -134,29 +132,7 @@
             </div>
         </div>
         
-        <div class="folder-form-container">
-            <div class="folder-form-tab">
-                Purchase Order
-            </div>
-
-            <div class="folder-form-body">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label>Supplier</label>
-                            <input type="text" class="form-control" value="{{$supplier->name}}" id="supplier" disabled="true"/>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label>Payment Terms</label>
-                            <input type="text" class="form-control" value="{{$payment_term->text}}" id="payment_term" disabled="true"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
+ 
         <div id="item_container">
             
             @php $sub_total = 0; @endphp
