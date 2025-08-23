@@ -274,6 +274,14 @@
             });
         });
 
+        $q('.form-select').apply(el=>{
+            el.addEventListener('change',(e)=>{
+                showMoreBtn.style.display = 'block';
+                reinitalize();
+                showData();
+            });
+        });
+
         function reinitalize(){
             page = 1;
             $el.clear(list);   
