@@ -64,7 +64,7 @@
         
  
         <div class="table-responsive" id="item_container">
-            <table class="table">    
+            <table class="table" style="width:120%">    
                 <thead>
                     <tr>
                         <th>Material Item</th>
