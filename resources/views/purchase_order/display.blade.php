@@ -67,10 +67,10 @@
             <table class="table">    
                 <thead>
                     <tr>
-                        <th style="min-width:600px">Material Item</th>
-                        <th style="width:200px">Price</th>
-                        <th style="width:200px">Qantity</th>
-                        <th style="width:200px">Total</th>
+                        <th style="min-width:500px">Material Item</th>
+                        <th style="min-width:200px">Price</th>
+                        <th style="min-width:200px">Qantity</th>
+                        <th style="min-width:200px">Total</th>
                     </tr>
                 <thead>
 
