@@ -88,13 +88,13 @@
                                     <input type="text" class="form-control" disabled="true" value="{{ $materialItemArr[ $item->material_item_id ]->brand }} {{ $materialItemArr[ $item->material_item_id ]->name }} {{ $materialItemArr[ $item->material_item_id]->specification_unit_packaging }}"/>
                                 </td>    
                                 <td>
-                                    <input type="text" class="form-control" disabled="true" value="{{ number_format($item->price,2) }}"/>
+                                    <input type="text" class="form-control text-center" disabled="true" value="{{ number_format($item->price,2) }}"/>
                                 </td>    
                                 <td>
-                                    <input type="text" class="form-control" disabled="true" value="{{$item->quantity}}"/>
+                                    <input type="text" class="form-control text-center" disabled="true" value="{{$item->quantity}}"/>
                                 </td>    
                                 <td>
-                                    <input type="text" class="form-control" disabled="true" value="{{ number_format( $item->quantity * $item->price ) }}"/>
+                                    <input type="text" class="form-control text-end" disabled="true" value="{{ number_format( $item->quantity * $item->price ) }}"/>
                                 </td>
                             </tr>
                             @php $sub_total = $sub_total + ($item->quantity * $item->price); @endphp
@@ -108,7 +108,7 @@
                         <td colspan="2"></td>
                         <th class="text-center">Sub Total</th>
                         <td>
-                             <input type="text" id="sub_total" disabled="true" value="{{ number_format($sub_total, 2) }}" class="form-control"/>
+                             <input type="text" id="sub_total" disabled="true" value="{{ number_format($sub_total, 2) }}" class="form-control text-end"/>
                         </td>
                     </tr>
 
@@ -128,7 +128,7 @@
                                 <input type="text" disabled="true" value="{{$extra->text}}" class="extra_text form-control"/>
                             </td>
                             <td>
-                                <input type="number" disabled="true" value="{{ number_format($extra->value,2) }}" class="extra_val form-control" />
+                                <input type="number" disabled="true" value="{{ number_format($extra->value,2) }}" class="extra_val form-control text-end" />
                             </td>
                         </tr>
 
@@ -142,7 +142,7 @@
                             Grand Total
                         </td>
                         <td>
-                            <input type="text" disabled="true" value="{{ number_format($grand_total,2) }}" class="extra_val form-control" />
+                            <input type="text" disabled="true" value="{{ number_format($grand_total,2) }}" class="extra_val form-control text-end" />
                         </td>
                     </tr>
                 </tfoot>
