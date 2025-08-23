@@ -149,53 +149,6 @@
             </table>
         </div>
     
-        <div class="d-flex justify-content-end">
-            <table class="table w-50 table-border">
-                <tr>
-                    <td>
-                        <input type="text" disabled="true" value="Sub Total" class="form-control"/>
-                    </td>
-                    <td>
-                        <input type="text" id="sub_total" disabled="true" value="{{ number_format($sub_total, 2) }}" class="form-control"/>
-                    </td>
-                </tr>
-
-                <tr>
-                    <th colspan="2" class="text-center">
-                        Additional Charges / Discounts
-                    </th>
-                </tr>
-                <tr>
-                    <th class="text-center">Particular</th>
-                    <th class="text-center">Amount</th>
-                </tr>
-
-                @php $grand_total = $sub_total; @endphp
-
-                @foreach($extras as $extra)
-                    <tr class="extra">
-                        <td>
-                            <input type="text" disabled="true" value="{{$extra->text}}" class="extra_text form-control"/>
-                        </td>
-                        <td>
-                            <input type="number" disabled="true" value="{{ number_format($extra->value,2) }}" class="extra_val form-control" />
-                        </td>
-                    </tr>
-
-                    @php $grand_total = $grand_total + $extra->value @endphp
-
-                @endforeach
-
-                <tr class="extra">
-                    <td>
-                        <input type="text" disabled="true" value="Grand Total" class="extra_text form-control"/>
-                    </td>
-                    <td>
-                        <input type="text" disabled="true" value="{{ number_format($grand_total,2) }}" class="extra_val form-control" />
-                    </td>
-                </tr>
-            </table>
-        </div>
 
         <div class="row mt-3" id="comment-box"></div>
 
