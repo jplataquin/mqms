@@ -24,6 +24,8 @@
         </div>
         <hr>
         
+        <x-folder-details title="Material Request" :items="$mr_details"></x-folder-details>
+        
         <div class="folder-form-container">
             <div class="folder-form-tab">
                 Material Request

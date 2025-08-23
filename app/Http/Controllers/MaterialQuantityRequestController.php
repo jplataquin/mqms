@@ -526,7 +526,7 @@ class MaterialQuantityRequestController extends Controller
         
         $id = (int) $id;
 
-        $materialQuantityRequest = MaterialQuantityRequest::findOrFail($id);
+        $material_quantity_request = MaterialQuantityRequest::findOrFail($id);
         
         
         $user = auth()->user();
@@ -537,7 +537,7 @@ class MaterialQuantityRequestController extends Controller
                 return view('access_denied');
             }
 
-            if($materialQuantityRequest->created_by != $user->id){
+            if($material_quantity_request->created_by != $user->id){
                 return view('access_denied');
             }
         }
@@ -545,7 +545,7 @@ class MaterialQuantityRequestController extends Controller
         //Check if current user does not own the record, then are they allowed to view it?
         $codes = ['material_request:all:view'];
 
-        if($materialQuantityRequest->created_by != $user->id && !$this->hasAccess($codes)){
+        if($material_quantity_request->created_by != $user->id && !$this->hasAccess($codes)){
             return view('permission_denied',[
                 'user'                      => $user,
                 'required_access_codes'     => $codes,
@@ -553,11 +553,11 @@ class MaterialQuantityRequestController extends Controller
             ]);
         }
 
-        $project         = $materialQuantityRequest->Project;
-        $section         = $materialQuantityRequest->Section;
-        $contract_item   = $materialQuantityRequest->ContractItem;
-        $component       = $materialQuantityRequest->Component;
-        $request_items   = $materialQuantityRequest->Items;
+        $project         = $material_quantity_request->Project;
+        $section         = $material_quantity_request->Section;
+        $contract_item   = $material_quantity_request->ContractItem;
+        $component       = $material_quantity_request->Component;
+        $request_items   = $material_quantity_request->Items;
     
         if($component == null){
            //TODO fix error display
@@ -614,17 +614,34 @@ class MaterialQuantityRequestController extends Controller
                 'deleted_flag'  => ($row->deleted_at) ? true : false
             ];
         }
-
-
         
         $unit_options = Unit::toOptions();
 
+        $mr_details = [
+            "ID"                => str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT),
+            "Project"           => $project->name,
+            "Section"           => $section->name,
+            "Contract Item"     => $contract_item->name,
+            "Component"         => $compontent->name,
+            "Status"            => $material_quantity_request->status,
+            "Requested By"      => $material_quantity_request->CreatedByUser()->name.'  '.$material_quantity_request->created_at
+        ];
+
+        if($material_quantity_request->status == 'APRV'){
+            $mr_details['Approved By'] = $material_quantity_request->approvedByUser()->name.' '.$material_quantity_request->approved_at;
+        }
+
+        if($material_quantity_request->status == 'REJC'){
+            $mr_details['Rejected By'] = $material_quantity_request->rejectedByUser()->name.' '.$material_quantity_request->rejected_at;
+        }
+
         return view('material_quantity_request/display',[
+            'mr_details'                => $mr_details,
             'project'                   => $project,
             'section'                   => $section,
             'contract_item'             => $contract_item,
             'component'                 => $component,
-            'material_quantity_request' => $materialQuantityRequest,
+            'material_quantity_request' => $material_quantity_request,
             'request_items'             => $request_items,
             'material_options'          => $material_options,
             'component_item_options'    => $component_item_options,
