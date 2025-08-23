@@ -329,7 +329,7 @@ class PurchaseOrderController extends Controller
             "Contract Item"         => $contract_item->name,
             "Component"             => $component->name,
             "Status"                => $purchaseOrder->status,
-            "Description"           => $material_quantity_request->description,
+            "Description"           => $materialQuantityRequest->description,
             "Created By"            => $purchaseOrder->CreatedByUser()->name.' '.$purchaseOrder->created_at            
         ];
 
