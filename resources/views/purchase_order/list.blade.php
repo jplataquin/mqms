@@ -139,7 +139,7 @@
         </div>
 
         <div class="table-responsive"> 
-            <table class="table border" style="width:200%">
+            <table class="table border" style="width:100%">
                 <thead>
                     <th>Project</th>
                     <th>PO #</th>
@@ -150,7 +150,7 @@
                 </tbody>
             </table>
         </div>
-        
+
         <div class="row mt-3">
             <div class="col-lg-12">
                 <button id="showMoreBtn" class="btn w-100 btn-primary">Show More</button>
