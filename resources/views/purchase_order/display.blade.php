@@ -27,76 +27,6 @@
 
         <x-folder-details title="Purchase Order" :items="$po_details"></x-folder-details>
         
-        <!--
-        <table class="record-table-horizontal">
-            <tbody>
-                <tr>
-                    <th width="300px">PO Number</th>
-                    <td>{{str_pad($purchase_order->id,6,0,STR_PAD_LEFT)}}</td>
-                </tr>
-                <tr>
-                    <th>Material Request ID</th>
-                    <td>
-                        <a href="/material_quantity_request/{{$material_quantity_request->id}}">
-                            {{str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT)}}</td>
-                        </a>
-                </tr>
-                <tr>
-                    <th>Project</th>
-                    <td>{{$project->name}}</td>
-                </tr>
-                <tr>
-                    <th>Section</th>
-                    <td>{{$section->name}}</td>
-                </tr>
-                <tr>
-                    <th>Contract Item</th>
-                    <td>{{$contract_item->item_code}} {{$contract_item->description}}</td>
-                </tr>
-                <tr>
-                    <th>Component</th>
-                    <td>{{$component->name}}</td>
-                </tr>
-                <tr>
-                    <th>Status</th>
-                    <td>{{$purchase_order->status}}</td>
-                </tr>
-                <tr>
-                    <th>Created By</th>
-                    <td>{{$purchase_order->CreatedByUser()->name}} {{$purchase_order->created_at}}</td>
-                </tr>
-                
-                @if($purchase_order->updated_at && $purchase_order->UpdatedByUser()->name)
-                <tr>
-                    <th>Updated By</th>
-                    <td>{{$purchase_order->UpdatedByUser()->name}} {{$purchase_order->updated_at}}</td>
-                </tr>
-                @endif
-
-                @if($purchase_order->approved_at)
-                <tr>
-                    <th>Approved By</th>
-                    <td>{{$purchase_order->ApprovedByUser()->name}} {{$purchase_order->approved_at}}</td>
-                </tr>
-                @endif
-
-                @if($purchase_order->rejected_at)
-                <tr>
-                    <th>Rejected By</th>
-                    <td>{{$purchase_order->RejectedByUser()->name}} {{$purchase_order->rejected_at}}</td>
-                </tr>
-                @endif
-                
-                <tr>
-                    <th>Description</th>
-                    <td>
-                        <textarea disabled="true" class="w-100" id="description">{{$material_quantity_request->description}}</textarea>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table>
-        -->
 
 
         <div class="w-100 text-end mt-3">
@@ -133,7 +63,7 @@
         </div>
         
  
-        <div id="item_container">
+        <div class="table-responsive" id="item_container">
             
             @php $sub_total = 0; @endphp
 
