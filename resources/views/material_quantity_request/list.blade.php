@@ -266,9 +266,10 @@
 
         $q('.form-control').apply(el=>{
             el.addEventListener('keyup',(e)=>{
-                
                 if(e.keyCode == '13'){
-                    alert('test');
+                    showMoreBtn.style.display = 'block';
+                    reinitalize();
+                    showData();
                 }
             });
         });
