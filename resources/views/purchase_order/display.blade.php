@@ -106,9 +106,40 @@
                 <tfoot>
                     <tr>
                         <td colspan="2"></td>
-                        <th>Sub Total</th>
+                        <th class="text-center">Sub Total</th>
                         <td>
                              <input type="text" id="sub_total" disabled="true" value="{{ number_format($sub_total, 2) }}" class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2"></th>
+                        <th colspan="2">Additional Charges / Discounts</th>
+                    </tr>
+
+                    @php $grand_total = $sub_total; @endphp
+
+                    @foreach($extras as $extra)
+                        <tr class="extra">
+                            <td colspan="2"></td>
+                            <td>
+                                <input type="text" disabled="true" value="{{$extra->text}}" class="extra_text form-control"/>
+                            </td>
+                            <td>
+                                <input type="number" disabled="true" value="{{ number_format($extra->value,2) }}" class="extra_val form-control" />
+                            </td>
+                        </tr>
+
+                        @php $grand_total = $grand_total + $extra->value @endphp
+
+                    @endforeach
+
+                    <tr class="extra">
+                        <td colspan="2"></td>
+                        <td>
+                            <input type="text" disabled="true" value="Grand Total" class="extra_text form-control"/>
+                        </td>
+                        <td>
+                            <input type="text" disabled="true" value="{{ number_format($grand_total,2) }}" class="extra_val form-control" />
                         </td>
                     </tr>
                 </tfoot>
