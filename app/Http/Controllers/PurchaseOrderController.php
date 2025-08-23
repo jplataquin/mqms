@@ -329,7 +329,7 @@ class PurchaseOrderController extends Controller
             "Component"             => $component->name,
             "Material Request ID"   => [
                 'text' => str_pad($materialQuantityRequest->id,6,0,STR_PAD_LEFT),
-                'href' => "\/material_request\/".$materialQuantityRequest->id
+                'href' => "/material_request/".$materialQuantityRequest->id
             ],
             "Status"                => $purchaseOrder->status,
             "Description"           => $materialQuantityRequest->description,
