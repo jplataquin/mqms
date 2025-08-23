@@ -64,47 +64,44 @@
         
  
         <div class="table-responsive" id="item_container">
-            
+            <table>    
+                <thead>
+                    <tr>
+                        <th>Material Item</th>
+                        <th>Price</th>
+                        <th>Qantity</th>
+                        <th>Total</th>
+                    </tr>
+                <thead>
+
             @php $sub_total = 0; @endphp
 
             @foreach($componentItemMaterialsArr as $id => $items)
-
-                <div class="mb-3 border rounded p-3" style="max-width:120%">
+         
+                <!-- <div class="mb-3 border rounded p-3" style="max-width:120%"> -->
                   
             
                     @foreach($items as $item)
-                        <div class="mb-3">
-                            <div class="d-inline-block me-3" style="width:600px">
-                                <div class="form-group">
-                                    <label>Material Item</label>
-                                    <input type="text" class="form-control" disabled="true" value="{{ $materialItemArr[ $item->material_item_id ]->brand }} {{ $materialItemArr[ $item->material_item_id ]->name }} {{ $materialItemArr[ $item->material_item_id]->specification_unit_packaging }}"/>
-                                </div>
-                            </div>
-                            <div class="d-inline-block me-3" style="width:200px">
-                                <div class="form-group">
-                                    <label>Price</label>
-                                    <input type="text" class="form-control" disabled="true" value="{{ number_format($item->price,2) }}"/>
-                                </div>
-                            </div>
-                            <div class="d-inline-block me-3" style="width:200px">
-                                <div class="form-group">
-                                    <label>Order Quantity</label>
-                                    <input type="text" class="form-control" disabled="true" value="{{$item->quantity}}"/>
-                                </div>
-                            </div>
-                            <div class="d-inline-block me-3" style="width:200px">
-                                <div class="form-group">
-                                    <label>Total</label>
-                                    <input type="text" class="form-control" disabled="true" value="{{ number_format( $item->quantity * $item->price ) }}"/>
-                                </div>
-                            </div>
-                        </div>
-
+                        <tr>
+                            <td>
+                                <input type="text" class="form-control" disabled="true" value="{{ $materialItemArr[ $item->material_item_id ]->brand }} {{ $materialItemArr[ $item->material_item_id ]->name }} {{ $materialItemArr[ $item->material_item_id]->specification_unit_packaging }}"/>
+                            </td>    
+                            <td>
+                                <input type="text" class="form-control" disabled="true" value="{{ number_format($item->price,2) }}"/>
+                            </td>    
+                            <td>
+                                <input type="text" class="form-control" disabled="true" value="{{$item->quantity}}"/>
+                            </td>    
+                            <td>
+                                <input type="text" class="form-control" disabled="true" value="{{ number_format( $item->quantity * $item->price ) }}"/>
+                            </td>
+                        </tr>
                         @php $sub_total = $sub_total + ($item->quantity * $item->price); @endphp
                     @endforeach
-                </div>
+                <!-- </div> --> 
             
             @endforeach
+            </table>
         </div>
     
         <div class="d-flex justify-content-end">
