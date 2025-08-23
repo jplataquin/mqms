@@ -13,7 +13,7 @@
 
                         <td>
                             @if($value['href'])
-                                <a href="{{$value['href']}}">$value['text']</a>
+                                <a href="{{$value['href']}}">{{ $value['text'] }}</a>
                             @else
                                 {{$value['text']}}
                             @endif
