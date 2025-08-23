@@ -76,31 +76,42 @@
 
             @php $sub_total = 0; @endphp
 
-            @foreach($componentItemMaterialsArr as $id => $items)
-         
-                <!-- <div class="mb-3 border rounded p-3" style="max-width:120%"> -->
-                  
+                    <tbody>
+                    @foreach($componentItemMaterialsArr as $id => $items)
             
-                    @foreach($items as $item)
-                        <tr>
-                            <td>
-                                <input type="text" class="form-control" disabled="true" value="{{ $materialItemArr[ $item->material_item_id ]->brand }} {{ $materialItemArr[ $item->material_item_id ]->name }} {{ $materialItemArr[ $item->material_item_id]->specification_unit_packaging }}"/>
-                            </td>    
-                            <td>
-                                <input type="text" class="form-control" disabled="true" value="{{ number_format($item->price,2) }}"/>
-                            </td>    
-                            <td>
-                                <input type="text" class="form-control" disabled="true" value="{{$item->quantity}}"/>
-                            </td>    
-                            <td>
-                                <input type="text" class="form-control" disabled="true" value="{{ number_format( $item->quantity * $item->price ) }}"/>
-                            </td>
-                        </tr>
-                        @php $sub_total = $sub_total + ($item->quantity * $item->price); @endphp
-                    @endforeach
-                <!-- </div> --> 
-            
-            @endforeach
+                    <!-- <div class="mb-3 border rounded p-3" style="max-width:120%"> -->
+                    
+                
+                        @foreach($items as $item)
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" disabled="true" value="{{ $materialItemArr[ $item->material_item_id ]->brand }} {{ $materialItemArr[ $item->material_item_id ]->name }} {{ $materialItemArr[ $item->material_item_id]->specification_unit_packaging }}"/>
+                                </td>    
+                                <td>
+                                    <input type="text" class="form-control" disabled="true" value="{{ number_format($item->price,2) }}"/>
+                                </td>    
+                                <td>
+                                    <input type="text" class="form-control" disabled="true" value="{{$item->quantity}}"/>
+                                </td>    
+                                <td>
+                                    <input type="text" class="form-control" disabled="true" value="{{ number_format( $item->quantity * $item->price ) }}"/>
+                                </td>
+                            </tr>
+                            @php $sub_total = $sub_total + ($item->quantity * $item->price); @endphp
+                        @endforeach
+                    <!-- </div> --> 
+                
+                @endforeach
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2"></td>
+                        <th>Sub Total</th>
+                        <td>
+                             <input type="text" id="sub_total" disabled="true" value="{{ number_format($sub_total, 2) }}" class="form-control"/>
+                        </td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     
