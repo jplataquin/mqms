@@ -322,8 +322,8 @@ class PurchaseOrderController extends Controller
         $extras = json_decode($purchaseOrder->extras);
 
         $po_details = [
-            "PO Number"             => str_pad($purchase_order->id,6,0,STR_PAD_LEFT),
-            "Material Request ID"   => str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT),
+            "PO Number"             => str_pad($purchaseOrder->id,6,0,STR_PAD_LEFT),
+            "Material Request ID"   => str_pad($materialQuantityRequest->id,6,0,STR_PAD_LEFT),
             "Project"               => $project->name,
             "Section"               => $section->name,
             "Contract Item"         => $contract_item->name
