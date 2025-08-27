@@ -25,6 +25,8 @@
         
         <hr>
 
+        <x-folder-details title="Material Request" :items="$mr_details"></x-folder-details>
+        <!-- 
         <table class="record-table-horizontal">
             <tbody>
                 <tr>
@@ -67,7 +69,7 @@
                 </tr>
             </tbody>
         </table>
-
+        -->
         <div class="folder-form-container">
             <div class="folder-form-tab">
                 Review Purchase Order

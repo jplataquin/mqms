@@ -164,6 +164,34 @@ class PurchaseOrderReviewController extends Controller
 
         $extras = json_decode($purchaseOrder->extras);
 
+        $po_details = [
+            "PO Number"             => str_pad($purchaseOrder->id,6,0,STR_PAD_LEFT),
+            "Project"               => $project->name,
+            "Section"               => $section->name,
+            "Contract Item"         => $contract_item->name,
+            "Component"             => $component->name,
+            "Material Request ID"   => [
+                'text' => str_pad($materialQuantityRequest->id,6,0,STR_PAD_LEFT),
+                'href' => "/material_quantity_request/".$materialQuantityRequest->id
+            ],
+            "Status"                => $purchaseOrder->status,
+            "Description"           => $materialQuantityRequest->description,
+            "Created By"            => $purchaseOrder->CreatedByUser()->name.' '.$purchaseOrder->created_at            
+        ];
+
+
+        if($purchaseOrder->updated_at && $purchaseOrder->UpdatedByUser()->name){
+            $po_details["Updated By"] = $purchaseOrder->UpdatedByUser()->name.' '.$purchaseOrder->updated_at;
+        }
+
+        if($purchaseOrder->approved_at && $purchaseOrder->ApprovedByUser()->name){
+            $po_details["Approved By"] = $purchaseOrder->ApprovedByUser()->name.' '.$purchaseOrder->approved_at;
+        }
+
+        if($purchaseOrder->rejected_at && $purchaseOrder->RejectedByUser()->name){
+            $po_details["Rejected By"] = $purchaseOrder->RejectedByUser()->name.' '.$purchaseOrder->rejected_at;
+        }
+
         return view('review/purchase_order/display',[
             'purchase_order'            => $purchaseOrder,
             'material_quantity_request' => $materialQuantityRequest,
@@ -178,7 +206,8 @@ class PurchaseOrderReviewController extends Controller
             'extras'                    => $extras,
             'materialItemArr'           => $materialItemArr,
             'componentItemArr'          => $componentItemArr,
-            'componentItemMaterialsArr' => $componentItemMaterialsArr
+            'componentItemMaterialsArr' => $componentItemMaterialsArr,
+            'po_details'                => $po_details
         ]);
     }
 
