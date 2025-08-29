@@ -198,7 +198,7 @@
         
  
         <div class="table-responsive" id="item_container">
-            <table class="table">    
+            <table class="table shadow-standard">    
                 <thead>
                     <tr>
                         <th style="min-width:500px">Material Item</th>
@@ -223,7 +223,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td class="ps-3">
                                     <input type="text" class="form-control" disabled="true" value="{{ $materialItemArr[ $item->material_item_id ]->brand }} {{ $materialItemArr[ $item->material_item_id ]->name }} {{ $materialItemArr[ $item->material_item_id]->specification_unit_packaging }}"/>
                                 </td>    
                                 <td>
