@@ -198,7 +198,7 @@
         
  
         <div class="table-responsive" id="item_container">
-            <table class="table form-container">    
+            <table class="table">    
                 <thead>
                     <tr>
                         <th style="min-width:500px">Material Item</th>
