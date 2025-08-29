@@ -218,6 +218,11 @@
                 
                         @foreach($items as $item)
                             <tr>
+                                <td colspan="4">
+                                    {{ $componentItemArr[$id]->name }}
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>
                                     <input type="text" class="form-control" disabled="true" value="{{ $materialItemArr[ $item->material_item_id ]->brand }} {{ $materialItemArr[ $item->material_item_id ]->name }} {{ $materialItemArr[ $item->material_item_id]->specification_unit_packaging }}"/>
                                 </td>    
