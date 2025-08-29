@@ -197,7 +197,7 @@
         </div>
         
  
-        <div class="table-responsive" id="item_container">
+        <div class="table-responsive" id="item_container shadow-standard">
             <table class="table">    
                 <thead>
                     <tr>
