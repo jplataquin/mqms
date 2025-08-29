@@ -25,53 +25,10 @@
         
         <hr>
 
-             <x-folder-details title="Purchase Order" :items="$po_details"></x-folder-details>
+        <x-folder-details title="Review Purchase Order" :items="$po_details"></x-folder-details>
         
 
-        <!-- 
-        <table class="record-table-horizontal">
-            <tbody>
-                <tr>
-                    <th>PO Number</th>
-                    <td>{{ str_pad($purchase_order->id,6,0,STR_PAD_LEFT) }}</td>
-                </tr>
-                <tr>
-                    <th>Material Request ID</th>
-                    <td>{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}</td>
-                </tr>
-                <tr>
-                    <th>Project</th>
-                    <td>{{$project->name}}</td>
-                </tr>
-                <tr>
-                    <th>Section</th>
-                    <td>{{$section->name}}</td>
-                </tr>
-                <tr>
-                    <th>Contract Item</th>
-                    <td>{{$contract_item->item_code}} {{$contract_item->description}}</td>
-                </tr>
-                <tr>
-                    <th>Component</th>
-                    <td>{{$component->name}}</td>
-                </tr>
-                <tr>
-                    <th>PO Status</th>
-                    <td>{{$purchase_order->status}}</td>
-                </tr>
-                <tr>
-                    <th>Created By</th>
-                    <td>{{$purchase_order->createdByUser()->name}} {{$purchase_order->created_at}}</td>
-                </tr>
-                <tr>
-                    <th>Description</th>
-                    <td>
-                        <textarea disabled="true" class="w-100" id="description">{{$material_quantity_request->description}}</textarea>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        -->
+        <!--
         <div class="folder-form-container">
             <div class="folder-form-tab">
                 Review Purchase Order
@@ -214,6 +171,119 @@
                 </tr>
             </table>
         </div>
+        -->
+
+
+         <div class="form-container mt-3 mb-3">
+            <div class="form-header">
+                &nbsp;
+            </div>
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-lg-6 mb-3">
+                         <div class="form-group">
+                            <label>Supplier</label>
+                            <input type="text" class="form-control" value="{{$supplier->name}}" id="supplier" disabled="true"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Payment Terms</label>
+                            <input type="text" class="form-control" value="{{$payment_term->text}}" id="payment_term" disabled="true"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+ 
+        <div class="table-responsive" id="item_container">
+            <table class="table">    
+                <thead>
+                    <tr>
+                        <th style="min-width:500px">Material Item</th>
+                        <th style="min-width:200px">Price</th>
+                        <th style="min-width:200px">Qantity</th>
+                        <th style="min-width:200px">Total</th>
+                    </tr>
+                <thead>
+
+            @php $sub_total = 0; @endphp
+
+                    <tbody>
+                    @foreach($componentItemMaterialsArr as $id => $items)
+            
+                    <!-- <div class="mb-3 border rounded p-3" style="max-width:120%"> -->
+                    
+                
+                        @foreach($items as $item)
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" disabled="true" value="{{ $materialItemArr[ $item->material_item_id ]->brand }} {{ $materialItemArr[ $item->material_item_id ]->name }} {{ $materialItemArr[ $item->material_item_id]->specification_unit_packaging }}"/>
+                                </td>    
+                                <td>
+                                    <input type="text" class="form-control text-center" disabled="true" value="{{ number_format($item->price,2) }}"/>
+                                </td>    
+                                <td>
+                                    <input type="text" class="form-control text-center" disabled="true" value="{{$item->quantity}}"/>
+                                </td>    
+                                <td>
+                                    <input type="text" class="form-control text-end" disabled="true" value="{{ number_format( $item->quantity * $item->price ) }}"/>
+                                </td>
+                            </tr>
+                            @php $sub_total = $sub_total + ($item->quantity * $item->price); @endphp
+                        @endforeach
+                    <!-- </div> --> 
+                
+                @endforeach
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2"></td>
+                        <th class="text-center">Sub Total</th>
+                        <td>
+                             <input type="text" id="sub_total" disabled="true" value="{{ number_format($sub_total, 2) }}" class="form-control text-end"/>
+                        </td>
+                    </tr>
+
+                    @if($extras)
+                    <tr>
+                        <th colspan="2"></th>
+                        <th colspan="2" class="text-center">Additional Charges / Discounts</th>
+                    </tr>
+                    @endif
+
+                    @php $grand_total = $sub_total; @endphp
+
+                    @foreach($extras as $extra)
+                        <tr class="extra">
+                            <td colspan="2"></td>
+                            <td>
+                                <input type="text" disabled="true" value="{{$extra->text}}" class="extra_text form-control"/>
+                            </td>
+                            <td>
+                                <input type="number" disabled="true" value="{{ number_format($extra->value,2) }}" class="extra_val form-control text-end" />
+                            </td>
+                        </tr>
+
+                        @php $grand_total = $grand_total + $extra->value @endphp
+
+                    @endforeach
+
+                    <tr class="extra">
+                        <td colspan="2"></td>
+                        <th class="text-center">
+                            Grand Total
+                        </td>
+                        <td>
+                            <input type="text" disabled="true" value="{{ number_format($grand_total,2) }}" class="extra_val form-control text-end" />
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    
+
 
         <div class="row mt-3" id="comment-box"></div>
 
