@@ -174,6 +174,7 @@ class PurchaseOrderReviewController extends Controller
                 'text' => str_pad($materialQuantityRequest->id,6,0,STR_PAD_LEFT),
                 'href' => "/material_quantity_request/".$materialQuantityRequest->id
             ],
+            "Date Needed"           => $materialQuantityRequest->date_needed,
             "Status"                => $purchaseOrder->status,
             "Description"           => $materialQuantityRequest->description,
             "Created By"            => $purchaseOrder->CreatedByUser()->name.' '.$purchaseOrder->created_at            
