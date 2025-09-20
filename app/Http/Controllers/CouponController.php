@@ -70,7 +70,8 @@ class CouponController extends Controller
 
 
     public function display($id){
-        $coupon = Cooupon::findOrFail($id);
+
+        $coupon = Coupon::findOrFail($id);
 
         return view('coupon/display',[
             'coupon' => $coupon
