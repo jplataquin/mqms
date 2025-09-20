@@ -82,7 +82,7 @@ class CouponController extends Controller
             'Created By'    => $coupon->CreatedByUser()->name.' '.$coupon->created_at
         ];
 
-        if($coupon->updated_at){
+        if($coupon->updated_at && $coupon->updated_by){
             $coupon_details['Updated By'] = $coupon->UpdatedByUser()->name.' '.$coupon->updated_at;
         }
 
