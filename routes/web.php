@@ -187,6 +187,8 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/coupon/create', [App\Http\Controllers\CouponController::class, 'create']);
     Route::get('/coupon/{id}', [App\Http\Controllers\CouponController::class, 'display']);
     Route::get('/coupons', [App\Http\Controllers\CouponController::class, 'list']);
+    Route::get('/coupon/claim/{code}', [App\Http\Controllers\CouponController::class, 'claim']);
+    
   
 });
 

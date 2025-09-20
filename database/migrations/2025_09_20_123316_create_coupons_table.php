@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('coupons', function (Blueprint $table) {
             $table->id();
             $table->char('status',4)->default('UNCL');
+            $table->char('code',64);
             $table->decimal('amount',10,2);
             $table->bigInteger('created_by');
             $table->bigInteger('updated_by')->nullable();
