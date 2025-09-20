@@ -71,7 +71,7 @@
 
     const deleteBtn  = $q('#deleteBtn').first();
     const editBtn    = $q('#editBtn').first();
-    const updateBtn  = $q('#editBtn').first();
+    const updateBtn  = $q('#updateBtn').first();
     const printBtn   = $q('#printBtn').first();
     
     const cancelBtn  = $q('#cancelBtn').first();
@@ -85,7 +85,7 @@
     }
 
     if(editBtn){
-        
+
         editBtn.onclick = (e) =>{
             
             editBtn.classList.add('d-none');
