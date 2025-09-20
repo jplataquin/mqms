@@ -107,7 +107,8 @@ class CouponController extends Controller
         }
 
         return view('coupon/display',[
-            'coupon' => $coupon
+            'coupon'            => $coupon,
+            'coupon_details'    => $coupon_details
         ]);
     }
 
