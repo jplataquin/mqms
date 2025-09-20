@@ -85,10 +85,8 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/project/section/contract_items', [App\Http\Controllers\ContractItemController::class, 'list']);
     Route::get('/project/section/contract_item/print/{id}', [App\Http\Controllers\ContractItemController::class, '_print']);
 
-
     Route::get('/project/section/contract_item/component/{id}', [App\Http\Controllers\ComponentController::class, 'display']);
-    Route::get('/project/section/contract_item/component/print/{id}', [App\Http\Controllers\ComponentController::class, '_print']);
-    
+    Route::get('/project/section/contract_item/component/print/{id}', [App\Http\Controllers\ComponentController::class, '_print']);    
     
     Route::get('/material_budget/report/{id}', [App\Http\Controllers\MaterialQuantityController::class, 'report']);
     Route::get('component_item/report/{id}', [App\Http\Controllers\ComponentItemController::class, 'report']);
@@ -113,8 +111,6 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/master_data/unit/{id}', [App\Http\Controllers\UnitController::class, 'display']);
     Route::get('/master_data/units', [App\Http\Controllers\UnitController::class, 'list']);
     
-    
-
     Route::get('/material_quantity_request/create/{project_id}/{section_id}/{contract_item_id}/{component_id}', [App\Http\Controllers\MaterialQuantityRequestController::class, 'create']);
     Route::get('/material_quantity_request/{id}', [App\Http\Controllers\MaterialQuantityRequestController::class, 'display']);
     Route::get('/material_quantity_request/print/{id}', [App\Http\Controllers\MaterialQuantityRequestController::class, 'print']);
@@ -122,8 +118,6 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/material_quantity_request/select/create', [App\Http\Controllers\MaterialQuantityRequestController::class, 'selectCreate']);
     Route::get('/material_quantity_request/po_list/{id}', [App\Http\Controllers\MaterialQuantityRequestController::class, 'po_list']);
     
-  
-
     Route::get('/review/material_quantity_request/{id}', [App\Http\Controllers\Review\MaterialQuantityRequestReviewController::class, 'display']);
     Route::get('/review/material_quantity_requests', [App\Http\Controllers\Review\MaterialQuantityRequestReviewController::class, 'list']);
     Route::get('/review/material_quantity_requests/qr/approve/{id}/{hash_code}', [App\Http\Controllers\Review\MaterialQuantityRequestReviewController::class, 'qr_approve']);
@@ -132,7 +126,6 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/review/material_canvass/{id}', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, 'display']);
     Route::get('/review/material_canvass/test_unavailable/{id}', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, '_test_unavailable']);
     
- 
     Route::get('/review/purchase_order/{id}', [App\Http\Controllers\Review\PurchaseOrderReviewController::class, 'display']);
     Route::get('/review/purchase_orders', [App\Http\Controllers\Review\PurchaseOrderReviewController::class, 'list']);
     
@@ -140,7 +133,6 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/review/budget/{section_id}', [App\Http\Controllers\Review\BudgetReviewController::class, 'display']);
     Route::get('/review/budget/sheet/{section_id}', [App\Http\Controllers\Review\BudgetReviewController::class, 'sheet']);
    
-
     Route::get('/material_canvass', [App\Http\Controllers\MaterialCanvassController::class, 'list']);
     Route::get('/material_canvass/{id}', [App\Http\Controllers\MaterialCanvassController::class, 'display']);
     Route::get('/material_canvass/print/{id}', [App\Http\Controllers\MaterialCanvassController::class, 'print']);
@@ -148,7 +140,6 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/review/components', [App\Http\Controllers\Review\ComponentReviewController::class, 'list']);
     Route::get('/review/component/{contract_item_id}/{component_id?}', [App\Http\Controllers\Review\ComponentReviewController::class, 'display']);
     
-
     Route::get('/purchase_orders', [App\Http\Controllers\PurchaseOrderController::class, 'list']);
     Route::get('/purchase_order/create/select', [App\Http\Controllers\PurchaseOrderController::class, 'select']);
     Route::get('/purchase_order/create/{id}', [App\Http\Controllers\PurchaseOrderController::class, 'create']);
@@ -163,7 +154,6 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/report/project/generate', [App\Http\Controllers\Report\ProjectReportController::class, 'generate']);
     Route::get('/report/project/print', [App\Http\Controllers\Report\ProjectReportController::class, 'print']);
     
-
     Route::get('/report/price/parameters', [App\Http\Controllers\Report\PriceReportController::class, 'parameters']);
     Route::get('/report/price/generate', [App\Http\Controllers\Report\PriceReportController::class, 'generate']);
     Route::get('/report/price/print', [App\Http\Controllers\Report\PriceReportController::class, 'print']);
@@ -182,18 +172,22 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     //Objectives
     Route::get('/objectives/material', [App\Http\Controllers\ObjectivesController::class, 'material']);
     
-
     Route::get('/users', [App\Http\Controllers\UserController::class, 'list']);
     Route::get('/user/create', [App\Http\Controllers\UserController::class, 'create']);
     Route::get('/user/{id}', [App\Http\Controllers\UserController::class, 'display']);
     Route::get('/me',[App\Http\Controllers\UserController::class, 'me']);
-
 
     Route::get('/change_user_password/{id}', [App\Http\Controllers\UserController::class, 'change_user_password']);
     
     Route::get('/test_mq/{id}',[App\Http\Controllers\MaterialQuantityController::class, 'test_mq']);
 
     Route::get('/qrcode',[App\Http\Controllers\QrCodeController::class, 'index']);
+
+    //Coupon
+    Route::get('/coupon/create', [App\Http\Controllers\CouponController::class, 'create']);
+    Route::get('/coupon/{id}', [App\Http\Controllers\CouponController::class, 'display']);
+    Route::get('/coupons', [App\Http\Controllers\CouponController::class, 'list']);
+  
 });
 
 
