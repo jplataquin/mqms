@@ -28,7 +28,7 @@
 
     <div class="form-container">
         <div class="form-header">
-            Display Coupon
+            &nbsp;
         </div>
         <div class="form-body">
             <div class="row">
@@ -44,7 +44,7 @@
 
             <div class="row mt-5">
                 <div class="col-12 text-end">
-                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                 
                    
                     @if($coupon->status == 'PEND')    
                         <button class="btn btn-danger" id="deleteBtn">Delete</button>    
@@ -55,6 +55,8 @@
                     @if($coupon->status == 'APRV')    
                         <button class="btn btn-primary" id="printBtn">Print</button>
                     @endif
+
+                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
                 </div>
             </div>
         </div>
