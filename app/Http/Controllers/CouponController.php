@@ -128,12 +128,70 @@ class CouponController extends Controller
         ]);
     }
 
-    public function update(){
-
-    }
 
     public function _update(Request $request){
         
+        $amount = $request->input('amount');
+        $id     = (int) $request->input('id');
+
+        
+        $coupon = Coupon::find($id);
+
+        if(!$coupon){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Record not found',
+                'data'      => []
+            ]);
+        }
+
+        if($coupon->status != 'PEND'){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Record can no longer be updated',
+                'data'      => []
+            ]);
+        }
+
+        $validator = Validator::make($request->all(),[
+            'amount' => [
+                'required',
+                'numeric',
+                'gte:1'
+            ],
+            'id' => [
+                'required',
+                'numeric',
+                'gte:1'
+            ]
+        ]);
+         
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => $validator->messages()
+            ]);
+        }
+
+        $user_id    = Auth::user()->id;
+        $salt       = Str::random(16);
+
+        $code           = $coupon->generateCode($salt,$amount);
+        
+        $coupon->amount     = $amount;
+        $coupon->code       = $code;
+        $coupon->updated_by = $user_id; 
+
+        $coupon->save();
+
+        return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data'      => [
+                'id' => $coupon->id
+            ]
+        ]);
     }
     
 

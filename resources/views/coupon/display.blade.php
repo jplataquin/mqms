@@ -102,7 +102,23 @@
 
     if(updateBtn){
         updateBtn.onclick = (e) =>{
+            window.util.blockUI();
+
+            window.util.$post('/api/coupon/update',{
+                id      : '{{$coupon->id}}',
+                amount  : amount.value,           
+            }).then(reply=>{
+                
+                window.util.unblockUI();
+
+                if(reply.status <= 0 ){
+                    window.util.showMsg(reply);
+                    return false;
+                };
+        
+                window.util.navReload();
             
+            });
         }
     }
     
