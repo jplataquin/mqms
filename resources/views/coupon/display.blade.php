@@ -24,6 +24,8 @@
     </div>
     <hr>
 
+    <x-folder-details title="Coupon" :items="$coupon_details"></x-folder-details>
+
     <div class="form-container">
         <div class="form-header">
             Display Coupon

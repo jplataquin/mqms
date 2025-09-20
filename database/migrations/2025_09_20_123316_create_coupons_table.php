@@ -20,12 +20,14 @@ return new class extends Migration
             $table->string('claimed_by_name')->nullable();
             
             $table->bigInteger('created_by');
+            $table->bigInteger('processed_by')->nullable(); 
             $table->bigInteger('approved_by')->nullable();
             $table->bigInteger('updated_by')->nullable();
             $table->bigInteger('deleted_by')->nullable();
             $table->bigInteger('void_by')->nullable();
 
             $table->datetime('claimed_at')->nullable();
+            $table->datetime('processed_at')->nullable();
             $table->datetime('approved_at')->nullable();
             $table->datetime('void_at')->nullable();
 

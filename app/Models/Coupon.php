@@ -27,4 +27,70 @@ class Coupon extends Model
 
         //$hash = substr($raw_hash,0,3).substr($raw_hash,61,3);
     }
+
+    public function CreatedByUser(){   
+
+        $user = User::find($this->created_by);
+
+        if(!$user){
+            return User::defaultAttirbutes();
+        }
+
+        return $user;
+    }
+
+    public function UpdatedByUser(){   
+       
+        $user = User::find($this->updated_by);
+
+        if(!$user){
+            return User::defaultAttirbutes();
+        }
+
+        return $user;
+    }
+
+    public function ApprovedByUser(){   
+       
+        $user = User::find($this->approved_by);
+
+        if(!$user){
+            return User::defaultAttirbutes();
+        }
+
+        return $user;
+    }
+
+    public function RejectedByUser(){   
+       
+        $user = User::find($this->rejected_by);
+
+        if(!$user){
+            return User::defaultAttirbutes();
+        }
+
+        return $user;
+    }
+
+    public function ProcessedByUser(){   
+
+        $user = User::find($this->processed_by);
+
+        if(!$user){
+            return User::defaultAttirbutes();
+        }
+
+        return $user;
+    }
+
+    public function VoidByUser(){   
+
+        $user = User::find($this->void_by);
+
+        if(!$user){
+            return User::defaultAttirbutes();
+        }
+
+        return $user;
+    }
 }
