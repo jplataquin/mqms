@@ -52,6 +52,7 @@ class CouponController extends Controller
 
         $coupon->amount         = $amount;
         $coupon->status         = 'PEND';
+        $coupon->salt           = $salt;
         $coupon->code           = $coupon->generateCode($salt,$amount);
         $coupon->created_by     = $user_id;
 
