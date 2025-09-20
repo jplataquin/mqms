@@ -18,13 +18,13 @@ class CouponController extends Controller
     public function _create(Request $request){
         
 
-        if(!$this->hasAccess('coupon:own:create')){
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Access Denied',
-                'data'      => []
-            ]);
-        }
+        // if(!$this->hasAccess('coupon:own:create')){
+        //     return response()->json([
+        //         'status'    => 0,
+        //         'message'   => 'Access Denied',
+        //         'data'      => []
+        //     ]);
+        // }
 
 
         $amount = $request->input('amount');
