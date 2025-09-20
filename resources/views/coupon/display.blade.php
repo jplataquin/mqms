@@ -85,6 +85,7 @@
     }
 
     if(editBtn){
+        
         editBtn.onclick = (e) =>{
             
             editBtn.classList.add('d-none');
