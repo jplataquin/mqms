@@ -102,6 +102,9 @@
                                 <li class="nav-sub-item">
                                     <a href="/purchase_orders" hx-select="#content" hx-target="#main">Purchase Order</a>
                                 </li>
+                                <li class="nav-sub-item">
+                                    <a href="/coupons" hx-select="#content" hx-target="#main">Coupon</a>
+                                </li>
                             </ul>
                             
                         <li>
@@ -149,6 +152,9 @@
                                 </li>
                                 <li class="nav-sub-item">
                                     <a href="/review/purchase_orders" hx-select="#content" hx-target="#main">Purchase Orders</a>
+                                </li>
+                                <li class="nav-sub-item">
+                                    <a href="/review/coupons" hx-select="#content" hx-target="#main">Coupon</a>
                                 </li>
                             </ul>
                         </li>
