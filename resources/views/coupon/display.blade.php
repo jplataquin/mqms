@@ -93,7 +93,7 @@
             updateBtn.classList.remove('d-none');
 
             cancelBtn.onclick = (e) => {
-                window.util.reload();
+                window.util.navReload();
             }
 
             amount.disabled = false;
