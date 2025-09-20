@@ -93,7 +93,7 @@
             updateBtn.classList.remove('d-none');
 
             cancelBtn.onclick = (e) => {
-                window.util.navTo('/coupon/{{$coupon->id}}');
+                window.util.reload();
             }
 
             amount.disabled = false;
