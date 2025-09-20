@@ -17,7 +17,7 @@ return new class extends Migration
             $table->char('salt',16);
             $table->char('code',64);
             $table->decimal('amount',10,2);
-            $table->string('claimed_by_name');
+            $table->string('claimed_by_name')->nullable();
             
             $table->bigInteger('created_by');
             $table->bigInteger('approved_by')->nullable();
@@ -28,7 +28,7 @@ return new class extends Migration
             $table->datetime('claimed_at')->nullable();
             $table->datetime('approved_at')->nullable();
             $table->datetime('void_at')->nullable();
-            
+
             $table->softDeletes();
             $table->timestamps();
         });
