@@ -56,12 +56,37 @@
 <script type="module">
     import {$q} from '/adarna.js';
 
-    const amount = $q('#amount').first();
-
+    const amount    = $q('#amount').first();
+    const createBtn = $q('#createBtn').first();
+    const cancelBtn = $q('#cancelBtn').first();
+    
     amount.onkeypress = (e)=>{
         return window.util.inputNumber(amount,e,2,false);
     }
 
+    createBtn.onclick = (e)=>{
+        window.util.blockUI();
+
+        window.util.$post('/api/coupon/create',{
+            amount : amount.value,           
+        }).then(reply=>{
+            
+            window.util.unblockUI();
+
+            if(reply.status <= 0 ){
+                window.util.showMsg(reply);
+                return false;
+            };
+    
+            window.util.navTo('/coupon/'+reply.data.id);
+        
+        });
+    }
+
+    cancelBtn.onclick = (e) => {
+        window.util.navTo('/coupons');
+    }
+    
 </script>
 </div>
 @endsection

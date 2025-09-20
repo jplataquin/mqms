@@ -167,4 +167,11 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
 
     //Objectives
     Route::get('/objectives/material', [App\Http\Controllers\ObjectivesController::class, '_material']);
+
+    //Coupons
+    Route::get('/coupon/list', [App\Http\Controllers\CouponController::class, '_list']);
+    Route::post('/coupon/create', [App\Http\Controllers\CouponController::class, '_create']);
+    Route::post('/coupon/update', [App\Http\Controllers\CouponController::class, '_update']);
+    Route::post('/coupon/delete', [App\Http\Controllers\CouponController::class, '_delete']);
+    
 });
