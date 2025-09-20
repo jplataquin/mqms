@@ -31,7 +31,7 @@
         <div class="form-body">
             <div class="row">
 
-                <div class="col-lg-3">
+                <div class="col-lg-12">
                     <div class="form-group">
                         <label>Amount</label>
                         <input type="text" id="amount" class="form-control"/>

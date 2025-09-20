@@ -37,7 +37,7 @@ class CouponController extends Controller
         
     }
 
-    public function claim(Request $request){
+    public function claim($code){
         
     }
 
