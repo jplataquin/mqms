@@ -77,7 +77,7 @@
 
         window.util.blockUI();
 
-        window.util.$get('/api/review/coupon/approve',{
+        window.util.$post('/api/review/coupon/approve',{
             id     : '{{$coupon->id}}',
             amount : amount.value
         }).then(reply=>{
@@ -106,7 +106,7 @@
 
         window.util.blockUI();
 
-        window.util.$get('/api/review/coupon/reject',{
+        window.util.$post('/api/review/coupon/reject',{
             id     : '{{$coupon->id}}',
             amount : amount.value
         }).then(reply=>{
