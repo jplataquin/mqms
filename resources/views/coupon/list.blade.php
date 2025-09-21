@@ -169,7 +169,7 @@
                 let row = t.tr({class:'selectable-div'},()=>{
                    
                     t.td({},()=>{
-                        t.txt(item.id);
+                        t.txt( String(item.id).padStart(4,'0') );
                     });
                     t.td({},()=>{
                         t.txt(item.status);
