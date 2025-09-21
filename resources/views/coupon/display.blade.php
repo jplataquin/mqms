@@ -47,7 +47,7 @@
                  
                    
                     @if($coupon->status == 'PEND')    
-                        <button class="btn btn-danger" id="deleteBtn">Delete</button>    
+                        <button class="btn btn-danger d-none" id="deleteBtn">Delete</button>    
                         <button class="btn btn-primary" id="editBtn">Edit</button>
                         <button class="btn btn-primary d-none" id="updateBtn">Update</button>
                     @endif
@@ -70,11 +70,11 @@
 
     const amount    = $q('#amount').first();
 
-    const deleteBtn  = $q('#deleteBtn').first();
-    const editBtn    = $q('#editBtn').first();
-    const updateBtn  = $q('#updateBtn').first();
-    const generateBtn   = $q('#generateBtn').first();
-    const requestVoidBtn   = $q('#requestVoidBtn').first();
+    const deleteBtn         = $q('#deleteBtn').first();
+    const editBtn           = $q('#editBtn').first();
+    const updateBtn         = $q('#updateBtn').first();
+    const generateBtn       = $q('#generateBtn').first();
+    const requestVoidBtn    = $q('#requestVoidBtn').first();
     
     const cancelBtn  = $q('#cancelBtn').first();
     
@@ -94,6 +94,7 @@
             editBtn.classList.add('d-none');
             deleteBtn.classList.add('d-none');
             updateBtn.classList.remove('d-none');
+            deleteBtn.classList.remove('d-none');
 
             cancelBtn.onclick = (e) => {
                 window.util.navReload();
