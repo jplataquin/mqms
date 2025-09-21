@@ -26,7 +26,7 @@
 
     <div class="form-container">
         <div class="form-header">
-            Create Coupon
+            Coupon
         </div>
         <div class="form-body">
             <div class="row">
