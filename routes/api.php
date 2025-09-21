@@ -179,4 +179,7 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::get('/review/coupon/list', [App\Http\Controllers\Review\CouponReviewController::class, '_list']);
     Route::post('/review/coupon/approve', [App\Http\Controllers\Review\CouponReviewController::class, '_approve']);
     Route::post('/review/coupon/reject', [App\Http\Controllers\Review\CouponReviewController::class, '_reject']);
+
+    Route::post('/review/coupon/approve_void', [App\Http\Controllers\Review\CouponReviewController::class, '_approve_void']);
+    Route::post('/review/coupon/reject_void', [App\Http\Controllers\Review\CouponReviewController::class, '_reject_void']);
 });

@@ -45,11 +45,16 @@
             <div class="row mt-5">
                 <div class="col-12 text-end">
                  
-                    
-                    <button class="btn btn-danger" id="rejectBtn">Reject</button>
-                   
-                    <button class="btn btn-primary" id="approveBtn">Approve</button>
-                   
+                    @if($coupon->status == 'PEND')
+                        <button class="btn btn-danger" id="rejectBtn">Reject</button>
+                        <button class="btn btn-primary" id="approveBtn">Approve</button>
+                    @endif
+
+                    @if($coupon->status == 'REVO')
+                        <button class="btn btn-danger" id="rejectVoidBtn">Reject Void</button>
+                        <button class="btn btn-primary" id="approveVoidBtn">Approve Void</button>
+                    @endif
+
                     <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
                 </div>
             </div>
@@ -61,70 +66,139 @@
 <script type="module">
     import {$q} from '/adarna.js';
 
-    const amount      = $q('#amount').first();
-    const cancelBtn   = $q('#cancelBtn').first();
-    const approveBtn  = $q('#approveBtn').first();
-    const rejectBtn   = $q('#rejectBtn').first();
+    const amount            = $q('#amount').first();
+    const cancelBtn         = $q('#cancelBtn').first();
+   
+    @if($coupon->status == 'PEND')
     
-
-    approveBtn.onclick = async (e) => {
+        const approveBtn        = $q('#approveBtn').first();
+        const rejectBtn         = $q('#rejectBtn').first();
         
-        let check = await window.util.confirm('Are you sure you want to APPROVE this Coupon?');
-
-        if(!check){
-            return false;
-        }
-
-        window.util.blockUI();
-
-        window.util.$post('/api/review/coupon/approve',{
-            id     : '{{$coupon->id}}',
-            amount : amount.value
-        }).then(reply=>{
-
-            window.util.unblockUI();
-                
-
-            if(reply.status <= 0){
-                
-                window.util.showMsg(reply);
-                return false;
-            };
-
-            window.util.navReload();
+        approveBtn.onclick = async (e) => {
             
-        });
-    } 
+            let check = await window.util.confirm('Are you sure you want to APPROVE this Coupon?');
 
-    rejectBtn.onclick = async (e) => {
+            if(!check){
+                return false;
+            }
+
+            window.util.blockUI();
+
+            window.util.$post('/api/review/coupon/approve',{
+                id     : '{{$coupon->id}}',
+                amount : amount.value
+            }).then(reply=>{
+
+                window.util.unblockUI();
+                    
+
+                if(reply.status <= 0){
+                    
+                    window.util.showMsg(reply);
+                    return false;
+                };
+
+                window.util.navReload();
+                
+            });
+        } 
+
+        rejectBtn.onclick = async (e) => {
+            
+            let check = await window.util.confirm('Are you sure you want to REJECT this Coupon?');
+
+            if(!check){
+                return false;
+            }
+
+            window.util.blockUI();
+
+            window.util.$post('/api/review/coupon/reject',{
+                id     : '{{$coupon->id}}',
+                amount : amount.value
+            }).then(reply=>{
+
+                window.util.unblockUI();
+                    
+
+                if(reply.status <= 0){
+                    
+                    window.util.showMsg(reply);
+                    return false;
+                };
+
+                
+                window.util.navReload();
+                
+            });
+        }
+    @endif
+
+    
+    @if($coupon->status == 'REVO')
+
+        const approveVoidBtn    = $q('#approveVoidBtn').first();
+        const rejectVoidBtn     = $q('#rejectVoidBtn').first();
         
-        let check = await window.util.confirm('Are you sure you want to REJECT this Coupon?');
+        approveVoidBtn.onclick = async (e) => {
+            
+            let check = await window.util.confirm('Are you sure you want to APPROVE VOIDING this Coupon?');
 
-        if(!check){
-            return false;
-        }
-
-        window.util.blockUI();
-
-        window.util.$post('/api/review/coupon/reject',{
-            id     : '{{$coupon->id}}',
-            amount : amount.value
-        }).then(reply=>{
-
-            window.util.unblockUI();
-                
-
-            if(reply.status <= 0){
-                
-                window.util.showMsg(reply);
+            if(!check){
                 return false;
-            };
+            }
 
+            window.util.blockUI();
+
+            window.util.$post('/api/review/coupon/approve_void',{
+                id     : '{{$coupon->id}}',
+                amount : amount.value
+            }).then(reply=>{
+
+                window.util.unblockUI();
+                    
+
+                if(reply.status <= 0){
+                    
+                    window.util.showMsg(reply);
+                    return false;
+                };
+
+                window.util.navReload();
+                
+            });
+        } 
+
+        rejectVoidBtn.onclick = async (e) => {
             
-            window.util.navReload();
-            
-        });
-    } 
+            let check = await window.util.confirm('Are you sure you want to REJECT VOIDING this Coupon?');
+
+            if(!check){
+                return false;
+            }
+
+            window.util.blockUI();
+
+            window.util.$post('/api/review/coupon/reject_void',{
+                id     : '{{$coupon->id}}',
+                amount : amount.value
+            }).then(reply=>{
+
+                window.util.unblockUI();
+                    
+
+                if(reply.status <= 0){
+                    
+                    window.util.showMsg(reply);
+                    return false;
+                };
+
+                
+                window.util.navReload();
+                
+            });
+        } 
+    @endif
 
     cancelBtn.onclick = (e) => {
         window.util.navTo('/review/coupons');

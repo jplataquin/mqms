@@ -58,7 +58,6 @@ class CouponReviewController extends Controller
         ]);
     }
 
-
     public function list(){
 
         $users = User::orderBy('name','ASC')->get();
@@ -194,7 +193,7 @@ class CouponReviewController extends Controller
         if($coupon->status != 'PEND'){
             return response()->json([
                 'status'    => 0,
-                'message'   =>'Cannot approve this record, the status status is '.$coupon->status,
+                'message'   =>'Cannot approve this record, the status is '.$coupon->status,
                 'data'      => []
             ]);
         }
@@ -269,7 +268,82 @@ class CouponReviewController extends Controller
         if($coupon->status != 'PEND'){
             return response()->json([
                 'status'    => 0,
-                'message'   =>'Cannot approve this record, the status status is '.$coupon->status,
+                'message'   =>'Cannot reject this record, the status is '.$coupon->status,
+                'data'      => []
+            ]);
+        }
+
+        //Prevents race conditions when rejecting
+        if($coupon->amount != $amount){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'The record has been altred',
+                'data'      => []
+            ]);
+        }
+
+        
+        $user_id = Auth::user()->id;
+
+        $coupon->status      = 'REJC';
+        $coupon->rejected_by = $user_id;
+        $coupon->rejected_at = Carbon::now();
+        
+        $coupon->save();
+
+        return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data'      => []
+        ]);
+    }
+
+
+       public function _approve_void(Request $request){
+
+        // if(!$this->hasAccess('coupon:all:approve')){
+        //     return response()->json([
+        //         'status'    => 0,
+        //         'message'   => 'Access Denied',
+        //         'data'      => []
+        //     ]);
+        // }
+
+        $id     = (int) $request->input('id') ?? 0;
+        $amount = $request->input('amount');
+
+        $validator = Validator::make($request->all(),[
+            'id' => [
+                'required',
+                'integer'
+            ],
+            'amount' => [
+                'required'
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Failed Validation',
+                'data'      => $validator->messages()
+            ]);
+        }
+
+        $coupon = Coupon::find($id);
+
+        if(!$coupon){
+            return response()->json([
+                'status'    => 0,
+                'message'   =>'Error: Record not found',
+                'data'      => []
+            ]);
+        }
+
+        if($coupon->status != 'REVO'){
+            return response()->json([
+                'status'    => 0,
+                'message'   =>'Cannot approve voiding this record, the status is '.$coupon->status,
                 'data'      => []
             ]);
         }
@@ -286,10 +360,80 @@ class CouponReviewController extends Controller
         
         $user_id = Auth::user()->id;
 
-        $coupon->status      = 'REJC';
-        $coupon->approved_by = $user_id;
-        $coupon->approved_at = Carbon::now();
+        $coupon->status         = 'VOID';
+        $coupon->void_by        = $user_id;
+        $coupon->void_at        = Carbon::now();
         
+        $coupon->save();
+
+        return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data'      => []
+        ]);
+        
+    }
+
+    public function _reject_void(Request $request){
+
+        // if(!$this->hasAccess('coupon:all:reject')){
+        //     return response()->json([
+        //         'status'    => 0,
+        //         'message'   => 'Access Denied',
+        //         'data'      => []
+        //     ]);
+        // }
+        
+        $id     = (int) $request->input('id') ?? 0;
+        $amount = $request->input('amount');
+
+        $validator = Validator::make($request->all(),[
+            'id' => [
+                'required',
+                'integer'
+            ],
+            'amount' => [
+                'required'
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Failed Validation',
+                'data'      => $validator->messages()
+            ]);
+        }
+
+        $coupon = Coupon::find($id);
+
+        if(!$coupon){
+            return response()->json([
+                'status'    => 0,
+                'message'   =>'Error: Record not found',
+                'data'      => []
+            ]);
+        }
+
+        if($coupon->status != 'REVO'){
+            return response()->json([
+                'status'    => 0,
+                'message'   =>'Cannot reject voiding this record, the status is '.$coupon->status,
+                'data'      => []
+            ]);
+        }
+
+        //Prevents race conditions when approving
+        if($coupon->amount != $amount){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'The record has been altred',
+                'data'      => []
+            ]);
+        }
+
+        $coupon->status      = 'APRV';
+       
         $coupon->save();
 
         return response()->json([
