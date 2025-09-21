@@ -77,7 +77,7 @@ class CouponController extends Controller
         $coupon = Coupon::findOrFail($id);
 
         $coupon_details = [
-            'ID'            => str_pad($coupon->id,6,0,STR_PAD_LEFT),
+            'ID'            => str_pad($coupon->id,4,0,STR_PAD_LEFT),
             'status'        => $coupon->status,
             'Code'          => $coupon->code,
             'Created By'    => $coupon->CreatedByUser()->name.' '.$coupon->created_at
