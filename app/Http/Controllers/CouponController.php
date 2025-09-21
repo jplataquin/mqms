@@ -225,9 +225,11 @@ class CouponController extends Controller
                 'gte:1'
             ],
             'from' => [
+                'sometimes',
                 'date_format:Y-m-d'
             ],
             'to' => [
+                'sometimes',
                 'date_format:Y-m-d'
             ]
         ]);
