@@ -146,8 +146,8 @@
         const dateTypeSelect        = $q('#dateTypeSelect').first();
         const userSelect            = $q('#userSelect').first();
         const statusSelect          = $q('#statusSelect').first();
-        const from                  = $q('#componentSelect').first();
-        const to                    = $q('#contractItemSelect').first();
+        const from                  = $q('#from').first();
+        const to                    = $q('#to').first();
         
 
         let page            = 1;
