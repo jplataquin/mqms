@@ -223,6 +223,7 @@ class CouponController extends Controller
 
          $validator = Validator::make($request->all(),[
             'created_by' =>[
+                'nullable',
                 'integer',
                 'gte:1'
             ],
