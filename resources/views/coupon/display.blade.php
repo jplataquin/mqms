@@ -126,7 +126,7 @@
 
         
         amount.onkeyup = (e) => {
-            if(!amount.disabled){
+            if(!amount.disabled && e.keyCode == 13){
                 updateBtn.click();    
             }
         }
