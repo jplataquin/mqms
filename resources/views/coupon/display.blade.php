@@ -80,6 +80,7 @@
         return window.util.inputNumber(amount,e,2,false);
     }
 
+
     cancelBtn.onclick = (e) => {
         window.util.navTo('/coupons');
     }
@@ -97,10 +98,12 @@
             }
 
             amount.disabled = false;
+
         }
     }
 
     if(updateBtn){
+
         updateBtn.onclick = (e) =>{
             window.util.blockUI();
 
@@ -119,6 +122,13 @@
                 window.util.navReload();
             
             });
+        }
+
+        
+        amount.onkeyup = (e) => {
+            if(!amount.disabled){
+                updateBtn.click();    
+            }
         }
     }
     
