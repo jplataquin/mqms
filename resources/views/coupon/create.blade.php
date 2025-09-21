@@ -64,6 +64,13 @@
         return window.util.inputNumber(amount,e,2,false);
     }
 
+    amount.onkeyup = (e)=>{
+        
+        if(e.keyCode == 13){
+            createBtn.click();
+        }
+    }
+
     createBtn.onclick = (e)=>{
         window.util.blockUI();
 
