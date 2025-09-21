@@ -217,6 +217,8 @@ class CouponController extends Controller
          $from              = $request->input('from')           ?? '';
          $to                = $request->input('to')             ?? '';
          $status            = $request->input('status')         ?? '';
+         $date_type         = $request->input('date_type')      ?? '';
+
          $created_by        = (int) $request->input('created_by');
 
          $validator = Validator::make($request->all(),[
@@ -256,12 +258,12 @@ class CouponController extends Controller
             $coupon = $coupon->where('status',$status);
         }
 
-        if($from){
-            $coupon = $coupon->where('created_at','>=',$from.' 00:00:00');
+        if($from && $date_type){
+            $coupon = $coupon->where($date_type,'>=',$from.' 00:00:00');
         }
 
-        if($to){
-            $coupon = $coupon->where('created_at','<=',$to.' 23:59:59');
+        if($to && $date_type){
+            $coupon = $coupon->where($date_type,'<=',$to.' 23:59:59');
         }
  
         if($limit > 0){
@@ -273,11 +275,16 @@ class CouponController extends Controller
 
             $result = $coupon->orderBy($orderBy,$order)->get();
         }
+
+        foreach($result as $i => $res){
+
+            $result[$i]['created_by_name'] = $res->createdByUser()->name; 
+        }
  
         return response()->json([
-            'status' => 1,
-            'message'=>'',
-            'data'=> $result
+            'status'    => 1,
+            'message'   =>'',
+            'data'      => $result
         ]);
     }
 

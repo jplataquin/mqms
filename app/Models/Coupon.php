@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\User;
 
 class Coupon extends Model
 {
@@ -17,6 +17,7 @@ class Coupon extends Model
 
     protected $table = 'coupons';
 
+    
     public function generateCode($salt, $amount){
         
         $secret_text = $salt.'='.$amount.'='.env('APP_KEY','');

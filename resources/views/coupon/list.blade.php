@@ -115,9 +115,10 @@
         <div class="table-responsive"> 
             <table class="table border" style="width:150%">
                 <thead>
-                    <th>Project</th>
-                    <th>PO #</th>
+                    <th>ID</th>
                     <th>Status</th>
+                    <th>Created By</th>
+                    <th>Date Claimed</th>
                     <th>Date Created</th>
                 <thead>
                 <tbody id="list">
@@ -144,7 +145,7 @@
         
         const sortSelect            = $q('#sortSelect').first();
         const dateTypeSelect        = $q('#dateTypeSelect').first();
-        const userSelect            = $q('#userSelect').first();
+        const createdBySelect       = $q('#createdBySelect').first();
         const statusSelect          = $q('#statusSelect').first();
         const from                  = $q('#from').first();
         const to                    = $q('#to').first();
@@ -173,6 +174,15 @@
                     t.td({},()=>{
                         t.txt(item.status);
                     });
+                    t.td({},()=>{
+                        t.txt(item.created_by_name);
+                    });
+                    t.td({},()=>{
+                        t.txt(item.claimed_at);
+                    });
+                    t.td({},()=>{
+                        t.txt(item.created_at);
+                    });
                 });
 
                 row.onclick = ()=>{
@@ -194,7 +204,7 @@
                 order               : order,
                 order_by            : orderBy,
                 status              : statusSelect.value,
-                user                : userSelect.value,
+                created_by          : createdBySelect.value,
                 date_type           : dateTypeSelect.value,
                 from                : from.value,
                 to                  : to.value,
