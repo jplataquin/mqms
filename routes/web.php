@@ -190,6 +190,7 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/coupon/claim/{code}', [App\Http\Controllers\CouponController::class, 'claim']);
     
     Route::get('/review/coupons', [App\Http\Controllers\Review\CouponReviewController::class, 'list']);
+    Route::get('/review/coupon/{id}', [App\Http\Controllers\Review\CouponReviewController::class, 'display']);
     
   
 });
