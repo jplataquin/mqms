@@ -139,7 +139,7 @@
     if(deleteBtn){
         deleteBtn.onclick = async (e) =>{
 
-            let check = window.util.confirm('Are you sure you want to delete this Coupon?');
+            let check = await window.util.confirm('Are you sure you want to delete this Coupon?');
 
             if(!check) return false;
 
@@ -166,7 +166,7 @@
     if(requestVoidBtn){
         requestVoidBtn.onclick = async (e) =>{
 
-            let check = window.util.confirm('Are you sure you want to request voiding of this Coupon?');
+            let check = await window.util.confirm('Are you sure you want to request voiding of this Coupon?');
 
             if(!check) return false;
 
