@@ -201,7 +201,7 @@ class CouponController extends Controller
         $users = User::orderBy('name','ASC')->get();
 
         return view('coupon/list',[
-            'users' => $user
+            'users' => $users
         ]);
     }
 
