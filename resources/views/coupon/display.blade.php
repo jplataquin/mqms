@@ -52,8 +52,9 @@
                         <button class="btn btn-primary d-none" id="updateBtn">Update</button>
                     @endif
 
-                    @if($coupon->status == 'APRV')    
-                        <button class="btn btn-primary" id="printBtn">Print</button>
+                    @if($coupon->status == 'APRV')
+                        <button class="btn btn-danger" id="requestVoidBtn">Request Void</button>
+                        <button class="btn btn-primary" id="generateBtn">Generate</button>
                     @endif
 
                     <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
@@ -72,7 +73,8 @@
     const deleteBtn  = $q('#deleteBtn').first();
     const editBtn    = $q('#editBtn').first();
     const updateBtn  = $q('#updateBtn').first();
-    const printBtn   = $q('#printBtn').first();
+    const generateBtn   = $q('#generateBtn').first();
+    const requestVoidBtn   = $q('#requestVoidBtn').first();
     
     const cancelBtn  = $q('#cancelBtn').first();
     
@@ -129,6 +131,60 @@
             if(!amount.disabled && e.keyCode == 13){
                 updateBtn.click();    
             }
+        }
+    }
+
+
+    if(deleteBtn){
+        deleteBtn.onclick = async (e) =>{
+
+            let check = window.util.confirm('Are you sure you want to delete this Coupon?');
+
+            if(!check) return false;
+
+            window.util.blockUI();
+
+            window.util.$post('/api/coupon/delete',{
+                id      : '{{$coupon->id}}'       
+            }).then(reply=>{
+                
+                window.util.unblockUI();
+
+                if(reply.status <= 0 ){
+                    window.util.showMsg(reply);
+                    return false;
+                };
+        
+                window.util.navTo('/coupons');
+            
+            });
+        }
+    }
+
+
+    if(requestVoidBtn){
+        requestVoidBtn.onclick = async (e) =>{
+
+            let check = window.util.confirm('Are you sure you want to request voiding of this Coupon?');
+
+            if(!check) return false;
+
+            window.util.blockUI();
+
+            window.util.$post('/api/coupon/request_void',{
+                id      : '{{$coupon->id}}'       
+            }).then(reply=>{
+                
+                window.util.unblockUI();
+
+                if(reply.status <= 0 ){
+                    window.util.showMsg(reply);
+                    return false;
+                };
+        
+                window.util.navReload();
+            
+            });
         }
     }
     

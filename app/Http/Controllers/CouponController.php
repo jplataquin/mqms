@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Coupon;
 use App\Models\User;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class CouponController extends Controller
 {
@@ -93,6 +94,10 @@ class CouponController extends Controller
 
         if($coupon->rejected_at && $coupon->status == 'REJC'){
             $coupon_details['Rejected By'] = $coupon->RejectedByUser()->name.' '.$coupon->rejected_at;
+        }
+
+        if($coupon->rejected_at && $coupon->status == 'REVO'){
+            $coupon_details['Request Void By'] = $coupon->RequestVoidByUser()->name.' '.$coupon->request_void_at;
         }
 
         if($coupon->void_at && $coupon->status == 'VOID'){
@@ -292,6 +297,75 @@ class CouponController extends Controller
 
     public function _delete(Request $request){
         
+        $id = (int) $request->input('id') ?? 0;
+
+        $coupon = Coupon::find($id);
+
+        if(!$coupon){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Record not found',
+                'data'      => []
+            ]);
+        }
+
+        if($coupon->status != 'PEND'){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Record can no longer be deleted, status is '.$coupon->status,
+                'data'      => []
+            ]);
+        }
+
+        $user_id    = Auth::user()->id;
+        
+        $coupon->deleted_by = $user_id;
+        $coupon->save();
+        
+        $coupon->delete();
+
+        return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data'      => []
+        ]);
+    }
+
+    public function _request_void(Request $request){
+        
+        $id = (int) $request->input('id') ?? 0;
+
+        $coupon = Coupon::find($id);
+
+        if(!$coupon){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Record not found',
+                'data'      => []
+            ]);
+        }
+
+        if($coupon->status != 'APRV'){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Record can no longer be requested for voiding, status is '.$coupon->status,
+                'data'      => []
+            ]);
+        }
+
+        $user_id    = Auth::user()->id;
+        
+        $coupon->status          = 'REVO';
+        $coupon->request_void_by = $user_id;
+        $coupon->request_void_at = Carbon::now();;
+        
+        $coupon->save();
+
+        return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data'      => []
+        ]);
     }
 
     public function claim($code){

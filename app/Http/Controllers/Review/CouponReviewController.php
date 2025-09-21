@@ -40,6 +40,10 @@ class CouponReviewController extends Controller
             $coupon_details['Rejected By'] = $coupon->RejectedByUser()->name.' '.$coupon->rejected_at;
         }
 
+        if($coupon->rejected_at && $coupon->status == 'REVO'){
+            $coupon_details['Request Void By'] = $coupon->RequestVoidByUser()->name.' '.$coupon->request_void_at;
+        }
+
         if($coupon->void_at && $coupon->status == 'VOID'){
             $coupon_details['Void By'] = $coupon->VoidByUser()->name.' '.$coupon->void_at;
         }
