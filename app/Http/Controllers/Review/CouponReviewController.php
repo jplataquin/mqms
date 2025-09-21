@@ -119,7 +119,7 @@ class CouponReviewController extends Controller
             $coupon = $coupon->where('created_by',$created_by);
         }
 
-        $coupon = $coupon->where('status','PEND');
+        $coupon = $coupon->where('status','PEND')-orWhere('status','REVO');
         
 
         if($from){
