@@ -63,6 +63,7 @@
                             <div class="form-group">
                                 <label>Created By</label>
                                 <select class="form-select" id="createdBySelect">
+                                    <option value=""> - </option>
                                     @foreach($users as $user)
                                         <option value="{{$user->id}}">{{$user->name}}</option>
                                     @endforeach
