@@ -153,7 +153,7 @@
                 });
 
                 row.onclick = ()=>{
-                    window.util.navTo('/coupon/'+item.id);
+                    window.util.navTo('/review/coupon/'+item.id);
                 };
 
                 $el.append(row).to(list);
