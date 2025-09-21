@@ -23,6 +23,7 @@ return new class extends Migration
             $table->bigInteger('processed_by')->nullable(); 
             $table->bigInteger('approved_by')->nullable();
             $table->bigInteger('rejected_by')->nullable();
+            $table->bigInteger('request_void_by')->nullable();
             $table->bigInteger('updated_by')->nullable();
             $table->bigInteger('deleted_by')->nullable();
             $table->bigInteger('void_by')->nullable();
@@ -31,6 +32,7 @@ return new class extends Migration
             $table->datetime('processed_at')->nullable();
             $table->datetime('approved_at')->nullable();
             $table->datetime('rejected_at')->nullable();
+            $table->datetime('request_void_at')->nullable();
             $table->datetime('void_at')->nullable();
 
             $table->softDeletes();
