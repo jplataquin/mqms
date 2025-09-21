@@ -56,22 +56,14 @@
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label>Date Type</label>
-                                <select class="form-select" id="dateTypeSelect">
-                                    <option value="created_at">Created</option>
-                                    <option value="claimed_at">Claimed</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
+                      
+                        <div class="col-lg-6">
                             <div class="form-group">
                                 <label>From</label>
                                 <input type="date" class="form-control" id="from"/>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="form-group">
                                 <label>To</label>
                                 <input type="date" class="form-control" id="to"/>
@@ -83,7 +75,6 @@
                     <div class="row">
                             <div class="col-lg-12 text-end">    
                                 
-                                <button id="createBtn" class="btn btn-warning">Create</button>
 
                                 <button id="searchBtn" class="btn btn-primary">Search</button>
 
@@ -101,7 +92,6 @@
                     <th>ID</th>
                     <th>Status</th>
                     <th>Created By</th>
-                    <th>Date Claimed</th>
                     <th>Date Created</th>
                 <thead>
                 <tbody id="list">
@@ -123,11 +113,9 @@
         const list                  = $q('#list').first();
         const query                 = $q('#query').first();
         const searchBtn             = $q('#searchBtn').first();
-        const createBtn             = $q('#createBtn').first();
         const showMoreBtn           = $q('#showMoreBtn').first();
         
         const sortSelect            = $q('#sortSelect').first();
-        const dateTypeSelect        = $q('#dateTypeSelect').first();
         const createdBySelect       = $q('#createdBySelect').first();
         const from                  = $q('#from').first();
         const to                    = $q('#to').first();
@@ -160,9 +148,6 @@
                         t.txt(item.created_by_name);
                     });
                     t.td({},()=>{
-                        t.txt(item.claimed_at);
-                    });
-                    t.td({},()=>{
                         t.txt(item.created_at);
                     });
                 });
@@ -186,7 +171,6 @@
                 order               : order,
                 order_by            : orderBy,
                 created_by          : createdBySelect.value,
-                date_type           : dateTypeSelect.value,
                 from                : from.value,
                 to                  : to.value,
                 
@@ -243,10 +227,6 @@
             showData();
         }         
         
-
-        createBtn.onclick = ()=>{
-            window.util.navTo('/coupon/create');
-        }
         
         reinitalize();
         showData();
