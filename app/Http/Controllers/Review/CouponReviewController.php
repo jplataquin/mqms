@@ -3,20 +3,25 @@
 namespace App\Http\Controllers\Review;
 
 use Illuminate\Http\Request;
-use App\Models\Coupon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use App\Models\Coupon;
+use App\Models\User;
 
 
 class CouponReviewController extends Controller
 {
 
     public function list(){
-        
-        return view('review/coupon/list');
+
+        $users = User::orderBy('name','ASC')->get();
+
+        return view('review/coupon/list',[
+            'users' => $users
+        ]);
     }
 
     public function _list(Request $request){
@@ -30,17 +35,22 @@ class CouponReviewController extends Controller
          
          $from              = $request->input('from')           ?? '';
          $to                = $request->input('to')             ?? '';
+         $date_type         = $request->input('date_type')      ?? '';
+
          $created_by        = (int) $request->input('created_by');
 
          $validator = Validator::make($request->all(),[
             'created_by' =>[
+                'nullable',
                 'integer',
                 'gte:1'
             ],
             'from' => [
+                'nullable',
                 'date_format:Y-m-d'
             ],
             'to' => [
+                'nullable',
                 'date_format:Y-m-d'
             ]
         ]);
@@ -58,19 +68,20 @@ class CouponReviewController extends Controller
         $result = [];
  
         $coupon = new Coupon();
-        
-        $coupon = $coupon->where('status','PEND');
-        
+ 
         if($created_by){
             $coupon = $coupon->where('created_by',$created_by);
         }
 
-        if($from){
-            $coupon = $coupon->where('created_at','>=',$from.' 00:00:00');
+        $coupon = $coupon->where('status','PEND');
+        
+
+        if($from && $date_type){
+            $coupon = $coupon->where($date_type,'>=',$from.' 00:00:00');
         }
 
-        if($to){
-            $coupon = $coupon->where('created_at','<=',$to.' 23:59:59');
+        if($to && $date_type){
+            $coupon = $coupon->where($date_type,'<=',$to.' 23:59:59');
         }
  
         if($limit > 0){
@@ -82,14 +93,18 @@ class CouponReviewController extends Controller
 
             $result = $coupon->orderBy($orderBy,$order)->get();
         }
+
+        foreach($result as $i => $res){
+
+            $result[$i]['created_by_name'] = $res->createdByUser()->name; 
+        }
  
         return response()->json([
-            'status' => 1,
-            'message'=>'',
-            'data'=> $result
+            'status'    => 1,
+            'message'   =>'',
+            'data'      => $result
         ]);
     }
-
 
 
     public function _approve(Request $request){
