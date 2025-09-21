@@ -52,7 +52,7 @@ class CouponReviewController extends Controller
             $coupon_details['Processed By'] = $coupon->ProcessedByUser()->name.' '.$coupon->processed_at;
         }
 
-        return view('coupon/display',[
+        return view('review/coupon/display',[
             'coupon'            => $coupon,
             'coupon_details'    => $coupon_details
         ]);
