@@ -69,13 +69,13 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label>From</label>
-                                <input type="date" id="from"/>
+                                <input type="date" class="form-control" id="from"/>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label>To</label>
-                                <input type="date" id="to"/>
+                                <input type="date" class="form-control" id="to"/>
                             </div>
                         </div>
                     </div>
