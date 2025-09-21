@@ -69,13 +69,61 @@
 
     approveBtn.onclick = async (e) => {
         
-        let check = await window.util.confirm('Are you sure you want to approve this Coupon?');
+        let check = await window.util.confirm('Are you sure you want to APPROVE this Coupon?');
 
         if(!check){
             return false;
         }
 
+        window.util.blockUI();
+
+        window.util.$get('/api/review/coupon/approve',{
+            id     : '{{$coupon->id}}',
+            amount : amount.value
+        }).then(reply=>{
+
+            window.util.unblockUI();
+                
+
+            if(reply.status <= 0){
+                
+                window.util.showMsg(reply);
+                return false;
+            };
+
+            window.util.navReload();
+            
+        });
+    } 
+
+    rejectBtn.onclick = async (e) => {
         
+        let check = await window.util.confirm('Are you sure you want to REJECT this Coupon?');
+
+        if(!check){
+            return false;
+        }
+
+        window.util.blockUI();
+
+        window.util.$get('/api/review/coupon/reject',{
+            id     : '{{$coupon->id}}',
+            amount : amount.value
+        }).then(reply=>{
+
+            window.util.unblockUI();
+                
+
+            if(reply.status <= 0){
+                
+                window.util.showMsg(reply);
+                return false;
+            };
+
+            
+            window.util.navReload();
+            
+        });
     } 
 
     cancelBtn.onclick = (e) => {
