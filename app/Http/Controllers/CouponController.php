@@ -197,7 +197,11 @@ class CouponController extends Controller
 
     public function list(){
 
-        return view('coupon/list');
+        $users = User::orderBy('name','ASC')->get();
+
+        return view('coupon/list',[
+            'users' => $user
+        ]);
     }
 
     public function _list(Request $request){

@@ -35,7 +35,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Sort By</label>
-                                <select class="form-control" id="sortSelect">
+                                <select class="form-select" id="sortSelect">
                                     <option value="1" selected>Latest Entry</option>
                                     <option value="2">Oldest Entry</option>
                                 </select>
@@ -54,6 +54,21 @@
                             </div>
                         </div>
                             
+                    </div>
+
+
+                    
+                    <div class="row mb-3">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Created By</label>
+                                <select class="form-select" id="createdBySelect">
+                                    @foreach($users as $user)
+                                        <option value="{{$user->id}}">{{$user->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row mb-3">
