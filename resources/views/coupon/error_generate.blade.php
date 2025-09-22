@@ -1,0 +1,1 @@
+<h1>Error Coupon ({{$coupon->id}}) can no longer be generated, status is {{$coupon->status}}</h1>

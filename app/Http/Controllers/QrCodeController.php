@@ -44,4 +44,5 @@ class QrCodeController extends Controller{
         return response($writer->writeString($data))->header('Content-type','image/png');
 
     }
+  
 }

@@ -119,7 +119,7 @@ class CouponController extends Controller
     }
 
 
-    public function print($id){
+    public function generate($id){
         
         $coupon = Cooupon::findOrFail($id);
 
