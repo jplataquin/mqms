@@ -129,7 +129,7 @@ class CouponController extends Controller
             ]);
         }
 
-        return view('coupon/print',[
+        return view('coupon/generate',[
             'coupon' => $coupon
         ]);
     }
