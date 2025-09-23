@@ -3,7 +3,7 @@
         <title>Coupon - {{$coupon->id}}</title>
     </head>
     <body>
-        <canvas id="canvas" style="border: solid 1px #000000"></canvas>
+        <canvas id="canvas"></canvas>
 
         
 
