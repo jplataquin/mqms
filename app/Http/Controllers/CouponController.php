@@ -376,7 +376,7 @@ class CouponController extends Controller
 
         $salt = $coupon->salt;
 
-        $correct_code = $coupon->generateCode($salt,'100');
+        $correct_code = $coupon->generateCode($salt, (float) $coupon->amount);
         
 
         $flag = 'valid';
