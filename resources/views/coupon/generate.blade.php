@@ -10,7 +10,7 @@
         <script>
             
             const canvas = document.querySelector('#canvas');
-            const c_width = 500;
+            const c_width = 400;
             const c_height = 120;
 
             canvas.width    = c_width;
@@ -58,7 +58,7 @@
                     newWidth = canvas.height * imageAspectRatio;
                 }
 
-                ctx.drawImage(headerImg, 110, 10, newWidth * .8,newHeight *.8);
+                ctx.drawImage(headerImg, 110, 10, newWidth * .7,newHeight *.7);
                 
                 ctx.fillStyle           = 'black'; // Set fill color for the text
                 ctx.font                = "14px Arial";
