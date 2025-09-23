@@ -10,7 +10,7 @@
 
         <script>
             
-            const canvas = document.querySelector('#canvass');
+            const canvas = document.querySelector('#canvas');
             const c_width = 300;
             const c_height = 120;
 
