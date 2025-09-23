@@ -398,7 +398,8 @@ class CouponController extends Controller
             'ID'            => str_pad($coupon->id,4,0,STR_PAD_LEFT),
             'status'        => $coupon->status,
             'Code'          => $coupon->code,
-            'Created By'    => $coupon->CreatedByUser()->name.' '.$coupon->created_at
+            'Created By'    => $coupon->CreatedByUser()->name.' '.$coupon->created_at,
+            'correct_code'  => $correct_code
         ];
 
         if($coupon->updated_at && $coupon->updated_by){

@@ -69,6 +69,9 @@
     @if($flag == 'invalid')
         <div class="text-center container">
             <h1 class="text-danger">Invalid Coupon</h1>
+            {{$correct_code}}
+            <br>
+            {{$coupon->code}}
         </div>
     @endif
 
