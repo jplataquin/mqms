@@ -29,7 +29,7 @@
     @if($flag == 'valid')
     <div class="form-container">
         <div class="form-header">
-            Coupon
+            Claim Coupon
         </div>
         <div class="form-body">
             <div class="row">
@@ -76,23 +76,23 @@
             <table class="table w-100 mt-3">
                 <tr>
                     <th>Code</th>
-                    <tr>
+                    <td>
                         {{$coupon->code}}
-                    </tr>
+                    </td>
                 </tr>
 
                 <tr>
                     <th>Correct Code</th>
-                    <tr>
+                    <td>
                          {{$correct_code}} 
-                    </tr>
+                    </td>
                 </tr>
 
                 <tr>
                     <th>Amount</th>
-                    <tr>
+                    <td>
                         {{$coupon->amount}}
-                    </tr>
+                    </td>
                 </tr>
 
             </table>
