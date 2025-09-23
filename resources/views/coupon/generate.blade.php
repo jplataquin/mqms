@@ -26,6 +26,10 @@
 
             ctx.fillStyle = "#FFFFFF";
             ctx.fillRect(0, 0, c_width, c_height);
+            
+            ctx.strokeStyle = 'black'; // Or any other color like '#FF0000' for red
+            ctx.lineWidth = 5; 
+            ctx.strokeRect(0, 0, c_width, c_height);
 
             qrImg.onload = ()=>{
 
