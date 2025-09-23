@@ -55,7 +55,7 @@
                     newWidth = canvas.height * imageAspectRatio;
                 }
 
-                ctx.drawImage(headerImg, 110, 10, newWidth * .6,newHeight *.6);
+                ctx.drawImage(headerImg, 110, 10, newWidth * .8,newHeight *.8);
                 
                 ctx.fillStyle           = 'black'; // Set fill color for the text
                 ctx.font                = "14px Arial";
