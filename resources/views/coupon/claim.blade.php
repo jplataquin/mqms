@@ -102,7 +102,7 @@
 
     @if($flag == 'claimed')
         <div class="text-center container">
-            <h1 class="text-danger">This Coupon is already claimed</h1>
+            <h1 class="text-warning">This Coupon is already claimed</h1>
         </div>
     
     @endif
@@ -115,7 +115,7 @@
     import {$q} from '/adarna.js';
 
 
-    const name      = $q('#name').firstt();
+    const name      = $q('#name').first();
     const createBtn = $q('#createBtn').first();
     const cancelBtn = $q('#cancelBtn').first();
     
