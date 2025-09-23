@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Coupon</title>
+        <title>Coupon - {{$coupon->id}}</title>
     </head>
     <body>
         <canvas id="canvas" style="border: solid 1px #000000"></canvas>
@@ -10,8 +10,8 @@
         <script>
             
             const canvas = document.querySelector('#canvas');
-            const c_width = 300;
-            const c_height = 150;
+            const c_width = 500;
+            const c_height = 120;
 
             canvas.width    = c_width;
             canvas.height  = c_height;
