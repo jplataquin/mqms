@@ -29,14 +29,14 @@
 
             qrImg.onload = ()=>{
 
-                ctx.drawImage(qrImg, 10, 10, 90, 90);
+                ctx.drawImage(qrImg, 10, 10, 80, 80);
                 
                 ctx.fillStyle           = 'black'; // Set fill color for the text
                 ctx.font                = "14px Arial";
 
                 let id_text             = String("{{$coupon->id}}").padStart(4, '0');
                 
-                ctx.fillText(id_text,60,110);
+                ctx.fillText(id_text,50,110);
             }
 
 
@@ -65,7 +65,7 @@
 
                 let amount_text             = "Fuel Coupon ( P {{number_format($coupon->amount,2)}} )";
                 
-                ctx.fillText(amount_text, 200, 110 );
+                ctx.fillText(amount_text, 10+90+10+75, 100 );
             }
             
             qrImg.src       = "/qrcode?d={{ url('/coupon/claim/'.$coupon->id.'/'.$coupon->code ) }}";
