@@ -49,7 +49,7 @@
                 ctx.fillText(id_text,110, 10+90+10+75 );
             }
             
-            qrImg.src       = "/qr_code?d={{ url('/coupon/claim/'.$coupon->id.'/'.$coupon->code ) }}";
+            qrImg.src       = "/qrcode?d={{ url('/coupon/claim/'.$coupon->id.'/'.$coupon->code ) }}";
             headerImg.src   = "/storage/sys_images/heaheader_with_address.png";
             
         </script>
