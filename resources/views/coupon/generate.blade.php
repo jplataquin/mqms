@@ -50,7 +50,7 @@
             }
             
             qrImg.src       = "/qrcode?d={{ url('/coupon/claim/'.$coupon->id.'/'.$coupon->code ) }}";
-            headerImg.src   = "/storage/sys_images/heaheader_with_address.png";
+            headerImg.src   = "/storage/sys_images/header_with_address.png";
             
         </script>
     </body>
