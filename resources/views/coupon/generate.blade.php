@@ -15,7 +15,7 @@
             const c_height = 120;
 
             canvas.width    = c_width;
-            canvass.height  = c_height;
+            canvas.height  = c_height;
 
             const ctx    = canvas.getContext('2d');
 
