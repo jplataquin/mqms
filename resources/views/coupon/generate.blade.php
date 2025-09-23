@@ -38,7 +38,24 @@
 
 
             headerImg.onload =  ()=>{
-                ctx.drawImage(headerImg, 110, 10, 200,80);
+
+                const imageAspectRatio = headerImg.width / headerImg.height;
+                const canvasAspectRatio = canvas.width / canvas.height;
+
+                let newWidth;
+                let newHeight;
+
+                if (imageAspectRatio > canvasAspectRatio) {
+                    // Image is wider than canvas, fit by width
+                    newWidth = canvas.width;
+                    newHeight = canvas.width / imageAspectRatio;
+                } else {
+                    // Image is taller than canvas, fit by height
+                    newHeight = canvas.height;
+                    newWidth = canvas.height * imageAspectRatio;
+                }
+
+                ctx.drawImage(headerImg, 110, 10, newWidth,newHeight);
                 
                 ctx.fillStyle           = 'black'; // Set fill color for the text
                 ctx.font                = "14px Arial";
