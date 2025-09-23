@@ -123,7 +123,7 @@
 
         let check = await window.util.confirm('Are you sure you want to claim this coupon amount P {{ number_format($coupon->amount,2) }}?');
 
-        if(!$check){
+        if(!check){
             return false;
         }
 
