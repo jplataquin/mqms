@@ -49,6 +49,10 @@
                     @if($coupon->status == 'PEND')    
                         <button class="btn btn-danger d-none" id="deleteBtn">Delete</button>    
                         <button class="btn btn-primary" id="editBtn">Edit</button>
+                        <button class="btn btn-outline-primary" id="reviewLinkBtn">
+                            Review Link
+                            <i class="bi bi-copy"></i>
+                        </button>
                         <button class="btn btn-primary d-none" id="updateBtn">Update</button>
                     @endif
 
@@ -75,8 +79,21 @@
     const updateBtn         = $q('#updateBtn').first();
     const generateBtn       = $q('#generateBtn').first();
     const requestVoidBtn    = $q('#requestVoidBtn').first();
+    const reviewLinkBtn     = $q('#reviewLinkBtn').first();
     
     const cancelBtn  = $q('#cancelBtn').first();
+    
+
+    if(reviewLinkBtn){
+        reviewLinkBtn.onclick = async ()=>{
+            let test = await window.util.copyToClipboard('{{ url("/review/coupon/".$coupon->id); }}');
+            if(test){
+                alert('Review Link for "Coupon: {{$coupon->id}}" copied!');
+            }else{
+                alert('Failed to copy');
+            }
+        }
+    }
     
     amount.onkeypress = (e)=>{
         return window.util.inputNumber(amount,e,2,false);
