@@ -3,10 +3,9 @@
         <title>Coupon</title>
     </head>
     <body>
-        <canvas id="canvas"></canvas>
+        <canvas id="canvas" style="border: solid 1px #000000"></canvas>
 
         
-        <img width="300px" src="/qr_code?d={{ url('/coupon/claim/'.$coupon->id.'/'.$coupon->code ) }}"/>
 
         <script>
             
