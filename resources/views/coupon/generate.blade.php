@@ -11,7 +11,7 @@
             
             const canvas = document.querySelector('#canvas');
             const c_width = 300;
-            const c_height = 200;
+            const c_height = 150;
 
             canvas.width    = c_width;
             canvas.height  = c_height;
@@ -23,6 +23,9 @@
             const qrImg     = new Image();
             const headerImg = new Image();
             
+
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillRect(0, 0, c_width, c_height);
 
             qrImg.onload = ()=>{
 
