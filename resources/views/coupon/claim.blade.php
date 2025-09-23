@@ -120,6 +120,13 @@
     const cancelBtn = $q('#cancelBtn').first();
     
     claimBtn.onclick = async (e)=>{
+
+        let check = await window.util.confirm('Are you sure you want to claim this coupon amount P {{ number_format($coupon->amount,2) }}?');
+
+        if(!$check){
+            return false;
+        }
+
         window.util.blockUI();
 
         window.util.$post('/api/coupon/claim',{
