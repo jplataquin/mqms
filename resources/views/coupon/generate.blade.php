@@ -38,7 +38,7 @@
 
 
             headerImg.onload =  ()=>{
-                ctx.drawImage(headerImg, 110, 10, 80,150);
+                ctx.drawImage(headerImg, 110, 10, 150,80);
                 
                 ctx.fillStyle           = 'black'; // Set fill color for the text
                 ctx.font                = "14px Arial";
