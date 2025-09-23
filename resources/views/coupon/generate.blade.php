@@ -33,7 +33,7 @@
 
                 let id_text             = String("{{$coupon->id}}").padStart(4, '0');
                 
-                ctx.fillText(id_text,110,60);
+                ctx.fillText(id_text,60,110);
             }
 
 

@@ -54,7 +54,7 @@
 
                     @if($coupon->status == 'APRV')
                         <button class="btn btn-danger" id="requestVoidBtn">Request Void</button>
-                        <button class="btn btn-primary" id="generateBtn">Generate</button>
+                        <button class="btn btn-primary" id="generateBtn" onclick="window.document.location = '/coupon/generate/{{$coupon->id}}'">Generate</button>
                     @endif
 
                     <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
@@ -188,6 +188,8 @@
             });
         }
     }
+
+
     
 </script>
 </div>
