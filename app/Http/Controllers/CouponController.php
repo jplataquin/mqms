@@ -368,8 +368,72 @@ class CouponController extends Controller
         ]);
     }
 
-    public function claim($code){
+    public function claim($id,$code){
         
+        $id = (int) $id;
+        
+        $coupon = Coupon::findOrFail($id);
+
+        $salt = $coupon->salt;
+
+        $correct_code = $coupon->generateCode($salt,$coupon->amount);
+        
+
+        $flag = 'valid';
+
+        if($coupon->status != 'APRV'){
+        
+            $flag = 'invalid';
+        
+        }else if($correct_code != $code){
+        
+            $flag = 'invalid';
+
+        }else if($coupon == 'CLAI'){
+            $flag = 'claimed';
+        }
+
+
+          $coupon_details = [
+            'ID'            => str_pad($coupon->id,4,0,STR_PAD_LEFT),
+            'status'        => $coupon->status,
+            'Code'          => $coupon->code,
+            'Created By'    => $coupon->CreatedByUser()->name.' '.$coupon->created_at
+        ];
+
+        if($coupon->updated_at && $coupon->updated_by){
+            $coupon_details['Updated By'] = $coupon->UpdatedByUser()->name.' '.$coupon->updated_at;
+        }
+
+        if($coupon->approved_at && $coupon->status == 'APRV'){
+            $coupon_details['Approved By'] = $coupon->ApprovedByUser()->name.' '.$coupon->approved_at;
+        }
+
+        if($coupon->rejected_at && $coupon->status == 'REJC'){
+            $coupon_details['Rejected By'] = $coupon->RejectedByUser()->name.' '.$coupon->rejected_at;
+        }
+
+        if($coupon->request_void_at && $coupon->status == 'REVO'){
+            $coupon_details['Request Void By'] = $coupon->RequestVoidByUser()->name.' '.$coupon->request_void_at;
+        }
+
+        if($coupon->void_at && $coupon->status == 'VOID'){
+            $coupon_details['Void By'] = $coupon->VoidByUser()->name.' '.$coupon->void_at;
+        }
+
+        if($coupon->claimed_at && $coupon->satatus == 'CLAI'){
+            $coupon_details['Claimed By'] = $coupon->claimed_by_name.' '.$coupon->claimed_at;
+        }
+
+        if($coupon->processed_at){
+            $coupon_details['Processed By'] = $coupon->ProcessedByUser()->name.' '.$coupon->processed_at;
+        }
+
+
+        return view('coupon/claim',[
+            'flag'      => $flag,
+            'coupon'    => $coupon
+        ]);
     }
 
     
