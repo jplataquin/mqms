@@ -63,13 +63,13 @@
                 ctx.fillStyle           = 'black'; // Set fill color for the text
                 ctx.font                = "14px Arial";
 
-                let amount_text             = "P {{number_format($coupon->amount,2)}}";
+                let amount_text             = "Fuel Coupon ( P {{number_format($coupon->amount,2)}} )";
                 
-                ctx.fillText(amount_text, 10+90+10+75, 110 );
+                ctx.fillText(amount_text, 10+90+10+75, 100 );
             }
             
             qrImg.src       = "/qrcode?d={{ url('/coupon/claim/'.$coupon->id.'/'.$coupon->code ) }}";
-            headerImg.src   = "/storage/sys_images/header_with_address.png";
+            headerImg.src   = "/storage/sys_images/header.png";
             
         </script>
     </body>
