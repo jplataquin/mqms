@@ -24,7 +24,7 @@
     </div>
     <hr>
 
-    <x-folder-details title="Coupon" :items="$coupon_details"></x-folder-details>
+    <x-folder-details title="Details" :items="$coupon_details"></x-folder-details>
 
     @if($flag == 'valid')
     <div class="form-container">
@@ -110,29 +110,21 @@
     
 </div>
 
+@if($flag == 'valid')
 <script type="module">
     import {$q} from '/adarna.js';
 
-    const amount    = $q('#amount').first();
+
+    const name      = $q('#name').firstt();
     const createBtn = $q('#createBtn').first();
     const cancelBtn = $q('#cancelBtn').first();
     
-    amount.onkeypress = (e)=>{
-        return window.util.inputNumber(amount,e,2,false);
-    }
-
-    amount.onkeyup = (e)=>{
-        
-        if(e.keyCode == 13){
-            createBtn.click();
-        }
-    }
-
-    createBtn.onclick = (e)=>{
+    claimBtn.onclick = async (e)=>{
         window.util.blockUI();
 
-        window.util.$post('/api/coupon/create',{
-            amount : amount.value,           
+        window.util.$post('/api/coupon/claim',{
+            id      : '{{$coupon->id}}',
+            name    : name.value           
         }).then(reply=>{
             
             window.util.unblockUI();
@@ -148,9 +140,10 @@
     }
 
     cancelBtn.onclick = (e) => {
-        window.util.navTo('/coupons');
+        window.util.navTo('/home');
     }
     
 </script>
+@endif
 </div>
 @endsection

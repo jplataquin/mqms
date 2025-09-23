@@ -174,7 +174,7 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::post('/coupon/update', [App\Http\Controllers\CouponController::class, '_update']);
     Route::post('/coupon/delete', [App\Http\Controllers\CouponController::class, '_delete']);
     Route::post('/coupon/request_void', [App\Http\Controllers\CouponController::class, '_request_void']);
-
+    Route::post('/coupon/claim', [App\Http\Controllers\CouponController::class, '_claim']);
 
     Route::get('/review/coupon/list', [App\Http\Controllers\Review\CouponReviewController::class, '_list']);
     Route::post('/review/coupon/approve', [App\Http\Controllers\Review\CouponReviewController::class, '_approve']);

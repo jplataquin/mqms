@@ -438,6 +438,62 @@ class CouponController extends Controller
         ]);
     }
 
-    
+    public function _claim(Request $request){
+        
+        $amount = $request->input('name');
+        $id     = (int) $request->input('id');
+
+        
+        $coupon = Coupon::find($id);
+
+        if(!$coupon){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Record not found',
+                'data'      => []
+            ]);
+        }
+
+        if($coupon->status != 'APRV'){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Record can not be claimed, status is '.$coupon->status,
+                'data'      => []
+            ]);
+        }
+
+        $validator = Validator::make($request->all(),[
+            'name' => [
+                'required',
+            ]
+        ]);
+         
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => $validator->messages()
+            ]);
+        }
+
+        $user_id    = Auth::user()->id;
+
+        $now = Carbon::now();
+
+        $coupon->claimed_by_name  = $name;
+        $coupon->claimed_at       = $now;
+        $coupon->processed_by     = $user_id;
+        $coupon->processed_at     = $now;
+
+        $coupon->save();
+
+        return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data'      => [
+                'id' => $coupon->id
+            ]
+        ]);
+    }
 
 }
