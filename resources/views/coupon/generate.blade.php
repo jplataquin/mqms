@@ -5,11 +5,13 @@
     <body>
         <canvas id="canvas"></canvas>
 
-        
+        <button style="margin-top:20px" id="downloadBtn">Download</button>
 
         <script>
             
             const canvas = document.querySelector('#canvas');
+            const download = document.querySelector('downloadBtn');
+
             const c_width = 400;
             const c_height = 120;
 
@@ -75,6 +77,19 @@
             qrImg.src       = "/qrcode?d={{ url('/coupon/claim/'.$coupon->id.'/'.$coupon->code ) }}";
             headerImg.src   = "/storage/sys_images/header.png";
             
+
+            downloadBtn.onclick = () => {
+                const imageURL = canvas.toDataURL('image/png'); // For PNG format
+
+                const downloadLink = document.createElement('a');
+
+                downloadLink.href = imageURL;
+                downloadLink.download = 'Coupon - {{$coupon->id}}'; // Or .jpg
+
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            }
         </script>
     </body>
 </html
