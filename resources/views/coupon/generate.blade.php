@@ -65,7 +65,7 @@
 
                 let amount_text             = "Fuel Coupon ( P {{number_format($coupon->amount,2)}} )";
                 
-                ctx.fillText(amount_text, 10+90+10+75, 75 );
+                ctx.fillText(amount_text, 10+90+10+70, 75 );
             }
             
             qrImg.src       = "/qrcode?d={{ url('/coupon/claim/'.$coupon->id.'/'.$coupon->code ) }}";
