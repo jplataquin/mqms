@@ -431,8 +431,9 @@ class CouponController extends Controller
 
 
         return view('coupon/claim',[
-            'flag'      => $flag,
-            'coupon'    => $coupon
+            'flag'              => $flag,
+            'coupon'            => $coupon,
+            'coupon_details'    => $coupon_details
         ]);
     }
 
