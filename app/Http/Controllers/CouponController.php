@@ -480,6 +480,7 @@ class CouponController extends Controller
 
         $now = Carbon::now();
 
+        $coupon->status           = 'CLAI';
         $coupon->claimed_by_name  = $name;
         $coupon->claimed_at       = $now;
         $coupon->processed_by     = $user_id;
