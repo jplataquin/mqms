@@ -69,9 +69,33 @@
     @if($flag == 'invalid')
         <div class="text-center container">
             <h1 class="text-danger">Invalid Coupon</h1>
-            {{$correct_code}}
+           
             <br>
-            {{$coupon->code}}
+            
+
+            <table class="table w-100 mt-3">
+                <tr>
+                    <th>Code</th>
+                    <tr>
+                        {{$coupon->code}}
+                    </tr>
+                </tr>
+
+                <tr>
+                    <th>Correct Code</th>
+                    <tr>
+                         {{$correct_code}} 
+                    </tr>
+                </tr>
+
+                <tr>
+                    <th>Amount</th>
+                    <tr>
+                        {{$coupon->amount}}
+                    </tr>
+                </tr>
+
+            </table>
         </div>
     @endif
 
