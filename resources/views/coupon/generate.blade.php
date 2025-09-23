@@ -11,7 +11,7 @@
             
             const canvas = document.querySelector('#canvas');
             const c_width = 300;
-            const c_height = 120;
+            const c_height = 200;
 
             canvas.width    = c_width;
             canvas.height  = c_height;
