@@ -110,6 +110,8 @@
             
             editBtn.classList.add('d-none');
             deleteBtn.classList.add('d-none');
+            reviewLinkBtn.classList.add('d-none');
+            
             updateBtn.classList.remove('d-none');
             deleteBtn.classList.remove('d-none');
 
