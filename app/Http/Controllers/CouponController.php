@@ -124,7 +124,7 @@ class CouponController extends Controller
         $coupon = Coupon::findOrFail($id);
 
         if($coupon->status != 'APRV'){
-            return view('coupon/error_print',[
+            return view('coupon/error_generate',[
                 'coupon' => $coupon
             ]);
         }
