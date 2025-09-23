@@ -45,7 +45,7 @@
 
                 let amount_text             = "P {{number_format($coupon->amount,2)}}";
                 
-                ctx.fillText(id_text,110, 10+90+10+75 );
+                ctx.fillText(amount_text,110, 10+90+10+75 );
             }
             
             qrImg.src       = "/qrcode?d={{ url('/coupon/claim/'.$coupon->id.'/'.$coupon->code ) }}";
