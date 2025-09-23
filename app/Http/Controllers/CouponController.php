@@ -440,7 +440,7 @@ class CouponController extends Controller
 
     public function _claim(Request $request){
         
-        $amount = $request->input('name');
+        $name   = $request->input('name');
         $id     = (int) $request->input('id');
 
         
