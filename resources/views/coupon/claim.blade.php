@@ -37,7 +37,7 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label>Amount</label>
-                        <input type="text" id="amount" value="{{number_format($coupon->amount,2}}" class="form-control" disabled="true"/>
+                        <input type="text" id="amount" value="{{number_format($coupon->amount,2)}}" class="form-control" disabled="true"/>
                     </div>
                 </div>
 
