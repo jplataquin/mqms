@@ -85,7 +85,6 @@
                         @foreach($items as $item)
                             <tr>
                                 <td>
-                                    {{$item->material_item_id }}
                                     <input type="text" class="form-control" disabled="true" value="{{ $materialItemArr[ $item->material_item_id ]->brand }} {{ $materialItemArr[ $item->material_item_id ]->name }} {{ $materialItemArr[ $item->material_item_id]->specification_unit_packaging }}"/>
                                 </td>    
                                 <td>
@@ -99,9 +98,10 @@
                                 </td>
                             </tr>
 
-                            @if(isset($quantity_check[ $item->material_item_id ]))
+                            @if( isset( $quantity_check[ $item->material_item_id ]) )
+                            TEST
                             <tr>
-                                <td class="text-danger">
+                                <td class="text-danger" colspan="4">
                                     @foreach($quantity_check[$item->material_item_id] as $msg)
                                         <div>{{$msg}}</div>
                                     @endforeach
