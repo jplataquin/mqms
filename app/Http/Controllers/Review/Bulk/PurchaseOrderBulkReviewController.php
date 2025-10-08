@@ -122,7 +122,7 @@ class PurchaseOrderBulkReviewController extends Controller
                 return [
                     'po'        => $po,
                     'flag'      => false,
-                    'failed'    => ['Approved Material Request quantity is less than the PO item quantity']
+                    'failed'    => ['Approved Material Request quantity is less than the PO item quantity '.$remaining_quantity_arr[$po_item->material_item_id].' < '.$po_item->quantity]
                 ];
             }
         }
