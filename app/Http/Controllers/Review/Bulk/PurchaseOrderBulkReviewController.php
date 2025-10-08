@@ -76,8 +76,8 @@ class PurchaseOrderBulkReviewController extends Controller
 
         $component = $po->Component;
 
-        //Check if component is status active
-        if($component->status != 'ACTV'){
+        //Check if component is status approved
+        if($component->status != 'APRV'){
            
              return [
                 'po'        => $po,
