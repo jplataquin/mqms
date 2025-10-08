@@ -50,6 +50,7 @@
 
         let result      = reply.data.result;
         let projects    = reply.data.projects;
+        let suppliers   = reply.data.suppliers;
 
         for(let project_id in result){
 
@@ -78,7 +79,7 @@
 
                             t.div({class:'row'},()=>{
                                 t.span('Date Created: '+item.po.created_at);
-                                t.span('Supplier: '+item.po.supplier_id);
+                                t.span(supplier[item.po.supplier_id]);
                                 t.span('Payment Terms: '+item.po.supplier_id);
                             });
 
@@ -99,7 +100,7 @@
 
                              t.div({class:'row'},()=>{
                                 t.span('Date Created: '+item.po.created_at);
-                                t.span('Supplier: '+item.po.supplier_id);
+                                t.span(supplier[item.po.supplier_id]);
                                 t.span('Payment Terms: '+item.po.supplier_id);
                             });
 
