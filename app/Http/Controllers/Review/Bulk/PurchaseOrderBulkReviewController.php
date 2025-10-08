@@ -48,6 +48,7 @@ class PurchaseOrderBulkReviewController extends Controller
         $result         = [];
         $projects       = [];
         $suppliers      = [];
+        $payment_terms  = [];
 
         foreach($purchase_orders as $po){
 
@@ -60,6 +61,10 @@ class PurchaseOrderBulkReviewController extends Controller
                 $suppliers[$po->supplier_id] = Supplier::find($po->supplier_id);
             }
 
+            if(!isset($payment_terms[$po->payment_term_id])){
+                $payment_terms[$po->payment_term_id] = PaymentTerm::find($po->payment_term_id);
+            }
+
             $result[$po->project_id][] = $this->review_checklist($po);
         }
 
@@ -68,9 +73,10 @@ class PurchaseOrderBulkReviewController extends Controller
             'status' => 1,
             'message'=>'',
             'data'=> [
-                'projects'  => $projects,
-                'suppliers' => $suppliers,
-                'result'    => $result
+                'projects'          => $projects,
+                'payment_terms'     => $payment_terms,
+                'suppliers'         => $suppliers,
+                'result'            => $result
             ]
         ]);
     }

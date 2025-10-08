@@ -48,9 +48,10 @@
             return false;
         };
 
-        let result      = reply.data.result;
-        let projects    = reply.data.projects;
-        let suppliers   = reply.data.suppliers;
+        let result          = reply.data.result;
+        let projects        = reply.data.projects;
+        let suppliers       = reply.data.suppliers;
+        let payment_terms   = reply.data.payment_terms;
 
         for(let project_id in result){
 
@@ -80,7 +81,7 @@
                             t.div({class:'row'},()=>{
                                 t.span('Date Created: '+item.po.created_at);
                                 t.span(suppliers[item.po.supplier_id].name);
-                                t.span('Payment Terms: '+item.po.supplier_id);
+                                 t.span(payment_terms[item.po.payment_term_id].name);
                             });
 
                         });
@@ -101,7 +102,7 @@
                              t.div({class:'row'},()=>{
                                 t.span('Date Created: '+item.po.created_at);
                                 t.span(suppliers[item.po.supplier_id].name);
-                                t.span('Payment Terms: '+item.po.supplier_id);
+                                t.span(payment_terms[item.po.payment_term_id].name);
                             });
 
                         });
