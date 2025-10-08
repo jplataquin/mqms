@@ -79,7 +79,7 @@
 
                             t.div({class:'row'},()=>{
                                 t.span('Date Created: '+item.po.created_at);
-                                t.span(suppliers[item.po.supplier_id]);
+                                t.span(suppliers[item.po.supplier_id].name);
                                 t.span('Payment Terms: '+item.po.supplier_id);
                             });
 
@@ -100,7 +100,7 @@
 
                              t.div({class:'row'},()=>{
                                 t.span('Date Created: '+item.po.created_at);
-                                t.span(suppliers[item.po.supplier_id]);
+                                t.span(suppliers[item.po.supplier_id].name);
                                 t.span('Payment Terms: '+item.po.supplier_id);
                             });
 
