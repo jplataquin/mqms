@@ -431,7 +431,7 @@ class PurchaseOrderController extends Controller
             if($remaining_quantity_arr[$po_item->material_item_id] < $po_item->quantity && $po->status == 'PEND'){
          
 
-                $po_item_arr[$po_item->material_item_id][] = 'Available Material Request quantity ('.$remaining_quantity_arr.') is less than the PO item quantity ('.$po_item->quantity.')';
+                $po_item_arr[$po_item->material_item_id][] = 'Available Material Request quantity ('.$remaining_quantity_arr[$po_item->material_item_id].') is less than the PO item quantity ('.$po_item->quantity.')';
             }
         }
 
