@@ -45,17 +45,28 @@ class PurchaseOrderBulkReviewController extends Controller
 
         $purchase_orders = $purchase_orders->get();
         
-        $result = [];
+        $result         = [];
+        $project_id_arr = [];
 
         foreach($purchase_orders as $po){
 
-            $result[] = $this->review_checklist($po);
+            if(!isset($result[$po->project_id])){
+                $project_id_arr[]           = $po->project_id;
+                $result[$po->project_id]    = [];
+            }
+
+            $result[$po->project_id][] = $this->review_checklist($po);
         }
 
+        $projects = Projects::whereIn('id',$project_id_arr)->get();
+        
         return response()->json([
             'status' => 1,
             'message'=>'',
-            'data'=> $result
+            'data'=> [
+                'projects' => $projects,
+                'result' => $result
+            ]
         ]);
     }
 
