@@ -37,6 +37,11 @@
 
     const t = new Template();
 
+
+    function checkboxOnchangeController(){
+        console.log(this);
+    }
+
     window.util.$get('/api/review/bulk/purchase_order/list',{}).then(reply=>{
 
         
@@ -75,7 +80,10 @@
                                     t.txt(item.po.id);
                                 });
                                 t.div({class:'col-1 text-end'},()=>{
-                                    t.input({class:'po ok form-check-input', value:item.po.id, checked:true, type:'checkbox'});
+                                    let chbx = t.input({class:'po ok form-check-input',dataPayment_term_id:item.po.payment_term_id, dataAmount: item.po.total, value:item.po.id, checked:true, type:'checkbox'});
+                                    
+                                    chbx.onchange = checkboxOnchangeController;
+
                                 });
                             });
 
@@ -90,7 +98,9 @@
                                     t.txt(item.po.id);
                                 });
                                 t.div({class:'col-1 text-end'},()=>{
-                                    t.input({class:'po invalid form-check-input', value:item.po.id, type:'checkbox'});
+                                    let chbx = t.input({class:'po invalid form-check-input', dataPayment_term_id:item.po.payment_term_id, dataAmount: item.po.total, value:item.po.id, type:'checkbox'});
+                                    
+                                    chbx.onchange = checkboxOnchangeController;
                                 });
                             });
                         }
