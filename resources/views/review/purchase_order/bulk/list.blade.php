@@ -81,7 +81,7 @@
                                 t.txt(item.po.id);
                             });
                             t.div({class:'col-1 text-end'},()=>{
-                                t.input({class:'po form-control', value:item.po.id, checked:false, type:'checkbox'});
+                                t.input({class:'po form-check-input', value:item.po.id, checked:false, type:'checkbox'});
                             });
                         });
                     }
