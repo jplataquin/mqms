@@ -129,12 +129,22 @@
                                     chbx.onchange = checkboxOnchangeController;
                                 });
                             });
+
+                            t.div({class:'row'},()=>{
+                                item.failed.map(fail=>{
+                                    t.span({class:'text-danger text-sm'},fail);
+                                
+                                });
+                            })
                         }
 
                         t.div({class:'row'},()=>{
                             t.span(item.po.created_at);
+                            t.span(item.po.status);
                             t.span(suppliers[item.po.supplier_id].name);
                             t.span(payment_terms[item.po.payment_term_id].text);
+
+                            
                         });
 
                     });
