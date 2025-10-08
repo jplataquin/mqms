@@ -55,7 +55,10 @@ class PurchaseOrderBulkReviewController extends Controller
         return response()->json([
             'status' => 1,
             'message'=>'',
-            'data'=> $result
+            'data'=> [
+                'result' => $result,
+                'po' => $purchase_orders
+            ],
         ]);
     }
 
