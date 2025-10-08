@@ -292,8 +292,7 @@
 
                     let invalid = $q('.text-danger').items();
 
-                    console.log(invalid)
-                    if(invalid){
+                    if(invalid.length){
                         let inavlid_ans = await window.util.confirm('Invalid items detected, do you want to proceed with approval?');
 
                         if(!inavlid_ans){
