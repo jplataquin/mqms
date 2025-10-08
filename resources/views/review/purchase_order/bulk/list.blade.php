@@ -59,33 +59,33 @@
                 
                 t.h3( projects[project_id].name );
 
-                // items.map(item => {
+                items.map(item => {
 
-                //     if(item.flag){
+                    if(item.flag){
                     
-                //         t.div({class:'row'}=>{
-                //             t.div({class:'col-11'},()=>{
-                //                 t.span({class:'text-success'},'[ok]');
-                //                 t.txt(item.po.id);
-                //             });
-                //             t.div({class:'col-1 text-end'},()=>{
-                //                 t.input({class:'po form-control', value:item.po.id, checked:true, type:'checkbox'});
-                //             });
-                //         });
+                        t.div({class:'row'},()=>{
+                            t.div({class:'col-11'},()=>{
+                                t.span({class:'text-success'},'[ok]');
+                                t.txt(item.po.id);
+                            });
+                            t.div({class:'col-1 text-end'},()=>{
+                                t.input({class:'po form-control', value:item.po.id, checked:true, type:'checkbox'});
+                            });
+                        });
                     
-                //     }else{
+                    }else{
 
-                //          t.div({class:'row'}=>{
-                //             t.div({class:'col-11'},()=>{
-                //                 t.span({class:'text-danger'},'[invalid]');
-                //                 t.txt(item.po.id);
-                //             });
-                //             t.div({class:'col-1 text-end'},()=>{
-                //                 t.input({class:'po form-control', value:item.po.id, checked:false, type:'checkbox'});
-                //             });
-                //         });
-                //     }
-                // });//items
+                         t.div({class:'row'},()=>{
+                            t.div({class:'col-11'},()=>{
+                                t.span({class:'text-danger'},'[invalid]');
+                                t.txt(item.po.id);
+                            });
+                            t.div({class:'col-1 text-end'},()=>{
+                                t.input({class:'po form-control', value:item.po.id, checked:false, type:'checkbox'});
+                            });
+                        });
+                    }
+                });//items
             });
 
 
