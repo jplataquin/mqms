@@ -62,27 +62,47 @@
                 items.map(item => {
 
                     if(item.flag){
-                    
-                        t.div({class:'row border border-secondary mb-2'},()=>{
-                            t.div({class:'col-11'},()=>{
-                                t.span({class:'text-success'},'[✔] ');
-                                t.txt(item.po.id);
+                        
+                        t.div({class:'border border-secondary mb-2'},()=>{
+
+                        
+                            t.div({class:'row'},()=>{
+                                t.div({class:'col-11'},()=>{
+                                    t.span({class:'text-success'},'[✔] ');
+                                    t.txt(item.po.id);
+                                });
+                                t.div({class:'col-1 text-end'},()=>{
+                                    t.input({class:'po ok form-check-input', value:item.po.id, checked:true, type:'checkbox'});
+                                });
                             });
-                            t.div({class:'col-1 text-end'},()=>{
-                                t.input({class:'po ok form-check-input', value:item.po.id, checked:true, type:'checkbox'});
+
+                            t.div({class:'row'},()=>{
+                                t.span('Date Created '+item.po.created_at);
+                                t.span('Supplier '+item.po.supplier_id);
+                                t.span('Payment Terms '+item.po.supplier_id);
                             });
+
                         });
-                    
                     }else{
 
-                         t.div({class:'row border border-secondary mb-2'},()=>{
-                            t.div({class:'col-11'},()=>{
-                                t.span({class:'text-danger'},'[✖] ');
-                                t.txt(item.po.id);
+                        t.div({class:'border border-secondary mb-2'},()=>{
+
+                            t.div({class:'row'},()=>{
+                                t.div({class:'col-11'},()=>{
+                                    t.span({class:'text-danger'},'[✖] ');
+                                    t.txt(item.po.id);
+                                });
+                                t.div({class:'col-1 text-end'},()=>{
+                                    t.input({class:'po invalid form-check-input', value:item.po.id, type:'checkbox'});
+                                });
                             });
-                            t.div({class:'col-1 text-end'},()=>{
-                                t.input({class:'po invalid form-check-input', value:item.po.id, type:'checkbox'});
+
+                             t.div({class:'row'},()=>{
+                                t.span('Date Created '+item.po.created_at);
+                                t.span('Supplier '+item.po.supplier_id);
+                                t.span('Payment Terms '+item.po.supplier_id);
                             });
+
                         });
                     }
                 });//items
