@@ -46,14 +46,25 @@
 
         let checkboxes = $q('.po[type="checkbox"]:checked').items();
 
-        console.log(checkboxes);
+        let payment_term_summary = {};
+
+        checkboxes.map(c=>{
+            let payment_term_id = c.getAttribute('data-payment_term_id');
+
+            if(typeof payment_term_summary[payment_term_id] == 'undefined'){
+                payment_term_summary[payment_term_id] = parseFloat( c.getAttribute('data-amount') );
+            }
+
+            payment_term_summary[payment_term_id] =+ parseFloat( c.getAttribute('data-amount') );
+        });
+
+        console.log(payment_term_summary);
     }
 
     function checkboxOnchangeController(){
 
-        setTimeout(()=>{
-            updatePaymentTermsTotal();
-        },500);
+        updatePaymentTermsTotal();
+       
         
     }
 
@@ -95,7 +106,7 @@
                                     t.txt(item.po.id);
                                 });
                                 t.div({class:'col-1 text-end'},()=>{
-                                    let chbx = t.input({class:'po ok form-check-input',dataPayment_term_id:item.po.payment_term_id, dataAmount: item.po.total, value:item.po.id, checked:true, type:'checkbox'});
+                                    let chbx = t.input({class:'po ok form-check-input',dataPayment_term_id:item.po.payment_term_id, dataAmount: 1, value:item.po.id, checked:true, type:'checkbox'});
                                     
                                     chbx.onchange = checkboxOnchangeController;
 
@@ -113,7 +124,7 @@
                                     t.txt(item.po.id);
                                 });
                                 t.div({class:'col-1 text-end'},()=>{
-                                    let chbx = t.input({class:'po invalid form-check-input', dataPayment_term_id:item.po.payment_term_id, dataAmount: item.po.total, value:item.po.id, type:'checkbox'});
+                                    let chbx = t.input({class:'po invalid form-check-input', dataPayment_term_id:item.po.payment_term_id, dataAmount: 1, value:item.po.id, type:'checkbox'});
                                     
                                     chbx.onchange = checkboxOnchangeController;
                                 });
@@ -121,9 +132,9 @@
                         }
 
                         t.div({class:'row'},()=>{
-                            t.span('Date Created: '+item.po.created_at);
+                            t.span(item.po.created_at);
                             t.span(suppliers[item.po.supplier_id].name);
-                                t.span(payment_terms[item.po.payment_term_id].text);
+                            t.span(payment_terms[item.po.payment_term_id].text);
                         });
 
                     });
