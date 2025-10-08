@@ -118,7 +118,7 @@ class PurchaseOrderBulkReviewController extends Controller
                 ];
             }
 
-            if($remaining_quantity_arr[$po_item->material_item_id] < $po_item->quantity){
+            if($remaining_quantity_arr[$po_item->material_item_id] < $po_item->quantity && $po->status == 'PEND'){
                 return [
                     'po'        => $po,
                     'flag'      => false,
