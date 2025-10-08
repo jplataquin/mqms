@@ -34,7 +34,7 @@ class PurchaseOrderBulkReviewController extends Controller
         $projects = Project::orderBy('name','ASC')->where('status','=','ACTV')->get();
 
         
-        return view('review/purchase_orders/bulk/list',[
+        return view('review/purchase_order/bulk/list',[
             'projects' => $projects
         ]);
     }
