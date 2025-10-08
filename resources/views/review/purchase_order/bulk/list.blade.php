@@ -55,7 +55,7 @@
                 payment_term_summary[payment_term_id] = parseFloat( c.getAttribute('data-amount') );
             }
 
-            payment_term_summary[payment_term_id] =+ parseFloat( c.getAttribute('data-amount') );
+            payment_term_summary[payment_term_id] += parseFloat( c.getAttribute('data-amount') );
         });
 
         console.log(payment_term_summary);
