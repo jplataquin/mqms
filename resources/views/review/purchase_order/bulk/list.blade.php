@@ -65,7 +65,7 @@
                     
                         t.div({class:'row border border-secondary mb-2'},()=>{
                             t.div({class:'col-11'},()=>{
-                                t.span({class:'text-success'},'[✔]');
+                                t.span({class:'text-success'},'[✔] ');
                                 t.txt(item.po.id);
                             });
                             t.div({class:'col-1 text-end'},()=>{
@@ -77,7 +77,7 @@
 
                          t.div({class:'row border border-secondary mb-2'},()=>{
                             t.div({class:'col-11'},()=>{
-                                t.span({class:'text-danger'},'[✖]');
+                                t.span({class:'text-danger'},'[✖] ');
                                 t.txt(item.po.id);
                             });
                             t.div({class:'col-1 text-end'},()=>{
