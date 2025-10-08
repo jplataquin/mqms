@@ -417,20 +417,20 @@ class PurchaseOrderController extends Controller
 
         foreach($po_items as $po_item){
 
-            if(!isset($po_item_arr[$po_item->id])){
-                $po_item_arr[$po_item->id] = [];
+            if(!isset($po_item_arr[$po_item->material_item_id])){
+                $po_item_arr[$po_item->material_item_id] = [];
             }
 
             if(!isset($remaining_quantity_arr[$po_item->material_item_id])){
 
-                $po_item_arr[$po_item->id][] = 'PO Material Item not found in Material Request';
+                $po_item_arr[$po_item->material_item_id][] = 'PO Material Item not found in Material Request';
                 continue;
             }
 
             if($remaining_quantity_arr[$po_item->material_item_id] < $po_item->quantity && $po->status == 'PEND'){
          
 
-                $po_item_arr[$po_item->id][] = 'Approved Material Request quantity is less than the PO item quantity '.$remaining_quantity_arr[$po_item->material_item_id].' < '.$po_item->quantity;
+                $po_item_arr[$po_item->material_item_id][] = 'Approved Material Request quantity is less than the PO item quantity '.$remaining_quantity_arr[$po_item->material_item_id].' < '.$po_item->quantity;
             }
         }
 
