@@ -63,7 +63,7 @@
 
                     if(item.flag){
                         
-                        t.div({class:'border border-secondary mb-2'},()=>{
+                        t.div({class:'border border-secondary mb-2 p-3'},()=>{
 
                         
                             t.div({class:'row'},()=>{
@@ -77,15 +77,15 @@
                             });
 
                             t.div({class:'row'},()=>{
-                                t.span('Date Created '+item.po.created_at);
-                                t.span('Supplier '+item.po.supplier_id);
-                                t.span('Payment Terms '+item.po.supplier_id);
+                                t.span('Date Created: '+item.po.created_at);
+                                t.span('Supplier: '+item.po.supplier_id);
+                                t.span('Payment Terms: '+item.po.supplier_id);
                             });
 
                         });
                     }else{
 
-                        t.div({class:'border border-secondary mb-2'},()=>{
+                        t.div({class:'border border-secondary mb-2 p-3'},()=>{
 
                             t.div({class:'row'},()=>{
                                 t.div({class:'col-11'},()=>{
@@ -98,9 +98,9 @@
                             });
 
                              t.div({class:'row'},()=>{
-                                t.span('Date Created '+item.po.created_at);
-                                t.span('Supplier '+item.po.supplier_id);
-                                t.span('Payment Terms '+item.po.supplier_id);
+                                t.span('Date Created: '+item.po.created_at);
+                                t.span('Supplier: '+item.po.supplier_id);
+                                t.span('Payment Terms: '+item.po.supplier_id);
                             });
 
                         });
