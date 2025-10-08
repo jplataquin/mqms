@@ -55,10 +55,7 @@ class PurchaseOrderBulkReviewController extends Controller
         return response()->json([
             'status' => 1,
             'message'=>'',
-            'data'=> [
-                'result' => $result,
-                'po' => $purchase_orders
-            ],
+            'data'=> $result
         ]);
     }
 
@@ -84,7 +81,7 @@ class PurchaseOrderBulkReviewController extends Controller
            
              return [
                 'po'        => $po,
-                'flag'      => $flag,
+                'flag'      => false,
                 'failed'    => ['Component status is not active']
             ];
         }
