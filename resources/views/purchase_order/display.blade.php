@@ -97,6 +97,17 @@
                                     <input type="text" class="form-control text-end" disabled="true" value="{{ number_format( $item->quantity * $item->price ) }}"/>
                                 </td>
                             </tr>
+
+                            @if(isset($quantity_check[$item->id]))
+                            <tr>
+                                <td class="text-danger">
+                                    @foreach($quantity_check[$item->id] as $msg)
+                                        <div>{{$msg}}</div>
+                                    @endforeach
+                                </td>
+                            </tr>
+                            @endif
+
                             @php $sub_total = $sub_total + ($item->quantity * $item->price); @endphp
                         @endforeach
                     <!-- </div> --> 
