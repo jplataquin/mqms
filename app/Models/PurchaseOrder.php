@@ -36,7 +36,7 @@ class PurchaseOrder extends Model
         return $this->belongsTo(User::class,'created_by');
     }
 
-    public function MaterialQuantityReqest(): BelongsTo
+    public function MaterialQuantityRequest(): BelongsTo
     {
         return $this->belongsTo(MaterialQuantityRequest::class);
     }
