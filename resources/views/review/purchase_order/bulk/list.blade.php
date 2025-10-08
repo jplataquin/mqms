@@ -50,7 +50,11 @@
     }
 
     function checkboxOnchangeController(){
-        updatePaymentTermsTotal();
+
+        setTimeout(()=>{
+            updatePaymentTermsTotal();
+        },500);
+        
     }
 
     window.util.$get('/api/review/bulk/purchase_order/list',{}).then(reply=>{
@@ -125,6 +129,8 @@
                     });
                     
                 });//items
+
+
             });
 
 
