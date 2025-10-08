@@ -38,8 +38,19 @@
     const t = new Template();
 
 
+    function updateTotal(){
+
+    }
+
+    function updatePaymentTermsTotal(){
+
+        let checkboxes = $q('.po[checked]').items();
+
+        console.log(checkboxes);
+    }
+
     function checkboxOnchangeController(){
-        console.log(this);
+        updatePaymentTermsTotal();
     }
 
     window.util.$get('/api/review/bulk/purchase_order/list',{}).then(reply=>{
