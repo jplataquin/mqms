@@ -91,6 +91,17 @@
                                     <input type="text" class="form-control text-end" disabled="true" value="{{ number_format( $item->quantity * $item->price ) }}"/>
                                 </td>
                             </tr>
+
+                            @if( isset( $check_quantity[ $item->material_item_id ]) )
+                                <tr>
+                                    <td class="text-danger" colspan="4">
+                                        @foreach($check_quantity[$item->material_item_id] as $msg)
+                                            <div>{{$msg}}</div>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                            @endif
+
                             @php $sub_total = $sub_total + ($item->quantity * $item->price); @endphp
                         @endforeach
                     <!-- </div> --> 
@@ -276,33 +287,42 @@
                     });
             }
 
-            approveBtn.onclick = (e)=>{
+            approveBtn.onclick = async (e)=>{
                     e.preventDefault();
 
-                    window.util.confirm('Are you sure you want to APPROVE this PO?',(answer)=>{
+                    let invalid = $q('.text-danger').items();
+
+                    if(invalid){
+                        let inavlid_ans = await window.util.confirm('Invalid items detected, do you want to proceed with approval?');
+
+                        if(inavlid_ans){
+                            return false;
+                        }
+                    }
+
+                    let confirm_ans = await window.util.confirm('Are you sure you want to APPROVE this PO?');
                         
-                        if(!answer){
+                    if(!confirm_ans){
+                        return false;
+                    }
+
+                    window.util.blockUI();
+
+                    window.util.$post('/api/review/purchase_order/approve',{
+                        id: '{{$purchase_order->id}}'
+                    }).then(reply=>{
+
+                        window.util.unblockUI();
+
+                        if(reply.status <= 0){
+
+                            window.util.showMsg(reply);
                             return false;
                         }
 
-                        window.util.blockUI();
-
-                        window.util.$post('/api/review/purchase_order/approve',{
-                            id: '{{$purchase_order->id}}'
-                        }).then(reply=>{
-
-                            window.util.unblockUI();
-
-                            if(reply.status <= 0){
-
-                                window.util.showMsg(reply);
-                                return false;
-                            }
-
-                            window.util.navTo("/review/purchase_orders");
-                        });
+                        window.util.navTo("/review/purchase_orders");
                     });
-
+                    
             }
         @endif
     </script>
