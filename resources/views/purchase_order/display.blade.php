@@ -98,14 +98,14 @@
                                 </td>
                             </tr>
 
-                            @if( isset( $check_quantity[ $item->material_item_id ]) )
-                            <tr>
-                                <td class="text-danger" colspan="4">
-                                    @foreach($check_quantity[$item->material_item_id] as $msg)
-                                        <div>{{$msg}}</div>
-                                    @endforeach
-                                </td>
-                            </tr>
+                            @if( $check_quantity[ $item->material_item_id ] )
+                                <tr>
+                                    <td class="text-danger" colspan="4">
+                                        @foreach($check_quantity[$item->material_item_id] as $msg)
+                                            <div>{{$msg}}</div>
+                                        @endforeach
+                                    </td>
+                                </tr>
                             @endif
 
                             @php $sub_total = $sub_total + ($item->quantity * $item->price); @endphp
