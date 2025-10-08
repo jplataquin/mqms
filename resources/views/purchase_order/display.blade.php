@@ -98,11 +98,10 @@
                                 </td>
                             </tr>
 
-                            @if( isset( $quantity_check[ $item->material_item_id ]) )
-                            TEST
+                            @if( isset( $check_quantity[ $item->material_item_id ]) )
                             <tr>
                                 <td class="text-danger" colspan="4">
-                                    @foreach($quantity_check[$item->material_item_id] as $msg)
+                                    @foreach($check_quantity[$item->material_item_id] as $msg)
                                         <div>{{$msg}}</div>
                                     @endforeach
                                 </td>

@@ -351,7 +351,6 @@ class PurchaseOrderController extends Controller
 
         $check_quantity = $this->check_for_over_quantity($purchaseOrder);
 
-        print_r($check_quantity);
         
         return view('purchase_order/display',[
             'check_quantity'                => $check_quantity,
