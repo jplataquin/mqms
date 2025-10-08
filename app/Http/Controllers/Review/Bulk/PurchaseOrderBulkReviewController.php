@@ -41,7 +41,7 @@ class PurchaseOrderBulkReviewController extends Controller
 
     public function _list(Request $request){
 
-        $purchase_orders = PurchaseOrder::where('status','PEND')->orWhere('status','REVO');
+        $purchase_orders = PurchaseOrder::where('status','PEND')->orWhere('status','REVO')->orderBy('id','ASC');
 
         $purchase_orders = $purchase_orders->get();
         
