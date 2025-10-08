@@ -101,7 +101,7 @@
                             @if(isset($quantity_check[ $item->material_item_id ]))
                             <tr>
                                 <td class="text-danger">
-                                    @foreach($quantity_check[$item->id] as $msg)
+                                    @foreach($quantity_check[$item->material_item_id] as $msg)
                                         <div>{{$msg}}</div>
                                     @endforeach
                                 </td>
