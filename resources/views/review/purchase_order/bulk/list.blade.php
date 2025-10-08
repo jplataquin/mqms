@@ -44,7 +44,7 @@
 
     function updatePaymentTermsTotal(){
 
-        let checkboxes = $q('.po[checked]').items();
+        let checkboxes = $q('.po[type="checkbox"]:checked').items();
 
         console.log(checkboxes);
     }
