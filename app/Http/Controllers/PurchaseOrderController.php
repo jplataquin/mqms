@@ -349,7 +349,7 @@ class PurchaseOrderController extends Controller
             $po_details["Rejected By"] = $purchaseOrder->RejectedByUser()->name.' '.$purchaseOrder->rejected_at;
         }
 
-        $check_quantity = check_for_over_quantity($purchaseOrder);
+        $check_quantity = $this->check_for_over_quantity($purchaseOrder);
 
         return view('purchase_order/display',[
             'check_quantity'                => $check_quantity,
