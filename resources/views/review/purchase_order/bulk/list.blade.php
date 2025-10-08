@@ -63,10 +63,11 @@
 
                 items.map(item => {
 
-                    if(item.flag){
-                        
-                        t.div({class:'border border-secondary mb-2 p-3'},()=>{
+                    t.div({class:'border border-secondary mb-2 p-3'},()=>{
 
+                        if(item.flag){
+                        
+                        
                         
                             t.div({class:'row'},()=>{
                                 t.div({class:'col-11'},()=>{
@@ -78,16 +79,10 @@
                                 });
                             });
 
-                            t.div({class:'row'},()=>{
-                                t.span('Date Created: '+item.po.created_at);
-                                t.span(suppliers[item.po.supplier_id].name);
-                                 t.span(payment_terms[item.po.payment_term_id].name);
-                            });
 
-                        });
-                    }else{
+                    
+                        }else{
 
-                        t.div({class:'border border-secondary mb-2 p-3'},()=>{
 
                             t.div({class:'row'},()=>{
                                 t.div({class:'col-11'},()=>{
@@ -98,15 +93,16 @@
                                     t.input({class:'po invalid form-check-input', value:item.po.id, type:'checkbox'});
                                 });
                             });
+                        }
 
-                             t.div({class:'row'},()=>{
-                                t.span('Date Created: '+item.po.created_at);
-                                t.span(suppliers[item.po.supplier_id].name);
-                                t.span(payment_terms[item.po.payment_term_id].name);
-                            });
-
+                        t.div({class:'row'},()=>{
+                            t.span('Date Created: '+item.po.created_at);
+                            t.span(suppliers[item.po.supplier_id].name);
+                                t.span(payment_terms[item.po.payment_term_id].text);
                         });
-                    }
+
+                    });
+                    
                 });//items
             });
 
