@@ -57,7 +57,7 @@ class PurchaseOrderBulkReviewController extends Controller
             }
 
             if(!isset($suppliers[$po->supplier_id])){
-                $suppliers[$po->supplier_id] = Supplier::find($po->suppplier_id);
+                $suppliers[$po->supplier_id] = Supplier::find($po->supplier_id);
             }
 
             $result[$po->project_id][] = $this->review_checklist($po);
