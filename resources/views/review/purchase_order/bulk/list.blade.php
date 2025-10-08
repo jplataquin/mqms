@@ -63,7 +63,7 @@
 
                     if(item.flag){
                     
-                        t.div({class:'row border-secondary mb-3'},()=>{
+                        t.div({class:'row border border-secondary mb-3'},()=>{
                             t.div({class:'col-11'},()=>{
                                 t.span({class:'text-success'},'[✔]');
                                 t.txt(item.po.id);
@@ -75,7 +75,7 @@
                     
                     }else{
 
-                         t.div({class:'row border-secondary mb-3'},()=>{
+                         t.div({class:'row border border-secondary mb-3'},()=>{
                             t.div({class:'col-11'},()=>{
                                 t.span({class:'text-danger'},'[✖]');
                                 t.txt(item.po.id);
