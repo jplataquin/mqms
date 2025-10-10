@@ -26,14 +26,16 @@
 
     
   
-    <div id="result_container"></div>   
+    <div id="result_container"></div>
+    <div id="payment_terms_summary"></div>
  
 </div>
 <script type="module">
     import {$q,Template,$el} from '/adarna.js';
 
 
-    const result_container = $q('#result_container').first();
+    const result_container          = $q('#result_container').first();
+    const payment_terms_summary     = $q('#payment_terms_summary').first();
 
     const t = new Template();
 
@@ -44,9 +46,11 @@
 
     function updatePaymentTermsTotal(payment_terms){
 
+        const t = new Template();
+
         let checkboxes = $q('.po[type="checkbox"]:checked').items();
 
-        let payment_term_summary = {};
+        let summary = {};
 
         checkboxes.map(c=>{
             let payment_term_id = c.getAttribute('data-payment_term_id');
@@ -55,9 +59,20 @@
                 payment_term_summary[payment_term_id] = parseFloat( c.getAttribute('data-amount') );
             }
 
-            payment_term_summary[payment_term_id] += parseFloat( c.getAttribute('data-amount') );
+            summary[payment_term_id] += parseFloat( c.getAttribute('data-amount') );
         });
 
+        
+        for(let id in summary){
+
+            const summary_el = t.div({},()=>{
+                t.h3(payment_terms[id]);
+                t.h4('P '+summary[id]);
+            });
+
+            payment_terms_summary.appendChild(summery_el);
+        }
+        
         console.log(payment_terms);
         console.log(payment_term_summary);
     }
@@ -162,7 +177,10 @@
             result_container.appendChild(project_div);
         }//For
 
-        updatePaymentTermsTotal(payment_terms);
+        setTimeout(()=>{
+            updatePaymentTermsTotal(payment_terms);
+        },500);
+        
 
     });//End http call
 </script>
