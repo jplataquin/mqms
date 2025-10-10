@@ -132,7 +132,8 @@ class PurchaseOrderBulkReviewController extends Controller
         $total = 0;
 
         
-        $flag =true;
+        $flag   = true;
+        $failed = [];
 
         foreach($po_items as $po_item){
 
