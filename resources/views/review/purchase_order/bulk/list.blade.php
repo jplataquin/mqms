@@ -70,7 +70,7 @@
                 t.h4('P '+summary[id]);
             });
 
-            payment_terms_summary.appendChild(summery_el);
+            payment_terms_summary.appendChild(summary_el);
         }
 
         console.log(payment_terms);
