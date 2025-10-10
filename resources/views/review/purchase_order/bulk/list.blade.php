@@ -106,7 +106,7 @@
 
             let items = result[project_id];
 
-            const project_div = t.div({class:'mb-3'},()=>{
+            const project_div = t.div({class:'mb-5'},()=>{
                 
                 t.h5( projects[project_id].name );
 
