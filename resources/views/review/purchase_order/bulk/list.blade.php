@@ -108,7 +108,7 @@
 
             const project_div = t.div({class:'mb-3'},()=>{
                 
-                t.h3( projects[project_id].name );
+                t.h6( projects[project_id].name );
 
                 items.map(item => {
 
