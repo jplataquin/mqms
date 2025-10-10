@@ -136,7 +136,7 @@
                             t.div({class:'row'},()=>{
                                 t.div({class:'col-11'},()=>{
                                     t.span({class:'text-danger'},'[✖] ');
-                                    t.txt(String(item.po.id).padStart(6,0) +' (P '+window.util.numberFormat( parseFloat( item.total ) ,2)+')');
+                                    t.txt(String(item.po.id).padStart(6,0) +' 'item.total);
                                 });
                                 t.div({class:'col-1 text-end'},()=>{
                                     let chbx = t.input({class:'po invalid form-check-input', dataPayment_term_id:item.po.payment_term_id, dataAmount: item.total, value:item.po.id, type:'checkbox'});
