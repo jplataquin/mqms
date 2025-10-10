@@ -129,6 +129,8 @@ class PurchaseOrderBulkReviewController extends Controller
 
         $po_items = $po->Items;
 
+        $total = 0;
+
         foreach($po_items as $po_item){
 
             if(!isset($remaining_quantity_arr[$po_item->material_item_id])){
@@ -147,12 +149,22 @@ class PurchaseOrderBulkReviewController extends Controller
                     'failed'    => ['Approved Material Request quantity is less than the PO item quantity '.$remaining_quantity_arr[$po_item->material_item_id].' < '.$po_item->quantity]
                 ];
             }
+
+
+            $total =  $total + ($po_item->quantity * $po_item->price); 
+        }
+
+        $extras = json_decode($po->extras);
+
+        foreach($extras as $extra){
+           $total = $total + (float) $extra['value'];
         }
 
         return [
-            'po'        => $po,
-            'flag'      => true,
-            'failed'    => ['Approved Material Request quantity is less than the PO item quantity']    
+            'po'            => $po,
+            'total'         => $total,
+            'flag'          => true,
+            'failed'        => ['Approved Material Request quantity is less than the PO item quantity']    
         ];
 
 

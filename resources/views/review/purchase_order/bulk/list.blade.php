@@ -120,7 +120,7 @@
                                     t.txt(item.po.id);
                                 });
                                 t.div({class:'col-1 text-end'},()=>{
-                                    let chbx = t.input({class:'po ok form-check-input',dataPayment_term_id:item.po.payment_term_id, dataAmount: 1, value:item.po.id, checked:true, type:'checkbox'});
+                                    let chbx = t.input({class:'po ok form-check-input',dataPayment_term_id:item.po.payment_term_id, dataAmount: item.total, value:item.po.id, checked:true, type:'checkbox'});
                                     
                                     chbx.onchange = ()=>{
                                         checkboxOnchangeController(payment_terms);
@@ -139,7 +139,7 @@
                                     t.txt(item.po.id);
                                 });
                                 t.div({class:'col-1 text-end'},()=>{
-                                    let chbx = t.input({class:'po invalid form-check-input', dataPayment_term_id:item.po.payment_term_id, dataAmount: 1, value:item.po.id, type:'checkbox'});
+                                    let chbx = t.input({class:'po invalid form-check-input', dataPayment_term_id:item.po.payment_term_id, dataAmount: item.total, value:item.po.id, type:'checkbox'});
                                     
                                     chbx.onchange = ()=>{
                                         checkboxOnchangeController(payment_terms);
