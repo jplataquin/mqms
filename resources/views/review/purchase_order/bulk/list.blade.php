@@ -27,7 +27,7 @@
     
   
     <div id="result_container"></div>
-    <div id="payment_terms_summary" class="d-flex flex-row "></div>
+    <div id="payment_terms_summary" class="d-flex justify-content-between"></div>
  
 </div>
 <script type="module">
@@ -65,7 +65,7 @@
         
         for(let id in summary){
 
-            const summary_el = t.div({class:'d-flex justify-content-center border border-secondary'},()=>{
+            const summary_el = t.div({class:'text-center border border-secondary'},()=>{
                 t.h3(payment_terms[id].text);
                 t.h4('P '+summary[id]);
             });
