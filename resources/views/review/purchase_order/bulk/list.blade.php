@@ -67,7 +67,7 @@
 
             const summary_el = t.div({class:'text-center border border-secondary p-3'},()=>{
                 t.h3(payment_terms[id].text);
-                t.h4('P '+summary[id]);
+                t.h4('P '+window.util.numberFormat(summary[id],2));
             });
 
             payment_terms_summary.appendChild(summary_el);
