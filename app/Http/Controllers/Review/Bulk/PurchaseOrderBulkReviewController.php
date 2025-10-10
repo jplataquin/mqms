@@ -140,6 +140,7 @@ class PurchaseOrderBulkReviewController extends Controller
 
         foreach($po_items as $po_item){
 
+        
             $total =  $total + ($po_item->quantity * $po_item->price); 
         
 
@@ -164,6 +165,7 @@ class PurchaseOrderBulkReviewController extends Controller
            $total = $total + (float) $extra['value'];
         }
 
+        $po->created_at = $po->created_at->format('M d, Y H:i');
         return [
             'po'            => $po,
             'total'         => $total,
