@@ -117,7 +117,7 @@
                             t.div({class:'row'},()=>{
                                 t.div({class:'col-11'},()=>{
                                     t.span({class:'text-success'},'[✔] ');
-                                    t.txt(item.po.id);
+                                    t.txt('PO#'+String(item.po.id).padStart(6,0) +' (P '+window.util.numberFormat(item.total,2)+')');
                                 });
                                 t.div({class:'col-1 text-end'},()=>{
                                     let chbx = t.input({class:'po ok form-check-input',dataPayment_term_id:item.po.payment_term_id, dataAmount: item.total, value:item.po.id, checked:true, type:'checkbox'});
@@ -136,7 +136,7 @@
                             t.div({class:'row'},()=>{
                                 t.div({class:'col-11'},()=>{
                                     t.span({class:'text-danger'},'[✖] ');
-                                    t.txt(item.po.id);
+                                    t.txt('PO#'+String(item.po.id).padStart(6,0) +' (P '+window.util.numberFormat(item.total,2)+')');
                                 });
                                 t.div({class:'col-1 text-end'},()=>{
                                     let chbx = t.input({class:'po invalid form-check-input', dataPayment_term_id:item.po.payment_term_id, dataAmount: item.total, value:item.po.id, type:'checkbox'});
