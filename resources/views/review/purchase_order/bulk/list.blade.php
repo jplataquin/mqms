@@ -130,7 +130,7 @@
 
             const project_div = t.div({class:'mb-5'},()=>{
                 
-                t.div({class:'d-flex justify-content-evenly'},()=>{
+                t.div({class:'d-flex justify-content-center'},()=>{
                     t.h5( projects[project_id].name );
 
                     let chbx_project = t.input({class:'form-check-input', type:'checkbox'});
@@ -145,6 +145,9 @@
                                 item.checked = false;
                             }
                         });
+
+
+                        updatePaymentTermsTotal(payment_terms);
                     }
                 });
                 
