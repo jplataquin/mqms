@@ -130,7 +130,7 @@
 
             const project_div = t.div({class:'mb-5'},()=>{
                 
-                t.div({class:'d-flex justify-content-center'},()=>{
+                t.div({class:'d-flex justify-content-between'},()=>{
                     t.h5( projects[project_id].name );
 
                     let chbx_project = t.input({class:'form-check-input', type:'checkbox'});
