@@ -31,7 +31,7 @@
     <hr>
     
     <h1 class="mb-3">Payment Summary</h1>
-    <div id="payment_terms_summary" class="d-flex flex-wrap justify-content-evenly"></div>
+    <div id="payment_terms_summary" class="d-flex flex-wrap jalign-content-center"></div>
     
 </div>
 <script type="module">
@@ -73,7 +73,7 @@
 
         for(let id in summary){
 
-            const summary_el = t.div({class:'text-center border border-secondary p-3'},()=>{
+            const summary_el = t.div({class:'text-center border border-secondary p-3 m-3'},()=>{
                 t.h3(payment_terms[id].text);
                 t.h4('P '+window.util.numberFormat(summary[id],2));
             });
@@ -83,7 +83,7 @@
             payment_terms_summary.appendChild(summary_el);
         }
 
-        payment_terms_summary.appendChild(t.div({class:'text-center p-3 border border-warning'},()=>{
+        payment_terms_summary.appendChild(t.div({class:'text-center p-3 border border-warning m-3'},()=>{
 
             t.h3('Grand Total');
             t.h4('P '+window.util.numberFormat(grand_total,2));
