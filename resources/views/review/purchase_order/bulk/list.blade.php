@@ -73,8 +73,6 @@
             payment_terms_summary.appendChild(summary_el);
         }
 
-        console.log(payment_terms);
-        console.log(payment_term_summary);
     }
 
     function checkboxOnchangeController(payment_terms){
