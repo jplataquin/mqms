@@ -42,7 +42,7 @@
 
     }
 
-    function updatePaymentTermsTotal(){
+    function updatePaymentTermsTotal(payment_terms){
 
         let checkboxes = $q('.po[type="checkbox"]:checked').items();
 
@@ -58,12 +58,13 @@
             payment_term_summary[payment_term_id] += parseFloat( c.getAttribute('data-amount') );
         });
 
+        console.log(payment_terms);
         console.log(payment_term_summary);
     }
 
-    function checkboxOnchangeController(){
+    function checkboxOnchangeController(payment_terms){
 
-        updatePaymentTermsTotal();
+        updatePaymentTermsTotal(payment_terms);
        
         
     }
@@ -108,8 +109,9 @@
                                 t.div({class:'col-1 text-end'},()=>{
                                     let chbx = t.input({class:'po ok form-check-input',dataPayment_term_id:item.po.payment_term_id, dataAmount: 1, value:item.po.id, checked:true, type:'checkbox'});
                                     
-                                    chbx.onchange = checkboxOnchangeController;
-
+                                    chbx.onchange = ()=>{
+                                        checkboxOnchangeController(payment_terms);
+                                    }
                                 });
                             });
 
@@ -126,7 +128,9 @@
                                 t.div({class:'col-1 text-end'},()=>{
                                     let chbx = t.input({class:'po invalid form-check-input', dataPayment_term_id:item.po.payment_term_id, dataAmount: 1, value:item.po.id, type:'checkbox'});
                                     
-                                    chbx.onchange = checkboxOnchangeController;
+                                    chbx.onchange = ()=>{
+                                        checkboxOnchangeController(payment_terms);
+                                    }
                                 });
                             });
 
@@ -156,7 +160,9 @@
 
 
             result_container.appendChild(project_div);
-        }
+        }//For
+
+        updatePaymentTermsTotal(payment_terms);
 
     });//End http call
 </script>
