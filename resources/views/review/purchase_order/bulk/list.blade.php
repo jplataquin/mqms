@@ -31,7 +31,7 @@
     <hr>
     
     <h1 class="mb-3">Payment Summary</h1>
-    <div id="payment_terms_summary" class="d-flex justify-content-evenly"></div>
+    <div id="payment_terms_summary" class="d-flex flex-wrap justify-content-evenly"></div>
     
 </div>
 <script type="module">
@@ -51,7 +51,7 @@
     function updatePaymentTermsTotal(payment_terms){
 
         payment_terms_summary.innerHTML = '';
-        
+
         const t = new Template();
 
         let checkboxes = $q('.po[type="checkbox"]:checked').items();
