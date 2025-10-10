@@ -25,13 +25,14 @@
     <hr>
 
     
-  
+    <h1>Items</h1>
     <div id="result_container"></div>
+    
     <hr>
+    
     <h1>Payment Term Summary</h1>
-    <div class="p-5">
-        <div id="payment_terms_summary" class="d-flex justify-content-evenly"></div>
-    </div>
+    <div id="payment_terms_summary" class="d-flex justify-content-evenly"></div>
+    
 </div>
 <script type="module">
     import {$q,Template,$el} from '/adarna.js';
