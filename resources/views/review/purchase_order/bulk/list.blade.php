@@ -66,7 +66,7 @@
         for(let id in summary){
 
             const summary_el = t.div({},()=>{
-                t.h3(payment_terms[id]);
+                t.h3(payment_terms[id].text);
                 t.h4('P '+summary[id]);
             });
 
