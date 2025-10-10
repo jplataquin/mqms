@@ -30,7 +30,7 @@
     
     <hr>
     
-    <h1 class="mb-3">Payment Term Summary</h1>
+    <h1 class="mb-3">Payment Summary</h1>
     <div id="payment_terms_summary" class="d-flex justify-content-evenly"></div>
     
 </div>
@@ -67,6 +67,8 @@
         });
 
         
+        let grand_total = 0;
+
         for(let id in summary){
 
             const summary_el = t.div({class:'text-center border border-secondary p-3'},()=>{
@@ -74,8 +76,16 @@
                 t.h4('P '+window.util.numberFormat(summary[id],2));
             });
 
+            grand_total += summary[id];
+
             payment_terms_summary.appendChild(summary_el);
         }
+
+        payment_terms_summary.appendChild(t.div({class:'text-center p-3 border border-warning'},()=>{
+
+            t.h3('Grand Total');
+            t.h4('P '+window.util.numberFormat(grand_total,2));
+        }));
 
     }
 
