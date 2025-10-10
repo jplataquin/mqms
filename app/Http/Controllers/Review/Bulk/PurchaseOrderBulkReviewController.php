@@ -165,10 +165,10 @@ class PurchaseOrderBulkReviewController extends Controller
            $total = $total + (float) $extra['value'];
         }
 
-        $po->created_at = $po->created_at->format('M d, Y H:i');
-        
+
         return [
             'po'            => $po,
+            'created_at'    => $po->created_at->format('M d, Y H:i'),
             'total'         => $total,
             'flag'          => $flag,
             'failed'        => $failed    
