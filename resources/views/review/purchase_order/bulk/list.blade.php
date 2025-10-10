@@ -50,6 +50,8 @@
 
     function updatePaymentTermsTotal(payment_terms){
 
+        payment_terms_summary.innerHTML = '';
+        
         const t = new Template();
 
         let checkboxes = $q('.po[type="checkbox"]:checked').items();
