@@ -106,6 +106,8 @@
         
     }
 
+    window.util.blockUI();
+
     window.util.$get('/api/review/bulk/purchase_order/list',{}).then(reply=>{
 
         
@@ -128,7 +130,24 @@
 
             const project_div = t.div({class:'mb-5'},()=>{
                 
-                t.h5( projects[project_id].name );
+                t.div({class:'d-flex justify-content-evenly'},()=>{
+                    t.h5( projects[project_id].name );
+
+                    let chbx_project = t.input({class:'form-check-input', type:'checkbox'});
+                    
+                    chbx_project.onchange = ()=>{
+                       
+                        $q('.project_'+project_id).items().map(item=>{
+
+                            if(chbx_project.checked){
+                                item.checked = true;
+                            }else{
+                                item.checked = false;
+                            }
+                        });
+                    }
+                });
+                
 
                 items.map(item => {
 
@@ -144,7 +163,7 @@
                                     t.txt(String(item.po.id).padStart(6,0) +' (P'+window.util.numberFormat(item.total,2)+')');
                                 });
                                 t.div({class:'col-1 text-end'},()=>{
-                                    let chbx = t.input({class:'po ok form-check-input',dataPayment_term_id:item.po.payment_term_id, dataAmount: item.total, value:item.po.id, checked:true, type:'checkbox'});
+                                    let chbx = t.input({class:'po ok form-check-input project_'+project_id, dataPayment_term_id:item.po.payment_term_id, dataAmount: item.total, value:item.po.id, checked:true, type:'checkbox'});
                                     
                                     chbx.onchange = ()=>{
                                         checkboxOnchangeController(payment_terms);
@@ -163,7 +182,7 @@
                                     t.txt(String(item.po.id).padStart(6,0) +' (P'+window.util.numberFormat(item.total,2)+')');
                                 });
                                 t.div({class:'col-1 text-end'},()=>{
-                                    let chbx = t.input({class:'po invalid form-check-input', dataPayment_term_id:item.po.payment_term_id, dataAmount: item.total, value:item.po.id, type:'checkbox'});
+                                    let chbx = t.input({class:'po invalid form-check-input project_'+project_id, dataPayment_term_id:item.po.payment_term_id, dataAmount: item.total, value:item.po.id, type:'checkbox'});
                                     
                                     chbx.onchange = ()=>{
                                         checkboxOnchangeController(payment_terms);
