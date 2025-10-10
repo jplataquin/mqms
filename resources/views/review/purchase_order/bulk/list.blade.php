@@ -160,7 +160,7 @@
                         }
 
                         t.div({class:'row'},()=>{
-                            t.span(item.po.created_at);
+                            t.span(item.created_at);
                             t.span(item.po.status);
                             t.span(suppliers[item.po.supplier_id].name);
                             t.span(payment_terms[item.po.payment_term_id].text);
