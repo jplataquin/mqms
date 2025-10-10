@@ -25,12 +25,12 @@
     <hr>
 
     
-    <h1>Items</h1>
+    <h1 class="mb-3">Items</h1>
     <div id="result_container"></div>
     
     <hr>
     
-    <h1>Payment Term Summary</h1>
+    <h1 class="mb-3">Payment Term Summary</h1>
     <div id="payment_terms_summary" class="d-flex justify-content-evenly"></div>
     
 </div>
