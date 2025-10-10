@@ -28,8 +28,9 @@
   
     <div id="result_container"></div>
     <hr>
+    <h1>Payment Term Summary</h1>
     <div class="p-5">
-        <div id="payment_terms_summary" class="d-flex justify-content-between"></div>
+        <div id="payment_terms_summary" class="d-flex justify-content-evenly"></div>
     </div>
 </div>
 <script type="module">
