@@ -166,6 +166,7 @@ class PurchaseOrderBulkReviewController extends Controller
         }
 
         $po->created_at = $po->created_at->format('M d, Y H:i');
+        
         return [
             'po'            => $po,
             'total'         => $total,
