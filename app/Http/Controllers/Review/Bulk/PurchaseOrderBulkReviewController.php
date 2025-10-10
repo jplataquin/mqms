@@ -85,12 +85,15 @@ class PurchaseOrderBulkReviewController extends Controller
 
 
         $project = $po->Project;
+        
+        $total = 0;
 
         //Check project if status is active
         if($project->status != 'ACTV'){
             
             return [
                 'po'        => $po,
+                'total'     => $total,
                 'flag'      => false,
                 'failed'    => ['Project status is not active']
             ];
@@ -103,6 +106,7 @@ class PurchaseOrderBulkReviewController extends Controller
            
              return [
                 'po'        => $po,
+                'total'     => $total,
                 'flag'      => false,
                 'failed'    => ['Component status is not active']
             ];
@@ -129,7 +133,6 @@ class PurchaseOrderBulkReviewController extends Controller
 
         $po_items = $po->Items;
 
-        $total = 0;
 
         
         $flag   = true;
