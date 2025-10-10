@@ -55,8 +55,8 @@
         checkboxes.map(c=>{
             let payment_term_id = c.getAttribute('data-payment_term_id');
 
-            if(typeof payment_term_summary[payment_term_id] == 'undefined'){
-                payment_term_summary[payment_term_id] = parseFloat( c.getAttribute('data-amount') );
+            if(typeof summary[payment_term_id] == 'undefined'){
+                summary[payment_term_id] = parseFloat( c.getAttribute('data-amount') );
             }
 
             summary[payment_term_id] += parseFloat( c.getAttribute('data-amount') );
@@ -72,7 +72,7 @@
 
             payment_terms_summary.appendChild(summery_el);
         }
-        
+
         console.log(payment_terms);
         console.log(payment_term_summary);
     }
