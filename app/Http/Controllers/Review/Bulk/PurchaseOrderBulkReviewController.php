@@ -131,27 +131,27 @@ class PurchaseOrderBulkReviewController extends Controller
 
         $total = 0;
 
+        
+        $flag =true;
+
         foreach($po_items as $po_item){
+
+            $total =  $total + ($po_item->quantity * $po_item->price); 
+        
 
             if(!isset($remaining_quantity_arr[$po_item->material_item_id])){
 
-                return [
-                    'po'        => $po,
-                    'flag'      => false,
-                    'failed'    => ['PO Material Item not found in Material Request']
-                ];
-            }
+                $flag       = false;
+                $failed[]   = 'PO Material Item not found in Material Request';
+              
+            }else if($remaining_quantity_arr[$po_item->material_item_id] < $po_item->quantity && $po->status == 'PEND'){
+                
+                $flag = false;
 
-            if($remaining_quantity_arr[$po_item->material_item_id] < $po_item->quantity && $po->status == 'PEND'){
-                return [
-                    'po'        => $po,
-                    'flag'      => false,
-                    'failed'    => ['Approved Material Request quantity is less than the PO item quantity '.$remaining_quantity_arr[$po_item->material_item_id].' < '.$po_item->quantity]
-                ];
+                $failed[] = 'Approved Material Request quantity ('.number_format($remaining_quantity_arr[$po_item->material_item_id],2).') is less than the PO item quantity ('.number_format($po_item->quantity,2).')';
             }
 
 
-            $total =  $total + ($po_item->quantity * $po_item->price); 
         }
 
         $extras = json_decode($po->extras);
@@ -163,8 +163,8 @@ class PurchaseOrderBulkReviewController extends Controller
         return [
             'po'            => $po,
             'total'         => $total,
-            'flag'          => true,
-            'failed'        => ['Approved Material Request quantity is less than the PO item quantity']    
+            'flag'          => $flag,
+            'failed'        => $failed    
         ];
 
 
