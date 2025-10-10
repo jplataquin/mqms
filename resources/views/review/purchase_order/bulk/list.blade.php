@@ -36,7 +36,8 @@
 
     <div class="row mt-5">
         <div class="col-lg-12 text-end shadow bg-white rounded footer-action-menu p-2">
-            
+            <button id="rejectButton" class="btn btn-danger">Reject</button>
+            <button id="aproveButton" class="btn btn-primary">Arppove</button>
             <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
         </div>
     </div>
