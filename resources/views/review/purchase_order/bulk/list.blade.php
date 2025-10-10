@@ -33,6 +33,13 @@
     <h1 class="mb-3">Payment Summary</h1>
     <div id="payment_terms_summary" class="d-flex flex-wrap jalign-content-center"></div>
     
+
+    <div class="row mt-5">
+        <div class="col-lg-12 text-end shadow bg-white rounded footer-action-menu p-2">
+            
+            <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+        </div>
+    </div>
 </div>
 <script type="module">
     import {$q,Template,$el} from '/adarna.js';
