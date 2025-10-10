@@ -27,8 +27,10 @@
     
   
     <div id="result_container"></div>
-    <div id="payment_terms_summary" class="d-flex justify-content-between"></div>
- 
+    <hr>
+    <div class="p-5">
+        <div id="payment_terms_summary" class="d-flex justify-content-between"></div>
+    </div>
 </div>
 <script type="module">
     import {$q,Template,$el} from '/adarna.js';
