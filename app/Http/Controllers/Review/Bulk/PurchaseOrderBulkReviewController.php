@@ -126,9 +126,10 @@ class PurchaseOrderBulkReviewController extends Controller
             ->where('material_quantity_request_item_id',$mr_item->id)
             ->where('material_item_id',$mr_item->material_item_id)
             ->where('status','APRV')
+            ->where('purchase_order_id','!=',$po->id)
             ->sum('quantity');
             
-            $remaining_quantity_arr[$mr_item->material_item_id] = $mr_item->requested_quantity - $total_poed;
+            $remaining_quantity_arr[$mr_item->component_item_id][$mr_item->material_item_id] = $mr_item->requested_quantity - $total_poed;
         }
 
         $po_items = $po->Items;
@@ -144,16 +145,16 @@ class PurchaseOrderBulkReviewController extends Controller
             $total =  $total + ($po_item->quantity * $po_item->price); 
         
 
-            if(!isset($remaining_quantity_arr[$po_item->material_item_id])){
+            if(!isset($remaining_quantity_arr[$po_item->component_item_id][$po_item->material_item_id])){
 
                 $flag       = false;
                 $failed[]   = 'PO Material Item not found in Material Request';
               
-            }else if($remaining_quantity_arr[$po_item->material_item_id] < $po_item->quantity && $po->status == 'PEND'){
+            }else if($remaining_quantity_arr[$po_item->component_item_id][$po_item->material_item_id] < $po_item->quantity && $po->status == 'PEND'){
                 
                 $flag = false;
 
-                $failed[] = 'Approved Material Request quantity ('.number_format($remaining_quantity_arr[$po_item->material_item_id],2).') is less than the PO item quantity ('.number_format($po_item->quantity,2).')';
+                $failed[] = 'Approved Material Request quantity ('.number_format($remaining_quantity_arr[$po_item->component_item_id][$po_item->material_item_id],2).') is less than the PO item quantity ('.number_format($po_item->quantity,2).')';
             }
 
 
