@@ -77,12 +77,17 @@
             @php $sub_total = 0; @endphp
 
                     <tbody>
-                    @foreach($componentItemMaterialsArr as $id => $items)
+                    @foreach($componentItemMaterialsArr as $component_item_id => $items)
             
                     <!-- <div class="mb-3 border rounded p-3" style="max-width:120%"> -->
                     
                 
                         @foreach($items as $item)
+                            <tr>
+                                <td colspan="4">
+                                    {{ $componentItemArr[$component_item_id]->name }}
+                                </td>
+                            </tr>
                             <tr>
                                 <td>
                                     <input type="text" class="form-control" disabled="true" value="{{ $materialItemArr[ $item->material_item_id ]->brand }} {{ $materialItemArr[ $item->material_item_id ]->name }} {{ $materialItemArr[ $item->material_item_id]->specification_unit_packaging }}"/>

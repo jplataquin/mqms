@@ -407,9 +407,10 @@ class PurchaseOrderController extends Controller
             ->where('material_quantity_request_item_id',$mr_item->id)
             ->where('material_item_id',$mr_item->material_item_id)
             ->where('status','APRV')
+            ->where('purchase_order_id','!=',$po->id)
             ->sum('quantity');
             
-            $remaining_quantity_arr[$mr_item->material_item_id] = $mr_item->requested_quantity - $total_poed;
+            $remaining_quantity_arr[$mr_item->component_item_id][$mr_item->material_item_id] = $mr_item->requested_quantity - $total_poed;
         }
 
         $po_items = $po->Items;
@@ -422,15 +423,15 @@ class PurchaseOrderController extends Controller
                 $po_item_arr[$po_item->material_item_id] = [];
             }
 
-            if(!isset($remaining_quantity_arr[$po_item->material_item_id])){
+            if(!isset($remaining_quantity_arr[$po_item->component_item_id][$po_item->material_item_id])){
 
                 $po_item_arr[$po_item->material_item_id][] = 'PO Material Item not found in Material Request';
                 continue;
             }
 
-            if($remaining_quantity_arr[$po_item->material_item_id] < $po_item->quantity && $po->status == 'PEND'){
+            if($remaining_quantity_arr[$po_item->component_item_id][$po_item->material_item_id] < $po_item->quantity && $po->status == 'PEND'){
          
-                $po_item_arr[$po_item->material_item_id][] = 'Available remaining Material Request quantity ('.$remaining_quantity_arr[$po_item->material_item_id].') is less than the PO item quantity ('.$po_item->quantity.')';
+                $po_item_arr[$po_item->material_item_id][] = 'Available remaining Material Request quantity ('.$remaining_quantity_arr[$po_item->component_item_id][$po_item->material_item_id].') is less than the PO item quantity ('.$po_item->quantity.')';
             }
         }
 
