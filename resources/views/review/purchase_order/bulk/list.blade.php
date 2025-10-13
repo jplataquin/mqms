@@ -133,18 +133,31 @@
 
     all_ok.onchange = ()=>{
 
+        let last_item = null;
+
         $q('.ok').items().map(item=>{
             item.checked = all_ok.checked;
-            item.onchange();
+            last_item = item;
         });
+
+        
+        if(last_item){
+            last_item.onchange();
+        }
     }
 
     all_not_ok.onchange = ()=>{
 
+        let last_item = null;
+
         $q('.invalid').items().map(item=>{
             item.checked = all_not_ok.checked;
-            item.onchange();
+            last_item = item;
         });
+
+        if(last_item){
+            last_item.onchange();
+        }
     }
 
     window.util.blockUI();
