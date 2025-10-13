@@ -58,8 +58,8 @@
 
     <div class="row mt-5">
         <div class="col-lg-12 text-end shadow bg-white rounded footer-action-menu p-2">
-            <button id="rejectButton" class="btn btn-danger">Reject</button>
-            <button id="aproveButton" class="btn btn-primary">Arppove</button>
+            <button id="rejectBtn" class="btn btn-danger">Reject</button>
+            <button id="approveBtn" class="btn btn-primary">Arppove</button>
             <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
         </div>
     </div>
@@ -72,12 +72,18 @@
     const payment_terms_summary     = $q('#payment_terms_summary').first();
     const all_ok                    = $q('#all_ok').first();
     const all_not_ok                = $q('#all_not_ok').first();
+    const approveBtn                = $q('#approveBtn').first();
+    const rejectBtn                 = $q('#rejectBtn').first();
+    const cancelBtn                 = $q('#cancelBtn').first();
 
     const t = new Template();
 
 
-    function updateTotal(){
+    approveBtn.onclick = async ()=>{
 
+        let po = $q('.po[checked="true"]').items();
+
+        console.log(po);
     }
 
     function updatePaymentTermsTotal(payment_terms){
@@ -128,6 +134,14 @@
         updatePaymentTermsTotal(payment_terms);
        
         
+    }
+
+    function approveSelection(){
+
+    }
+
+    function rejectSelection(){
+
     }
 
 
