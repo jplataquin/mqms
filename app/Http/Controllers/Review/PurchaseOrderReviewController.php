@@ -21,10 +21,10 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Super\PurchaseOrderSuperController;
 
 
-class PurchaseOrderReviewController extends Controller
+class PurchaseOrderReviewController extends PurchaseOrderSuperController
 {
 
     public function list(){
@@ -93,79 +93,6 @@ class PurchaseOrderReviewController extends Controller
     }
 
 
-        private function check_for_over_quantity($po){
-
-
-        // $project = $po->Project;
-
-        // //Check project if status is active
-        // if($project->status != 'ACTV'){
-            
-        //     return [
-        //         'po'        => $po,
-        //         'flag'      => false,
-        //         'failed'    => ['Project status is not active']
-        //     ];
-        // }
-
-        // $component = $po->Component;
-
-        // //Check if component is status approved
-        // if($component->status != 'APRV'){
-           
-        //      return [
-        //         'po'        => $po,
-        //         'flag'      => false,
-        //         'failed'    => ['Component status is not active']
-        //     ];
-        // }
-
-        $mr                     = $po->MaterialQuantityRequest;
-        $mr_items               = $mr->Items;
-        $remaining_quantity_arr = [];
-
-        foreach($mr_items as $mr_item){
-            
-            if( !isset($remaining_quantity_arr[$mr_item->component_item_id]) ){
-                $remaining_quantity_arr[$mr_item->component_item_id] = [];
-            }
-
-            $total_poed = PurchaseOrderItem::where('component_item_id',$mr_item->component_item_id)
-            ->where('material_quantity_request_item_id',$mr_item->id)
-            ->where('material_item_id',$mr_item->material_item_id)
-            ->where('status','APRV')
-            ->sum('quantity');
-            
-            $remaining_quantity_arr[$mr_item->material_item_id] = $mr_item->requested_quantity - $total_poed;
-        }
-
-        $po_items = $po->Items;
-
-        $po_item_arr = [];
-
-        foreach($po_items as $po_item){
-
-            if(!isset($po_item_arr[$po_item->material_item_id])){
-                $po_item_arr[$po_item->material_item_id] = [];
-            }
-
-            if(!isset($remaining_quantity_arr[$po_item->material_item_id])){
-
-                $po_item_arr[$po_item->material_item_id][] = 'PO Material Item not found in Material Request';
-                continue;
-            }
-
-            if($remaining_quantity_arr[$po_item->material_item_id] < $po_item->quantity && $po->status == 'PEND'){
-         
-
-                $po_item_arr[$po_item->material_item_id][] = 'Available remaining Material Request quantity ('.$remaining_quantity_arr[$po_item->material_item_id].') is less than the PO item quantity ('.$po_item->quantity.')';
-            }
-        }
-
-       
-        return $po_item_arr;
-
-    }
 
     public function display($id){
         
@@ -269,7 +196,7 @@ class PurchaseOrderReviewController extends Controller
             $po_details["Rejected By"] = $purchaseOrder->RejectedByUser()->name.' '.$purchaseOrder->rejected_at;
         }
 
-        $check_quantity = $this->check_for_over_quantity($purchaseOrder);
+        $check_quantity = $this->__check_over_quantity($purchaseOrder);
 
         return view('review/purchase_order/display',[
             'purchase_order'            => $purchaseOrder,

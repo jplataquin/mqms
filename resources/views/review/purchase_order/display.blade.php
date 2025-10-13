@@ -66,7 +66,7 @@
             @php $sub_total = 0; @endphp
 
                     <tbody>
-                    @foreach($componentItemMaterialsArr as $id => $items)
+                    @foreach($componentItemMaterialsArr as $component_item_id => $items)
             
                     <!-- <div class="mb-3 border rounded p-3" style="max-width:120%"> -->
                     
@@ -74,7 +74,7 @@
                         @foreach($items as $item)
                             <tr>
                                 <td colspan="4">
-                                    {{ $componentItemArr[$id]->name }}
+                                    {{ $componentItemArr[$component_item_id]->name }}
                                 </td>
                             </tr>
                             <tr>
@@ -163,19 +163,16 @@
                 
                 @if($purchase_order->status == 'PEND')
                     <button id="rejectBtn" class="btn btn-danger">Reject</button>
-                @endif
-
-                @if($purchase_order->status == 'REVO')
-                    <button id="approveVoidBtn" class="btn btn-danger">Approve Void</button>
-                @endif
-
-                @if($purchase_order->status == 'PEND')
                     <button id="approveBtn" class="btn btn-primary">Approve</button>
                 @endif
 
+                
                 @if($purchase_order->status == 'REVO')
-                <button id="rejectVoidBtn" class="btn btn-primary">Reject Void</button>
+                    <button id="rejectVoidBtn" class="btn btn-danger">Reject Void</button>
+                    <button id="approveVoidBtn" class="btn btn-primary">Approve Void</button>
                 @endif
+
+
                 <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
             </div>
         </div>
@@ -210,9 +207,9 @@
         @if($purchase_order->status == 'REVO')
             const approveVoidBtn = $q('#approveVoidBtn').first();
 
-            approveVoidBtn.onclick = ()=>{
+            approveVoidBtn.onclick = async ()=>{
 
-                if(!confirm('Are you sure you want to VOID this PO?')){
+                if(!await window.util.confirm('Are you sure you want to VOID this PO?')){
                     return false;
                 }
 
@@ -261,10 +258,10 @@
             const rejectBtn = $q('#rejectBtn').first();
             const approveBtn   = $q('#approveBtn').first();
 
-            rejectBtn.onclick = (e)=>{
+            rejectBtn.onclick = async (e)=>{
                     e.preventDefault();
 
-                    if(!confirm('Are you sure you want to REJECT this PO?')){
+                    if(! await window.util.confirm('Are you sure you want to REJECT this PO?')){
 
                         return false;
                     }
