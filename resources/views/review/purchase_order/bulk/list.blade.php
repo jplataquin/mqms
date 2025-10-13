@@ -135,6 +135,7 @@
 
         $q('.ok').items().map(item=>{
             item.checked = all_ok.checked;
+            item.changed();
         });
     }
 
@@ -142,6 +143,7 @@
 
         $q('.invalid').items().map(item=>{
             item.checked = all_not_ok.checked;
+            item.changed();
         });
     }
 
