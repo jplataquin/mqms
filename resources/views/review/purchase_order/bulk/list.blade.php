@@ -28,7 +28,7 @@
 
 
 
-      <div class="d-flex flex-wrap align-content-between">
+      <div class="d-flex flex-wrap justify-content-between">
         <h1 class="mb-3">Items</h1>
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="all_not_ok" checked>
@@ -49,13 +49,11 @@
     
     <hr>
     
-    <div class="d-flex flex-wrap align-content-center">
-        
-        <h1 class="mb-3">Payment Summary</h1>
-        
-    </div>
+  
+    <h1 class="mb-3">Payment Summary</h1>
+      
 
-    <div id="payment_terms_summary" class="d-flex flex-wrap align-content-center"></div>
+    <div id="payment_terms_summary" class="d-flex flex-wrap justify-content-between"></div>
     
 
     <div class="row mt-5">
