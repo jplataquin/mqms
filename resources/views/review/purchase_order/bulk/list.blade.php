@@ -30,8 +30,28 @@
     
     <hr>
     
-    <h1 class="mb-3">Payment Summary</h1>
-    <div id="payment_terms_summary" class="d-flex flex-wrap jalign-content-center"></div>
+    <div class="d-flex flex-wrap align-content-center">
+        
+        <h1 class="mb-3">Payment Summary</h1>
+
+        
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="all_not_ok" checked>
+            <label class="form-check-label text-danger">
+            All [✖]
+            </label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="all_ok" checked>
+            <label class="form-check-label text-success">
+            All [✔]
+            </label>
+        </div>
+
+        
+    </div>
+    <div id="payment_terms_summary" class="d-flex flex-wrap align-content-center"></div>
     
 
     <div class="row mt-5">
