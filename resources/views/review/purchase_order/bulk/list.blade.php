@@ -140,7 +140,7 @@
 
     all_not_ok.onchange = ()=>{
 
-        $q('.not_ok').items().map(item=>{
+        $q('.invalid').items().map(item=>{
             item.checked = all_not_ok.checked;
         });
     }
