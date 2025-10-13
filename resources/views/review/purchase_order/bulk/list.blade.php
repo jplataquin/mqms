@@ -31,14 +31,14 @@
       <div class="d-flex flex-wrap justify-content-between">
         <h1 class="mb-3">Items</h1>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="all_not_ok" checked>
+            <input class="form-check-input" type="checkbox" value="" id="all_not_ok"/>
             <label class="form-check-label text-danger">
             All [✖]
             </label>
         </div>
 
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="all_ok" checked>
+            <input class="form-check-input" type="checkbox" value="" id="all_ok"/>
             <label class="form-check-label text-success">
             All [✔]
             </label>
@@ -70,6 +70,8 @@
 
     const result_container          = $q('#result_container').first();
     const payment_terms_summary     = $q('#payment_terms_summary').first();
+    const all_ok                    = $q('#all_ok').first();
+    const all_not_ok                = $q('#all_not_ok').first();
 
     const t = new Template();
 
@@ -126,6 +128,21 @@
         updatePaymentTermsTotal(payment_terms);
        
         
+    }
+
+
+    all_ok.onchange = ()=>{
+
+        $q('.ok').items().map(item=>{
+            item.checked = all_ok.checked;
+        });
+    }
+
+    all_not_ok.onchange = ()=>{
+
+        $q('.not_ok').items().map(item=>{
+            item.checked = all_not_ok.checked;
+        });
     }
 
     window.util.blockUI();
