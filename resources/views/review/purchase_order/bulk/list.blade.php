@@ -143,7 +143,7 @@
 
         $q('.invalid').items().map(item=>{
             item.checked = all_not_ok.checked;
-            item.change();
+            console.log(item);
         });
     }
 
