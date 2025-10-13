@@ -8,7 +8,7 @@ use App\Models\PurchaseOrderItem;
 class PurchaseOrderSuperController extends Controller
 {
 
-      private function __check_over_quantity($po){
+      protected function __check_over_quantity($po){
 
 
         $mr                     = $po->MaterialQuantityRequest;
