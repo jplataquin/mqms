@@ -25,16 +25,11 @@
     <hr>
 
     
-    <h1 class="mb-3">Items</h1>
-    <div id="result_container"></div>
-    
-    <hr>
-    
-    <div class="d-flex flex-wrap align-content-center">
-        
-        <h1 class="mb-3">Payment Summary</h1>
 
-        
+
+
+      <div class="d-flex flex-wrap align-content-between">
+        <h1 class="mb-3">Items</h1>
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="all_not_ok" checked>
             <label class="form-check-label text-danger">
@@ -47,10 +42,19 @@
             <label class="form-check-label text-success">
             All [✔]
             </label>
-        </div>
+        </div>   
+    </div>
 
+    <div id="result_container"></div>
+    
+    <hr>
+    
+    <div class="d-flex flex-wrap align-content-center">
+        
+        <h1 class="mb-3">Payment Summary</h1>
         
     </div>
+
     <div id="payment_terms_summary" class="d-flex flex-wrap align-content-center"></div>
     
 
