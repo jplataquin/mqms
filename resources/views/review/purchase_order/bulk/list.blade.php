@@ -81,7 +81,7 @@
 
     approveBtn.onclick = async ()=>{
 
-        let po = $q('.po[checked="true"]').items();
+        let po = $q('input[type="checkbox"].po:checked').items();
 
         console.log(po);
     }
