@@ -238,9 +238,9 @@
                             t.div({class:'row'},()=>{
                                 t.div({class:'col-9'},()=>{
                                     t.span({class:'text-success'},'[✔] ');
-                                    t.txt(String(item.po.id).padStart(6,0) +' (P'+window.util.numberFormat(item.total,2)+')');
+                                    t.a({href:'/review/purchase_order/'+item.po.id},String(item.po.id).padStart(6,0));
                                 });
-                                t.div({class:'col-3 text-end d-flex justify-content-between'},()=>{
+                                t.div({class:'col-3 d-flex justify-content-end'},()=>{
 
                                     t.label('P '+window.util.numberFormat(item.total,2));
 
