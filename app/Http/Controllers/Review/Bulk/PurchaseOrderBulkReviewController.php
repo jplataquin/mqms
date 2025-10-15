@@ -210,7 +210,7 @@ class PurchaseOrderBulkReviewController extends Controller
             $pos[] = $po;
         }
 
-        print_r($pos);
+        print_r($ids);
     }
 
 }
