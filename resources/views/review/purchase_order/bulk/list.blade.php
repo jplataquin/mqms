@@ -234,7 +234,7 @@
                 });
                 
 
-                t.div({class:'border ps-3'},()=>{
+                t.div({class:'ps-3'},()=>{
 
                 
                     items.map(item => {
