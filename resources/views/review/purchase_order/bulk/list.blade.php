@@ -210,7 +210,7 @@
 
             let items = result[project_id];
 
-            const project_div = t.div({class:'mb-5'},()=>{
+            const project_div = t.div({class:'mb-5 border border-secondary p-5'},()=>{
                 
                 t.div({class:'d-flex justify-content-between'},()=>{
                     t.h5( projects[project_id].name );
