@@ -169,6 +169,8 @@
 
 
         form.submit();
+
+        console.log(form);
     }
 
     async function approveSelection(){
