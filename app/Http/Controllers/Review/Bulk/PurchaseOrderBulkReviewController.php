@@ -205,9 +205,9 @@ class PurchaseOrderBulkReviewController extends Controller
 
             if(!$po) continue;
 
+            echo $po->status.'<br>';
             if($po->status != 'PEND' || $po->status != 'REVO') continue;
             
-            echo $po;
             $pos[] = $po;
         }
 
