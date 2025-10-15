@@ -238,11 +238,11 @@
                             t.div({class:'row'},()=>{
                                 t.div({class:'col-9'},()=>{
                                     t.span({class:'text-success'},'[✔] ');
-                                    t.a({href:'/review/purchase_order/'+item.po.id},String(item.po.id).padStart(6,0));
+                                    t.a({href:'/review/purchase_order/'+item.po.id,target:'_blank'},String(item.po.id).padStart(6,0));
                                 });
                                 t.div({class:'col-3 d-flex justify-content-end'},()=>{
 
-                                    t.label('P '+window.util.numberFormat(item.total,2));
+                                    t.label({class:'me-3'},'P '+window.util.numberFormat(item.total,2));
 
                                     let chbx = t.input({class:'po ok form-check-input project_'+project_id, dataPayment_term_id:item.po.payment_term_id, dataAmount: item.total, value:item.po.id, checked:true, type:'checkbox'});
                                     
