@@ -167,10 +167,12 @@
             t.input({type:'hidden',name:'action',value:'APRV'})
         );
 
+        result_container.appendChild(form);
 
-        form.submit();
-
-        console.log(form);
+        setTimeout(()=>{
+            form.submit();
+        },100);
+    
     }
 
     async function approveSelection(){
