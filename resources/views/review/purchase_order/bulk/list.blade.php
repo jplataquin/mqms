@@ -152,7 +152,7 @@
         });
 
         const form = t.form({
-            methid:'POST',
+            method:'POST',
             action:'/review/bulk/purchase_order/action'
         });
 
