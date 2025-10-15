@@ -210,7 +210,7 @@
 
             let items = result[project_id];
 
-            const project_div = t.div({class:'mb-5 border border-secondary p-5'},()=>{
+            const project_div = t.div({class:'mb-5'},()=>{
                 
                 t.div({class:'d-flex justify-content-between'},()=>{
                     t.h5( projects[project_id].name );
@@ -234,74 +234,78 @@
                 });
                 
 
-                items.map(item => {
+                t.div({class:'border border-secondary p-3'},()=>{
 
-                    t.div({class:'border border-secondary mb-2 p-3'},()=>{
+                
+                    items.map(item => {
 
-                        if(item.flag){
-                        
-                        
-                        
-                            t.div({class:'row'},()=>{
-                                t.div({class:'col-6'},()=>{
-                                    t.span({class:'text-success'},'[✔] ');
-                                    t.a({href:'/review/purchase_order/'+item.po.id,target:'_blank'},String(item.po.id).padStart(6,0));
-                                });
-                                t.div({class:'col-6 d-flex justify-content-end'},()=>{
+                        t.div({class:'border border-secondary mb-2 p-3'},()=>{
 
-                                    t.label({class:'me-3'},'P '+window.util.numberFormat(item.total,2));
-
-                                    let chbx = t.input({class:'po ok form-check-input project_'+project_id, dataPayment_term_id:item.po.payment_term_id, dataAmount: item.total, value:item.po.id, checked:true, type:'checkbox'});
-                                    
-                                    chbx.onchange = ()=>{
-                                        checkboxOnchangeController(payment_terms);
-                                    }
-                                });
-                            });
-
-
-                    
-                        }else{
-
-
-                            t.div({class:'row'},()=>{
-                                t.div({class:'col-6'},()=>{
-                                    t.span({class:'text-danger'},'[✖] ');
-                                     t.a({href:'/review/purchase_order/'+item.po.id,target:'_blank'},String(item.po.id).padStart(6,0));
-                                });
-                                t.div({class:'col-6 d-flex justify-content-end'},()=>{
-
-                                     t.label({class:'me-3'},'P '+window.util.numberFormat(item.total,2));
-
-                                    let chbx = t.input({class:'po invalid form-check-input project_'+project_id, dataPayment_term_id:item.po.payment_term_id, dataAmount: item.total, value:item.po.id, type:'checkbox'});
-                                    
-                                    chbx.onchange = ()=>{
-                                        checkboxOnchangeController(payment_terms);
-                                    }
-                                });
-                            });
-
-                            t.div({class:'row'},()=>{
-                                item.failed.map(fail=>{
-                                    t.span({class:'text-danger text-sm'},fail);
-                                
-                                });
-                            })
-                        }
-
-                        t.div({class:'row'},()=>{
-                            t.span(item.created_at);
-                            t.span(item.po.status);
-                            t.span(suppliers[item.po.supplier_id].name);
-                            t.span(payment_terms[item.po.payment_term_id].text);
-
+                            if(item.flag){
                             
+                            
+                            
+                                t.div({class:'row'},()=>{
+                                    t.div({class:'col-6'},()=>{
+                                        t.span({class:'text-success'},'[✔] ');
+                                        t.a({href:'/review/purchase_order/'+item.po.id,target:'_blank'},String(item.po.id).padStart(6,0));
+                                    });
+                                    t.div({class:'col-6 d-flex justify-content-end'},()=>{
+
+                                        t.label({class:'me-3'},'P '+window.util.numberFormat(item.total,2));
+
+                                        let chbx = t.input({class:'po ok form-check-input project_'+project_id, dataPayment_term_id:item.po.payment_term_id, dataAmount: item.total, value:item.po.id, checked:true, type:'checkbox'});
+                                        
+                                        chbx.onchange = ()=>{
+                                            checkboxOnchangeController(payment_terms);
+                                        }
+                                    });
+                                });
+
+
+                        
+                            }else{
+
+
+                                t.div({class:'row'},()=>{
+                                    t.div({class:'col-6'},()=>{
+                                        t.span({class:'text-danger'},'[✖] ');
+                                        t.a({href:'/review/purchase_order/'+item.po.id,target:'_blank'},String(item.po.id).padStart(6,0));
+                                    });
+                                    t.div({class:'col-6 d-flex justify-content-end'},()=>{
+
+                                        t.label({class:'me-3'},'P '+window.util.numberFormat(item.total,2));
+
+                                        let chbx = t.input({class:'po invalid form-check-input project_'+project_id, dataPayment_term_id:item.po.payment_term_id, dataAmount: item.total, value:item.po.id, type:'checkbox'});
+                                        
+                                        chbx.onchange = ()=>{
+                                            checkboxOnchangeController(payment_terms);
+                                        }
+                                    });
+                                });
+
+                                t.div({class:'row'},()=>{
+                                    item.failed.map(fail=>{
+                                        t.span({class:'text-danger text-sm'},fail);
+                                    
+                                    });
+                                })
+                            }
+
+                            t.div({class:'row'},()=>{
+                                t.span(item.created_at);
+                                t.span(item.po.status);
+                                t.span(suppliers[item.po.supplier_id].name);
+                                t.span(payment_terms[item.po.payment_term_id].text);
+
+                                
+                            });
+
                         });
-
-                    });
-                    
-                });//items
-
+                        
+                    });//items
+                
+                });
 
             });
 
