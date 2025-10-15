@@ -167,6 +167,10 @@
             t.input({type:'hidden',name:'action',value:'APRV'})
         );
 
+        form.appendChild(
+            t.input({type:'hidden',name:'_token',value:'{{ csrf_token() }}'})
+        );
+
         result_container.appendChild(form);
 
         setTimeout(()=>{
