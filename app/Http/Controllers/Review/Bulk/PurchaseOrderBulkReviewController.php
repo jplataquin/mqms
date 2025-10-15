@@ -189,6 +189,8 @@ class PurchaseOrderBulkReviewController extends Controller
         
         }else if($action == 'REJC'){
             return $this->_reject($ids);
+        }else{
+            echo 'tae';
         }
     }
 
