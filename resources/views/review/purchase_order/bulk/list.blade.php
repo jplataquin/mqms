@@ -29,7 +29,7 @@
 
 
       <div class="d-flex flex-wrap justify-content-between">
-        <h1 class="mb-3">Items</h1>
+        <h1 class="mb-3">PO List</h1>
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="all_not_ok"/>
             <label class="form-check-label text-danger">
@@ -145,6 +145,13 @@
     async function approveSelection(){
         const po = $q('input[type="checkbox"].po:checked').items();
 
+        let ans = await window.util.confirm('Are you sure you want to approve '+po.length+' items?');
+
+        if(!ans){
+            return false;
+        }
+
+        alert('do it');
     }
 
     async function rejectSelection(){
