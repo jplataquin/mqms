@@ -142,6 +142,19 @@
         
     }
 
+
+    async function submitAction(action,els){
+
+        let ids = [];
+
+        els.map(el=>{
+            ids.push(el.value);
+        });
+
+        console.log(ids);
+
+    }
+
     async function approveSelection(){
         const po = $q('input[type="checkbox"].po:checked').items();
 
@@ -151,7 +164,7 @@
             return false;
         }
 
-        alert('do it');
+        submitAction('APRV',po);
     }
 
     async function rejectSelection(){
