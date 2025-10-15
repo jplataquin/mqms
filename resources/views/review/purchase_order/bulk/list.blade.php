@@ -262,7 +262,7 @@
                                     t.span({class:'text-danger'},'[✖] ');
                                      t.a({href:'/review/purchase_order/'+item.po.id,target:'_blank'},String(item.po.id).padStart(6,0));
                                 });
-                                t.div({class:'col-1 d-flex justify-content-end'},()=>{
+                                t.div({class:'col-6 d-flex justify-content-end'},()=>{
 
                                      t.label({class:'me-3'},'P '+window.util.numberFormat(item.total,2));
 
