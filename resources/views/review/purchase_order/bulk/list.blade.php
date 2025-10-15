@@ -81,9 +81,15 @@
 
     approveBtn.onclick = async ()=>{
 
-        let po = $q('input[type="checkbox"].po:checked').items();
+        await approveSelection();
+      
+    }
 
-        console.log(po);
+
+    rejectBtn.onclick = async ()=>{
+
+        await rejectSelection();
+      
     }
 
     function updatePaymentTermsTotal(payment_terms){
@@ -136,12 +142,13 @@
         
     }
 
-    function approveSelection(){
+    async function approveSelection(){
+        const po = $q('input[type="checkbox"].po:checked').items();
 
     }
 
-    function rejectSelection(){
-
+    async function rejectSelection(){
+        const po = $q('input[type="checkbox"].po:checked').items();
     }
 
 
@@ -229,11 +236,14 @@
                         
                         
                             t.div({class:'row'},()=>{
-                                t.div({class:'col-11'},()=>{
+                                t.div({class:'col-9'},()=>{
                                     t.span({class:'text-success'},'[✔] ');
                                     t.txt(String(item.po.id).padStart(6,0) +' (P'+window.util.numberFormat(item.total,2)+')');
                                 });
-                                t.div({class:'col-1 text-end'},()=>{
+                                t.div({class:'col-3 text-end d-flex justify-content-between'},()=>{
+
+                                    t.label('P '+window.util.numberFormat(item.total,2));
+
                                     let chbx = t.input({class:'po ok form-check-input project_'+project_id, dataPayment_term_id:item.po.payment_term_id, dataAmount: item.total, value:item.po.id, checked:true, type:'checkbox'});
                                     
                                     chbx.onchange = ()=>{
