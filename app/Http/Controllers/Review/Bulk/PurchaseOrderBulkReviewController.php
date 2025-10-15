@@ -65,7 +65,7 @@ class PurchaseOrderBulkReviewController extends Controller
                 $payment_terms[$po->payment_term_id] = PaymentTerm::find($po->payment_term_id);
             }
 
-            $result[$po->project_id][] = $this->review_checklist($po);
+            $result[$po->project_id][] = $this->audit_po($po);
         }
 
         
@@ -81,7 +81,7 @@ class PurchaseOrderBulkReviewController extends Controller
         ]);
     }
 
-    private function review_checklist($po){
+    private function audit_po($po){
 
 
         $project = $po->Project;
@@ -176,6 +176,39 @@ class PurchaseOrderBulkReviewController extends Controller
         ];
 
 
+    }
+
+    public function _action(Request $request){
+
+        $ids    = $request->input('ids');
+        $action = $request->input('action');
+
+        if($action =='APRV'){
+        
+            return $this->_approve($ids);
+        
+        }else if($action == 'REJC'){
+            return $this->_reject($ids);
+        }
+    }
+
+    private function _approve($ids){
+
+        $pos = [];
+
+        foreach($ids as $id){
+            $id = (int) $id;
+
+            $po = PurchaseOrder::find($id);
+
+            if(!$po) continue;
+
+            if($po->status != 'PEND' || $po->status != 'REVO') continue;
+
+            $pos[] = $po;
+        }
+
+        print_r($pos);
     }
 
 }

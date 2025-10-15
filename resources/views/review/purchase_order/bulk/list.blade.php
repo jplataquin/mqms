@@ -151,8 +151,24 @@
             ids.push(el.value);
         });
 
-        console.log(ids);
+        const form = t.form({
+            methid:'POST',
+            action:'/review/bulk/purchase_order/action'
+        });
 
+        ids.map(id=>{
+            
+            const input = t.input({type:'hidden',name:'ids[]',value:id});
+
+            form.appendChild(input);
+        });
+
+        form.appendChild(
+            t.input({type:'hidden',name:'action',value:'APRV'})
+        );
+
+
+        form.submit();
     }
 
     async function approveSelection(){
