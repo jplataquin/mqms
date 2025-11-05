@@ -124,7 +124,7 @@ class PurchaseOrder extends Model
         $extras = json_decode($this->extras);
 
         foreach($extras as $extra){
-            $grand_total = $grand_total + (float) $extra['value'];
+            $grand_total = $grand_total + (float) $extra->value;
         }
 
         return $grand_total;
