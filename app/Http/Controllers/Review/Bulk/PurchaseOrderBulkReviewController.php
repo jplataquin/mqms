@@ -88,7 +88,7 @@ class PurchaseOrderBulkReviewController extends Controller
         
         $total = 0;
 
-                if(!$component){
+        if(!$project){
             return [
                 'po'        => $po,
                 'total'     => $total,
