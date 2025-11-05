@@ -219,6 +219,9 @@ class PurchaseOrderBulkReviewController extends Controller
         $total_per_payment_terms    = [];
         $grand_total                = 0;
 
+        
+        $user_id = Auth::user()->id;
+
         DB::beginTransaction();
         
         $projects = Project::where('status','ACTV')->get();
@@ -320,13 +323,15 @@ class PurchaseOrderBulkReviewController extends Controller
         $total_per_payment_terms    = [];
         $grand_total                = 0;
 
+        $user_id = Auth::user()->id;
+
         DB::beginTransaction();
         
         $projects = Project::where('status','ACTV')->get();
 
         $project_arr = [];
 
-        $user_id = Auth::user()->id;
+    
 
         try {
 
