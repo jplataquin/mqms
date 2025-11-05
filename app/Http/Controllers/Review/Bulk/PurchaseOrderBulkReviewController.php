@@ -262,18 +262,20 @@ class PurchaseOrderBulkReviewController extends Controller
                     $po->status         = 'APRV';
                     $po->approved_by    = $user_id;
                     $po->approved_at    = Carbon::now();
-
-                    DB::table('purchase_order_items')->where('purchase_order_id',$po->id)->update(['status'=>'APRV']);
                     $po->save();
+                    
+                    DB::table('purchase_order_items')->where('purchase_order_id',$po->id)->update(['status'=>'APRV']);
+                    
 
                 }else if($po->status == 'REVO'){
 
                     $po->status     = 'VOID';
                     $po->void_by    = $user_id;
                     $po->void_at    = Carbon::now();
-
-                    DB::table('purchase_order_items')->where('purchase_order_id',$po->id)->update(['status'=>'APRV']);
                     $po->save();
+                    
+                    DB::table('purchase_order_items')->where('purchase_order_id',$po->id)->update(['status'=>'APRV']);
+                   
                     
                 }
 
