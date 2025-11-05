@@ -85,7 +85,18 @@ class PurchaseOrderBulkReviewController extends Controller
 
         $project = $po->Project;
         
+        
         $total = 0;
+
+                if(!$component){
+            return [
+                'po'        => $po,
+                'total'     => $total,
+                'flag'      => false,
+                'failed'    => ['Project does not exists (id:'.$po->project_id.')']
+            ];
+        }
+
 
         //Check project if status is active
         if($project->status != 'ACTV'){
@@ -105,7 +116,7 @@ class PurchaseOrderBulkReviewController extends Controller
                 'po'        => $po,
                 'total'     => $total,
                 'flag'      => false,
-                'failed'    => ['Component does not exists']
+                'failed'    => ['Component does not exists (id:'.$po->component_id.')']
             ];
         }
 
