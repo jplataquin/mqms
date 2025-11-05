@@ -23,7 +23,7 @@
     </div>
     <hr>
 
-    <h1>{{$target_status_text}}</h1>
+    <h1>Target Status: {{$target_status_text}}</h1>
 
     <div class="mt-5">
         <form id="form">
@@ -53,15 +53,15 @@
                                 </div>
 
                                 <div>
-                                    @if($po->status == 'APRV')
+                                    @if($item['po']->status == 'APRV')
                                         PEND > <span class="text-success">APRV</span>
                                     @endif
 
-                                    @if($po->status == 'REJC')
+                                    @if($item['po']->status == 'REJC')
                                         PEND > <span class="text-danger">REJC</span>
                                     @endif
 
-                                    @if($po->status == 'VOID')
+                                    @if($item['po']->status == 'VOID')
                                         REVO > <span class="text-primary">VOID</span>
                                     @endif
                                 </div>
