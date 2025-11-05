@@ -182,7 +182,7 @@ class PurchaseOrderBulkReviewController extends Controller
         $extras = json_decode($po->extras);
 
         foreach($extras as $extra){
-           $total = $total + (float) $extra['value'];
+           $total = $total + (float) $extra->value;
         }
 
 
@@ -225,9 +225,108 @@ class PurchaseOrderBulkReviewController extends Controller
 
         $project_arr = [];
 
-        foreach($projects as $project){
-            $project_arr[$project->id] = $project;
+        
+        try {
+
+            foreach($ids as $id){
+
+                $id = (int) $id;
+
+                $po = PurchaseOrder::find($id);
+
+                if(!$po) continue;
+
+                if($po->status != 'PEND' && $po->status != 'REVO') continue;
+                
+                
+                $component = $po->Component;
+
+                if(!$component) continue;
+                
+                if($component->status != 'APRV') continue;
+
+                $project = $po->Project;
+
+                if(!$project) continue;
+
+                if($project->status != 'ACTV') continue;
+
+                $project_arr[$project->id] = $project;
+
+
+                if($po->status == 'PEND'){
+                    
+                    $po->status         = 'APRV';
+                    $po->approved_by    = $user_id;
+                    $po->approved_at    = Carbon::now();
+
+                    DB::table('purchase_order_items')->where('purchase_order_id',$po->id)->update(['status'=>'APRV']);
+                    $po->save();
+
+                }else if($po->status == 'REVO'){
+
+                    $po->status     = 'VOID';
+                    $po->void_by    = $user_id;
+                    $po->void_at    = Carbon::now();
+
+                    DB::table('purchase_order_items')->where('purchase_order_id',$po->id)->update(['status'=>'APRV']);
+                    $po->save();
+                    
+                }
+
+                
+                if(!isset($total_per_payment_terms[$po->payment_term_id])){
+                    $total_per_payment_terms[$po->payment_term_id] = 0;
+                }
+
+                $gt = $po->getGrandTotal();
+                
+                
+                $total_per_payment_terms[$po->payment_term_id] = $total_per_payment_terms[$po->payment_term_id] + $gt;
+                
+                $grand_total = $grand_total + $gt;
+
+                if(!isset($pos[$po->project_id])){
+                    $pos[$po->project_id] = [];
+                }
+
+                $pos[$po->project_id][] = $this->audit_po($po);
+            }
+
+
+            DB::commit();
+
+            return view('review/purchase_order/bulk/success',[
+                'pos'                       => $pos,
+                'grand_total'               => $grand_total,
+                'project_arr'               => $project_arr,
+                'total_per_payment_terms'   => $total_per_payment_terms
+            ]);
+
+        } catch(\Exception $e) {
+
+            DB::rollBack();
+
+            return view('review/purchase_order/bulk/fail',[
+                'message' => $e->getMessage()
+            ]);
         }
+    }
+
+
+    private function _reject($ids){
+
+        $pos                        = [];
+        $total_per_payment_terms    = [];
+        $grand_total                = 0;
+
+        DB::beginTransaction();
+        
+        $projects = Project::where('status','ACTV')->rows();
+
+        $project_arr = [];
+
+        $user_id = Auth::user()->id;
 
         try {
 
@@ -241,21 +340,42 @@ class PurchaseOrderBulkReviewController extends Controller
 
                 if($po->status != 'PEND' && $po->status != 'REVO') continue;
                 
-                if( !isset($project_arr[$po->project_id]) ) continue;
+                
+                $component = $po->Component;
+
+                if(!$component) continue;
+                
+                if($component->status != 'APRV') continue;
+
+                $project = $po->Project;
+
+                if(!$project) continue;
+
+                if($project->status != 'ACTV') continue;
+
+                $project_arr[$project->id] = $project;
+
 
                 if($po->status == 'PEND'){
                     
-                    $po->status         = 'APRV';
-                    $po->approved_at    = Carbon::now();
+                    $po->status         = 'REJC';
+                    $po->rejected_by    = $user_id;
+                    $po->rejected_at    = Carbon::now();
+
+                    DB::table('purchase_order_items')->where('purchase_order_id',$po->id)->update(['status'=>'REJC']);
+                    $po->save();
 
                 }else if($po->status == 'REVO'){
 
-                    $po->status     = 'VOID';
-                    $po->void_at    = Carbon::now();
+                    $po->status     = 'PEND';
+
+                    DB::table('purchase_order_items')->where('purchase_order_id',$po->id)->update(['status'=>'PEND']);
+                    
+                    $po->save();
+                    
                 }
 
-                $po->save();
-
+                
                 if(!isset($total_per_payment_terms[$po->payment_term_id])){
                     $total_per_payment_terms[$po->payment_term_id] = 0;
                 }

@@ -72,6 +72,10 @@
                 <div>
             @endforeach
         </form>
+
+        <div class="text-end">
+                <button class="btn btn-warning" id="revertBtn">Revert</button>
+        </div>
     </div>
 
 </div>
