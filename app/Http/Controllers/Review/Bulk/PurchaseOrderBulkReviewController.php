@@ -221,7 +221,7 @@ class PurchaseOrderBulkReviewController extends Controller
 
         DB::beginTransaction();
         
-        $projects = Project::where('status','ACTV')->rows();
+        $projects = Project::where('status','ACTV')->get();
 
         $project_arr = [];
 
@@ -322,7 +322,7 @@ class PurchaseOrderBulkReviewController extends Controller
 
         DB::beginTransaction();
         
-        $projects = Project::where('status','ACTV')->rows();
+        $projects = Project::where('status','ACTV')->get();
 
         $project_arr = [];
 
