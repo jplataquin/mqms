@@ -218,7 +218,7 @@ class PurchaseOrderBulkReviewController extends Controller
         $pos                        = [];
         $total_per_payment_terms    = [];
         $grand_total                = 0;
-
+        
         
         $user_id = Auth::user()->id;
 
@@ -303,7 +303,8 @@ class PurchaseOrderBulkReviewController extends Controller
                 'pos'                       => $pos,
                 'grand_total'               => $grand_total,
                 'project_arr'               => $project_arr,
-                'total_per_payment_terms'   => $total_per_payment_terms
+                'total_per_payment_terms'   => $total_per_payment_terms,
+                'target_status_text'        => 'Approve'
             ]);
 
         } catch(\Exception $e) {
@@ -406,7 +407,8 @@ class PurchaseOrderBulkReviewController extends Controller
                 'pos'                       => $pos,
                 'grand_total'               => $grand_total,
                 'project_arr'               => $project_arr,
-                'total_per_payment_terms'   => $total_per_payment_terms
+                'total_per_payment_terms'   => $total_per_payment_terms,
+                'target_status_text'        => 'Reject'
             ]);
 
         } catch(\Exception $e) {
