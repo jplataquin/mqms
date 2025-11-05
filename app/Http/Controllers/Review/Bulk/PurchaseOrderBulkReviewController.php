@@ -23,7 +23,6 @@ use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 
-
 class PurchaseOrderBulkReviewController extends Controller
 {
 
@@ -100,6 +99,15 @@ class PurchaseOrderBulkReviewController extends Controller
         }
 
         $component = $po->Component;
+
+        if(!$component){
+            return [
+                'po'        => $po,
+                'total'     => $total,
+                'flag'      => false,
+                'failed'    => ['Component does not exists']
+            ];
+        }
 
         //Check if component is status approved
         if($component->status != 'APRV'){
@@ -196,21 +204,83 @@ class PurchaseOrderBulkReviewController extends Controller
 
     private function _approve($ids){
 
-        $pos = [];
+        $pos                        = [];
+        $total_per_payment_terms    = [];
+        $grand_total                = 0;
 
-        foreach($ids as $id){
-            $id = (int) $id;
+        DB::beginTransaction();
+        
+        $projects = Project::where('status','ACTV')->rows();
 
-            $po = PurchaseOrder::find($id);
+        $project_arr = [];
 
-            if(!$po) continue;
-
-            if($po->status != 'PEND' && $po->status != 'REVO') continue;
-            
-            $pos[] = $po;
+        foreach($projects as $project){
+            $project_arr[$project->id] = $project;
         }
 
-        print_r($pos);
+        try {
+
+            foreach($ids as $id){
+
+                $id = (int) $id;
+
+                $po = PurchaseOrder::find($id);
+
+                if(!$po) continue;
+
+                if($po->status != 'PEND' && $po->status != 'REVO') continue;
+                
+                if( !isset($project_arr[$po->project_id]) ) continue;
+
+                if($po->status == 'PEND'){
+                    
+                    $po->status         = 'APRV';
+                    $po->approved_at    = Carbon::now();
+
+                }else if($po->status == 'REVO'){
+
+                    $po->status     = 'VOID';
+                    $po->void_at    = Carbon::now();
+                }
+
+                $po->save();
+
+                if(!isset($total_per_payment_terms[$po->payment_term_id])){
+                    $total_per_payment_terms[$po->payment_term_id] = 0;
+                }
+
+                $gt = $po->getGrandTotal();
+                
+                
+                $total_per_payment_terms[$po->payment_term_id] = $total_per_payment_terms[$po->payment_term_id] + $gt;
+                
+                $grand_total = $grand_total + $gt;
+
+                if(!isset($pos[$po->project_id])){
+                    $pos[$po->project_id] = [];
+                }
+
+                $pos[$po->project_id][] = $this->audit_po($po);
+            }
+
+
+            DB::commit();
+
+            return view('review/purchase_order/bulk/success',[
+                'pos'                       => $pos,
+                'grand_total'               => $grand_total,
+                'project_arr'               => $project_arr,
+                'total_per_payment_terms'   => $total_per_payment_terms
+            ]);
+
+        } catch(\Exception $e) {
+
+            DB::rollBack();
+
+            return view('review/purchase_order/bulk/fail',[
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
 }

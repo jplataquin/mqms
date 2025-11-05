@@ -109,4 +109,24 @@ class PurchaseOrder extends Model
 
         return $user;
     }
+
+    public function getGrandTotal(){
+
+        $items = $this->Items;
+
+        $grand_total = 0;
+
+        foreach($items as $item){
+            $total = $item->price * $item->quantity;
+            $grand_total = $grand_total + $total;
+        }
+
+        $extras = json_decode($this->extras);
+
+        foreach($extras as $extra){
+            $grand_total = $grand_total + (float) $extra['value'];
+        }
+
+        return $grand_total;
+    }
 }
