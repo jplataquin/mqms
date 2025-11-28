@@ -19,9 +19,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
-use Spipu\Html2Pdf\Html2Pdf;
-use Spipu\Html2Pdf\Exception\Html2PdfException;
-use Spipu\Html2Pdf\Exception\ExceptionFormatter;
+// use Spipu\Html2Pdf\Html2Pdf;
+// use Spipu\Html2Pdf\Exception\Html2PdfException;
+// use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 use Illuminate\Support\Str;
 
 class MaterialCanvassController extends Controller
@@ -382,7 +382,7 @@ class MaterialCanvassController extends Controller
             ->where('payment_term_id','=',$d['payment_term_id'])
             ->where('material_quantity_request_item_id','=',$d['material_quantity_request_item_id'])
             ->where(function($q){
-                return $q->where('status','!=','VOID')->Where('status','!=','REJC');
+                return $q->where('status','!=','VOID')->where('status','!=','REJC');
             })->exists();
 
             if($testA){

@@ -31,7 +31,7 @@
                 <div>
                     <h3>{{$project_arr[$project_id]->name}}</h3>
 
-                    <div class="d-flex d-wrap p3">
+                    <div class="d-flex flex-wrap justify-content-between">
                         @foreach($po_list as $item)
                             <input type="hidden" value="{{$item['po']->id}}" name="po[]"/>
                             <div class="border border-secondary">
