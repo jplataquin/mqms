@@ -382,7 +382,9 @@ class MaterialCanvassController extends Controller
             ->where('payment_term_id','=',$d['payment_term_id'])
             ->where('material_quantity_request_item_id','=',$d['material_quantity_request_item_id'])
             ->where(function($q){
+
                 return $q->where('status','!=','VOID')->where('status','!=','REJC');
+            
             })->exists();
 
             if($testA){
