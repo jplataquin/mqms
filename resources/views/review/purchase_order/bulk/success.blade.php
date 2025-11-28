@@ -31,10 +31,10 @@
                 <div>
                     <h3>{{$project_arr[$project_id]->name}}</h3>
 
-                    <div class="d-flex flex-wrap justify-content-between">
+                    <div class="d-flex flex-wrap justify-content-evenly">
                         @foreach($po_list as $item)
                             <input type="hidden" value="{{$item['po']->id}}" name="po[]"/>
-                            <div class="border border-secondary">
+                            <div class="border border-secondary p-2">
                                 <div>
                                     @if($item['flag'])
                                         <span class="text-success">[✔]</span>
@@ -73,8 +73,13 @@
             @endforeach
         </form>
 
-        <div class="text-end">
+
+
+          <div class="row mt-5">
+            <div class="col-lg-12 text-end shadow bg-white rounded footer-action-menu p-2">
                 <button class="btn btn-warning" id="revertBtn">Revert</button>
+                <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+            </div>
         </div>
     </div>
 
