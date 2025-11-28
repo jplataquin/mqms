@@ -383,7 +383,7 @@ class MaterialCanvassController extends Controller
             ->where('material_quantity_request_item_id','=',$d['material_quantity_request_item_id'])
             ->where(function($q){
 
-                return $q->where('status','!=','VOID')->where('status','!=','REJC');
+                return $q->where('status','!=','VOID')->orWhere('status','!=','REJC');
             
             })->exists();
 
