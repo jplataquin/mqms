@@ -403,6 +403,7 @@
                 query>append('to',to_val);
             }
 
+            
             window.open('/report/price/print?'+query,'_blank').focus();
         }
     </script>

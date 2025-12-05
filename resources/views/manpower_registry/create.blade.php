@@ -101,7 +101,19 @@
                         <label>Region</label>
                         <select class="form-select" id="region">
 
-</select>
+                        </select>
+                    </div>
+                </div>            
+            </div>
+
+
+            <div class="row mb-3">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>Region</label>
+                        <select class="form-select" id="region">
+
+                        </select>
                     </div>
                 </div>            
             </div>
