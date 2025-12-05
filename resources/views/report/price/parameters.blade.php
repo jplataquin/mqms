@@ -365,7 +365,7 @@
             }
 
             if(to_val){
-                query>append('to',to_val);
+                query.append('to',to_val);
             }
 
             window.open('/report/price/generate?'+query,'_blank').focus();

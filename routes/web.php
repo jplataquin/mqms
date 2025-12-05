@@ -196,7 +196,10 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/review/coupons', [App\Http\Controllers\Review\CouponReviewController::class, 'list']);
     Route::get('/review/coupon/{id}', [App\Http\Controllers\Review\CouponReviewController::class, 'display']);
     
-  
+    
+    Route::get('/manpower_registry', [App\Http\Controllers\ManpowerRegistryController::class, 'list']);
+    Route::get('/manpower_registry/{id}', [App\Http\Controllers\ManpowerRegistryController::class, 'display']);
+    Route::get('/manpower_registry/create', [App\Http\Controllers\ManpowerRegistryController::class, 'create']);
 });
 
 

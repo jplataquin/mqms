@@ -84,6 +84,12 @@
 
                         <li class="menu-item">
                             <div class="nav-item">
+                                <a href="/manpower_registry" hx-select="#content" hx-target="#main">Manpower Registry</a>
+                            </div>          
+                        </li>
+
+                        <li class="menu-item">
+                            <div class="nav-item">
                                 <a href="/projects" hx-select="#content" hx-target="#main">Projects</a>
                             </div>          
                         </li>
