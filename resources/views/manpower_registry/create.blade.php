@@ -163,7 +163,20 @@
             </div>
 
             <div class="row mb-3">
-            
+                <div class="col-lg-12">
+                    <div class="d-flex justify-content-around">
+                    @foreach($skill_options as $val=>$text)
+                    
+                        <div class="form-check">
+                            <input class="form-check-input skill" type="checkbox" value="{{$val}}">
+                            <label class="form-check-label">
+                                {{$text}}
+                            </label>
+                        </div>
+
+                    @endforeach
+                    </div>
+                </div>
             </div>
 
             <div class="row mt-5">

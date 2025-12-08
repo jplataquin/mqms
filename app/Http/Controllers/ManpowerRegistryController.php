@@ -15,7 +15,8 @@ class ManpowerRegistryController extends Controller
         return view('manpower_registry/create',[
             'region_options'                => ManpowerRegistry::region_options(),
             'province_options'              => ManpowerRegistry::province_options(),
-            'city_municipality_options'     => ManpowerRegistry::city_municipality_options()
+            'city_municipality_options'     => ManpowerRegistry::city_municipality_options(),
+            'skill_options'                 => ManpowerRegistry::skill_options()
         ]);
     }
 

@@ -107,4 +107,17 @@ class ManpowerRegistry extends Model
         
         ];
     }
+
+    public static function skill_options(){
+        return [
+            'mason'         => 'Mason',
+            'welder'        => 'welder',
+            'painter'       => 'Painter',
+            'electrician'   => 'Electrician',
+            'carpenter'     => 'Carpenter',
+            'roofer'        => 'Roofer',
+            'tile_setter'   => 'Tile Setter',
+            'metal_worker'  => 'Metal Worker'
+        ];
+    }
 }
