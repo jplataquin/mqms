@@ -101,9 +101,9 @@ class ManpowerRegistry extends Model
                 'SIGMA_' => 'Sigma', 
                 'TAPAZ_' => 'Tapaz'
             ],
-            'GUIMAR'     => 'Guimaras',
-            'ILOILO'     => 'Iloilo',
-            'NEGOCC'     => 'Negros Occidental'
+            'GUIMAR'     => [],
+            'ILOILO'     => [],
+            'NEGOCC'     => []
         
         ];
     }
