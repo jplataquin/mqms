@@ -117,7 +117,7 @@
                             <option value=""> - </option>
                             @foreach($province_options as $group=>$options)
                                 @foreach($options as $val => $text)
-                                <option value="{{$val}}" class="{{$group}}">{{$text}}</option>
+                                <option value="{{$val}}" data-group="{{$group}}" class="option d-none">{{$text}}</option>
                                 @endforeach
                             @endforeach
                         </select>
@@ -132,7 +132,7 @@
                             <option value=""> - </option>
                             @foreach($city_municipality_options as $group=>$options)
                                 @foreach($options as $val => $text)
-                                <option value="{{$val}}" class="{{$group}}">{{$text}}</option>
+                                <option value="{{$val}}" data-group="{{$group}}" class="option d-none">{{$text}}</option>
                                 @endforeach
                             @endforeach
                         </select>
@@ -141,7 +141,7 @@
             </div>
 
             <div class="row mb-3">
-                <div class="col-lg-6">
+                <div class="col-lg-6 mb-3">
                     <div class="form-group">
                         <label>Type * </label>
                         <select class="form-select" id="type">
@@ -150,13 +150,13 @@
                         </select> 
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6 mb-3">
                     <div class="form-group">
                         <label>Structure Category * </label>
                         <select class="form-select" id="structure_category">
                             <option value="VERT">Vertical</option>
                             <option value="HORI">Horizontal</option>
-                            <option value="BOTH">Both Horizontal</option>
+                            <option value="BOTH">Both Vertical & Horizontal</option>
                         </select> 
                     </div>
                 </div>
@@ -179,6 +179,51 @@
 
 <script type="module">
     import {$q} from '/adarna.js';
+
+    const region_select             = $q('#region').first();
+    const province_select           = $q('#province').first();
+    const city_municipality_select  = $q('#city_municipality').first();
+
+    region_select.onchange = (e)=>{
+
+        let selected = region_select.value;
+
+        Array.from(province_select.querySelectorAll('.option')).map((el)=>{
+            
+            let group = el.getAttribute('data-group');
+
+            if(group != selected ){
+                el.classList.add('d-none');
+            }else{
+                el.classList.remove('d-none');
+            }
+        });
+
+        province_select.value = '';
+        province_select.onchange();
+    }
+
+    region_select.onchange();
+
+
+    province_select.onchange = (e)=>{
+
+        let selected = province_select.value;
+
+        Array.from(city_municipality_select.querySelectorAll('.option')).map((el)=>{
+            
+            let group = el.getAttribute('data-group');
+
+            if(group != selected ){
+                el.classList.add('d-none');
+            }else{
+                el.classList.remove('d-none');
+            }
+        });
+
+        city_municipality_select.value = '';
+        city_municipality_select.onchange();
+    }
 
 </script>
 </div>
