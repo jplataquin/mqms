@@ -100,7 +100,9 @@
                     <div class="form-group">
                         <label>Region</label>
                         <select class="form-select" id="region">
-
+                            @foreach($region_options as $val => $text)
+                                <option value="{{$val}}">{{$text}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>            
@@ -110,14 +112,33 @@
             <div class="row mb-3">
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <label>Region</label>
-                        <select class="form-select" id="region">
-
+                        <label>Province</label>
+                        <select class="form-select" id="province">
+                            <option value=""> - </option>
+                            @foreach($region_options as $group=>$options)
+                                @foreach($options as $val => $text)
+                                <option value="{{$val}}" class="{{$group}}">{{$text}}</option>
+                                @endforeach
+                            @endforeach
                         </select>
                     </div>
                 </div>            
             </div>
-
+            <div class="row mb-3">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>City/Municipality</label>
+                        <select class="form-select" id="city_municipality">
+                            <option value=""> - </option>
+                            @foreach($city_municipality_options as $group=>$options)
+                                @foreach($options as $val => $text)
+                                <option value="{{$val}}" class="{{$group}}">{{$text}}</option>
+                                @endforeach
+                            @endforeach
+                        </select>
+                    </div>
+                </div>            
+            </div>
 
             <div class="row mb-3">
                 <div class="col-lg-6">
