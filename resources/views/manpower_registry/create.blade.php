@@ -166,14 +166,14 @@
             @foreach($skill_options as $val=>$text)
 
                 
-                <div class="row d-flex justify-content-between mb-1 border border-primary">
+                <div class="row d-flex justify-content-between mb-3 border border-secondary">
                     
-                    <div class="w-50">
+                    <div class="w-50 h4">
                         {{$text}}
                     </div>
 
                     <div class="w-50 text-center">
-                        <input class="skill" type="checkbox" value="{{$val}}">
+                        <input class="skill h4" type="checkbox" value="{{$val}}">
                     </div>
 
                 </div>
