@@ -206,8 +206,9 @@
     const region_select             = $q('#region').first();
     const province_select           = $q('#province').first();
     const city_municipality_select  = $q('#city_municipality').first();
+    const skill_select              = $q('#skill_select').first();
+    const type_select               = $q('#type').first();
 
-    console.log(province_select);
     region_select.onchange = (e)=>{
 
         let selected = region_select.value;
@@ -229,7 +230,6 @@
 
     region_select.onchange();
 
-
     province_select.onchange = (e)=>{
 
         let selected = province_select.value;
@@ -249,6 +249,21 @@
         city_municipality_select.value = '';
         city_municipality_select.dispatchEvent((new Event('change', { bubbles: true })));
     }
+
+    type_select.onchange = (e)=>{
+
+        $q('.skill').items().map((el)=>{
+            el.chacked = false;
+        });
+
+        if(type_select.value == "SKILLED"){
+            skill_select.classList.remove('d-none');
+        }else{
+            skill_select.classList.add('d-none');
+        }
+    }
+
+    type_select.dispatchEvent((new Event('change', { bubbles: true })));
 
 </script>
 </div>
