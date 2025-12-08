@@ -164,6 +164,7 @@
 
             <div id="skill_select" class="mb-3">
                 <h3>Skills</h3>
+                <div class="m-3">
                 @foreach($skill_options as $val=>$text)
 
 
@@ -184,6 +185,7 @@
                     </div>
 
                 @endforeach
+                </div>
             </div>
           
 
