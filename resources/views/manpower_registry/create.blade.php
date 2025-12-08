@@ -224,7 +224,7 @@
 
         
         city_municipality_select.value = '';
-        provincity_municipality_selectce_select.dispatchEvent((new Event('change', { bubbles: true })));
+        provincity_municipality_select.dispatchEvent((new Event('change', { bubbles: true })));
     }
 
 </script>
