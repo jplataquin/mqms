@@ -201,7 +201,7 @@
         });
 
         province_select.value = '';
-        province_select.onchange();
+        province_select.dispatchEvent((new Event('change', { bubbles: true })));
     }
 
     region_select.onchange();
@@ -222,8 +222,9 @@
             }
         });
 
+        
         city_municipality_select.value = '';
-        city_municipality_select.onchange();
+        provincity_municipality_selectce_select.dispatchEvent((new Event('change', { bubbles: true })));
     }
 
 </script>
