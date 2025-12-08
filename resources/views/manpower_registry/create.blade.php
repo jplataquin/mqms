@@ -162,18 +162,22 @@
                 </div>
             </div>
 
-            <div class="">
+            <div class="row mb-3">
             @foreach($skill_options as $val=>$text)
 
-                
-                <div class="row d-flex justify-content-between mb-3 border border-secondary">
-                    
-                    <div class="w-50 h4 p-1">
-                        {{$text}}
-                    </div>
 
-                    <div class="w-50 p-1 text-center">
-                        <input class="skill h4" type="checkbox" value="{{$val}}">
+                <div class="row">
+                    
+                    <div class="col-lg-12">
+                        <div class="d-flex justify-content-between mb-3 border border-secondary">
+                            <div class="w-50 h4 p-1">
+                                {{$text}}
+                            </div>
+
+                            <div class="w-50 p-1 text-center">
+                                <input class="skill h4" type="checkbox" value="{{$val}}">
+                            </div>
+                        </div>
                     </div>
 
                 </div>
