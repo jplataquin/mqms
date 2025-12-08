@@ -253,7 +253,7 @@
     type_select.onchange = (e)=>{
 
         $q('.skill').items().map((el)=>{
-            el.chacked = false;
+            el.checked = false;
         });
 
         if(type_select.value == "SKILLED"){
