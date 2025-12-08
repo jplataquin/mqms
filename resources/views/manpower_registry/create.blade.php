@@ -168,14 +168,14 @@
                 
                 <div class="row d-flex justify-content-between mb-1 border border-primary">
                     
-                    <div>
+                    <div class="w-50">
                         {{$text}}
                     </div>
 
-                    <div>
+                    <div class="w-50">
                         <input class="skill" type="checkbox" value="{{$val}}">
                     </div>
-                    
+
                 </div>
 
             @endforeach
