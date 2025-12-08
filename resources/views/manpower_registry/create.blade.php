@@ -174,8 +174,8 @@
                                 {{$text}}
                             </div>
 
-                            <div class="w-50 p-1 text-center">
-                                <input class="skill h4" type="checkbox" value="{{$val}}">
+                            <div class="w-50 pt-2 text-center">
+                                <input class="skill" style="transform: scale(1.5);" type="checkbox" value="{{$val}}">
                             </div>
                         </div>
                     </div>
