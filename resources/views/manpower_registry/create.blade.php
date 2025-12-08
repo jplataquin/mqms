@@ -184,6 +184,7 @@
     const province_select           = $q('#province').first();
     const city_municipality_select  = $q('#city_municipality').first();
 
+    console.log(province_select);
     region_select.onchange = (e)=>{
 
         let selected = region_select.value;
