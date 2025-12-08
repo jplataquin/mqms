@@ -190,11 +190,13 @@
           
 
             <div class="row mt-5">
-                <div class="col-12 text-end">
-                <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
-                <button class="btn btn-primary" id="createBtn">Create</button>
+                <div class="col-lg-12 text-end shadow bg-white rounded footer-action-menu p-2">
+                
+                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                    <button class="btn btn-primary" id="createBtn">Create</button>
                 </div>
             </div>
+            
         </div>
     </div>
 
