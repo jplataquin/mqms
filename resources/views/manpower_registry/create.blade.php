@@ -168,11 +168,11 @@
                 
                 <div class="row d-flex justify-content-between mb-1 border border-primary">
                     
-                    <label class="form-check-label">
+                    <label>
                         {{$text}}
                     </label>
 
-                    <input class="form-check-input skill" type="checkbox" value="{{$val}}">
+                    <input class="skill" type="checkbox" value="{{$val}}">
                     
                 </div>
 
