@@ -115,7 +115,7 @@
                         <label>Province</label>
                         <select class="form-select" id="province">
                             <option value=""> - </option>
-                            @foreach($region_options as $group=>$options)
+                            @foreach($province_options as $group=>$options)
                                 @foreach($options as $val => $text)
                                 <option value="{{$val}}" class="{{$group}}">{{$text}}</option>
                                 @endforeach
