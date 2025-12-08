@@ -172,7 +172,7 @@
                         {{$text}}
                     </div>
 
-                    <div class="w-50">
+                    <div class="w-50 text-center">
                         <input class="skill" type="checkbox" value="{{$val}}">
                     </div>
 
