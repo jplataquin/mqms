@@ -111,7 +111,7 @@ class ManpowerRegistry extends Model
     public static function skill_options(){
         return [
             'mason'         => 'Mason',
-            'welder'        => 'welder',
+            'welder'        => 'Welder',
             'painter'       => 'Painter',
             'electrician'   => 'Electrician',
             'carpenter'     => 'Carpenter',
