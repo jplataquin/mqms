@@ -232,7 +232,6 @@ class PurchaseOrderController extends PurchaseOrderSuperController
 
         $results_to_show = [];
 
-        DB::enableQueryLog();
 
 
         //Filter out completed material request
@@ -259,19 +258,11 @@ class PurchaseOrderController extends PurchaseOrderSuperController
             }
         }   
 
-        $queries = DB::getQueryLog();
-    
 
         return response()->json([
             'status'    => 1,
             'message'   => '',
-            'items'     =>   $items,
-            'po_quantity' => $po_quantity,
-            'count'     => count($items),
-            'data'      => $results_to_show,
-            'available_item_count' => $available_item_count,
-            'lq' => $queries,
-            'r' => $result
+            'data'      => $results_to_show
         ]);
     }
 
