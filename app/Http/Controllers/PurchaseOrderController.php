@@ -264,7 +264,8 @@ class PurchaseOrderController extends PurchaseOrderSuperController
             'status'    => 1,
             'message'   => '',
             'data'      => $results_to_show,
-            'lq' => $queries
+            'lq' => $queries,
+            'r' => $result
         ]);
     }
 
