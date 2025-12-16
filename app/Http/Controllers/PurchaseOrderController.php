@@ -265,6 +265,8 @@ class PurchaseOrderController extends PurchaseOrderSuperController
         return response()->json([
             'status'    => 1,
             'message'   => '',
+            'items'     =>   $items,
+            'count'     => count($items),
             'data'      => $results_to_show,
             'available_item_count' => $available_item_count,
             'lq' => $queries,
