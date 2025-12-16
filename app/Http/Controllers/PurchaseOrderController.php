@@ -264,6 +264,7 @@ class PurchaseOrderController extends PurchaseOrderSuperController
             'status'    => 1,
             'message'   => '',
             'data'      => $results_to_show,
+            'available_item_count' => $available_item_count,
             'lq' => $queries,
             'r' => $result
         ]);
