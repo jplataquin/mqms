@@ -208,6 +208,8 @@ class PurchaseOrderController extends PurchaseOrderSuperController
             $materialQuantityRequest = $materialQuantityRequest->where('component_id','=',$component_id);
         }
 
+        DB::enableQueryLog()
+
         if($limit > 0){
             $page   = ($page-1) * $limit;
             
@@ -255,10 +257,14 @@ class PurchaseOrderController extends PurchaseOrderSuperController
             }
         }   
 
+        $queries = DB::getQueryLog();
+    
+
         return response()->json([
             'status'    => 1,
-            'message'   =>'',
-            'data'      => $results_to_show
+            'message'   => '',
+            'data'      => $results_to_show,
+            'lq' => $queries
         ]);
     }
 
