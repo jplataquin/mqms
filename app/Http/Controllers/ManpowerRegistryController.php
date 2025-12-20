@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ManpowerRegistry;
+use Illuminate\Support\Facades\Validator;
 
 class ManpowerRegistryController extends Controller
 {
@@ -68,12 +69,62 @@ class ManpowerRegistryController extends Controller
             $data[$val] = $$val;
         }
 
+        $validate = $this->_validate_create_entry($data);
         
+
+        if($validate['status'] <= 0 ){
+            return response()->json($validate);    
+        }
+
         return response()->json([
             'status'    => 1,
             'message'   => '',
             'data'      => $data
         ]);
+    }
+
+
+    private function _validate_create_entry($data){
+
+
+        $rules = [
+            'firstname'             => ['required','max:255'],
+            'lastname'              => ['required','max:255'],
+            'gender'                => ['required'],
+            'email'                 => ['nullable','email'],
+            'mobile_no'             => ['required'],
+            'type'                  => ['required'],
+            'structure_category'    => ['required'],
+            'birthdate'             => ['required'],
+            'region'                => ['required'],
+            'province'              => ['required'],
+            'city_municipality'     => ['required']
+        ];
+
+        //todo validate area
+
+        //validate uniqueness
+
+        //validate skillset
+
+        $validator = Validator::make([$data],$rules);
+
+        if ($validator->fails()) {
+            
+            return [
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => $validator->messages()
+            ];
+        }
+
+
+        return [
+            'status'    => 1,
+            'message'   => '',
+            'data'      => []
+        ];
+
     }
 
 }

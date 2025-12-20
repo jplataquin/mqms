@@ -98,7 +98,7 @@
             <div class="row mb-3">
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <label>Region</label>
+                        <label>Region *</label>
                         <select class="form-select" id="region">
                             @foreach($region_options as $val => $text)
                                 <option value="{{$val}}">{{$text}}</option>
@@ -112,7 +112,7 @@
             <div class="row mb-3">   
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <label>Province</label>
+                        <label>Province *</label>
                         <select class="form-select" id="province">
                             <option value=""> - </option>
                             @foreach($province_options as $group=>$options)
@@ -127,7 +127,7 @@
             <div class="row mb-3">
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <label>City/Municipality</label>
+                        <label>City/Municipality *</label>
                         <select class="form-select" id="city_municipality">
                             <option value=""> - </option>
                             @foreach($city_municipality_options as $group=>$options)
