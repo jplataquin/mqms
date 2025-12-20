@@ -184,4 +184,13 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
 
     Route::post('/review/coupon/approve_void', [App\Http\Controllers\Review\CouponReviewController::class, '_approve_void']);
     Route::post('/review/coupon/reject_void', [App\Http\Controllers\Review\CouponReviewController::class, '_reject_void']);
+
+
+    //Manpower Regqistry
+
+    Route::get('/manpower_registry/list', [App\Http\Controllers\ManpowerController::class, '_list']);
+    Route::post('/manpower_registry/create', [App\Http\Controllers\ManpowerController::class, '_create']);
+    Route::post('/manpower_registry/update', [App\Http\Controllers\ManpowerController::class, '_update']);
+    Route::post('/manpower_registry/delete', [App\Http\Controllers\ManpowerController::class, '_delete']);
+    
 });

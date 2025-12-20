@@ -307,7 +307,14 @@
 
         }).then(reply=>{
 
-            window.,util.unblockUI();
+            window.util.unblockUI();
+
+            if(reply.status <= 0){
+                window.util.showMst(reply);
+                return false;
+            }
+
+            console.log(reply.data);
 
         });
     }
