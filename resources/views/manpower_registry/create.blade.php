@@ -302,7 +302,7 @@
             structure_category: structure_category.value,
 
             @foreach($skill_options as $val=>$text)
-                {{$val}}: skill_{{$val}}.selected ,
+                {{$val}}: skill_{{$val}}.checked ,
             @endforeach
 
         }).then(reply=>{
