@@ -22,11 +22,11 @@ class ManpowerRegistryController extends Controller
 
     public function _create(Request $request){
 
-        $firstname  = $requerst->input('firstname');
+        $firstname  = $request->input('firstname');
         $middlename = $request->input('middlename');
         $lastname   = $request->input('lastname');
         $suffix     = $request->input('suffix');
-        $gender     = $requerst->input('gender');
+        $gender     = $request->input('gender');
         $mobile_no  = $request->input('mobile_no');
         $birthdate  = $request->input('birthdate');
         $email      = $request->input('email');
