@@ -284,7 +284,7 @@
     createBtn.onclick = ()=>{
         window.util.blockUI();
 
-        window.util.$post('/api/create',{
+        window.util.$post('/api/manpower_registry/create',{
             firstname: firstname.value,
             middlename: middlename.value,
             lastname: lastname.value,
