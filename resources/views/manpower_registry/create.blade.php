@@ -219,7 +219,7 @@
     const middlename    = $q('#middlename').first();
     const lastname      = $q('#lastname').first();
     const suffix        = $q('#suffix').first();
-    const birthdate     = $q('#birstdate').first();
+    const birthdate     = $q('#birthdate').first();
     const gender        = $q('#gender').first();
     const mobile_no     = $q('#mobile_no').first();
     const email         = $q('#email').first();
