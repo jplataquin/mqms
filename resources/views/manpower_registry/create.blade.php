@@ -28,7 +28,7 @@
         <div class="form-header">
             Register Manpower
         </div>
-        <div class="form-body">
+        <div class="form-body pt-3">
 
             <div class="row mb-3">
                 <div class="col-lg-4">
@@ -109,7 +109,7 @@
             </div>
 
 
-            <div class="row mb-3">
+            <div class="row mb-3">   
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label>Province</label>
