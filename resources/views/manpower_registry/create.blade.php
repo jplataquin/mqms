@@ -152,11 +152,11 @@
                 </div>
                 <div class="col-lg-6 mb-3">
                     <div class="form-group">
-                        <label>Structure Category * </label>
+                        <label>Structure Speciality Category * </label>
                         <select class="form-select" id="structure_category">
+                            <option value="BOTH">Both Vertical & Horizontal</option>
                             <option value="VERT">Vertical</option>
                             <option value="HORI">Horizontal</option>
-                            <option value="BOTH">Both Vertical & Horizontal</option>
                         </select> 
                     </div>
                 </div>
@@ -177,7 +177,7 @@
                                     </div>
 
                                     <div class="w-50 pt-2 text-center">
-                                        <input class="skill" style="transform: scale(1.5);" type="checkbox" value="{{$val}}">
+                                        <input class="skill" style="transform: scale(1.5);" id="skill_{{$val}}" type="checkbox" value="{{$val}}">
                                     </div>
                                 </div>
                             </div>
@@ -210,6 +210,20 @@
     const city_municipality_select  = $q('#city_municipality').first();
     const skill_select              = $q('#skill_select').first();
     const type_select               = $q('#type').first();
+    const structural_category       = $q('#structural_category').first();
+
+    const createBtn                 = $q('#createBtn').first();
+    const cancelBtn                 = $q('#cancelBtn').first();
+
+    const firstname     = $q('#firstname').first();
+    const middlename    = $q('#middlename').first();
+    const lastname      = $q('#lastname').first();
+    const suffix        = $q('#suffix').first();
+    const birthdate     = $q('#birstdate').first();
+    const gender        = $q('#gender').first();
+    const mobile_no     = $q('#mobile_no').first();
+    const email         = $q('#email').first();
+
 
     region_select.onchange = (e)=>{
 
@@ -266,6 +280,37 @@
     }
 
     type_select.dispatchEvent((new Event('change', { bubbles: true })));
+
+    createBtn.onclick = ()=>{
+        window.util.blockUI();
+
+        window.util.$post('/api/create',{
+            firstname: firstname.value,
+            middlename: middlename.value,
+            lastname: lastname.value,
+            suffix: suffix.value,
+            birthdate: birthdate.value,
+            gender: gender.value,
+            mobile_no: mobile_no.value,
+            email: email.value,
+
+            region: region_select.value,
+            province: province_select.value,
+            city_municipality: city_municipality_select.value,
+
+            type: type_select.value,
+            structure_category: structure_category.value,
+
+            @foreach($skill_options as $val=>$text)
+                {{$val}}: skill_{{$val}}.selected
+            @endforeach
+
+        }).then(reply=>{
+
+            window.,util.unblockUI();
+
+        });
+    }
 
 </script>
 </div>
