@@ -114,7 +114,8 @@ class ManpowerRegistryController extends Controller
             return [
                 'status'    => -2,
                 'message'   => 'Failed Validation',
-                'data'      => $validator->messages()
+                'data'      => $validator->messages(),
+                'input'     => $data
             ];
         }
 

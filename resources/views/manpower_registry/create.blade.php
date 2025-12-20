@@ -163,7 +163,7 @@
             </div>
 
             <div id="skill_select" class="mb-3">
-                <h3>Skills</h3>
+                <h3>Skill Set</h3>
                 <div class="m-3">
                     @foreach($skill_options as $val=>$text)
 
@@ -310,7 +310,7 @@
             window.util.unblockUI();
 
             if(reply.status <= 0){
-                window.util.showMst(reply);
+                window.util.showMsg(reply);
                 return false;
             }
 
