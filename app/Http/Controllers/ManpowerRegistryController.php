@@ -58,7 +58,7 @@ class ManpowerRegistryController extends Controller
             'email' => $email,
             'birthdate' => $birthdate,
             'type' => $type,
-            'structural_category' => $structural_category,
+            'structure_category' => $structure_category,
             'region' => $region,
             'province' => $province,
             'city_municipality' => $city_municipality
