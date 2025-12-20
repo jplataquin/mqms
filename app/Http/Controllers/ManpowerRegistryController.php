@@ -36,7 +36,7 @@ class ManpowerRegistryController extends Controller
         $city_municipality  = $request->input('city_municipality');
 
         $type                   = $request->input('type');
-        $structural_category    = $request->input('structural_category');
+        $structure_category    = $request->input('structure_category');
 
 
         $skill_options = ManpowerRegistry::skill_options();
