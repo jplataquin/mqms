@@ -188,9 +188,9 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
 
     //Manpower Regqistry
 
-    Route::get('/manpower_registry/list', [App\Http\Controllers\ManpowerController::class, '_list']);
-    Route::post('/manpower_registry/create', [App\Http\Controllers\ManpowerController::class, '_create']);
-    Route::post('/manpower_registry/update', [App\Http\Controllers\ManpowerController::class, '_update']);
-    Route::post('/manpower_registry/delete', [App\Http\Controllers\ManpowerController::class, '_delete']);
+    Route::get('/manpower_registry/list', [App\Http\Controllers\ManpowerRegistryController::class, '_list']);
+    Route::post('/manpower_registry/create', [App\Http\Controllers\ManpowerRegistryController::class, '_create']);
+    Route::post('/manpower_registry/update', [App\Http\Controllers\ManpowerRegistryController::class, '_update']);
+    Route::post('/manpower_registry/delete', [App\Http\Controllers\ManpowerRegistryController::class, '_delete']);
     
 });
