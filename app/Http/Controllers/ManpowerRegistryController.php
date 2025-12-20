@@ -107,7 +107,7 @@ class ManpowerRegistryController extends Controller
 
         //validate skillset
 
-        $validator = Validator::make([$data],$rules);
+        $validator = Validator::make([[$data]],$rules);
 
         if ($validator->fails()) {
             
