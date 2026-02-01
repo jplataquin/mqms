@@ -69,7 +69,7 @@
         
      
 
-         @foreach(['Supplier','Accounting'] as $copy)
+         @foreach(['Supplier','Accounting','Purchaser'] as $copy)
             <div class="whole mb-10">
                 <table class="table" border="1">
                     <tr>
