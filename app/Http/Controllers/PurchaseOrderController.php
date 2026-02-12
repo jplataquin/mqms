@@ -21,9 +21,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
-use Spipu\Html2Pdf\Html2Pdf;
-use Spipu\Html2Pdf\Exception\Html2PdfException;
-use Spipu\Html2Pdf\Exception\ExceptionFormatter;
+// use Spipu\Html2Pdf\Html2Pdf;
+// use Spipu\Html2Pdf\Exception\Html2PdfException;
+// use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Super\PurchaseOrderSuperController;
 
@@ -863,89 +863,89 @@ class PurchaseOrderController extends PurchaseOrderSuperController
         }
     }
     
-    public function __print($id){
+    // public function __print($id){
 
-        $purchaseOrder           = PurchaseOrder::findOrFail($id);
-        $materialQuantityRequest = MaterialQuantityRequest::findOrFail($purchaseOrder->material_quantity_request_id);
+    //     $purchaseOrder           = PurchaseOrder::findOrFail($id);
+    //     $materialQuantityRequest = MaterialQuantityRequest::findOrFail($purchaseOrder->material_quantity_request_id);
 
-        $user = auth()->user();
+    //     $user = auth()->user();
 
-        if(!$this->hasAccess(['purchase_order:all:view'])){
+    //     if(!$this->hasAccess(['purchase_order:all:view'])){
 
-            if( !$this->hasAccess(['purchase_order:own:view']) ){
-                return view('access_denied');
-            }
+    //         if( !$this->hasAccess(['purchase_order:own:view']) ){
+    //             return view('access_denied');
+    //         }
 
-            if($purchaseOrder->created_by != $user->id){
-                return view('access_denied');
-            }
-        }
+    //         if($purchaseOrder->created_by != $user->id){
+    //             return view('access_denied');
+    //         }
+    //     }
 
-        if($purchaseOrder->status != 'APRV'){
-            return abort(404);
-        }
+    //     if($purchaseOrder->status != 'APRV'){
+    //         return abort(404);
+    //     }
 
-        $project                = $materialQuantityRequest->Project;
-        $section                = $materialQuantityRequest->Section;
-        $component              = $materialQuantityRequest->Component;
+    //     $project                = $materialQuantityRequest->Project;
+    //     $section                = $materialQuantityRequest->Section;
+    //     $component              = $materialQuantityRequest->Component;
         
-        $componentItems                 = $component->ComponentItems;
-        $paymentTerm                    = $purchaseOrder->PaymentTerm;
-        $supplier                       = $purchaseOrder->Supplier;
-        $materialQuantityRequestItems   = $purchaseOrder->Items;
+    //     $componentItems                 = $component->ComponentItems;
+    //     $paymentTerm                    = $purchaseOrder->PaymentTerm;
+    //     $supplier                       = $purchaseOrder->Supplier;
+    //     $materialQuantityRequestItems   = $purchaseOrder->Items;
                             
-        $material_id_arr                = [];
+    //     $material_id_arr                = [];
 
-        foreach($materialQuantityRequestItems as $item){
+    //     foreach($materialQuantityRequestItems as $item){
 
-            $material_id_arr[] = $item->material_item_id;
-        }
+    //         $material_id_arr[] = $item->material_item_id;
+    //     }
                    
 
-        $materialItems              = MaterialItem::whereIn('id',$material_id_arr)->get();
-        $materialItemArr    =        [];
+    //     $materialItems              = MaterialItem::whereIn('id',$material_id_arr)->get();
+    //     $materialItemArr    =        [];
 
 
-        foreach($materialItems as $materialItem){
-            $materialItemArr[$materialItem->id] = $materialItem;
-        }
+    //     foreach($materialItems as $materialItem){
+    //         $materialItemArr[$materialItem->id] = $materialItem;
+    //     }
 
-        $extras = json_decode($purchaseOrder->extras);
+    //     $extras = json_decode($purchaseOrder->extras);
         
     
-        $html = view('purchase_order/print',[
-            'purchase_order'                    => $purchaseOrder,
-            'material_quantity_request'         => $materialQuantityRequest,
-            'project'                           => $project,
-            'section'                           => $section,
-            'component'                         => $component,
-            'supplier'                          => $supplier,
-            'payment_term'                      => $paymentTerm,
-            'items'                             => $materialQuantityRequestItems,
-            'extras'                            => $extras,
-            'materialItemArr'                   => $materialItemArr,
-            'current_datetime'                  => Carbon::now()
+    //     $html = view('purchase_order/print',[
+    //         'purchase_order'                    => $purchaseOrder,
+    //         'material_quantity_request'         => $materialQuantityRequest,
+    //         'project'                           => $project,
+    //         'section'                           => $section,
+    //         'component'                         => $component,
+    //         'supplier'                          => $supplier,
+    //         'payment_term'                      => $paymentTerm,
+    //         'items'                             => $materialQuantityRequestItems,
+    //         'extras'                            => $extras,
+    //         'materialItemArr'                   => $materialItemArr,
+    //         'current_datetime'                  => Carbon::now()
             
-        ])->render();
+    //     ])->render();
         
-        $html2pdf = new Html2Pdf('P','A4','en', false, 'UTF-8', [5, 5, 10, 0]);
+    //     $html2pdf = new Html2Pdf('P','A4','en', false, 'UTF-8', [5, 5, 10, 0]);
            
 
-        try {
-            $html2pdf->writeHTML($html);
-            $html2pdf->output('Purchase Order - '.str_pad($purchaseOrder->id,0,6,STR_PAD_LEFT ).'.pdf');
-            $html2pdf->clean();
+    //     try {
+    //         $html2pdf->writeHTML($html);
+    //         $html2pdf->output('Purchase Order - '.str_pad($purchaseOrder->id,0,6,STR_PAD_LEFT ).'.pdf');
+    //         $html2pdf->clean();
         
-        }catch(Html2PdfException $e) {
-            $html2pdf->clean();
+    //     }catch(Html2PdfException $e) {
+    //         $html2pdf->clean();
         
-            $formatter = new ExceptionFormatter($e);
-            echo $html;
-            echo $formatter->getHtmlMessage();        
-        } 
+    //         $formatter = new ExceptionFormatter($e);
+    //         echo $html;
+    //         echo $formatter->getHtmlMessage();        
+    //     } 
         
 
-    }
+    // }
 
 
     public function print($id){

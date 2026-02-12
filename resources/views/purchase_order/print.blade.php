@@ -331,7 +331,7 @@
 
         <!-- Warehouse Copy -->
         <div class="whole mb-10">
-             <table class="table" border="1">
+            <table class="table" border="1">
                 <tr>
                     <td colspan="4" class="text-center bold" style="">
                         <img src="/storage/sys_images/header.png" style="width:500px"/>
@@ -477,6 +477,116 @@
                         <label class="bold">Validated By</label>
                     </td>
                 </tr>
+            </table>
+        </div>
+
+
+        <!-- Item Call Out -->
+        <div class="whole mb-10">
+            <table class="table" border="1">
+                <tr>
+                    <td colspan="4" class="text-center bold" style="">
+                        <img src="/storage/sys_images/header.png" style="width:500px"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="text-center bold" style="background-color:#ccc">
+                        Material Call Out Slip
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="padding:3px">
+                        <table class="table" style="margin:auto" border="1">
+                            <tr>
+                                <td class="text-left bold" style="width:15%">PO#</td>
+                                <td style="width:20%">{{ str_pad($purchase_order->id,6,0,STR_PAD_LEFT) }}</td>
+                                <td class="text-center bold" rowspan="2"  style="width:15%">Supplier</td>
+                                <td style="width:48%" rowspan="2"> {{$supplier->name}}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left bold">Mat. Req #</td>
+                                <td>{{ str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT) }}</td>
+                              
+                            </tr>
+                            <tr>
+                                <td class="text-left bold">Project</td>
+                                <td colspan="3">
+                                    {{$project->name}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left bold">Section</td>
+                                <td colspan="3">
+                                    {{$section->name}}
+                                </td>
+                            </tr>
+                                 <tr>
+                                <td class="text-left bold">Contract Item</td>
+                                <td colspan="3">
+                                    {{$contract_item->name}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left bold">Component</td>
+                                <td colspan="3">
+                                    {{$component->name}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left bold">Date Needed</td>
+                                <td colspan="3">
+                                    {{$date_needed}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left bold">Datetime</td>
+                                <td colspan="3" style="font-size:12px">
+                                    
+                                    [Created]
+                                    {{$purchase_order->created_at}}
+                                    | 
+                                    [Approved]
+                                    {{$purchase_order->approved_at}}
+                                    | 
+                                    [Generated] 
+                                    {{$current_datetime}}
+                                </td>
+                                
+                            </tr>
+                            
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="text-center bold" colspan="4" style="background-color:#ccc;width:100%">
+                        Items
+                    </th>
+                </tr>
+                
+                
+                @foreach($items as $i => $item)
+
+                    @php 
+                        
+                        $item_name = $materialItemArr[ $item->material_item_id]->formatted_name;
+                        $item_name = Str::wordWrap($item_name, 50, "<br>", false);
+
+                    @endphp
+
+                    <tr>
+                        <td colspan="4">{{$i+1}}.) {!! $item_name !!}</td>
+                        <td class="text-center"> 00 </td>    
+                        <td class="text-center">{{number_format($item->quantity,2)}}</td>
+                        <td class="text-center">
+                            {{ number_format( $item->quantity ,2) }}
+                        </td>
+                    </tr>
+
+                   
+                     
+                @endforeach    
+              
+       
             </table>
         </div>
     </body>
