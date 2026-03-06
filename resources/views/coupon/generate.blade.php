@@ -135,7 +135,7 @@
                     @endif
 
                     <div>
-                        Created By: {{$coupon->createdByUser()->name() }}
+                        Created By: {{$coupon->createdByUser()->FullName }}
                     </div>
                 </td>
             </tr>

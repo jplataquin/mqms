@@ -90,6 +90,12 @@ class User extends Authenticatable
             }
         }
         
+        
         return $access_codes;
+    }
+
+
+    public function getFullNameAttribute(){
+        return trim($this->prefix.' '.$this->firstname.' '.$this->lastname.' '.$this->suffix);
     }
 }
