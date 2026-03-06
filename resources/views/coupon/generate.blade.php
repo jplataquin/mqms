@@ -128,9 +128,9 @@
                 <td colspan="2" style="padding-left:20px">
                     <h1>Fuel Coupon</h1>
                     {{$coupon->amount}} | {{$coupon->quantity}}
-                    @if($coupon->amount && !$coupon->quantity)
+                    @if($coupon->amount && $coupon->quantity <= 0)
                         <h3>Amount P {{number_format($coupon->amount,2)}}</h3>
-                    @elseif($coupon->quantity && !$coupon->amount)
+                    @elseif($coupon->quantity && $coupon->amount <= 0)
                         <h3>Quantity {{number_format($coupon->quantity)}} Ltrs</h3>
                     @endif
                 </td>
