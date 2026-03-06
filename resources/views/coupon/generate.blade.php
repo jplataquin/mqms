@@ -35,7 +35,7 @@
 
             qrImg.onload = ()=>{
 
-                ctx.drawImage(qrImg, 110, 10, 80, 80);
+                ctx.drawImage(qrImg, 300, 10, 80, 80);
                 
                 ctx.fillStyle           = 'black'; // Set fill color for the text
                 ctx.font                = "14px Arial";
@@ -44,8 +44,8 @@
                 
                 ctx.fillText('#'+id_text,25,110);
             }
-
-
+        
+        
             headerImg.onload =  ()=>{
 
                 const imageAspectRatio = headerImg.width / headerImg.height;
