@@ -120,11 +120,12 @@
                     <img src="/storage/sys_images/header.png" style="width:500px"/>
                 </td>
                 <td class="text-center">
-                    <img id="qr" src="/qrcode?d={{ url('/coupon/claim/'.$coupon->id.'/'.$coupon->code ) }}"style="width:200px;height:200px"/>
+                    <img id="qr" src="/qrcode?d={{ url('/coupon/claim/'.$coupon->id.'/'.$coupon->code ) }}"style="width:50px;height:50px"/>
                 </td>
             </tr>
         </table>
 
+        <!--
         <canvas id="canvas"></canvas>
 
         <button style="margin-top:20px" id="downloadBtn">Download</button>
@@ -223,5 +224,7 @@
                 document.body.removeChild(downloadLink);
             }
         </script>
+
+-->
     </body>
 </html
