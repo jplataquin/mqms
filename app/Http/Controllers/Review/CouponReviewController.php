@@ -203,13 +203,13 @@ class CouponReviewController extends Controller
         }
 
         //Prevents race conditions when approving
-        if($coupon->amount != $amount){
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'The record has been altred',
-                'data'      => []
-            ]);
-        }
+        // if($coupon->amount != $amount){
+        //     return response()->json([
+        //         'status'    => 0,
+        //         'message'   => 'The record has been altred',
+        //         'data'      => []
+        //     ]);
+        // }
 
         
         $user_id = Auth::user()->id;
