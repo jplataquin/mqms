@@ -36,13 +36,23 @@
 
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <label>Amount</label>
-                        <input type="text" id="amount" value="{{number_format($coupon->amount,2)}}" class="form-control" disabled="true"/>
+                        <label>Amount (PHP {{ number_format($amount,2) }}) </label>
+                        <input type="text" id="amount" value="{{$coupon->amount}}" class="form-control"/>
                     </div>
                 </div>
 
-                
             </div>
+
+            
+            <div class="row mt-3">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>Quantity ({{ number_fromat($quantity,2) }} Ltrs)</label>
+                        <input type="text" id="quantity" value="{{$quantity}}" class="form-control"/>
+                    </div>
+                </div>                
+            </div>
+
             <div class="row mt-3">
 
                 <div class="col-lg-12">
@@ -54,6 +64,30 @@
 
                 
             </div>
+
+            <div class="row mt-3">
+
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>Plate No.</label>
+                        <input type="text" id="name" class="form-control"/>
+                    </div>
+                </div>
+
+            </div>
+
+             <div class="row mt-3">
+
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>Remarks</label>
+                        <textarea id="name" class="form-control"></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+
 
             <div class="row mt-5">
                 <div class="col-12 text-end">
@@ -91,9 +125,18 @@
                 <tr>
                     <th>Amount</th>
                     <td>
-                        {{$coupon->amount}}
+                        {{ number_format($coupon->amount,2) }}
                     </td>
                 </tr>
+
+                <tr>
+                    <th>Quantity (Ltrs)</th>
+                    <td>
+                        {{ number_format($coupon->quantity,2) }}
+                    </td>
+                </tr>
+
+                
 
             </table>
         </div>
@@ -102,7 +145,7 @@
 
     @if($flag == 'claimed')
         <div class="text-center container">
-            <h1 class="text-warning">This Coupon is already claimed</h1>
+            <h1 class="text-warning">This Coupon has already been claimed</h1>
         </div>
     
     @endif
@@ -118,10 +161,44 @@
     const name      = $q('#name').first();
     const createBtn = $q('#createBtn').first();
     const cancelBtn = $q('#cancelBtn').first();
+    const amount    = $q('#amount').first();
+    const quantity  = $q('#quantity').first();
+
+    const original_amount   = parseFloat( {{$coupon->amount}} );
+    const original_quantity = parseFlaot( {{$coupon->quantity}} );
+    
+    amount.onkeyup = ()=>{
+
+        let amt = parseFloat(amount.value);
+        
+        if(original_amount != 0 (amt != original_amount) ){
+            amount.classList.add('border');
+            amount.classList.add('border-warning');
+        }else{
+            amount.classList.remove('border');
+            amount.classList.remove('border-warning');
+        }
+    }
+
+    quantity.onkeyup = ()=>{
+        
+        let qty = parseFloat(quantity.value);
+        
+        if(original_quantity != 0 (qty != original_quantity) ){
+            quantity.classList.add('border');
+            quantity.classList.add('border-warning');
+        }else{
+            quantity.classList.remove('border');
+            quantity.classList.remove('border-warning');
+        }
+    }
     
     claimBtn.onclick = async (e)=>{
 
-        let check = await window.util.confirm('Are you sure you want to claim this coupon amount P {{ number_format($coupon->amount,2) }}?');
+        let amt = parseFloat(amount.value);
+        let qty = parseFloat(quantity.value);
+
+        let check = await window.util.confirm('Are you sure you want to claim this coupon? (Amount P'+amt+' Quantity: '+qty+' Ltrs)');
 
         if(!check){
             return false;
@@ -130,8 +207,12 @@
         window.util.blockUI();
 
         window.util.$post('/api/coupon/claim',{
-            id      : '{{$coupon->id}}',
-            name    : name.value           
+            id       : '{{$coupon->id}}',
+            amount   : amt,
+            quantity : qty,
+            plate_no : plate_no.value, 
+            name     : name.value,
+            remarks  : remarks      
         }).then(reply=>{
             
             window.util.unblockUI();

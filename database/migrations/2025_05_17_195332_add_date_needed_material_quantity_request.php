@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-           Schema::table('material_quantity_requests', function (Blueprint $table) {
+        Schema::table('material_quantity_requests', function (Blueprint $table) {
             $table->dropColoumn('date_needed');
         });
     }

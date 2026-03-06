@@ -26,20 +26,29 @@
 
     <div class="form-container">
         <div class="form-header">
-            Coupon
+            Fuel Coupon
         </div>
         <div class="form-body">
             <div class="row">
 
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <label>Amount</label>
+                        <label>Amount (PHP)</label>
                         <input type="text" id="amount" class="form-control"/>
                     </div>
                 </div>
-
-
                 
+            </div>
+
+            <div class="row">
+                
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>Quantity (Ltrs)</label>
+                        <input type="text" id="quantity" class="form-control"/>
+                    </div>
+                </div>
+
             </div>
 
             <div class="row mt-5">
@@ -59,13 +68,23 @@
     const amount    = $q('#amount').first();
     const createBtn = $q('#createBtn').first();
     const cancelBtn = $q('#cancelBtn').first();
+    const quantity  = $q('#quantity').first();
     
     amount.onkeypress = (e)=>{
         return window.util.inputNumber(amount,e,2,false);
     }
 
     amount.onkeyup = (e)=>{
-        
+        quantity.value = '';
+        if(e.keyCode == 13){
+            createBtn.click();
+        }
+    }
+
+    quantity.onkeyup = (e)=>{
+     
+        amount.value = '';
+     
         if(e.keyCode == 13){
             createBtn.click();
         }
@@ -75,7 +94,8 @@
         window.util.blockUI();
 
         window.util.$post('/api/coupon/create',{
-            amount : amount.value,           
+            amount : amount.value,
+            quantity: quantity.value        
         }).then(reply=>{
             
             window.util.unblockUI();

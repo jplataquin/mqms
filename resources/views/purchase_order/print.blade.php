@@ -586,7 +586,7 @@
                      
                 @endforeach    
               
-       
+                //Patrila Builders Complex, Kabasaka road
             </table>
         </div>
     </body>

@@ -29,15 +29,49 @@ class CouponController extends Controller
         // }
 
 
-        $amount = $request->input('amount');
+        $amount     = (float) $request->input('amount');
+        $quantity   = (float) $request->input('quantity');
 
-        $validator = Validator::make($request->all(),[
-            'amount' =>[
-                'required',
-                'numeric',
-                'gte:1'
-            ]
-        ]);
+        $rules = [];
+
+        if($amount <=0 && $quantity <= 0){
+            
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Missing data',
+                'data'      => []
+            ]);
+
+        }else if($amount > 0 && $quantity > 0){
+
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Choose either "amount" or "quantity" value, cannot be both',
+                'data'      => []
+            ]);
+
+        }else if($amount > 0 && $quantity <= 0){
+            
+            $rules = [
+                'amount' => [
+                    'required',
+                    'numeric',
+                    'gte:1'
+                ]
+            ];
+
+        }else{
+
+            $rules = [
+                'quantity' => [
+                    'required',
+                    'numeric',
+                    'gte:1'
+                ]
+            ];
+        }
+
+        $validator = Validator::make($request->all(),$rules);
          
         if ($validator->fails()) {
             return response()->json([
@@ -53,6 +87,7 @@ class CouponController extends Controller
         $coupon = new Coupon();
 
         $coupon->amount         = $amount;
+        $coupon->quantity       = $quantity;
         $coupon->status         = 'PEND';
         $coupon->salt           = $salt;
         $coupon->code           = $coupon->generateCode($salt,$amount);
@@ -440,8 +475,12 @@ class CouponController extends Controller
 
     public function _claim(Request $request){
         
-        $name   = $request->input('name');
-        $id     = (int) $request->input('id');
+        $name       = $request->input('name');
+        $amount     = $request->input('amount');
+        $quantity   = $request->input('quantity');
+        $plate_no   = $request->input('plate_no');
+        $remarks    = $request->input('remarks');
+        $id         = (int) $request->input('id');
 
         
         $coupon = Coupon::find($id);
@@ -465,7 +504,20 @@ class CouponController extends Controller
         $validator = Validator::make($request->all(),[
             'name' => [
                 'required',
-            ]
+            ],
+            'plate_no' => [
+                'required',
+            ],
+            'amount' => [
+                'numeric',
+                'required',
+                'gte:1'
+            ],
+            'quantity' => [
+                'numeric',
+                'required',
+                'gte:1'
+            ],
         ]);
          
         if ($validator->fails()) {
@@ -481,7 +533,11 @@ class CouponController extends Controller
         $now = Carbon::now();
 
         $coupon->status           = 'CLAI';
+        $coupon->actual_amount    = (float) $amount;
+        $coupon->actual_quantity  = (float) $quantity;
         $coupon->claimed_by_name  = $name;
+        $coupon->plate_no         = $plate_no;
+        $coupon->remarks          = $remarks;
         $coupon->claimed_at       = $now;
         $coupon->processed_by     = $user_id;
         $coupon->processed_at     = $now;
