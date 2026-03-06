@@ -47,7 +47,7 @@
             <div class="row mt-3">
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <label>Quantity ({{ number_fromat($quantity,2) }} Ltrs)</label>
+                        <label>Quantity ({{ number_format($quantity,2) }} Ltrs)</label>
                         <input type="text" id="quantity" value="{{$quantity}}" class="form-control"/>
                     </div>
                 </div>                
