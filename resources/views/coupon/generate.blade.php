@@ -1,8 +1,130 @@
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+
         <title>Coupon - {{$coupon->id}}</title>
+  
+        <style>
+
+            .d-none{
+                display:none;
+            }
+
+            .d-inline{
+                display:inline;
+            }
+
+
+            table, tr, td, th {
+                border: solid 1px #000000;
+                border-collapse: collapse;
+                font-size: 11px;
+            }
+            
+            table {
+                width:100%;
+            }
+
+            th{
+                text-align: center;
+            }
+
+            td, th {
+                padding: 5px;
+            }
+
+           
+            .text-end{
+                text-align:right !important;
+            }
+
+            .text-start{
+                text-align:left !important;
+            }
+
+            .text-center{
+                text-align:center !important;
+            }
+
+            .ml-3{
+                margin-left: 3px;
+            }
+
+            .ml-5{
+                margin-left: 5px;
+            }
+
+
+            .mb-3{
+                margin-bottom:3px;
+            }
+
+            .mb-5{
+                margin-bottom:5px;
+            }
+
+            .amount-15{
+                width: 15ch !important;
+            }
+
+            .amount-13{
+                width: 13ch !important;
+            }
+            
+            .text-italic{
+                font-style: italic;
+            }
+
+            .wrap{
+                word-wrap: break-word;
+            }
+
+            .warning-text{
+                color:rgb(234, 255, 5);
+            }
+
+            .pending-text{
+                color:rgb(234, 255, 5);
+            }
+
+            .approved-text{
+                color:rgb(11, 152, 1);
+            }
+
+            .rejected-text{
+                color:rgb(255, 5, 5);
+            }
+
+            
+
+            @media print {
+
+                td, th{
+                    font-size:10px;
+                }
+
+                .page-break{
+                    break-before:always;
+                }
+                
+            
+            }
+        </style>
     </head>
     <body>
+
+        <table>
+            <tr>
+                <td>
+                    <img src="/storage/sys_images/header.png" width="300px"/>
+                </td>
+                <td>
+                    <img id="qr" src="/qrcode?d={{ url('/coupon/claim/'.$coupon->id.'/'.$coupon->code ) }}" width="200px" height="200px"/>
+                </td>
+            </tr>
+        </table>
+
         <canvas id="canvas"></canvas>
 
         <button style="margin-top:20px" id="downloadBtn">Download</button>
