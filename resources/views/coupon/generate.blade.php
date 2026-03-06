@@ -120,7 +120,7 @@
                     <img src="/storage/sys_images/header.png" style="width:500px"/>
                 </td>
                 <td class="text-center">
-                    <img id="qr" src="/qrcode?d={{ url('/coupon/claim/'.$coupon->id.'/'.$coupon->code ) }}"style="width:50px;height:50px"/>
+                    <img id="qr" src="/qrcode?d={{ url('/coupon/claim/'.$coupon->id.'/'.$coupon->code ) }}"style="width:100px;height:100px"/>
                 </td>
             </tr>
         </table>
