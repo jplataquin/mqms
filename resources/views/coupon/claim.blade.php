@@ -36,7 +36,7 @@
 
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <label>Amount (PHP {{ number_format($amount,2) }}) </label>
+                        <label>Amount (PHP {{ number_format($coupon->amount,2) }}) </label>
                         <input type="text" id="amount" value="{{$coupon->amount}}" class="form-control"/>
                     </div>
                 </div>
