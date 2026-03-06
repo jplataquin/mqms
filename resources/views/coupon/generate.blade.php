@@ -121,7 +121,9 @@
                 </td>
                 <td class="text-center">
                     <img id="qr" src="/qrcode?d={{ url('/coupon/claim/'.$coupon->id.'/'.$coupon->code ) }}"style="width:100px;height:100px"/>
-                    {{str_pad($coupon->id,6,0,STR_PAD_LEFT)}}
+                    <div>
+                        {{str_pad($coupon->id,6,0,STR_PAD_LEFT)}}
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -135,7 +137,7 @@
                     @endif
 
                     <div>
-                        Created By: {{$coupon->createdByUser()->fullName }}
+                        Created By: {{$coupon->createdByUser()->fullname }}
                     </div>
                 </td>
             </tr>
