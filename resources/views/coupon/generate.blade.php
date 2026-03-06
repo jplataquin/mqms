@@ -116,11 +116,11 @@
 
         <table>
             <tr>
-                <td>
-                    <img src="/storage/sys_images/header.png" width="300px"/>
+                <td class="text-center">
+                    <img src="/storage/sys_images/header.png" style="width:500px"/>
                 </td>
-                <td>
-                    <img id="qr" src="/qrcode?d={{ url('/coupon/claim/'.$coupon->id.'/'.$coupon->code ) }}" width="200px" height="200px"/>
+                <td class="text-center">
+                    <img id="qr" src="/qrcode?d={{ url('/coupon/claim/'.$coupon->id.'/'.$coupon->code ) }}"style="width:200px;height:200px"/>
                 </td>
             </tr>
         </table>
