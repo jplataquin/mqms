@@ -121,12 +121,13 @@
                 </td>
                 <td class="text-center">
                     <img id="qr" src="/qrcode?d={{ url('/coupon/claim/'.$coupon->id.'/'.$coupon->code ) }}"style="width:100px;height:100px"/>
+                    {{str_pad($coupon->id,6,0)}}
                 </td>
             </tr>
             <tr>
-                <td colspan="2">
+                <td colspan="2" style="padding-left:20px">
                     <h1>Fuel Coupon</h1>
-
+                    {{$coupon->amount}} | {{$coupon->quantity}}
                     @if($coupon->amount && !$coupon->quantity)
                         <h3>Amount P {{number_format($coupon->amount,2)}}</h3>
                     @elseif($coupon->quantity && !$coupon->amount)
