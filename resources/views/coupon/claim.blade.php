@@ -47,8 +47,8 @@
             <div class="row mt-3">
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <label>Quantity ({{ number_format($quantity,2) }} Ltrs)</label>
-                        <input type="text" id="quantity" value="{{$quantity}}" class="form-control"/>
+                        <label>Quantity ({{ number_format($coupon->quantity,2) }} Ltrs)</label>
+                        <input type="text" id="quantity" value="{{$coupon->quantity}}" class="form-control"/>
                     </div>
                 </div>                
             </div>
