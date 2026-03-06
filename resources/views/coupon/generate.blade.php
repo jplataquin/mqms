@@ -13,7 +13,7 @@
             const download = document.querySelector('downloadBtn');
 
             const c_width = 400;
-            const c_height = 120;
+            const c_height = 600;
 
             canvas.width    = c_width;
             canvas.height  = c_height;
@@ -35,7 +35,7 @@
 
             qrImg.onload = ()=>{
 
-                ctx.drawImage(qrImg, 10, 10, 80, 80);
+                ctx.drawImage(qrImg, 110, 10, 80, 80);
                 
                 ctx.fillStyle           = 'black'; // Set fill color for the text
                 ctx.font                = "14px Arial";
@@ -64,14 +64,24 @@
                     newWidth = canvas.height * imageAspectRatio;
                 }
 
-                ctx.drawImage(headerImg, 110, 10, newWidth * .7,newHeight *.7);
+                ctx.drawImage(headerImg, 10, 10, newWidth * .7,newHeight *.7);
                 
                 ctx.fillStyle           = 'black'; // Set fill color for the text
                 ctx.font                = "16px Arial";
 
-                let amount_text             = "Fuel Coupon ( P {{number_format($coupon->amount,2)}} )";
+                @if($coupon->amount && $coupon->quantity <= 0)
+                let amount_text             = "Amount ( P {{number_format($coupon->amount,2)}} )";
                 
                 ctx.fillText(amount_text, 115, 75 );
+
+                @elseif($coupon->quantity && $coupon->amount <=0 )
+
+                    let quantity_text           = "Quantity ( {{number_format($coupon->quantity,2)}} Ltrs )";
+                    
+                    ctx.fillText(quantity_text, 115, 75 );
+
+                @endif
+                
             }
             
             qrImg.src       = "/qrcode?d={{ url('/coupon/claim/'.$coupon->id.'/'.$coupon->code ) }}";

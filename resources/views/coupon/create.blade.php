@@ -74,6 +74,10 @@
         return window.util.inputNumber(amount,e,2,false);
     }
 
+    quantity.onkeypress = (e)=>{
+        return window.util.inputNumber(amount,e,2,false);
+    }
+
     amount.onkeyup = (e)=>{
         quantity.value = '';
         if(e.keyCode == 13){
