@@ -81,7 +81,7 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label>Remarks</label>
-                        <textarea id="name" class="form-control"></textarea>
+                        <textarea id="remarks" class="form-control"></textarea>
                     </div>
                 </div>
 
@@ -213,7 +213,7 @@
             quantity : qty,
             plate_no : plate_no.value, 
             name     : name.value,
-            remarks  : remarks      
+            remarks  : remarks.value      
         }).then(reply=>{
             
             window.util.unblockUI();
