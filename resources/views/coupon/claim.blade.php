@@ -173,7 +173,7 @@
 
         let amt = parseFloat(amount.value);
         
-        if(original_amount != 0 (amt != original_amount) ){
+        if(original_amount != 0 && (amt != original_amount) ){
             amount.classList.add('border');
             amount.classList.add('border-warning');
         }else{
@@ -186,7 +186,7 @@
         
         let qty = parseFloat(quantity.value);
         
-        if(original_quantity != 0 (qty != original_quantity) ){
+        if(original_quantity != 0 && (qty != original_quantity) ){
             quantity.classList.add('border');
             quantity.classList.add('border-warning');
         }else{
