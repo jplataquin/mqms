@@ -57,7 +57,7 @@
                             <input type="text" id="quantity" class="form-control" disabled="true" value="{{$coupon->quantity}}"/>
                         </div>
                     </div>        
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <div class="form-group">
                             <label>Actual Quantity (Ltrs)</label>
                             <input type="text" id="actual_quantity" class="form-control" disabled="true" value="{{number_format($coupon->actual_quantity,2)}}"/>
