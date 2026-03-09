@@ -70,7 +70,7 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label>Plate No.</label>
-                        <input type="text" id="name" class="form-control"/>
+                        <input type="text" id="plate_no" class="form-control"/>
                     </div>
                 </div>
 
@@ -163,6 +163,7 @@
     const cancelBtn = $q('#cancelBtn').first();
     const amount    = $q('#amount').first();
     const quantity  = $q('#quantity').first();
+    const plate_no  = $q('#plate_no').first();
 
     const original_amount   = parseFloat( "{{$coupon->amount}}" );
     const original_quantity = parseFloat( "{{$coupon->quantity}}" );
