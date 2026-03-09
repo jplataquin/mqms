@@ -165,7 +165,7 @@
     const quantity  = $q('#quantity').first();
 
     const original_amount   = parseFloat( "{{$coupon->amount}}" );
-    const original_quantity = parseFlaot( "{{$coupon->quantity}}" );
+    const original_quantity = parseFloat( "{{$coupon->quantity}}" );
     
     amount.onkeyup = ()=>{
 
