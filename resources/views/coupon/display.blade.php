@@ -33,45 +33,37 @@
         <div class="form-body">
 
 
-            <div class="row mb-3">
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <label>Amount (PHP)</label>
-                        <input type="text" id="amount" class="form-control" disabled="true" value="{{number_format($coupon->amount,2)}}"/>
-                    </div>
-                </div>                
-            </div>
             
-            @if($coupon->actual_amount)
                 <div class="row mb-3">
-                    <div class="col-lg-12 ms-5">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Amount (PHP)</label>
+                            <input type="text" id="amount" class="form-control" disabled="true" value="{{number_format($coupon->amount,2)}}"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
                         <div class="form-group">
                             <label>Actual Amount (PHP)</label>
                             <input type="text" id="actual_amount" class="form-control" disabled="true" value="{{number_format($coupon->actual_amount,2)}}"/>
                         </div>
                     </div>                
                 </div>
-            @endif
 
-            <div class="row mb-3">
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <label>Quantity (Ltrs)</label>
-                        <input type="text" id="quantity" class="form-control" disabled="true" value="{{$coupon->quantity}}"/>
-                    </div>
-                </div>                
-            </div>
 
-             @if($coupon->actual_quantity)
                 <div class="row mb-3">
-                    <div class="col-lg-12 ms-5">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                                <label>Quantity (Ltrs)</label>
+                            <input type="text" id="quantity" class="form-control" disabled="true" value="{{$coupon->quantity}}"/>
+                        </div>
+                    </div>        
+                    <div class="col-lg-12">
                         <div class="form-group">
                             <label>Actual Quantity (Ltrs)</label>
                             <input type="text" id="actual_quantity" class="form-control" disabled="true" value="{{number_format($coupon->actual_quantity,2)}}"/>
                         </div>
                     </div>                
                 </div>
-            @endif
 
             <div class="row mb-3">
                 <div class="col-lg-12">
