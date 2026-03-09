@@ -164,6 +164,7 @@
     const amount    = $q('#amount').first();
     const quantity  = $q('#quantity').first();
     const plate_no  = $q('#plate_no').first();
+    const remarks   = $q('#remarks').first();
 
     const original_amount   = parseFloat( "{{$coupon->amount}}" );
     const original_quantity = parseFloat( "{{$coupon->quantity}}" );
