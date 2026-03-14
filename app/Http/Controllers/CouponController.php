@@ -293,7 +293,7 @@ class CouponController extends Controller
  
         $coupon = new Coupon();
 
-        $coupon = $coupon->where('created_by',$user);
+        $coupon = $coupon->where('created_by',$user->id);
 
         if($status){
             $coupon = $coupon->where('status',$status);
