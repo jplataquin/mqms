@@ -136,7 +136,7 @@
         window.util.navTo('/api_credentials');
     }
 
-    $q('.copy-btn').map(btn => {
+    $q('.copy-btn').all().map(btn => {
         btn.onclick = () => {
             const targetId = btn.getAttribute('data-target');
             const input = document.getElementById(targetId);
