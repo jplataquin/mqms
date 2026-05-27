@@ -50,8 +50,173 @@ Retrieves a list of projects managed in the system.
 *   **Method**: `GET`
 *   **Query Parameters**:
     *   `page` (int, default: 1): The page number for pagination.
-    *   `limit` (int, default: 10): Number of records per page.
-    *   `query` (string, optional): Filter by project name.
+    *   `limit` (int, default: 10): Number of records per page. Use `0` for no limit.
+    *   `query` (string, optional): Filter by project name (fuzzy match).
+    *   `status` (string, optional): Filter by project status (e.g., `ACTV`, `DONE`).
+    *   `order_by` (string, default: `id`): Field to sort by.
+    *   `order` (string, default: `DESC`): Sort direction (`ASC` or `DESC`).
+
+#### Example Response
+```json
+{
+    "status": 1,
+    "message": "Success",
+    "data": [
+        {
+            "id": 1,
+            "status": "ACTV",
+            "name": "Commercial Building A",
+            "created_by": 1,
+            "updated_by": null,
+            "deleted_by": null,
+            "deleted_at": null,
+            "created_at": "2024-05-27T10:00:00.000000Z",
+            "updated_at": "2024-05-27T10:00:00.000000Z"
+        }
+    ]
+}
+```
+
+### List Sections
+Retrieves a list of sections belonging to projects.
+
+*   **URL**: `/api/call/sections`
+*   **Method**: `GET`
+*   **Query Parameters**:
+    *   `page` (int, default: 1): The page number for pagination.
+    *   `limit` (int, default: 10): Number of records per page. Use `0` for no limit.
+    *   `query` (string, optional): Filter by section name (fuzzy match).
+    *   `project_id` (int, optional): Filter by project ID.
+    *   `order_by` (string, default: `id`): Field to sort by.
+    *   `order` (string, default: `DESC`): Sort direction (`ASC` or `DESC`).
+
+#### Example Response
+```json
+{
+    "status": 1,
+    "message": "Success",
+    "data": [
+        {
+            "id": 1,
+            "project_id": 1,
+            "name": "Ground Floor",
+            "created_by": 1,
+            "updated_by": null,
+            "deleted_by": null,
+            "created_at": "2024-05-27T10:00:00.000000Z",
+            "updated_at": "2024-05-27T10:00:00.000000Z",
+            "deleted_at": null
+        }
+    ]
+}
+```
+
+### List Contract Items
+Retrieves a list of contract items belonging to sections.
+
+*   **URL**: `/api/call/contract_items`
+*   **Method**: `GET`
+*   **Query Parameters**:
+    *   `page` (int, default: 1): The page number for pagination.
+    *   `limit` (int, default: 10): Number of records per page. Use `0` for no limit.
+    *   `query` (string, optional): Filter by contract item name (fuzzy match).
+    *   `section_id` (int, optional): Filter by section ID.
+    *   `order_by` (string, default: `id`): Field to sort by.
+    *   `order` (string, default: `DESC`): Sort direction (`ASC` or `DESC`).
+
+#### Example Response
+```json
+{
+    "status": 1,
+    "message": "Success",
+    "data": [
+        {
+            "id": 1,
+            "section_id": 1,
+            "name": "Concrete Works",
+            "item_type": "LBSM",
+            "created_by": 1,
+            "updated_by": null,
+            "deleted_by": null,
+            "created_at": "2024-05-27T10:00:00.000000Z",
+            "updated_at": "2024-05-27T10:00:00.000000Z",
+            "deleted_at": null
+        }
+    ]
+}
+```
+
+### List Materials
+Retrieves a list of material items managed in the system.
+
+*   **URL**: `/api/call/materials`
+*   **Method**: `GET`
+*   **Query Parameters**:
+    *   `page` (int, default: 1): The page number for pagination.
+    *   `limit` (int, default: 10): Number of records per page. Use `0` for no limit.
+    *   `query` (string, optional): Filter by material name (fuzzy match).
+    *   `material_group_id` (int, optional): Filter by material group ID.
+    *   `order_by` (string, default: `id`): Field to sort by.
+    *   `order` (string, default: `DESC`): Sort direction (`ASC` or `DESC`).
+
+#### Example Response
+```json
+{
+    "status": 1,
+    "message": "Success",
+    "data": [
+        {
+            "id": 1,
+            "material_group_id": 1,
+            "name": "Portland Cement",
+            "specification_unit_packaging": "40kg Bag",
+            "brand": "Eagle",
+            "created_by": 1,
+            "updated_by": null,
+            "deleted_by": null,
+            "created_at": "2024-05-27T10:00:00.000000Z",
+            "updated_at": "2024-05-27T10:00:00.000000Z",
+            "deleted_at": null
+        }
+    ]
+}
+```
+
+### List Suppliers
+Retrieves a list of suppliers managed in the system.
+
+*   **URL**: `/api/call/suppliers`
+*   **Method**: `GET`
+*   **Query Parameters**:
+    *   `page` (int, default: 1): The page number for pagination.
+    *   `limit` (int, default: 10): Number of records per page. Use `0` for no limit.
+    *   `query` (string, optional): Filter by supplier name (fuzzy match).
+    *   `order_by` (string, default: `id`): Field to sort by.
+    *   `order` (string, default: `DESC`): Sort direction (`ASC` or `DESC`).
+
+#### Example Response
+```json
+{
+    "status": 1,
+    "message": "Success",
+    "data": [
+        {
+            "id": 1,
+            "name": "General Hardware Inc.",
+            "address": "123 Main St, City",
+            "primary_contact_no": "555-0199",
+            "primary_email": "sales@genhardware.com",
+            "primary_contact_person": "John Doe",
+            "created_by": 1,
+            "updated_by": null,
+            "deleted_by": null,
+            "created_at": "2024-05-27T10:00:00.000000Z",
+            "updated_at": "2024-05-27T10:00:00.000000Z",
+            "deleted_at": null
+        }
+    ]
+}
+```
 
 #### Example Request (PHP)
 ```php
