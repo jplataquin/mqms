@@ -114,6 +114,10 @@
                 });
             });
 
+            row.onclick = ()=>{
+                window.util.navTo('/api_credential/'+item.id);
+            };
+
             $el.append(row).to(list);
             
         });
