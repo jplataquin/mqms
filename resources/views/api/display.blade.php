@@ -52,11 +52,10 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label>Secret Key</label>
-                        <div class="alert alert-info">
-                            <i class="bi bi-info-circle me-2"></i> The Secret Key is only shown once during creation for security reasons.
-                        </div>
                         <div class="input-group">
-                            <input type="text" class="form-control" value="********************************" readonly/>
+                            <input type="password" id="secretKey" class="form-control" value="{{ $credential->secret_key }}" readonly/>
+                            <button class="btn btn-outline-secondary" id="toggleSecretBtn">Show</button>
+                            <button class="btn btn-outline-secondary copy-btn" data-target="secretKey">Copy</button>
                         </div>
                     </div>
                 </div>
@@ -82,8 +81,20 @@
 <script type="module">
     import {$q} from '/adarna.js';
 
-    const deleteBtn = $q('#deleteBtn').first();
-    const backBtn   = $q('#backBtn').first();
+    const deleteBtn      = $q('#deleteBtn').first();
+    const backBtn        = $q('#backBtn').first();
+    const toggleSecretBtn = $q('#toggleSecretBtn').first();
+    const secretKeyInput = $q('#secretKey').first();
+
+    toggleSecretBtn.onclick = () => {
+        if (secretKeyInput.type === "password") {
+            secretKeyInput.type = "text";
+            toggleSecretBtn.innerText = "Hide";
+        } else {
+            secretKeyInput.type = "password";
+            toggleSecretBtn.innerText = "Show";
+        }
+    };
 
     deleteBtn.onclick = () => {
         if(confirm('Are you sure you want to delete this API credential? This action cannot be undone and will immediately revoke access for the 3rd-party system.')){

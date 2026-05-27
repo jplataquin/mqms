@@ -198,3 +198,7 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::post('/api_credentials/delete', [App\Http\Controllers\Api\ApiCredentialController::class, '_delete']);
     
 });
+
+Route::middleware(['third_party_api'])->group(function () {
+    Route::get('/call/projects', [App\Http\Controllers\Api\ProjectAPIController::class, 'list']);
+});

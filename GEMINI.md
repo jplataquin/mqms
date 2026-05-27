@@ -32,6 +32,7 @@ MQMS is a specialized ERP-style application designed for construction, engineeri
 ### 6. API & 3rd-Party Integration
 - **API Credential Management**: Users with appropriate access can generate and delete API Keys and Secret Keys for external system integrations.
 - **Secure Authentication**: 3rd-party requests are authenticated via a dedicated middleware checking `X-API-KEY` and `X-SECRET-KEY` headers.
+- **Integration Guide**: Detailed technical instructions can be found in [API_DOCUMENTATION.md](API_DOCUMENTATION.md).
 
 ## Technical Foundation
 - **Framework**: Laravel 10 (PHP)
