@@ -203,6 +203,7 @@ Route::middleware(['third_party_api'])->group(function () {
     Route::get('/call/projects', [App\Http\Controllers\Api\ProjectAPIController::class, 'list']);
     Route::get('/call/sections', [App\Http\Controllers\Api\SectionAPIController::class, 'list']);
     Route::get('/call/contract_items', [App\Http\Controllers\Api\ContractItemAPIController::class, 'list']);
+    Route::get('/call/components', [App\Http\Controllers\Api\ComponentAPIController::class, 'list']);
     Route::get('/call/materials', [App\Http\Controllers\Api\MaterialAPIController::class, 'list']);
     Route::get('/call/suppliers', [App\Http\Controllers\Api\SupplierAPIController::class, 'list']);
 });

@@ -37,10 +37,11 @@ class MqmsApiClient
         $method    = strtoupper($method);
         
         // Path used for signature must match the server's expectation (api/call/...)
+        // Middleware uses $request->path() which returns 'api/call/endpoint'
         $path = 'api/call/' . ltrim($endpoint, '/');
         
         // Prepare the body for the signature
-        $body = $method === 'GET' ? '' : json_encode($data);
+        $body = ($method === 'GET' || empty($data)) ? '' : json_encode($data);
         
         // Payload: METHOD + PATH + TIMESTAMP + BODY
         $payload   = $method . $path . $timestamp . $body;
@@ -53,7 +54,7 @@ class MqmsApiClient
             'Accept'      => 'application/json',
         ]);
 
-        $url = $this->baseUrl . $endpoint;
+        $url = rtrim($this->baseUrl, '/') . '/' . ltrim($endpoint, '/');
 
         $response = $method === 'GET' 
             ? $request->get($url, $data) 
@@ -89,6 +90,15 @@ class MqmsApiClient
     public function getContractItems(array $filters = [])
     {
         return $this->request('GET', 'contract_items', $filters);
+    }
+
+    /**
+     * List components.
+     * Supported filters: page, limit, query, contract_item_id, section_id, status, order_by, order
+     */
+    public function getComponents(array $filters = [])
+    {
+        return $this->request('GET', 'components', $filters);
     }
 
     /**

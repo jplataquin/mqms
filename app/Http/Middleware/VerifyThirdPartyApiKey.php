@@ -56,6 +56,16 @@ class VerifyThirdPartyApiKey
         $expectedSignature = hash_hmac('sha256', $payload, $credential->secret_key);
 
         if (!hash_equals($expectedSignature, $signature)) {
+            \Illuminate\Support\Facades\Log::error('API Signature Mismatch', [
+                'received_signature' => $signature,
+                'expected_signature' => $expectedSignature,
+                'payload' => $payload,
+                'method' => $method,
+                'path' => $path,
+                'timestamp' => $timestamp,
+                'body' => $body,
+                'api_key' => $apiKey
+            ]);
             return response()->json([
                 'status'  => 0,
                 'message' => 'Unauthorized: Invalid Signature.',

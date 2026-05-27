@@ -146,6 +146,47 @@ Retrieves a list of contract items belonging to sections.
 }
 ```
 
+### List Components
+Retrieves a list of components belonging to contract items.
+
+*   **URL**: `/api/call/components`
+*   **Method**: `GET`
+*   **Query Parameters**:
+    *   `page` (int, default: 1): The page number for pagination.
+    *   `limit` (int, default: 10): Number of records per page. Use `0` for no limit.
+    *   `query` (string, optional): Filter by component name (fuzzy match).
+    *   `contract_item_id` (int, optional): Filter by contract item ID.
+    *   `section_id` (int, optional): Filter by section ID.
+    *   `status` (string, optional): Filter by component status (e.g., `ACTV`, `DONE`).
+    *   `order_by` (string, default: `id`): Field to sort by.
+    *   `order` (string, default: `DESC`): Sort direction (`ASC` or `DESC`).
+
+#### Example Response
+```json
+{
+    "status": 1,
+    "message": "Success",
+    "data": [
+        {
+            "id": 1,
+            "contract_item_id": 1,
+            "section_id": 1,
+            "name": "Footing F1",
+            "status": "ACTV",
+            "unit_id": 1,
+            "quantity": 10.5,
+            "unit_text": "cu.m",
+            "created_by": 1,
+            "updated_by": null,
+            "deleted_by": null,
+            "created_at": "2024-05-27T10:00:00.000000Z",
+            "updated_at": "2024-05-27T10:00:00.000000Z",
+            "deleted_at": null
+        }
+    ]
+}
+```
+
 ### List Materials
 Retrieves a list of material items managed in the system.
 
