@@ -13,7 +13,7 @@ class ApiCredentialController extends Controller
 {
     public function list()
     {
-        if (!$this->hasAccess('api_credential:view')) {
+        if (!$this->hasAccess('api_credential:all:view')) {
             return view('access_denied');
         }
 
@@ -22,7 +22,7 @@ class ApiCredentialController extends Controller
 
     public function create()
     {
-        if (!$this->hasAccess('api_credential:create')) {
+        if (!$this->hasAccess('api_credential:all:create')) {
             return view('access_denied');
         }
 
@@ -31,7 +31,7 @@ class ApiCredentialController extends Controller
 
     public function _list(Request $request)
     {
-        if (!$this->hasAccess('api_credential:view')) {
+        if (!$this->hasAccess('api_credential:all:view')) {
             return response()->json([
                 'status'  => 0,
                 'message' => 'Access Denied',
@@ -67,7 +67,7 @@ class ApiCredentialController extends Controller
 
     public function _create(Request $request)
     {
-        if (!$this->hasAccess('api_credential:create')) {
+        if (!$this->hasAccess('api_credential:all:create')) {
             return response()->json([
                 'status'  => 0,
                 'message' => 'Access Denied',
@@ -103,7 +103,7 @@ class ApiCredentialController extends Controller
 
     public function _delete(Request $request)
     {
-        if (!$this->hasAccess('api_credential:delete')) {
+        if (!$this->hasAccess('api_credential:all:delete')) {
             return response()->json([
                 'status'  => 0,
                 'message' => 'Access Denied',
