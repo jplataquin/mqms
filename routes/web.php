@@ -201,6 +201,9 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/manpower_registry/create', [App\Http\Controllers\ManpowerRegistryController::class, 'create']);
     Route::get('/manpower_registry/{id}', [App\Http\Controllers\ManpowerRegistryController::class, 'display']);
     
+    Route::get('/api_credentials', [App\Http\Controllers\Api\ApiCredentialController::class, 'list']);
+    Route::get('/api_credentials/create', [App\Http\Controllers\Api\ApiCredentialController::class, 'create']);
+    
 });
 
 

@@ -192,5 +192,9 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::post('/manpower_registry/create', [App\Http\Controllers\ManpowerRegistryController::class, '_create']);
     Route::post('/manpower_registry/update', [App\Http\Controllers\ManpowerRegistryController::class, '_update']);
     Route::post('/manpower_registry/delete', [App\Http\Controllers\ManpowerRegistryController::class, '_delete']);
+
+    Route::get('/api_credentials/list', [App\Http\Controllers\Api\ApiCredentialController::class, '_list']);
+    Route::post('/api_credentials/create', [App\Http\Controllers\Api\ApiCredentialController::class, '_create']);
+    Route::post('/api_credentials/delete', [App\Http\Controllers\Api\ApiCredentialController::class, '_delete']);
     
 });

@@ -79,6 +79,20 @@
                 </div>
 
 
+                     <div class="row mb-3">
+                    <div class="col-lg-12 mb-3">
+                        <div class="form-group">
+                            <label>Supplier</label>
+                            <select class="form-select" id="supplier">
+                                <option value=""> - </option>
+                                @foreach($suppliers as $supplier)
+                                    <option value="{{$supplier->id}}">{{$supplier->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div> <!-- div row -->
+
 
                 <div class="row mb-3">
                     <div class="col-lg-12 mb-3">
@@ -133,6 +147,7 @@
         const component             = $q('#component').first();
         const from                  = $q('#from').first();
         const to                    = $q('#to').first();
+        const supplier              = $q('#supplier').first();
         const material_item_list    = $q('#material_item_list').first();
         const all_btn               = $q('#allBtn').first();
         const check_icon_on         = $q('#check_icon_on').first();
@@ -361,7 +376,8 @@
                 project_id          : project.value,
                 section_id          : section.value,
                 contract_item_id    : contract_item.value,
-                component_id        : component.value
+                component_id        : component.value,
+                supplier_id         : supplier.value
             });
 
             let from_val  = from_dp.getDate('yyyy-mm-dd') ?? '';
@@ -395,6 +411,7 @@
                 material_group_id   : material_group.value,
                 project_id          : project.value,
                 section_id          : section.value,
+                supplier_id         : supplier.value,
                 contract_item_id    : contract_item.value,
                 component_id        : component.value
             });
