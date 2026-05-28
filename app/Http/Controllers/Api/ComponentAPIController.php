@@ -22,7 +22,7 @@ class ComponentAPIController extends Controller
         $status           = $request->input('status')         ?? '';
         $contractItemId   = $request->input('contract_item_id');
         $sectionId        = $request->input('section_id');
-        $projectId        = $request->input('project_id');
+       
 
         $componentQuery = Component::query();
 
@@ -42,9 +42,6 @@ class ComponentAPIController extends Controller
             $componentQuery = $componentQuery->where('section_id', '=', $sectionId);
         }
 
-        if ($projectId){
-             $componentQuery = $componentQuery->where('project_id', '=', $sectionId);
-        }
 
         if ($limit > 0) {
             $offset = ($page - 1) * $limit;
