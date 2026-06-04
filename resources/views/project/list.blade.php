@@ -30,13 +30,23 @@
         </div>
         <div class="folder-form-body">
             <div class="row mb-3">
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label>Query</label>
                         <input type="text" id="query" class="form-control"/>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select class="form-control" id="statusSelect">
+                            <option value="">ALL</option>
+                            <option value="ACTV">ACTV</option>
+                            <option value="INAC">INAC</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label>Sort By</label>
                         <select class="form-control" id="sortSelect">
@@ -73,6 +83,7 @@
 
     const list            = $q('#list').first();
     const query           = $q('#query').first();
+    const statusSelect    = $q('#statusSelect').first();
     const searchBtn       = $q('#searchBtn').first();
     const showMoreBtn     = $q('#showMoreBtn').first();
     const sortSelect      = $q('#sortSelect').first();
@@ -137,6 +148,7 @@
 
         window.util.$get('/api/project/list',{
             query: query.value,
+            status: statusSelect.value,
             page: page,
             order: order,
             order_by: orderBy,
@@ -182,6 +194,10 @@
 
     showMoreBtn.onclick = ()=>{
         showData();
+    }
+
+    statusSelect.onchange = ()=>{
+        runQuery();
     }
 
     sortSelect.onchange = ()=>{
