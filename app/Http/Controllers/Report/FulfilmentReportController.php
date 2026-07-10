@@ -20,19 +20,15 @@ class FulfilmentReportController extends Controller
         return view('report/fulfilment/parameters');
     }
 
-    public function generate(Request $request){
+    private function process(){
 
-        $from_input = $request->input('from');
-        $to_input   = $request->input('to');
-
-        $from = $from_input.' 00:00:00';
-        $to   = $to_input.' 23:59:59';
-
+    
         $material_quantity_request = MaterialQuantityRequest::where('status','APRV')->where('approved_at','>=',$from)->where('approved_at','<=',$to)->get();
 
         $request_count  = 0;
         $target_hit     = 0;
         $target_missed  = 0;
+        $missed_entrires = [];
 
         foreach($material_quantity_request as $mqr){
 
@@ -44,6 +40,8 @@ class FulfilmentReportController extends Controller
             $purchase_order = PurchaseOrder::where('status','APRV')->where('material_quantity_request_id',$mqr->id)->get();
             
             $hit_flag = true;
+            
+            $missed_po_list = [];
 
             foreach($purchase_order as $po){
                 $end = Carbon::parse($po->approved_at);
@@ -52,8 +50,8 @@ class FulfilmentReportController extends Controller
 
                 if($days > $this->threshold){
                     
-                    //echo $days.' '.$po->id.'<br>';
                     $hit_flag = false;
+                    $missed_po_list[] = $po->id;
                 }
             }
 
@@ -61,26 +59,18 @@ class FulfilmentReportController extends Controller
                 $target_hit++;
             }else{
                 $target_missed++;
+                
+                if(!isset($missed_entrires[$mqr->id])){
+                    $missed_entrires[$mqr->id] = [];
+                }
+
+                $missed_entrires[$mqr->id] = $missed_po_list;
             }
         }
 
         $percentage = 0;
 
-        // if($target_missed >= 100){
-        
-        //     $target_missed  = $target_missed - 100;
-        //     $target_hit     = $target_hit + 100;
-        
-        // }else if($target_missed >= 60){
-            
-        //     $target_missed  = $target_missed - 60;
-        //     $target_hit     = $target_hit + 60;
-        
-        // }else if($target_missed >= 50){
-        //     $target_missed  = $target_missed - 50;
-        //     $target_hit     = $target_hit + 50;
-        // }
-
+       
         if($request_count > 0){
 
             $percentage = ($target_hit / $request_count) * 100;
@@ -88,24 +78,29 @@ class FulfilmentReportController extends Controller
             $percentage = ceil($percentage);
         }
 
-        // $percentage = $percentage + 20;
+      
 
-        // if($percentage > 100){
-        //     $percentage = 100;
-        // }
+        return [
+            'request_count'     => $request_count,
+            'target_hit'        => $target_hit,
+            'target_missed'     => $target_missed,
+            'percentage'        => $percentage,
+            'from'              => $from,
+            'to'                => $to,
+            'missed_entries'    => $missed_entrires,
+        ];
+    }
+    public function generate(Request $request){
 
-        // if($percentage < 95){
-        //     $percentage = 96;
-        // }
+        $from_input = $request->input('from');
+        $to_input   = $request->input('to');
 
-        return view('report/fulfilment/generate',[
-            'request_count' => $request_count,
-            'target_hit'    => $target_hit,
-            'target_missed' => $target_missed,
-            'percentage'    => $percentage,
-            'from'          => $from,
-            'to'            => $to
-        ]);
+        $from = $from_input.' 00:00:00';
+        $to   = $to_input.' 23:59:59';
+
+        $data = $this->process($from,$to);
+
+        return view('report/fulfilment/generate',$data);
     }
 
 
@@ -117,83 +112,8 @@ class FulfilmentReportController extends Controller
         $from = $from_input.' 00:00:00';
         $to   = $to_input.' 23:59:59';
 
-        $material_quantity_request = MaterialQuantityRequest::where('status','APRV')->where('approved_at','>=',$from)->where('approved_at','<=',$to)->get();
-
-        $request_count  = 0;
-        $target_hit     = 0;
-        $target_missed  = 0;
-
-        foreach($material_quantity_request as $mqr){
-
-            $request_count++;
-
-            $start = Carbon::parse($mqr->approved_at);
-
-
-            $purchase_order = PurchaseOrder::where('status','APRV')->where('material_quantity_request_id',$mqr->id)->get();
-            
-            $hit_flag = true;
-
-            foreach($purchase_order as $po){
-                $end = Carbon::parse($po->approved_at);
-                
-                $days = $start->diffInDays($end);
-
-                if($days > $this->threshold){
-                    
-                    //echo $days.' '.$po->id.'<br>';
-                    $hit_flag = false;
-                }
-            }
-
-            if($hit_flag){
-                $target_hit++;
-            }else{
-                $target_missed++;
-            }
-        }
-
-        $percentage = 0;
-
-        // if($target_missed >= 100){
+        $data = $this->process($from,$to);
         
-        //     $target_missed  = $target_missed - 100;
-        //     $target_hit     = $target_hit + 100;
-        
-        // }else if($target_missed >= 60){
-            
-        //     $target_missed  = $target_missed - 60;
-        //     $target_hit     = $target_hit + 60;
-        
-        // }else if($target_missed >= 50){
-        //     $target_missed  = $target_missed - 50;
-        //     $target_hit     = $target_hit + 50;
-        // }
-
-        if($request_count > 0){
-
-            $percentage = ($target_hit / $request_count) * 100;
-
-            $percentage = ceil($percentage);
-        }
-
-        // $percentage = $percentage + 20;
-
-        // if($percentage > 100){
-        //     $percentage = 100;
-        // }
-
-        // if($percentage < 95){
-        //     $percentage = 96;
-        // }
-
-        return view('report/fulfilment/print',[
-            'request_count' => $request_count,
-            'target_hit'    => $target_hit,
-            'target_missed' => $target_missed,
-            'percentage'    => $percentage,
-            'from'          => $from,
-            'to'            => $to
-        ]);
+        return view('report/fulfilment/print',$data);
     }
 }
