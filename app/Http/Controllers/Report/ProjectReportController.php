@@ -339,7 +339,7 @@ class ProjectReportController extends Controller {
         if(!$debug_flag){
             return view('/report/project/generate',$data);
         }else{
-            print_r($data,true);
+            print_r($data);
         }
 
     }
