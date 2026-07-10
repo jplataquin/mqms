@@ -46,6 +46,7 @@ class ProjectReportController extends Controller {
         $component_id           = (int) $request->input('component_id');
         $as_of                  = $request->input('as_of');
         $material_item_id_arr   = explode(',',$request->input('material_items'));
+    
 
         $project_name       = '';
         $section_name       = '';
@@ -326,13 +327,21 @@ class ProjectReportController extends Controller {
 
     public function generate(Request $request){
 
+        $debug_flag             = $request->input('debug');
+
+
         $data = $this->_generate($request);
 
         if(!is_array($data)){
             return $data;
         }
+        
+        if(!$debug_flag){
+            return view('/report/project/generate',$data);
+        }else{
+            print_r($data,true);
+        }
 
-        return view('/report/project/generate',$data);
     }
 
     public function print(Request $request){
