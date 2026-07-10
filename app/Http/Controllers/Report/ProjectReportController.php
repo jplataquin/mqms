@@ -328,12 +328,20 @@ class ProjectReportController extends Controller {
 
         $data = $this->_generate($request);
 
+        if(!is_array($data)){
+            return $data;
+        }
+
         return view('/report/project/generate',$data);
     }
 
     public function print(Request $request){
 
         $data = $this->_generate($request);
+
+        if(!is_array($data)){
+            return $data;
+        }
 
         return view('/report/project/print',$data);
     }
