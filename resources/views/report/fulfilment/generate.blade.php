@@ -238,7 +238,7 @@
                                 <i class="bi bi-check-circle-fill"></i>
                             </div>
                         </div>
-                        <p class="card-text text-secondary small mb-0">Requests fulfilled with an approved Purchase Order within 7 days.</p>
+                        <p class="card-text text-secondary small mb-0">Requests fulfilled with an approved Purchase Order within 30 days.</p>
                     </div>
                 </div>
             </div>
