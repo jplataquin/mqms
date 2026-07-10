@@ -179,8 +179,16 @@
                 <h1 class="h3 mb-1 fw-bold text-body">Request to Purchase Timeframe KPI</h1>
                 <p class="text-secondary mb-0">Analyzes and measures fulfillment efficiency against organizational targets.</p>
             </div>
-            <div class="d-flex flex-wrap gap-2">
-                <a href="/report/fulfilment/print?from={{ $from_date }}&to={{ $to_date }}" class="btn btn-warning d-inline-flex align-items-center gap-2 px-3 py-2 fw-semibold">
+            <div class="d-flex flex-wrap align-items-center gap-3">
+                @if($percentage < 90)
+                <div class="form-check mb-0">
+                    <input class="form-check-input" type="checkbox" id="include_misses_check" checked>
+                    <label class="form-check-label small fw-semibold text-secondary" for="include_misses_check">
+                        Include Misses Breakdown in Print
+                    </label>
+                </div>
+                @endif
+                <a id="print_report_link" href="/report/fulfilment/print?from={{ $from_date }}&to={{ $to_date }}&include_misses=1" class="btn btn-warning d-inline-flex align-items-center gap-2 px-3 py-2 fw-semibold">
                     <i class="bi bi-printer-fill"></i>
                     <span>Print Report</span>
                 </a>
@@ -340,7 +348,7 @@
             </div>
         </div>
 
-        @if(!empty($missed_entries))
+        @if(!empty($missed_entries) && $percentage < 90)
         <!-- Missed Entries Breakdown -->
         <div class="card border-0 shadow-sm bg-body-tertiary mb-4">
             <div class="card-header border-0 bg-transparent pt-4 px-4 pb-0">
@@ -398,6 +406,21 @@
 
     <script type="module">
         import {$q,Template,$el,$util} from '/adarna.js';
+
+        // Dynamically update print report link query param when include misses checkbox state changes
+        const includeMissesCheck = document.getElementById('include_misses_check');
+        const printReportLink = document.getElementById('print_report_link');
+        if (includeMissesCheck && printReportLink) {
+            includeMissesCheck.addEventListener('change', function() {
+                let url = new URL(printReportLink.href, window.location.origin);
+                if (this.checked) {
+                    url.searchParams.set('include_misses', '1');
+                } else {
+                    url.searchParams.set('include_misses', '0');
+                }
+                printReportLink.href = url.pathname + url.search;
+            });
+        }
     </script>
 </div>
 @endsection

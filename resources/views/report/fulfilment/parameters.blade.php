@@ -45,6 +45,17 @@
                     </div>
                 </div>
 
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="include_misses" checked>
+                            <label class="form-check-label fw-semibold text-secondary" for="include_misses">
+                                Include Target Misses Breakdown in Print
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="row mb-3">
                     <div class="col-lg-12 text-end">
@@ -78,11 +89,13 @@
 
             let from_val  = from_dp.getDate('yyyy-mm-dd') ?? '';
             let to_val    = to_dp.getDate('yyyy-mm-dd') ?? '';
+            let include_misses_val = document.getElementById('include_misses')?.checked ? '1' : '0';
         
             
             let query = new URLSearchParams({
                 from : from_val,
                 to   : to_val,
+                include_misses : include_misses_val,
             });
 
             
@@ -94,11 +107,13 @@
 
             let from_val  = from_dp.getDate('yyyy-mm-dd') ?? '';
             let to_val    = to_dp.getDate('yyyy-mm-dd') ?? '';
+            let include_misses_val = document.getElementById('include_misses')?.checked ? '1' : '0';
         
             
             let query = new URLSearchParams({
                 from : from_val,
                 to   : to_val,
+                include_misses : include_misses_val,
             });
 
             

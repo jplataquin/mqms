@@ -498,7 +498,7 @@
             </div>
         </div>
 
-        @if(!empty($missed_entries))
+        @if(!empty($missed_entries) && $percentage < 90 && request('include_misses') == 1)
         <!-- Missed Entries Breakdown -->
         <div style="margin-top: 30px; page-break-inside: avoid;">
             <h3 class="fw-bold" style="font-size: 14px; margin-top: 0; margin-bottom: 12px; color: #111; text-transform: uppercase; border-bottom: 2px solid #333; padding-bottom: 6px;">Target Misses Breakdown</h3>
