@@ -65,7 +65,7 @@
 
     /* Component Row Header */
     .component {
-        background-color: rgba(255, 255, 255, 0.03) !important;
+        background-color: #2a2e33 !important;
         color: #f8fafc !important;
         font-weight: 700 !important;
         font-size: 13px !important;
