@@ -2,36 +2,37 @@
 
 @section('content')
 <style>
-    /* Modern variables and general layout resets */
+    /* Modern variables and general layout resets suited for dark theme */
     :root {
         --slate-50: #f8fafc;
         --slate-100: #f1f5f9;
         --slate-200: #e2e8f0;
         --slate-300: #cbd5e1;
         --slate-400: #94a3b8;
+        --slate-500: #64748b;
         --slate-600: #475569;
         --slate-700: #334155;
         --slate-800: #1e293b;
         --slate-900: #0f172a;
         
+        --indigo-400: #818cf8;
         --indigo-500: #6366f1;
         --indigo-600: #4f46e5;
         --blue-500: #3b82f6;
-        --blue-600: #2563eb;
         --amber-500: #f59e0b;
-        --amber-600: #d97706;
     }
 
-    /* Table hierarchy styling - Sleek, Clean and Professional */
+    /* Table hierarchy styling - Sleek, Dark Dashboard and Professional */
     .report-table {
         border-collapse: separate !important;
         border-spacing: 0;
         width: 100%;
         border-radius: 12px;
         overflow: hidden;
-        border: 1px solid #e2e8f0 !important;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
         margin-top: 1.5rem;
+        background-color: rgba(33, 37, 41, 0.6) !important;
     }
 
     .report-table tr {
@@ -40,8 +41,8 @@
 
     .report-table td, .report-table th {
         border: none !important;
-        border-bottom: 1px solid #f1f5f9 !important;
-        padding: 0.875rem 1.25rem !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        padding: 1rem 1.25rem !important;
         line-height: 1.5;
     }
 
@@ -55,7 +56,7 @@
         text-transform: uppercase;
         padding: 1.25rem 1.25rem !important;
         vertical-align: middle !important;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
     }
     .contract_item p {
         margin: 0 !important;
@@ -64,32 +65,32 @@
 
     /* Component Row Header */
     .component {
-        background-color: #f8fafc !important;
-        color: #0f172a !important;
+        background-color: rgba(255, 255, 255, 0.03) !important;
+        color: #f8fafc !important;
         font-weight: 700 !important;
         font-size: 13px !important;
-        padding: 1rem 1.25rem !important;
+        padding: 1.125rem 1.25rem !important;
         vertical-align: middle !important;
         border-left: 5px solid #6366f1 !important; /* Indigo accent bar */
-        border-bottom: 1px solid #e2e8f0 !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
     }
     .component a {
-        color: #6366f1 !important;
+        color: #818cf8 !important;
         transition: color 0.15s;
     }
     .component a:hover {
-        color: #4f46e5 !important;
+        color: #a5b4fc !important;
     }
 
     /* Component Item Row Header */
     .component_item {
-        background-color: #ffffff !important;
-        color: #334155 !important;
+        background-color: rgba(255, 255, 255, 0.01) !important;
+        color: #e2e8f0 !important;
         font-weight: 600 !important;
         font-size: 12.5px !important;
-        padding: 0.875rem 1.25rem 0.875rem 2.25rem !important; /* Nested Indentation */
+        padding: 0.95rem 1.25rem 0.95rem 2.25rem !important; /* Nested Indentation */
         vertical-align: middle !important;
-        border-bottom: 1px solid #e2e8f0 !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
         position: relative;
     }
     .component_item::before {
@@ -99,26 +100,27 @@
         top: 0;
         bottom: 0;
         width: 3px;
-        background-color: #cbd5e1;
+        background-color: rgba(255, 255, 255, 0.15);
     }
 
     /* Material Item Row Styling */
     .material_item {
-        background-color: #fafafa !important;
-        color: #475569 !important;
+        background-color: transparent !important;
+        color: #cbd5e1 !important;
         font-size: 12px !important;
-        padding: 0.75rem 1.25rem 0.75rem 3.5rem !important; /* Nested Indentation */
+        padding: 0.8rem 1.25rem 0.8rem 3.5rem !important; /* Nested Indentation */
         vertical-align: middle !important;
-        border-bottom: 1px solid #f1f5f9 !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
     }
 
     /* Progress and Sub-rows with Timeline Guides */
     .report-table td[style*="padding-left:5em"] {
         padding-left: 4.5rem !important;
-        padding-top: 0.75rem !important;
-        padding-bottom: 0.75rem !important;
+        padding-top: 0.8rem !important;
+        padding-bottom: 0.8rem !important;
         position: relative;
-        background-color: #fafafa !important;
+        background-color: transparent !important;
+        color: #cbd5e1 !important;
     }
     .report-table td[style*="padding-left:5em"]::before {
         content: '';
@@ -127,23 +129,24 @@
         top: 0;
         bottom: 0;
         width: 2px;
-        background-color: #e2e8f0; /* Timeline guidelines vertical connector */
+        background-color: rgba(255, 255, 255, 0.08); /* Timeline guidelines vertical connector */
     }
     .report-table td[style*="padding-top:1.8em"] {
-        padding-top: 0.75rem !important;
-        padding-bottom: 0.75rem !important;
-        background-color: #fafafa !important;
+        padding-top: 0.8rem !important;
+        padding-bottom: 0.8rem !important;
+        background-color: transparent !important;
+        color: #cbd5e1 !important;
     }
 
     /* Beautiful Progress Bars */
     .progress {
-        height: 14px !important;
+        height: 15px !important;
         border-radius: 10px !important;
-        background-color: #e2e8f0 !important;
-        box-shadow: inset 0 1px 2px rgba(0,0,0,0.1) !important;
+        background-color: rgba(255, 255, 255, 0.08) !important;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.3) !important;
         overflow: hidden !important;
         border: none !important;
-        margin-top: 0.35rem;
+        margin-top: 0.4rem;
     }
     .progress-bar {
         border-radius: 10px !important;
@@ -152,6 +155,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        box-shadow: none !important;
     }
 
     /* Custom CSS-based Stacked Progress Bars */
@@ -182,15 +186,15 @@
         background: linear-gradient(90deg, #fbbf24, #f59e0b) !important; /* Warm Amber */
     }
     .horizontal-bar-stacked-default {
-        background-color: rgba(0, 0, 0, 0.08) !important;
+        background-color: rgba(255, 255, 255, 0.04) !important;
         color: #64748b !important;
         text-shadow: none !important;
     }
 
     /* Styles inside Dark Folder Container */
     .folder-form-body .horizontal-bar-stacked-default {
-        background-color: rgba(255, 255, 255, 0.1) !important;
-        color: rgba(255, 255, 255, 0.4) !important;
+        background-color: rgba(255, 255, 255, 0.08) !important;
+        color: rgba(255, 255, 255, 0.3) !important;
     }
 
     /* Metadata Table Styling */
@@ -269,15 +273,15 @@
     #callout-danger {
         border: none !important;
         border-left: 5px solid #ef4444 !important;
-        background-color: #fef2f2 !important;
-        color: #ef4444 !important;
+        background-color: rgba(239, 68, 68, 0.1) !important;
+        color: #fca5a5 !important;
         border-radius: 10px;
         padding: 1.125rem 1.5rem !important;
         margin-bottom: 1.75rem !important;
-        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.08) !important;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15) !important;
     }
     #callout-danger h4 {
-        color: #991b1b !important;
+        color: #fee2e2 !important;
         font-size: 0.95rem !important;
         font-weight: 700 !important;
         margin: 0 !important;
@@ -314,7 +318,7 @@
 
     /* Hover effects for table rows */
     .report-table tr:hover td {
-        background-color: rgba(99, 102, 241, 0.015) !important;
+        background-color: rgba(255, 255, 255, 0.015) !important;
     }
     .report-table tr:hover td.contract_item,
     .report-table tr:hover td.component {
