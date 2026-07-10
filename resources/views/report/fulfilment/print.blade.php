@@ -442,7 +442,7 @@
             <div class="metric-card success">
                 <div class="metric-card-value text-success">{{ number_format($target_hit) }}</div>
                 <div class="metric-card-label">Target Hits</div>
-                <div class="metric-card-subtext">POs approved within 7 days of request.</div>
+                <div class="metric-card-subtext">POs approved within 30 days of request.</div>
             </div>
 
             <!-- Target Misses -->

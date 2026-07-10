@@ -313,7 +313,7 @@
                         <dl class="info-list row g-2">
                             <dt class="col-sm-4">Target Standard</dt>
                             <dd class="col-sm-8 text-body">
-                                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill">7 Days or Less</span>
+                                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill">30 Days or Less</span>
                             </dd>
 
                             <dt class="col-sm-4">Target Threshold</dt>
