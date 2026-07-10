@@ -20,7 +20,7 @@ class FulfilmentReportController extends Controller
         return view('report/fulfilment/parameters');
     }
 
-    private function process(){
+    private function process($from,$to){
 
     
         $material_quantity_request = MaterialQuantityRequest::where('status','APRV')->where('approved_at','>=',$from)->where('approved_at','<=',$to)->get();
@@ -113,7 +113,7 @@ class FulfilmentReportController extends Controller
         $to   = $to_input.' 23:59:59';
 
         $data = $this->process($from,$to);
-        
+
         return view('report/fulfilment/print',$data);
     }
 }
