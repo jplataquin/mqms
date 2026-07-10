@@ -144,6 +144,14 @@
         font-weight: 600;
         margin-bottom: 1rem;
     }
+
+    .clickable-row-link {
+        transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    }
+    .clickable-row-link:hover {
+        background-color: rgba(13, 110, 253, 0.08) !important; /* light blue highlight */
+        color: var(--bs-primary) !important;
+    }
 </style>
 
 <div id="content" class="kpi-container">
@@ -352,20 +360,24 @@
                         <tbody>
                             @foreach($missed_entries as $mqr_id => $po_ids)
                                 <tr class="table-secondary">
-                                    <td class="fw-bold text-dark" colspan="3">
-                                        <i class="bi bi-file-earmark-text-fill me-1"></i>
-                                        Material Quantity Request #{{ $mqr_id }}
+                                    <td class="p-0" colspan="3">
+                                        <a href="/material_quantity_request/{{ $mqr_id }}" class="d-block w-100 h-100 fw-bold text-decoration-none text-dark clickable-row-link" target="_blank" style="padding: 0.5rem 0.75rem;">
+                                            <i class="bi bi-file-earmark-text-fill me-1"></i>
+                                            Material Quantity Request #{{ $mqr_id }}
+                                        </a>
                                     </td>
                                 </tr>
                                 @if(!empty($po_ids))
                                     @foreach($po_ids as $po_id)
                                         <tr>
-                                            <td style="padding-left: 2.5rem;">
-                                                <i class="bi bi-arrow-return-right text-muted me-2"></i>
-                                                Purchase Order #{{ $po_id }}
+                                            <td style="padding: 0;">
+                                                <a href="/purchase_order/{{ $po_id }}" class="d-block w-100 h-100 text-decoration-none text-body clickable-row-link" target="_blank" style="padding: 0.5rem 0.75rem 0.5rem 2.5rem;">
+                                                    <i class="bi bi-arrow-return-right text-muted me-2"></i>
+                                                    Purchase Order #{{ $po_id }}
+                                                </a>
                                             </td>
-                                            <td><span class="badge bg-danger-subtle text-danger">Target Missed</span></td>
-                                            <td class="text-secondary small">Exceeded {{ $threshold }}-day target threshold</td>
+                                            <td class="align-middle"><span class="badge bg-danger-subtle text-danger">Target Missed</span></td>
+                                            <td class="text-secondary small align-middle">Exceeded {{ $threshold }}-day target threshold</td>
                                         </tr>
                                     @endforeach
                                 @else
