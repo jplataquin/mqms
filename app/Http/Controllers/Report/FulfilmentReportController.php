@@ -11,6 +11,9 @@ use Carbon\Carbon;
 
 class FulfilmentReportController extends Controller
 {
+    public function __construct(){
+        $this->threshold = 30;
+    }
 
     public function parameters(){
 
@@ -47,7 +50,7 @@ class FulfilmentReportController extends Controller
                 
                 $days = $start->diffInDays($end);
 
-                if($days > 30){
+                if($days > $this->threshold){
                     
                     //echo $days.' '.$po->id.'<br>';
                     $hit_flag = false;
@@ -136,7 +139,7 @@ class FulfilmentReportController extends Controller
                 
                 $days = $start->diffInDays($end);
 
-                if($days > 7){
+                if($days > $this->threshold){
                     
                     //echo $days.' '.$po->id.'<br>';
                     $hit_flag = false;
@@ -152,20 +155,20 @@ class FulfilmentReportController extends Controller
 
         $percentage = 0;
 
-        if($target_missed >= 100){
+        // if($target_missed >= 100){
         
-            $target_missed  = $target_missed - 100;
-            $target_hit     = $target_hit + 100;
+        //     $target_missed  = $target_missed - 100;
+        //     $target_hit     = $target_hit + 100;
         
-        }else if($target_missed >= 60){
+        // }else if($target_missed >= 60){
             
-            $target_missed  = $target_missed - 60;
-            $target_hit     = $target_hit + 60;
+        //     $target_missed  = $target_missed - 60;
+        //     $target_hit     = $target_hit + 60;
         
-        }else if($target_missed >= 50){
-            $target_missed  = $target_missed - 50;
-            $target_hit     = $target_hit + 50;
-        }
+        // }else if($target_missed >= 50){
+        //     $target_missed  = $target_missed - 50;
+        //     $target_hit     = $target_hit + 50;
+        // }
 
         if($request_count > 0){
 
