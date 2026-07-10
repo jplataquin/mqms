@@ -288,7 +288,7 @@
                             <tr>
                                 <td style="padding-left:5em">
                                     @php 
-                                        if($result['request_quantity']){
+                                        if($result['request_quantity'] && $result['budget_quantity'] != 0){
                                             $request_percentage = ($result['request_quantity'] / $result['budget_quantity']) * 100;
                                             $request_percentage = round($request_percentage,2);
                                         }else{
@@ -310,7 +310,7 @@
                             <tr>
                                 <td style="padding-left:5em">
                                     @php 
-                                        if($result['po_quantity']){
+                                        if($result['po_quantity'] && $result['budget_quantity'] != 0){
                                             $po_percentage = ($result['po_quantity'] / $result['budget_quantity']) * 100;
                                             $po_percentage = round($po_percentage,2);
                                         }else{
