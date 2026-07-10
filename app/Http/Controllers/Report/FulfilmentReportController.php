@@ -51,7 +51,10 @@ class FulfilmentReportController extends Controller
                 if($days > $this->threshold){
                     
                     $hit_flag = false;
-                    $missed_po_list[] = $po->id;
+                    $missed_po_list[] = [
+                        'id'   => $po->id,
+                        'days' => $days,
+                    ];
                 }
             }
 

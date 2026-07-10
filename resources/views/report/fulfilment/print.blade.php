@@ -518,16 +518,16 @@
                             </td>
                         </tr>
                         @if(!empty($po_ids))
-                            @foreach($po_ids as $po_id)
+                            @foreach($po_ids as $po)
                                 <tr style="border-bottom: 1px dashed #dee2e6;">
                                     <td style="padding: 6px 10px; padding-left: 25px; color: #333;">
-                                        ↳ Purchase Order #{{ $po_id }}
+                                        ↳ Purchase Order #{{ $po['id'] }}
                                     </td>
                                     <td style="padding: 6px 10px; color: #dc3545; font-weight: 600;">
                                         Target Missed
                                     </td>
                                     <td style="padding: 6px 10px; color: #6c757d; font-size: 10px;">
-                                        Exceeded {{ $threshold }}-day target threshold
+                                        Exceeded target threshold (Took {{ $po['days'] }} days)
                                     </td>
                                 </tr>
                             @endforeach

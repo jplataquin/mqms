@@ -368,16 +368,16 @@
                                     </td>
                                 </tr>
                                 @if(!empty($po_ids))
-                                    @foreach($po_ids as $po_id)
+                                    @foreach($po_ids as $po)
                                         <tr>
                                             <td style="padding: 0;">
-                                                <a href="/purchase_order/{{ $po_id }}" class="d-block w-100 h-100 text-decoration-none text-body clickable-row-link" target="_blank" style="padding: 0.5rem 0.75rem 0.5rem 2.5rem;">
+                                                <a href="/purchase_order/{{ $po['id'] }}" class="d-block w-100 h-100 text-decoration-none text-body clickable-row-link" target="_blank" style="padding: 0.5rem 0.75rem 0.5rem 2.5rem;">
                                                     <i class="bi bi-arrow-return-right text-muted me-2"></i>
-                                                    Purchase Order #{{ $po_id }}
+                                                    Purchase Order #{{ $po['id'] }}
                                                 </a>
                                             </td>
                                             <td class="align-middle"><span class="badge bg-danger-subtle text-danger">Target Missed</span></td>
-                                            <td class="text-secondary small align-middle">Exceeded {{ $threshold }}-day target threshold</td>
+                                            <td class="text-secondary small align-middle">Exceeded target threshold (Took {{ $po['days'] }} days)</td>
                                         </tr>
                                     @endforeach
                                 @else
