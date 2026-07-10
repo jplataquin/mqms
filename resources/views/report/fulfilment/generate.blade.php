@@ -256,7 +256,7 @@
                                 <i class="bi bi-x-circle-fill"></i>
                             </div>
                         </div>
-                        <p class="card-text text-secondary small mb-0">Requests where Purchase Order approval exceeded the 7-day limit.</p>
+                        <p class="card-text text-secondary small mb-0">Requests where Purchase Order approval exceeded the 30 day limit.</p>
                     </div>
                 </div>
             </div>

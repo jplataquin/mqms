@@ -449,7 +449,7 @@
             <div class="metric-card danger">
                 <div class="metric-card-value text-danger">{{ number_format($target_missed) }}</div>
                 <div class="metric-card-label">Target Misses</div>
-                <div class="metric-card-subtext">POs exceeding the 7-day threshold.</div>
+                <div class="metric-card-subtext">POs exceeding the 30 day threshold.</div>
             </div>
         </div>
 
