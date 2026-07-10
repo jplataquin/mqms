@@ -238,7 +238,7 @@
                                 <i class="bi bi-check-circle-fill"></i>
                             </div>
                         </div>
-                        <p class="card-text text-secondary small mb-0">Requests fulfilled with an approved Purchase Order within 30 days.</p>
+                        <p class="card-text text-secondary small mb-0">Requests fulfilled with an approved Purchase Order within {{ $threshold }} days.</p>
                     </div>
                 </div>
             </div>
@@ -256,7 +256,7 @@
                                 <i class="bi bi-x-circle-fill"></i>
                             </div>
                         </div>
-                        <p class="card-text text-secondary small mb-0">Requests where Purchase Order approval exceeded the 30 day limit.</p>
+                        <p class="card-text text-secondary small mb-0">Requests where Purchase Order approval exceeded the {{ $threshold }} day limit.</p>
                     </div>
                 </div>
             </div>
@@ -313,7 +313,7 @@
                         <dl class="info-list row g-2">
                             <dt class="col-sm-4">Target Standard</dt>
                             <dd class="col-sm-8 text-body">
-                                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill">30 Days or Less</span>
+                                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill">{{ $threshold }} Days or Less</span>
                             </dd>
 
                             <dt class="col-sm-4">Target Threshold</dt>
@@ -331,6 +331,57 @@
                 </div>
             </div>
         </div>
+
+        @if(!empty($missed_entries))
+        <!-- Missed Entries Breakdown -->
+        <div class="card border-0 shadow-sm bg-body-tertiary mb-4">
+            <div class="card-header border-0 bg-transparent pt-4 px-4 pb-0">
+                <h4 class="h5 fw-bold m-0 text-body">Target Misses Breakdown</h4>
+                <p class="text-secondary small mb-0">Detailed list of approved Material Quantity Requests (MQR) that exceeded the {{ $threshold }}-day fulfillment threshold, along with their associated Purchase Orders (PO).</p>
+            </div>
+            <div class="card-body p-4">
+                <div class="table-responsive">
+                    <table class="table table-bordered mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 50%;">Entity / ID</th>
+                                <th style="width: 25%;">Type</th>
+                                <th style="width: 25%;">Status / Info</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($missed_entries as $mqr_id => $po_ids)
+                                <tr class="table-secondary">
+                                    <td class="fw-bold text-dark" colspan="3">
+                                        <i class="bi bi-file-earmark-text-fill me-1"></i>
+                                        Material Quantity Request #{{ $mqr_id }}
+                                    </td>
+                                </tr>
+                                @if(!empty($po_ids))
+                                    @foreach($po_ids as $po_id)
+                                        <tr>
+                                            <td style="padding-left: 2.5rem;">
+                                                <i class="bi bi-arrow-return-right text-muted me-2"></i>
+                                                Purchase Order #{{ $po_id }}
+                                            </td>
+                                            <td><span class="badge bg-danger-subtle text-danger">Target Missed</span></td>
+                                            <td class="text-secondary small">Exceeded {{ $threshold }}-day target threshold</td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td style="padding-left: 2.5rem;" colspan="3" class="text-muted fst-italic">
+                                            <i class="bi bi-info-circle me-1"></i> No associated POs recorded as missed
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        @endif
     </div>
 
     <script type="module">

@@ -88,6 +88,7 @@ class FulfilmentReportController extends Controller
             'from'              => $from,
             'to'                => $to,
             'missed_entries'    => $missed_entrires,
+            'threshold'         => $this->threshold,
         ];
     }
     public function generate(Request $request){

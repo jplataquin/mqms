@@ -442,14 +442,14 @@
             <div class="metric-card success">
                 <div class="metric-card-value text-success">{{ number_format($target_hit) }}</div>
                 <div class="metric-card-label">Target Hits</div>
-                <div class="metric-card-subtext">POs approved within 30 days of request.</div>
+                <div class="metric-card-subtext">POs approved within {{ $threshold }} days of request.</div>
             </div>
 
             <!-- Target Misses -->
             <div class="metric-card danger">
                 <div class="metric-card-value text-danger">{{ number_format($target_missed) }}</div>
                 <div class="metric-card-label">Target Misses</div>
-                <div class="metric-card-subtext">POs exceeding the 30 day threshold.</div>
+                <div class="metric-card-subtext">POs exceeding the {{ $threshold }} day threshold.</div>
             </div>
         </div>
 
@@ -478,7 +478,7 @@
                 <table class="detail-table">
                     <tr>
                         <td class="fw-semibold">Fulfillment Metric</td>
-                        <td class="text-end text-secondary">MQR Approved to PO Approved ≤ 30 Days</td>
+                        <td class="text-end text-secondary">MQR Approved to PO Approved ≤ {{ $threshold }} Days</td>
                     </tr>
                     <tr>
                         <td class="fw-semibold">Target Threshold</td>
@@ -497,6 +497,52 @@
                 </table>
             </div>
         </div>
+
+        @if(!empty($missed_entries))
+        <!-- Missed Entries Breakdown -->
+        <div style="margin-top: 30px; page-break-inside: avoid;">
+            <h3 class="fw-bold" style="font-size: 14px; margin-top: 0; margin-bottom: 12px; color: #111; text-transform: uppercase; border-bottom: 2px solid #333; padding-bottom: 6px;">Target Misses Breakdown</h3>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 11px; border: 1px solid #dee2e6;">
+                <thead>
+                    <tr style="background-color: #f8f9fa; border-bottom: 1px solid #dee2e6;">
+                        <th style="padding: 6px 10px; text-align: left; font-weight: 700; text-transform: uppercase; color: #555; width: 50%;">Entity / ID</th>
+                        <th style="padding: 6px 10px; text-align: left; font-weight: 700; text-transform: uppercase; color: #555; width: 25%;">Type</th>
+                        <th style="padding: 6px 10px; text-align: left; font-weight: 700; text-transform: uppercase; color: #555; width: 25%;">Status / Info</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($missed_entries as $mqr_id => $po_ids)
+                        <tr style="background-color: #e9ecef; border-bottom: 1px solid #dee2e6;">
+                            <td colspan="3" style="padding: 6px 10px; font-weight: 700; color: #111;">
+                                Material Quantity Request #{{ $mqr_id }}
+                            </td>
+                        </tr>
+                        @if(!empty($po_ids))
+                            @foreach($po_ids as $po_id)
+                                <tr style="border-bottom: 1px dashed #dee2e6;">
+                                    <td style="padding: 6px 10px; padding-left: 25px; color: #333;">
+                                        ↳ Purchase Order #{{ $po_id }}
+                                    </td>
+                                    <td style="padding: 6px 10px; color: #dc3545; font-weight: 600;">
+                                        Target Missed
+                                    </td>
+                                    <td style="padding: 6px 10px; color: #6c757d; font-size: 10px;">
+                                        Exceeded {{ $threshold }}-day target threshold
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr style="border-bottom: 1px dashed #dee2e6;">
+                                <td colspan="3" style="padding: 6px 10px; padding-left: 25px; color: #6c757d; font-style: italic;">
+                                    No associated POs recorded as missed
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        @endif
 
         <!-- Signatures Section -->
         <div class="signatures-section">
