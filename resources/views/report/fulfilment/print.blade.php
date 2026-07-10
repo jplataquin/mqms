@@ -478,7 +478,7 @@
                 <table class="detail-table">
                     <tr>
                         <td class="fw-semibold">Fulfillment Metric</td>
-                        <td class="text-end text-secondary">MQR Approved to PO Approved ≤ 7 Days</td>
+                        <td class="text-end text-secondary">MQR Approved to PO Approved ≤ 30 Days</td>
                     </tr>
                     <tr>
                         <td class="fw-semibold">Target Threshold</td>
