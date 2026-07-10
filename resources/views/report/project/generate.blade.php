@@ -2,83 +2,344 @@
 
 @section('content')
 <style>
-
-    .contract_item{
-        background-color: #373f51 !important;
-        color: #c7d0d9 !important;
-        top:40px;
+    /* Modern variables and general layout resets */
+    :root {
+        --slate-50: #f8fafc;
+        --slate-100: #f1f5f9;
+        --slate-200: #e2e8f0;
+        --slate-300: #cbd5e1;
+        --slate-400: #94a3b8;
+        --slate-600: #475569;
+        --slate-700: #334155;
+        --slate-800: #1e293b;
+        --slate-900: #0f172a;
+        
+        --indigo-500: #6366f1;
+        --indigo-600: #4f46e5;
+        --blue-500: #3b82f6;
+        --blue-600: #2563eb;
+        --amber-500: #f59e0b;
+        --amber-600: #d97706;
     }
 
-    .component{
-        background-color: #A2A2A2 !important;
-        top:114px;
+    /* Table hierarchy styling - Sleek, Clean and Professional */
+    .report-table {
+        border-collapse: separate !important;
+        border-spacing: 0;
+        width: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #e2e8f0 !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        margin-top: 1.5rem;
     }
 
-    .component_item{
-        background-color: #a9bcd0 !important;
+    .report-table tr {
+        transition: background-color 0.15s ease;
     }
 
-    .material_item{
-        background-color: #d8dbe2 !important;
+    .report-table td, .report-table th {
+        border: none !important;
+        border-bottom: 1px solid #f1f5f9 !important;
+        padding: 0.875rem 1.25rem !important;
+        line-height: 1.5;
     }
 
-    .bar{
-        padding:2px;
+    /* Contract Item Row Header */
+    .contract_item {
+        background-color: #1e293b !important;
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        font-size: 13.5px !important;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        padding: 1.25rem 1.25rem !important;
+        vertical-align: middle !important;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    .contract_item p {
+        margin: 0 !important;
+        font-family: 'Nunito', sans-serif;
     }
 
-    .bar-request{
-        background-color:#343aeb !important;
+    /* Component Row Header */
+    .component {
+        background-color: #f8fafc !important;
+        color: #0f172a !important;
+        font-weight: 700 !important;
+        font-size: 13px !important;
+        padding: 1rem 1.25rem !important;
+        vertical-align: middle !important;
+        border-left: 5px solid #6366f1 !important; /* Indigo accent bar */
+        border-bottom: 1px solid #e2e8f0 !important;
+    }
+    .component a {
+        color: #6366f1 !important;
+        transition: color 0.15s;
+    }
+    .component a:hover {
+        color: #4f46e5 !important;
     }
 
-    .horizontal-bar-stacked{
+    /* Component Item Row Header */
+    .component_item {
+        background-color: #ffffff !important;
+        color: #334155 !important;
+        font-weight: 600 !important;
+        font-size: 12.5px !important;
+        padding: 0.875rem 1.25rem 0.875rem 2.25rem !important; /* Nested Indentation */
+        vertical-align: middle !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+        position: relative;
+    }
+    .component_item::before {
+        content: '';
+        position: absolute;
+        left: 1.25rem;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background-color: #cbd5e1;
+    }
+
+    /* Material Item Row Styling */
+    .material_item {
+        background-color: #fafafa !important;
+        color: #475569 !important;
+        font-size: 12px !important;
+        padding: 0.75rem 1.25rem 0.75rem 3.5rem !important; /* Nested Indentation */
+        vertical-align: middle !important;
+        border-bottom: 1px solid #f1f5f9 !important;
+    }
+
+    /* Progress and Sub-rows with Timeline Guides */
+    .report-table td[style*="padding-left:5em"] {
+        padding-left: 4.5rem !important;
+        padding-top: 0.75rem !important;
+        padding-bottom: 0.75rem !important;
+        position: relative;
+        background-color: #fafafa !important;
+    }
+    .report-table td[style*="padding-left:5em"]::before {
+        content: '';
+        position: absolute;
+        left: 3.5rem;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background-color: #e2e8f0; /* Timeline guidelines vertical connector */
+    }
+    .report-table td[style*="padding-top:1.8em"] {
+        padding-top: 0.75rem !important;
+        padding-bottom: 0.75rem !important;
+        background-color: #fafafa !important;
+    }
+
+    /* Beautiful Progress Bars */
+    .progress {
+        height: 14px !important;
+        border-radius: 10px !important;
+        background-color: #e2e8f0 !important;
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.1) !important;
+        overflow: hidden !important;
+        border: none !important;
+        margin-top: 0.35rem;
+    }
+    .progress-bar {
+        border-radius: 10px !important;
+        font-weight: bold;
+        font-size: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Custom CSS-based Stacked Progress Bars */
+    .horizontal-bar-stacked {
         width: 100%;
         min-width: 100%;
-        min-height:1em;
-        max-height:1em;
+        height: 100% !important;
         border-collapse: collapse;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .horizontal-bar-stacked td {
+        text-align: center;
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        font-size: 11px !important;
+        font-family: 'Nunito', sans-serif;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+        transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 0 !important;
+        height: 100%;
+        vertical-align: middle;
+    }
+    .horizontal-bar-stacked-expense {
+        background: linear-gradient(90deg, #3b82f6, #1d4ed8) !important; /* Vivid Blue */
+    }
+    .horizontal-bar-stacked-overhead {
+        background: linear-gradient(90deg, #fbbf24, #f59e0b) !important; /* Warm Amber */
+    }
+    .horizontal-bar-stacked-default {
+        background-color: rgba(0, 0, 0, 0.08) !important;
+        color: #64748b !important;
+        text-shadow: none !important;
     }
 
-    .horizontal-bar-stacked td{
-        text-align:center;
-        color: #ffffff;
+    /* Styles inside Dark Folder Container */
+    .folder-form-body .horizontal-bar-stacked-default {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        color: rgba(255, 255, 255, 0.4) !important;
     }
 
-    .horizontal-bar-stacked-expense{
-        background-color: rgb(13, 110, 253);
-        width:0%;
+    /* Metadata Table Styling */
+    .record-table-horizontal {
+        background-color: rgba(255, 255, 255, 0.02) !important;
+        border-radius: 12px !important;
+        border-collapse: separate !important;
+        border-spacing: 0 !important;
+        overflow: hidden !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        margin-bottom: 2rem !important;
+    }
+    .record-table-horizontal tr:hover {
+        background-color: rgba(255, 255, 255, 0.04) !important;
+        color: #ffffff !important;
+    }
+    .record-table-horizontal th {
+        background-color: rgba(255, 255, 255, 0.04) !important;
+        color: #cbd5e1 !important;
+        font-weight: 700 !important;
+        padding: 0.875rem 1.25rem !important;
+        width: 220px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+    .record-table-horizontal td {
+        color: #ffffff !important;
+        padding: 0.875rem 1.25rem !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+    .record-table-horizontal tr:last-child th,
+    .record-table-horizontal tr:last-child td {
+        border-bottom: none !important;
     }
 
-    .horizontal-bar-stacked-overhead{
-        background-color: rgb(255, 193, 7);
-        width:0%;
+    /* KPI Cards - SaaS inspired Dashboard Indicators */
+    .kpi-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06) !important;
+        border-left: 5px solid #6366f1 !important;
+        border-radius: 12px;
+        padding: 1.25rem 1.5rem;
+        transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s, background-color 0.2s;
+        text-align: left !important;
+    }
+    .kpi-card:hover {
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.5);
+    }
+    .kpi-card-budget {
+        border-left-color: #818cf8 !important; /* Indigo */
+    }
+    .kpi-card-expense {
+        border-left-color: #38bdf8 !important; /* Sky Blue */
+    }
+    .kpi-card-overhead {
+        border-left-color: #fbbf24 !important; /* Amber */
+    }
+    .kpi-title {
+        font-size: 0.725rem !important;
+        font-weight: 700 !important;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #94a3b8 !important;
+        margin-bottom: 0.5rem;
+    }
+    .kpi-value {
+        font-size: 1.625rem !important;
+        font-weight: 800 !important;
+        color: #ffffff !important;
+        margin-bottom: 0;
+        font-family: 'Nunito', sans-serif;
     }
 
-    .horizontal-bar-stacked-default{
-        background-color: #c7d0d9;
-        width:100%;
-        color:#000000 !important;
+    /* Modern Alert Callout */
+    #callout-danger {
+        border: none !important;
+        border-left: 5px solid #ef4444 !important;
+        background-color: #fef2f2 !important;
+        color: #ef4444 !important;
+        border-radius: 10px;
+        padding: 1.125rem 1.5rem !important;
+        margin-bottom: 1.75rem !important;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.08) !important;
+    }
+    #callout-danger h4 {
+        color: #991b1b !important;
+        font-size: 0.95rem !important;
+        font-weight: 700 !important;
+        margin: 0 !important;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    #callout-danger h4::before {
+        content: "\F5C4"; /* Bootstrap icon bi-exclamation-triangle-fill */
+        font-family: "bootstrap-icons";
+        font-size: 1.15rem;
+        color: #ef4444;
     }
 
-    .report-table{
-        font-size: 12px !important;
+    /* Premium styled print button */
+    #printBtn {
+        background-color: #fbbf24 !important;
+        border: none !important;
+        color: #0f172a !important;
+        font-weight: 700 !important;
+        font-size: 12.5px !important;
+        border-radius: 8px !important;
+        padding: 0.625rem 1.75rem !important;
+        box-shadow: 0 4px 10px rgba(251, 191, 36, 0.25) !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+    }
+    #printBtn:hover {
+        background-color: #f59e0b !important;
+        transform: translateY(-1.5px) !important;
+        box-shadow: 0 6px 16px rgba(245, 158, 11, 0.35) !important;
     }
 
-    .report-table th{
-        border-bottom-width: 0px !important;
+    /* Hover effects for table rows */
+    .report-table tr:hover td {
+        background-color: rgba(99, 102, 241, 0.015) !important;
+    }
+    .report-table tr:hover td.contract_item,
+    .report-table tr:hover td.component {
+        background-color: inherit !important; /* Prevent headers from changing hover bg */
     }
 
-    @media (min-width:961px){
-        .contract_item{
-            position:sticky !important;
-            top:40px;
+    /* Red indicator for over-budget items */
+    .text-danger {
+        color: #ef4444 !important;
+        font-weight: 700 !important;
+    }
+
+    /* Sticky headers configuration on desktop */
+    @media (min-width: 961px) {
+        .contract_item {
+            position: sticky !important;
+            top: 40px;
+            z-index: 10;
         }
-
-        .component{
-            position:sticky !important;
-            top:114px;
+        .component {
+            position: sticky !important;
+            top: 114px;
+            z-index: 9;
         }
     }
-
 </style>
 <div id="content">
     <div class="container">
@@ -115,7 +376,7 @@
             </div>
 
             <div class="folder-form-body">
-                <table class="record-table-horizontal mb-3">
+                <table class="record-table-horizontal mb-4">
                     <tbody>
                         <tr>
                             <th>Project</th>
@@ -141,29 +402,28 @@
                 </table> 
 
 
-                <div class="row mb-3">
-                    <div class="col-lg-12 col-md-12 text-center">
-                        <div class="border rounded border-secondary">
-                            <h4>Total Budget</h4>
-                            <h5 id="material_budget_grand_total" data-value="0">-</h5>
+                <div class="row g-3 mb-4">
+                    <div class="col-lg-4 col-md-12">
+                        <div class="kpi-card kpi-card-budget shadow-sm">
+                            <div class="kpi-title">Total Budget</div>
+                            <div class="kpi-value" id="material_budget_grand_total" data-value="0">-</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="kpi-card kpi-card-expense shadow-sm">
+                            <div class="kpi-title">Total Expense</div>
+                            <div class="kpi-value check" id="material_expense_grand_total" data-check-target="#material_budget_grand_total" data-value="0">-</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="kpi-card kpi-card-overhead shadow-sm">
+                            <div class="kpi-title">Total Overhead</div>
+                            <div class="kpi-value" id="material_overhead_grand_total" data-value="0">-</div>
                         </div>
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-lg-6 col-md-6 text-center">
-                        <div class="border rounded border-secondary">
-                            <h4>Total Expense</h4>
-                            <h5 id="material_expense_grand_total" class="check" data-check-target="#material_budget_grand_total" data-value="0">-</h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 text-center">
-                        <div class="border rounded border-secondary">
-                            <h4>Total Overhead</h4>
-                            <h5 id="material_overhead_grand_total" data-value="0">-</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-5 row">
+
+                <div class="mb-4 row">
                     <div class="col-lg-12">
                     
                         <div class="progress">
@@ -178,7 +438,7 @@
                     </div>
                 </div>
 
-                <div class="mb-5 row">
+                <div class="mb-2 row">
                     <div class="col-lg-12 text-end">
                         <button class="btn btn-warning" id="printBtn" onclick="window.open('/report/project/print?project_id={{$project_id}}&section_id={{$section_id}}&contract_item_id={{$contract_item_id}}&component_id={{$component_id}}&as_of={{$as_of}}&material_items={{$material_items_request}}','_blank')">Print</button>
                     </div>
