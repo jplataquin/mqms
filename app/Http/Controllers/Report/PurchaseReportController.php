@@ -171,15 +171,14 @@ class PurchaseReportController extends Controller{
         
         //Filter From
         if($from){
-            echo $from.' 00:00:00';
            $purchase_orders = $purchase_orders->where('approved_at','>=', $from.' 00:00:00');
         }
 
         if($to){
-            echo $to.' 59:59:59';
-            $purchase_orders = $purchase_orders->where('approved_at','<=', $to.' 59:59:59');
+
+            $purchase_orders = $purchase_orders->where('approved_at','<=', $to.' 00:00:00');
         }
-        exit;
+
         $purchase_orders = $purchase_orders->where('status','APRV')->get();
 
 
