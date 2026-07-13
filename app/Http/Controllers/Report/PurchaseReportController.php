@@ -238,7 +238,6 @@ class PurchaseReportController extends Controller{
             $per_material = $per_material->with('MaterialItem')->get();
         }
        
-        echo $from.' - '.$to;
         return [
             'per_supplier'  => $per_supplier,
             'per_material'  => $per_material,

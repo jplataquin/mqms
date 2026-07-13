@@ -55,7 +55,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>Date Scope</th>
+                        <th>Date Scope {{$from}}</th>
                         <td>
                             @if(!$from && !$to)
                                 *
