@@ -176,7 +176,7 @@ class PurchaseReportController extends Controller{
 
         if($to){
 
-            $purchase_orders = $purchase_orders->where('approved_at','<=', $to.' 00:00:00');
+            $purchase_orders = $purchase_orders->where('approved_at','<=', $to.' 23:59:59');
         }
 
         $purchase_orders = $purchase_orders->where('status','APRV')->get();
