@@ -61,10 +61,10 @@
                                 *
                             @else
                                 @php 
-                                    $from = $from || '*';
-                                    $to   = $to || '*';
+                                    $from = $from ?? '*';
+                                    $to   = $to ?? '*';
                                 @endphp
-                                (From: {{$from}}) - To: ({{$to}})
+                                    From: {{$from}} - To: {{$to}}
                             @endif
                         </td>
                     </tr>
