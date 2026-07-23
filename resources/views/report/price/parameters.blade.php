@@ -79,6 +79,10 @@
                     <div class="col-lg-12 mb-3">
                         <div class="form-group">
                             <label>Material Group</label>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control" id="material_group_search" placeholder="Type to search material group...">
+                            </div>
                             <select class="form-select" id="material_group">
                                 <option value=""> - </option>
                                 @foreach($material_groups as $material_group)
@@ -120,12 +124,32 @@
         import {$q,Template} from '/adarna.js';
      
         const material_group        = $q('#material_group').first();
+        const material_group_search = $q('#material_group_search').first();
         const project               = $q('#project').first();
         const section               = $q('#section').first();
         const contract_item         = $q('#contract_item').first();
         const component             = $q('#component').first();
         const from                  = $q('#from').first();
         const to                    = $q('#to').first();
+
+        // Cache original material group options for filtering
+        const material_group_options = Array.from(material_group.options);
+
+        material_group_search.oninput = () => {
+            const searchVal = material_group_search.value.toLowerCase();
+            const currentValue = material_group.value;
+            
+            material_group.innerHTML = '';
+            
+            material_group_options.forEach(option => {
+                if (option.value === '' || option.text.toLowerCase().includes(searchVal)) {
+                    material_group.append(option);
+                }
+            });
+
+            // Restore previous value if still present
+            material_group.value = currentValue;
+        };
         const material_item_list    = $q('#material_item_list').first();
         const all_btn               = $q('#allBtn').first();
         const check_icon_on         = $q('#check_icon_on').first();
