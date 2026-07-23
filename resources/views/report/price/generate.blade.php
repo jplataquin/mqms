@@ -56,32 +56,33 @@
         </div>
 
         @foreach($result as $material_item_id => $res1)
-
-            <div class="mb-3 ps-3 border border-primary">
-                <h2>{{ $material_item_options[$material_item_id]->text }}</h2>
-
-                @foreach($res1 as $supplier_id => $res2)
-                    <div class="mb-3 ps-3 border border-secondary">
-                        <h3>{{ $supplier_options[$supplier_id]->text }}</h3>
-
-                        @foreach($res2 as $payment_term_id => $res3)
-                            <div class="mb-3 ps-3 border border-warning">
-                                <h4>{{ $payment_term_options[$payment_term_id]->text }}</h4>
-
-                                <ul class="list-group">
-                                    @foreach($res3 as $price => $created_at)
-                                        <li class="list-group-item">P{{number_format($price,2)}} [ {{$created_at}} ]</li>
-                                    @endforeach
-                                
-                                </ul>
-                            </div>
+            <div class="mb-5">
+                <h3 class="mb-3">{{ $material_item_options[$material_item_id]->text }}</h3>
+                <table class="table w-100 table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Supplier</th>
+                            <th>Payment Term</th>
+                            <th class="text-end">Price</th>
+                            <th class="text-center">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($res1 as $supplier_id => $res2)
+                            @foreach($res2 as $payment_term_id => $res3)
+                                @foreach($res3 as $price => $created_at)
+                                    <tr>
+                                        <td>{{ $supplier_options[$supplier_id]->text }}</td>
+                                        <td>{{ $payment_term_options[$payment_term_id]->text }}</td>
+                                        <td class="text-end">P {{ number_format($price, 2) }}</td>
+                                        <td class="text-center">{{ $created_at }}</td>
+                                    </tr>
+                                @endforeach
+                            @endforeach
                         @endforeach
-                    </div>
-
-                @endforeach
-
+                    </tbody>
+                </table>
             </div>
-
         @endforeach
     
 
