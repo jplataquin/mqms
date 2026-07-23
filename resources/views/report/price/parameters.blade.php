@@ -79,16 +79,16 @@
                     <div class="col-lg-12 mb-3">
                         <div class="form-group">
                             <label>Material Group</label>
-                            <div class="input-group mb-2">
+                            <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-search"></i></span>
-                                <input type="text" class="form-control" id="material_group_search" placeholder="Type to search material group...">
+                                <input type="text" class="form-control" id="material_group_suggest" list="material_group_datalist" placeholder="Type to select material group...">
                             </div>
-                            <select class="form-select" id="material_group">
-                                <option value=""> - </option>
-                                @foreach($material_groups as $material_group)
-                                    <option value="{{$material_group->id}}">{{$material_group->name}}</option>
+                            <datalist id="material_group_datalist">
+                                @foreach($material_groups as $group)
+                                    <option value="{{ $group->name }}" data-id="{{ $group->id }}"></option>
                                 @endforeach
-                            </select>
+                            </datalist>
+                            <input type="hidden" id="material_group" value="">
                         </div>
                     </div>
                 </div> <!-- div row -->
@@ -123,8 +123,9 @@
     <script type="module">
         import {$q,Template} from '/adarna.js';
      
-        const material_group        = $q('#material_group').first();
-        const material_group_search = $q('#material_group_search').first();
+        const material_group         = $q('#material_group').first();
+        const material_group_suggest = $q('#material_group_suggest').first();
+        const material_group_datalist = $q('#material_group_datalist').first();
         const project               = $q('#project').first();
         const section               = $q('#section').first();
         const contract_item         = $q('#contract_item').first();
@@ -132,23 +133,24 @@
         const from                  = $q('#from').first();
         const to                    = $q('#to').first();
 
-        // Cache original material group options for filtering
-        const material_group_options = Array.from(material_group.options);
+        material_group_suggest.oninput = () => {
+            const val = material_group_suggest.value;
+            const options = material_group_datalist.options;
+            let foundId = '';
 
-        material_group_search.oninput = () => {
-            const searchVal = material_group_search.value.toLowerCase();
-            const currentValue = material_group.value;
-            
-            material_group.innerHTML = '';
-            
-            material_group_options.forEach(option => {
-                if (option.value === '' || option.text.toLowerCase().includes(searchVal)) {
-                    material_group.append(option);
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].value === val) {
+                    foundId = options[i].getAttribute('data-id');
+                    break;
                 }
-            });
+            }
 
-            // Restore previous value if still present
-            material_group.value = currentValue;
+            if (material_group.value !== foundId) {
+                material_group.value = foundId;
+                if (material_group.onchange) {
+                    material_group.onchange();
+                }
+            }
         };
         const material_item_list    = $q('#material_item_list').first();
         const all_btn               = $q('#allBtn').first();
