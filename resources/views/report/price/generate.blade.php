@@ -58,7 +58,7 @@
         <div class="card mb-4 border-info">
             <div class="card-body">
                 <h5 class="card-title text-info mb-1">Overall Average Price</h5>
-                <h2 class="card-text text-dark font-weight-bold" id="overall-average-price">P 0.00</h2>
+                <h2 class="card-text text-light font-weight-bold" id="overall-average-price">P 0.00</h2>
                 <small class="text-muted" id="overall-average-entries">Based on 0 price entries</small>
             </div>
         </div>
