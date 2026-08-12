@@ -170,4 +170,40 @@ class AccomplishmentTest extends TestCase
             'status' => 'APRV'
         ]);
     }
+
+    /** @test */
+    public function it_can_create_and_manage_accomplishment_records()
+    {
+        // 1. Create Accomplishment record
+        $accomplishment = new \App\Models\Accomplishment();
+        $accomplishment->component_id = $this->component->id;
+        $accomplishment->type = 'ACTUAL';
+        $accomplishment->entry_date = '2026-08-12';
+        $accomplishment->quantity = 25.5;
+        $accomplishment->remarks = 'Completed half the component';
+        $accomplishment->created_by = $this->user->id;
+        $accomplishment->save();
+
+        $this->assertDatabaseHas('accomplishments', [
+            'id' => $accomplishment->id,
+            'component_id' => $this->component->id,
+            'type' => 'ACTUAL',
+            'quantity' => 25.5,
+            'remarks' => 'Completed half the component',
+        ]);
+
+        // 2. Test relationships
+        $this->assertEquals($this->component->id, $accomplishment->Component->id);
+        $this->assertEquals($this->user->id, $accomplishment->CreatedBy->id);
+
+        // 3. Test Component relationship
+        $this->assertCount(1, $this->component->fresh()->Accomplishments);
+        $this->assertEquals($accomplishment->id, $this->component->fresh()->Accomplishments->first()->id);
+
+        // 4. Test Soft Delete
+        $accomplishment->delete();
+        $this->assertSoftDeleted('accomplishments', [
+            'id' => $accomplishment->id
+        ]);
+    }
 }

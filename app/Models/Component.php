@@ -15,6 +15,7 @@ use App\Models\ComponentItem;
 use App\Models\ContractItem;
 use App\Models\User;
 use App\Models\Unit;
+use App\Models\Accomplishment;
 
 class Component extends Model
 {
@@ -40,6 +41,11 @@ class Component extends Model
     public function ComponentItems(): HasMany
     {
         return $this->hasMany(ComponentItem::class);
+    }
+
+    public function Accomplishments(): HasMany
+    {
+        return $this->hasMany(Accomplishment::class);
     }
     
     
