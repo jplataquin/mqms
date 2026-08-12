@@ -75,6 +75,12 @@
                             </div>          
                         </li>
 
+                        <li class="menu-item">
+                            <div class="nav-item">
+                                <a href="/accomplishment" hx-select="#content" hx-target="#main">Accomplishment</a>
+                            </div>          
+                        </li>
+
 
                         <li class="menu-item">
                             <div class="nav-item">

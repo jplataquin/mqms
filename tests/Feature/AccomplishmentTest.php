@@ -1,0 +1,173 @@
+<?php
+
+namespace Tests\Feature;
+
+use Tests\TestCase;
+use App\Models\User;
+use App\Models\Project;
+use App\Models\Section;
+use App\Models\ContractItem;
+use App\Models\Component;
+use App\Models\Unit;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+class AccomplishmentTest extends TestCase
+{
+    use RefreshDatabase;
+
+    protected $user;
+    protected $project;
+    protected $section;
+    protected $contractItem;
+    protected $component;
+    protected $unit;
+
+    public function createApplication()
+    {
+        $app = parent::createApplication();
+
+        config(['database.default' => 'sqlite']);
+        config(['database.connections.sqlite' => [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+            'foreign_key_constraints' => false,
+        ]]);
+
+        return $app;
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Create a user and authenticate
+        $this->user = User::factory()->create();
+
+        // Create a unit first
+        $this->unit = new Unit();
+        $this->unit->text = 'Pcs';
+        $this->unit->created_by = $this->user->id;
+        $this->unit->save();
+
+        // Create project, section, contract item, and component
+        $this->project = new Project();
+        $this->project->name = 'Test Project 123';
+        $this->project->status = 'ACTV';
+        $this->project->created_by = $this->user->id;
+        $this->project->save();
+
+        $this->section = new Section();
+        $this->section->project_id = $this->project->id;
+        $this->section->name = 'Test Section 123';
+        $this->section->gross_total_amount = 500000.00;
+        $this->section->created_by = $this->user->id;
+        $this->section->save();
+
+        $this->contractItem = new ContractItem();
+        $this->contractItem->section_id = $this->section->id;
+        $this->contractItem->item_type = 'MAT';
+        $this->contractItem->item_code = 'C-101';
+        $this->contractItem->description = 'Test Contract Item 123';
+        $this->contractItem->contract_quantity = 100;
+        $this->contractItem->unit_id = $this->unit->id;
+        $this->contractItem->contract_unit_price = 1500.00;
+        $this->contractItem->created_by = $this->user->id;
+        $this->contractItem->save();
+
+        $this->component = new Component();
+        $this->component->name = 'Test Component 123';
+        $this->component->contract_item_id = $this->contractItem->id;
+        $this->component->quantity = 50;
+        $this->component->unit_id = $this->unit->id;
+        $this->component->use_count = 1;
+        $this->component->status = 'APRV';
+        $this->component->section_id = $this->section->id;
+        $this->component->created_by = $this->user->id;
+        $this->component->save();
+    }
+
+    /** @test */
+    public function it_can_render_the_accomplishment_projects_list_page()
+    {
+        $response = $this->actingAs($this->user)->get('/accomplishment');
+        $response->assertStatus(200);
+        $response->assertSee('Accomplishment');
+    }
+
+    /** @test */
+    public function it_can_render_the_accomplishment_sections_list_page()
+    {
+        $response = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id);
+        $response->assertStatus(200);
+        $response->assertSee('Test Project 123');
+    }
+
+    /** @test */
+    public function it_can_render_the_accomplishment_contract_items_list_page()
+    {
+        $response = $this->actingAs($this->user)->get('/accomplishment/section/' . $this->section->id);
+        $response->assertStatus(200);
+        $response->assertSee('Test Section 123');
+    }
+
+    /** @test */
+    public function it_can_render_the_accomplishment_components_list_page()
+    {
+        $response = $this->actingAs($this->user)->get('/accomplishment/contract_item/' . $this->contractItem->id);
+        $response->assertStatus(200);
+        $response->assertSee('Test Contract Item 123');
+    }
+
+    /** @test */
+    public function it_can_render_the_blank_accomplishment_component_page()
+    {
+        $response = $this->actingAs($this->user)->get('/accomplishment/component/' . $this->component->id);
+        $response->assertStatus(200);
+        $response->assertSee('Test Component 123');
+        // Ensure container exists
+        $response->assertSee('id="list"', false);
+    }
+
+    /** @test */
+    public function it_can_fetch_projects_via_api()
+    {
+        $response = $this->actingAs($this->user)->get('/api/accomplishment/project/list?query=Test Project 123');
+        $response->assertStatus(200);
+        $response->assertJsonFragment([
+            'name' => 'Test Project 123',
+            'status' => 'ACTV'
+        ]);
+    }
+
+    /** @test */
+    public function it_can_fetch_sections_via_api()
+    {
+        $response = $this->actingAs($this->user)->get('/api/accomplishment/section/list?project_id=' . $this->project->id);
+        $response->assertStatus(200);
+        $response->assertJsonFragment([
+            'name' => 'Test Section 123'
+        ]);
+    }
+
+    /** @test */
+    public function it_can_fetch_contract_items_via_api()
+    {
+        $response = $this->actingAs($this->user)->get('/api/accomplishment/contract_item/list?section_id=' . $this->section->id);
+        $response->assertStatus(200);
+        $response->assertJsonFragment([
+            'description' => 'Test Contract Item 123'
+        ]);
+    }
+
+    /** @test */
+    public function it_can_fetch_components_via_api()
+    {
+        $response = $this->actingAs($this->user)->get('/api/accomplishment/component/list?contract_item_id=' . $this->contractItem->id);
+        $response->assertStatus(200);
+        $response->assertJsonFragment([
+            'name' => 'Test Component 123',
+            'status' => 'APRV'
+        ]);
+    }
+}

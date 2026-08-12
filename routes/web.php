@@ -68,6 +68,12 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/budget/contract_item/{id}', [App\Http\Controllers\BudgetController::class, 'component_list']);
     Route::get('/budget/component/{id}', [App\Http\Controllers\BudgetController::class, 'component_display']);
     
+    Route::get('/accomplishment', [App\Http\Controllers\AccomplishmentController::class, 'list']);
+    Route::get('/accomplishment/project/{id}', [App\Http\Controllers\AccomplishmentController::class, 'section_list']);
+    Route::get('/accomplishment/section/{id}', [App\Http\Controllers\AccomplishmentController::class, 'contract_item_list']);
+    Route::get('/accomplishment/contract_item/{id}', [App\Http\Controllers\AccomplishmentController::class, 'component_list']);
+    Route::get('/accomplishment/component/{id}', [App\Http\Controllers\AccomplishmentController::class, 'component_display']);
+    
 
     Route::get('/project/create', [App\Http\Controllers\ProjectController::class, 'create']);
     Route::get('/project/{id}', [App\Http\Controllers\ProjectController::class, 'display']);
