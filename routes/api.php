@@ -36,6 +36,7 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::get('/accomplishment/section/list', [App\Http\Controllers\AccomplishmentController::class, '_section_list']);
     Route::get('/accomplishment/contract_item/list', [App\Http\Controllers\AccomplishmentController::class, '_contract_item_list']);
     Route::get('/accomplishment/component/list', [App\Http\Controllers\AccomplishmentController::class, '_component_list']);
+    Route::post('/accomplishment/create', [App\Http\Controllers\AccomplishmentController::class, '_create']);
 
 
     Route::get('/role/list', [App\Http\Controllers\RoleController::class, '_list']);

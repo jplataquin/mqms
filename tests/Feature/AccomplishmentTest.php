@@ -206,4 +206,56 @@ class AccomplishmentTest extends TestCase
             'id' => $accomplishment->id
         ]);
     }
+
+    /** @test */
+    public function it_can_render_the_accomplishment_create_page()
+    {
+        $response = $this->actingAs($this->user)->get('/accomplishment/component/' . $this->component->id . '/create');
+        $response->assertStatus(200);
+        $response->assertSee('Create Accomplishment');
+        $response->assertSee('Test Component 123');
+    }
+
+    /** @test */
+    public function it_can_create_an_accomplishment_via_api()
+    {
+        $response = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
+            'component_id' => $this->component->id,
+            'type'         => 'TARGET',
+            'entry_date'   => '2026-08-12',
+            'quantity'     => 120.4,
+            'remarks'      => 'Target accomplishment for project phase'
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+            'message' => ''
+        ]);
+
+        $this->assertDatabaseHas('accomplishments', [
+            'component_id' => $this->component->id,
+            'type'         => 'TARGET',
+            'quantity'     => 120.4,
+            'remarks'      => 'Target accomplishment for project phase',
+            'created_by'   => $this->user->id
+        ]);
+    }
+
+    /** @test */
+    public function it_fails_accomplishment_api_creation_due_to_validation()
+    {
+        $response = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
+            'component_id' => $this->component->id,
+            'type'         => 'INVALID_TYPE', // Invalid enum
+            'entry_date'   => 'not-a-date',   // Invalid date
+            'quantity'     => 'not-numeric'   // Invalid quantity
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => -2,
+            'message' => 'Failed Validation'
+        ]);
+    }
 }

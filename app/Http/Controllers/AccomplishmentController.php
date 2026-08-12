@@ -7,6 +7,9 @@ use App\Models\Project;
 use App\Models\Section;
 use App\Models\ContractItem;
 use App\Models\Component;
+use App\Models\Accomplishment;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class AccomplishmentController extends Controller
 {
@@ -232,6 +235,58 @@ class AccomplishmentController extends Controller
             'section'               => $section,
             'contract_item'         => $contract_item,
             'component'             => $component
+        ]);
+    }
+
+    public function create($component_id){
+
+        $component     = Component::findOrFail($component_id);
+        $contract_item = $component->ContractItem;
+        $section       = $contract_item->Section;
+        $project       = $section->Project;
+
+        return view('accomplishment/create',[
+            'project'               => $project,
+            'section'               => $section,
+            'contract_item'         => $contract_item,
+            'component'             => $component
+        ]);
+    }
+
+    public function _create(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'component_id' => 'required|integer|exists:components,id',
+            'type'         => 'required|in:ACTUAL,TARGET',
+            'entry_date'   => 'required|date',
+            'quantity'     => 'required|numeric',
+            'remarks'      => 'nullable|string'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => $validator->messages()
+            ]);
+        }
+
+        $user_id = Auth::user()->id;
+
+        $accomplishment = new Accomplishment();
+        $accomplishment->component_id   = $request->input('component_id');
+        $accomplishment->type           = $request->input('type');
+        $accomplishment->entry_date     = $request->input('entry_date');
+        $accomplishment->quantity       = $request->input('quantity');
+        $accomplishment->remarks        = $request->input('remarks');
+        $accomplishment->created_by     = $user_id;
+
+        $accomplishment->save();
+
+        return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data'      => $accomplishment
         ]);
     }
 }
