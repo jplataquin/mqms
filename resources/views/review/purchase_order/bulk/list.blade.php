@@ -53,7 +53,7 @@
     <h2 class="mb-3">Payment Summary</h2>
       
 
-    <div id="payment_terms_summary" class="d-flex flex-wrap justify-content-between"></div>
+    <div id="payment_terms_summary" class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3 mt-2 mb-4"></div>
     
 
     <div class="row mt-5">
@@ -117,9 +117,13 @@
 
         for(let id in summary){
 
-            const summary_el = t.div({class:'text-center border border-secondary p-3 m-3'},()=>{
-                t.h3(payment_terms[id].text);
-                t.h4('P '+window.util.numberFormat(summary[id],2));
+            const summary_el = t.div({class:'col'},()=>{
+                t.div({class:'card h-100 text-center border-secondary shadow-sm'}, () => {
+                    t.div({class:'card-body d-flex flex-column justify-content-center p-3'}, () => {
+                        t.h6({class:'card-title text-muted small text-uppercase mb-2 fw-bold'}, payment_terms[id].text);
+                        t.h4({class:'card-text fw-bold text-dark m-0'}, 'P '+window.util.numberFormat(summary[id],2));
+                    });
+                });
             });
 
             grand_total += summary[id];
@@ -127,10 +131,13 @@
             payment_terms_summary.appendChild(summary_el);
         }
 
-        payment_terms_summary.appendChild(t.div({class:'text-center p-3 border border-warning m-3'},()=>{
-
-            t.h3('Grand Total');
-            t.h4('P '+window.util.numberFormat(grand_total,2));
+        payment_terms_summary.appendChild(t.div({class:'col'},()=>{
+            t.div({class:'card h-100 text-center border-warning bg-warning bg-opacity-10 shadow-sm'}, () => {
+                t.div({class:'card-body d-flex flex-column justify-content-center p-3'}, () => {
+                    t.h6({class:'card-title text-warning small text-uppercase mb-2 fw-bold'}, 'Grand Total');
+                    t.h4({class:'card-text fw-bold text-dark m-0'}, 'P '+window.util.numberFormat(grand_total,2));
+                });
+            });
         }));
 
     }
