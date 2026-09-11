@@ -277,22 +277,36 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.5) !important;
             border-radius: 4px !important;
             padding: 5px 0 !important;
+            min-width: 180px !important;
+            width: auto !important;
+            z-index: 1000 !important;
         }
         .vakata-context li > a {
             color: var(--vscode-text) !important;
             text-shadow: none !important;
             font-size: 12px !important;
             padding: 6px 15px !important;
-        }
-        .vakata-context li > a:hover {
-            background-color: var(--vscode-accent) !important;
-            color: var(--vscode-text-active) !important;
-            border-radius: 0 !important;
+            white-space: nowrap !important;
             border: none !important;
             box-shadow: none !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+        }
+        .vakata-context li > a i {
+            font-size: 13px;
+        }
+        .vakata-context li > a:hover,
+        .vakata-context .vakata-context-hover > a {
+            background-color: var(--vscode-accent) !important;
+            color: var(--vscode-text-active) !important;
+            border: none !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
         }
         .vakata-context .vakata-context-separator a {
             border-top: 1px solid var(--vscode-border) !important;
+            background: transparent !important;
         }
     </style>
 </head>
