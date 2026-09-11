@@ -403,11 +403,13 @@
                     'data': {
                         'url': function(node) {
                             return node.id === '#' 
-                                ? '/api/project/studio/node?project_id=' + projectId
-                                : '/api/project/studio/node/children?type=' + node.original.type + '&id=' + node.original.real_id;
+                                ? '/api/project/studio/node'
+                                : '/api/project/studio/node/children';
                         },
                         'data': function(node) {
-                            return { 'id': node.id };
+                            return node.id === '#' 
+                                ? { 'project_id': projectId }
+                                : { 'type': node.original.type, 'id': node.original.real_id };
                         }
                     },
                     'check_callback': true,
