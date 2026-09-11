@@ -71,10 +71,32 @@
         .studio-sidebar {
             width: 320px;
             background-color: var(--vscode-bg-dark);
-            border-right: 1px solid var(--vscode-border);
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        /* Sidebar resizer split handle */
+        .sidebar-resizer {
+            width: 4px;
+            background-color: var(--vscode-border);
+            cursor: col-resize;
+            transition: background-color 0.15s;
+            position: relative;
+            z-index: 100;
+            margin-left: -2px;
+            margin-right: -2px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-resizer:hover, .sidebar-resizer.resizing {
+            background-color: var(--vscode-accent);
+        }
+
+        /* Prevents iframe from capturing mouse events during drag */
+        .resizing-active iframe {
+            pointer-events: none !important;
         }
 
         .sidebar-header {
@@ -309,6 +331,9 @@
                 <div id="jstree-workspace"></div>
             </div>
         </div>
+
+        <!-- Sidebar Resizer Split Handle -->
+        <div class="sidebar-resizer" id="sidebar-resizer"></div>
 
         <!-- Main Code/Form Editor Area -->
         <div class="studio-workspace">
@@ -778,6 +803,43 @@
                     }
                 });
             }
+
+            // Sidebar Drag Resize Logic (VS Code-style panel resizer)
+            const resizerSplit = document.getElementById('sidebar-resizer');
+            const explorerSidebar = document.querySelector('.studio-sidebar');
+            const studioContainer = document.querySelector('.studio-container');
+
+            let isResizingPanel = false;
+
+            resizerSplit.addEventListener('mousedown', function(e) {
+                isResizingPanel = true;
+                resizerSplit.classList.add('resizing');
+                studioContainer.classList.add('resizing-active');
+                document.body.style.cursor = 'col-resize';
+                e.preventDefault(); // Prevent text highlights during resize dragging
+            });
+
+            document.addEventListener('mousemove', function(e) {
+                if (!isResizingPanel) return;
+
+                const containerRect = studioContainer.getBoundingClientRect();
+                let width = e.clientX - containerRect.left;
+
+                // Restrict resizing width (clamped min: 220px, max: 600px)
+                if (width < 220) width = 220;
+                if (width > 600) width = 600;
+
+                explorerSidebar.style.width = width + 'px';
+            });
+
+            document.addEventListener('mouseup', function(e) {
+                if (isResizingPanel) {
+                    isResizingPanel = false;
+                    resizerSplit.classList.remove('resizing');
+                    studioContainer.classList.remove('resizing-active');
+                    document.body.style.cursor = 'default';
+                }
+            });
         });
     </script>
 </body>
