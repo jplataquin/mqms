@@ -295,6 +295,8 @@
         }
         .vakata-context li > a i {
             font-size: 13px;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
         }
         .vakata-context li > a:hover,
         .vakata-context .vakata-context-hover > a {
