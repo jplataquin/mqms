@@ -28,7 +28,10 @@ class PurchaseOrderSuperController extends Controller
             ->where('purchase_order_id','!=',$po->id)
             ->sum('quantity');
             
-            $remaining_quantity_arr[$mr_item->component_item_id][$mr_item->material_item_id] = $mr_item->requested_quantity - $total_poed;
+            if (!isset($remaining_quantity_arr[$mr_item->component_item_id][$mr_item->material_item_id])) {
+                $remaining_quantity_arr[$mr_item->component_item_id][$mr_item->material_item_id] = 0;
+            }
+            $remaining_quantity_arr[$mr_item->component_item_id][$mr_item->material_item_id] += ($mr_item->requested_quantity - $total_poed);
         }
 
         $po_items = $po->Items;

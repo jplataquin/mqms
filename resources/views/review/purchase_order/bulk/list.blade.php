@@ -29,7 +29,7 @@
 
 
       <div class="d-flex flex-wrap justify-content-between mb-5">
-        <h2 class="mb-3">PO List</h2>
+        <h1 class="mb-3">PO List</h1>
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="all_not_ok"/>
             <label class="form-check-label text-danger">
@@ -50,7 +50,7 @@
     <hr>
     
   
-    <h1 class="mb-3">Payment Summary</h1>
+    <h2 class="mb-3">Payment Summary</h2>
       
 
     <div id="payment_terms_summary" class="d-flex flex-wrap justify-content-between"></div>
@@ -59,7 +59,7 @@
     <div class="row mt-5">
         <div class="col-lg-12 text-end shadow bg-white rounded footer-action-menu p-2">
             <button id="rejectBtn" class="btn btn-danger">Reject</button>
-            <button id="approveBtn" class="btn btn-primary">Arppove</button>
+            <button id="approveBtn" class="btn btn-primary">Approve</button>
             <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
         </div>
     </div>
@@ -106,7 +106,7 @@
             let payment_term_id = c.getAttribute('data-payment_term_id');
 
             if(typeof summary[payment_term_id] == 'undefined'){
-                summary[payment_term_id] = parseFloat( c.getAttribute('data-amount') );
+                summary[payment_term_id] = 0;
             }
 
             summary[payment_term_id] += parseFloat( c.getAttribute('data-amount') );
@@ -164,7 +164,7 @@
         });
 
         form.appendChild(
-            t.input({type:'hidden',name:'action',value:'APRV'})
+            t.input({type:'hidden',name:'action',value:action})
         );
 
         form.appendChild(
@@ -182,6 +182,11 @@
     async function approveSelection(){
         const po = $q('input[type="checkbox"].po:checked').items();
 
+        if (po.length === 0) {
+            await window.util.showMsg({ status: 0, message: 'Please select at least one purchase order.' });
+            return false;
+        }
+
         let ans = await window.util.confirm('Are you sure you want to APPROVE '+po.length+' items?');
 
         if(!ans){
@@ -193,7 +198,24 @@
 
     async function rejectSelection(){
         const po = $q('input[type="checkbox"].po:checked').items();
+
+        if (po.length === 0) {
+            await window.util.showMsg({ status: 0, message: 'Please select at least one purchase order.' });
+            return false;
+        }
+
+        let ans = await window.util.confirm('Are you sure you want to REJECT '+po.length+' items?');
+
+        if(!ans){
+            return false;
+        }
+
+        submitAction('REJC',po);
     }
+
+    cancelBtn.onclick = ()=>{
+        window.location.href = '/review/purchase_orders';
+    };
 
 
     all_ok.onchange = ()=>{
@@ -291,7 +313,7 @@
 
                                         t.label({class:'me-3'},'P '+window.util.numberFormat(item.total,2));
 
-                                        let chbx = t.input({class:'po ok form-check-input project_'+project_id, dataPayment_term_id:item.po.payment_term_id, dataAmount: item.total, value:item.po.id, checked:true, type:'checkbox'});
+                                        let chbx = t.input({class:'po ok form-check-input project_'+project_id, 'data-payment_term_id':item.po.payment_term_id, 'data-amount': item.total, value:item.po.id, checked:true, type:'checkbox'});
                                         
                                         chbx.onchange = ()=>{
                                             checkboxOnchangeController(payment_terms);
@@ -313,7 +335,7 @@
 
                                         t.label({class:'me-3'},'P '+window.util.numberFormat(item.total,2));
 
-                                        let chbx = t.input({class:'po invalid form-check-input project_'+project_id, dataPayment_term_id:item.po.payment_term_id, dataAmount: item.total, value:item.po.id, type:'checkbox'});
+                                        let chbx = t.input({class:'po invalid form-check-input project_'+project_id, 'data-payment_term_id':item.po.payment_term_id, 'data-amount': item.total, value:item.po.id, type:'checkbox'});
                                         
                                         chbx.onchange = ()=>{
                                             checkboxOnchangeController(payment_terms);
@@ -329,13 +351,23 @@
                                 })
                             }
 
-                            t.div({class:'row'},()=>{
-                                t.span(item.created_at);
-                                t.span(item.po.status);
-                                t.span(suppliers[item.po.supplier_id].name);
-                                t.span(payment_terms[item.po.payment_term_id].text);
-
-                                
+                            t.div({class:'row mt-2 pt-2 border-top text-secondary small'},()=>{
+                                t.div({class:'col-md-3 col-sm-6 mb-1'}, () => {
+                                    t.span({class:'fw-bold text-dark'}, 'Created: ');
+                                    t.span(item.created_at);
+                                });
+                                t.div({class:'col-md-3 col-sm-6 mb-1'}, () => {
+                                    t.span({class:'fw-bold text-dark'}, 'Status: ');
+                                    t.span({class: 'badge ' + (item.po.status === 'PEND' ? 'bg-warning text-dark' : 'bg-secondary')}, item.po.status);
+                                });
+                                t.div({class:'col-md-3 col-sm-6 mb-1'}, () => {
+                                    t.span({class:'fw-bold text-dark'}, 'Supplier: ');
+                                    t.span(suppliers[item.po.supplier_id].name);
+                                });
+                                t.div({class:'col-md-3 col-sm-6 mb-1'}, () => {
+                                    t.span({class:'fw-bold text-dark'}, 'Terms: ');
+                                    t.span(payment_terms[item.po.payment_term_id].text);
+                                });
                             });
 
                         });
