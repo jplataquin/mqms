@@ -277,8 +277,8 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.5) !important;
             border-radius: 4px !important;
             padding: 5px 0 !important;
-            min-width: 180px !important;
-            width: auto !important;
+            min-width: 250px !important;
+            width: max-content !important;
             z-index: 1000 !important;
         }
         .vakata-context li > a {
