@@ -80,9 +80,7 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/project/{id}', [App\Http\Controllers\ProjectController::class, 'display']);
     Route::get('/projects', [App\Http\Controllers\ProjectController::class, 'list']);
     
-    //Obsolete code
-    // Route::get('/project/studio/{id}', [App\Http\Controllers\ProjectController::class, 'studio_display']);
-    // Route::get('/project/studio/overview/{project_id}/{section_id}', [App\Http\Controllers\ProjectStudio\OverviewController::class, 'display']);
+    Route::get('/project/studio/{id}', [App\Http\Controllers\ProjectStudio\StudioController::class, 'index']);
 
     Route::get('/project/{project_id}/section/create', [App\Http\Controllers\SectionController::class, 'create']);
     Route::get('/project/section/{id}', [App\Http\Controllers\SectionController::class, 'display']);

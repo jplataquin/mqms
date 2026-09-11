@@ -26,6 +26,34 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     
     <script src="/htmx.min.js"></script>
+    @if(request()->has('studio'))
+    <style>
+        #bar, #side-bar-container, #side-bar-mobile-background {
+            display: none !important;
+        }
+        .wrapper {
+            height: 100vh !important;
+        }
+        main {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+        }
+        #main {
+            margin: 0 !important;
+            padding: 10px !important;
+        }
+        /* Hide breadcrumbs inside the iframe */
+        .breadcrumbs {
+            display: none !important;
+        }
+    </style>
+    <script>
+        if (window.parent && window.parent !== window) {
+            window.parent.postMessage('reload-tree', '*');
+        }
+    </script>
+    @endif
 </head>
 <body>
     <div id="bar" class="w-100 d-flex justify-content-between">
