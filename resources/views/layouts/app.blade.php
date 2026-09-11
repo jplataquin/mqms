@@ -48,6 +48,24 @@
             display: none !important;
         }
     </style>
+    <script>
+        window.addEventListener('message', function(event) {
+            if (event.data && event.data.action === 'trigger-click') {
+                const btn = document.getElementById(event.data.targetId);
+                if (btn) btn.click();
+            }
+        });
+
+        window.addEventListener('load', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('open_drawer')) {
+                setTimeout(() => {
+                    const btn = document.getElementById(urlParams.get('open_drawer'));
+                    if (btn) btn.click();
+                }, 400); 
+            }
+        });
+    </script>
     @endif
 </head>
 <body>

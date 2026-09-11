@@ -480,7 +480,7 @@
                                 'label': 'Add Section',
                                 'icon': 'bi bi-folder-plus text-warning',
                                 'action': function() {
-                                    createNodePrompt('section', '/api/section/create', { project_id: realId }, node);
+                                    openDrawerForNode('/project/' + realId + '?studio=1', 'Project: ' + node.text, iconMapping.project, 'createBtn', node);
                                 }
                             };
                             items['edit_project'] = {
@@ -495,7 +495,7 @@
                                 'label': 'Add Contract Item',
                                 'icon': 'bi bi-file-earmark-plus text-success',
                                 'action': function() {
-                                    createNodePrompt('contract_item', '/api/contract_item/create', { section_id: realId }, node);
+                                    openDrawerForNode('/project/section/' + realId + '?studio=1', 'Section: ' + node.text, iconMapping.section, 'createBtn', node);
                                 }
                             };
                             items['edit_section'] = {
@@ -517,7 +517,7 @@
                                 'label': 'Add Component',
                                 'icon': 'bi bi-plus-circle text-primary',
                                 'action': function() {
-                                    createComponentPrompt(realId, node);
+                                    openDrawerForNode('/project/section/contract_item/' + realId + '?studio=1', 'Contract Item: ' + node.text, iconMapping.contract_item, 'createComponentBtn', node);
                                 }
                             };
                             items['edit_contract_item'] = {
@@ -539,7 +539,7 @@
                                 'label': 'Add Material/Item',
                                 'icon': 'bi bi-plus-square text-danger',
                                 'action': function() {
-                                    createComponentItemPrompt(realId, node);
+                                    openDrawerForNode('/project/section/contract_item/component/' + realId + '?studio=1', 'Component: ' + node.text, iconMapping.component, 'addComponentItemBtn', node);
                                 }
                             };
                             items['edit_component'] = {
@@ -622,6 +622,28 @@
                     }
                 }
             });
+
+            // Helper function to either post a click message or load the page and click the button
+            function openDrawerForNode(targetUrl, title, iconClass, buttonId, node) {
+                // Select the node in the tree so the user has active context
+                const tree = $('#jstree-workspace').jstree(true);
+                tree.deselect_all();
+                tree.select_node(node);
+
+                const currentSrc = iframe.attr('src') || '';
+                const relativeSrc = currentSrc.replace(window.location.origin, '').split('&open_drawer=')[0];
+
+                if (relativeSrc === targetUrl) {
+                    // Already on the right page, trigger the click message inside the iframe
+                    if (iframe[0] && iframe[0].contentWindow) {
+                        iframe[0].contentWindow.postMessage({ action: 'trigger-click', targetId: buttonId }, '*');
+                    }
+                } else {
+                    // Navigate to the target page and append open_drawer action
+                    const separator = targetUrl.indexOf('?') !== -1 ? '&' : '?';
+                    loadForm(targetUrl + separator + 'open_drawer=' + buttonId, title, iconClass);
+                }
+            }
 
             // Helper function to load forms into the workspace iframe
             function loadForm(url, title, iconClass) {
