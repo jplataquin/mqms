@@ -48,11 +48,6 @@
             display: none !important;
         }
     </style>
-    <script>
-        if (window.parent && window.parent !== window) {
-            window.parent.postMessage('reload-tree', '*');
-        }
-    </script>
     @endif
 </head>
 <body>

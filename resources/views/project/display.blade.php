@@ -154,6 +154,10 @@
                 return false;
             }
 
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage('reload-tree', '*');
+            }
+
             window.util.navReload();
         });
     }
@@ -192,6 +196,10 @@
             if(reply.status <= 0){
                 window.util.showMsg(reply);
                 return false;
+            }
+
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage('reload-tree', '*');
             }
 
             window.util.navTo('/projects');

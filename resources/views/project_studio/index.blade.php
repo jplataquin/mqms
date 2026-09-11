@@ -543,18 +543,40 @@
                 const type = node.original.type;
                 const realId = node.original.real_id;
 
+                let targetUrl = '';
+                let title = '';
+                let iconClass = '';
+
                 if (type === 'project') {
-                    loadForm('/project/' + realId + '?studio=1', 'Project: ' + node.text, iconMapping.project);
+                    targetUrl = '/project/' + realId + '?studio=1';
+                    title = 'Project: ' + node.text;
+                    iconClass = iconMapping.project;
                 } else if (type === 'section') {
-                    loadForm('/project/section/' + realId + '?studio=1', 'Section: ' + node.text, iconMapping.section);
+                    targetUrl = '/project/section/' + realId + '?studio=1';
+                    title = 'Section: ' + node.text;
+                    iconClass = iconMapping.section;
                 } else if (type === 'contract_item') {
-                    loadForm('/project/section/contract_item/' + realId + '?studio=1', 'Contract Item: ' + node.text, iconMapping.contract_item);
+                    targetUrl = '/project/section/contract_item/' + realId + '?studio=1';
+                    title = 'Contract Item: ' + node.text;
+                    iconClass = iconMapping.contract_item;
                 } else if (type === 'component') {
-                    loadForm('/project/section/contract_item/component/' + realId + '?studio=1', 'Component: ' + node.text, iconMapping.component);
+                    targetUrl = '/project/section/contract_item/component/' + realId + '?studio=1';
+                    title = 'Component: ' + node.text;
+                    iconClass = iconMapping.component;
                 } else if (type === 'component_item') {
                     // Open parent component display
                     const parentNode = $('#jstree-workspace').jstree(true).get_node(node.parent);
-                    loadForm('/project/section/contract_item/component/' + parentNode.original.real_id + '?studio=1', 'Component: ' + parentNode.text, iconMapping.component);
+                    targetUrl = '/project/section/contract_item/component/' + parentNode.original.real_id + '?studio=1';
+                    title = 'Component: ' + parentNode.text;
+                    iconClass = iconMapping.component;
+                }
+
+                if (targetUrl) {
+                    const currentSrc = iframe.attr('src') || '';
+                    const relativeSrc = currentSrc.replace(window.location.origin, '');
+                    if (relativeSrc !== targetUrl) {
+                        loadForm(targetUrl, title, iconClass);
+                    }
                 }
             });
 
