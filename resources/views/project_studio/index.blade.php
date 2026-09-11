@@ -633,7 +633,7 @@
                         <select id="swal-comp-unit" class="swal2-select" style="width: 80%;">
                             <option value="">Select Unit (Optional)</option>
                             @foreach($unit_options as $option)
-                                <option value="{{ $option->value }}">{{ $option->label }}</option>
+                                <option value="{{ $option->id }}">{{ $option->text }}</option>
                             @endforeach
                         </select>
                     `,
