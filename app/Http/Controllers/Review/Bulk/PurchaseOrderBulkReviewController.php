@@ -173,7 +173,9 @@ class PurchaseOrderBulkReviewController extends Controller
                 
                 $flag = false;
 
-                $failed[] = 'Approved Material Request quantity ('.number_format($remaining_quantity_arr[$po_item->component_item_id][$po_item->material_item_id],2).') is less than the PO item quantity ('.number_format($po_item->quantity,2).')';
+                $itemName = $po_item->MaterialItem ? $po_item->MaterialItem->formatted_name : 'Unknown Item';
+
+                $failed[] = 'Approved Material Request quantity ('.number_format($remaining_quantity_arr[$po_item->component_item_id][$po_item->material_item_id],2).') for item "'.$itemName.'" is less than the PO item quantity ('.number_format($po_item->quantity,2).')';
             }
 
 
