@@ -232,12 +232,19 @@ class AccomplishmentController extends Controller
 
         $accomplishments = $component->Accomplishments()->orderBy('entry_data', 'desc')->get();
 
+        $latestActual = $component->Accomplishments()
+            ->where('type', 'ACTUAL')
+            ->orderBy('entry_data', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->first();
+
         return view('accomplishment/component_display',[
             'project'               => $project,
             'section'               => $section,
             'contract_item'         => $contract_item,
             'component'             => $component,
-            'accomplishments'       => $accomplishments
+            'accomplishments'       => $accomplishments,
+            'latestActual'          => $latestActual
         ]);
     }
 
@@ -271,6 +278,17 @@ class AccomplishmentController extends Controller
                 'status'    => -2,
                 'message'   => 'Failed Validation',
                 'data'      => $validator->messages()
+            ]);
+        }
+
+        $component = Component::findOrFail($request->input('component_id'));
+        if ($request->input('quantity') > $component->quantity) {
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => [
+                    'quantity' => ['The quantity must not be greater than the total quantity of the component.']
+                ]
             ]);
         }
 
@@ -330,6 +348,17 @@ class AccomplishmentController extends Controller
                 'status'    => -2,
                 'message'   => 'Failed Validation',
                 'data'      => $validator->messages()
+            ]);
+        }
+
+        $component = Component::findOrFail($request->input('component_id'));
+        if ($request->input('quantity') > $component->quantity) {
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => [
+                    'quantity' => ['The quantity must not be greater than the total quantity of the component.']
+                ]
             ]);
         }
 

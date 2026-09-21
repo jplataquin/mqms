@@ -56,6 +56,16 @@
                    {{ number_format($component->quantity) }} {{$component->unit_text}}
                 </td>
             </tr>
+            <tr>
+                <th>Latest Quantity</th>
+                <td>
+                   @if($latestActual)
+                       {{ number_format($latestActual->quantity, 2) }} {{$component->unit_text}}
+                   @else
+                       -
+                   @endif
+                </td>
+            </tr>
         </tbody>
     </table>
 

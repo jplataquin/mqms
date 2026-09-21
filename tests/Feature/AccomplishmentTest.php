@@ -142,7 +142,7 @@ class AccomplishmentTest extends TestCase
         $accomplishment->component_id = $this->component->id;
         $accomplishment->type = 'ACTUAL';
         $accomplishment->entry_data = '2026-09-21';
-        $accomplishment->quantity = 75.25;
+        $accomplishment->quantity = 35.50;
         $accomplishment->remarks = 'Completed most of it';
         $accomplishment->created_by = $this->user->id;
         $accomplishment->save();
@@ -151,6 +151,8 @@ class AccomplishmentTest extends TestCase
         $response = $this->actingAs($this->user)->get('/accomplishment/component/' . $this->component->id);
         $response->assertStatus(200);
         $response->assertSee('Test Component 123');
+        $response->assertSee('Latest Quantity');
+        $response->assertSee('35.50 Pcs');
 
         // 2. Verify API returns accomplishment list correctly (since records are loaded via AJAX)
         $apiResponse = $this->actingAs($this->user)->get('/api/accomplishment/record/list?component_id=' . $this->component->id);
@@ -158,7 +160,7 @@ class AccomplishmentTest extends TestCase
         $apiResponse->assertJsonFragment([
             'component_id' => $this->component->id,
             'type' => 'ACTUAL',
-            'quantity' => 75.25,
+            'quantity' => 35.50,
             'remarks' => 'Completed most of it',
             'creator_name' => $this->user->name
         ]);
@@ -258,7 +260,7 @@ class AccomplishmentTest extends TestCase
             'component_id' => $this->component->id,
             'type'         => 'TARGET',
             'entry_date'   => '2026-08-12',
-            'quantity'     => 120.4,
+            'quantity'     => 20.4,
             'remarks'      => 'Target accomplishment for project phase'
         ]);
 
@@ -271,7 +273,7 @@ class AccomplishmentTest extends TestCase
         $this->assertDatabaseHas('accomplishment_registry', [
             'component_id' => $this->component->id,
             'type'         => 'TARGET',
-            'quantity'     => 120.4,
+            'quantity'     => 20.4,
             'remarks'      => 'Target accomplishment for project phase',
             'created_by'   => $this->user->id
         ]);
@@ -396,7 +398,7 @@ class AccomplishmentTest extends TestCase
         $accomplishment->component_id = $this->component->id;
         $accomplishment->type = 'ACTUAL';
         $accomplishment->entry_data = '2026-09-21';
-        $accomplishment->quantity = 150.75;
+        $accomplishment->quantity = 45.75;
         $accomplishment->remarks = 'Highly targeted remarks for specific record';
         $accomplishment->created_by = $this->user->id;
         $accomplishment->save();
@@ -417,8 +419,43 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('Accomplishment Registry Record Details');
         $response->assertSee('Record ID');
         $response->assertSee('ACTUAL');
-        $response->assertSee('150.75');
+        $response->assertSee('45.75');
         $response->assertSee('Highly targeted remarks for specific record');
+    }
+
+    /** @test */
+    public function it_fails_creation_if_quantity_exceeds_component_total_quantity()
+    {
+        $this->grantAccessCode($this->user, 'accomplishment:all:create');
+
+        // 1. Test original API (_create)
+        $response1 = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
+            'component_id' => $this->component->id,
+            'type'         => 'ACTUAL',
+            'entry_date'   => '2026-09-21',
+            'quantity'     => 105.0, // exceeds component total of 50
+            'remarks'      => 'Exceeds limit'
+        ]);
+
+        $response1->assertStatus(200);
+        $response1->assertJson([
+            'status' => -2,
+            'message' => 'Failed Validation'
+        ]);
+
+        // 2. Test new API (_add)
+        $response2 = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
+            'component_id' => $this->component->id,
+            'entry_data'   => '2026-09-21',
+            'quantity'     => 105.0, // exceeds component total of 50
+            'remarks'      => 'Exceeds limit'
+        ]);
+
+        $response2->assertStatus(200);
+        $response2->assertJson([
+            'status' => -2,
+            'message' => 'Failed Validation'
+        ]);
     }
 
     protected function grantAccessCode($user, $codeString)
