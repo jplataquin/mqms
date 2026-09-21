@@ -61,6 +61,20 @@
                             <th>Total Quantity</th>
                             <td>{{$component->quantity}} {{$component->unit_text}}</td>
                         </tr>
+                        <tr>
+                            <th>Latest Quantity</th>
+                            <td>
+                               @if($latestActual)
+                                   @php
+                                       $percentage = $component->quantity > 0 ? ($latestActual->quantity / $component->quantity) * 100 : 0;
+                                       $formattedDate = $latestActual->entry_data ? $latestActual->entry_data->format('Y-m-d') : 'N/A';
+                                   @endphp
+                                   {{ number_format($latestActual->quantity, 2) }} {{$component->unit_text}} ({{ number_format($percentage, 0) }}%) as of {{ $formattedDate }}.
+                               @else
+                                   -
+                               @endif
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

@@ -311,6 +311,7 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('Test Contract Item 123');
         $response->assertSee('Total Quantity');
         $response->assertSee('50 Pcs');
+        $response->assertSee('Latest Quantity');
     }
 
     /** @test */
@@ -414,6 +415,8 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('Test Contract Item 123');
         $response->assertSee('Total Quantity');
         $response->assertSee('50 Pcs');
+        $response->assertSee('Latest Quantity');
+        $response->assertSee('45.75 Pcs (92%) as of 2026-09-21.');
 
         // Assert record details are shown
         $response->assertSee('Accomplishment Registry Record Details');

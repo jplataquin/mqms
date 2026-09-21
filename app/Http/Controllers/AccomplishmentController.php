@@ -318,11 +318,18 @@ class AccomplishmentController extends Controller
         $section       = $contract_item->Section;
         $project       = $section->Project;
 
+        $latestActual = $component->Accomplishments()
+            ->where('type', 'ACTUAL')
+            ->orderBy('entry_data', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->first();
+
         return view('accomplishment/add',[
             'project'               => $project,
             'section'               => $section,
             'contract_item'         => $contract_item,
-            'component'             => $component
+            'component'             => $component,
+            'latestActual'          => $latestActual
         ]);
     }
 
@@ -414,12 +421,19 @@ class AccomplishmentController extends Controller
         $section        = $contract_item->Section;
         $project        = $section->Project;
 
+        $latestActual = $component->Accomplishments()
+            ->where('type', 'ACTUAL')
+            ->orderBy('entry_data', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->first();
+
         return view('accomplishment/display',[
             'project'               => $project,
             'section'               => $section,
             'contract_item'         => $contract_item,
             'component'             => $component,
-            'accomplishment'        => $accomplishment
+            'accomplishment'        => $accomplishment,
+            'latestActual'          => $latestActual
         ]);
     }
 }
