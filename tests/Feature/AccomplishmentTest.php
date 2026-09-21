@@ -152,7 +152,7 @@ class AccomplishmentTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Test Component 123');
         $response->assertSee('Latest Quantity');
-        $response->assertSee('35.50 Pcs');
+        $response->assertSee('35.50 Pcs (71%) as of 2026-09-21.');
 
         // 2. Verify API returns accomplishment list correctly (since records are loaded via AJAX)
         $apiResponse = $this->actingAs($this->user)->get('/api/accomplishment/record/list?component_id=' . $this->component->id);
