@@ -274,6 +274,8 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('Test Project 123');
         $response->assertSee('Test Section 123');
         $response->assertSee('Test Contract Item 123');
+        $response->assertSee('Total Quantity');
+        $response->assertSee('50 Pcs');
     }
 
     /** @test */

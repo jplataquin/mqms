@@ -58,8 +58,8 @@
                             <td>{{$component->name}}</td>
                         </tr>
                         <tr>
-                            <th>Component Quantity</th>
-                            <td>{{$component->quantity}} {{$component->Unit ? $component->Unit->text : ''}}</td>
+                            <th>Total Quantity</th>
+                            <td>{{$component->quantity}} {{$component->unit_text}}</td>
                         </tr>
                         <tr>
                             <th>Status</th>
