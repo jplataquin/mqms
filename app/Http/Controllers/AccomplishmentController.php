@@ -401,9 +401,9 @@ class AccomplishmentController extends Controller
 
         if($limit > 0){
             $offset = ($page-1) * $limit;
-            $result = $query->orderBy($orderBy, $order)->skip($offset)->take($limit)->get();
+            $result = $query->orderBy($orderBy, $order)->orderBy('id', 'DESC')->skip($offset)->take($limit)->get();
         }else{
-            $result = $query->orderBy($orderBy, $order)->get();
+            $result = $query->orderBy($orderBy, $order)->orderBy('id', 'DESC')->get();
         }
 
         return response()->json([
