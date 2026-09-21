@@ -148,21 +148,11 @@
             
                 <div class="row mt-4">
                     <div class="col-12 text-end">
-                        <button class="btn btn-secondary px-4" id="backBtn">Back to Component</button>
+                        <a href="/accomplishment/component/{{$component->id}}" class="btn btn-secondary px-4" id="backBtn">Back to Component</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script type="module">
-        import {$q} from '/adarna.js';
-
-        const backBtn = $q('#backBtn').first();
-
-        backBtn.onclick = (e) => {
-            window.util.navTo('/accomplishment/component/{{$component->id}}');
-        }
-    </script>
 </div>
 @endsection

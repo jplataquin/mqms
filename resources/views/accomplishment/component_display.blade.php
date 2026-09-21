@@ -109,11 +109,8 @@
                 t.div({class: 'item-header'}, `Entry Date: ${displayEntryData} [${item.type}]`);
                 t.div({class: 'item-body'}, () => {
                     t.div({class: 'row'}, () => {
-                        t.div({class: 'col-lg-4'}, () => {
+                        t.div({class: 'col-12'}, () => {
                             t.span({class: 'fw-bold text-primary'}, `Quantity: ${formattedQty}`);
-                        });
-                        t.div({class: 'col-lg-8'}, () => {
-                            t.span({class: 'text-muted'}, `Remarks: ${item.remarks || 'N/A'}`);
                         });
                     });
                     
