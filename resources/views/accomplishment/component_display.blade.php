@@ -61,40 +61,24 @@
         </div>
     </div>
 
-    <div class="container px-0" id="list-container">
-        <div class="card border-0 shadow-sm">
-            <div class="card-header bg-light py-3">
-                <h5 class="mb-0 text-secondary fw-bold"><i class="bi bi-list-stars ms-1"></i> Accomplishment Registry Records</h5>
-            </div>
-            <div class="card-body p-0">
-                <div class="table-responsive d-none" id="tableResponsive">
-                    <table class="table table-hover table-striped align-middle mb-0">
-                        <thead class="table-secondary">
-                            <tr>
-                                <th scope="col" class="py-3 ps-4">Entry Date</th>
-                                <th scope="col" class="py-3">Type</th>
-                                <th scope="col" class="py-3 text-end">Quantity</th>
-                                <th scope="col" class="py-3">Remarks</th>
-                                <th scope="col" class="py-3">Created By</th>
-                                <th scope="col" class="py-3 pe-4">Created At</th>
-                            </tr>
-                        </thead>
-                        <tbody id="list">
-                            <!-- Populated dynamically via Adarna.js -->
-                        </tbody>
-                    </table>
-                </div>
-                
-                <div class="text-center py-5 text-muted d-none" id="emptyState">
-                    <i class="bi bi-file-earmark-plus display-1 text-secondary opacity-50 mb-3 d-block"></i>
-                    <p class="fs-5 mb-0">No accomplishment records found for this component.</p>
-                    <small>Click "Add Registry Entry" to create your first record.</small>
-                </div>
-            </div>
-        </div>
+    <div class="container">
+        <table class="table border" id="tableResponsive" style="display: none;">
+            <thead>
+                <tr>
+                    <th>Entry Date</th>
+                    <th>Type</th>
+                    <th>Quantity</th>
+                    <th>Remarks</th>
+                    <th>User</th>
+                    <th>Date Created</th>
+                </tr>
+            </thead>
+            <tbody id="list">
+            </tbody>
+        </table>
     </div>
 
-    <div class="row mt-3">
+    <div class="row">
         <div class="col-lg-12">
             <button id="showMoreBtn" class="btn w-100 btn-primary" style="display: none;">Show More</button>
         </div>
@@ -108,7 +92,6 @@
 
     const list            = $q('#list').first();
     const showMoreBtn     = $q('#showMoreBtn').first();
-    const emptyState      = $q('#emptyState').first();
     const tableResponsive = $q('#tableResponsive').first();
     
     let page            = 1;
@@ -122,26 +105,15 @@
         data.map(item => {
             let displayEntryData = item.entry_data ? item.entry_data.substring(0, 10) : 'N/A';
             let displayCreatedAt = item.created_at ? $util.dateTime(new Date(item.created_at)).full() : 'N/A';
-            
-            let typeBadge = t.span({class: 'badge bg-success text-white'}, 'ACTUAL');
-            if (item.type !== 'ACTUAL') {
-                typeBadge = t.span({class: 'badge bg-info text-dark'}, 'TARGET');
-            }
-
-            let formattedQty = parseFloat(item.quantity).toFixed(2);
-            let unitText = '{{ $component->unit_text }}';
+            let formattedQty = parseFloat(item.quantity).toFixed(2) + ' {{ $component->unit_text }}';
 
             let row = t.tr({class: 'selectable-div'}, () => {
-                t.td({class: 'ps-4 fw-semibold'}, displayEntryData);
-                t.td(() => {
-                    $el.append(typeBadge).to(t.current());
-                });
-                t.td({class: 'text-end fw-bold text-primary'}, `${formattedQty} ${unitText}`);
-                t.td(() => {
-                    t.span({class: 'text-wrap d-inline-block', style: 'max-width: 300px;'}, item.remarks || '');
-                });
+                t.td(displayEntryData);
+                t.td(item.type);
+                t.td(formattedQty);
+                t.td(item.remarks || '');
                 t.td(item.creator_name || 'System');
-                t.td({class: 'pe-4 text-muted small'}, displayCreatedAt);
+                t.td(displayCreatedAt);
             });
 
             $el.append(row).to(list);
@@ -166,15 +138,13 @@
             }
 
             if (page === 1 && reply.data.length === 0) {
-                emptyState.classList.remove('d-none');
-                tableResponsive.classList.add('d-none');
+                tableResponsive.style.display = 'none';
                 showMoreBtn.style.display = 'none';
                 return;
             }
 
             if (page === 1) {
-                tableResponsive.classList.remove('d-none');
-                emptyState.classList.add('d-none');
+                tableResponsive.style.display = 'table';
             }
 
             page++;

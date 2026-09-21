@@ -127,7 +127,6 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('Test Component 123');
         $response->assertSee('Add Registry Entry');
         $response->assertSee('/accomplishment/component/' . $this->component->id . '/add');
-        $response->assertSee('No accomplishment records found for this component.');
         // Ensure container exists
         $response->assertSee('id="list"', false);
     }
