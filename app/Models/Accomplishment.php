@@ -13,12 +13,12 @@ class Accomplishment extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'accomplishments';
+    protected $table = 'accomplishment_registry';
 
     protected $fillable = [
         'component_id',
         'type',
-        'entry_date',
+        'entry_data',
         'quantity',
         'remarks',
         'created_by',
@@ -27,7 +27,7 @@ class Accomplishment extends Model
     ];
 
     protected $casts = [
-        'entry_date' => 'date',
+        'entry_data' => 'date',
         'quantity' => 'float',
     ];
 

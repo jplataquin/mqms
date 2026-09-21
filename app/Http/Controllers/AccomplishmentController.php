@@ -276,7 +276,58 @@ class AccomplishmentController extends Controller
         $accomplishment = new Accomplishment();
         $accomplishment->component_id   = $request->input('component_id');
         $accomplishment->type           = $request->input('type');
-        $accomplishment->entry_date     = $request->input('entry_date');
+        $accomplishment->entry_data     = $request->input('entry_date');
+        $accomplishment->quantity       = $request->input('quantity');
+        $accomplishment->remarks        = $request->input('remarks');
+        $accomplishment->created_by     = $user_id;
+
+        $accomplishment->save();
+
+        return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data'      => $accomplishment
+        ]);
+    }
+
+    public function add($component_id){
+
+        $component     = Component::findOrFail($component_id);
+        $contract_item = $component->ContractItem;
+        $section       = $contract_item->Section;
+        $project       = $section->Project;
+
+        return view('accomplishment/add',[
+            'project'               => $project,
+            'section'               => $section,
+            'contract_item'         => $contract_item,
+            'component'             => $component
+        ]);
+    }
+
+    public function _add(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'component_id' => 'required|integer|exists:components,id',
+            'entry_data'   => 'required|date',
+            'quantity'     => 'required|numeric',
+            'remarks'      => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => $validator->messages()
+            ]);
+        }
+
+        $user_id = Auth::user()->id;
+
+        $accomplishment = new Accomplishment();
+        $accomplishment->component_id   = $request->input('component_id');
+        $accomplishment->type           = 'ACTUAL'; // default enum required field
+        $accomplishment->entry_data     = $request->input('entry_data');
         $accomplishment->quantity       = $request->input('quantity');
         $accomplishment->remarks        = $request->input('remarks');
         $accomplishment->created_by     = $user_id;

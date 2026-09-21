@@ -483,26 +483,12 @@
                                     openDrawerForNode('/project/' + realId + '?studio=1', 'Project: ' + node.text, iconMapping.project, 'createBtn', node);
                                 }
                             };
-                            items['edit_project'] = {
-                                'label': 'Edit Project details',
-                                'icon': 'bi bi-pencil-square text-info',
-                                'action': function() {
-                                    loadForm('/project/' + realId + '?studio=1', 'Project: ' + node.text, iconMapping.project);
-                                }
-                            };
                         } else if (type === 'section') {
                             items['add_contract_item'] = {
                                 'label': 'Add Contract Item',
                                 'icon': 'bi bi-file-earmark-plus text-success',
                                 'action': function() {
                                     openDrawerForNode('/project/section/' + realId + '?studio=1', 'Section: ' + node.text, iconMapping.section, 'createBtn', node);
-                                }
-                            };
-                            items['edit_section'] = {
-                                'label': 'Edit Section details',
-                                'icon': 'bi bi-pencil-square text-info',
-                                'action': function() {
-                                    loadForm('/project/section/' + realId + '?studio=1', 'Section: ' + node.text, iconMapping.section);
                                 }
                             };
                             items['delete_section'] = {
@@ -520,13 +506,6 @@
                                     openDrawerForNode('/project/section/contract_item/' + realId + '?studio=1', 'Contract Item: ' + node.text, iconMapping.contract_item, 'createComponentBtn', node);
                                 }
                             };
-                            items['edit_contract_item'] = {
-                                'label': 'Edit Contract Item details',
-                                'icon': 'bi bi-pencil-square text-info',
-                                'action': function() {
-                                    loadForm('/project/section/contract_item/' + realId + '?studio=1', 'Contract Item: ' + node.text, iconMapping.contract_item);
-                                }
-                            };
                             items['delete_contract_item'] = {
                                 'label': 'Delete Contract Item',
                                 'icon': 'bi bi-trash text-danger',
@@ -542,13 +521,6 @@
                                     openDrawerForNode('/project/section/contract_item/component/' + realId + '?studio=1', 'Component: ' + node.text, iconMapping.component, 'addComponentItemBtn', node);
                                 }
                             };
-                            items['edit_component'] = {
-                                'label': 'Edit Component details',
-                                'icon': 'bi bi-pencil-square text-info',
-                                'action': function() {
-                                    loadForm('/project/section/contract_item/component/' + realId + '?studio=1', 'Component: ' + node.text, iconMapping.component);
-                                }
-                            };
                             items['delete_component'] = {
                                 'label': 'Delete Component',
                                 'icon': 'bi bi-trash text-danger',
@@ -557,15 +529,6 @@
                                 }
                             };
                         } else if (type === 'component_item') {
-                            items['edit_component_item'] = {
-                                'label': 'Edit Component Item details',
-                                'icon': 'bi bi-pencil-square text-info',
-                                'action': function() {
-                                    // There is no dedicated view for a component_item, editing is typically done on the component display itself
-                                    const parentNode = $('#jstree-workspace').jstree(true).get_node(node.parent);
-                                    loadForm('/project/section/contract_item/component/' + parentNode.original.real_id + '?studio=1', 'Component: ' + parentNode.text, iconMapping.component);
-                                }
-                            };
                             items['delete_component_item'] = {
                                 'label': 'Delete Component Item',
                                 'icon': 'bi bi-trash text-danger',

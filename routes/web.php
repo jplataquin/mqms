@@ -74,6 +74,7 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/accomplishment/contract_item/{id}', [App\Http\Controllers\AccomplishmentController::class, 'component_list']);
     Route::get('/accomplishment/component/{id}', [App\Http\Controllers\AccomplishmentController::class, 'component_display']);
     Route::get('/accomplishment/component/{component_id}/create', [App\Http\Controllers\AccomplishmentController::class, 'create']);
+    Route::get('/accomplishment/component/{component_id}/add', [App\Http\Controllers\AccomplishmentController::class, 'add']);
     
 
     Route::get('/project/create', [App\Http\Controllers\ProjectController::class, 'create']);

@@ -178,13 +178,13 @@ class AccomplishmentTest extends TestCase
         $accomplishment = new \App\Models\Accomplishment();
         $accomplishment->component_id = $this->component->id;
         $accomplishment->type = 'ACTUAL';
-        $accomplishment->entry_date = '2026-08-12';
+        $accomplishment->entry_data = '2026-08-12';
         $accomplishment->quantity = 25.5;
         $accomplishment->remarks = 'Completed half the component';
         $accomplishment->created_by = $this->user->id;
         $accomplishment->save();
 
-        $this->assertDatabaseHas('accomplishments', [
+        $this->assertDatabaseHas('accomplishment_registry', [
             'id' => $accomplishment->id,
             'component_id' => $this->component->id,
             'type' => 'ACTUAL',
@@ -202,7 +202,7 @@ class AccomplishmentTest extends TestCase
 
         // 4. Test Soft Delete
         $accomplishment->delete();
-        $this->assertSoftDeleted('accomplishments', [
+        $this->assertSoftDeleted('accomplishment_registry', [
             'id' => $accomplishment->id
         ]);
     }
@@ -233,7 +233,7 @@ class AccomplishmentTest extends TestCase
             'message' => ''
         ]);
 
-        $this->assertDatabaseHas('accomplishments', [
+        $this->assertDatabaseHas('accomplishment_registry', [
             'component_id' => $this->component->id,
             'type'         => 'TARGET',
             'quantity'     => 120.4,
@@ -250,6 +250,77 @@ class AccomplishmentTest extends TestCase
             'type'         => 'INVALID_TYPE', // Invalid enum
             'entry_date'   => 'not-a-date',   // Invalid date
             'quantity'     => 'not-numeric'   // Invalid quantity
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => -2,
+            'message' => 'Failed Validation'
+        ]);
+    }
+
+    /** @test */
+    public function it_can_render_the_new_accomplishment_add_page_with_component_details()
+    {
+        $response = $this->actingAs($this->user)->get('/accomplishment/component/' . $this->component->id . '/add');
+        $response->assertStatus(200);
+        
+        // Assert view content
+        $response->assertSee('Add Registry');
+        $response->assertSee('Component Reference Details');
+        $response->assertSee('Test Component 123');
+        $response->assertSee('Test Project 123');
+        $response->assertSee('Test Section 123');
+        $response->assertSee('Test Contract Item 123');
+    }
+
+    /** @test */
+    public function it_can_create_an_accomplishment_via_new_api_with_required_fields()
+    {
+        $response = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
+            'component_id' => $this->component->id,
+            'entry_data'   => '2026-09-21',
+            'quantity'     => 45.2,
+            'remarks'      => 'Highly critical required remarks'
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+            'message' => ''
+        ]);
+
+        $this->assertDatabaseHas('accomplishment_registry', [
+            'component_id' => $this->component->id,
+            'type'         => 'ACTUAL',
+            'quantity'     => 45.2,
+            'remarks'      => 'Highly critical required remarks',
+            'created_by'   => $this->user->id
+        ]);
+    }
+
+    /** @test */
+    public function it_fails_new_api_creation_if_required_fields_are_missing()
+    {
+        // 1. Missing remarks (which is now required in the new API)
+        $response = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
+            'component_id' => $this->component->id,
+            'entry_data'   => '2026-09-21',
+            'quantity'     => 45.2,
+            'remarks'      => '' // empty
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => -2,
+            'message' => 'Failed Validation'
+        ]);
+
+        // 2. Missing entry_data
+        $response = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
+            'component_id' => $this->component->id,
+            'quantity'     => 45.2,
+            'remarks'      => 'Some remarks'
         ]);
 
         $response->assertStatus(200);
