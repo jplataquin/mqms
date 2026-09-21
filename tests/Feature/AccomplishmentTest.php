@@ -129,6 +129,7 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('/accomplishment/component/' . $this->component->id . '/add');
         $response->assertSee('Total Quantity');
         $response->assertSee('50 Pcs');
+        $response->assertSee('No accomplishment records found');
         // Ensure container exists
         $response->assertSee('id="list"', false);
     }

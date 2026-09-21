@@ -148,6 +148,17 @@
                 return false;
             }
 
+            if (page === 1 && reply.data.length === 0) {
+                let emptyDiv = t.div({class: 'text-center py-5 text-muted border border-secondary rounded shadow-sm mb-3'}, () => {
+                    t.i({class: 'bi bi-file-earmark-plus display-4 text-secondary opacity-50 mb-3 d-block'});
+                    t.p({class: 'fs-5 mb-1 fw-bold text-light'}, 'No accomplishment records found');
+                    t.small({class: 'text-muted'}, 'Click "Add Registry Entry" to create your first record.');
+                });
+                $el.append(emptyDiv).to(list);
+                showMoreBtn.style.display = 'none';
+                return;
+            }
+
             page++;
 
             if (reply.data.length) {
