@@ -201,12 +201,12 @@
                     return false;
                 }
         
-                window.util.navTo('/accomplishment/component/{{$component->id}}');
+                window.location.href = '/accomplishment/component/{{$component->id}}';
             });
         }
 
         cancelBtn.onclick = (e) => {
-            window.util.navTo('/accomplishment/component/{{$component->id}}');
+            window.location.href = '/accomplishment/component/{{$component->id}}';
         }
 
     </script>
