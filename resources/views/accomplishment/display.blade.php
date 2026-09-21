@@ -75,14 +75,14 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label class="form-label fw-semibold">Record ID</label>
-                            <input type="text" class="form-control bg-light" disabled value="{{ STR_PAD($accomplishment->id, 6, '0', STR_PAD_LEFT) }}"/>
+                            <input type="text" class="form-control" disabled value="{{ STR_PAD($accomplishment->id, 6, '0', STR_PAD_LEFT) }}"/>
                         </div>
                     </div>
 
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label class="form-label fw-semibold">Type</label>
-                            <input type="text" class="form-control bg-light" disabled value="{{ $accomplishment->type }}"/>
+                            <input type="text" class="form-control" disabled value="{{ $accomplishment->type }}"/>
                         </div>
                     </div>
                 </div>
@@ -91,14 +91,14 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label class="form-label fw-semibold">Entry Date</label>
-                            <input type="text" class="form-control bg-light" disabled value="{{ $accomplishment->entry_data ? $accomplishment->entry_data->format('Y-m-d') : 'N/A' }}"/>
+                            <input type="text" class="form-control" disabled value="{{ $accomplishment->entry_data ? $accomplishment->entry_data->format('Y-m-d') : 'N/A' }}"/>
                         </div>
                     </div>
 
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label class="form-label fw-semibold">Quantity Accomplished</label>
-                            <input type="text" class="form-control bg-light" disabled value="{{ number_format($accomplishment->quantity, 2) }} {{ $component->unit_text }}"/>
+                            <input type="text" class="form-control" disabled value="{{ number_format($accomplishment->quantity, 2) }} {{ $component->unit_text }}"/>
                         </div>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label class="form-label fw-semibold">Remarks</label>
-                            <textarea class="form-control bg-light" rows="4" disabled>{{ $accomplishment->remarks }}</textarea>
+                            <textarea class="form-control" rows="4" disabled>{{ $accomplishment->remarks }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -116,14 +116,14 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label class="form-label fw-semibold">Created By</label>
-                            <input type="text" class="form-control bg-light" disabled value="{{ $accomplishment->CreatedBy ? $accomplishment->CreatedBy->name : 'System' }}"/>
+                            <input type="text" class="form-control" disabled value="{{ $accomplishment->CreatedBy ? $accomplishment->CreatedBy->name : 'System' }}"/>
                         </div>
                     </div>
 
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label class="form-label fw-semibold">Created At</label>
-                            <input type="text" class="form-control bg-light" disabled value="{{ $accomplishment->created_at ? $accomplishment->created_at->format('Y-m-d H:i:s') : 'N/A' }}"/>
+                            <input type="text" class="form-control" disabled value="{{ $accomplishment->created_at ? $accomplishment->created_at->format('Y-m-d H:i:s') : 'N/A' }}"/>
                         </div>
                     </div>
                 </div>
@@ -133,14 +133,14 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-label fw-semibold">Updated By</label>
-                                <input type="text" class="form-control bg-light" disabled value="{{ $accomplishment->UpdatedBy ? $accomplishment->UpdatedBy->name : 'N/A' }}"/>
+                                <input type="text" class="form-control" disabled value="{{ $accomplishment->UpdatedBy ? $accomplishment->UpdatedBy->name : 'N/A' }}"/>
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-label fw-semibold">Updated At</label>
-                                <input type="text" class="form-control bg-light" disabled value="{{ $accomplishment->updated_at ? $accomplishment->updated_at->format('Y-m-d H:i:s') : 'N/A' }}"/>
+                                <input type="text" class="form-control" disabled value="{{ $accomplishment->updated_at ? $accomplishment->updated_at->format('Y-m-d H:i:s') : 'N/A' }}"/>
                             </div>
                         </div>
                     </div>
