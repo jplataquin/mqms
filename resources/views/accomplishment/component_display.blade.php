@@ -53,6 +53,14 @@
         </tbody>
     </table>
 
+    <div class="row mb-3">
+        <div class="col-12 text-end">
+            <a href="/accomplishment/component/{{$component->id}}/add" class="btn btn-primary" hx-boost="true" hx-select="#content" hx-target="#main">
+                <i class="bi bi-plus-lg me-1"></i> Add Registry Entry
+            </a>
+        </div>
+    </div>
+
     <div class="container" id="list">
         <!-- Blank page for now -->
     </div>
