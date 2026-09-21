@@ -127,6 +127,8 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('Test Component 123');
         $response->assertSee('Add Registry Entry');
         $response->assertSee('/accomplishment/component/' . $this->component->id . '/add');
+        $response->assertSee('Total Quantity');
+        $response->assertSee('50 Pcs');
         // Ensure container exists
         $response->assertSee('id="list"', false);
     }
@@ -383,6 +385,39 @@ class AccomplishmentTest extends TestCase
             'status' => 0,
             'message' => 'Access Denied'
         ]);
+    }
+
+    /** @test */
+    public function it_can_render_the_accomplishment_record_display_page()
+    {
+        // Create an accomplishment record for this component
+        $accomplishment = new \App\Models\Accomplishment();
+        $accomplishment->component_id = $this->component->id;
+        $accomplishment->type = 'ACTUAL';
+        $accomplishment->entry_data = '2026-09-21';
+        $accomplishment->quantity = 150.75;
+        $accomplishment->remarks = 'Highly targeted remarks for specific record';
+        $accomplishment->created_by = $this->user->id;
+        $accomplishment->save();
+
+        $response = $this->actingAs($this->user)->get('/accomplishment/record/' . $accomplishment->id);
+        $response->assertStatus(200);
+        
+        // Assert reference details are shown
+        $response->assertSee('Component Reference Details');
+        $response->assertSee('Test Component 123');
+        $response->assertSee('Test Project 123');
+        $response->assertSee('Test Section 123');
+        $response->assertSee('Test Contract Item 123');
+        $response->assertSee('Total Quantity');
+        $response->assertSee('50 Pcs');
+
+        // Assert record details are shown
+        $response->assertSee('Accomplishment Registry Record Details');
+        $response->assertSee('Record ID');
+        $response->assertSee('ACTUAL');
+        $response->assertSee('150.75');
+        $response->assertSee('Highly targeted remarks for specific record');
     }
 
     protected function grantAccessCode($user, $codeString)

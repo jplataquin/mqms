@@ -376,4 +376,21 @@ class AccomplishmentController extends Controller
             'data'      => $result
         ]);
     }
+
+    public function display_record($id){
+
+        $accomplishment = Accomplishment::findOrFail($id);
+        $component      = $accomplishment->Component;
+        $contract_item  = $component->ContractItem;
+        $section        = $contract_item->Section;
+        $project        = $section->Project;
+
+        return view('accomplishment/display',[
+            'project'               => $project,
+            'section'               => $section,
+            'contract_item'         => $contract_item,
+            'component'             => $component,
+            'accomplishment'        => $accomplishment
+        ]);
+    }
 }

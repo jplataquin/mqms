@@ -50,6 +50,12 @@
                    {{$component->name}}
                 </td>
             </tr>
+            <tr>
+                <th>Total Quantity</th>
+                <td>
+                   {{ number_format($component->quantity) }} {{$component->unit_text}}
+                </td>
+            </tr>
         </tbody>
     </table>
 
@@ -61,24 +67,17 @@
         </div>
     </div>
 
-    <div class="container">
-        <table class="table border" id="tableResponsive" style="display: none;">
-            <thead>
-                <tr>
-                    <th>Entry Date</th>
-                    <th>Type</th>
-                    <th>Quantity</th>
-                    <th>Remarks</th>
-                    <th>User</th>
-                    <th>Date Created</th>
-                </tr>
-            </thead>
-            <tbody id="list">
-            </tbody>
-        </table>
+    <div class="folder-form-container mb-3">
+        <div class="folder-form-tab">
+            Accomplishment Registry Records
+        </div>
     </div>
 
-    <div class="row">
+    <div class="container px-0" id="list">
+        <!-- Populated dynamically via Adarna.js -->
+    </div>
+
+    <div class="row mt-3">
         <div class="col-lg-12">
             <button id="showMoreBtn" class="btn w-100 btn-primary" style="display: none;">Show More</button>
         </div>
@@ -92,7 +91,6 @@
 
     const list            = $q('#list').first();
     const showMoreBtn     = $q('#showMoreBtn').first();
-    const tableResponsive = $q('#tableResponsive').first();
     
     let page            = 1;
     let order           = 'DESC';
@@ -107,14 +105,27 @@
             let displayCreatedAt = item.created_at ? $util.dateTime(new Date(item.created_at)).full() : 'N/A';
             let formattedQty = parseFloat(item.quantity).toFixed(2) + ' {{ $component->unit_text }}';
 
-            let row = t.tr({class: 'selectable-div'}, () => {
-                t.td(displayEntryData);
-                t.td(item.type);
-                t.td(formattedQty);
-                t.td(item.remarks || '');
-                t.td(item.creator_name || 'System');
-                t.td(displayCreatedAt);
+            let row = t.div({class: 'item-container fade-in'}, () => {
+                t.div({class: 'item-header'}, `Entry Date: ${displayEntryData} [${item.type}]`);
+                t.div({class: 'item-body'}, () => {
+                    t.div({class: 'row'}, () => {
+                        t.div({class: 'col-lg-4'}, () => {
+                            t.span({class: 'fw-bold text-primary'}, `Quantity: ${formattedQty}`);
+                        });
+                        t.div({class: 'col-lg-8'}, () => {
+                            t.span({class: 'text-muted'}, `Remarks: ${item.remarks || 'N/A'}`);
+                        });
+                    });
+                    
+                    t.div({class: 'row mt-2'}, () => {
+                        t.div({class: 'col-12 small text-muted'}, `Created by ${item.creator_name || 'System'} on ${displayCreatedAt}`);
+                    });
+                });
             });
+
+            row.onclick = () => {
+                window.util.navTo('/accomplishment/record/' + item.id);
+            };
 
             $el.append(row).to(list);
         });
@@ -135,16 +146,6 @@
             if (reply.status <= 0) {
                 window.util.showMsg(reply);
                 return false;
-            }
-
-            if (page === 1 && reply.data.length === 0) {
-                tableResponsive.style.display = 'none';
-                showMoreBtn.style.display = 'none';
-                return;
-            }
-
-            if (page === 1) {
-                tableResponsive.style.display = 'table';
             }
 
             page++;
