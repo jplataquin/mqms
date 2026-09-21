@@ -15,6 +15,10 @@ class Accomplishment extends Model
 
     protected $table = 'accomplishment_registry';
 
+    protected $appends = [
+        'creator_name'
+    ];
+
     protected $fillable = [
         'component_id',
         'type',
@@ -30,6 +34,11 @@ class Accomplishment extends Model
         'entry_data' => 'date',
         'quantity' => 'float',
     ];
+
+    public function getCreatorNameAttribute()
+    {
+        return $this->CreatedBy ? $this->CreatedBy->name : 'System';
+    }
 
     public function Component(): BelongsTo
     {

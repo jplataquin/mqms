@@ -145,16 +145,21 @@ class AccomplishmentTest extends TestCase
         $accomplishment->created_by = $this->user->id;
         $accomplishment->save();
 
+        // 1. Verify page renders successfully
         $response = $this->actingAs($this->user)->get('/accomplishment/component/' . $this->component->id);
         $response->assertStatus(200);
         $response->assertSee('Test Component 123');
-        
-        // Assert record is displayed in the table
-        $response->assertSee('2026-09-21');
-        $response->assertSee('ACTUAL');
-        $response->assertSee('75.25');
-        $response->assertSee('Completed most of it');
-        $response->assertSee($this->user->name);
+
+        // 2. Verify API returns accomplishment list correctly (since records are loaded via AJAX)
+        $apiResponse = $this->actingAs($this->user)->get('/api/accomplishment/record/list?component_id=' . $this->component->id);
+        $apiResponse->assertStatus(200);
+        $apiResponse->assertJsonFragment([
+            'component_id' => $this->component->id,
+            'type' => 'ACTUAL',
+            'quantity' => 75.25,
+            'remarks' => 'Completed most of it',
+            'creator_name' => $this->user->name
+        ]);
     }
 
     /** @test */

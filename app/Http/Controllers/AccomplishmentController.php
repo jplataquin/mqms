@@ -351,4 +351,29 @@ class AccomplishmentController extends Controller
             'data'      => $accomplishment
         ]);
     }
+
+    public function _record_list(Request $request){
+
+        $component_id = (int) $request->input('component_id') ?? 0;
+        $page         = (int) ($request->input('page') ?? 1);
+        $limit        = (int) ($request->input('limit') ?? 10);
+        $orderBy      = $request->input('order_by')       ?? 'entry_data';
+        $order        = $request->input('order')          ?? 'DESC';
+        $result       = [];
+
+        $query = Accomplishment::with('CreatedBy')->where('component_id', $component_id);
+
+        if($limit > 0){
+            $offset = ($page-1) * $limit;
+            $result = $query->orderBy($orderBy, $order)->skip($offset)->take($limit)->get();
+        }else{
+            $result = $query->orderBy($orderBy, $order)->get();
+        }
+
+        return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data'      => $result
+        ]);
+    }
 }
