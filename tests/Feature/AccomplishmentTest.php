@@ -127,8 +127,34 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('Test Component 123');
         $response->assertSee('Add Registry Entry');
         $response->assertSee('/accomplishment/component/' . $this->component->id . '/add');
+        $response->assertSee('No accomplishment records found for this component.');
         // Ensure container exists
         $response->assertSee('id="list"', false);
+    }
+
+    /** @test */
+    public function it_can_render_the_accomplishment_component_page_with_records()
+    {
+        // Create an accomplishment record for this component
+        $accomplishment = new \App\Models\Accomplishment();
+        $accomplishment->component_id = $this->component->id;
+        $accomplishment->type = 'ACTUAL';
+        $accomplishment->entry_data = '2026-09-21';
+        $accomplishment->quantity = 75.25;
+        $accomplishment->remarks = 'Completed most of it';
+        $accomplishment->created_by = $this->user->id;
+        $accomplishment->save();
+
+        $response = $this->actingAs($this->user)->get('/accomplishment/component/' . $this->component->id);
+        $response->assertStatus(200);
+        $response->assertSee('Test Component 123');
+        
+        // Assert record is displayed in the table
+        $response->assertSee('2026-09-21');
+        $response->assertSee('ACTUAL');
+        $response->assertSee('75.25');
+        $response->assertSee('Completed most of it');
+        $response->assertSee($this->user->name);
     }
 
     /** @test */

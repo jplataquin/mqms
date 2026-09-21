@@ -230,11 +230,14 @@ class AccomplishmentController extends Controller
         $section       = $contract_item->Section;
         $project       = $section->Project;
 
+        $accomplishments = $component->Accomplishments()->orderBy('entry_data', 'desc')->get();
+
         return view('accomplishment/component_display',[
             'project'               => $project,
             'section'               => $section,
             'contract_item'         => $contract_item,
-            'component'             => $component
+            'component'             => $component,
+            'accomplishments'       => $accomplishments
         ]);
     }
 
