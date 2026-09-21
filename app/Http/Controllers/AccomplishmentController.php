@@ -422,6 +422,7 @@ class AccomplishmentController extends Controller
         $project        = $section->Project;
 
         $latestActual = $component->Accomplishments()
+            ->where('id', '!=', $id)
             ->where('type', 'ACTUAL')
             ->orderBy('entry_data', 'desc')
             ->orderBy('created_at', 'desc')

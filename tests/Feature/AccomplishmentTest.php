@@ -394,7 +394,17 @@ class AccomplishmentTest extends TestCase
     /** @test */
     public function it_can_render_the_accomplishment_record_display_page()
     {
-        // Create an accomplishment record for this component
+        // 1. Create a prior accomplishment record
+        $priorAccomplishment = new \App\Models\Accomplishment();
+        $priorAccomplishment->component_id = $this->component->id;
+        $priorAccomplishment->type = 'ACTUAL';
+        $priorAccomplishment->entry_data = '2026-09-20';
+        $priorAccomplishment->quantity = 15.00; // 30% of 50
+        $priorAccomplishment->remarks = 'First entry';
+        $priorAccomplishment->created_by = $this->user->id;
+        $priorAccomplishment->save();
+
+        // 2. Create the current accomplishment record being displayed
         $accomplishment = new \App\Models\Accomplishment();
         $accomplishment->component_id = $this->component->id;
         $accomplishment->type = 'ACTUAL';
@@ -416,7 +426,8 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('Total Quantity');
         $response->assertSee('50 Pcs');
         $response->assertSee('Latest Quantity');
-        $response->assertSee('45.75 Pcs (92%) as of 2026-09-21.');
+        // It must show the PRIOR accomplishment because the CURRENT one is excluded!
+        $response->assertSee('15.00 Pcs (30%) as of 2026-09-20.');
 
         // Assert record details are shown
         $response->assertSee('Accomplishment Registry Record Details');
