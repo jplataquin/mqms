@@ -307,6 +307,14 @@ class AccomplishmentController extends Controller
 
     public function _add(Request $request){
 
+        if(!$this->hasAccess(['accomplishment:all:create'])){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Access Denied',
+                'data'      => []
+            ]);
+        }
+
         $validator = Validator::make($request->all(), [
             'component_id' => 'required|integer|exists:components,id',
             'entry_data'   => 'required|date',

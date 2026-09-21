@@ -281,6 +281,8 @@ class AccomplishmentTest extends TestCase
     /** @test */
     public function it_can_create_an_accomplishment_via_new_api_with_required_fields()
     {
+        $this->grantAccessCode($this->user, 'accomplishment:all:create');
+
         $response = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
             'component_id' => $this->component->id,
             'entry_data'   => '2026-09-21',
@@ -306,6 +308,8 @@ class AccomplishmentTest extends TestCase
     /** @test */
     public function it_fails_new_api_creation_if_required_fields_are_missing()
     {
+        $this->grantAccessCode($this->user, 'accomplishment:all:create');
+
         // 1. Missing remarks (which is now required in the new API)
         $response = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
             'component_id' => $this->component->id,
@@ -332,5 +336,52 @@ class AccomplishmentTest extends TestCase
             'status' => -2,
             'message' => 'Failed Validation'
         ]);
+    }
+
+    /** @test */
+    public function it_denies_new_api_creation_if_user_lacks_access_code()
+    {
+        $response = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
+            'component_id' => $this->component->id,
+            'entry_data'   => '2026-09-21',
+            'quantity'     => 45.2,
+            'remarks'      => 'Some remarks'
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 0,
+            'message' => 'Access Denied'
+        ]);
+    }
+
+    protected function grantAccessCode($user, $codeString)
+    {
+        // 1. Create or find the AccessCode
+        $accessCode = \App\Models\AccessCode::where('code', $codeString)->first();
+        if (!$accessCode) {
+            $accessCode = new \App\Models\AccessCode();
+            $accessCode->code = $codeString;
+            $accessCode->description = 'Test access code description';
+            $accessCode->save();
+        }
+
+        // 2. Create a Role
+        $role = new \App\Models\Role();
+        $role->name = 'Test Role ' . uniqid();
+        $role->description = 'Test Description';
+        $role->save();
+
+        // 3. Link Role to AccessCode
+        $roleAccessCode = new \App\Models\RoleAccessCode();
+        $roleAccessCode->role_id = $role->id;
+        $roleAccessCode->access_code_id = $accessCode->id;
+        $roleAccessCode->save();
+
+        // 4. Link User to Role
+        $userRole = new \App\Models\UserRole();
+        $userRole->user_id = $user->id;
+        $userRole->role_id = $role->id;
+        $userRole->save();
     }
 }
