@@ -5,6 +5,7 @@ class CreateAccomplishmentForm extends Component {
     model() {
         return {
             component_id: '',
+            type: 'ACTUAL',
             successCallback: () => {
                 document.location.reload(true);
             }
@@ -16,6 +17,8 @@ class CreateAccomplishmentForm extends Component {
 
         // Get today's date in YYYY-MM-DD format
         const today = new Date().toISOString().split('T')[0];
+
+        const btnClass = this._model.type === 'TARGET' ? 'btn btn-success me-3' : 'btn btn-primary me-3';
 
         return t.div(() => {
             t.div({class: 'row mb-3'}, () => {
@@ -47,7 +50,7 @@ class CreateAccomplishmentForm extends Component {
 
             t.div({class: 'row mb-3'}, () => {
                 t.div({class: 'col-lg-12 text-end'}, () => {
-                    this.el.submit_btn = t.div({class: 'btn btn-primary me-3'}, 'Save Entry');
+                    this.el.submit_btn = t.div({class: btnClass}, 'Save Entry');
                     this.el.cancel_btn = t.div({class: 'btn btn-secondary'}, 'Cancel');
                 });
             });
@@ -106,6 +109,7 @@ class CreateAccomplishmentForm extends Component {
 
         window.util.$post('/api/accomplishment/add', {
             component_id: this._model.component_id,
+            type: this._model.type,
             entry_data: this.el.entry_data.value,
             quantity: this.el.quantity.value,
             remarks: this.el.remarks.value

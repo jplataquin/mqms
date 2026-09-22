@@ -81,9 +81,12 @@
         </div>
     </div>
 
-    <div class="folder-form-container mb-3">
-        <div class="folder-form-tab">
-            Accomplishment Registry Records
+    <div class="folder-form-container mb-3 d-flex" style="gap: 5px;">
+        <div id="tabActual" class="folder-form-tab c-pointer" style="background-color: #0d6efd; color: white; min-width: 150px; transition: all 0.2s;">
+            Actual
+        </div>
+        <div id="tabTarget" class="folder-form-tab c-pointer" style="background-color: #2c3034; color: #198754; min-width: 150px; transition: all 0.2s;">
+            Target
         </div>
     </div>
 
@@ -107,11 +110,14 @@
     const list            = $q('#list').first();
     const showMoreBtn     = $q('#showMoreBtn').first();
     const addRegistryBtn  = $q('#addRegistryBtn').first();
+    const tabActual       = $q('#tabActual').first();
+    const tabTarget       = $q('#tabTarget').first();
     
     let page            = 1;
     let order           = 'DESC';
     let orderBy         = 'entry_data';
     const limit         = 10;
+    let currentType     = 'ACTUAL';
     
     const t = new Template();
 
@@ -121,12 +127,14 @@
             let displayCreatedAt = item.created_at ? $util.dateTime(new Date(item.created_at)).full() : 'N/A';
             let formattedQty = parseFloat(item.quantity).toFixed(2) + ' {{ $component->unit_text }}';
 
+            let qtyClass = item.type === 'TARGET' ? 'fw-bold text-success' : 'fw-bold text-primary';
+
             let row = t.div({class: 'item-container fade-in'}, () => {
                 t.div({class: 'item-header'}, `Entry Date: ${displayEntryData} [${item.type}]`);
                 t.div({class: 'item-body'}, () => {
                     t.div({class: 'row'}, () => {
                         t.div({class: 'col-12'}, () => {
-                            t.span({class: 'fw-bold text-primary'}, `Quantity: ${formattedQty}`);
+                            t.span({class: qtyClass}, `Quantity: ${formattedQty}`);
                         });
                     });
                     
@@ -149,6 +157,7 @@
 
         window.util.$get('/api/accomplishment/record/list', {
             component_id: '{{ $component->id }}',
+            type: currentType,
             page: page,
             limit: limit,
             order_by: orderBy,
@@ -196,10 +205,43 @@
     addRegistryBtn.onclick = () => {
         window.util.drawerModal.content('Add Accomplishment Registry Entry', CreateAccomplishmentForm({
             component_id: '{{$component->id}}',
+            type: currentType,
             successCallback: () => {
                 document.location.reload(true);
             }
         })).open();
+    }
+
+    tabActual.onclick = () => {
+        if (currentType === 'ACTUAL') return;
+        currentType = 'ACTUAL';
+        
+        tabActual.style.backgroundColor = '#0d6efd';
+        tabActual.style.color = 'white';
+        tabTarget.style.backgroundColor = '#2c3034';
+        tabTarget.style.color = '#198754';
+        
+        addRegistryBtn.className = 'btn btn-primary';
+        
+        $el.clear(list);
+        page = 1;
+        showData();
+    }
+
+    tabTarget.onclick = () => {
+        if (currentType === 'TARGET') return;
+        currentType = 'TARGET';
+        
+        tabActual.style.backgroundColor = '#2c3034';
+        tabActual.style.color = '#0d6efd';
+        tabTarget.style.backgroundColor = '#198754';
+        tabTarget.style.color = 'white';
+        
+        addRegistryBtn.className = 'btn btn-success';
+        
+        $el.clear(list);
+        page = 1;
+        showData();
     }
 </script>
 @endsection

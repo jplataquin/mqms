@@ -325,7 +325,8 @@ class AccomplishmentController extends Controller
             'component_id' => 'required|integer|exists:components,id',
             'entry_data'   => 'required|date',
             'quantity'     => 'required|numeric',
-            'remarks'      => 'required|string'
+            'remarks'      => 'required|string',
+            'type'         => 'nullable|in:ACTUAL,TARGET'
         ]);
 
         if ($validator->fails()) {
@@ -351,7 +352,7 @@ class AccomplishmentController extends Controller
 
         $accomplishment = new Accomplishment();
         $accomplishment->component_id   = $request->input('component_id');
-        $accomplishment->type           = 'ACTUAL'; // default enum required field
+        $accomplishment->type           = $request->input('type') ?? 'ACTUAL';
         $accomplishment->entry_data     = $request->input('entry_data');
         $accomplishment->quantity       = $request->input('quantity');
         $accomplishment->remarks        = $request->input('remarks');
@@ -371,11 +372,14 @@ class AccomplishmentController extends Controller
         $component_id = (int) $request->input('component_id') ?? 0;
         $page         = (int) ($request->input('page') ?? 1);
         $limit        = (int) ($request->input('limit') ?? 10);
+        $type         = $request->input('type')           ?? 'ACTUAL';
         $orderBy      = $request->input('order_by')       ?? 'entry_data';
         $order        = $request->input('order')          ?? 'DESC';
         $result       = [];
 
-        $query = Accomplishment::with('CreatedBy')->where('component_id', $component_id);
+        $query = Accomplishment::with('CreatedBy')
+                    ->where('component_id', $component_id)
+                    ->where('type', $type);
 
         if($limit > 0){
             $offset = ($page-1) * $limit;
