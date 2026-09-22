@@ -311,28 +311,6 @@ class AccomplishmentController extends Controller
         ]);
     }
 
-    public function add($component_id){
-
-        $component     = Component::findOrFail($component_id);
-        $contract_item = $component->ContractItem;
-        $section       = $contract_item->Section;
-        $project       = $section->Project;
-
-        $latestActual = $component->Accomplishments()
-            ->where('type', 'ACTUAL')
-            ->orderBy('entry_data', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->first();
-
-        return view('accomplishment/add',[
-            'project'               => $project,
-            'section'               => $section,
-            'contract_item'         => $contract_item,
-            'component'             => $component,
-            'latestActual'          => $latestActual
-        ]);
-    }
-
     public function _add(Request $request){
 
         if(!$this->hasAccess(['accomplishment:all:create'])){

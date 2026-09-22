@@ -75,9 +75,9 @@
 
     <div class="row mb-3">
         <div class="col-12 text-end">
-            <a href="/accomplishment/component/{{$component->id}}/add" class="btn btn-primary" hx-boost="true" hx-select="#content" hx-target="#main">
+            <button id="addRegistryBtn" class="btn btn-primary">
                 <i class="bi bi-plus-lg me-1"></i> Add Registry Entry
-            </a>
+            </button>
         </div>
     </div>
 
@@ -102,9 +102,11 @@
 
 <script type="module">
     import {$q,Template,$el,$util} from '/adarna.js';
+    import CreateAccomplishmentForm from '/ui_components/create_forms/CreateAccomplishmentForm.js';
 
     const list            = $q('#list').first();
     const showMoreBtn     = $q('#showMoreBtn').first();
+    const addRegistryBtn  = $q('#addRegistryBtn').first();
     
     let page            = 1;
     let order           = 'DESC';
@@ -189,6 +191,15 @@
 
     showMoreBtn.onclick = () => {
         showData();
+    }
+
+    addRegistryBtn.onclick = () => {
+        window.util.drawerModal.content('Add Accomplishment Registry Entry', CreateAccomplishmentForm({
+            component_id: '{{$component->id}}',
+            successCallback: () => {
+                window.util.navReload();
+            }
+        })).open();
     }
 </script>
 @endsection
