@@ -197,7 +197,7 @@
         window.util.drawerModal.content('Add Accomplishment Registry Entry', CreateAccomplishmentForm({
             component_id: '{{$component->id}}',
             successCallback: () => {
-                window.util.navReload();
+                document.location.reload(true);
             }
         })).open();
     }

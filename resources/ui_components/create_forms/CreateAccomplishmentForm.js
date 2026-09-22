@@ -6,7 +6,7 @@ class CreateAccomplishmentForm extends Component {
         return {
             component_id: '',
             successCallback: () => {
-                window.util.navReload();
+                document.location.reload(true);
             }
         }
     }
