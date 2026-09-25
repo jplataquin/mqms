@@ -482,6 +482,14 @@ class AccomplishmentTest extends TestCase
     }
 
     /** @test */
+    public function it_can_activate_target_tab_via_query_param()
+    {
+        $response = $this->actingAs($this->user)->get('/accomplishment/component/' . $this->component->id . '?type=TARGET');
+        $response->assertStatus(200);
+        $response->assertSee('btn-success');
+    }
+
+    /** @test */
     public function it_can_fetch_studio_mode_data_via_api()
     {
         // Add an accomplishment record to verify it's loaded in the hierarchy

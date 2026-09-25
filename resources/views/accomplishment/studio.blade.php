@@ -851,7 +851,14 @@
 
         btnAddRecord.onclick = () => {
             if (selectedComponentId) {
-                studioFrame.src = `/accomplishment/component/${selectedComponentId}/create?studio=1`;
+                let currentType = 'ACTUAL';
+                try {
+                    const frameUrl = new URL(studioFrame.contentWindow.location.href);
+                    if (frameUrl.searchParams.get('type')) {
+                        currentType = frameUrl.searchParams.get('type');
+                    }
+                } catch(e) {}
+                studioFrame.src = `/accomplishment/component/${selectedComponentId}/create?studio=1&type=${currentType}`;
             }
         };
 

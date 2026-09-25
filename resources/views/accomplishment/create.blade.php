@@ -65,8 +65,8 @@
                         <div class="form-group">
                             <label>Type</label>
                             <select class="form-control" id="type">
-                                <option value="ACTUAL">ACTUAL</option>
-                                <option value="TARGET">TARGET</option>
+                                <option value="ACTUAL" {{ request()->get('type') == 'ACTUAL' ? 'selected' : '' }}>ACTUAL</option>
+                                <option value="TARGET" {{ request()->get('type') == 'TARGET' ? 'selected' : '' }}>TARGET</option>
                             </select>
                         </div>
                     </div>
@@ -141,12 +141,14 @@
                     return false;
                 }
         
-                window.util.navTo('/accomplishment/component/{{$component->id}}');
+                const isStudio = new URLSearchParams(window.location.search).has('studio') ? '&studio=1' : '';
+                window.util.navTo('/accomplishment/component/{{$component->id}}?type=' + type.value + isStudio);
             });
         }
 
         cancelBtn.onclick = (e) => {
-            window.util.navTo('/accomplishment/component/{{$component->id}}');
+            const isStudio = new URLSearchParams(window.location.search).has('studio') ? '&studio=1' : '';
+            window.util.navTo('/accomplishment/component/{{$component->id}}?type=' + type.value + isStudio);
         }
 
     </script>

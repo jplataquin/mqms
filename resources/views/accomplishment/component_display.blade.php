@@ -73,19 +73,26 @@
         </tbody>
     </table>
 
+    @php
+        $activeType = strtoupper(request()->get('type', 'ACTUAL'));
+        if (!in_array($activeType, ['ACTUAL', 'TARGET'])) {
+            $activeType = 'ACTUAL';
+        }
+    @endphp
+
     <div class="row mb-3">
         <div class="col-12 text-end">
-            <button id="addRegistryBtn" class="btn btn-primary">
+            <button id="addRegistryBtn" class="btn {{ $activeType == 'TARGET' ? 'btn-success' : 'btn-primary' }}">
                 <i class="bi bi-plus-lg me-1"></i> Add Registry Entry
             </button>
         </div>
     </div>
 
     <div class="folder-form-container mb-3 d-flex" style="gap: 5px;">
-        <div id="tabActual" class="folder-form-tab c-pointer" style="background-color: #0d6efd; color: white; min-width: 150px; transition: all 0.2s;">
+        <div id="tabActual" class="folder-form-tab c-pointer" style="background-color: {{ $activeType == 'ACTUAL' ? '#0d6efd' : '#2c3034' }}; color: {{ $activeType == 'ACTUAL' ? 'white' : '#0d6efd' }}; min-width: 150px; transition: all 0.2s;">
             Actual
         </div>
-        <div id="tabTarget" class="folder-form-tab c-pointer" style="background-color: #2c3034; color: #198754; min-width: 150px; transition: all 0.2s;">
+        <div id="tabTarget" class="folder-form-tab c-pointer" style="background-color: {{ $activeType == 'TARGET' ? '#198754' : '#2c3034' }}; color: {{ $activeType == 'TARGET' ? 'white' : '#198754' }}; min-width: 150px; transition: all 0.2s;">
             Target
         </div>
     </div>
@@ -117,7 +124,11 @@
     let order           = 'DESC';
     let orderBy         = 'entry_data';
     const limit         = 10;
-    let currentType     = 'ACTUAL';
+    const urlParams     = new URLSearchParams(window.location.search);
+    let currentType     = (urlParams.get('type') || '{{ $activeType }}').toUpperCase();
+    if (currentType !== 'TARGET' && currentType !== 'ACTUAL') {
+        currentType = 'ACTUAL';
+    }
     
     const t = new Template();
 
@@ -195,7 +206,39 @@
         });
     }
 
+    function updateTabUI() {
+        if (currentType === 'TARGET') {
+            tabActual.style.backgroundColor = '#2c3034';
+            tabActual.style.color = '#0d6efd';
+            tabTarget.style.backgroundColor = '#198754';
+            tabTarget.style.color = 'white';
+            addRegistryBtn.className = 'btn btn-success';
+        } else {
+            tabActual.style.backgroundColor = '#0d6efd';
+            tabActual.style.color = 'white';
+            tabTarget.style.backgroundColor = '#2c3034';
+            tabTarget.style.color = '#198754';
+            addRegistryBtn.className = 'btn btn-primary';
+        }
+    }
+
+    function switchTab(type) {
+        if (currentType === type) return;
+        currentType = type;
+
+        const url = new URL(window.location.href);
+        url.searchParams.set('type', currentType);
+        window.history.replaceState({}, '', url.toString());
+
+        updateTabUI();
+
+        $el.clear(list);
+        page = 1;
+        showData();
+    }
+
     // Initial load
+    updateTabUI();
     showData();
 
     showMoreBtn.onclick = () => {
@@ -207,41 +250,14 @@
             component_id: '{{$component->id}}',
             type: currentType,
             successCallback: () => {
-                document.location.reload(true);
+                const url = new URL(window.location.href);
+                url.searchParams.set('type', currentType);
+                window.location.href = url.toString();
             }
         })).open();
     }
 
-    tabActual.onclick = () => {
-        if (currentType === 'ACTUAL') return;
-        currentType = 'ACTUAL';
-        
-        tabActual.style.backgroundColor = '#0d6efd';
-        tabActual.style.color = 'white';
-        tabTarget.style.backgroundColor = '#2c3034';
-        tabTarget.style.color = '#198754';
-        
-        addRegistryBtn.className = 'btn btn-primary';
-        
-        $el.clear(list);
-        page = 1;
-        showData();
-    }
-
-    tabTarget.onclick = () => {
-        if (currentType === 'TARGET') return;
-        currentType = 'TARGET';
-        
-        tabActual.style.backgroundColor = '#2c3034';
-        tabActual.style.color = '#0d6efd';
-        tabTarget.style.backgroundColor = '#198754';
-        tabTarget.style.color = 'white';
-        
-        addRegistryBtn.className = 'btn btn-success';
-        
-        $el.clear(list);
-        page = 1;
-        showData();
-    }
+    tabActual.onclick = () => switchTab('ACTUAL');
+    tabTarget.onclick = () => switchTab('TARGET');
 </script>
 @endsection
