@@ -659,39 +659,54 @@
                                 const displayComp = (isSectionCollapsed || isCiCollapsed) ? 'display: none;' : '';
                                 const isActive = selectedComponentId === comp.id ? 'active' : '';
 
-                                // Aggregate Accomplishments
+                                // Scope and Accomplishment metrics
                                 const totalScope = parseFloat(comp.quantity) || 0;
                                 const unitText = comp.unit_text || '';
                                 
-                                let totalActual = 0;
+                                let latestActual = null;
                                 let totalTarget = 0;
                                 const monthlyAccomplishments = {};
 
                                 if (comp.accomplishments) {
                                     comp.accomplishments.forEach(acc => {
                                         const qty = parseFloat(acc.quantity) || 0;
+
                                         if (acc.type === 'ACTUAL') {
-                                            totalActual += qty;
+                                            // Determine latest actual accomplishment by entry_data and id
+                                            if (!latestActual) {
+                                                latestActual = acc;
+                                            } else {
+                                                const dateCurr = new Date(acc.entry_data || acc.created_at || 0);
+                                                const dateLatest = new Date(latestActual.entry_data || latestActual.created_at || 0);
+                                                if (dateCurr > dateLatest || (dateCurr.getTime() === dateLatest.getTime() && (acc.id || 0) > (latestActual.id || 0))) {
+                                                    latestActual = acc;
+                                                }
+                                            }
                                         } else if (acc.type === 'TARGET') {
                                             totalTarget += qty;
-                                        }
-
-                                        if (acc.entry_data) {
-                                            const monthKey = acc.entry_data.substring(0, 7); // YYYY-MM
-                                            if (!monthlyAccomplishments[monthKey]) {
-                                                monthlyAccomplishments[monthKey] = { actual: 0, target: 0, items: [] };
-                                            }
-                                            if (acc.type === 'ACTUAL') {
-                                                monthlyAccomplishments[monthKey].actual += qty;
-                                            } else {
+                                            if (acc.entry_data) {
+                                                const monthKey = acc.entry_data.substring(0, 7); // YYYY-MM
+                                                if (!monthlyAccomplishments[monthKey]) {
+                                                    monthlyAccomplishments[monthKey] = { target: 0, latestActual: null };
+                                                }
                                                 monthlyAccomplishments[monthKey].target += qty;
                                             }
-                                            monthlyAccomplishments[monthKey].items.push(acc);
                                         }
                                     });
+
+                                    // Display only the latest Actual accomplishment in the timeline
+                                    if (latestActual && latestActual.entry_data) {
+                                        const actualMonthKey = latestActual.entry_data.substring(0, 7);
+                                        if (!monthlyAccomplishments[actualMonthKey]) {
+                                            monthlyAccomplishments[actualMonthKey] = { target: 0, latestActual: null };
+                                        }
+                                        monthlyAccomplishments[actualMonthKey].latestActual = latestActual;
+                                    }
                                 }
 
+                                const totalActual = latestActual ? (parseFloat(latestActual.quantity) || 0) : 0;
                                 const percentActual = totalScope > 0 ? Math.min(100, Math.round((totalActual / totalScope) * 100)) : 0;
+                                const actualDateStr = latestActual && latestActual.entry_data ? latestActual.entry_data.substring(0, 10) : '';
 
                                 bodyHtml += `
                                 <tr class="row-component ${isActive}" id="comp-row-${comp.id}" style="${displayComp}" data-section-parent="${section.id}" data-ci-parent="${ci.id}" onclick="selectComponent(${comp.id}, '${escapeHtml(comp.name)}')">
@@ -711,6 +726,7 @@
                                         <div class="gantt-progress-bar">
                                             <div class="progress-actual" style="width: ${percentActual}%;"></div>
                                         </div>
+                                        ${actualDateStr ? `<div class="text-truncate" style="font-size: 9px; color: var(--text-muted); line-height: 1.2; margin-top: 2px;" title="As of ${escapeHtml(actualDateStr)}">as of ${escapeHtml(actualDateStr)}</div>` : ''}
                                     </td>`;
 
                                 // Timeline Month Cells
@@ -725,10 +741,11 @@
                                                 <small>${escapeHtml(unitText)}</small>
                                             </div>`;
                                         }
-                                        if (entry.actual > 0) {
+                                        if (entry.latestActual) {
+                                            const actualQty = parseFloat(entry.latestActual.quantity) || 0;
                                             bodyHtml += `
-                                            <div class="gantt-pill pill-actual" title="Actual: ${formatNumber(entry.actual)} ${escapeHtml(unitText)}">
-                                                <span>✅ ${formatNumber(entry.actual)}</span>
+                                            <div class="gantt-pill pill-actual" title="Latest Actual: ${formatNumber(actualQty)} ${escapeHtml(unitText)} as of ${escapeHtml(actualDateStr)}">
+                                                <span>✅ ${formatNumber(actualQty)}</span>
                                                 <small>${escapeHtml(unitText)}</small>
                                             </div>`;
                                         }
