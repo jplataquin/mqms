@@ -472,6 +472,49 @@ class AccomplishmentTest extends TestCase
         ]);
     }
 
+    /** @test */
+    public function it_can_render_the_accomplishment_studio_mode_page()
+    {
+        $response = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/studio');
+        $response->assertStatus(200);
+        $response->assertSee('Accomplishment Studio');
+        $response->assertSee($this->project->name);
+    }
+
+    /** @test */
+    public function it_can_fetch_studio_mode_data_via_api()
+    {
+        // Add an accomplishment record to verify it's loaded in the hierarchy
+        $acc = new \App\Models\Accomplishment();
+        $acc->component_id = $this->component->id;
+        $acc->type = 'ACTUAL';
+        $acc->entry_data = '2026-09-25';
+        $acc->quantity = 15.0;
+        $acc->remarks = 'Studio test entry';
+        $acc->created_by = $this->user->id;
+        $acc->save();
+
+        $response = $this->actingAs($this->user)->getJson('/api/accomplishment/project/' . $this->project->id . '/studio-data');
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+            'data' => [
+                'id' => $this->project->id,
+                'name' => $this->project->name,
+            ]
+        ]);
+
+        $responseData = $response->json('data');
+        $this->assertNotEmpty($responseData['sections']);
+        $this->assertEquals($this->section->id, $responseData['sections'][0]['id']);
+        $this->assertNotEmpty($responseData['sections'][0]['contract_items']);
+        $this->assertEquals($this->contractItem->id, $responseData['sections'][0]['contract_items'][0]['id']);
+        $this->assertNotEmpty($responseData['sections'][0]['contract_items'][0]['components']);
+        $this->assertEquals($this->component->id, $responseData['sections'][0]['contract_items'][0]['components'][0]['id']);
+        $this->assertNotEmpty($responseData['sections'][0]['contract_items'][0]['components'][0]['accomplishments']);
+        $this->assertEquals(15.0, $responseData['sections'][0]['contract_items'][0]['components'][0]['accomplishments'][0]['quantity']);
+    }
+
     protected function grantAccessCode($user, $codeString)
     {
         // 1. Create or find the AccessCode

@@ -419,4 +419,35 @@ class AccomplishmentController extends Controller
             'latestActual'          => $latestActual
         ]);
     }
+
+    public function studio($id){
+        $project = Project::findOrFail($id);
+
+        return view('accomplishment/studio',[
+            'project' => $project
+        ]);
+    }
+
+    public function _studio_data($id){
+        $project = Project::with([
+            'Sections' => function($q){
+                $q->whereNull('deleted_at')->orderBy('name', 'asc');
+            },
+            'Sections.ContractItems' => function($q){
+                $q->whereNull('deleted_at')->orderBy('item_code', 'asc');
+            },
+            'Sections.ContractItems.Components' => function($q){
+                $q->whereNull('deleted_at')->orderBy('name', 'asc');
+            },
+            'Sections.ContractItems.Components.Accomplishments' => function($q){
+                $q->orderBy('entry_data', 'asc');
+            }
+        ])->findOrFail($id);
+
+        return response()->json([
+            'status'  => 1,
+            'message' => '',
+            'data'    => $project
+        ]);
+    }
 }

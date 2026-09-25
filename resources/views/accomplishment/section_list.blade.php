@@ -25,16 +25,23 @@
 <hr>
 
 
-    <table class="record-table-horizontal mb-3"  hx-boost="true" hx-select="#content" hx-target="#main">
-        <tbody>
-            <tr>
-                <th>Project</th>
-                <td>
-                    <a href="/accomplishment/project/{{$project->id}}">{{$project->name}}</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <table class="record-table-horizontal mb-0"  hx-boost="true" hx-select="#content" hx-target="#main">
+            <tbody>
+                <tr>
+                    <th>Project</th>
+                    <td>
+                        <a href="/accomplishment/project/{{$project->id}}">{{$project->name}}</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <a href="/accomplishment/project/{{$project->id}}/studio" class="btn btn-primary">
+                <i class="bi bi-layout-split me-1"></i> Studio Mode
+            </a>
+        </div>
+    </div>
 
     <div class="folder-form-container">
         <div class="folder-form-tab">

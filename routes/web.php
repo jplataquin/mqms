@@ -70,6 +70,7 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     
     Route::get('/accomplishment', [App\Http\Controllers\AccomplishmentController::class, 'list']);
     Route::get('/accomplishment/project/{id}', [App\Http\Controllers\AccomplishmentController::class, 'section_list']);
+    Route::get('/accomplishment/project/{id}/studio', [App\Http\Controllers\AccomplishmentController::class, 'studio']);
     Route::get('/accomplishment/section/{id}', [App\Http\Controllers\AccomplishmentController::class, 'contract_item_list']);
     Route::get('/accomplishment/contract_item/{id}', [App\Http\Controllers\AccomplishmentController::class, 'component_list']);
     Route::get('/accomplishment/component/{id}', [App\Http\Controllers\AccomplishmentController::class, 'component_display']);
