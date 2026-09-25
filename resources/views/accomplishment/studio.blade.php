@@ -663,50 +663,64 @@
                                 const totalScope = parseFloat(comp.quantity) || 0;
                                 const unitText = comp.unit_text || '';
                                 
-                                let latestActual = null;
-                                let totalTarget = 0;
+                                let overallLatestActual = null;
                                 const monthlyAccomplishments = {};
 
                                 if (comp.accomplishments) {
                                     comp.accomplishments.forEach(acc => {
-                                        const qty = parseFloat(acc.quantity) || 0;
-
+                                        // Track overall latest actual
                                         if (acc.type === 'ACTUAL') {
-                                            // Determine latest actual accomplishment by entry_data and id
-                                            if (!latestActual) {
-                                                latestActual = acc;
+                                            if (!overallLatestActual) {
+                                                overallLatestActual = acc;
                                             } else {
                                                 const dateCurr = new Date(acc.entry_data || acc.created_at || 0);
-                                                const dateLatest = new Date(latestActual.entry_data || latestActual.created_at || 0);
-                                                if (dateCurr > dateLatest || (dateCurr.getTime() === dateLatest.getTime() && (acc.id || 0) > (latestActual.id || 0))) {
-                                                    latestActual = acc;
+                                                const dateLatest = new Date(overallLatestActual.entry_data || overallLatestActual.created_at || 0);
+                                                if (dateCurr > dateLatest || (dateCurr.getTime() === dateLatest.getTime() && (acc.id || 0) > (overallLatestActual.id || 0))) {
+                                                    overallLatestActual = acc;
                                                 }
                                             }
-                                        } else if (acc.type === 'TARGET') {
-                                            totalTarget += qty;
-                                            if (acc.entry_data) {
-                                                const monthKey = acc.entry_data.substring(0, 7); // YYYY-MM
-                                                if (!monthlyAccomplishments[monthKey]) {
-                                                    monthlyAccomplishments[monthKey] = { target: 0, latestActual: null };
+                                        }
+
+                                        // Track latest Target and latest Actual per month
+                                        if (acc.entry_data) {
+                                            const monthKey = acc.entry_data.substring(0, 7); // YYYY-MM
+                                            if (!monthlyAccomplishments[monthKey]) {
+                                                monthlyAccomplishments[monthKey] = {
+                                                    latestTarget: null,
+                                                    latestActual: null
+                                                };
+                                            }
+
+                                            const monthEntry = monthlyAccomplishments[monthKey];
+
+                                            if (acc.type === 'TARGET') {
+                                                if (!monthEntry.latestTarget) {
+                                                    monthEntry.latestTarget = acc;
+                                                } else {
+                                                    const dateCurr = new Date(acc.entry_data || acc.created_at || 0);
+                                                    const dateLatest = new Date(monthEntry.latestTarget.entry_data || monthEntry.latestTarget.created_at || 0);
+                                                    if (dateCurr > dateLatest || (dateCurr.getTime() === dateLatest.getTime() && (acc.id || 0) > (monthEntry.latestTarget.id || 0))) {
+                                                        monthEntry.latestTarget = acc;
+                                                    }
                                                 }
-                                                monthlyAccomplishments[monthKey].target += qty;
+                                            } else if (acc.type === 'ACTUAL') {
+                                                if (!monthEntry.latestActual) {
+                                                    monthEntry.latestActual = acc;
+                                                } else {
+                                                    const dateCurr = new Date(acc.entry_data || acc.created_at || 0);
+                                                    const dateLatest = new Date(monthEntry.latestActual.entry_data || monthEntry.latestActual.created_at || 0);
+                                                    if (dateCurr > dateLatest || (dateCurr.getTime() === dateLatest.getTime() && (acc.id || 0) > (monthEntry.latestActual.id || 0))) {
+                                                        monthEntry.latestActual = acc;
+                                                    }
+                                                }
                                             }
                                         }
                                     });
-
-                                    // Display only the latest Actual accomplishment in the timeline
-                                    if (latestActual && latestActual.entry_data) {
-                                        const actualMonthKey = latestActual.entry_data.substring(0, 7);
-                                        if (!monthlyAccomplishments[actualMonthKey]) {
-                                            monthlyAccomplishments[actualMonthKey] = { target: 0, latestActual: null };
-                                        }
-                                        monthlyAccomplishments[actualMonthKey].latestActual = latestActual;
-                                    }
                                 }
 
-                                const totalActual = latestActual ? (parseFloat(latestActual.quantity) || 0) : 0;
+                                const totalActual = overallLatestActual ? (parseFloat(overallLatestActual.quantity) || 0) : 0;
                                 const percentActual = totalScope > 0 ? Math.min(100, Math.round((totalActual / totalScope) * 100)) : 0;
-                                const actualDateStr = latestActual && latestActual.entry_data ? latestActual.entry_data.substring(0, 10) : '';
+                                const actualDateStr = overallLatestActual && overallLatestActual.entry_data ? overallLatestActual.entry_data.substring(0, 10) : '';
 
                                 bodyHtml += `
                                 <tr class="row-component ${isActive}" id="comp-row-${comp.id}" style="${displayComp}" data-section-parent="${section.id}" data-ci-parent="${ci.id}" onclick="selectComponent(${comp.id}, '${escapeHtml(comp.name)}')">
@@ -734,17 +748,20 @@
                                     const entry = monthlyAccomplishments[m.key];
                                     bodyHtml += `<td class="month-cell">`;
                                     if (entry) {
-                                        if (entry.target > 0) {
+                                        if (entry.latestTarget) {
+                                            const targetQty = parseFloat(entry.latestTarget.quantity) || 0;
+                                            const targetDateStr = entry.latestTarget.entry_data ? entry.latestTarget.entry_data.substring(0, 10) : '';
                                             bodyHtml += `
-                                            <div class="gantt-pill pill-target" title="Target: ${formatNumber(entry.target)} ${escapeHtml(unitText)}">
-                                                <span>🎯 ${formatNumber(entry.target)}</span>
+                                            <div class="gantt-pill pill-target" title="Target: ${formatNumber(targetQty)} ${escapeHtml(unitText)} as of ${escapeHtml(targetDateStr)}">
+                                                <span>🎯 ${formatNumber(targetQty)}</span>
                                                 <small>${escapeHtml(unitText)}</small>
                                             </div>`;
                                         }
                                         if (entry.latestActual) {
                                             const actualQty = parseFloat(entry.latestActual.quantity) || 0;
+                                            const monthActualDateStr = entry.latestActual.entry_data ? entry.latestActual.entry_data.substring(0, 10) : '';
                                             bodyHtml += `
-                                            <div class="gantt-pill pill-actual" title="Latest Actual: ${formatNumber(actualQty)} ${escapeHtml(unitText)} as of ${escapeHtml(actualDateStr)}">
+                                            <div class="gantt-pill pill-actual" title="Actual: ${formatNumber(actualQty)} ${escapeHtml(unitText)} as of ${escapeHtml(monthActualDateStr)}">
                                                 <span>✅ ${formatNumber(actualQty)}</span>
                                                 <small>${escapeHtml(unitText)}</small>
                                             </div>`;
