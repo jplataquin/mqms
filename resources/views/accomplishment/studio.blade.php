@@ -19,8 +19,8 @@
             --border-color: #3e4042;
             --text-main: #e4e6eb;
             --text-muted: #b0b3b8;
-            --accent-target: #0d6efd;
-            --accent-actual: #198754;
+            --accent-target: #198754;
+            --accent-actual: #0d6efd;
             --accent-highlight: #ffc107;
         }
 
@@ -296,15 +296,15 @@
         }
 
         .pill-target {
-            background-color: rgba(13, 110, 253, 0.25);
+            background-color: rgba(25, 135, 84, 0.28);
             border: 1px solid var(--accent-target);
-            color: #9ec5fe;
+            color: #a3cfbb;
         }
 
         .pill-actual {
-            background-color: rgba(25, 135, 84, 0.28);
+            background-color: rgba(13, 110, 253, 0.25);
             border: 1px solid var(--accent-actual);
-            color: #a3cfbb;
+            color: #9ec5fe;
         }
 
         .gantt-progress-bar {
@@ -720,8 +720,8 @@
                                     </td>
                                     <td class="sticky-col-progress">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <span class="small fw-semibold text-success">${formatNumber(totalActual)}</span>
-                                            <span class="badge ${percentActual >= 100 ? 'bg-success' : 'bg-secondary'}" style="font-size: 10px;">${percentActual}%</span>
+                                            <span class="small fw-semibold text-primary">${formatNumber(totalActual)}</span>
+                                            <span class="badge ${percentActual >= 100 ? 'bg-primary' : 'bg-secondary'}" style="font-size: 10px;">${percentActual}%</span>
                                         </div>
                                         <div class="gantt-progress-bar">
                                             <div class="progress-actual" style="width: ${percentActual}%;"></div>
