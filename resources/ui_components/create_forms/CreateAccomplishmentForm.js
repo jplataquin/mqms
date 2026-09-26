@@ -6,6 +6,7 @@ class CreateAccomplishmentForm extends Component {
         return {
             component_id: '',
             type: 'ACTUAL',
+            entry_data: '',
             successCallback: () => {
                 document.location.reload(true);
             }
@@ -15,8 +16,8 @@ class CreateAccomplishmentForm extends Component {
     view() {
         const t = new Template();
 
-        // Get today's date in YYYY-MM-DD format
-        const today = new Date().toISOString().split('T')[0];
+        // Get initial date (provided entry_data or today's date in YYYY-MM-DD format)
+        const initialDate = this._model.entry_data || new Date().toISOString().split('T')[0];
 
         const btnClass = this._model.type === 'TARGET' ? 'btn btn-success me-3' : 'btn btn-primary me-3';
 
@@ -25,7 +26,7 @@ class CreateAccomplishmentForm extends Component {
                 t.div({class: 'col-lg-6'}, () => {
                     t.div({class: 'form-group'}, () => {
                         t.label({class: 'form-label fw-semibold'}, 'Entry Date *');
-                        this.el.entry_data = t.input({class: 'form-control', type: 'date', value: today, required: true});
+                        this.el.entry_data = t.input({class: 'form-control', type: 'date', value: initialDate, required: true});
                         this.el.entry_data_feedback = t.div({class: 'invalid-feedback d-none'}, 'Entry date is required.');
                     });
                 });

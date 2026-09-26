@@ -10,6 +10,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
+    <!-- MQMS Assets (Adarna, Drawer Modal, Bootstrap utilities) -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
     <style>
         :root {
             --bg-darker: #18191a;
@@ -55,7 +58,7 @@
             gap: 10px;
         }
 
-        /* Main Split Layout */
+        /* Main Workspace Layout (Full Width) */
         .studio-container {
             display: flex;
             flex: 1;
@@ -63,45 +66,13 @@
             position: relative;
         }
 
-        /* Left Panel - Gantt Table */
-        .studio-left {
-            width: 60%;
-            min-width: 420px;
-            max-width: 85%;
+        .studio-main {
+            width: 100%;
+            height: 100%;
             background-color: var(--bg-darker);
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            border-right: 1px solid var(--border-color);
-        }
-
-        /* Split Resizer */
-        .studio-resizer {
-            width: 6px;
-            background-color: var(--border-color);
-            cursor: col-resize;
-            transition: background-color 0.15s;
-            position: relative;
-            z-index: 20;
-            flex-shrink: 0;
-        }
-
-        .studio-resizer:hover, .studio-resizer.resizing {
-            background-color: #0d6efd;
-        }
-
-        .resizing-active iframe {
-            pointer-events: none !important;
-        }
-
-        /* Right Panel - Iframe Workspace */
-        .studio-right {
-            flex: 1;
-            background-color: var(--bg-dark);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            min-width: 320px;
         }
 
         /* Toolbar */
@@ -350,54 +321,48 @@
             height: 100%;
         }
 
-        /* Right Panel Elements */
-        .workspace-tabs {
-            height: 38px;
-            background-color: var(--bg-dark);
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 12px;
-            flex-shrink: 0;
+        /* Custom Context Menu */
+        .gantt-context-menu {
+            position: fixed;
+            z-index: 1050;
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            min-width: 190px;
+            padding: 6px 0;
+            display: none;
+            backdrop-filter: blur(8px);
         }
 
-        .tab-title {
-            font-size: 13px;
+        .gantt-context-menu-header {
+            padding: 5px 14px 6px 14px;
+            font-size: 11px;
             font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 4px;
+        }
+
+        .gantt-context-menu-item {
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-main);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            cursor: pointer;
+            transition: background-color 0.12s, color 0.12s;
+        }
+
+        .gantt-context-menu-item:hover {
+            background-color: var(--bg-hover);
             color: #fff;
         }
 
-        .iframe-container {
-            flex: 1;
-            position: relative;
-            background-color: var(--bg-darker);
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .empty-workspace {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            color: var(--text-muted);
-            text-align: center;
-            padding: 24px;
-        }
-
-        .empty-workspace i {
-            font-size: 48px;
-            margin-bottom: 12px;
-            color: #495057;
+        .gantt-context-menu-item i {
+            font-size: 15px;
         }
 
         /* Loading overlay */
@@ -447,11 +412,11 @@
         </div>
     </div>
 
-    <!-- Main Workspace Split -->
+    <!-- Main Workspace (Full Width) -->
     <div class="studio-container" id="studioContainer">
         
-        <!-- Left Panel: Table Gantt Chart -->
-        <div class="studio-left" id="leftPanel">
+        <!-- Full-Width Gantt Panel -->
+        <div class="studio-main" id="mainPanel">
             <!-- Toolbar -->
             <div class="gantt-toolbar">
                 <div class="search-box">
@@ -493,49 +458,48 @@
             </div>
         </div>
 
-        <!-- Resizer Bar -->
-        <div class="studio-resizer" id="resizer"></div>
+    </div>
 
-        <!-- Right Panel: Form and Display Iframe -->
-        <div class="studio-right" id="rightPanel">
-            <div class="workspace-tabs">
-                <div class="tab-title">
-                    <i class="bi bi-sliders text-info"></i>
-                    <span id="activeComponentName">Component Detail & Registry</span>
-                </div>
-                <div class="d-flex align-items-center gap-1">
-                    <button id="btnViewComponent" class="btn btn-sm btn-outline-secondary py-0 px-2" style="font-size: 12px; display: none;" title="Overview">
-                        <i class="bi bi-card-checklist me-1"></i> View
-                    </button>
-                    <button id="btnAddRecord" class="btn btn-sm btn-success py-0 px-2" style="font-size: 12px; display: none;" title="Add Record">
-                        <i class="bi bi-plus-lg me-1"></i> Add Entry
-                    </button>
-                    <button id="btnReloadFrame" class="btn btn-sm btn-outline-secondary py-0 px-2" style="font-size: 12px; display: none;" title="Reload Frame">
-                        <i class="bi bi-arrow-repeat"></i>
-                    </button>
-                    <button id="btnOpenTab" class="btn btn-sm btn-outline-secondary py-0 px-2" style="font-size: 12px; display: none;" title="Open in New Tab">
-                        <i class="bi bi-box-arrow-up-right"></i>
-                    </button>
-                </div>
+    <!-- Floating Context Menu -->
+    <div id="ganttContextMenu" class="gantt-context-menu">
+        <div class="gantt-context-menu-header text-truncate" id="contextMenuTitle">Component Actions</div>
+        <div class="gantt-context-menu-item text-primary" onclick="openAccomplishmentDrawer('ACTUAL')">
+            <i class="bi bi-check-circle-fill text-primary"></i>
+            <span>Add Actual</span>
+        </div>
+        <div class="gantt-context-menu-item text-success" onclick="openAccomplishmentDrawer('TARGET')">
+            <i class="bi bi-bullseye text-success"></i>
+            <span>Add Target</span>
+        </div>
+    </div>
+
+    <!-- Drawer Modal -->
+    <div class="drawer_modal_background"></div>
+    <div class="drawer_modal bg-dark">
+        <div class="drawer_modal_header pe-3 ps-3 d-flex justify-content-between align-items-stretch">
+            <div class="p-2">
+                <h5 class="drawer_modal_title"></h5>
             </div>
-
-            <div class="iframe-container">
-                <div class="empty-workspace" id="emptyWorkspace">
-                    <i class="bi bi-kanban"></i>
-                    <h5 class="fw-semibold">No Component Selected</h5>
-                    <p class="small text-muted mb-0">Select any component row on the left Gantt table to record or inspect accomplishments.</p>
-                </div>
-                <iframe id="studioFrame" name="studioFrame" style="display: none;"></iframe>
+            <div class="p-2">
+                <button type="button" onclick="window.util.drawerModal.close()" class="btn btn-outline-secondary">
+                    <i class="bi bi-x-lg"></i>
+                </button>
             </div>
         </div>
-
+        <div class="drawer_modal_body p-3">
+        </div>
     </div>
 
     <!-- Scripts -->
-    <script>
+    <script type="module">
+        import CreateAccomplishmentForm from '/ui_components/create_forms/CreateAccomplishmentForm.js';
+
         const projectId = {{ $project->id }};
         let projectData = null;
         let selectedComponentId = null;
+
+        // Context menu target state
+        let contextMenuTarget = { compId: null, compName: '', cellDate: '' };
 
         // Timeline state (months to show)
         let timelineMonthsCount = 8;
@@ -547,8 +511,6 @@
 
         // DOM elements
         const container = document.getElementById('studioContainer');
-        const leftPanel = document.getElementById('leftPanel');
-        const resizer = document.getElementById('resizer');
         const loadingOverlay = document.getElementById('loadingOverlay');
         const ganttHead = document.getElementById('ganttHead');
         const ganttBody = document.getElementById('ganttBody');
@@ -558,45 +520,13 @@
         const btnPrevWindow = document.getElementById('btnPrevWindow');
         const btnNextWindow = document.getElementById('btnNextWindow');
         const btnCurrentWindow = document.getElementById('btnCurrentWindow');
-
-        const studioFrame = document.getElementById('studioFrame');
-        const emptyWorkspace = document.getElementById('emptyWorkspace');
-        const activeComponentName = document.getElementById('activeComponentName');
-        const btnViewComponent = document.getElementById('btnViewComponent');
-        const btnAddRecord = document.getElementById('btnAddRecord');
-        const btnReloadFrame = document.getElementById('btnReloadFrame');
-        const btnOpenTab = document.getElementById('btnOpenTab');
+        const ganttContextMenu = document.getElementById('ganttContextMenu');
+        const contextMenuTitle = document.getElementById('contextMenuTitle');
 
         // Collapsed state tracking
         const collapsedSections = new Set();
         const collapsedContractItems = new Set();
         let allExpanded = true;
-
-        /* ================= Resizable Split Pane ================= */
-        let isResizing = false;
-
-        resizer.addEventListener('mousedown', (e) => {
-            isResizing = true;
-            document.body.classList.add('resizing-active');
-            resizer.classList.add('resizing');
-        });
-
-        document.addEventListener('mousemove', (e) => {
-            if (!isResizing) return;
-            const containerRect = container.getBoundingClientRect();
-            let newWidth = e.clientX - containerRect.left;
-            if (newWidth < 380) newWidth = 380;
-            if (newWidth > containerRect.width - 320) newWidth = containerRect.width - 320;
-            leftPanel.style.width = newWidth + 'px';
-        });
-
-        document.addEventListener('mouseup', () => {
-            if (isResizing) {
-                isResizing = false;
-                document.body.classList.remove('resizing-active');
-                resizer.classList.remove('resizing');
-            }
-        });
 
         /* ================= Timeline Calculation ================= */
         function getTimelineColumns() {
@@ -843,7 +773,7 @@
                                     const hasActual = !!(entry && entry.latestActual);
                                     const cellClass = currentViewMode === 'day' ? 'day-cell' : 'month-cell';
 
-                                    bodyHtml += `<td class="${cellClass}" data-month="${col.monthKey}">`;
+                                    bodyHtml += `<td class="${cellClass}" data-month="${col.monthKey}" data-comp-id="${comp.id}" data-comp-name="${escapeHtml(comp.name)}" data-cell-key="${col.key}" data-cell-label="${escapeHtml(col.label)}">`;
                                     if (hasTarget || hasActual) {
                                         // Target row (always on top)
                                         if (hasTarget) {
@@ -944,57 +874,71 @@
         };
 
         /* ================= Component Selection ================= */
-        window.selectComponent = function(compId, compName) {
+        window.selectComponent = function(compId) {
             selectedComponentId = compId;
-
-            // Highlight row
             document.querySelectorAll('.row-component').forEach(row => row.classList.remove('active'));
             const row = document.getElementById(`comp-row-${compId}`);
             if (row) row.classList.add('active');
-
-            // Update right workspace header
-            activeComponentName.innerText = compName;
-            btnViewComponent.style.display = 'inline-block';
-            btnAddRecord.style.display = 'inline-block';
-            btnReloadFrame.style.display = 'inline-block';
-            btnOpenTab.style.display = 'inline-block';
-
-            // Show iframe
-            emptyWorkspace.style.display = 'none';
-            studioFrame.style.display = 'block';
-            studioFrame.src = `/accomplishment/component/${compId}?studio=1`;
         };
 
-        // Right panel toolbar actions
-        btnViewComponent.onclick = () => {
-            if (selectedComponentId) {
-                studioFrame.src = `/accomplishment/component/${selectedComponentId}?studio=1`;
-            }
-        };
+        /* ================= Right-Click Context Menu & Drawer ================= */
+        document.getElementById('ganttTable').addEventListener('contextmenu', (e) => {
+            const cell = e.target.closest('.month-cell, .day-cell');
+            if (!cell || !cell.dataset.compId) return;
 
-        btnAddRecord.onclick = () => {
-            if (selectedComponentId) {
-                let currentType = 'ACTUAL';
-                try {
-                    const frameUrl = new URL(studioFrame.contentWindow.location.href);
-                    if (frameUrl.searchParams.get('type')) {
-                        currentType = frameUrl.searchParams.get('type');
-                    }
-                } catch(e) {}
-                studioFrame.src = `/accomplishment/component/${selectedComponentId}/create?studio=1&type=${currentType}`;
-            }
-        };
+            e.preventDefault();
+            contextMenuTarget.compId = cell.dataset.compId;
+            contextMenuTarget.compName = cell.dataset.compName;
+            contextMenuTarget.cellDate = cell.dataset.cellKey;
 
-        btnReloadFrame.onclick = () => {
-            if (selectedComponentId) {
-                studioFrame.contentWindow.location.reload();
-            }
-        };
+            contextMenuTitle.innerText = `${cell.dataset.compName} (${cell.dataset.cellLabel || cell.dataset.cellKey})`;
 
-        btnOpenTab.onclick = () => {
-            if (selectedComponentId) {
-                window.open(`/accomplishment/component/${selectedComponentId}`, '_blank');
+            // Position context menu
+            let x = e.clientX;
+            let y = e.clientY;
+            if (x + 210 > window.innerWidth) x = window.innerWidth - 220;
+            if (y + 130 > window.innerHeight) y = window.innerHeight - 140;
+
+            ganttContextMenu.style.left = `${x}px`;
+            ganttContextMenu.style.top = `${y}px`;
+            ganttContextMenu.style.display = 'block';
+        });
+
+        // Close context menu on outside click or escape
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#ganttContextMenu')) {
+                ganttContextMenu.style.display = 'none';
             }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                ganttContextMenu.style.display = 'none';
+            }
+        });
+
+        window.openAccomplishmentDrawer = function(type) {
+            ganttContextMenu.style.display = 'none';
+            if (!contextMenuTarget.compId) return;
+
+            let entryDate = '';
+            if (contextMenuTarget.cellDate) {
+                if (contextMenuTarget.cellDate.length === 10) {
+                    entryDate = contextMenuTarget.cellDate;
+                } else if (contextMenuTarget.cellDate.length === 7) {
+                    entryDate = `${contextMenuTarget.cellDate}-01`;
+                }
+            }
+
+            const title = `Add ${type === 'TARGET' ? 'Target' : 'Actual'} Accomplishment - ${contextMenuTarget.compName}`;
+            window.util.drawerModal.content(title, CreateAccomplishmentForm({
+                component_id: contextMenuTarget.compId,
+                type: type,
+                entry_data: entryDate,
+                successCallback: () => {
+                    loadProjectData();
+                }
+            })).open();
         };
 
         /* ================= Zoom In / Out ================= */
@@ -1083,14 +1027,11 @@
             });
         }
 
-        // Expose to window for iframe communication
+        // Expose to window for external communication
         window.refreshGanttChart = loadProjectData;
 
         btnRefresh.onclick = () => {
             loadProjectData();
-            if (selectedComponentId) {
-                studioFrame.contentWindow.location.reload();
-            }
         };
 
         /* ================= Utilities ================= */
