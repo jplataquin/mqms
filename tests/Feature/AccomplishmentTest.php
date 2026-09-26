@@ -482,6 +482,18 @@ class AccomplishmentTest extends TestCase
     }
 
     /** @test */
+    public function it_renders_gantt_chart_with_placeholder_pill_support_and_alignment()
+    {
+        $response = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/studio');
+        $response->assertStatus(200);
+        $response->assertSee('.pill-placeholder', false);
+        $response->assertSee('pill-placeholder-target', false);
+        $response->assertSee('pill-placeholder-actual', false);
+        $response->assertSee('pill-target', false);
+        $response->assertSee('pill-actual', false);
+    }
+
+    /** @test */
     public function it_can_activate_target_tab_via_query_param()
     {
         $response = $this->actingAs($this->user)->get('/accomplishment/component/' . $this->component->id . '?type=TARGET');

@@ -282,6 +282,8 @@
         /* Gantt Bars / Pills */
         .gantt-pill {
             font-size: 11px;
+            line-height: 1.3;
+            min-height: 21px;
             border-radius: 3px;
             padding: 2px 6px;
             margin-bottom: 2px;
@@ -293,6 +295,11 @@
             overflow: hidden;
             text-overflow: ellipsis;
             box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            box-sizing: border-box;
+        }
+
+        .gantt-pill:last-child {
+            margin-bottom: 0;
         }
 
         .pill-target {
@@ -305,6 +312,16 @@
             background-color: rgba(13, 110, 253, 0.25);
             border: 1px solid var(--accent-actual);
             color: #9ec5fe;
+        }
+
+        .pill-placeholder {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px dashed rgba(255, 255, 255, 0.22);
+            color: var(--text-muted);
+            box-shadow: none;
+            justify-content: center;
+            opacity: 0.7;
+            user-select: none;
         }
 
         .gantt-progress-bar {
@@ -746,9 +763,13 @@
                                 // Timeline Month Cells
                                 months.forEach(m => {
                                     const entry = monthlyAccomplishments[m.key];
+                                    const hasTarget = !!(entry && entry.latestTarget);
+                                    const hasActual = !!(entry && entry.latestActual);
+
                                     bodyHtml += `<td class="month-cell">`;
-                                    if (entry) {
-                                        if (entry.latestTarget) {
+                                    if (hasTarget || hasActual) {
+                                        // Target row (always on top)
+                                        if (hasTarget) {
                                             const targetQty = parseFloat(entry.latestTarget.quantity) || 0;
                                             const targetDateStr = entry.latestTarget.entry_data ? entry.latestTarget.entry_data.substring(0, 10) : '';
                                             bodyHtml += `
@@ -756,14 +777,26 @@
                                                 <span>🎯 ${formatNumber(targetQty)}</span>
                                                 <small>${escapeHtml(unitText)}</small>
                                             </div>`;
+                                        } else {
+                                            bodyHtml += `
+                                            <div class="gantt-pill pill-placeholder pill-placeholder-target" title="No Target">
+                                                <span>&mdash;</span>
+                                            </div>`;
                                         }
-                                        if (entry.latestActual) {
+
+                                        // Actual row (always on bottom)
+                                        if (hasActual) {
                                             const actualQty = parseFloat(entry.latestActual.quantity) || 0;
                                             const monthActualDateStr = entry.latestActual.entry_data ? entry.latestActual.entry_data.substring(0, 10) : '';
                                             bodyHtml += `
                                             <div class="gantt-pill pill-actual" title="Actual: ${formatNumber(actualQty)} ${escapeHtml(unitText)} as of ${escapeHtml(monthActualDateStr)}">
                                                 <span>✅ ${formatNumber(actualQty)}</span>
                                                 <small>${escapeHtml(unitText)}</small>
+                                            </div>`;
+                                        } else {
+                                            bodyHtml += `
+                                            <div class="gantt-pill pill-placeholder pill-placeholder-actual" title="No Actual">
+                                                <span>&mdash;</span>
                                             </div>`;
                                         }
                                     }
