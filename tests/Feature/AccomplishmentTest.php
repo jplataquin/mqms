@@ -491,6 +491,10 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('pill-placeholder-actual', false);
         $response->assertSee('pill-target', false);
         $response->assertSee('pill-actual', false);
+        $response->assertSee('zoomOut', false);
+        $response->assertSee('Back to Months', false);
+        $response->assertSee('day-header', false);
+        $response->assertSee('day-cell', false);
     }
 
     /** @test */

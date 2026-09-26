@@ -241,9 +241,22 @@
             text-align: center;
         }
 
+        .day-header {
+            min-width: 45px;
+            text-align: center;
+            font-size: 11px;
+            padding: 4px 2px !important;
+        }
+
         .month-cell {
             min-width: 140px;
             padding: 4px !important;
+            background-color: rgba(255, 255, 255, 0.01);
+        }
+
+        .day-cell {
+            min-width: 45px;
+            padding: 2px !important;
             background-color: rgba(255, 255, 255, 0.01);
         }
 
@@ -525,6 +538,10 @@
         let timelineMonthsCount = 8;
         let timelineStartOffset = -2; // e.g. 2 months in past, 6 months in future
 
+        // Zoom state tracking
+        let currentViewMode = 'month'; // 'month' or 'day'
+        let zoomedMonthKey = null;     // e.g. '2024-05'
+
         // DOM elements
         const container = document.getElementById('studioContainer');
         const leftPanel = document.getElementById('leftPanel');
@@ -579,7 +596,27 @@
         });
 
         /* ================= Timeline Calculation ================= */
-        function getTimelineMonths() {
+        function getTimelineColumns() {
+            if (currentViewMode === 'day' && zoomedMonthKey) {
+                const parts = zoomedMonthKey.split('-').map(Number);
+                const year = parts[0];
+                const month = parts[1];
+                const daysInMonth = new Date(year, month, 0).getDate();
+                const days = [];
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayStr = day < 10 ? '0' + day : '' + day;
+                    const monthStr = month < 10 ? '0' + month : '' + month;
+                    const key = `${year}-${monthStr}-${dayStr}`;
+                    days.push({
+                        key: key,
+                        label: `${day}`,
+                        fullLabel: `${year}-${monthStr}-${dayStr}`,
+                        monthKey: zoomedMonthKey
+                    });
+                }
+                return days;
+            }
+
             const months = [];
             const now = new Date();
             const startYear = now.getFullYear();
@@ -592,24 +629,45 @@
                 const monthStr = month < 10 ? '0' + month : '' + month;
                 const key = `${year}-${monthStr}`;
                 const label = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-                months.push({ key, label, year, month });
+                months.push({ key, label, year, month, monthKey: key });
             }
             return months;
         }
 
         /* ================= Render Gantt Table ================= */
         function renderGantt() {
-            const months = getTimelineMonths();
+            const columns = getTimelineColumns();
             const filter = searchInput.value.toLowerCase().trim();
 
             // Build Head
-            let headHtml = `<tr>
+            let headHtml = '';
+            if (currentViewMode === 'day') {
+                const parts = zoomedMonthKey.split('-').map(Number);
+                const monthDate = new Date(parts[0], parts[1] - 1, 1);
+                const monthTitle = monthDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+                headHtml += `<tr>
+                    <th colspan="3" class="text-start bg-dark">
+                        <button class="btn btn-sm btn-link text-decoration-none text-info p-0" onclick="zoomOut()" title="Zoom out to monthly view">
+                            <i class="bi bi-arrow-left"></i> Back to Months
+                        </button>
+                    </th>
+                    <th colspan="${columns.length}" class="text-center bg-dark text-info fw-bold">
+                        ${monthTitle} (Daily View)
+                    </th>
+                </tr>`;
+            }
+
+            headHtml += `<tr>
                 <th class="sticky-col-tree">WBS Work Item</th>
                 <th class="sticky-col-metric">Scope</th>
                 <th class="sticky-col-progress">Accomplished</th>`;
 
-            months.forEach(m => {
-                headHtml += `<th class="month-header">${m.label}</th>`;
+            columns.forEach(col => {
+                const isDay = currentViewMode === 'day';
+                const headerClass = isDay ? 'day-header' : 'month-header';
+                const headerTitle = isDay ? col.fullLabel : 'Double click to zoom into days';
+                headHtml += `<th class="${headerClass}" data-month="${col.monthKey}" style="cursor: pointer;" title="${headerTitle}">${col.label}</th>`;
             });
             headHtml += `</tr>`;
             ganttHead.innerHTML = headHtml;
@@ -617,7 +675,7 @@
             // Build Body
             let bodyHtml = '';
             if (!projectData || !projectData.sections || projectData.sections.length === 0) {
-                bodyHtml = `<tr><td colspan="${3 + months.length}" class="text-center py-4 text-muted">No sections or components found in this project.</td></tr>`;
+                bodyHtml = `<tr><td colspan="${3 + columns.length}" class="text-center py-4 text-muted">No sections or components found in this project.</td></tr>`;
                 ganttBody.innerHTML = bodyHtml;
                 return;
             }
@@ -638,8 +696,9 @@
                     <td class="sticky-col-metric text-muted">-</td>
                     <td class="sticky-col-progress text-muted">-</td>`;
 
-                months.forEach(() => {
-                    bodyHtml += `<td class="month-cell"></td>`;
+                columns.forEach(col => {
+                    const cellClass = currentViewMode === 'day' ? 'day-cell' : 'month-cell';
+                    bodyHtml += `<td class="${cellClass}" data-month="${col.monthKey}"></td>`;
                 });
                 bodyHtml += `</tr>`;
 
@@ -662,8 +721,9 @@
                             <td class="sticky-col-metric text-muted">-</td>
                             <td class="sticky-col-progress text-muted">-</td>`;
 
-                        months.forEach(() => {
-                            bodyHtml += `<td class="month-cell"></td>`;
+                        columns.forEach(col => {
+                            const cellClass = currentViewMode === 'day' ? 'day-cell' : 'month-cell';
+                            bodyHtml += `<td class="${cellClass}" data-month="${col.monthKey}"></td>`;
                         });
                         bodyHtml += `</tr>`;
 
@@ -681,7 +741,7 @@
                                 const unitText = comp.unit_text || '';
                                 
                                 let overallLatestActual = null;
-                                const monthlyAccomplishments = {};
+                                const timeKeyAccomplishments = {};
 
                                 if (comp.accomplishments) {
                                     comp.accomplishments.forEach(acc => {
@@ -698,36 +758,39 @@
                                             }
                                         }
 
-                                        // Track latest Target and latest Actual per month
+                                        // Track latest Target and latest Actual per month or day
                                         if (acc.entry_data) {
-                                            const monthKey = acc.entry_data.substring(0, 7); // YYYY-MM
-                                            if (!monthlyAccomplishments[monthKey]) {
-                                                monthlyAccomplishments[monthKey] = {
+                                            const timeKey = currentViewMode === 'month' 
+                                                ? acc.entry_data.substring(0, 7) 
+                                                : acc.entry_data.substring(0, 10);
+
+                                            if (!timeKeyAccomplishments[timeKey]) {
+                                                timeKeyAccomplishments[timeKey] = {
                                                     latestTarget: null,
                                                     latestActual: null
                                                 };
                                             }
 
-                                            const monthEntry = monthlyAccomplishments[monthKey];
+                                            const entry = timeKeyAccomplishments[timeKey];
 
                                             if (acc.type === 'TARGET') {
-                                                if (!monthEntry.latestTarget) {
-                                                    monthEntry.latestTarget = acc;
+                                                if (!entry.latestTarget) {
+                                                    entry.latestTarget = acc;
                                                 } else {
                                                     const dateCurr = new Date(acc.entry_data || acc.created_at || 0);
-                                                    const dateLatest = new Date(monthEntry.latestTarget.entry_data || monthEntry.latestTarget.created_at || 0);
-                                                    if (dateCurr > dateLatest || (dateCurr.getTime() === dateLatest.getTime() && (acc.id || 0) > (monthEntry.latestTarget.id || 0))) {
-                                                        monthEntry.latestTarget = acc;
+                                                    const dateLatest = new Date(entry.latestTarget.entry_data || entry.latestTarget.created_at || 0);
+                                                    if (dateCurr > dateLatest || (dateCurr.getTime() === dateLatest.getTime() && (acc.id || 0) > (entry.latestTarget.id || 0))) {
+                                                        entry.latestTarget = acc;
                                                     }
                                                 }
                                             } else if (acc.type === 'ACTUAL') {
-                                                if (!monthEntry.latestActual) {
-                                                    monthEntry.latestActual = acc;
+                                                if (!entry.latestActual) {
+                                                    entry.latestActual = acc;
                                                 } else {
                                                     const dateCurr = new Date(acc.entry_data || acc.created_at || 0);
-                                                    const dateLatest = new Date(monthEntry.latestActual.entry_data || monthEntry.latestActual.created_at || 0);
-                                                    if (dateCurr > dateLatest || (dateCurr.getTime() === dateLatest.getTime() && (acc.id || 0) > (monthEntry.latestActual.id || 0))) {
-                                                        monthEntry.latestActual = acc;
+                                                    const dateLatest = new Date(entry.latestActual.entry_data || entry.latestActual.created_at || 0);
+                                                    if (dateCurr > dateLatest || (dateCurr.getTime() === dateLatest.getTime() && (acc.id || 0) > (entry.latestActual.id || 0))) {
+                                                        entry.latestActual = acc;
                                                     }
                                                 }
                                             }
@@ -760,13 +823,14 @@
                                         ${actualDateStr ? `<div class="text-truncate" style="font-size: 9px; color: var(--text-muted); line-height: 1.2; margin-top: 2px;" title="As of ${escapeHtml(actualDateStr)}">as of ${escapeHtml(actualDateStr)}</div>` : ''}
                                     </td>`;
 
-                                // Timeline Month Cells
-                                months.forEach(m => {
-                                    const entry = monthlyAccomplishments[m.key];
+                                // Timeline Columns Cells (Month or Day)
+                                columns.forEach(col => {
+                                    const entry = timeKeyAccomplishments[col.key];
                                     const hasTarget = !!(entry && entry.latestTarget);
                                     const hasActual = !!(entry && entry.latestActual);
+                                    const cellClass = currentViewMode === 'day' ? 'day-cell' : 'month-cell';
 
-                                    bodyHtml += `<td class="month-cell">`;
+                                    bodyHtml += `<td class="${cellClass}" data-month="${col.monthKey}">`;
                                     if (hasTarget || hasActual) {
                                         // Target row (always on top)
                                         if (hasTarget) {
@@ -907,19 +971,59 @@
             }
         };
 
+        /* ================= Zoom In / Out ================= */
+        window.zoomOut = function() {
+            currentViewMode = 'month';
+            zoomedMonthKey = null;
+            renderGantt();
+        };
+
+        // Double-click event to zoom into a specific month
+        document.getElementById('ganttTable').addEventListener('dblclick', (e) => {
+            const cell = e.target.closest('.month-cell, .month-header');
+            if (cell && cell.dataset.month && currentViewMode === 'month') {
+                zoomedMonthKey = cell.dataset.month;
+                currentViewMode = 'day';
+                renderGantt();
+            }
+        });
+
         /* ================= Timeline Navigation ================= */
         btnPrevWindow.onclick = () => {
-            timelineStartOffset -= 3;
+            if (currentViewMode === 'day' && zoomedMonthKey) {
+                const parts = zoomedMonthKey.split('-').map(Number);
+                const prevDate = new Date(parts[0], parts[1] - 2, 1);
+                const pYear = prevDate.getFullYear();
+                const pMonth = prevDate.getMonth() + 1;
+                zoomedMonthKey = `${pYear}-${pMonth < 10 ? '0' + pMonth : pMonth}`;
+            } else {
+                timelineStartOffset -= 3;
+            }
             renderGantt();
         };
 
         btnNextWindow.onclick = () => {
-            timelineStartOffset += 3;
+            if (currentViewMode === 'day' && zoomedMonthKey) {
+                const parts = zoomedMonthKey.split('-').map(Number);
+                const nextDate = new Date(parts[0], parts[1], 1);
+                const nYear = nextDate.getFullYear();
+                const nMonth = nextDate.getMonth() + 1;
+                zoomedMonthKey = `${nYear}-${nMonth < 10 ? '0' + nMonth : nMonth}`;
+            } else {
+                timelineStartOffset += 3;
+            }
             renderGantt();
         };
 
         btnCurrentWindow.onclick = () => {
-            timelineStartOffset = -2;
+            if (currentViewMode === 'day') {
+                const now = new Date();
+                const cYear = now.getFullYear();
+                const cMonth = now.getMonth() + 1;
+                zoomedMonthKey = `${cYear}-${cMonth < 10 ? '0' + cMonth : cMonth}`;
+            } else {
+                timelineStartOffset = -2;
+            }
             renderGantt();
         };
 
