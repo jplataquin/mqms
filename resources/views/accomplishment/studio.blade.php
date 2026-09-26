@@ -302,13 +302,20 @@
             background-color: #2c3035 !important;
         }
         .row-component.active td {
-            background-color: rgba(13, 110, 253, 0.18) !important;
-            border-color: #0d6efd !important;
+            background-color: rgba(255, 193, 7, 0.16) !important;
+            border-top: 1px solid #ffc107 !important;
+            border-bottom: 1px solid #ffc107 !important;
         }
         .row-component.active td.sticky-col-tree,
         .row-component.active td.sticky-col-metric,
         .row-component.active td.sticky-col-progress {
-            background-color: #172846 !important; /* Fully solid dark navy blue for active sticky columns */
+            background-color: #383015 !important; /* Fully solid dark amber for active sticky columns */
+            border-top: 1px solid #ffc107 !important;
+            border-bottom: 1px solid #ffc107 !important;
+        }
+        .row-component.active td.sticky-col-tree span {
+            color: #ffe082 !important;
+            font-weight: 600;
         }
 
         /* Gantt Bars / Pills */
