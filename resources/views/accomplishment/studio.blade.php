@@ -473,7 +473,6 @@
                 </div>
 
                 <div class="d-flex align-items-center gap-2">
-                    <span id="zoomedMonthBadge" class="badge bg-dark border border-info text-info py-1 px-3 fw-bold" style="font-size: 12px; display: none;"></span>
                     <button id="btnZoomOut" class="btn btn-sm btn-primary py-1 px-2 fw-bold text-white shadow-sm" style="font-size: 11px; display: none;" onclick="zoomOut()">
                         <i class="bi bi-arrow-left-circle-fill me-1"></i> Back to Months
                     </button>
@@ -629,9 +628,8 @@
                 currentMonthTitle = monthDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
             }
 
-            // Update Toolbar Zoom Out Button and Zoomed Month Badge
+            // Update Toolbar Zoom Out Button
             const btnZoomOut = document.getElementById('btnZoomOut');
-            const zoomedMonthBadge = document.getElementById('zoomedMonthBadge');
 
             if (btnZoomOut) {
                 if (currentViewMode === 'day' && zoomedMonthKey) {
@@ -640,15 +638,6 @@
                     btnZoomOut.style.display = 'inline-flex';
                 } else {
                     btnZoomOut.style.display = 'none';
-                }
-            }
-
-            if (zoomedMonthBadge) {
-                if (currentViewMode === 'day' && currentMonthTitle) {
-                    zoomedMonthBadge.innerHTML = `<i class="bi bi-calendar-check text-info me-1"></i> ${escapeHtml(currentMonthTitle)}`;
-                    zoomedMonthBadge.style.display = 'inline-flex';
-                } else {
-                    zoomedMonthBadge.style.display = 'none';
                 }
             }
 
