@@ -486,12 +486,6 @@
                     <button id="btnToggleAll" class="btn btn-sm btn-outline-secondary py-1 px-2" style="font-size: 11px;">
                         <i class="bi bi-arrows-expand me-1"></i> Expand All
                     </button>
-                    <div class="legend-badge pill-target">
-                        <i class="bi bi-bullseye"></i> Target
-                    </div>
-                    <div class="legend-badge pill-actual">
-                        <i class="bi bi-check-circle-fill"></i> Actual
-                    </div>
                 </div>
             </div>
 
