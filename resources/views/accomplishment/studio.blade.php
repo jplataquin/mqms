@@ -219,6 +219,23 @@
             padding: 4px 2px !important;
         }
 
+        .zoomed-month-header {
+            background-color: #1a1d20 !important;
+            color: #0dcaf0 !important;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-align: center;
+            padding: 6px 12px !important;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .gantt-table thead tr.day-sub-row th {
+            top: 33px !important;
+            font-size: 11px;
+            padding: 4px 2px !important;
+        }
+
         .month-cell {
             min-width: 140px;
             padding: 4px !important;
@@ -425,6 +442,7 @@
                 </div>
 
                 <div class="d-flex align-items-center gap-2">
+                    <span id="zoomedMonthBadge" class="badge bg-dark border border-info text-info py-1 px-3 fw-bold" style="font-size: 12px; display: none;"></span>
                     <button id="btnZoomOut" class="btn btn-sm btn-primary py-1 px-2 fw-bold text-white shadow-sm" style="font-size: 11px; display: none;" onclick="zoomOut()">
                         <i class="bi bi-arrow-left-circle-fill me-1"></i> Back to Months
                     </button>
@@ -572,14 +590,21 @@
             const columns = getTimelineColumns();
             const filter = searchInput.value.toLowerCase().trim();
 
-            // Update Toolbar Zoom Out Button (Placed right before Expand All)
+            // Extract formatted current month title if in day view
+            let currentMonthTitle = '';
+            if (currentViewMode === 'day' && zoomedMonthKey) {
+                const parts = zoomedMonthKey.split('-').map(Number);
+                const monthDate = new Date(parts[0], parts[1] - 1, 1);
+                currentMonthTitle = monthDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+            }
+
+            // Update Toolbar Zoom Out Button and Zoomed Month Badge
             const btnZoomOut = document.getElementById('btnZoomOut');
+            const zoomedMonthBadge = document.getElementById('zoomedMonthBadge');
+
             if (btnZoomOut) {
                 if (currentViewMode === 'day' && zoomedMonthKey) {
-                    const parts = zoomedMonthKey.split('-').map(Number);
-                    const monthDate = new Date(parts[0], parts[1] - 1, 1);
-                    const monthTitle = monthDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-                    btnZoomOut.innerHTML = `<i class="bi bi-arrow-left-circle-fill me-1"></i> Back to Months (${escapeHtml(monthTitle)})`;
+                    btnZoomOut.innerHTML = `<i class="bi bi-arrow-left-circle-fill me-1"></i> Back to Months`;
                     btnZoomOut.title = 'Click to zoom back out to rolling monthly view';
                     btnZoomOut.style.display = 'inline-flex';
                 } else {
@@ -587,32 +612,48 @@
                 }
             }
 
-            // Build Head
-            let headHtml = `<tr>
-                <th class="sticky-col-tree">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span>WBS Work Item</span>
-                        ${currentViewMode === 'day' ? `
-                        <button class="btn btn-sm btn-info py-0 px-2" style="font-size: 11px;" onclick="zoomOut()" title="Zoom out to monthly view">
-                            <i class="bi bi-arrow-left"></i> Months
-                        </button>` : ''}
-                    </div>
-                </th>
-                <th class="sticky-col-metric">Scope</th>
-                <th class="sticky-col-progress">Accomplished</th>`;
+            if (zoomedMonthBadge) {
+                if (currentViewMode === 'day' && currentMonthTitle) {
+                    zoomedMonthBadge.innerHTML = `<i class="bi bi-calendar-check text-info me-1"></i> ${escapeHtml(currentMonthTitle)}`;
+                    zoomedMonthBadge.style.display = 'inline-flex';
+                } else {
+                    zoomedMonthBadge.style.display = 'none';
+                }
+            }
 
-            columns.forEach(col => {
-                const isDay = currentViewMode === 'day';
-                const headerClass = isDay ? 'day-header' : 'month-header';
-                const headerTitle = isDay ? col.fullLabel : 'Click zoom icon or double click to view days';
-                headHtml += `<th class="${headerClass}" data-month="${col.monthKey}" style="cursor: pointer;" title="${headerTitle}">
-                    <div class="d-flex align-items-center justify-content-center gap-1">
-                        <span>${col.label}</span>
-                        ${!isDay ? `<i class="bi bi-zoom-in text-info" style="font-size: 11px; opacity: 0.85;" onclick="event.stopPropagation(); zoomIn('${col.monthKey}')" title="Zoom into ${col.label}"></i>` : ''}
-                    </div>
-                </th>`;
-            });
-            headHtml += `</tr>`;
+            // Build Head
+            let headHtml = '';
+            if (currentViewMode === 'day') {
+                // Multi-tier header: Month banner spanning all day columns
+                headHtml += `<tr>
+                    <th rowspan="2" class="sticky-col-tree" style="vertical-align: middle;">WBS Work Item</th>
+                    <th rowspan="2" class="sticky-col-metric" style="vertical-align: middle;">Scope</th>
+                    <th rowspan="2" class="sticky-col-progress" style="vertical-align: middle;">Accomplished</th>
+                    <th colspan="${columns.length}" class="zoomed-month-header">
+                        <i class="bi bi-calendar3 me-1"></i> ${escapeHtml(currentMonthTitle)}
+                    </th>
+                </tr>
+                <tr class="day-sub-row">`;
+                columns.forEach(col => {
+                    headHtml += `<th class="day-header" data-month="${col.monthKey}" style="cursor: pointer;" title="${col.fullLabel}">${col.label}</th>`;
+                });
+                headHtml += `</tr>`;
+            } else {
+                headHtml += `<tr>
+                    <th class="sticky-col-tree">WBS Work Item</th>
+                    <th class="sticky-col-metric">Scope</th>
+                    <th class="sticky-col-progress">Accomplished</th>`;
+
+                columns.forEach(col => {
+                    headHtml += `<th class="month-header" data-month="${col.monthKey}" style="cursor: pointer;" title="Click zoom icon or double click to view days">
+                        <div class="d-flex align-items-center justify-content-center gap-1">
+                            <span>${col.label}</span>
+                            <i class="bi bi-zoom-in text-info" style="font-size: 11px; opacity: 0.85;" onclick="event.stopPropagation(); zoomIn('${col.monthKey}')" title="Zoom into ${col.label}"></i>
+                        </div>
+                    </th>`;
+                });
+                headHtml += `</tr>`;
+            }
             ganttHead.innerHTML = headHtml;
 
             // Build Body
