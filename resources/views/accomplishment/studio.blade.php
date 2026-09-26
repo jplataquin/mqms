@@ -161,48 +161,54 @@
             background-color: var(--bg-darker);
         }
 
-        /* Sticky Left Column */
+        /* Sticky Left Columns - 100% Solid & Opaque */
         .sticky-col-tree {
             position: sticky;
             left: 0;
-            background-color: var(--bg-dark) !important;
+            background-color: #1e2125 !important;
             z-index: 4;
             min-width: 280px;
             max-width: 340px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            opacity: 1 !important;
         }
 
         .gantt-table th.sticky-col-tree {
             z-index: 6 !important;
+            background-color: #1a1d20 !important;
         }
 
         .sticky-col-metric {
             position: sticky;
             left: 280px;
-            background-color: var(--bg-dark) !important;
+            background-color: #1e2125 !important;
             z-index: 4;
             min-width: 80px;
             text-align: right;
             white-space: nowrap;
+            opacity: 1 !important;
         }
 
         .gantt-table th.sticky-col-metric {
             z-index: 6 !important;
+            background-color: #1a1d20 !important;
         }
 
         .sticky-col-progress {
             position: sticky;
             left: 360px;
-            background-color: var(--bg-dark) !important;
+            background-color: #1e2125 !important;
             z-index: 4;
             min-width: 90px;
             border-right: 2px solid var(--border-color) !important;
+            opacity: 1 !important;
         }
 
         .gantt-table th.sticky-col-progress {
             z-index: 6 !important;
+            background-color: #1a1d20 !important;
             border-right: 2px solid var(--border-color) !important;
         }
 
@@ -258,6 +264,11 @@
             background-color: #212529 !important;
             border-top: 1px solid #495057;
         }
+        .row-section td.sticky-col-tree,
+        .row-section td.sticky-col-metric,
+        .row-section td.sticky-col-progress {
+            background-color: #212529 !important;
+        }
 
         .row-contract-item {
             background-color: #1a1e21 !important;
@@ -267,17 +278,37 @@
         .row-contract-item td {
             background-color: #1a1e21 !important;
         }
+        .row-contract-item td.sticky-col-tree,
+        .row-contract-item td.sticky-col-metric,
+        .row-contract-item td.sticky-col-progress {
+            background-color: #1a1e21 !important;
+        }
 
         .row-component {
             cursor: pointer;
             transition: background-color 0.1s;
         }
+        .row-component td.sticky-col-tree,
+        .row-component td.sticky-col-metric,
+        .row-component td.sticky-col-progress {
+            background-color: #1e2125 !important;
+        }
         .row-component:hover td {
             background-color: var(--bg-hover) !important;
+        }
+        .row-component:hover td.sticky-col-tree,
+        .row-component:hover td.sticky-col-metric,
+        .row-component:hover td.sticky-col-progress {
+            background-color: #2c3035 !important;
         }
         .row-component.active td {
             background-color: rgba(13, 110, 253, 0.18) !important;
             border-color: #0d6efd !important;
+        }
+        .row-component.active td.sticky-col-tree,
+        .row-component.active td.sticky-col-metric,
+        .row-component.active td.sticky-col-progress {
+            background-color: #172846 !important; /* Fully solid dark navy blue for active sticky columns */
         }
 
         /* Gantt Bars / Pills */
