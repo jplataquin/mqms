@@ -250,6 +250,9 @@
             component_id: '{{$component->id}}',
             type: currentType,
             successCallback: () => {
+                if (window.parent && typeof window.parent.refreshGanttChart === 'function') {
+                    window.parent.refreshGanttChart();
+                }
                 const url = new URL(window.location.href);
                 url.searchParams.set('type', currentType);
                 window.location.href = url.toString();

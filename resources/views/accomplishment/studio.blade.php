@@ -953,6 +953,9 @@
             });
         }
 
+        // Expose to window for iframe communication
+        window.refreshGanttChart = loadProjectData;
+
         btnRefresh.onclick = () => {
             loadProjectData();
             if (selectedComponentId) {
