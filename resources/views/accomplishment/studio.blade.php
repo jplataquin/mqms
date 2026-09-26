@@ -924,9 +924,11 @@
             let entryDate = '';
             if (contextMenuTarget.cellDate) {
                 if (contextMenuTarget.cellDate.length === 10) {
+                    // Day view: exact day selected (YYYY-MM-DD)
                     entryDate = contextMenuTarget.cellDate;
                 } else if (contextMenuTarget.cellDate.length === 7) {
-                    entryDate = `${contextMenuTarget.cellDate}-01`;
+                    // Month view: default to the 15th of the month (YYYY-MM-15)
+                    entryDate = `${contextMenuTarget.cellDate}-15`;
                 }
             }
 
