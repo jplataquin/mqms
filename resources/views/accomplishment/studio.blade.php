@@ -460,6 +460,9 @@
                 </div>
 
                 <div class="d-flex align-items-center gap-2">
+                    <button id="btnZoomOut" class="btn btn-sm btn-primary py-1 px-2 fw-bold text-white shadow-sm" style="font-size: 11px; display: none;" onclick="zoomOut()">
+                        <i class="bi bi-arrow-left-circle-fill me-1"></i> Back to Months
+                    </button>
                     <button id="btnToggleAll" class="btn btn-sm btn-outline-secondary py-1 px-2" style="font-size: 11px;">
                         <i class="bi bi-arrows-expand me-1"></i> Expand All
                     </button>
@@ -639,35 +642,45 @@
             const columns = getTimelineColumns();
             const filter = searchInput.value.toLowerCase().trim();
 
-            // Build Head
-            let headHtml = '';
-            if (currentViewMode === 'day') {
-                const parts = zoomedMonthKey.split('-').map(Number);
-                const monthDate = new Date(parts[0], parts[1] - 1, 1);
-                const monthTitle = monthDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-
-                headHtml += `<tr>
-                    <th colspan="3" class="text-start bg-dark">
-                        <button class="btn btn-sm btn-link text-decoration-none text-info p-0" onclick="zoomOut()" title="Zoom out to monthly view">
-                            <i class="bi bi-arrow-left"></i> Back to Months
-                        </button>
-                    </th>
-                    <th colspan="${columns.length}" class="text-center bg-dark text-info fw-bold">
-                        ${monthTitle} (Daily View)
-                    </th>
-                </tr>`;
+            // Update Toolbar Zoom Out Button (Placed right before Expand All)
+            const btnZoomOut = document.getElementById('btnZoomOut');
+            if (btnZoomOut) {
+                if (currentViewMode === 'day' && zoomedMonthKey) {
+                    const parts = zoomedMonthKey.split('-').map(Number);
+                    const monthDate = new Date(parts[0], parts[1] - 1, 1);
+                    const monthTitle = monthDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+                    btnZoomOut.innerHTML = `<i class="bi bi-arrow-left-circle-fill me-1"></i> Back to Months (${escapeHtml(monthTitle)})`;
+                    btnZoomOut.title = 'Click to zoom back out to rolling monthly view';
+                    btnZoomOut.style.display = 'inline-flex';
+                } else {
+                    btnZoomOut.style.display = 'none';
+                }
             }
 
-            headHtml += `<tr>
-                <th class="sticky-col-tree">WBS Work Item</th>
+            // Build Head
+            let headHtml = `<tr>
+                <th class="sticky-col-tree">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>WBS Work Item</span>
+                        ${currentViewMode === 'day' ? `
+                        <button class="btn btn-sm btn-info py-0 px-2" style="font-size: 11px;" onclick="zoomOut()" title="Zoom out to monthly view">
+                            <i class="bi bi-arrow-left"></i> Months
+                        </button>` : ''}
+                    </div>
+                </th>
                 <th class="sticky-col-metric">Scope</th>
                 <th class="sticky-col-progress">Accomplished</th>`;
 
             columns.forEach(col => {
                 const isDay = currentViewMode === 'day';
                 const headerClass = isDay ? 'day-header' : 'month-header';
-                const headerTitle = isDay ? col.fullLabel : 'Double click to zoom into days';
-                headHtml += `<th class="${headerClass}" data-month="${col.monthKey}" style="cursor: pointer;" title="${headerTitle}">${col.label}</th>`;
+                const headerTitle = isDay ? col.fullLabel : 'Click zoom icon or double click to view days';
+                headHtml += `<th class="${headerClass}" data-month="${col.monthKey}" style="cursor: pointer;" title="${headerTitle}">
+                    <div class="d-flex align-items-center justify-content-center gap-1">
+                        <span>${col.label}</span>
+                        ${!isDay ? `<i class="bi bi-zoom-in text-info" style="font-size: 11px; opacity: 0.85;" onclick="event.stopPropagation(); zoomIn('${col.monthKey}')" title="Zoom into ${col.label}"></i>` : ''}
+                    </div>
+                </th>`;
             });
             headHtml += `</tr>`;
             ganttHead.innerHTML = headHtml;
@@ -687,7 +700,7 @@
 
                 // Section row
                 bodyHtml += `
-                <tr class="row-section" data-section-id="${section.id}" onclick="toggleSection(${section.id})">
+                <tr class="row-section" data-section-id="${section.id}" onclick="toggleSection(${section.id}, event)">
                     <td class="sticky-col-tree">
                         <i class="bi ${chevronIcon} me-1 text-muted" id="sec-chevron-${section.id}"></i>
                         <i class="bi bi-folder2 text-warning me-1"></i>
@@ -712,7 +725,7 @@
                         const displayCi = isSectionCollapsed ? 'display: none;' : '';
 
                         bodyHtml += `
-                        <tr class="row-contract-item" style="${displayCi}" data-section-parent="${section.id}" data-ci-id="${ci.id}" onclick="toggleContractItem(${ci.id})">
+                        <tr class="row-contract-item" style="${displayCi}" data-section-parent="${section.id}" data-ci-id="${ci.id}" onclick="toggleContractItem(${ci.id}, event)">
                             <td class="sticky-col-tree" style="padding-left: 28px;">
                                 <i class="bi ${ciChevronIcon} me-1 text-muted" id="ci-chevron-${ci.id}"></i>
                                 <i class="bi bi-diagram-3 text-info me-1"></i>
@@ -878,7 +891,10 @@
         }
 
         /* ================= Expand / Collapse ================= */
-        window.toggleSection = function(sectionId) {
+        window.toggleSection = function(sectionId, e) {
+            if (e && e.target && e.target.closest('.month-cell, .day-cell')) {
+                return;
+            }
             if (collapsedSections.has(sectionId)) {
                 collapsedSections.delete(sectionId);
             } else {
@@ -887,12 +903,22 @@
             renderGantt();
         };
 
-        window.toggleContractItem = function(ciId) {
+        window.toggleContractItem = function(ciId, e) {
+            if (e && e.target && e.target.closest('.month-cell, .day-cell')) {
+                return;
+            }
             if (collapsedContractItems.has(ciId)) {
                 collapsedContractItems.delete(ciId);
             } else {
                 collapsedContractItems.add(ciId);
             }
+            renderGantt();
+        };
+
+        /* ================= Zoom In / Out ================= */
+        window.zoomIn = function(monthKey) {
+            zoomedMonthKey = monthKey;
+            currentViewMode = 'day';
             renderGantt();
         };
 
