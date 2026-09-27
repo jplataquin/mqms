@@ -649,6 +649,29 @@ class AccomplishmentTest extends TestCase
         $this->assertEquals($this->component->id, $data[0]['component_id']);
     }
 
+    /** @test */
+    public function it_renders_print_report_button_on_project_sections_page()
+    {
+        $response = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id);
+        $response->assertStatus(200);
+        $response->assertSee('/accomplishment/project/' . $this->project->id . '/print');
+        $response->assertSee('Print Report');
+    }
+
+    /** @test */
+    public function it_renders_printable_project_report()
+    {
+        $response = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/print');
+        $response->assertStatus(200);
+        $response->assertSee('Project Breakdown Report');
+        $response->assertSee($this->project->name);
+        $response->assertSee('SECTION: ' . $this->section->name);
+        $response->assertSee($this->contractItem->item_code);
+        $response->assertSee($this->contractItem->description);
+        $response->assertSee($this->component->name);
+        $response->assertSee('window.print()', false);
+    }
+
     protected function grantAccessCode($user, $codeString)
     {
         // 1. Create or find the AccessCode

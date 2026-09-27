@@ -38,6 +38,9 @@
 
     <div class="row mb-3">
         <div class="col-12 text-end">
+            <a href="/accomplishment/project/{{$project->id}}/print" target="_blank" class="btn btn-secondary me-2">
+                <i class="bi bi-printer me-1"></i> Print Report
+            </a>
             <a href="/accomplishment/project/{{$project->id}}/studio" class="btn btn-primary">
                 <i class="bi bi-layout-split me-1"></i> Studio Mode
             </a>
