@@ -948,9 +948,9 @@
                                             const targetDataEncoded = encodeURIComponent(JSON.stringify(targetData));
                                             bodyHtml += `
                                             <div class="gantt-pill pill-target" style="cursor: pointer;" onclick="viewAccomplishment('${targetDataEncoded}')" title="Target: ${formatNumber(targetQty)} ${escapeHtml(unitText)} as of ${escapeHtml(targetDateStr)}">
-                                                <span>🎯 ${formatNumber(targetQty)}</span>
+                                                <span>🎯 ${formatNumber(targetQty)}&nbsp;</span>
                                                 <div class="d-flex align-items-center gap-1">
-                                                    <small>${escapeHtml(unitText)}</small>
+                                                    <small class="ms-1">${escapeHtml(unitText)}</small>
                                                     <i class="bi bi-x-circle text-danger ms-1 delete-pill-btn" onclick="event.stopPropagation(); deleteAccomplishment(${entry.latestTarget.id})" title="Delete Target"></i>
                                                 </div>
                                             </div>`;
@@ -969,9 +969,9 @@
                                             const actualDataEncoded = encodeURIComponent(JSON.stringify(actualData));
                                             bodyHtml += `
                                             <div class="gantt-pill pill-actual" style="cursor: pointer;" onclick="viewAccomplishment('${actualDataEncoded}')" title="Actual: ${formatNumber(actualQty)} ${escapeHtml(unitText)} as of ${escapeHtml(monthActualDateStr)}">
-                                                <span>✅ ${formatNumber(actualQty)}</span>
+                                                <span>✅ ${formatNumber(actualQty)}&nbsp;</span>
                                                 <div class="d-flex align-items-center gap-1">
-                                                    <small>${escapeHtml(unitText)}</small>
+                                                    <small class="ms-1">${escapeHtml(unitText)}</small>
                                                     <i class="bi bi-x-circle text-danger ms-1 delete-pill-btn" onclick="event.stopPropagation(); deleteAccomplishment(${entry.latestActual.id})" title="Delete Actual"></i>
                                                 </div>
                                             </div>`;
