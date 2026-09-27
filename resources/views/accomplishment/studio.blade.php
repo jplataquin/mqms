@@ -848,12 +848,17 @@
                                 const unitText = comp.unit_text || '';
                                 
                                 let overallLatestActual = null;
+                                let firstActual = null;
                                 const timeKeyAccomplishments = {};
 
                                 if (comp.accomplishments) {
                                     comp.accomplishments.forEach(acc => {
-                                        // Track overall latest actual
+                                        // Track overall latest and first actual
                                         if (acc.type === 'ACTUAL') {
+                                            if (!firstActual || new Date(acc.entry_data || acc.created_at || 0) < new Date(firstActual.entry_data || firstActual.created_at || 0)) {
+                                                firstActual = acc;
+                                            }
+
                                             if (!overallLatestActual) {
                                                 overallLatestActual = acc;
                                             } else {
@@ -909,6 +914,35 @@
                                 const percentActual = totalScope > 0 ? Math.min(100, Math.round((totalActual / totalScope) * 100)) : 0;
                                 const actualDateStr = overallLatestActual && overallLatestActual.entry_data ? overallLatestActual.entry_data.substring(0, 10) : '';
 
+                                let compVelocity = 0;
+                                let compEtaDateStr = null;
+                                let daysElapsed = 0;
+                                if (firstActual && overallLatestActual) {
+                                    const d1Str = (firstActual.entry_data || firstActual.created_at || '').substring(0, 10);
+                                    const d2Str = (overallLatestActual.entry_data || overallLatestActual.created_at || '').substring(0, 10);
+                                    if (d1Str && d2Str) {
+                                        const d1 = new Date(d1Str);
+                                        const d2 = new Date(d2Str);
+                                        daysElapsed = Math.max(1, Math.ceil((d2 - d1) / (1000 * 60 * 60 * 24)) + 1);
+                                        compVelocity = totalActual / daysElapsed;
+                                        if (compVelocity > 0 && totalActual < totalScope) {
+                                            const remainingQty = totalScope - totalActual;
+                                            const remainingDays = Math.ceil(remainingQty / compVelocity);
+                                            const etaDate = new Date(d2);
+                                            etaDate.setDate(etaDate.getDate() + remainingDays);
+                                            compEtaDateStr = etaDate.toISOString().substring(0, 10);
+                                        }
+                                    }
+                                }
+                                const compStats = { 
+                                    velocity: compVelocity, 
+                                    eta: compEtaDateStr, 
+                                    days: daysElapsed,
+                                    totalActual: totalActual,
+                                    totalScope: totalScope,
+                                    percentActual: percentActual
+                                };
+
                                 bodyHtml += `
                                 <tr class="row-component ${isActive}" id="comp-row-${comp.id}" style="${displayComp}" data-section-parent="${section.id}" data-ci-parent="${ci.id}" onclick="selectComponent(${comp.id}, '${escapeHtml(comp.name)}')">
                                     <td class="sticky-col-tree" style="padding-left: 48px;">
@@ -944,7 +978,7 @@
                                         if (hasTarget) {
                                             const targetQty = parseFloat(entry.latestTarget.quantity) || 0;
                                             const targetDateStr = entry.latestTarget.entry_data ? entry.latestTarget.entry_data.substring(0, 10) : '';
-                                            const targetData = { ...entry.latestTarget, unitText: unitText, compName: comp.name };
+                                            const targetData = { ...entry.latestTarget, unitText: unitText, compName: comp.name, compStats: compStats };
                                             const targetDataEncoded = encodeURIComponent(JSON.stringify(targetData));
                                             bodyHtml += `
                                             <div class="gantt-pill pill-target" style="cursor: pointer;" onclick="viewAccomplishment('${targetDataEncoded}')" title="Target: ${formatNumber(targetQty)} ${escapeHtml(unitText)} as of ${escapeHtml(targetDateStr)}">
@@ -965,7 +999,7 @@
                                         if (hasActual) {
                                             const actualQty = parseFloat(entry.latestActual.quantity) || 0;
                                             const monthActualDateStr = entry.latestActual.entry_data ? entry.latestActual.entry_data.substring(0, 10) : '';
-                                            const actualData = { ...entry.latestActual, unitText: unitText, compName: comp.name };
+                                            const actualData = { ...entry.latestActual, unitText: unitText, compName: comp.name, compStats: compStats };
                                             const actualDataEncoded = encodeURIComponent(JSON.stringify(actualData));
                                             bodyHtml += `
                                             <div class="gantt-pill pill-actual" style="cursor: pointer;" onclick="viewAccomplishment('${actualDataEncoded}')" title="Actual: ${formatNumber(actualQty)} ${escapeHtml(unitText)} as of ${escapeHtml(monthActualDateStr)}">
@@ -1158,10 +1192,34 @@
                 const unit = acc.unitText || '';
                 const typeBadgeClass = acc.type === 'TARGET' ? 'bg-success' : 'bg-primary';
 
+                const stats = acc.compStats || {};
+                const velocityStr = stats.velocity > 0 ? `${formatNumber(stats.velocity)} ${escapeHtml(unit)}/day` : 'N/A';
+                const etaStr = stats.eta ? stats.eta : (stats.percentActual >= 100 ? 'Completed' : 'Insufficient Data');
+                const daysStr = stats.days ? `${stats.days} day(s) active` : '';
+
                 const html = `
                     <div class="card mb-3 border-secondary bg-dark">
                         <div class="card-header bg-dark border-secondary py-2">
                             <span class="text-light fw-bold"><i class="bi bi-box-seam me-1"></i> ${escapeHtml(compName)}</span>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3 border-secondary bg-dark">
+                        <div class="card-header bg-dark border-secondary py-2 d-flex justify-content-between align-items-center">
+                            <span class="text-light fw-bold small"><i class="bi bi-speedometer2 text-info me-1"></i> Component Velocity & ETA</span>
+                            <small class="text-muted">${daysStr}</small>
+                        </div>
+                        <div class="card-body py-2">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="text-muted small">Speed / Rate</div>
+                                    <div class="fw-semibold text-info">${velocityStr}</div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-muted small">Estimated Completion</div>
+                                    <div class="fw-semibold text-warning">${escapeHtml(etaStr)}</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -1330,9 +1388,19 @@
             const d = String(now.getDate()).padStart(2, '0');
             const asOfDate = typeof asOfDateOverride === 'string' ? asOfDateOverride : `${y}-${m}-${d}`;
 
+            // Calculate date 7 days prior
+            const scopeDateObj = new Date(asOfDate);
+            const date7DaysAgoObj = new Date(scopeDateObj);
+            date7DaysAgoObj.setDate(date7DaysAgoObj.getDate() - 7);
+            const y7 = date7DaysAgoObj.getFullYear();
+            const m7 = String(date7DaysAgoObj.getMonth() + 1).padStart(2, '0');
+            const d7 = String(date7DaysAgoObj.getDate()).padStart(2, '0');
+            const date7DaysAgo = `${y7}-${m7}-${d7}`;
+
             let totalComponents = 0;
             let sumTargetPercentages = 0;
             let sumActualPercentages = 0;
+            let sumActualPercentages7DaysAgo = 0;
 
             projectData.sections.forEach(section => {
                 if (section.contract_items) {
@@ -1343,10 +1411,12 @@
                                 const totalScope = parseFloat(comp.quantity) || 0;
                                 let targetQty = 0;
                                 let actualQty = 0;
+                                let actualQty7DaysAgo = 0;
 
                                 if (comp.accomplishments && comp.accomplishments.length > 0) {
                                     let latestTarget = null;
                                     let latestActual = null;
+                                    let latestActual7DaysAgo = null;
                                     
                                     comp.accomplishments.forEach(acc => {
                                         const accDateStr = acc.entry_data ? acc.entry_data.substring(0, 10) : '';
@@ -1361,20 +1431,32 @@
                                                 }
                                             }
                                         }
+
+                                        if (accDateStr <= date7DaysAgo) {
+                                            if (acc.type === 'ACTUAL') {
+                                                if (!latestActual7DaysAgo || new Date(acc.entry_data) > new Date(latestActual7DaysAgo.entry_data) || (acc.entry_data === latestActual7DaysAgo.entry_data && acc.id > latestActual7DaysAgo.id)) {
+                                                    latestActual7DaysAgo = acc;
+                                                }
+                                            }
+                                        }
                                     });
                                     
                                     if (latestTarget) targetQty = parseFloat(latestTarget.quantity) || 0;
                                     if (latestActual) actualQty = parseFloat(latestActual.quantity) || 0;
+                                    if (latestActual7DaysAgo) actualQty7DaysAgo = parseFloat(latestActual7DaysAgo.quantity) || 0;
                                 }
 
                                 let percentTarget = 0;
                                 let percentActual = 0;
+                                let percentActual7DaysAgo = 0;
                                 if (totalScope > 0) {
                                     percentTarget = Math.min(100, (targetQty / totalScope) * 100);
                                     percentActual = Math.min(100, (actualQty / totalScope) * 100);
+                                    percentActual7DaysAgo = Math.min(100, (actualQty7DaysAgo / totalScope) * 100);
                                 }
                                 sumTargetPercentages += percentTarget;
                                 sumActualPercentages += percentActual;
+                                sumActualPercentages7DaysAgo += percentActual7DaysAgo;
                             });
                         }
                     });
@@ -1383,8 +1465,25 @@
 
             const overallTarget = totalComponents > 0 ? (sumTargetPercentages / totalComponents) : 0;
             const overallActual = totalComponents > 0 ? (sumActualPercentages / totalComponents) : 0;
+            const overallActual7DaysAgo = totalComponents > 0 ? (sumActualPercentages7DaysAgo / totalComponents) : 0;
             const variance = overallActual - overallTarget;
             
+            // 7-day velocity and projected completion
+            const progressDiff7Days = Math.max(0, overallActual - overallActual7DaysAgo);
+            const velocityPerDay = progressDiff7Days / 7;
+            const formattedVelocity = velocityPerDay > 0 ? `${velocityPerDay.toFixed(2)}%/day` : '0.00%/day';
+
+            let projectEtaStr = 'Insufficient Recent Data';
+            if (overallActual >= 100) {
+                projectEtaStr = 'Completed';
+            } else if (velocityPerDay > 0) {
+                const remainingPercent = 100 - overallActual;
+                const remainingDays = Math.ceil(remainingPercent / velocityPerDay);
+                const etaDate = new Date(scopeDateObj);
+                etaDate.setDate(etaDate.getDate() + remainingDays);
+                projectEtaStr = etaDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ` (~${remainingDays} days)`;
+            }
+
             const formatNum = (num) => num.toFixed(2) + '%';
             const varianceText = variance >= 0 ? `+${formatNum(variance)} Ahead` : `${formatNum(Math.abs(variance))} Behind`;
             const varianceClass = variance >= 0 ? 'text-success' : 'text-danger';
@@ -1393,6 +1492,25 @@
                 <div class="mb-4">
                     <label class="form-label text-muted small fw-semibold">Scope Date (As Of)</label>
                     <input type="date" class="form-control bg-dark border-secondary text-light" value="${asOfDate}" onchange="showOverallProgress(this.value)">
+                </div>
+
+                <div class="card mb-3 border-secondary bg-dark">
+                    <div class="card-header bg-dark border-secondary py-2 d-flex justify-content-between align-items-center">
+                        <span class="text-light fw-bold small"><i class="bi bi-speedometer2 text-info me-1"></i> Project Velocity & ETA</span>
+                        <small class="text-muted">Past 7 days pace</small>
+                    </div>
+                    <div class="card-body py-2">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="text-muted small">Speed / Rate</div>
+                                <div class="fw-semibold text-info">${formattedVelocity}</div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-muted small">Estimated Completion</div>
+                                <div class="fw-semibold text-warning">${escapeHtml(projectEtaStr)}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="card bg-dark border-secondary text-light mb-3">
