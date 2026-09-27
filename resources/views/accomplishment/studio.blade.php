@@ -944,6 +944,7 @@
                                 }
 
                                 let requiredVelocity = 0;
+                                let reqDaysLeft = 0;
                                 if (allTimeLatestTarget && totalActual < totalScope) {
                                     const dTargetStr = (allTimeLatestTarget.entry_data || '').substring(0, 10);
                                     if (dTargetStr) {
@@ -951,15 +952,16 @@
                                         const today = new Date();
                                         today.setHours(0,0,0,0);
                                         dTarget.setHours(0,0,0,0);
-                                        const daysLeft = Math.max(1, Math.ceil((dTarget - today) / (1000 * 60 * 60 * 24)));
+                                        reqDaysLeft = Math.max(1, Math.ceil((dTarget - today) / (1000 * 60 * 60 * 24)));
                                         const remainingQty = totalScope - totalActual;
-                                        requiredVelocity = remainingQty / daysLeft;
+                                        requiredVelocity = remainingQty / reqDaysLeft;
                                     }
                                 }
 
                                 const compStats = { 
                                     velocity: compVelocity, 
                                     reqVelocity: requiredVelocity,
+                                    reqDaysLeft: reqDaysLeft,
                                     targetDeadline: allTimeLatestTarget ? (allTimeLatestTarget.entry_data || '').substring(0, 10) : null,
                                     eta: compEtaDateStr, 
                                     days: daysElapsed,
@@ -1219,7 +1221,8 @@
 
                 const stats = acc.compStats || {};
                 const velocityStr = stats.velocity > 0 ? `${formatNumber(stats.velocity)} ${escapeHtml(unit)}/day` : 'N/A';
-                const reqVelocityStr = stats.reqVelocity > 0 ? `${formatNumber(stats.reqVelocity)} ${escapeHtml(unit)}/day` : 'N/A';
+                const reqDaysText = stats.reqDaysLeft > 0 ? ` for ${stats.reqDaysLeft} day${stats.reqDaysLeft === 1 ? '' : 's'}` : '';
+                const reqVelocityStr = stats.reqVelocity > 0 ? `${formatNumber(stats.reqVelocity)} ${escapeHtml(unit)}/day${reqDaysText}` : 'N/A';
                 const etaStr = stats.eta ? stats.eta : (stats.percentActual >= 100 ? 'Completed' : 'Insufficient Data');
                 const daysStr = stats.days ? `${stats.days} day(s) active` : '';
                 const speedStatusClass = (stats.velocity && stats.reqVelocity) ? (stats.velocity >= stats.reqVelocity ? 'text-success' : 'text-danger') : 'text-info';
@@ -1547,16 +1550,18 @@
             const formattedRunningVelocity = runningVelocityPerDay > 0 ? `${runningVelocityPerDay.toFixed(2)}%/day` : '0.00%/day';
 
             let requiredVelocityPerDay = 0;
+            let projectDaysLeft = 0;
             if (projectLatestTargetDate && currentOverallActual < 100) {
                 const dTarget = new Date(projectLatestTargetDate);
                 const today = new Date();
                 today.setHours(0,0,0,0);
                 dTarget.setHours(0,0,0,0);
-                const daysLeft = Math.max(1, Math.ceil((dTarget - today) / (1000 * 60 * 60 * 24)));
+                projectDaysLeft = Math.max(1, Math.ceil((dTarget - today) / (1000 * 60 * 60 * 24)));
                 const remainingPercent = 100 - currentOverallActual;
-                requiredVelocityPerDay = remainingPercent / daysLeft;
+                requiredVelocityPerDay = remainingPercent / projectDaysLeft;
             }
-            const formattedRequiredVelocity = requiredVelocityPerDay > 0 ? `${requiredVelocityPerDay.toFixed(2)}%/day` : 'N/A';
+            const projectDaysText = projectDaysLeft > 0 ? ` for ${projectDaysLeft} day${projectDaysLeft === 1 ? '' : 's'}` : '';
+            const formattedRequiredVelocity = requiredVelocityPerDay > 0 ? `${requiredVelocityPerDay.toFixed(2)}%/day${projectDaysText}` : 'N/A';
             const projectSpeedStatusClass = (runningVelocityPerDay && requiredVelocityPerDay) ? (runningVelocityPerDay >= requiredVelocityPerDay ? 'text-success' : 'text-danger') : 'text-info';
 
             const formatNum = (num) => num.toFixed(2) + '%';
@@ -1740,6 +1745,7 @@
             }
 
             let requiredVelocity = 0;
+            let compDaysLeft = 0;
             if (allTimeLatestTarget && allTimeActualQty < totalScope) {
                 const dTargetStr = (allTimeLatestTarget.entry_data || '').substring(0, 10);
                 if (dTargetStr) {
@@ -1747,9 +1753,9 @@
                     const today = new Date();
                     today.setHours(0,0,0,0);
                     dTarget.setHours(0,0,0,0);
-                    const daysLeft = Math.max(1, Math.ceil((dTarget - today) / (1000 * 60 * 60 * 24)));
+                    compDaysLeft = Math.max(1, Math.ceil((dTarget - today) / (1000 * 60 * 60 * 24)));
                     const remainingQty = totalScope - allTimeActualQty;
-                    requiredVelocity = remainingQty / daysLeft;
+                    requiredVelocity = remainingQty / compDaysLeft;
                 }
             }
 
@@ -1758,7 +1764,8 @@
             const varianceText = variance >= 0 ? `+${formatNum(variance)} Ahead` : `${formatNum(Math.abs(variance))} Behind`;
             const varianceClass = variance >= 0 ? 'text-success' : 'text-danger';
             const velocityStr = compVelocity > 0 ? `${formatNumber(compVelocity)} ${escapeHtml(unitText)}/day` : '0.00 ' + escapeHtml(unitText) + '/day';
-            const reqVelocityStr = requiredVelocity > 0 ? `${formatNumber(requiredVelocity)} ${escapeHtml(unitText)}/day` : 'N/A';
+            const compDaysText = compDaysLeft > 0 ? ` for ${compDaysLeft} day${compDaysLeft === 1 ? '' : 's'}` : '';
+            const reqVelocityStr = requiredVelocity > 0 ? `${formatNumber(requiredVelocity)} ${escapeHtml(unitText)}/day${compDaysText}` : 'N/A';
             const speedStatusClass = (compVelocity && requiredVelocity) ? (compVelocity >= requiredVelocity ? 'text-success' : 'text-danger') : 'text-info';
 
             const html = `
