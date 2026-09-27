@@ -1145,7 +1145,10 @@
                     </div>
                 `;
 
-                window.util.drawerModal.content(`Accomplishment Details #${padId}`, html).open();
+                const contentEl = document.createElement('div');
+                contentEl.innerHTML = html;
+
+                window.util.drawerModal.content(`Accomplishment Details #${padId}`, contentEl).open();
             } catch (err) {
                 console.error('Error viewing accomplishment record:', err);
             }
