@@ -1163,7 +1163,8 @@
 
         // Double-click event to zoom into a specific month
         document.getElementById('ganttTable').addEventListener('dblclick', (e) => {
-            const cell = e.target.closest('.month-cell, .month-header');
+            // Restrict zoom to header double-click to prevent conflict with pill click
+            const cell = e.target.closest('.month-header');
             if (cell && cell.dataset.month && currentViewMode === 'month') {
                 zoomedMonthKey = cell.dataset.month;
                 currentViewMode = 'day';
