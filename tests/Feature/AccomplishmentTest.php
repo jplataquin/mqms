@@ -661,6 +661,25 @@ class AccomplishmentTest extends TestCase
     /** @test */
     public function it_renders_printable_project_report()
     {
+        // Create an empty section with no components
+        $emptySection = new \App\Models\Section();
+        $emptySection->project_id = $this->project->id;
+        $emptySection->name = 'Empty Ghost Section';
+        $emptySection->created_by = $this->user->id;
+        $emptySection->save();
+
+        // Create an empty contract item with no components
+        $emptyCi = new \App\Models\ContractItem();
+        $emptyCi->section_id = $this->section->id;
+        $emptyCi->item_code = 'GHOST-01';
+        $emptyCi->description = 'Empty Ghost Contract Item';
+        $emptyCi->item_type = 'MAT';
+        $emptyCi->contract_quantity = 50;
+        $emptyCi->unit_id = $this->unit->id;
+        $emptyCi->contract_unit_price = 100;
+        $emptyCi->created_by = $this->user->id;
+        $emptyCi->save();
+
         $response = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/print');
         $response->assertStatus(200);
         $response->assertSee('Project Accomplishment Form');
@@ -670,6 +689,10 @@ class AccomplishmentTest extends TestCase
         $response->assertSee($this->contractItem->description);
         $response->assertSee($this->component->name);
         $response->assertSee('window.print()', false);
+
+        // Verify rows without any components are hidden
+        $response->assertDontSee('SECTION: Empty Ghost Section');
+        $response->assertDontSee('Empty Ghost Contract Item');
     }
 
     protected function grantAccessCode($user, $codeString)

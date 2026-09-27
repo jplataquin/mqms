@@ -160,17 +160,25 @@
             </tr>
         </thead>
         <tbody>
-            @forelse($project->Sections as $section)
+            @php
+                $sectionsWithComponents = $project->Sections->filter(function($section) {
+                    return $section->ContractItems->some(function($ci) {
+                        return $ci->Components->isNotEmpty();
+                    });
+                });
+            @endphp
+
+            @forelse($sectionsWithComponents as $section)
                 <tr class="section-row">
                     <td colspan="5">SECTION: {{ $section->name }}</td>
                 </tr>
-                @forelse($section->ContractItems as $ci)
+                @foreach($section->ContractItems->filter(fn($ci) => $ci->Components->isNotEmpty()) as $ci)
                     <tr class="ci-row">
                         <td colspan="5" style="padding-left: 18px;">
                             CONTRACT ITEM: {{ $ci->item_code ? $ci->item_code . ' - ' : '' }}{{ $ci->description ?: $ci->name }}
                         </td>
                     </tr>
-                    @forelse($ci->Components as $comp)
+                    @foreach($ci->Components as $comp)
                         <tr class="comp-row">
                             <td style="padding-left: 36px;">{{ $comp->name }}</td>
                             <td class="text-right">{{ number_format($comp->quantity, 2) }}</td>
@@ -178,19 +186,11 @@
                             <td class="fill-box"></td>
                             <td class="fill-box"></td>
                         </tr>
-                    @empty
-                        <tr class="comp-row">
-                            <td colspan="5" style="padding-left: 36px; font-style: italic; color: #555;">No components in this contract item.</td>
-                        </tr>
-                    @endforelse
-                @empty
-                    <tr class="ci-row">
-                        <td colspan="5" style="padding-left: 18px; font-style: italic; color: #555;">No contract items in this section.</td>
-                    </tr>
-                @endforelse
+                    @endforeach
+                @endforeach
             @empty
                 <tr>
-                    <td colspan="5" class="text-center" style="padding: 20px;">No sections found in this project.</td>
+                    <td colspan="5" class="text-center" style="padding: 20px; font-style: italic;">No components found for this project.</td>
                 </tr>
             @endforelse
         </tbody>
