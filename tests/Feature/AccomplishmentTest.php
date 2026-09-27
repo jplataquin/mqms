@@ -718,6 +718,39 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('page-break', false);
     }
 
+    /** @test */
+    public function it_excludes_components_with_exclude_from_monitoring_from_studio_and_print_form()
+    {
+        // 1. Create a normal component (already exists in setUp: $this->component)
+        // 2. Create an excluded component
+        $excludedComp = new \App\Models\Component();
+        $excludedComp->name = 'Excluded Special Component';
+        $excludedComp->contract_item_id = $this->contractItem->id;
+        $excludedComp->quantity = 100;
+        $excludedComp->unit_id = $this->unit->id;
+        $excludedComp->use_count = 1;
+        $excludedComp->status = 'APRV';
+        $excludedComp->section_id = $this->section->id;
+        $excludedComp->exclude_from_monitoring = 1;
+        $excludedComp->created_by = $this->user->id;
+        $excludedComp->save();
+
+        // Check studio data API
+        $studioResponse = $this->actingAs($this->user)->getJson('/api/accomplishment/project/' . $this->project->id . '/studio-data');
+        $studioResponse->assertStatus(200);
+        $components = $studioResponse->json('data.sections.0.contract_items.0.components');
+        $componentNames = array_column($components, 'name');
+        
+        $this->assertContains($this->component->name, $componentNames);
+        $this->assertNotContains('Excluded Special Component', $componentNames);
+
+        // Check printable form
+        $printResponse = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/print');
+        $printResponse->assertStatus(200);
+        $printResponse->assertSee($this->component->name);
+        $printResponse->assertDontSee('Excluded Special Component');
+    }
+
     protected function grantAccessCode($user, $codeString)
     {
         // 1. Create or find the AccessCode

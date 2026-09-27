@@ -71,32 +71,45 @@ class CreateComponentForm extends Component{
 
             t.div({class:'row mb-3'},()=>{
 
-                t.div({class:'col-lg-3'},()=>{
+                t.div({class:'col-lg-4'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label('Quantity');
                         this.el.quantity = t.input({class:'form-control',type:'text'});
                     });
                 });//div col
                 
-                t.div({class:'col-lg-3'},()=>{
+                t.div({class:'col-lg-4'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label('Unit');
                         this.el.unit = t.select({class:'form-select'});
                     });
                 });//div col
                 
-                t.div({class:'col-lg-3'},()=>{
+                t.div({class:'col-lg-4'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label('Use Count');
                         this.el.use_count = t.input({class:'form-control',type:'text'});
                     });
                 });//div col
-                
-                t.div({class:'col-lg-3'},()=>{
+
+            });//div row
+
+            t.div({class:'row mb-3'},()=>{
+
+                t.div({class:'col-lg-6'},()=>{
                     t.div({class:'form-group'},()=>{
                         t.label('Sum Flag');
-                        t.div({class:'form-switch text-center'},()=>{
+                        t.div({class:'form-switch text-start'},()=>{
                             this.el.sum_flag = t.input({type:'checkbox', class:'form-check-input', value:1, checked:true});
+                        });
+                    });
+                });//div col
+
+                t.div({class:'col-lg-6'},()=>{
+                    t.div({class:'form-group'},()=>{
+                        t.label('Exclude from Accomplishment Monitoring');
+                        t.div({class:'form-switch text-start'},()=>{
+                            this.el.exclude_from_monitoring = t.input({type:'checkbox', class:'form-check-input', value:1, checked:false});
                         });
                     });
                 });//div col
@@ -194,7 +207,8 @@ class CreateComponentForm extends Component{
             quantity            : this.el.quantity.value,
             use_count           : this.el.use_count.value,
             unit_id             : this.el.unit.value,
-            sum_flag            : (this.el.sum_flag.checked == true) ? 1 : 0
+            sum_flag            : (this.el.sum_flag.checked == true) ? 1 : 0,
+            exclude_from_monitoring : (this.el.exclude_from_monitoring.checked == true) ? 1 : 0
         }).then(reply=>{
 
             window.util.unblockUI();

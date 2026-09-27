@@ -79,7 +79,12 @@ class AccomplishmentController extends Controller
                 $q->whereNull('deleted_at')->orderBy('item_code', 'asc')->orderBy('description', 'asc'); 
             },
             'Sections.ContractItems.Components' => function($q) { 
-                $q->whereNull('deleted_at')->orderBy('name', 'asc'); 
+                $q->whereNull('deleted_at')
+                  ->where(function($sq) {
+                      $sq->where('exclude_from_monitoring', '!=', 1)
+                         ->orWhereNull('exclude_from_monitoring');
+                  })
+                  ->orderBy('name', 'asc'); 
             }
         ])->findOrFail($id);
 
@@ -476,7 +481,12 @@ class AccomplishmentController extends Controller
                 $q->whereNull('deleted_at')->orderBy('item_code', 'asc');
             },
             'Sections.ContractItems.Components' => function($q){
-                $q->whereNull('deleted_at')->orderBy('name', 'asc');
+                $q->whereNull('deleted_at')
+                  ->where(function($sq) {
+                      $sq->where('exclude_from_monitoring', '!=', 1)
+                         ->orWhereNull('exclude_from_monitoring');
+                  })
+                  ->orderBy('name', 'asc');
             },
             'Sections.ContractItems.Components.Accomplishments' => function($q){
                 $q->orderBy('entry_data', 'asc');

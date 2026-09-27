@@ -77,6 +77,7 @@ class ComponentController extends Controller
         $use_count          = (int) $request->input('use_count') ?? 1;
         $unit_id            = (int) $request->input('unit_id');
         $sum_flag           = (boolean) $request->input('sum_flag');
+        $exclude_from_monitoring = (boolean) $request->input('exclude_from_monitoring');
 
         $ref_1_quantity     = $request->input('ref_1_quantity');
         $ref_1_unit_id      = $request->input('ref_1_unit_id');
@@ -157,6 +158,7 @@ class ComponentController extends Controller
         $component->status                 = 'PEND';
         $component->section_id             = $section_id;
         $component->sum_flag               = $sum_flag;
+        $component->exclude_from_monitoring = $exclude_from_monitoring;
 
         $component->ref_1_quantity         = $ref_1_quantity;
         $component->ref_1_unit_id          = $ref_1_unit_id;
@@ -377,6 +379,7 @@ class ComponentController extends Controller
         $use_count           = (int) $request->input('use_count') ?? 1;
         $unit_id             = (int) $request->input('unit_id');
         $sum_flag            = (boolean) $request->input('sum_flag');
+        $exclude_from_monitoring = (boolean) $request->input('exclude_from_monitoring');
 
         $component  = Component::find($id);
 
@@ -468,6 +471,7 @@ class ComponentController extends Controller
         $component->updated_by                   = $user_id;
         $component->unit_id                      = $unit_id;
         $component->sum_flag                     = $sum_flag;
+        $component->exclude_from_monitoring     = $exclude_from_monitoring;
         $component->save();
 
         $this->updateComponentItems($component, $user_id);

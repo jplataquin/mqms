@@ -189,6 +189,17 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row mb-3">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Exclude from Accomplishment Monitoring</label>
+                        <div class="form-switch">
+                            <input type="checkbox" class="form-check-input editable_field" id="component_exclude_from_monitoring" value="1" disabled="true" @if($component->exclude_from_monitoring == 1) checked @endif/>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
             <div class="row mb-5">
                 <div class="col-lg-12">
@@ -259,6 +270,7 @@
     const component_quantity        = $q('#component_quantity').first();
     const use_count                 = $q('#use_count').first();
     const component_sum_flag        = $q('#component_sum_flag').first();
+    const component_exclude_from_monitoring = $q('#component_exclude_from_monitoring').first();
     const component_unit            = $q('#component_unit').first();
     const component_sticky_trigger  = $q('#component_sticky_trigger').first();
     const component_controls        = $q('#component_controls').first();
@@ -363,7 +375,8 @@
             quantity    : component_quantity.value,
             unit_id     : component_unit.value,
             use_count   : use_count.value,
-            sum_flag    : (component_sum_flag.checked == true) ? 1 : 0
+            sum_flag    : (component_sum_flag.checked == true) ? 1 : 0,
+            exclude_from_monitoring : (component_exclude_from_monitoring.checked == true) ? 1 : 0
         }).then((reply)=>{
 
             window.util.unblockUI();
