@@ -272,6 +272,27 @@
             background-color: rgba(255, 193, 7, 0.2) !important;
         }
 
+        .day-header.current-day-col {
+            background-color: rgba(255, 193, 7, 0.22) !important;
+            border-bottom: 2px solid #ffc107 !important;
+            color: #ffc107 !important;
+            font-weight: 700;
+        }
+
+        td.day-cell.current-day-col {
+            background-color: rgba(255, 193, 7, 0.05) !important;
+            border-left: 1px dashed rgba(255, 193, 7, 0.35) !important;
+            border-right: 1px dashed rgba(255, 193, 7, 0.35) !important;
+        }
+
+        .row-component:hover td.day-cell.current-day-col {
+            background-color: rgba(255, 193, 7, 0.12) !important;
+        }
+
+        .row-component.active td.day-cell.current-day-col {
+            background-color: rgba(255, 193, 7, 0.2) !important;
+        }
+
         .day-cell {
             min-width: 45px;
             padding: 2px !important;
@@ -679,7 +700,21 @@
             const now = new Date();
             const currentYear = now.getFullYear();
             const currentMonth = now.getMonth() + 1;
-            const currentMonthKey = `${currentYear}-${currentMonth < 10 ? '0' + currentMonth : currentMonth}`;
+            const currentDay = now.getDate();
+            const currentMonthStr = currentMonth < 10 ? '0' + currentMonth : '' + currentMonth;
+            const currentDayStr = currentDay < 10 ? '0' + currentDay : '' + currentDay;
+            const currentMonthKey = `${currentYear}-${currentMonthStr}`;
+            const currentDayKey = `${currentYear}-${currentMonthStr}-${currentDayStr}`;
+
+            const getHighlightColClass = (col) => {
+                if (currentViewMode === 'month' && col.monthKey === currentMonthKey) {
+                    return ' current-month-col';
+                }
+                if (currentViewMode === 'day' && col.key === currentDayKey) {
+                    return ' current-day-col';
+                }
+                return '';
+            };
 
             // Extract formatted current month title if in day view
             let currentMonthTitle = '';
@@ -716,7 +751,8 @@
                 </tr>
                 <tr class="day-sub-row">`;
                 columns.forEach(col => {
-                    headHtml += `<th class="day-header" data-month="${col.monthKey}" style="cursor: pointer;" title="${col.fullLabel}">${col.label}</th>`;
+                    const currentClass = getHighlightColClass(col);
+                    headHtml += `<th class="day-header${currentClass}" data-month="${col.monthKey}" style="cursor: pointer;" title="${col.fullLabel}">${col.label}</th>`;
                 });
                 headHtml += `</tr>`;
             } else {
@@ -726,8 +762,7 @@
                     <th class="sticky-col-progress">Accomplished</th>`;
 
                 columns.forEach(col => {
-                    const isCurrentMonth = (currentViewMode === 'month' && col.monthKey === currentMonthKey);
-                    const currentClass = isCurrentMonth ? ' current-month-col' : '';
+                    const currentClass = getHighlightColClass(col);
                     headHtml += `<th class="month-header${currentClass}" data-month="${col.monthKey}" style="cursor: pointer;" title="Click zoom icon or double click to view days">
                         <div class="d-flex align-items-center justify-content-center gap-1">
                             <span>${col.label}</span>
@@ -764,8 +799,7 @@
                     <td class="sticky-col-progress text-muted">-</td>`;
 
                 columns.forEach(col => {
-                    const isCurrentMonth = (currentViewMode === 'month' && col.monthKey === currentMonthKey);
-                    const currentClass = isCurrentMonth ? ' current-month-col' : '';
+                    const currentClass = getHighlightColClass(col);
                     const cellClass = currentViewMode === 'day' ? 'day-cell' : 'month-cell';
                     bodyHtml += `<td class="${cellClass}${currentClass}" data-month="${col.monthKey}"></td>`;
                 });
@@ -791,8 +825,7 @@
                             <td class="sticky-col-progress text-muted">-</td>`;
 
                         columns.forEach(col => {
-                            const isCurrentMonth = (currentViewMode === 'month' && col.monthKey === currentMonthKey);
-                            const currentClass = isCurrentMonth ? ' current-month-col' : '';
+                            const currentClass = getHighlightColClass(col);
                             const cellClass = currentViewMode === 'day' ? 'day-cell' : 'month-cell';
                             bodyHtml += `<td class="${cellClass}${currentClass}" data-month="${col.monthKey}"></td>`;
                         });
@@ -899,8 +932,7 @@
                                     const entry = timeKeyAccomplishments[col.key];
                                     const hasTarget = !!(entry && entry.latestTarget);
                                     const hasActual = !!(entry && entry.latestActual);
-                                    const isCurrentMonth = (currentViewMode === 'month' && col.monthKey === currentMonthKey);
-                                    const currentClass = isCurrentMonth ? ' current-month-col' : '';
+                                    const currentClass = getHighlightColClass(col);
                                     const cellClass = currentViewMode === 'day' ? 'day-cell' : 'month-cell';
 
                                     bodyHtml += `<td class="${cellClass}${currentClass}" data-month="${col.monthKey}" data-comp-id="${comp.id}" data-comp-name="${escapeHtml(comp.name)}" data-cell-key="${col.key}" data-cell-label="${escapeHtml(col.label)}">`;

@@ -591,6 +591,7 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('viewAccomplishment', false);
         $response->assertSee('primary_modal', false);
         $response->assertSee('current-month-col', false);
+        $response->assertSee('current-day-col', false);
     }
 
     protected function grantAccessCode($user, $codeString)
