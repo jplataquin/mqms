@@ -735,14 +735,13 @@ class AccomplishmentTest extends TestCase
         $excludedComp->created_by = $this->user->id;
         $excludedComp->save();
 
-        // Check studio data API
+        // Check studio data API returns components with exclude_from_monitoring flag for client toggle
         $studioResponse = $this->actingAs($this->user)->getJson('/api/accomplishment/project/' . $this->project->id . '/studio-data');
         $studioResponse->assertStatus(200);
         $components = $studioResponse->json('data.sections.0.contract_items.0.components');
-        $componentNames = array_column($components, 'name');
-        
-        $this->assertContains($this->component->name, $componentNames);
-        $this->assertNotContains('Excluded Special Component', $componentNames);
+        $excludedItem = collect($components)->firstWhere('name', 'Excluded Special Component');
+        $this->assertNotNull($excludedItem);
+        $this->assertEquals(1, $excludedItem['exclude_from_monitoring']);
 
         // Check printable form
         $printResponse = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/print');
@@ -785,6 +784,40 @@ class AccomplishmentTest extends TestCase
         $studioView->assertStatus(200);
         $studioView->assertSee('excludeComponentFromMonitoring', false);
         $studioView->assertSee('Exclude from Monitoring', false);
+        $studioView->assertSee('btnToggleExcluded', false);
+        $studioView->assertSee('includeComponentInMonitoring', false);
+        $studioView->assertSee('row-component-excluded', false);
+    }
+
+    /** @test */
+    public function it_can_include_an_excluded_component_via_api()
+    {
+        $compToInclude = new \App\Models\Component();
+        $compToInclude->name = 'Component to Re-Include';
+        $compToInclude->contract_item_id = $this->contractItem->id;
+        $compToInclude->quantity = 75;
+        $compToInclude->unit_id = $this->unit->id;
+        $compToInclude->use_count = 1;
+        $compToInclude->status = 'APRV';
+        $compToInclude->section_id = $this->section->id;
+        $compToInclude->exclude_from_monitoring = 1;
+        $compToInclude->created_by = $this->user->id;
+        $compToInclude->save();
+
+        $this->assertEquals(1, $compToInclude->exclude_from_monitoring);
+
+        $response = $this->actingAs($this->user)->postJson('/api/accomplishment/component/include', [
+            'component_id' => $compToInclude->id
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+            'message' => 'Component successfully included in accomplishment monitoring.'
+        ]);
+
+        $compToInclude->refresh();
+        $this->assertEquals(0, $compToInclude->exclude_from_monitoring);
     }
 
     protected function grantAccessCode($user, $codeString)

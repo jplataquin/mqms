@@ -363,6 +363,28 @@
             font-weight: 600;
         }
 
+        /* Excluded component styling */
+        .row-component-excluded td {
+            background-color: rgba(220, 53, 69, 0.08) !important;
+        }
+        .row-component-excluded td.sticky-col-tree,
+        .row-component-excluded td.sticky-col-metric,
+        .row-component-excluded td.sticky-col-progress {
+            background-color: #26191e !important;
+        }
+        .row-component-excluded:hover td {
+            background-color: rgba(220, 53, 69, 0.16) !important;
+        }
+        .row-component-excluded:hover td.sticky-col-tree,
+        .row-component-excluded:hover td.sticky-col-metric,
+        .row-component-excluded:hover td.sticky-col-progress {
+            background-color: #341f27 !important;
+        }
+        .row-component-excluded td.sticky-col-tree span.comp-name-text {
+            color: #d68f9a !important;
+            text-decoration: line-through;
+        }
+
         /* Gantt Bars / Pills */
         .gantt-pill {
             font-size: 11px;
@@ -545,6 +567,9 @@
                     <button id="btnZoomOut" class="btn btn-sm btn-primary py-1 px-2 fw-bold text-white shadow-sm" style="font-size: 11px; display: none;" onclick="zoomOut()">
                         <i class="bi bi-arrow-left-circle-fill me-1"></i> Back to Months
                     </button>
+                    <button id="btnToggleExcluded" class="btn btn-sm btn-outline-secondary py-1 px-2" style="font-size: 11px;" onclick="toggleShowExcluded()">
+                        <i class="bi bi-eye me-1"></i> Show Excluded
+                    </button>
                     <button id="btnToggleAll" class="btn btn-sm btn-outline-secondary py-1 px-2" style="font-size: 11px;">
                         <i class="bi bi-arrows-expand me-1"></i> Expand All
                     </button>
@@ -589,6 +614,10 @@
         <div class="gantt-context-menu-item text-danger" id="ctxMenuExclude" onclick="excludeComponentFromMonitoring()">
             <i class="bi bi-eye-slash text-danger"></i>
             <span>Exclude from Monitoring</span>
+        </div>
+        <div class="gantt-context-menu-item text-success" id="ctxMenuInclude" style="display: none;" onclick="includeComponentInMonitoring()">
+            <i class="bi bi-eye text-success"></i>
+            <span>Include in Monitoring</span>
         </div>
     </div>
 
@@ -660,6 +689,22 @@
         const collapsedSections = new Set();
         const collapsedContractItems = new Set();
         let allExpanded = true;
+        let showExcludedComponents = false;
+
+        window.toggleShowExcluded = function() {
+            showExcludedComponents = !showExcludedComponents;
+            const btn = document.getElementById('btnToggleExcluded');
+            if (btn) {
+                if (showExcludedComponents) {
+                    btn.className = 'btn btn-sm btn-warning py-1 px-2 fw-semibold';
+                    btn.innerHTML = `<i class="bi bi-eye-slash me-1"></i> Hide Excluded`;
+                } else {
+                    btn.className = 'btn btn-sm btn-outline-secondary py-1 px-2';
+                    btn.innerHTML = `<i class="bi bi-eye me-1"></i> Show Excluded`;
+                }
+            }
+            renderGantt();
+        };
 
         /* ================= Timeline Calculation ================= */
         function getTimelineColumns() {
@@ -791,9 +836,12 @@
             }
 
             projectData.sections.forEach(section => {
-                // Check if section has any monitored components
+                // Check if section has any visible components based on toggle
                 const sectionValidComponentsCount = (section.contract_items || []).reduce((sum, ci) => {
-                    return sum + (ci.components || []).filter(c => !c.exclude_from_monitoring || c.exclude_from_monitoring == 0).length;
+                    return sum + (ci.components || []).filter(c => {
+                        if (showExcludedComponents) return true;
+                        return !c.exclude_from_monitoring || c.exclude_from_monitoring == 0;
+                    }).length;
                 }, 0);
                 if (sectionValidComponentsCount === 0) return;
 
@@ -822,8 +870,11 @@
                 // Contract Items
                 if (section.contract_items) {
                     section.contract_items.forEach(ci => {
-                        // Skip contract items with empty components or where all components are excluded
-                        const validComponents = (ci.components || []).filter(c => !c.exclude_from_monitoring || c.exclude_from_monitoring == 0);
+                        // Skip contract items with empty components or where all components are excluded (unless showExcludedComponents is active)
+                        const validComponents = (ci.components || []).filter(c => {
+                            if (showExcludedComponents) return true;
+                            return !c.exclude_from_monitoring || c.exclude_from_monitoring == 0;
+                        });
                         if (validComponents.length === 0) return;
 
                         const ciName = (ci.item_code ? ci.item_code + ' ' : '') + (ci.description || ci.name || '');
@@ -856,6 +907,10 @@
 
                                 const displayComp = (isSectionCollapsed || isCiCollapsed) ? 'display: none;' : '';
                                 const isActive = selectedComponentId === comp.id ? 'active' : '';
+
+                                const isCompExcluded = (comp.exclude_from_monitoring == 1);
+                                const excludedClass = isCompExcluded ? 'row-component-excluded' : '';
+                                const excludedBadge = isCompExcluded ? `<span class="badge bg-danger ms-1" style="font-size: 8.5px; vertical-align: middle;">Excluded</span>` : '';
 
                                 // Scope and Accomplishment metrics
                                 const totalScope = parseFloat(comp.quantity) || 0;
@@ -985,10 +1040,11 @@
                                 };
 
                                 bodyHtml += `
-                                <tr class="row-component ${isActive}" id="comp-row-${comp.id}" style="${displayComp}" data-section-parent="${section.id}" data-ci-parent="${ci.id}" data-comp-id="${comp.id}" data-comp-name="${escapeHtml(comp.name)}" data-comp-qty="${comp.quantity || ''}" data-comp-unit="${escapeHtml(unitText)}" onclick="selectComponent(${comp.id}, '${escapeHtml(comp.name)}')">
+                                <tr class="row-component ${excludedClass} ${isActive}" id="comp-row-${comp.id}" style="${displayComp}" data-section-parent="${section.id}" data-ci-parent="${ci.id}" data-comp-id="${comp.id}" data-comp-name="${escapeHtml(comp.name)}" data-comp-qty="${comp.quantity || ''}" data-comp-unit="${escapeHtml(unitText)}" data-comp-excluded="${isCompExcluded ? '1' : '0'}" onclick="selectComponent(${comp.id}, '${escapeHtml(comp.name)}')">
                                     <td class="sticky-col-tree" style="padding-left: 48px; cursor: pointer;" title="Double-click to view progress & performance">
-                                        <i class="bi bi-box-seam text-secondary me-1"></i>
-                                        <span title="${escapeHtml(comp.name)}">${escapeHtml(comp.name)}</span>
+                                        <i class="bi bi-box-seam ${isCompExcluded ? 'text-danger' : 'text-secondary'} me-1"></i>
+                                        <span class="comp-name-text" title="${escapeHtml(comp.name)}">${escapeHtml(comp.name)}</span>
+                                        ${excludedBadge}
                                     </td>
                                     <td class="sticky-col-metric">
                                         <span class="fw-semibold">${formatNumber(totalScope)}</span>
@@ -1138,6 +1194,8 @@
         const ctxMenuAddActual = document.getElementById('ctxMenuAddActual');
         const ctxMenuAddTarget = document.getElementById('ctxMenuAddTarget');
         const ctxMenuDivider   = document.getElementById('ctxMenuDivider');
+        const ctxMenuExclude   = document.getElementById('ctxMenuExclude');
+        const ctxMenuInclude   = document.getElementById('ctxMenuInclude');
 
         document.getElementById('ganttTable').addEventListener('contextmenu', (e) => {
             const compRow = e.target.closest('.row-component');
@@ -1151,6 +1209,7 @@
             const compQty = cell.dataset.compQty || compRow.dataset.compQty;
             const compUnit = cell.dataset.compUnit || compRow.dataset.compUnit;
             const cellDate = cell.dataset.cellKey || '';
+            const isExcluded = (compRow.dataset.compExcluded === '1');
 
             if (!compId) return;
 
@@ -1160,22 +1219,36 @@
             contextMenuTarget.compQty = compQty;
             contextMenuTarget.compUnit = compUnit;
             contextMenuTarget.cellDate = cellDate;
+            contextMenuTarget.isExcluded = isExcluded;
 
             // Check if right-clicked inside the WBS Work Item column or other sticky non-timeline columns
             const isWbsCol = cell.classList.contains('sticky-col-tree') || cell.classList.contains('sticky-col-metric') || cell.classList.contains('sticky-col-progress');
 
-            if (isWbsCol) {
-                // In WBS column: hide Add Actual, Add Target, and divider
+            if (isExcluded) {
+                // If excluded component: only show "Include in Monitoring"
                 if (ctxMenuAddActual) ctxMenuAddActual.style.display = 'none';
                 if (ctxMenuAddTarget) ctxMenuAddTarget.style.display = 'none';
+                if (ctxMenuExclude) ctxMenuExclude.style.display = 'none';
                 if (ctxMenuDivider) ctxMenuDivider.style.display = 'none';
-                contextMenuTitle.innerText = `${compName}`;
+                if (ctxMenuInclude) ctxMenuInclude.style.display = 'flex';
+                contextMenuTitle.innerText = `${compName} (Excluded)`;
             } else {
-                // In timeline columns: show Add Actual, Add Target, and divider
-                if (ctxMenuAddActual) ctxMenuAddActual.style.display = 'flex';
-                if (ctxMenuAddTarget) ctxMenuAddTarget.style.display = 'flex';
-                if (ctxMenuDivider) ctxMenuDivider.style.display = 'block';
-                contextMenuTitle.innerText = `${compName}${cell.dataset.cellLabel ? ' (' + cell.dataset.cellLabel + ')' : ''}`;
+                if (ctxMenuInclude) ctxMenuInclude.style.display = 'none';
+                if (isWbsCol) {
+                    // In WBS column: hide Add Actual, Add Target, and divider
+                    if (ctxMenuAddActual) ctxMenuAddActual.style.display = 'none';
+                    if (ctxMenuAddTarget) ctxMenuAddTarget.style.display = 'none';
+                    if (ctxMenuDivider) ctxMenuDivider.style.display = 'none';
+                    if (ctxMenuExclude) ctxMenuExclude.style.display = 'flex';
+                    contextMenuTitle.innerText = `${compName}`;
+                } else {
+                    // In timeline columns: show Add Actual, Add Target, and divider
+                    if (ctxMenuAddActual) ctxMenuAddActual.style.display = 'flex';
+                    if (ctxMenuAddTarget) ctxMenuAddTarget.style.display = 'flex';
+                    if (ctxMenuDivider) ctxMenuDivider.style.display = 'block';
+                    if (ctxMenuExclude) ctxMenuExclude.style.display = 'flex';
+                    contextMenuTitle.innerText = `${compName}${cell.dataset.cellLabel ? ' (' + cell.dataset.cellLabel + ')' : ''}`;
+                }
             }
 
             // Position context menu
@@ -1224,6 +1297,37 @@
                         loadProjectData();
                     } else {
                         alert(data.message || 'Error excluding component');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('A network error occurred.');
+                });
+            }
+        };
+
+        window.includeComponentInMonitoring = async function() {
+            ganttContextMenu.style.display = 'none';
+            if (!contextMenuTarget.compId) return;
+
+            const confirmed = await window.util.confirm(`Are you sure you want to include "${contextMenuTarget.compName}" back in accomplishment monitoring?`);
+            if (confirmed) {
+                fetch('/api/accomplishment/component/include', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({ component_id: contextMenuTarget.compId })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 1) {
+                        loadProjectData();
+                    } else {
+                        alert(data.message || 'Error including component');
                     }
                 })
                 .catch(err => {

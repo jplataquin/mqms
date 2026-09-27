@@ -459,6 +459,26 @@ class AccomplishmentController extends Controller
         ]);
     }
 
+    public function _include_component(Request $request){
+        $component_id = (int) $request->input('component_id');
+        $component = Component::find($component_id);
+
+        if (!$component) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Component not found'
+            ]);
+        }
+
+        $component->exclude_from_monitoring = 0;
+        $component->save();
+
+        return response()->json([
+            'status'  => 1,
+            'message' => 'Component successfully included in accomplishment monitoring.'
+        ]);
+    }
+
     public function display_record($id){
 
         $accomplishment = Accomplishment::findOrFail($id);
@@ -501,12 +521,7 @@ class AccomplishmentController extends Controller
                 $q->whereNull('deleted_at')->orderBy('item_code', 'asc');
             },
             'Sections.ContractItems.Components' => function($q){
-                $q->whereNull('deleted_at')
-                  ->where(function($sq) {
-                      $sq->where('exclude_from_monitoring', '!=', 1)
-                         ->orWhereNull('exclude_from_monitoring');
-                  })
-                  ->orderBy('name', 'asc');
+                $q->whereNull('deleted_at')->orderBy('name', 'asc');
             },
             'Sections.ContractItems.Components.Accomplishments' => function($q){
                 $q->orderBy('entry_data', 'asc');
