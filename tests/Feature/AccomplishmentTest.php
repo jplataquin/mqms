@@ -597,6 +597,58 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('showComponentProgress', false);
     }
 
+    /** @test */
+    public function it_can_fetch_accomplishments_via_third_party_api()
+    {
+        // 1. Create API Credential
+        $credential = new \App\Models\ApiCredential();
+        $credential->name = 'Test Third Party';
+        $credential->api_key = 'test_api_key_' . uniqid();
+        $credential->secret_key = 'test_secret_key_' . uniqid();
+        $credential->created_by = $this->user->id;
+        $credential->save();
+
+        // 2. Create Accomplishment
+        $acc = new \App\Models\Accomplishment();
+        $acc->component_id = $this->component->id;
+        $acc->type = 'ACTUAL';
+        $acc->entry_data = '2026-09-27';
+        $acc->quantity = 42.5;
+        $acc->remarks = 'API test entry';
+        $acc->created_by = $this->user->id;
+        $acc->save();
+
+        // 3. Prepare HMAC Request
+        $method = 'GET';
+        $path = 'api/call/accomplishments';
+        $timestamp = time();
+        $body = '';
+        $payload = $method . $path . $timestamp . $body;
+        $signature = hash_hmac('sha256', $payload, $credential->secret_key);
+
+        $headers = [
+            'X-API-KEY' => $credential->api_key,
+            'X-TIMESTAMP' => $timestamp,
+            'X-SIGNATURE' => $signature,
+            'Accept' => 'application/json'
+        ];
+
+        // 4. Send request
+        $response = $this->withHeaders($headers)->get('/' . $path . '?component_id=' . $this->component->id);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+            'message' => 'Success'
+        ]);
+
+        $data = $response->json('data');
+        $this->assertNotEmpty($data);
+        $this->assertEquals(42.5, $data[0]['quantity']);
+        $this->assertEquals('ACTUAL', $data[0]['type']);
+        $this->assertEquals($this->component->id, $data[0]['component_id']);
+    }
+
     protected function grantAccessCode($user, $codeString)
     {
         // 1. Create or find the AccessCode

@@ -259,6 +259,45 @@ Retrieves a list of suppliers managed in the system.
 }
 ```
 
+### List Accomplishments
+Retrieves a list of accomplishment records (both TARGET and ACTUAL).
+
+*   **URL**: `/api/call/accomplishments`
+*   **Method**: `GET`
+*   **Query Parameters**:
+    *   `page` (int, default: 1): The page number for pagination.
+    *   `limit` (int, default: 10): Number of records per page. Use `0` for no limit.
+    *   `component_id` (int, optional): Filter by component ID.
+    *   `type` (string, optional): Filter by accomplishment type (`TARGET` or `ACTUAL`).
+    *   `entry_data` (string, optional): Filter by entry date (`YYYY-MM-DD`).
+    *   `order_by` (string, default: `id`): Field to sort by.
+    *   `order` (string, default: `DESC`): Sort direction (`ASC` or `DESC`).
+
+#### Example Response
+```json
+{
+    "status": 1,
+    "message": "Success",
+    "data": [
+        {
+            "id": 1,
+            "component_id": 10,
+            "type": "ACTUAL",
+            "entry_data": "2024-05-27T00:00:00.000000Z",
+            "quantity": 25.5,
+            "remarks": "Completed footing concrete pouring",
+            "created_by": 1,
+            "updated_by": null,
+            "deleted_by": null,
+            "created_at": "2024-05-27T10:00:00.000000Z",
+            "updated_at": "2024-05-27T10:00:00.000000Z",
+            "deleted_at": null,
+            "creator_name": "Admin User"
+        }
+    ]
+}
+```
+
 #### Example Request (PHP)
 ```php
 $apiKey = 'your_api_key';

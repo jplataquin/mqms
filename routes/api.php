@@ -216,4 +216,5 @@ Route::middleware(['third_party_api'])->group(function () {
     Route::get('/call/components', [App\Http\Controllers\Api\ComponentAPIController::class, 'list']);
     Route::get('/call/materials', [App\Http\Controllers\Api\MaterialAPIController::class, 'list']);
     Route::get('/call/suppliers', [App\Http\Controllers\Api\SupplierAPIController::class, 'list']);
+    Route::get('/call/accomplishments', [App\Http\Controllers\Api\AccomplishmentAPIController::class, 'list']);
 });
