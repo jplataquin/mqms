@@ -1206,13 +1206,13 @@
 
                     <div class="card mb-3 border-secondary bg-dark">
                         <div class="card-header bg-dark border-secondary py-2 d-flex justify-content-between align-items-center">
-                            <span class="text-light fw-bold small"><i class="bi bi-speedometer2 text-info me-1"></i> Component Velocity & ETA</span>
+                            <span class="text-light fw-bold small"><i class="bi bi-speedometer2 text-info me-1"></i> Running Velocity & ETA</span>
                             <small class="text-muted">${daysStr}</small>
                         </div>
                         <div class="card-body py-2">
                             <div class="row">
                                 <div class="col-6">
-                                    <div class="text-muted small">Speed / Rate</div>
+                                    <div class="text-muted small">Running Speed / Rate</div>
                                     <div class="fw-semibold text-info">${velocityStr}</div>
                                 </div>
                                 <div class="col-6">
@@ -1399,19 +1399,14 @@
             const d = String(now.getDate()).padStart(2, '0');
             const asOfDate = typeof asOfDateOverride === 'string' ? asOfDateOverride : `${y}-${m}-${d}`;
 
-            // Calculate date 7 days prior
-            const scopeDateObj = new Date(asOfDate);
-            const date7DaysAgoObj = new Date(scopeDateObj);
-            date7DaysAgoObj.setDate(date7DaysAgoObj.getDate() - 7);
-            const y7 = date7DaysAgoObj.getFullYear();
-            const m7 = String(date7DaysAgoObj.getMonth() + 1).padStart(2, '0');
-            const d7 = String(date7DaysAgoObj.getDate()).padStart(2, '0');
-            const date7DaysAgo = `${y7}-${m7}-${d7}`;
-
             let totalComponents = 0;
             let sumTargetPercentages = 0;
             let sumActualPercentages = 0;
-            let sumActualPercentages7DaysAgo = 0;
+
+            // Running calculation tracking (independent of scope date)
+            let projectFirstActualDate = null;
+            let projectLatestActualDate = null;
+            let sumAllTimeActualPercent = 0;
 
             projectData.sections.forEach(section => {
                 if (section.contract_items) {
@@ -1422,15 +1417,17 @@
                                 const totalScope = parseFloat(comp.quantity) || 0;
                                 let targetQty = 0;
                                 let actualQty = 0;
-                                let actualQty7DaysAgo = 0;
+
+                                let allTimeLatestActual = null;
 
                                 if (comp.accomplishments && comp.accomplishments.length > 0) {
                                     let latestTarget = null;
                                     let latestActual = null;
-                                    let latestActual7DaysAgo = null;
                                     
                                     comp.accomplishments.forEach(acc => {
                                         const accDateStr = acc.entry_data ? acc.entry_data.substring(0, 10) : '';
+                                        
+                                        // Scoped snapshot check
                                         if (accDateStr <= asOfDate) {
                                             if (acc.type === 'TARGET') {
                                                 if (!latestTarget || new Date(acc.entry_data) > new Date(latestTarget.entry_data) || (acc.entry_data === latestTarget.entry_data && acc.id > latestTarget.id)) {
@@ -1443,31 +1440,37 @@
                                             }
                                         }
 
-                                        if (accDateStr <= date7DaysAgo) {
-                                            if (acc.type === 'ACTUAL') {
-                                                if (!latestActual7DaysAgo || new Date(acc.entry_data) > new Date(latestActual7DaysAgo.entry_data) || (acc.entry_data === latestActual7DaysAgo.entry_data && acc.id > latestActual7DaysAgo.id)) {
-                                                    latestActual7DaysAgo = acc;
-                                                }
+                                        // Running calculation (all time)
+                                        if (acc.type === 'ACTUAL' && accDateStr) {
+                                            if (!projectFirstActualDate || new Date(accDateStr) < new Date(projectFirstActualDate)) {
+                                                projectFirstActualDate = accDateStr;
+                                            }
+                                            if (!projectLatestActualDate || new Date(accDateStr) > new Date(projectLatestActualDate)) {
+                                                projectLatestActualDate = accDateStr;
+                                            }
+                                            if (!allTimeLatestActual || new Date(acc.entry_data) > new Date(allTimeLatestActual.entry_data) || (acc.entry_data === allTimeLatestActual.entry_data && acc.id > allTimeLatestActual.id)) {
+                                                allTimeLatestActual = acc;
                                             }
                                         }
                                     });
                                     
                                     if (latestTarget) targetQty = parseFloat(latestTarget.quantity) || 0;
                                     if (latestActual) actualQty = parseFloat(latestActual.quantity) || 0;
-                                    if (latestActual7DaysAgo) actualQty7DaysAgo = parseFloat(latestActual7DaysAgo.quantity) || 0;
                                 }
 
                                 let percentTarget = 0;
                                 let percentActual = 0;
-                                let percentActual7DaysAgo = 0;
                                 if (totalScope > 0) {
                                     percentTarget = Math.min(100, (targetQty / totalScope) * 100);
                                     percentActual = Math.min(100, (actualQty / totalScope) * 100);
-                                    percentActual7DaysAgo = Math.min(100, (actualQty7DaysAgo / totalScope) * 100);
                                 }
                                 sumTargetPercentages += percentTarget;
                                 sumActualPercentages += percentActual;
-                                sumActualPercentages7DaysAgo += percentActual7DaysAgo;
+
+                                // Running all-time actual percent
+                                const allTimeActualQty = allTimeLatestActual ? (parseFloat(allTimeLatestActual.quantity) || 0) : 0;
+                                const allTimePercent = totalScope > 0 ? Math.min(100, (allTimeActualQty / totalScope) * 100) : 0;
+                                sumAllTimeActualPercent += allTimePercent;
                             });
                         }
                     });
@@ -1476,25 +1479,34 @@
 
             const overallTarget = totalComponents > 0 ? (sumTargetPercentages / totalComponents) : 0;
             const overallActual = totalComponents > 0 ? (sumActualPercentages / totalComponents) : 0;
-            const overallActual7DaysAgo = totalComponents > 0 ? (sumActualPercentages7DaysAgo / totalComponents) : 0;
             const variance = overallActual - overallTarget;
             
-            // 7-day velocity and projected completion
-            const progressDiff7Days = Math.max(0, overallActual - overallActual7DaysAgo);
-            const velocityPerDay = progressDiff7Days / 7;
-            const formattedVelocity = velocityPerDay > 0 ? `${velocityPerDay.toFixed(2)}%/day` : '0.00%/day';
+            // Running velocity across the full project lifecycle
+            const currentOverallActual = totalComponents > 0 ? (sumAllTimeActualPercent / totalComponents) : 0;
+            let runningDaysElapsed = 0;
+            let runningVelocityPerDay = 0;
+            let projectEtaStr = 'Insufficient Data';
 
-            let projectEtaStr = 'Insufficient Recent Data';
-            if (overallActual >= 100) {
+            if (projectFirstActualDate && projectLatestActualDate) {
+                const dStart = new Date(projectFirstActualDate);
+                const dEnd = new Date(projectLatestActualDate);
+                runningDaysElapsed = Math.max(1, Math.ceil((dEnd - dStart) / (1000 * 60 * 60 * 24)) + 1);
+                runningVelocityPerDay = currentOverallActual / runningDaysElapsed;
+
+                if (currentOverallActual >= 100) {
+                    projectEtaStr = 'Completed';
+                } else if (runningVelocityPerDay > 0) {
+                    const remainingPercent = 100 - currentOverallActual;
+                    const remainingDays = Math.ceil(remainingPercent / runningVelocityPerDay);
+                    const etaDate = new Date();
+                    etaDate.setDate(etaDate.getDate() + remainingDays);
+                    projectEtaStr = etaDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ` (~${remainingDays} days)`;
+                }
+            } else if (currentOverallActual >= 100) {
                 projectEtaStr = 'Completed';
-            } else if (velocityPerDay > 0) {
-                const remainingPercent = 100 - overallActual;
-                const remainingDays = Math.ceil(remainingPercent / velocityPerDay);
-                const etaDate = new Date(scopeDateObj);
-                etaDate.setDate(etaDate.getDate() + remainingDays);
-                projectEtaStr = etaDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ` (~${remainingDays} days)`;
             }
 
+            const formattedRunningVelocity = runningVelocityPerDay > 0 ? `${runningVelocityPerDay.toFixed(2)}%/day` : '0.00%/day';
             const formatNum = (num) => num.toFixed(2) + '%';
             const varianceText = variance >= 0 ? `+${formatNum(variance)} Ahead` : `${formatNum(Math.abs(variance))} Behind`;
             const varianceClass = variance >= 0 ? 'text-success' : 'text-danger';
@@ -1507,14 +1519,14 @@
 
                 <div class="card mb-3 border-secondary bg-dark">
                     <div class="card-header bg-dark border-secondary py-2 d-flex justify-content-between align-items-center">
-                        <span class="text-light fw-bold small"><i class="bi bi-speedometer2 text-info me-1"></i> Project Velocity & ETA</span>
-                        <small class="text-muted">Past 7 days pace</small>
+                        <span class="text-light fw-bold small"><i class="bi bi-speedometer2 text-info me-1"></i> Running Velocity & ETA</span>
+                        <small class="text-muted">${runningDaysElapsed > 0 ? runningDaysElapsed + ' day(s) tracked' : ''}</small>
                     </div>
                     <div class="card-body py-2">
                         <div class="row">
                             <div class="col-6">
-                                <div class="text-muted small">Speed / Rate</div>
-                                <div class="fw-semibold text-info">${formattedVelocity}</div>
+                                <div class="text-muted small">Running Speed / Rate</div>
+                                <div class="fw-semibold text-info">${formattedRunningVelocity}</div>
                             </div>
                             <div class="col-6">
                                 <div class="text-muted small">Estimated Completion</div>
@@ -1597,9 +1609,10 @@
 
             let targetQty = 0;
             let actualQty = 0;
-            let firstActual = null;
             let latestActual = null;
             let latestTarget = null;
+            let allTimeFirstActual = null;
+            let allTimeLatestActual = null;
 
             if (comp.accomplishments && comp.accomplishments.length > 0) {
                 comp.accomplishments.forEach(acc => {
@@ -1610,12 +1623,19 @@
                                 latestTarget = acc;
                             }
                         } else if (acc.type === 'ACTUAL') {
-                            if (!firstActual || new Date(acc.entry_data || acc.created_at || 0) < new Date(firstActual.entry_data || firstActual.created_at || 0)) {
-                                firstActual = acc;
-                            }
                             if (!latestActual || new Date(acc.entry_data) > new Date(latestActual.entry_data) || (acc.entry_data === latestActual.entry_data && acc.id > latestActual.id)) {
                                 latestActual = acc;
                             }
+                        }
+                    }
+
+                    // Running calculation (all time)
+                    if (acc.type === 'ACTUAL' && accDateStr) {
+                        if (!allTimeFirstActual || new Date(acc.entry_data || acc.created_at || 0) < new Date(allTimeFirstActual.entry_data || allTimeFirstActual.created_at || 0)) {
+                            allTimeFirstActual = acc;
+                        }
+                        if (!allTimeLatestActual || new Date(acc.entry_data) > new Date(allTimeLatestActual.entry_data) || (acc.entry_data === allTimeLatestActual.entry_data && acc.id > allTimeLatestActual.id)) {
+                            allTimeLatestActual = acc;
                         }
                     }
                 });
@@ -1628,30 +1648,31 @@
             const percentActual = totalScope > 0 ? Math.min(100, (actualQty / totalScope) * 100) : 0;
             const variance = percentActual - percentTarget;
 
-            // Velocity & ETA calculation as of the scope date
+            // Running Velocity & ETA calculation across entire component lifecycle
             let compVelocity = 0;
             let compEtaDateStr = 'Insufficient Data';
             let daysElapsed = 0;
-            if (firstActual && latestActual) {
-                const d1Str = (firstActual.entry_data || firstActual.created_at || '').substring(0, 10);
-                const d2Str = (latestActual.entry_data || latestActual.created_at || '').substring(0, 10);
+            const allTimeActualQty = allTimeLatestActual ? (parseFloat(allTimeLatestActual.quantity) || 0) : 0;
+
+            if (allTimeFirstActual && allTimeLatestActual) {
+                const d1Str = (allTimeFirstActual.entry_data || allTimeFirstActual.created_at || '').substring(0, 10);
+                const d2Str = (allTimeLatestActual.entry_data || allTimeLatestActual.created_at || '').substring(0, 10);
                 if (d1Str && d2Str) {
                     const d1 = new Date(d1Str);
                     const d2 = new Date(d2Str);
                     daysElapsed = Math.max(1, Math.ceil((d2 - d1) / (1000 * 60 * 60 * 24)) + 1);
-                    compVelocity = actualQty / daysElapsed;
-                    if (compVelocity > 0 && actualQty < totalScope) {
-                        const remainingQty = totalScope - actualQty;
+                    compVelocity = allTimeActualQty / daysElapsed;
+                    if (compVelocity > 0 && allTimeActualQty < totalScope) {
+                        const remainingQty = totalScope - allTimeActualQty;
                         const remainingDays = Math.ceil(remainingQty / compVelocity);
-                        const scopeDateObj = new Date(asOfDate);
-                        const etaDate = new Date(scopeDateObj);
+                        const etaDate = new Date();
                         etaDate.setDate(etaDate.getDate() + remainingDays);
                         compEtaDateStr = etaDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ` (~${remainingDays} days)`;
-                    } else if (actualQty >= totalScope) {
+                    } else if (allTimeActualQty >= totalScope) {
                         compEtaDateStr = 'Completed';
                     }
                 }
-            } else if (actualQty >= totalScope && totalScope > 0) {
+            } else if (allTimeActualQty >= totalScope && totalScope > 0) {
                 compEtaDateStr = 'Completed';
             }
 
@@ -1675,13 +1696,13 @@
 
                 <div class="card mb-3 border-secondary bg-dark">
                     <div class="card-header bg-dark border-secondary py-2 d-flex justify-content-between align-items-center">
-                        <span class="text-light fw-bold small"><i class="bi bi-speedometer2 text-info me-1"></i> Velocity & ETA</span>
+                        <span class="text-light fw-bold small"><i class="bi bi-speedometer2 text-info me-1"></i> Running Velocity & ETA</span>
                         <small class="text-muted">${daysElapsed > 0 ? daysElapsed + ' day(s) active' : ''}</small>
                     </div>
                     <div class="card-body py-2">
                         <div class="row">
                             <div class="col-6">
-                                <div class="text-muted small">Speed / Rate</div>
+                                <div class="text-muted small">Running Speed / Rate</div>
                                 <div class="fw-semibold text-info">${velocityStr}</div>
                             </div>
                             <div class="col-6">
