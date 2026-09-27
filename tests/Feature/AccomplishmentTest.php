@@ -588,6 +588,7 @@ class AccomplishmentTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('delete-pill-btn', false);
         $response->assertSee('deleteAccomplishment', false);
+        $response->assertSee('viewAccomplishment', false);
         $response->assertSee('primary_modal', false);
     }
 

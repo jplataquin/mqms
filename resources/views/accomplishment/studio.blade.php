@@ -872,8 +872,10 @@
                                         if (hasTarget) {
                                             const targetQty = parseFloat(entry.latestTarget.quantity) || 0;
                                             const targetDateStr = entry.latestTarget.entry_data ? entry.latestTarget.entry_data.substring(0, 10) : '';
+                                            const targetData = { ...entry.latestTarget, unitText: unitText, compName: comp.name };
+                                            const targetDataEncoded = encodeURIComponent(JSON.stringify(targetData));
                                             bodyHtml += `
-                                            <div class="gantt-pill pill-target" title="Target: ${formatNumber(targetQty)} ${escapeHtml(unitText)} as of ${escapeHtml(targetDateStr)}">
+                                            <div class="gantt-pill pill-target" style="cursor: pointer;" onclick="viewAccomplishment('${targetDataEncoded}')" title="Target: ${formatNumber(targetQty)} ${escapeHtml(unitText)} as of ${escapeHtml(targetDateStr)}">
                                                 <span>🎯 ${formatNumber(targetQty)}</span>
                                                 <div class="d-flex align-items-center gap-1">
                                                     <small>${escapeHtml(unitText)}</small>
@@ -891,8 +893,10 @@
                                         if (hasActual) {
                                             const actualQty = parseFloat(entry.latestActual.quantity) || 0;
                                             const monthActualDateStr = entry.latestActual.entry_data ? entry.latestActual.entry_data.substring(0, 10) : '';
+                                            const actualData = { ...entry.latestActual, unitText: unitText, compName: comp.name };
+                                            const actualDataEncoded = encodeURIComponent(JSON.stringify(actualData));
                                             bodyHtml += `
-                                            <div class="gantt-pill pill-actual" title="Actual: ${formatNumber(actualQty)} ${escapeHtml(unitText)} as of ${escapeHtml(monthActualDateStr)}">
+                                            <div class="gantt-pill pill-actual" style="cursor: pointer;" onclick="viewAccomplishment('${actualDataEncoded}')" title="Actual: ${formatNumber(actualQty)} ${escapeHtml(unitText)} as of ${escapeHtml(monthActualDateStr)}">
                                                 <span>✅ ${formatNumber(actualQty)}</span>
                                                 <div class="d-flex align-items-center gap-1">
                                                     <small>${escapeHtml(unitText)}</small>
@@ -1067,6 +1071,83 @@
                     console.error(err);
                     alert('A network error occurred.');
                 });
+            }
+        };
+
+        window.viewAccomplishment = function(accDataStr) {
+            try {
+                const acc = JSON.parse(decodeURIComponent(accDataStr));
+                const padId = String(acc.id || 0).padStart(6, '0');
+                const compName = acc.compName || 'Component';
+                const unit = acc.unitText || '';
+                const typeBadgeClass = acc.type === 'TARGET' ? 'bg-success' : 'bg-primary';
+
+                const html = `
+                    <div class="card mb-3 border-secondary bg-dark">
+                        <div class="card-header bg-dark border-secondary py-2">
+                            <span class="text-light fw-bold"><i class="bi bi-box-seam me-1"></i> ${escapeHtml(compName)}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-container">
+                        <div class="form-body">
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <label class="form-label text-muted small fw-semibold">Record ID</label>
+                                    <input type="text" class="form-control bg-dark border-secondary text-light" disabled value="${padId}">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label text-muted small fw-semibold">Type</label>
+                                    <div>
+                                        <span class="badge ${typeBadgeClass} fs-6 py-2 px-3">${escapeHtml(acc.type)}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <label class="form-label text-muted small fw-semibold">Entry Date</label>
+                                    <input type="text" class="form-control bg-dark border-secondary text-light" disabled value="${acc.entry_data ? acc.entry_data.substring(0, 10) : 'N/A'}">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label text-muted small fw-semibold">Quantity</label>
+                                    <input type="text" class="form-control bg-dark border-secondary text-light" disabled value="${formatNumber(acc.quantity)} ${escapeHtml(unit)}">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label class="form-label text-muted small fw-semibold">Remarks</label>
+                                    <textarea class="form-control bg-dark border-secondary text-light" rows="3" disabled>${escapeHtml(acc.remarks || 'None')}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <label class="form-label text-muted small fw-semibold">Created By</label>
+                                    <input type="text" class="form-control bg-dark border-secondary text-light" disabled value="${escapeHtml(acc.creator_name || 'System')}">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label text-muted small fw-semibold">Created At</label>
+                                    <input type="text" class="form-control bg-dark border-secondary text-light" disabled value="${acc.created_at ? new Date(acc.created_at).toLocaleString('en-US', { hour12: false }) : 'N/A'}">
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-12 text-end">
+                                    <button type="button" class="btn btn-outline-danger me-2" onclick="window.util.drawerModal.close(); deleteAccomplishment(${acc.id});">
+                                        <i class="bi bi-trash me-1"></i> Delete
+                                    </button>
+                                    <button type="button" class="btn btn-secondary px-4" onclick="window.util.drawerModal.close()">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                window.util.drawerModal.content(`Accomplishment Details #${padId}`, html).open();
+            } catch (err) {
+                console.error('Error viewing accomplishment record:', err);
             }
         };
 
