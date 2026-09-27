@@ -5,6 +5,8 @@ class CreateAccomplishmentForm extends Component {
     model() {
         return {
             component_id: '',
+            total_quantity: '',
+            unit: '',
             type: 'ACTUAL',
             entry_data: '',
             successCallback: () => {
@@ -21,6 +23,16 @@ class CreateAccomplishmentForm extends Component {
 
         const btnClass = this._model.type === 'TARGET' ? 'btn btn-success me-3' : 'btn btn-primary me-3';
 
+        let qtyLabel = 'Quantity *';
+        if (this._model.total_quantity !== undefined && this._model.total_quantity !== '' && this._model.total_quantity !== null) {
+            const formattedQty = parseFloat(this._model.total_quantity).toLocaleString('en-US', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2
+            });
+            const unitText = this._model.unit ? ` ${this._model.unit}` : '';
+            qtyLabel = `Quantity* (${formattedQty}${unitText})`;
+        }
+
         return t.div(() => {
             t.div({class: 'row mb-3'}, () => {
                 t.div({class: 'col-lg-6'}, () => {
@@ -32,7 +44,7 @@ class CreateAccomplishmentForm extends Component {
                 });
                 t.div({class: 'col-lg-6'}, () => {
                     t.div({class: 'form-group'}, () => {
-                        t.label({class: 'form-label fw-semibold'}, 'Quantity *');
+                        t.label({class: 'form-label fw-semibold'}, qtyLabel);
                         this.el.quantity = t.input({class: 'form-control', type: 'text', placeholder: '0.00', required: true});
                         this.el.quantity_feedback = t.div({class: 'invalid-feedback d-none'}, 'Quantity is required and must be numeric.');
                     });

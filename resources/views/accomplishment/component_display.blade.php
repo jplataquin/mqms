@@ -248,6 +248,8 @@
     addRegistryBtn.onclick = () => {
         window.util.drawerModal.content('Add Accomplishment Registry Entry', CreateAccomplishmentForm({
             component_id: '{{$component->id}}',
+            total_quantity: '{{$component->quantity}}',
+            unit: '{{$component->unit_text}}',
             type: currentType,
             successCallback: () => {
                 if (window.parent && typeof window.parent.refreshGanttChart === 'function') {

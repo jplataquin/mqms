@@ -624,7 +624,7 @@
         let selectedComponentId = null;
 
         // Context menu target state
-        let contextMenuTarget = { compId: null, compName: '', cellDate: '' };
+        let contextMenuTarget = { compId: null, compName: '', compQty: '', compUnit: '', cellDate: '' };
 
         // Timeline state (months to show)
         let timelineMonthsCount = 8;
@@ -935,7 +935,7 @@
                                     const currentClass = getHighlightColClass(col);
                                     const cellClass = currentViewMode === 'day' ? 'day-cell' : 'month-cell';
 
-                                    bodyHtml += `<td class="${cellClass}${currentClass}" data-month="${col.monthKey}" data-comp-id="${comp.id}" data-comp-name="${escapeHtml(comp.name)}" data-cell-key="${col.key}" data-cell-label="${escapeHtml(col.label)}">`;
+                                    bodyHtml += `<td class="${cellClass}${currentClass}" data-month="${col.monthKey}" data-comp-id="${comp.id}" data-comp-name="${escapeHtml(comp.name)}" data-comp-qty="${comp.quantity || ''}" data-comp-unit="${escapeHtml(unitText)}" data-cell-key="${col.key}" data-cell-label="${escapeHtml(col.label)}">`;
                                     if (hasTarget || hasActual) {
                                         // Target row (always on top)
                                         if (hasTarget) {
@@ -1061,6 +1061,8 @@
             e.preventDefault();
             contextMenuTarget.compId = cell.dataset.compId;
             contextMenuTarget.compName = cell.dataset.compName;
+            contextMenuTarget.compQty = cell.dataset.compQty;
+            contextMenuTarget.compUnit = cell.dataset.compUnit;
             contextMenuTarget.cellDate = cell.dataset.cellKey;
 
             contextMenuTitle.innerText = `${cell.dataset.compName} (${cell.dataset.cellLabel || cell.dataset.cellKey})`;
@@ -1107,6 +1109,8 @@
             const title = `Add ${type === 'TARGET' ? 'Target' : 'Actual'} Accomplishment - ${contextMenuTarget.compName}`;
             window.util.drawerModal.content(title, CreateAccomplishmentForm({
                 component_id: contextMenuTarget.compId,
+                total_quantity: contextMenuTarget.compQty,
+                unit: contextMenuTarget.compUnit,
                 type: type,
                 entry_data: entryDate,
                 successCallback: () => {
