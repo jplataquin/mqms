@@ -655,7 +655,7 @@ class AccomplishmentTest extends TestCase
         $response = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id);
         $response->assertStatus(200);
         $response->assertSee('/accomplishment/project/' . $this->project->id . '/print');
-        $response->assertSee('Print Report');
+        $response->assertSee('Accomplishment Form');
     }
 
     /** @test */
@@ -663,7 +663,7 @@ class AccomplishmentTest extends TestCase
     {
         $response = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/print');
         $response->assertStatus(200);
-        $response->assertSee('Project Breakdown Report');
+        $response->assertSee('Project Accomplishment Form');
         $response->assertSee($this->project->name);
         $response->assertSee('SECTION: ' . $this->section->name);
         $response->assertSee($this->contractItem->item_code);
