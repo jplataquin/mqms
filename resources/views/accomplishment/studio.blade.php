@@ -945,7 +945,7 @@
 
                                 bodyHtml += `
                                 <tr class="row-component ${isActive}" id="comp-row-${comp.id}" style="${displayComp}" data-section-parent="${section.id}" data-ci-parent="${ci.id}" onclick="selectComponent(${comp.id}, '${escapeHtml(comp.name)}')">
-                                    <td class="sticky-col-tree" style="padding-left: 48px;">
+                                    <td class="sticky-col-tree" style="padding-left: 48px; cursor: pointer;" title="Double-click to view progress & performance">
                                         <i class="bi bi-box-seam text-secondary me-1"></i>
                                         <span title="${escapeHtml(comp.name)}">${escapeHtml(comp.name)}</span>
                                     </td>
@@ -1295,14 +1295,25 @@
             renderGantt();
         };
 
-        // Double-click event to zoom into a specific month
+        // Double-click event: header zooms into month, component cell views component progress
         document.getElementById('ganttTable').addEventListener('dblclick', (e) => {
-            // Restrict zoom to header double-click to prevent conflict with pill click
+            // Header double-click to zoom
             const cell = e.target.closest('.month-header');
             if (cell && cell.dataset.month && currentViewMode === 'month') {
                 zoomedMonthKey = cell.dataset.month;
                 currentViewMode = 'day';
                 renderGantt();
+                return;
+            }
+
+            // Component tree cell double-click to view component progress
+            const compTreeCell = e.target.closest('.row-component td.sticky-col-tree');
+            if (compTreeCell) {
+                const row = compTreeCell.closest('.row-component');
+                const compId = row ? parseInt(row.id.replace('comp-row-', '')) : null;
+                if (compId) {
+                    showComponentProgress(compId);
+                }
             }
         });
 
@@ -1553,6 +1564,190 @@
             contentEl.innerHTML = html;
 
             window.util.drawerModal.content('Overall Project Progress', contentEl).open();
+        };
+
+        window.showComponentProgress = function(compId, asOfDateOverride) {
+            if (!projectData || !projectData.sections) return;
+
+            let comp = null;
+            for (const section of projectData.sections) {
+                if (section.contract_items) {
+                    for (const ci of section.contract_items) {
+                        if (ci.components) {
+                            const found = ci.components.find(c => c.id === compId);
+                            if (found) {
+                                comp = found;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (comp) break;
+            }
+            if (!comp) return;
+
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = String(now.getMonth() + 1).padStart(2, '0');
+            const d = String(now.getDate()).padStart(2, '0');
+            const asOfDate = typeof asOfDateOverride === 'string' ? asOfDateOverride : `${y}-${m}-${d}`;
+
+            const totalScope = parseFloat(comp.quantity) || 0;
+            const unitText = comp.unit_text || '';
+
+            let targetQty = 0;
+            let actualQty = 0;
+            let firstActual = null;
+            let latestActual = null;
+            let latestTarget = null;
+
+            if (comp.accomplishments && comp.accomplishments.length > 0) {
+                comp.accomplishments.forEach(acc => {
+                    const accDateStr = acc.entry_data ? acc.entry_data.substring(0, 10) : '';
+                    if (accDateStr <= asOfDate) {
+                        if (acc.type === 'TARGET') {
+                            if (!latestTarget || new Date(acc.entry_data) > new Date(latestTarget.entry_data) || (acc.entry_data === latestTarget.entry_data && acc.id > latestTarget.id)) {
+                                latestTarget = acc;
+                            }
+                        } else if (acc.type === 'ACTUAL') {
+                            if (!firstActual || new Date(acc.entry_data || acc.created_at || 0) < new Date(firstActual.entry_data || firstActual.created_at || 0)) {
+                                firstActual = acc;
+                            }
+                            if (!latestActual || new Date(acc.entry_data) > new Date(latestActual.entry_data) || (acc.entry_data === latestActual.entry_data && acc.id > latestActual.id)) {
+                                latestActual = acc;
+                            }
+                        }
+                    }
+                });
+
+                if (latestTarget) targetQty = parseFloat(latestTarget.quantity) || 0;
+                if (latestActual) actualQty = parseFloat(latestActual.quantity) || 0;
+            }
+
+            const percentTarget = totalScope > 0 ? Math.min(100, (targetQty / totalScope) * 100) : 0;
+            const percentActual = totalScope > 0 ? Math.min(100, (actualQty / totalScope) * 100) : 0;
+            const variance = percentActual - percentTarget;
+
+            // Velocity & ETA calculation as of the scope date
+            let compVelocity = 0;
+            let compEtaDateStr = 'Insufficient Data';
+            let daysElapsed = 0;
+            if (firstActual && latestActual) {
+                const d1Str = (firstActual.entry_data || firstActual.created_at || '').substring(0, 10);
+                const d2Str = (latestActual.entry_data || latestActual.created_at || '').substring(0, 10);
+                if (d1Str && d2Str) {
+                    const d1 = new Date(d1Str);
+                    const d2 = new Date(d2Str);
+                    daysElapsed = Math.max(1, Math.ceil((d2 - d1) / (1000 * 60 * 60 * 24)) + 1);
+                    compVelocity = actualQty / daysElapsed;
+                    if (compVelocity > 0 && actualQty < totalScope) {
+                        const remainingQty = totalScope - actualQty;
+                        const remainingDays = Math.ceil(remainingQty / compVelocity);
+                        const scopeDateObj = new Date(asOfDate);
+                        const etaDate = new Date(scopeDateObj);
+                        etaDate.setDate(etaDate.getDate() + remainingDays);
+                        compEtaDateStr = etaDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ` (~${remainingDays} days)`;
+                    } else if (actualQty >= totalScope) {
+                        compEtaDateStr = 'Completed';
+                    }
+                }
+            } else if (actualQty >= totalScope && totalScope > 0) {
+                compEtaDateStr = 'Completed';
+            }
+
+            const remainingQty = Math.max(0, totalScope - actualQty);
+            const formatNum = (num) => num.toFixed(2) + '%';
+            const varianceText = variance >= 0 ? `+${formatNum(variance)} Ahead` : `${formatNum(Math.abs(variance))} Behind`;
+            const varianceClass = variance >= 0 ? 'text-success' : 'text-danger';
+            const velocityStr = compVelocity > 0 ? `${formatNumber(compVelocity)} ${escapeHtml(unitText)}/day` : '0.00 ' + escapeHtml(unitText) + '/day';
+
+            const html = `
+                <div class="card mb-3 border-secondary bg-dark">
+                    <div class="card-header bg-dark border-secondary py-2">
+                        <span class="text-light fw-bold"><i class="bi bi-box-seam me-1"></i> ${escapeHtml(comp.name)}</span>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label text-muted small fw-semibold">Scope Date (As Of)</label>
+                    <input type="date" class="form-control bg-dark border-secondary text-light" value="${asOfDate}" onchange="showComponentProgress(${compId}, this.value)">
+                </div>
+
+                <div class="card mb-3 border-secondary bg-dark">
+                    <div class="card-header bg-dark border-secondary py-2 d-flex justify-content-between align-items-center">
+                        <span class="text-light fw-bold small"><i class="bi bi-speedometer2 text-info me-1"></i> Velocity & ETA</span>
+                        <small class="text-muted">${daysElapsed > 0 ? daysElapsed + ' day(s) active' : ''}</small>
+                    </div>
+                    <div class="card-body py-2">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="text-muted small">Speed / Rate</div>
+                                <div class="fw-semibold text-info">${velocityStr}</div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-muted small">Estimated Completion</div>
+                                <div class="fw-semibold text-warning">${escapeHtml(compEtaDateStr)}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card bg-dark border-secondary text-light mb-3">
+                    <div class="card-body py-3">
+                        <div class="d-flex justify-content-between align-items-end mb-2">
+                            <span class="text-muted"><i class="bi bi-bullseye text-success me-1"></i> Target (Planned)</span>
+                            <span class="fw-bold fs-5 text-success">${formatNum(percentTarget)}</span>
+                        </div>
+                        <div class="progress mb-2" style="height: 12px; background-color: var(--bg-darker);">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: ${percentTarget}%"></div>
+                        </div>
+                        <div class="d-flex justify-content-between small text-muted">
+                            <span>${formatNumber(targetQty)} ${escapeHtml(unitText)}</span>
+                            <span>of ${formatNumber(totalScope)} ${escapeHtml(unitText)}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card bg-dark border-secondary text-light mb-3">
+                    <div class="card-body py-3">
+                        <div class="d-flex justify-content-between align-items-end mb-2">
+                            <span class="text-muted"><i class="bi bi-check-circle text-primary me-1"></i> Actual Accomplished</span>
+                            <span class="fw-bold fs-5 text-primary">${formatNum(percentActual)}</span>
+                        </div>
+                        <div class="progress mb-2" style="height: 12px; background-color: var(--bg-darker);">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: ${percentActual}%"></div>
+                        </div>
+                        <div class="d-flex justify-content-between small text-muted">
+                            <span>${formatNumber(actualQty)} ${escapeHtml(unitText)}</span>
+                            <span>of ${formatNumber(totalScope)} ${escapeHtml(unitText)}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <div class="p-2 border border-secondary rounded bg-dark text-center">
+                            <div class="text-muted small">Remaining Scope</div>
+                            <div class="fw-bold text-light">${formatNumber(remainingQty)} ${escapeHtml(unitText)}</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-2 border border-secondary rounded bg-dark text-center">
+                            <div class="text-muted small">Schedule Variance</div>
+                            <div class="fw-bold ${varianceClass}">${varianceText}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-end mt-4">
+                    <button type="button" class="btn btn-secondary px-4" onclick="window.util.drawerModal.close()">Close</button>
+                </div>
+            `;
+
+            const contentEl = document.createElement('div');
+            contentEl.innerHTML = html;
+
+            window.util.drawerModal.content(`Progress: ${comp.name}`, contentEl).open();
         };
 
         btnRefresh.onclick = () => {

@@ -594,6 +594,7 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('current-day-col', false);
         $response->assertSee('btnOverallProgress', false);
         $response->assertSee('showOverallProgress', false);
+        $response->assertSee('showComponentProgress', false);
     }
 
     protected function grantAccessCode($user, $codeString)
