@@ -1320,11 +1320,19 @@
         // Expose to window for external communication
         window.refreshGanttChart = loadProjectData;
 
-        window.showOverallProgress = function() {
+        window.showOverallProgress = function(asOfDateOverride) {
             if (!projectData || !projectData.sections) return;
 
+            // Default to today in local YYYY-MM-DD
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = String(now.getMonth() + 1).padStart(2, '0');
+            const d = String(now.getDate()).padStart(2, '0');
+            const asOfDate = typeof asOfDateOverride === 'string' ? asOfDateOverride : `${y}-${m}-${d}`;
+
             let totalComponents = 0;
-            let sumPercentages = 0;
+            let sumTargetPercentages = 0;
+            let sumActualPercentages = 0;
 
             projectData.sections.forEach(section => {
                 if (section.contract_items) {
@@ -1333,59 +1341,92 @@
                             ci.components.forEach(comp => {
                                 totalComponents++;
                                 const totalScope = parseFloat(comp.quantity) || 0;
-                                let latestActualQty = 0;
+                                let targetQty = 0;
+                                let actualQty = 0;
 
                                 if (comp.accomplishments && comp.accomplishments.length > 0) {
+                                    let latestTarget = null;
                                     let latestActual = null;
+                                    
                                     comp.accomplishments.forEach(acc => {
-                                        if (acc.type === 'ACTUAL') {
-                                            if (!latestActual) {
-                                                latestActual = acc;
-                                            } else {
-                                                const dateCurr = new Date(acc.entry_data || acc.created_at || 0);
-                                                const dateLatest = new Date(latestActual.entry_data || latestActual.created_at || 0);
-                                                if (dateCurr > dateLatest || (dateCurr.getTime() === dateLatest.getTime() && (acc.id || 0) > (latestActual.id || 0))) {
+                                        const accDateStr = acc.entry_data ? acc.entry_data.substring(0, 10) : '';
+                                        if (accDateStr <= asOfDate) {
+                                            if (acc.type === 'TARGET') {
+                                                if (!latestTarget || new Date(acc.entry_data) > new Date(latestTarget.entry_data) || (acc.entry_data === latestTarget.entry_data && acc.id > latestTarget.id)) {
+                                                    latestTarget = acc;
+                                                }
+                                            } else if (acc.type === 'ACTUAL') {
+                                                if (!latestActual || new Date(acc.entry_data) > new Date(latestActual.entry_data) || (acc.entry_data === latestActual.entry_data && acc.id > latestActual.id)) {
                                                     latestActual = acc;
                                                 }
                                             }
                                         }
                                     });
-                                    if (latestActual) {
-                                        latestActualQty = parseFloat(latestActual.quantity) || 0;
-                                    }
+                                    
+                                    if (latestTarget) targetQty = parseFloat(latestTarget.quantity) || 0;
+                                    if (latestActual) actualQty = parseFloat(latestActual.quantity) || 0;
                                 }
 
+                                let percentTarget = 0;
                                 let percentActual = 0;
                                 if (totalScope > 0) {
-                                    percentActual = Math.min(100, (latestActualQty / totalScope) * 100);
+                                    percentTarget = Math.min(100, (targetQty / totalScope) * 100);
+                                    percentActual = Math.min(100, (actualQty / totalScope) * 100);
                                 }
-                                sumPercentages += percentActual;
+                                sumTargetPercentages += percentTarget;
+                                sumActualPercentages += percentActual;
                             });
                         }
                     });
                 }
             });
 
-            const overallProgress = totalComponents > 0 ? (sumPercentages / totalComponents) : 0;
-            const formattedProgress = overallProgress.toFixed(2);
+            const overallTarget = totalComponents > 0 ? (sumTargetPercentages / totalComponents) : 0;
+            const overallActual = totalComponents > 0 ? (sumActualPercentages / totalComponents) : 0;
+            const variance = overallActual - overallTarget;
             
-            const isComplete = overallProgress >= 100;
-            const barColor = isComplete ? 'bg-success' : 'bg-primary';
+            const formatNum = (num) => num.toFixed(2) + '%';
+            const varianceText = variance >= 0 ? `+${formatNum(variance)} Ahead` : `${formatNum(Math.abs(variance))} Behind`;
+            const varianceClass = variance >= 0 ? 'text-success' : 'text-danger';
 
             const html = `
-                <div class="card bg-dark border-secondary text-light">
-                    <div class="card-body text-center py-5">
-                        <h5 class="text-muted mb-4">Average Completion Status</h5>
-                        <div class="display-3 fw-bold mb-4 ${isComplete ? 'text-success' : 'text-primary'}">
-                            ${formattedProgress}%
+                <div class="mb-4">
+                    <label class="form-label text-muted small fw-semibold">Scope Date (As Of)</label>
+                    <input type="date" class="form-control bg-dark border-secondary text-light" value="${asOfDate}" onchange="showOverallProgress(this.value)">
+                </div>
+                
+                <div class="card bg-dark border-secondary text-light mb-3">
+                    <div class="card-body py-4">
+                        <div class="d-flex justify-content-between align-items-end mb-2">
+                            <span class="text-muted"><i class="bi bi-bullseye text-success me-1"></i> Target (Planned)</span>
+                            <span class="fw-bold fs-5 text-success">${formatNum(overallTarget)}</span>
                         </div>
-                        <div class="progress" style="height: 20px; background-color: var(--bg-darker);">
-                            <div class="progress-bar ${barColor} progress-bar-striped progress-bar-animated" role="progressbar" style="width: ${overallProgress}%" aria-valuenow="${overallProgress}" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress" style="height: 12px; background-color: var(--bg-darker);">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: ${overallTarget}%"></div>
                         </div>
-                        <p class="text-muted mt-4 small">Calculated across ${totalComponents} tracked components.</p>
                     </div>
                 </div>
-                <div class="text-end mt-4">
+
+                <div class="card bg-dark border-secondary text-light mb-3">
+                    <div class="card-body py-4">
+                        <div class="d-flex justify-content-between align-items-end mb-2">
+                            <span class="text-muted"><i class="bi bi-check-circle text-primary me-1"></i> Actual Accomplished</span>
+                            <span class="fw-bold fs-5 text-primary">${formatNum(overallActual)}</span>
+                        </div>
+                        <div class="progress" style="height: 12px; background-color: var(--bg-darker);">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: ${overallActual}%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <span class="badge bg-dark border border-secondary text-light fs-6 py-2 px-4 shadow-sm">
+                        Variance: <span class="${varianceClass} ms-2 fw-bold">${varianceText}</span>
+                    </span>
+                    <div class="text-muted small mt-2">Calculated across ${totalComponents} tracked components.</div>
+                </div>
+
+                <div class="text-end mt-5">
                     <button type="button" class="btn btn-secondary px-4" onclick="window.util.drawerModal.close()">Close</button>
                 </div>
             `;
