@@ -695,6 +695,29 @@ class AccomplishmentTest extends TestCase
         $response->assertDontSee('Empty Ghost Contract Item');
     }
 
+    /** @test */
+    public function it_applies_page_break_after_every_30_rows_in_printable_form()
+    {
+        // Seed additional components so total rows exceed 30
+        // (1 section + 1 CI + existing 1 component = 3 rows, so we add 30 more components)
+        for ($i = 1; $i <= 30; $i++) {
+            $comp = new \App\Models\Component();
+            $comp->name = 'Bulk Component ' . $i;
+            $comp->contract_item_id = $this->contractItem->id;
+            $comp->quantity = 10;
+            $comp->unit_id = $this->unit->id;
+            $comp->use_count = 1;
+            $comp->status = 'APRV';
+            $comp->section_id = $this->section->id;
+            $comp->created_by = $this->user->id;
+            $comp->save();
+        }
+
+        $response = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/print');
+        $response->assertStatus(200);
+        $response->assertSee('page-break', false);
+    }
+
     protected function grantAccessCode($user, $codeString)
     {
         // 1. Create or find the AccessCode

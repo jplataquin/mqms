@@ -187,6 +187,11 @@
                 page-break-inside: avoid;
             }
 
+            .page-break, tr.page-break {
+                break-after: page !important;
+                page-break-after: always !important;
+            }
+
             table.form-table {
                 page-break-after: auto;
             }
@@ -234,20 +239,43 @@
                         return $ci->Components->isNotEmpty();
                     });
                 });
+
+                $totalRows = 0;
+                foreach ($sectionsWithComponents as $s) {
+                    $totalRows++;
+                    foreach ($s->ContractItems->filter(fn($ci) => $ci->Components->isNotEmpty()) as $ci) {
+                        $totalRows++;
+                        $totalRows += $ci->Components->count();
+                    }
+                }
+
+                $currentRow = 0;
             @endphp
 
             @forelse($sectionsWithComponents as $section)
-                <tr class="section-row">
+                @php
+                    $currentRow++;
+                    $pbClass = ($currentRow % 30 === 0 && $currentRow < $totalRows) ? 'page-break' : '';
+                @endphp
+                <tr class="section-row {{ $pbClass }}">
                     <td colspan="5">SECTION: {{ $section->name }}</td>
                 </tr>
                 @foreach($section->ContractItems->filter(fn($ci) => $ci->Components->isNotEmpty()) as $ci)
-                    <tr class="ci-row">
+                    @php
+                        $currentRow++;
+                        $pbClass = ($currentRow % 30 === 0 && $currentRow < $totalRows) ? 'page-break' : '';
+                    @endphp
+                    <tr class="ci-row {{ $pbClass }}">
                         <td colspan="5" style="padding-left: 18px;">
                             CONTRACT ITEM: {{ $ci->item_code ? $ci->item_code . ' - ' : '' }}{{ $ci->description ?: $ci->name }}
                         </td>
                     </tr>
                     @foreach($ci->Components as $comp)
-                        <tr class="comp-row">
+                        @php
+                            $currentRow++;
+                            $pbClass = ($currentRow % 30 === 0 && $currentRow < $totalRows) ? 'page-break' : '';
+                        @endphp
+                        <tr class="comp-row {{ $pbClass }}">
                             <td style="padding-left: 36px;">{{ $comp->name }}</td>
                             <td class="text-right">{{ number_format($comp->quantity, 2) }}</td>
                             <td class="text-center">{{ $comp->unit_text }}</td>
