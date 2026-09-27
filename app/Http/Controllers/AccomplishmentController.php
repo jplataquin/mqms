@@ -439,6 +439,26 @@ class AccomplishmentController extends Controller
         ]);
     }
 
+    public function _exclude_component(Request $request){
+        $component_id = (int) $request->input('component_id');
+        $component = Component::find($component_id);
+
+        if (!$component) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Component not found'
+            ]);
+        }
+
+        $component->exclude_from_monitoring = 1;
+        $component->save();
+
+        return response()->json([
+            'status'  => 1,
+            'message' => 'Component successfully excluded from accomplishment monitoring.'
+        ]);
+    }
+
     public function display_record($id){
 
         $accomplishment = Accomplishment::findOrFail($id);

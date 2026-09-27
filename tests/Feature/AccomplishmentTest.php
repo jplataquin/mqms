@@ -751,6 +751,42 @@ class AccomplishmentTest extends TestCase
         $printResponse->assertDontSee('Excluded Special Component');
     }
 
+    /** @test */
+    public function it_can_exclude_a_component_via_api_and_context_menu_option()
+    {
+        $compToExclude = new \App\Models\Component();
+        $compToExclude->name = 'Component to Exclude Now';
+        $compToExclude->contract_item_id = $this->contractItem->id;
+        $compToExclude->quantity = 75;
+        $compToExclude->unit_id = $this->unit->id;
+        $compToExclude->use_count = 1;
+        $compToExclude->status = 'APRV';
+        $compToExclude->section_id = $this->section->id;
+        $compToExclude->created_by = $this->user->id;
+        $compToExclude->save();
+
+        $this->assertEquals(0, $compToExclude->exclude_from_monitoring);
+
+        $response = $this->actingAs($this->user)->postJson('/api/accomplishment/component/exclude', [
+            'component_id' => $compToExclude->id
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+            'message' => 'Component successfully excluded from accomplishment monitoring.'
+        ]);
+
+        $compToExclude->refresh();
+        $this->assertEquals(1, $compToExclude->exclude_from_monitoring);
+
+        // Verify context menu option in Studio Mode view
+        $studioView = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/studio');
+        $studioView->assertStatus(200);
+        $studioView->assertSee('excludeComponentFromMonitoring', false);
+        $studioView->assertSee('Exclude from Monitoring', false);
+    }
+
     protected function grantAccessCode($user, $codeString)
     {
         // 1. Create or find the AccessCode

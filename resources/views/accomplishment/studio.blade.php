@@ -585,6 +585,11 @@
             <i class="bi bi-bullseye text-success"></i>
             <span>Add Target</span>
         </div>
+        <div class="border-top border-secondary my-1"></div>
+        <div class="gantt-context-menu-item text-danger" onclick="excludeComponentFromMonitoring()">
+            <i class="bi bi-eye-slash text-danger"></i>
+            <span>Exclude from Monitoring</span>
+        </div>
     </div>
 
     <!-- Drawer Modal -->
@@ -971,7 +976,7 @@
                                 };
 
                                 bodyHtml += `
-                                <tr class="row-component ${isActive}" id="comp-row-${comp.id}" style="${displayComp}" data-section-parent="${section.id}" data-ci-parent="${ci.id}" onclick="selectComponent(${comp.id}, '${escapeHtml(comp.name)}')">
+                                <tr class="row-component ${isActive}" id="comp-row-${comp.id}" style="${displayComp}" data-section-parent="${section.id}" data-ci-parent="${ci.id}" data-comp-id="${comp.id}" data-comp-name="${escapeHtml(comp.name)}" data-comp-qty="${comp.quantity || ''}" data-comp-unit="${escapeHtml(unitText)}" onclick="selectComponent(${comp.id}, '${escapeHtml(comp.name)}')">
                                     <td class="sticky-col-tree" style="padding-left: 48px; cursor: pointer;" title="Double-click to view progress & performance">
                                         <i class="bi bi-box-seam text-secondary me-1"></i>
                                         <span title="${escapeHtml(comp.name)}">${escapeHtml(comp.name)}</span>
@@ -1119,23 +1124,34 @@
 
         /* ================= Right-Click Context Menu & Drawer ================= */
         document.getElementById('ganttTable').addEventListener('contextmenu', (e) => {
-            const cell = e.target.closest('.month-cell, .day-cell');
-            if (!cell || !cell.dataset.compId) return;
+            const compRow = e.target.closest('.row-component');
+            if (!compRow) return;
+
+            const cell = e.target.closest('td');
+            if (!cell) return;
+
+            const compId = cell.dataset.compId || compRow.dataset.compId;
+            const compName = cell.dataset.compName || compRow.dataset.compName;
+            const compQty = cell.dataset.compQty || compRow.dataset.compQty;
+            const compUnit = cell.dataset.compUnit || compRow.dataset.compUnit;
+            const cellDate = cell.dataset.cellKey || '';
+
+            if (!compId) return;
 
             e.preventDefault();
-            contextMenuTarget.compId = cell.dataset.compId;
-            contextMenuTarget.compName = cell.dataset.compName;
-            contextMenuTarget.compQty = cell.dataset.compQty;
-            contextMenuTarget.compUnit = cell.dataset.compUnit;
-            contextMenuTarget.cellDate = cell.dataset.cellKey;
+            contextMenuTarget.compId = compId;
+            contextMenuTarget.compName = compName;
+            contextMenuTarget.compQty = compQty;
+            contextMenuTarget.compUnit = compUnit;
+            contextMenuTarget.cellDate = cellDate;
 
-            contextMenuTitle.innerText = `${cell.dataset.compName} (${cell.dataset.cellLabel || cell.dataset.cellKey})`;
+            contextMenuTitle.innerText = `${compName}${cell.dataset.cellLabel ? ' (' + cell.dataset.cellLabel + ')' : ''}`;
 
             // Position context menu
             let x = e.clientX;
             let y = e.clientY;
-            if (x + 210 > window.innerWidth) x = window.innerWidth - 220;
-            if (y + 130 > window.innerHeight) y = window.innerHeight - 140;
+            if (x + 230 > window.innerWidth) x = window.innerWidth - 240;
+            if (y + 180 > window.innerHeight) y = window.innerHeight - 190;
 
             ganttContextMenu.style.left = `${x}px`;
             ganttContextMenu.style.top = `${y}px`;
@@ -1154,6 +1170,37 @@
                 ganttContextMenu.style.display = 'none';
             }
         });
+
+        window.excludeComponentFromMonitoring = async function() {
+            ganttContextMenu.style.display = 'none';
+            if (!contextMenuTarget.compId) return;
+
+            const confirmed = await window.util.confirm(`Are you sure you want to exclude "${contextMenuTarget.compName}" from accomplishment monitoring? It will be removed from this chart.`);
+            if (confirmed) {
+                fetch('/api/accomplishment/component/exclude', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({ component_id: contextMenuTarget.compId })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 1) {
+                        loadProjectData();
+                    } else {
+                        alert(data.message || 'Error excluding component');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('A network error occurred.');
+                });
+            }
+        };
 
         window.openAccomplishmentDrawer = function(type) {
             ganttContextMenu.style.display = 'none';
