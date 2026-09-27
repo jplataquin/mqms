@@ -592,6 +592,8 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('primary_modal', false);
         $response->assertSee('current-month-col', false);
         $response->assertSee('current-day-col', false);
+        $response->assertSee('btnOverallProgress', false);
+        $response->assertSee('showOverallProgress', false);
     }
 
     protected function grantAccessCode($user, $codeString)

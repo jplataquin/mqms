@@ -548,6 +548,9 @@
                     <button id="btnToggleAll" class="btn btn-sm btn-outline-secondary py-1 px-2" style="font-size: 11px;">
                         <i class="bi bi-arrows-expand me-1"></i> Expand All
                     </button>
+                    <button id="btnOverallProgress" class="btn btn-sm btn-info py-1 px-2 fw-bold text-white shadow-sm" style="font-size: 11px;" onclick="showOverallProgress()">
+                        <i class="bi bi-bar-chart-fill me-1"></i> Overall Progress
+                    </button>
                 </div>
             </div>
 
@@ -1316,6 +1319,82 @@
 
         // Expose to window for external communication
         window.refreshGanttChart = loadProjectData;
+
+        window.showOverallProgress = function() {
+            if (!projectData || !projectData.sections) return;
+
+            let totalComponents = 0;
+            let sumPercentages = 0;
+
+            projectData.sections.forEach(section => {
+                if (section.contract_items) {
+                    section.contract_items.forEach(ci => {
+                        if (ci.components) {
+                            ci.components.forEach(comp => {
+                                totalComponents++;
+                                const totalScope = parseFloat(comp.quantity) || 0;
+                                let latestActualQty = 0;
+
+                                if (comp.accomplishments && comp.accomplishments.length > 0) {
+                                    let latestActual = null;
+                                    comp.accomplishments.forEach(acc => {
+                                        if (acc.type === 'ACTUAL') {
+                                            if (!latestActual) {
+                                                latestActual = acc;
+                                            } else {
+                                                const dateCurr = new Date(acc.entry_data || acc.created_at || 0);
+                                                const dateLatest = new Date(latestActual.entry_data || latestActual.created_at || 0);
+                                                if (dateCurr > dateLatest || (dateCurr.getTime() === dateLatest.getTime() && (acc.id || 0) > (latestActual.id || 0))) {
+                                                    latestActual = acc;
+                                                }
+                                            }
+                                        }
+                                    });
+                                    if (latestActual) {
+                                        latestActualQty = parseFloat(latestActual.quantity) || 0;
+                                    }
+                                }
+
+                                let percentActual = 0;
+                                if (totalScope > 0) {
+                                    percentActual = Math.min(100, (latestActualQty / totalScope) * 100);
+                                }
+                                sumPercentages += percentActual;
+                            });
+                        }
+                    });
+                }
+            });
+
+            const overallProgress = totalComponents > 0 ? (sumPercentages / totalComponents) : 0;
+            const formattedProgress = overallProgress.toFixed(2);
+            
+            const isComplete = overallProgress >= 100;
+            const barColor = isComplete ? 'bg-success' : 'bg-primary';
+
+            const html = `
+                <div class="card bg-dark border-secondary text-light">
+                    <div class="card-body text-center py-5">
+                        <h5 class="text-muted mb-4">Average Completion Status</h5>
+                        <div class="display-3 fw-bold mb-4 ${isComplete ? 'text-success' : 'text-primary'}">
+                            ${formattedProgress}%
+                        </div>
+                        <div class="progress" style="height: 20px; background-color: var(--bg-darker);">
+                            <div class="progress-bar ${barColor} progress-bar-striped progress-bar-animated" role="progressbar" style="width: ${overallProgress}%" aria-valuenow="${overallProgress}" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <p class="text-muted mt-4 small">Calculated across ${totalComponents} tracked components.</p>
+                    </div>
+                </div>
+                <div class="text-end mt-4">
+                    <button type="button" class="btn btn-secondary px-4" onclick="window.util.drawerModal.close()">Close</button>
+                </div>
+            `;
+
+            const contentEl = document.createElement('div');
+            contentEl.innerHTML = html;
+
+            window.util.drawerModal.content('Overall Project Progress', contentEl).open();
+        };
 
         btnRefresh.onclick = () => {
             loadProjectData();
