@@ -5,94 +5,151 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Accomplishment Form - {{ $project->name }}</title>
     <style>
+        * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
         body { 
-            font-family: Arial, sans-serif; 
-            font-size: 11px; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 10pt; 
+            line-height: 1.3;
             color: #000; 
             background: #fff; 
-            margin: 20px; 
+            margin: 0 auto;
+            padding: 12mm;
+            max-width: 210mm; /* A4 width */
         }
+
         h2 { 
             text-align: center; 
-            margin-bottom: 4px; 
+            margin: 0 0 4px 0; 
             text-transform: uppercase;
-            font-size: 16px;
+            font-size: 14pt;
+            letter-spacing: 0.5px;
         }
+
         .meta-info { 
             text-align: center; 
-            margin-bottom: 15px; 
-            font-size: 11px; 
+            margin-bottom: 12px; 
+            font-size: 8.5pt; 
             color: #333; 
         }
+
         .header-box {
             width: 100%;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             border-collapse: collapse;
+            table-layout: fixed;
         }
+
         .header-box td {
             border: 1px solid #000;
-            padding: 6px 10px;
-            font-size: 11px;
+            padding: 5px 8px;
+            font-size: 8.5pt;
             vertical-align: middle;
         }
+
         table.form-table { 
             width: 100%; 
             border-collapse: collapse; 
-            margin-bottom: 25px; 
+            margin-bottom: 20px; 
+            table-layout: fixed;
         }
+
+        table.form-table thead {
+            display: table-header-group;
+        }
+
         table.form-table th, table.form-table td { 
             border: 1px solid #000; 
-            padding: 6px 8px; 
+            padding: 4px 6px; 
             text-align: left; 
             vertical-align: middle; 
+            word-wrap: break-word;
         }
+
         table.form-table th { 
-            background-color: #f2f2f2; 
+            background-color: #f2f2f2 !important; 
             font-weight: bold; 
             text-transform: uppercase;
-            font-size: 10px;
+            font-size: 8pt;
+            letter-spacing: 0.3px;
         }
+
         .section-row { 
-            background-color: #e6e6e6; 
+            background-color: #e0e0e0 !important; 
             font-weight: bold; 
-            font-size: 11px;
+            font-size: 9pt;
         }
+
+        .section-row td {
+            padding: 5px 6px;
+        }
+
         .ci-row { 
             font-weight: bold; 
-            background-color: #f9f9f9; 
-            font-size: 10.5px;
+            background-color: #f5f5f5 !important; 
+            font-size: 8.5pt;
         }
+
+        .ci-row td {
+            padding: 4px 6px 4px 14px;
+        }
+
         .comp-row td { 
-            font-size: 10.5px;
-            height: 26px;
+            font-size: 8.5pt;
+            height: 24px;
+            padding: 3px 6px;
         }
+
         .text-right { 
             text-align: right; 
         }
+
         .text-center { 
             text-align: center; 
         }
+
         .fill-box {
-            background-color: #fff;
+            background-color: #fff !important;
         }
-        @media print {
-            @page { 
-                margin: 0.4in; 
-                size: portrait;
-            }
-            body { 
-                margin: 0; 
-            }
-            .no-print { 
-                display: none !important; 
-            }
-            tr {
-                page-break-inside: avoid;
-            }
+
+        .signoff-table {
+            width: 100%;
+            margin-top: 25px;
+            border-collapse: collapse;
+            table-layout: fixed;
+            break-inside: avoid;
+            page-break-inside: avoid;
         }
+
+        .signoff-table td {
+            border: none;
+            width: 50%;
+            padding: 0 15px;
+            vertical-align: top;
+            font-size: 8.5pt;
+        }
+
+        .sign-line {
+            display: block;
+            border-top: 1px solid #000;
+            width: 85%;
+            margin-top: 35px;
+            padding-top: 4px;
+            font-weight: bold;
+        }
+
+        .toolbar {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
         .btn-print { 
             display: inline-block; 
-            padding: 7px 18px; 
+            padding: 6px 20px; 
             text-align: center; 
             border: 1px solid #000; 
             background: #eee; 
@@ -101,32 +158,43 @@
             color: #000;
             font-weight: bold;
             border-radius: 4px;
+            font-size: 9pt;
         }
+
         .btn-print:hover {
             background: #ddd;
         }
-        .toolbar {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .signoff-table {
-            width: 100%;
-            margin-top: 35px;
-            border-collapse: collapse;
-        }
-        .signoff-table td {
-            border: none;
-            width: 50%;
-            padding: 10px 20px;
-            vertical-align: top;
-        }
-        .sign-line {
-            display: block;
-            border-top: 1px solid #000;
-            width: 80%;
-            margin-top: 40px;
-            padding-top: 5px;
-            font-weight: bold;
+
+        @media print {
+            @page { 
+                size: A4 portrait;
+                margin: 10mm 10mm 12mm 10mm; 
+            }
+
+            body { 
+                margin: 0; 
+                padding: 0;
+                max-width: none;
+                width: 100%;
+            }
+
+            .no-print { 
+                display: none !important; 
+            }
+
+            tr {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            table.form-table {
+                page-break-after: auto;
+            }
+
+            .signoff-table {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
         }
     </style>
 </head>
