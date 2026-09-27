@@ -539,6 +539,58 @@ class AccomplishmentTest extends TestCase
         $this->assertEquals(15.0, $responseData['sections'][0]['contract_items'][0]['components'][0]['accomplishments'][0]['quantity']);
     }
 
+    /** @test */
+    public function it_can_delete_an_accomplishment_via_api()
+    {
+        $acc = new \App\Models\Accomplishment();
+        $acc->component_id = $this->component->id;
+        $acc->type = 'ACTUAL';
+        $acc->entry_data = '2026-09-25';
+        $acc->quantity = 15.0;
+        $acc->remarks = 'Entry to be deleted';
+        $acc->created_by = $this->user->id;
+        $acc->save();
+
+        $response = $this->actingAs($this->user)->postJson('/api/accomplishment/delete', [
+            'id' => $acc->id
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+            'message' => 'Successfully deleted accomplishment.'
+        ]);
+
+        $this->assertSoftDeleted('accomplishment_registry', [
+            'id' => $acc->id,
+            'deleted_by' => $this->user->id
+        ]);
+    }
+
+    /** @test */
+    public function it_returns_error_when_deleting_non_existent_accomplishment()
+    {
+        $response = $this->actingAs($this->user)->postJson('/api/accomplishment/delete', [
+            'id' => 999999
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 0,
+            'message' => 'Record not found'
+        ]);
+    }
+
+    /** @test */
+    public function it_renders_delete_pill_button_and_confirmation_modal_in_studio_mode()
+    {
+        $response = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/studio');
+        $response->assertStatus(200);
+        $response->assertSee('delete-pill-btn', false);
+        $response->assertSee('deleteAccomplishment', false);
+        $response->assertSee('primary_modal', false);
+    }
+
     protected function grantAccessCode($user, $codeString)
     {
         // 1. Create or find the AccessCode

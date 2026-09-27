@@ -395,6 +395,27 @@ class AccomplishmentController extends Controller
         ]);
     }
 
+    public function _delete(Request $request){
+        $id = $request->input('id');
+        $accomplishment = Accomplishment::find($id);
+
+        if (!$accomplishment) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Record not found'
+            ]);
+        }
+
+        $accomplishment->deleted_by = Auth::id();
+        $accomplishment->save();
+        $accomplishment->delete();
+
+        return response()->json([
+            'status'  => 1,
+            'message' => 'Successfully deleted accomplishment.'
+        ]);
+    }
+
     public function display_record($id){
 
         $accomplishment = Accomplishment::findOrFail($id);

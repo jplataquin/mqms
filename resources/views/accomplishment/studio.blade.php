@@ -363,6 +363,23 @@
             user-select: none;
         }
 
+        .gantt-pill .delete-pill-btn {
+            display: none;
+            cursor: pointer;
+            opacity: 0.8;
+            font-size: 11px;
+            transition: opacity 0.15s;
+        }
+
+        .gantt-pill .delete-pill-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .gantt-pill:hover .delete-pill-btn {
+            display: inline-block;
+        }
+
         .gantt-progress-bar {
             height: 6px;
             border-radius: 3px;
@@ -536,6 +553,20 @@
             </div>
         </div>
         <div class="drawer_modal_body p-3">
+        </div>
+    </div>
+
+    <!-- Primary Modal (for window.util.confirm / alert) -->
+    <div id="primary_modal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content bg-dark border-secondary text-light">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title" id="primary_modal_title"></h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="primary_modal_body"></div>
+                <div class="modal-footer border-secondary" id="primary_modal_footer"></div>
+            </div>
         </div>
     </div>
 
@@ -844,7 +875,10 @@
                                             bodyHtml += `
                                             <div class="gantt-pill pill-target" title="Target: ${formatNumber(targetQty)} ${escapeHtml(unitText)} as of ${escapeHtml(targetDateStr)}">
                                                 <span>🎯 ${formatNumber(targetQty)}</span>
-                                                <small>${escapeHtml(unitText)}</small>
+                                                <div class="d-flex align-items-center gap-1">
+                                                    <small>${escapeHtml(unitText)}</small>
+                                                    <i class="bi bi-x-circle text-danger ms-1 delete-pill-btn" onclick="event.stopPropagation(); deleteAccomplishment(${entry.latestTarget.id})" title="Delete Target"></i>
+                                                </div>
                                             </div>`;
                                         } else {
                                             bodyHtml += `
@@ -860,7 +894,10 @@
                                             bodyHtml += `
                                             <div class="gantt-pill pill-actual" title="Actual: ${formatNumber(actualQty)} ${escapeHtml(unitText)} as of ${escapeHtml(monthActualDateStr)}">
                                                 <span>✅ ${formatNumber(actualQty)}</span>
-                                                <small>${escapeHtml(unitText)}</small>
+                                                <div class="d-flex align-items-center gap-1">
+                                                    <small>${escapeHtml(unitText)}</small>
+                                                    <i class="bi bi-x-circle text-danger ms-1 delete-pill-btn" onclick="event.stopPropagation(); deleteAccomplishment(${entry.latestActual.id})" title="Delete Actual"></i>
+                                                </div>
                                             </div>`;
                                         } else {
                                             bodyHtml += `
@@ -1003,6 +1040,34 @@
                     loadProjectData();
                 }
             })).open();
+        };
+
+        window.deleteAccomplishment = async function(id) {
+            const confirmed = await window.util.confirm('Are you sure you want to delete this accomplishment record?');
+            if (confirmed) {
+                fetch('/api/accomplishment/delete', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({ id: id })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 1) {
+                        loadProjectData();
+                    } else {
+                        alert(data.message || 'Error deleting accomplishment');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('A network error occurred.');
+                });
+            }
         };
 
         /* ================= Zoom In / Out ================= */
