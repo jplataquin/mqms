@@ -849,6 +849,7 @@
                                 
                                 let overallLatestActual = null;
                                 let firstActual = null;
+                                let allTimeLatestTarget = null;
                                 const timeKeyAccomplishments = {};
 
                                 if (comp.accomplishments) {
@@ -867,6 +868,13 @@
                                                 if (dateCurr > dateLatest || (dateCurr.getTime() === dateLatest.getTime() && (acc.id || 0) > (overallLatestActual.id || 0))) {
                                                     overallLatestActual = acc;
                                                 }
+                                            }
+                                        }
+
+                                        // Track all-time latest target
+                                        if (acc.type === 'TARGET' && acc.entry_data) {
+                                            if (!allTimeLatestTarget || new Date(acc.entry_data) > new Date(allTimeLatestTarget.entry_data) || (acc.entry_data === allTimeLatestTarget.entry_data && (acc.id || 0) > (allTimeLatestTarget.id || 0))) {
+                                                allTimeLatestTarget = acc;
                                             }
                                         }
 
@@ -934,8 +942,25 @@
                                         }
                                     }
                                 }
+
+                                let requiredVelocity = 0;
+                                if (allTimeLatestTarget && totalActual < totalScope) {
+                                    const dTargetStr = (allTimeLatestTarget.entry_data || '').substring(0, 10);
+                                    if (dTargetStr) {
+                                        const dTarget = new Date(dTargetStr);
+                                        const today = new Date();
+                                        today.setHours(0,0,0,0);
+                                        dTarget.setHours(0,0,0,0);
+                                        const daysLeft = Math.max(1, Math.ceil((dTarget - today) / (1000 * 60 * 60 * 24)));
+                                        const remainingQty = totalScope - totalActual;
+                                        requiredVelocity = remainingQty / daysLeft;
+                                    }
+                                }
+
                                 const compStats = { 
                                     velocity: compVelocity, 
+                                    reqVelocity: requiredVelocity,
+                                    targetDeadline: allTimeLatestTarget ? (allTimeLatestTarget.entry_data || '').substring(0, 10) : null,
                                     eta: compEtaDateStr, 
                                     days: daysElapsed,
                                     totalActual: totalActual,
@@ -1194,8 +1219,10 @@
 
                 const stats = acc.compStats || {};
                 const velocityStr = stats.velocity > 0 ? `${formatNumber(stats.velocity)} ${escapeHtml(unit)}/day` : 'N/A';
+                const reqVelocityStr = stats.reqVelocity > 0 ? `${formatNumber(stats.reqVelocity)} ${escapeHtml(unit)}/day` : 'N/A';
                 const etaStr = stats.eta ? stats.eta : (stats.percentActual >= 100 ? 'Completed' : 'Insufficient Data');
                 const daysStr = stats.days ? `${stats.days} day(s) active` : '';
+                const speedStatusClass = (stats.velocity && stats.reqVelocity) ? (stats.velocity >= stats.reqVelocity ? 'text-success' : 'text-danger') : 'text-info';
 
                 const html = `
                     <div class="card mb-3 border-secondary bg-dark">
@@ -1206,17 +1233,21 @@
 
                     <div class="card mb-3 border-secondary bg-dark">
                         <div class="card-header bg-dark border-secondary py-2 d-flex justify-content-between align-items-center">
-                            <span class="text-light fw-bold small"><i class="bi bi-speedometer2 text-info me-1"></i> Running Velocity & ETA</span>
+                            <span class="text-light fw-bold small"><i class="bi bi-speedometer2 text-info me-1"></i> Velocity & Target Rate</span>
                             <small class="text-muted">${daysStr}</small>
                         </div>
                         <div class="card-body py-2">
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="text-muted small">Running Speed / Rate</div>
-                                    <div class="fw-semibold text-info">${velocityStr}</div>
+                            <div class="row g-2">
+                                <div class="col-4">
+                                    <div class="text-muted small" style="font-size: 11px;">Running Speed</div>
+                                    <div class="fw-semibold ${speedStatusClass}">${velocityStr}</div>
                                 </div>
-                                <div class="col-6">
-                                    <div class="text-muted small">Estimated Completion</div>
+                                <div class="col-4">
+                                    <div class="text-muted small" style="font-size: 11px;">Required Speed</div>
+                                    <div class="fw-semibold text-light">${reqVelocityStr}</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="text-muted small" style="font-size: 11px;">Est. Completion</div>
                                     <div class="fw-semibold text-warning">${escapeHtml(etaStr)}</div>
                                 </div>
                             </div>
@@ -1406,6 +1437,7 @@
             // Running calculation tracking (independent of scope date)
             let projectFirstActualDate = null;
             let projectLatestActualDate = null;
+            let projectLatestTargetDate = null;
             let sumAllTimeActualPercent = 0;
 
             projectData.sections.forEach(section => {
@@ -1450,6 +1482,12 @@
                                             }
                                             if (!allTimeLatestActual || new Date(acc.entry_data) > new Date(allTimeLatestActual.entry_data) || (acc.entry_data === allTimeLatestActual.entry_data && acc.id > allTimeLatestActual.id)) {
                                                 allTimeLatestActual = acc;
+                                            }
+                                        }
+
+                                        if (acc.type === 'TARGET' && accDateStr) {
+                                            if (!projectLatestTargetDate || new Date(accDateStr) > new Date(projectLatestTargetDate)) {
+                                                projectLatestTargetDate = accDateStr;
                                             }
                                         }
                                     });
@@ -1507,6 +1545,20 @@
             }
 
             const formattedRunningVelocity = runningVelocityPerDay > 0 ? `${runningVelocityPerDay.toFixed(2)}%/day` : '0.00%/day';
+
+            let requiredVelocityPerDay = 0;
+            if (projectLatestTargetDate && currentOverallActual < 100) {
+                const dTarget = new Date(projectLatestTargetDate);
+                const today = new Date();
+                today.setHours(0,0,0,0);
+                dTarget.setHours(0,0,0,0);
+                const daysLeft = Math.max(1, Math.ceil((dTarget - today) / (1000 * 60 * 60 * 24)));
+                const remainingPercent = 100 - currentOverallActual;
+                requiredVelocityPerDay = remainingPercent / daysLeft;
+            }
+            const formattedRequiredVelocity = requiredVelocityPerDay > 0 ? `${requiredVelocityPerDay.toFixed(2)}%/day` : 'N/A';
+            const projectSpeedStatusClass = (runningVelocityPerDay && requiredVelocityPerDay) ? (runningVelocityPerDay >= requiredVelocityPerDay ? 'text-success' : 'text-danger') : 'text-info';
+
             const formatNum = (num) => num.toFixed(2) + '%';
             const varianceText = variance >= 0 ? `+${formatNum(variance)} Ahead` : `${formatNum(Math.abs(variance))} Behind`;
             const varianceClass = variance >= 0 ? 'text-success' : 'text-danger';
@@ -1519,17 +1571,21 @@
 
                 <div class="card mb-3 border-secondary bg-dark">
                     <div class="card-header bg-dark border-secondary py-2 d-flex justify-content-between align-items-center">
-                        <span class="text-light fw-bold small"><i class="bi bi-speedometer2 text-info me-1"></i> Running Velocity & ETA</span>
+                        <span class="text-light fw-bold small"><i class="bi bi-speedometer2 text-info me-1"></i> Velocity & Target Rate</span>
                         <small class="text-muted">${runningDaysElapsed > 0 ? runningDaysElapsed + ' day(s) tracked' : ''}</small>
                     </div>
                     <div class="card-body py-2">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="text-muted small">Running Speed / Rate</div>
-                                <div class="fw-semibold text-info">${formattedRunningVelocity}</div>
+                        <div class="row g-2">
+                            <div class="col-4">
+                                <div class="text-muted small" style="font-size: 11px;">Running Speed</div>
+                                <div class="fw-semibold ${projectSpeedStatusClass}">${formattedRunningVelocity}</div>
                             </div>
-                            <div class="col-6">
-                                <div class="text-muted small">Estimated Completion</div>
+                            <div class="col-4">
+                                <div class="text-muted small" style="font-size: 11px;">Required Speed</div>
+                                <div class="fw-semibold text-light">${formattedRequiredVelocity}</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="text-muted small" style="font-size: 11px;">Est. Completion</div>
                                 <div class="fw-semibold text-warning">${escapeHtml(projectEtaStr)}</div>
                             </div>
                         </div>
@@ -1613,6 +1669,7 @@
             let latestTarget = null;
             let allTimeFirstActual = null;
             let allTimeLatestActual = null;
+            let allTimeLatestTarget = null;
 
             if (comp.accomplishments && comp.accomplishments.length > 0) {
                 comp.accomplishments.forEach(acc => {
@@ -1636,6 +1693,12 @@
                         }
                         if (!allTimeLatestActual || new Date(acc.entry_data) > new Date(allTimeLatestActual.entry_data) || (acc.entry_data === allTimeLatestActual.entry_data && acc.id > allTimeLatestActual.id)) {
                             allTimeLatestActual = acc;
+                        }
+                    }
+
+                    if (acc.type === 'TARGET' && accDateStr) {
+                        if (!allTimeLatestTarget || new Date(acc.entry_data) > new Date(allTimeLatestTarget.entry_data) || (acc.entry_data === allTimeLatestTarget.entry_data && acc.id > allTimeLatestTarget.id)) {
+                            allTimeLatestTarget = acc;
                         }
                     }
                 });
@@ -1676,11 +1739,27 @@
                 compEtaDateStr = 'Completed';
             }
 
+            let requiredVelocity = 0;
+            if (allTimeLatestTarget && allTimeActualQty < totalScope) {
+                const dTargetStr = (allTimeLatestTarget.entry_data || '').substring(0, 10);
+                if (dTargetStr) {
+                    const dTarget = new Date(dTargetStr);
+                    const today = new Date();
+                    today.setHours(0,0,0,0);
+                    dTarget.setHours(0,0,0,0);
+                    const daysLeft = Math.max(1, Math.ceil((dTarget - today) / (1000 * 60 * 60 * 24)));
+                    const remainingQty = totalScope - allTimeActualQty;
+                    requiredVelocity = remainingQty / daysLeft;
+                }
+            }
+
             const remainingQty = Math.max(0, totalScope - actualQty);
             const formatNum = (num) => num.toFixed(2) + '%';
             const varianceText = variance >= 0 ? `+${formatNum(variance)} Ahead` : `${formatNum(Math.abs(variance))} Behind`;
             const varianceClass = variance >= 0 ? 'text-success' : 'text-danger';
             const velocityStr = compVelocity > 0 ? `${formatNumber(compVelocity)} ${escapeHtml(unitText)}/day` : '0.00 ' + escapeHtml(unitText) + '/day';
+            const reqVelocityStr = requiredVelocity > 0 ? `${formatNumber(requiredVelocity)} ${escapeHtml(unitText)}/day` : 'N/A';
+            const speedStatusClass = (compVelocity && requiredVelocity) ? (compVelocity >= requiredVelocity ? 'text-success' : 'text-danger') : 'text-info';
 
             const html = `
                 <div class="card mb-3 border-secondary bg-dark">
@@ -1696,17 +1775,21 @@
 
                 <div class="card mb-3 border-secondary bg-dark">
                     <div class="card-header bg-dark border-secondary py-2 d-flex justify-content-between align-items-center">
-                        <span class="text-light fw-bold small"><i class="bi bi-speedometer2 text-info me-1"></i> Running Velocity & ETA</span>
+                        <span class="text-light fw-bold small"><i class="bi bi-speedometer2 text-info me-1"></i> Velocity & Target Rate</span>
                         <small class="text-muted">${daysElapsed > 0 ? daysElapsed + ' day(s) active' : ''}</small>
                     </div>
                     <div class="card-body py-2">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="text-muted small">Running Speed / Rate</div>
-                                <div class="fw-semibold text-info">${velocityStr}</div>
+                        <div class="row g-2">
+                            <div class="col-4">
+                                <div class="text-muted small" style="font-size: 11px;">Running Speed</div>
+                                <div class="fw-semibold ${speedStatusClass}">${velocityStr}</div>
                             </div>
-                            <div class="col-6">
-                                <div class="text-muted small">Estimated Completion</div>
+                            <div class="col-4">
+                                <div class="text-muted small" style="font-size: 11px;">Required Speed</div>
+                                <div class="fw-semibold text-light">${reqVelocityStr}</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="text-muted small" style="font-size: 11px;">Est. Completion</div>
                                 <div class="fw-semibold text-warning">${escapeHtml(compEtaDateStr)}</div>
                             </div>
                         </div>
