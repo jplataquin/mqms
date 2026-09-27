@@ -577,16 +577,16 @@
     <!-- Floating Context Menu -->
     <div id="ganttContextMenu" class="gantt-context-menu">
         <div class="gantt-context-menu-header text-truncate" id="contextMenuTitle">Component Actions</div>
-        <div class="gantt-context-menu-item text-primary" onclick="openAccomplishmentDrawer('ACTUAL')">
+        <div class="gantt-context-menu-item text-primary" id="ctxMenuAddActual" onclick="openAccomplishmentDrawer('ACTUAL')">
             <i class="bi bi-check-circle-fill text-primary"></i>
             <span>Add Actual</span>
         </div>
-        <div class="gantt-context-menu-item text-success" onclick="openAccomplishmentDrawer('TARGET')">
+        <div class="gantt-context-menu-item text-success" id="ctxMenuAddTarget" onclick="openAccomplishmentDrawer('TARGET')">
             <i class="bi bi-bullseye text-success"></i>
             <span>Add Target</span>
         </div>
-        <div class="border-top border-secondary my-1"></div>
-        <div class="gantt-context-menu-item text-danger" onclick="excludeComponentFromMonitoring()">
+        <div class="border-top border-secondary my-1" id="ctxMenuDivider"></div>
+        <div class="gantt-context-menu-item text-danger" id="ctxMenuExclude" onclick="excludeComponentFromMonitoring()">
             <i class="bi bi-eye-slash text-danger"></i>
             <span>Exclude from Monitoring</span>
         </div>
@@ -1123,6 +1123,10 @@
         };
 
         /* ================= Right-Click Context Menu & Drawer ================= */
+        const ctxMenuAddActual = document.getElementById('ctxMenuAddActual');
+        const ctxMenuAddTarget = document.getElementById('ctxMenuAddTarget');
+        const ctxMenuDivider   = document.getElementById('ctxMenuDivider');
+
         document.getElementById('ganttTable').addEventListener('contextmenu', (e) => {
             const compRow = e.target.closest('.row-component');
             if (!compRow) return;
@@ -1145,7 +1149,22 @@
             contextMenuTarget.compUnit = compUnit;
             contextMenuTarget.cellDate = cellDate;
 
-            contextMenuTitle.innerText = `${compName}${cell.dataset.cellLabel ? ' (' + cell.dataset.cellLabel + ')' : ''}`;
+            // Check if right-clicked inside the WBS Work Item column or other sticky non-timeline columns
+            const isWbsCol = cell.classList.contains('sticky-col-tree') || cell.classList.contains('sticky-col-metric') || cell.classList.contains('sticky-col-progress');
+
+            if (isWbsCol) {
+                // In WBS column: hide Add Actual, Add Target, and divider
+                if (ctxMenuAddActual) ctxMenuAddActual.style.display = 'none';
+                if (ctxMenuAddTarget) ctxMenuAddTarget.style.display = 'none';
+                if (ctxMenuDivider) ctxMenuDivider.style.display = 'none';
+                contextMenuTitle.innerText = `${compName}`;
+            } else {
+                // In timeline columns: show Add Actual, Add Target, and divider
+                if (ctxMenuAddActual) ctxMenuAddActual.style.display = 'flex';
+                if (ctxMenuAddTarget) ctxMenuAddTarget.style.display = 'flex';
+                if (ctxMenuDivider) ctxMenuDivider.style.display = 'block';
+                contextMenuTitle.innerText = `${compName}${cell.dataset.cellLabel ? ' (' + cell.dataset.cellLabel + ')' : ''}`;
+            }
 
             // Position context menu
             let x = e.clientX;
