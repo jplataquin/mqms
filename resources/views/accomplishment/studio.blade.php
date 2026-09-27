@@ -248,6 +248,30 @@
             background-color: rgba(255, 255, 255, 0.01);
         }
 
+        .month-header.current-month-col {
+            background-color: rgba(255, 193, 7, 0.12) !important;
+            border-bottom: 2px solid #ffc107 !important;
+        }
+
+        .month-header.current-month-col span {
+            color: #ffc107 !important;
+            font-weight: 700;
+        }
+
+        td.month-cell.current-month-col {
+            background-color: rgba(255, 193, 7, 0.05) !important;
+            border-left: 1px dashed rgba(255, 193, 7, 0.35) !important;
+            border-right: 1px dashed rgba(255, 193, 7, 0.35) !important;
+        }
+
+        .row-component:hover td.month-cell.current-month-col {
+            background-color: rgba(255, 193, 7, 0.12) !important;
+        }
+
+        .row-component.active td.month-cell.current-month-col {
+            background-color: rgba(255, 193, 7, 0.2) !important;
+        }
+
         .day-cell {
             min-width: 45px;
             padding: 2px !important;
@@ -652,6 +676,11 @@
             const columns = getTimelineColumns();
             const filter = searchInput.value.toLowerCase().trim();
 
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            const currentMonth = now.getMonth() + 1;
+            const currentMonthKey = `${currentYear}-${currentMonth < 10 ? '0' + currentMonth : currentMonth}`;
+
             // Extract formatted current month title if in day view
             let currentMonthTitle = '';
             if (currentViewMode === 'day' && zoomedMonthKey) {
@@ -697,7 +726,9 @@
                     <th class="sticky-col-progress">Accomplished</th>`;
 
                 columns.forEach(col => {
-                    headHtml += `<th class="month-header" data-month="${col.monthKey}" style="cursor: pointer;" title="Click zoom icon or double click to view days">
+                    const isCurrentMonth = (currentViewMode === 'month' && col.monthKey === currentMonthKey);
+                    const currentClass = isCurrentMonth ? ' current-month-col' : '';
+                    headHtml += `<th class="month-header${currentClass}" data-month="${col.monthKey}" style="cursor: pointer;" title="Click zoom icon or double click to view days">
                         <div class="d-flex align-items-center justify-content-center gap-1">
                             <span>${col.label}</span>
                             <i class="bi bi-zoom-in text-info" style="font-size: 11px; opacity: 0.85;" onclick="event.stopPropagation(); zoomIn('${col.monthKey}')" title="Zoom into ${col.label}"></i>
@@ -733,8 +764,10 @@
                     <td class="sticky-col-progress text-muted">-</td>`;
 
                 columns.forEach(col => {
+                    const isCurrentMonth = (currentViewMode === 'month' && col.monthKey === currentMonthKey);
+                    const currentClass = isCurrentMonth ? ' current-month-col' : '';
                     const cellClass = currentViewMode === 'day' ? 'day-cell' : 'month-cell';
-                    bodyHtml += `<td class="${cellClass}" data-month="${col.monthKey}"></td>`;
+                    bodyHtml += `<td class="${cellClass}${currentClass}" data-month="${col.monthKey}"></td>`;
                 });
                 bodyHtml += `</tr>`;
 
@@ -758,8 +791,10 @@
                             <td class="sticky-col-progress text-muted">-</td>`;
 
                         columns.forEach(col => {
+                            const isCurrentMonth = (currentViewMode === 'month' && col.monthKey === currentMonthKey);
+                            const currentClass = isCurrentMonth ? ' current-month-col' : '';
                             const cellClass = currentViewMode === 'day' ? 'day-cell' : 'month-cell';
-                            bodyHtml += `<td class="${cellClass}" data-month="${col.monthKey}"></td>`;
+                            bodyHtml += `<td class="${cellClass}${currentClass}" data-month="${col.monthKey}"></td>`;
                         });
                         bodyHtml += `</tr>`;
 
@@ -864,9 +899,11 @@
                                     const entry = timeKeyAccomplishments[col.key];
                                     const hasTarget = !!(entry && entry.latestTarget);
                                     const hasActual = !!(entry && entry.latestActual);
+                                    const isCurrentMonth = (currentViewMode === 'month' && col.monthKey === currentMonthKey);
+                                    const currentClass = isCurrentMonth ? ' current-month-col' : '';
                                     const cellClass = currentViewMode === 'day' ? 'day-cell' : 'month-cell';
 
-                                    bodyHtml += `<td class="${cellClass}" data-month="${col.monthKey}" data-comp-id="${comp.id}" data-comp-name="${escapeHtml(comp.name)}" data-cell-key="${col.key}" data-cell-label="${escapeHtml(col.label)}">`;
+                                    bodyHtml += `<td class="${cellClass}${currentClass}" data-month="${col.monthKey}" data-comp-id="${comp.id}" data-comp-name="${escapeHtml(comp.name)}" data-cell-key="${col.key}" data-cell-label="${escapeHtml(col.label)}">`;
                                     if (hasTarget || hasActual) {
                                         // Target row (always on top)
                                         if (hasTarget) {

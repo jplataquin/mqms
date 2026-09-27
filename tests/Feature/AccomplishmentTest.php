@@ -590,6 +590,7 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('deleteAccomplishment', false);
         $response->assertSee('viewAccomplishment', false);
         $response->assertSee('primary_modal', false);
+        $response->assertSee('current-month-col', false);
     }
 
     protected function grantAccessCode($user, $codeString)
