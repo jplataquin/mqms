@@ -76,7 +76,7 @@ class AccomplishmentController extends Controller
                 $q->whereNull('deleted_at')->orderBy('name', 'asc'); 
             },
             'Sections.ContractItems' => function($q) { 
-                $q->whereNull('deleted_at')->orderBy('item_code', 'asc')->orderBy('name', 'asc'); 
+                $q->whereNull('deleted_at')->orderBy('item_code', 'asc')->orderBy('description', 'asc'); 
             },
             'Sections.ContractItems.Components' => function($q) { 
                 $q->whereNull('deleted_at')->orderBy('name', 'asc'); 
