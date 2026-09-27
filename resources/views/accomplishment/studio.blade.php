@@ -791,6 +791,12 @@
             }
 
             projectData.sections.forEach(section => {
+                // Check if section has any monitored components
+                const sectionValidComponentsCount = (section.contract_items || []).reduce((sum, ci) => {
+                    return sum + (ci.components || []).filter(c => !c.exclude_from_monitoring || c.exclude_from_monitoring == 0).length;
+                }, 0);
+                if (sectionValidComponentsCount === 0) return;
+
                 const sectionMatches = !filter || section.name.toLowerCase().includes(filter);
                 const isSectionCollapsed = collapsedSections.has(section.id);
                 const chevronIcon = isSectionCollapsed ? 'bi-chevron-right' : 'bi-chevron-down';
@@ -816,6 +822,10 @@
                 // Contract Items
                 if (section.contract_items) {
                     section.contract_items.forEach(ci => {
+                        // Skip contract items with empty components or where all components are excluded
+                        const validComponents = (ci.components || []).filter(c => !c.exclude_from_monitoring || c.exclude_from_monitoring == 0);
+                        if (validComponents.length === 0) return;
+
                         const ciName = (ci.item_code ? ci.item_code + ' ' : '') + (ci.description || ci.name || '');
                         const ciMatches = !filter || ciName.toLowerCase().includes(filter);
                         const isCiCollapsed = collapsedContractItems.has(ci.id);
@@ -840,8 +850,7 @@
                         bodyHtml += `</tr>`;
 
                         // Components
-                        if (ci.components) {
-                            ci.components.forEach(comp => {
+                        validComponents.forEach(comp => {
                                 const compMatches = !filter || comp.name.toLowerCase().includes(filter) || sectionMatches || ciMatches;
                                 if (filter && !compMatches) return;
 
@@ -1057,6 +1066,10 @@
                     });
                 }
             });
+
+            if (!bodyHtml) {
+                bodyHtml = `<tr><td colspan="${3 + columns.length}" class="text-center py-4 text-muted">No monitored components found in this project.</td></tr>`;
+            }
 
             ganttBody.innerHTML = bodyHtml;
         }
@@ -1514,6 +1527,7 @@
                     section.contract_items.forEach(ci => {
                         if (ci.components) {
                             ci.components.forEach(comp => {
+                                if (comp.exclude_from_monitoring == 1) return;
                                 totalComponents++;
                                 const totalScope = parseFloat(comp.quantity) || 0;
                                 let targetQty = 0;
