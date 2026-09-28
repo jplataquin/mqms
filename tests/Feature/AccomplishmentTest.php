@@ -598,6 +598,25 @@ class AccomplishmentTest extends TestCase
     }
 
     /** @test */
+    public function it_renders_drawer_velocity_metrics_with_est_completion_before_required_speed_in_studio_mode()
+    {
+        $response = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/studio');
+        $response->assertStatus(200);
+
+        $content = $response->getContent();
+        $this->assertStringContainsString('Running Speed', $content);
+        $this->assertStringContainsString('Est. Completion', $content);
+        $this->assertStringContainsString('Required Speed', $content);
+
+        $runningPos = strpos($content, 'Running Speed');
+        $estCompPos = strpos($content, 'Est. Completion');
+        $reqSpeedPos = strpos($content, 'Required Speed');
+
+        $this->assertTrue($runningPos < $estCompPos);
+        $this->assertTrue($estCompPos < $reqSpeedPos);
+    }
+
+    /** @test */
     public function it_can_fetch_accomplishments_via_third_party_api()
     {
         // 1. Create API Credential
@@ -818,6 +837,14 @@ class AccomplishmentTest extends TestCase
 
         $compToInclude->refresh();
         $this->assertEquals(0, $compToInclude->exclude_from_monitoring);
+    }
+
+    /** @test */
+    public function it_defaults_to_active_status_filter_on_projects_page()
+    {
+        $response = $this->actingAs($this->user)->get('/projects');
+        $response->assertStatus(200);
+        $response->assertSee('<option value="ACTV" selected>ACTV</option>', false);
     }
 
     protected function grantAccessCode($user, $codeString)

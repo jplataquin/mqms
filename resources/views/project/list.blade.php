@@ -41,7 +41,7 @@
                         <label>Status</label>
                         <select class="form-control" id="statusSelect">
                             <option value="">ALL</option>
-                            <option value="ACTV">ACTV</option>
+                            <option value="ACTV" selected>ACTV</option>
                             <option value="INAC">INAC</option>
                         </select>
                     </div>

@@ -1428,12 +1428,12 @@
                                     <div class="fw-semibold ${speedStatusClass}">${velocityStr}</div>
                                 </div>
                                 <div class="col-4">
-                                    <div class="text-muted small" style="font-size: 11px;">Required Speed</div>
-                                    <div class="fw-semibold text-light">${reqVelocityStr}</div>
-                                </div>
-                                <div class="col-4">
                                     <div class="text-muted small" style="font-size: 11px;">Est. Completion</div>
                                     <div class="fw-semibold text-warning">${escapeHtml(etaStr)}</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="text-muted small" style="font-size: 11px;">Required Speed</div>
+                                    <div class="fw-semibold text-light">${reqVelocityStr}</div>
                                 </div>
                             </div>
                         </div>
@@ -1769,12 +1769,12 @@
                                 <div class="fw-semibold ${projectSpeedStatusClass}">${formattedRunningVelocity}</div>
                             </div>
                             <div class="col-4">
-                                <div class="text-muted small" style="font-size: 11px;">Required Speed</div>
-                                <div class="fw-semibold text-light">${formattedRequiredVelocity}</div>
-                            </div>
-                            <div class="col-4">
                                 <div class="text-muted small" style="font-size: 11px;">Est. Completion</div>
                                 <div class="fw-semibold text-warning">${escapeHtml(projectEtaStr)}</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="text-muted small" style="font-size: 11px;">Required Speed</div>
+                                <div class="fw-semibold text-light">${formattedRequiredVelocity}</div>
                             </div>
                         </div>
                     </div>
@@ -1975,12 +1975,12 @@
                                 <div class="fw-semibold ${speedStatusClass}">${velocityStr}</div>
                             </div>
                             <div class="col-4">
-                                <div class="text-muted small" style="font-size: 11px;">Required Speed</div>
-                                <div class="fw-semibold text-light">${reqVelocityStr}</div>
-                            </div>
-                            <div class="col-4">
                                 <div class="text-muted small" style="font-size: 11px;">Est. Completion</div>
                                 <div class="fw-semibold text-warning">${escapeHtml(compEtaDateStr)}</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="text-muted small" style="font-size: 11px;">Required Speed</div>
+                                <div class="fw-semibold text-light">${reqVelocityStr}</div>
                             </div>
                         </div>
                     </div>
