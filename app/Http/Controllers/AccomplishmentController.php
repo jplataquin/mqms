@@ -315,11 +315,29 @@ class AccomplishmentController extends Controller
             ]);
         }
 
+        $type = $request->input('type');
+        $latestAccomplishment = $component->Accomplishments()
+            ->where('type', $type)
+            ->orderBy('entry_data', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if ($latestAccomplishment && (float) $request->input('quantity') <= (float) $latestAccomplishment->quantity) {
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => [
+                    'quantity' => ['The quantity must not be lower than or equal to the last previous accomplishment record quantity.']
+                ]
+            ]);
+        }
+
         $user_id = Auth::user()->id;
 
         $accomplishment = new Accomplishment();
         $accomplishment->component_id   = $request->input('component_id');
-        $accomplishment->type           = $request->input('type');
+        $accomplishment->type           = $type;
         $accomplishment->entry_data     = $request->input('entry_date');
         $accomplishment->quantity       = $request->input('quantity');
         $accomplishment->remarks        = $request->input('remarks');
@@ -371,11 +389,29 @@ class AccomplishmentController extends Controller
             ]);
         }
 
+        $type = $request->input('type') ?? 'ACTUAL';
+        $latestAccomplishment = $component->Accomplishments()
+            ->where('type', $type)
+            ->orderBy('entry_data', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if ($latestAccomplishment && (float) $request->input('quantity') <= (float) $latestAccomplishment->quantity) {
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => [
+                    'quantity' => ['The quantity must not be lower than or equal to the last previous accomplishment record quantity.']
+                ]
+            ]);
+        }
+
         $user_id = Auth::user()->id;
 
         $accomplishment = new Accomplishment();
         $accomplishment->component_id   = $request->input('component_id');
-        $accomplishment->type           = $request->input('type') ?? 'ACTUAL';
+        $accomplishment->type           = $type;
         $accomplishment->entry_data     = $request->input('entry_data');
         $accomplishment->quantity       = $request->input('quantity');
         $accomplishment->remarks        = $request->input('remarks');

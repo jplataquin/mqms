@@ -473,6 +473,216 @@ class AccomplishmentTest extends TestCase
     }
 
     /** @test */
+    public function it_fails_creation_if_quantity_is_lower_than_or_equal_to_last_previous_accomplishment_quantity()
+    {
+        $this->grantAccessCode($this->user, 'accomplishment:all:create');
+
+        // Create an initial accomplishment record (quantity = 25.0)
+        $prior = new \App\Models\Accomplishment();
+        $prior->component_id = $this->component->id;
+        $prior->type = 'ACTUAL';
+        $prior->entry_data = '2026-09-20';
+        $prior->quantity = 25.0;
+        $prior->remarks = 'Prior accomplishment';
+        $prior->created_by = $this->user->id;
+        $prior->save();
+
+        // 1. Test _create API with strictly lower quantity (20.0 <= 25.0)
+        $response1 = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
+            'component_id' => $this->component->id,
+            'type'         => 'ACTUAL',
+            'entry_date'   => '2026-09-21',
+            'quantity'     => 20.0,
+            'remarks'      => 'Lower quantity'
+        ]);
+
+        $response1->assertStatus(200);
+        $response1->assertJson([
+            'status' => -2,
+            'message' => 'Failed Validation',
+            'data' => [
+                'quantity' => ['The quantity must not be lower than or equal to the last previous accomplishment record quantity.']
+            ]
+        ]);
+
+        // 2. Test _create API with equal quantity (25.0 <= 25.0)
+        $response2 = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
+            'component_id' => $this->component->id,
+            'type'         => 'ACTUAL',
+            'entry_date'   => '2026-09-21',
+            'quantity'     => 25.0,
+            'remarks'      => 'Equal quantity'
+        ]);
+
+        $response2->assertStatus(200);
+        $response2->assertJson([
+            'status' => -2,
+            'message' => 'Failed Validation',
+            'data' => [
+                'quantity' => ['The quantity must not be lower than or equal to the last previous accomplishment record quantity.']
+            ]
+        ]);
+
+        // 3. Test _add API with strictly lower quantity (20.0 <= 25.0)
+        $response3 = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
+            'component_id' => $this->component->id,
+            'entry_data'   => '2026-09-21',
+            'quantity'     => 20.0,
+            'remarks'      => 'Lower quantity',
+            'type'         => 'ACTUAL'
+        ]);
+
+        $response3->assertStatus(200);
+        $response3->assertJson([
+            'status' => -2,
+            'message' => 'Failed Validation',
+            'data' => [
+                'quantity' => ['The quantity must not be lower than or equal to the last previous accomplishment record quantity.']
+            ]
+        ]);
+
+        // 4. Test _add API with equal quantity (25.0 <= 25.0)
+        $response4 = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
+            'component_id' => $this->component->id,
+            'entry_data'   => '2026-09-21',
+            'quantity'     => 25.0,
+            'remarks'      => 'Equal quantity',
+            'type'         => 'ACTUAL'
+        ]);
+
+        $response4->assertStatus(200);
+        $response4->assertJson([
+            'status' => -2,
+            'message' => 'Failed Validation',
+            'data' => [
+                'quantity' => ['The quantity must not be lower than or equal to the last previous accomplishment record quantity.']
+            ]
+        ]);
+    }
+
+    /** @test */
+    public function it_allows_creation_if_quantity_is_greater_than_last_previous_accomplishment_quantity()
+    {
+        $this->grantAccessCode($this->user, 'accomplishment:all:create');
+
+        // Create an initial accomplishment record (quantity = 25.0)
+        $prior = new \App\Models\Accomplishment();
+        $prior->component_id = $this->component->id;
+        $prior->type = 'ACTUAL';
+        $prior->entry_data = '2026-09-20';
+        $prior->quantity = 25.0;
+        $prior->remarks = 'Prior accomplishment';
+        $prior->created_by = $this->user->id;
+        $prior->save();
+
+        // 1. Test _create API with greater quantity (30.0 > 25.0)
+        $response1 = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
+            'component_id' => $this->component->id,
+            'type'         => 'ACTUAL',
+            'entry_date'   => '2026-09-21',
+            'quantity'     => 30.0,
+            'remarks'      => 'Higher quantity via create'
+        ]);
+
+        $response1->assertStatus(200);
+        $response1->assertJson([
+            'status' => 1,
+            'message' => ''
+        ]);
+
+        $this->assertDatabaseHas('accomplishment_registry', [
+            'component_id' => $this->component->id,
+            'type'         => 'ACTUAL',
+            'quantity'     => 30.0,
+        ]);
+
+        // 2. Test _add API with even higher quantity (35.0 > 30.0)
+        $response2 = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
+            'component_id' => $this->component->id,
+            'entry_data'   => '2026-09-22',
+            'quantity'     => 35.0,
+            'remarks'      => 'Higher quantity via add',
+            'type'         => 'ACTUAL'
+        ]);
+
+        $response2->assertStatus(200);
+        $response2->assertJson([
+            'status' => 1,
+            'message' => ''
+        ]);
+
+        $this->assertDatabaseHas('accomplishment_registry', [
+            'component_id' => $this->component->id,
+            'type'         => 'ACTUAL',
+            'quantity'     => 35.0,
+        ]);
+    }
+
+    /** @test */
+    public function it_scopes_previous_accomplishment_validation_by_type()
+    {
+        $this->grantAccessCode($this->user, 'accomplishment:all:create');
+
+        // Create an ACTUAL accomplishment record (quantity = 30.0)
+        $priorActual = new \App\Models\Accomplishment();
+        $priorActual->component_id = $this->component->id;
+        $priorActual->type = 'ACTUAL';
+        $priorActual->entry_data = '2026-09-20';
+        $priorActual->quantity = 30.0;
+        $priorActual->remarks = 'Actual accomplishment';
+        $priorActual->created_by = $this->user->id;
+        $priorActual->save();
+
+        // 1. Create a TARGET accomplishment with quantity 10.0 (lower than ACTUAL 30.0, but no prior TARGET exists)
+        $response1 = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
+            'component_id' => $this->component->id,
+            'type'         => 'TARGET',
+            'entry_date'   => '2026-09-21',
+            'quantity'     => 10.0,
+            'remarks'      => 'First target'
+        ]);
+
+        $response1->assertStatus(200);
+        $response1->assertJson([
+            'status' => 1,
+            'message' => ''
+        ]);
+
+        // 2. Creating another TARGET with quantity 8.0 (lower than TARGET 10.0) should fail
+        $response2 = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
+            'component_id' => $this->component->id,
+            'type'         => 'TARGET',
+            'entry_date'   => '2026-09-22',
+            'quantity'     => 8.0,
+            'remarks'      => 'Lower target'
+        ]);
+
+        $response2->assertStatus(200);
+        $response2->assertJson([
+            'status' => -2,
+            'message' => 'Failed Validation',
+            'data' => [
+                'quantity' => ['The quantity must not be lower than or equal to the last previous accomplishment record quantity.']
+            ]
+        ]);
+
+        // 3. Creating another TARGET with quantity 15.0 (greater than TARGET 10.0) should succeed
+        $response3 = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
+            'component_id' => $this->component->id,
+            'type'         => 'TARGET',
+            'entry_data'   => '2026-09-23',
+            'quantity'     => 15.0,
+            'remarks'      => 'Higher target'
+        ]);
+
+        $response3->assertStatus(200);
+        $response3->assertJson([
+            'status' => 1,
+            'message' => ''
+        ]);
+    }
+
+    /** @test */
     public function it_can_render_the_accomplishment_studio_mode_page()
     {
         $response = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/studio');
