@@ -141,7 +141,7 @@ class ProjectReportController extends Controller {
         }
 
         $report                                 = [];
-        $material_summary                       = [];
+        $material_summary_groups                = [];
         $contract_item_arr                      = [];
         $component_arr                          = [];
         $component_item_arr                     = [];
@@ -152,6 +152,7 @@ class ProjectReportController extends Controller {
         $valid_material_quantity_request_ids    = [];
 
         $unit_options = Unit::withTrashed()->get()->keyBy('id');
+        $material_groups_map = MaterialGroup::withTrashed()->get()->keyBy('id');
 
         $contract_items = ContractItem::where('section_id',$section_id)->where('deleted_at',null)->orderBy('item_code','ASC');
 
@@ -304,7 +305,10 @@ class ProjectReportController extends Controller {
                         $report[ $contract_item->id ][ $component->id ][ $component_item->id ][ $material_quantity->id ]['po_quantity']      = $total_po_quantity;
                         $report[ $contract_item->id ][ $component->id ][ $component_item->id ][ $material_quantity->id ]['po_amount']        = $total_po_amount->total;
                         
-                        // Summary of materials quantity count grouped by material and unit
+                        // Summary of materials quantity count grouped by material group, material and unit
+                        $group_id = ($material_item && $material_item->material_group_id) ? $material_item->material_group_id : 0;
+                        $group_name = ($group_id && isset($material_groups_map[$group_id])) ? $material_groups_map[$group_id]->name : 'Ungrouped';
+
                         $unit_text = '';
                         if($component_item->unit_id && isset($unit_options[$component_item->unit_id])){
                             $unit_model = $unit_options[$component_item->unit_id];
@@ -317,8 +321,18 @@ class ProjectReportController extends Controller {
 
                         $summary_key = $mat_item_id . '_' . $unit_text;
 
-                        if(!isset($material_summary[$summary_key])){
-                            $material_summary[$summary_key] = [
+                        if(!isset($material_summary_groups[$group_id])){
+                            $material_summary_groups[$group_id] = [
+                                'material_group_id'   => $group_id,
+                                'material_group_name' => $group_name,
+                                'total_count'         => 0,
+                                'total_po_amount'     => 0,
+                                'items'               => []
+                            ];
+                        }
+
+                        if(!isset($material_summary_groups[$group_id]['items'][$summary_key])){
+                            $material_summary_groups[$group_id]['items'][$summary_key] = [
                                 'material_item_id'       => $mat_item_id,
                                 'material_item'          => $material_item,
                                 'material_name'          => $material_item ? $material_item->formatted_name : ('Material #' . $mat_item_id),
@@ -328,14 +342,19 @@ class ProjectReportController extends Controller {
                                 'total_request_quantity' => 0,
                                 'total_po_quantity'      => 0,
                                 'total_po_amount'        => 0,
+                                'material_group_id'      => $group_id,
+                                'material_group_name'    => $group_name,
                             ];
                         }
 
-                        $material_summary[$summary_key]['count']++;
-                        $material_summary[$summary_key]['total_budget_quantity']  += (float) $material_quantity->quantity;
-                        $material_summary[$summary_key]['total_request_quantity'] += (float) $total_requested_quantity;
-                        $material_summary[$summary_key]['total_po_quantity']      += (float) $total_po_quantity;
-                        $material_summary[$summary_key]['total_po_amount']        += (float) ($total_po_amount->total ?? 0);
+                        $material_summary_groups[$group_id]['items'][$summary_key]['count']++;
+                        $material_summary_groups[$group_id]['items'][$summary_key]['total_budget_quantity']  += (float) $material_quantity->quantity;
+                        $material_summary_groups[$group_id]['items'][$summary_key]['total_request_quantity'] += (float) $total_requested_quantity;
+                        $material_summary_groups[$group_id]['items'][$summary_key]['total_po_quantity']      += (float) $total_po_quantity;
+                        $material_summary_groups[$group_id]['items'][$summary_key]['total_po_amount']        += (float) ($total_po_amount->total ?? 0);
+
+                        $material_summary_groups[$group_id]['total_count']++;
+                        $material_summary_groups[$group_id]['total_po_amount'] += (float) ($total_po_amount->total ?? 0);
 
                     }//material quantity
 
@@ -345,13 +364,33 @@ class ProjectReportController extends Controller {
 
         }//contract item
 
-        usort($material_summary, function($a, $b) {
-            $cmp = strcasecmp($a['material_name'], $b['material_name']);
-            if ($cmp === 0) {
-                return strcasecmp($a['unit'], $b['unit']);
-            }
-            return $cmp;
+        foreach($material_summary_groups as &$group){
+            $group_items = array_values($group['items']);
+            usort($group_items, function($a, $b) {
+                $cmp = strcasecmp($a['material_name'], $b['material_name']);
+                if ($cmp === 0) {
+                    return strcasecmp($a['unit'], $b['unit']);
+                }
+                return $cmp;
+            });
+            $group['items'] = $group_items;
+        }
+        unset($group);
+
+        usort($material_summary_groups, function($a, $b) {
+            if ($a['material_group_name'] === 'Ungrouped') return 1;
+            if ($b['material_group_name'] === 'Ungrouped') return -1;
+            return strcasecmp($a['material_group_name'], $b['material_group_name']);
         });
+
+        $material_summary = array_values($material_summary_groups);
+
+        $flat_items = [];
+        foreach($material_summary as $group){
+            foreach($group['items'] as $item){
+                $flat_items[] = $item;
+            }
+        }
 
         return [
             'project_name'          => $project_name,
@@ -365,7 +404,8 @@ class ProjectReportController extends Controller {
             'material_item_arr'     => $material_item_arr,
             'total_po_overhead_arr' => $total_po_overhead_arr,
             'report'                => $report,
-            'material_summary'      => array_values($material_summary),
+            'material_summary'      => $material_summary,
+            'material_summary_flat' => $flat_items,
             'as_of_display'         => $as_of_display,
             'url'                   => $url,
 

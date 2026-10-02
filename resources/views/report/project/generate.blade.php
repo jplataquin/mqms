@@ -416,6 +416,29 @@
         background-color: rgba(148, 163, 184, 0.15);
         color: #cbd5e1;
     }
+    .material-group-header-row td {
+        background-color: #242c3d !important;
+        color: #f1f5f9 !important;
+        font-weight: 700 !important;
+        font-size: 12.5px !important;
+        padding: 0.85rem 1.25rem !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+        letter-spacing: 0.02em;
+    }
+    .material-group-header-row td:first-child {
+        border-left: 4px solid #3b82f6 !important; /* Blue accent bar */
+    }
+    .material-group-badge {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        font-size: 11px;
+        font-weight: 600;
+        border-radius: 9999px;
+        background-color: rgba(59, 130, 246, 0.15);
+        color: #93c5fd;
+        border: 1px solid rgba(59, 130, 246, 0.3);
+    }
     .text-amber {
         color: #fbbf24 !important;
     }
@@ -526,22 +549,22 @@
         </div>
 
 
-        <!-- Materials Quantity Count Summary -->
+        <!-- Materials Quantity Count Summary Grouped by Material Group -->
         <div class="material-summary-card mb-4" id="material-summary-section">
             <div class="material-summary-header d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
                 <div>
                     <h5 class="mb-1 text-white fw-bold d-flex align-items-center gap-2">
                         <i class="bi bi-boxes text-primary"></i> Summary of Materials Quantity
                     </h5>
-                    <p class="text-secondary small mb-0">Summary of materials quantity count grouped by material and unit.</p>
+                    <p class="text-secondary small mb-0">Summary of materials quantity count grouped by material group, material, and unit.</p>
                 </div>
                 <div class="d-flex align-items-center gap-2">
                     <div class="input-group input-group-sm" style="max-width: 260px;">
                         <span class="input-group-text bg-dark border-secondary text-secondary"><i class="bi bi-search"></i></span>
-                        <input type="text" id="materialSummarySearch" class="form-control bg-dark border-secondary text-white form-control-sm" placeholder="Search material or unit...">
+                        <input type="text" id="materialSummarySearch" class="form-control bg-dark border-secondary text-white form-control-sm" placeholder="Search material or group...">
                     </div>
                     <span class="badge bg-primary px-3 py-2 rounded-pill fw-bold">
-                        {{ count($material_summary) }} {{ count($material_summary) == 1 ? 'Group' : 'Groups' }}
+                        {{ count($material_summary) }} {{ count($material_summary) == 1 ? 'Material Group' : 'Material Groups' }}
                     </span>
                 </div>
             </div>
@@ -560,11 +583,22 @@
                             <th style="width: 150px;" class="text-end">PO Amount</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @forelse($material_summary as $index => $summary_item)
+                    @forelse($material_summary as $group)
+                    <tbody class="material-group-block" data-group-name="{{ $group['material_group_name'] }}">
+                        <tr class="material-group-header-row">
+                            <td colspan="7">
+                                <i class="bi bi-folder2-open text-primary me-2"></i>
+                                <span class="fw-bold text-white fs-6">{{ $group['material_group_name'] }}</span>
+                                <span class="material-group-badge ms-2">{{ count($group['items']) }} {{ count($group['items']) == 1 ? 'item' : 'items' }}</span>
+                            </td>
+                            <td class="text-end fw-bold text-amber">
+                                P {{ number_format($group['total_po_amount'], 2) }}
+                            </td>
+                        </tr>
+                        @foreach($group['items'] as $index => $summary_item)
                         <tr class="material-summary-row">
-                            <td class="text-center text-secondary small">{{ $index + 1 }}</td>
-                            <td class="material-name-cell">
+                            <td class="text-center text-secondary small">{{ $loop->iteration }}</td>
+                            <td class="material-name-cell ps-4">
                                 <div class="fw-semibold text-white">{{ $summary_item['material_name'] }}</div>
                                 @if($summary_item['material_item'] && $summary_item['material_item']->brand)
                                     <small class="text-secondary">{{ $summary_item['material_item']->brand }}</small>
@@ -589,25 +623,32 @@
                                 P {{ number_format($summary_item['total_po_amount'], 2) }}
                             </td>
                         </tr>
-                        @empty
+                        @endforeach
+                    </tbody>
+                    @empty
+                    <tbody>
                         <tr>
                             <td colspan="8" class="text-center text-secondary py-4">
                                 <i class="bi bi-inbox fs-3 d-block mb-2 text-muted"></i>
                                 No material quantities found for the selected scope.
                             </td>
                         </tr>
-                        @endforelse
                     </tbody>
+                    @endforelse
                     @if(count($material_summary) > 0)
                     <tfoot>
+                        @php
+                            $grand_items_count = array_sum(array_map(fn($g) => $g['total_count'], $material_summary));
+                            $grand_po_amount = array_sum(array_map(fn($g) => $g['total_po_amount'], $material_summary));
+                        @endphp
                         <tr class="material-summary-footer">
                             <td colspan="3" class="text-end fw-bold text-uppercase small" style="color: #94a3b8;">Total Items Count:</td>
                             <td class="text-center fw-bold text-white">
-                                <span class="count-badge bg-secondary-subtle text-white">{{ number_format(array_sum(array_column($material_summary, 'count'))) }}</span>
+                                <span class="count-badge bg-secondary-subtle text-white">{{ number_format($grand_items_count) }}</span>
                             </td>
-                            <td colspan="3" class="text-end fw-bold text-uppercase small" style="color: #94a3b8;">Total PO Amount:</td>
+                            <td colspan="3" class="text-end fw-bold text-uppercase small" style="color: #94a3b8;">Grand Total PO Amount:</td>
                             <td class="text-end fw-bold text-amber fs-6">
-                                P {{ number_format(array_sum(array_column($material_summary, 'total_po_amount')), 2) }}
+                                P {{ number_format($grand_po_amount, 2) }}
                             </td>
                         </tr>
                     </tfoot>
@@ -1187,10 +1228,24 @@
         if(materialSummarySearch){
             materialSummarySearch.addEventListener('input', function(e){
                 let q = e.target.value.toLowerCase().trim();
-                let rows = document.querySelectorAll('.material-summary-row');
-                rows.forEach(row => {
-                    let text = row.textContent.toLowerCase();
-                    row.style.display = text.includes(q) ? '' : 'none';
+                let groupBlocks = document.querySelectorAll('.material-group-block');
+                
+                groupBlocks.forEach(group => {
+                    let groupName = (group.getAttribute('data-group-name') || '').toLowerCase();
+                    let rows = group.querySelectorAll('.material-summary-row');
+                    let anyRowMatches = false;
+
+                    rows.forEach(row => {
+                        let text = row.textContent.toLowerCase();
+                        let matches = !q || text.includes(q) || groupName.includes(q);
+                        row.style.display = matches ? '' : 'none';
+                        if (matches) anyRowMatches = true;
+                    });
+
+                    let header = group.querySelector('.material-group-header-row');
+                    if (header) {
+                        header.style.display = (!q || anyRowMatches) ? '' : 'none';
+                    }
                 });
             });
         }

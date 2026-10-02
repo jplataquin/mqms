@@ -140,7 +140,7 @@
 
         <!-- Summary of Materials Quantity -->
         <h3>Summary of Materials Quantity</h3>
-        <p style="color: #64748b; margin-top: -4px; margin-bottom: 8px;">Materials quantity count grouped by material and unit.</p>
+        <p style="color: #64748b; margin-top: -4px; margin-bottom: 8px;">Materials quantity count grouped by material group, material, and unit.</p>
         <table class="summary-table">
             <thead>
                 <tr>
@@ -155,10 +155,20 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($material_summary as $index => $item)
+                @forelse($material_summary as $group)
+                <tr style="background-color: #e2e8f0; font-weight: bold;">
+                    <td colspan="7">
+                        <strong>Group: {{ $group['material_group_name'] }}</strong>
+                        ({{ count($group['items']) }} {{ count($group['items']) == 1 ? 'item' : 'items' }})
+                    </td>
+                    <td class="text-end">
+                        P {{ number_format($group['total_po_amount'], 2) }}
+                    </td>
+                </tr>
+                @foreach($group['items'] as $index => $item)
                 <tr>
-                    <td class="text-center">{{ $index + 1 }}</td>
-                    <td>
+                    <td class="text-center">{{ $loop->iteration }}</td>
+                    <td style="padding-left: 15px;">
                         <strong>{{ $item['material_name'] }}</strong>
                     </td>
                     <td class="text-center">{{ $item['unit'] }}</td>
@@ -168,6 +178,7 @@
                     <td class="text-end">{{ number_format($item['total_po_quantity'], 2) }}</td>
                     <td class="text-end">P {{ number_format($item['total_po_amount'], 2) }}</td>
                 </tr>
+                @endforeach
                 @empty
                 <tr>
                     <td colspan="8" class="text-center">No materials found.</td>
@@ -176,11 +187,15 @@
             </tbody>
             @if(count($material_summary) > 0)
             <tfoot>
+                @php
+                    $grand_items_count = array_sum(array_map(fn($g) => $g['total_count'], $material_summary));
+                    $grand_po_amount = array_sum(array_map(fn($g) => $g['total_po_amount'], $material_summary));
+                @endphp
                 <tr>
                     <td colspan="3" class="text-end">Total Items Count:</td>
-                    <td class="text-center">{{ number_format(array_sum(array_column($material_summary, 'count'))) }}</td>
-                    <td colspan="3" class="text-end">Total PO Amount:</td>
-                    <td class="text-end">P {{ number_format(array_sum(array_column($material_summary, 'total_po_amount')), 2) }}</td>
+                    <td class="text-center">{{ number_format($grand_items_count) }}</td>
+                    <td colspan="3" class="text-end">Grand Total PO Amount:</td>
+                    <td class="text-end">P {{ number_format($grand_po_amount, 2) }}</td>
                 </tr>
             </tfoot>
             @endif

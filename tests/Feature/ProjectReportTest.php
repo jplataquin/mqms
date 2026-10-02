@@ -32,7 +32,8 @@ class ProjectReportTest extends TestCase
     protected $component;
     protected $unitPcs;
     protected $unitBags;
-    protected $materialGroup;
+    protected $materialGroupConstruction;
+    protected $materialGroupAggregates;
     protected $materialCement;
     protected $materialSand;
 
@@ -67,13 +68,18 @@ class ProjectReportTest extends TestCase
         $this->unitBags->created_by = $this->user->id;
         $this->unitBags->save();
 
-        $this->materialGroup = new MaterialGroup();
-        $this->materialGroup->name = 'Construction Materials';
-        $this->materialGroup->created_by = $this->user->id;
-        $this->materialGroup->save();
+        $this->materialGroupConstruction = new MaterialGroup();
+        $this->materialGroupConstruction->name = 'Construction Materials';
+        $this->materialGroupConstruction->created_by = $this->user->id;
+        $this->materialGroupConstruction->save();
+
+        $this->materialGroupAggregates = new MaterialGroup();
+        $this->materialGroupAggregates->name = 'Aggregates';
+        $this->materialGroupAggregates->created_by = $this->user->id;
+        $this->materialGroupAggregates->save();
 
         $this->materialCement = new MaterialItem();
-        $this->materialCement->material_group_id = $this->materialGroup->id;
+        $this->materialCement->material_group_id = $this->materialGroupConstruction->id;
         $this->materialCement->name = 'Portland Cement';
         $this->materialCement->specification_unit_packaging = '40kg Bag';
         $this->materialCement->brand = 'Holcim';
@@ -81,7 +87,7 @@ class ProjectReportTest extends TestCase
         $this->materialCement->save();
 
         $this->materialSand = new MaterialItem();
-        $this->materialSand->material_group_id = $this->materialGroup->id;
+        $this->materialSand->material_group_id = $this->materialGroupAggregates->id;
         $this->materialSand->name = 'Washed Sand';
         $this->materialSand->specification_unit_packaging = 'cu.m';
         $this->materialSand->brand = 'Local';
@@ -125,7 +131,7 @@ class ProjectReportTest extends TestCase
     }
 
     /** @test */
-    public function it_can_generate_project_report_with_materials_summary_grouped_by_material_and_unit()
+    public function it_can_generate_project_report_with_materials_summary_grouped_by_material_group()
     {
         // Component Item 1: Bags unit, Cement material (quantity = 50)
         $compItem1 = new ComponentItem();
@@ -147,7 +153,7 @@ class ProjectReportTest extends TestCase
         $mq1->created_by = $this->user->id;
         $mq1->save();
 
-        // Component Item 2: Same unit (Bags), same Cement material (quantity = 30) -> Should group with Item 1
+        // Component Item 2: Same unit (Bags), same Cement material (quantity = 30) -> Should group with Item 1 under Construction Materials
         $compItem2 = new ComponentItem();
         $compItem2->component_id = $this->component->id;
         $compItem2->name = 'Footing Concreting Part B';
@@ -167,7 +173,7 @@ class ProjectReportTest extends TestCase
         $mq2->created_by = $this->user->id;
         $mq2->save();
 
-        // Component Item 3: Different unit (Pcs), same Cement material (quantity = 20) -> Should be a distinct group
+        // Component Item 3: Different unit (Pcs), same Cement material (quantity = 20) -> Distinct item under Construction Materials
         $compItem3 = new ComponentItem();
         $compItem3->component_id = $this->component->id;
         $compItem3->name = 'Precast blocks';
@@ -187,7 +193,7 @@ class ProjectReportTest extends TestCase
         $mq3->created_by = $this->user->id;
         $mq3->save();
 
-        // Component Item 4: Sand material (quantity = 15), Bags unit
+        // Component Item 4: Sand material (quantity = 15), Bags unit -> under Aggregates group
         $compItem4 = new ComponentItem();
         $compItem4->component_id = $this->component->id;
         $compItem4->name = 'Backfill';
@@ -270,15 +276,27 @@ class ProjectReportTest extends TestCase
         $this->assertNotNull($materialSummary);
         $this->assertIsArray($materialSummary);
 
-        // 3 groups expected:
-        // 1: Cement + Bags (items: compItem1 and compItem2 -> count=2, total budget=80, requested=25, po=20, po_amount=4200)
-        // 2: Cement + Pcs (items: compItem3 -> count=1, total budget=20)
-        // 3: Sand + Bags (items: compItem4 -> count=1, total budget=15)
-        $this->assertCount(3, $materialSummary);
+        // 2 Material Groups expected: Aggregates and Construction Materials
+        $this->assertCount(2, $materialSummary);
 
-        $cementBags = collect($materialSummary)->first(function($item) {
-            return $item['material_item_id'] == $this->materialCement->id && $item['unit'] === 'Bags';
-        });
+        // Group 1: Aggregates
+        $aggregatesGroup = collect($materialSummary)->firstWhere('material_group_name', 'Aggregates');
+        $this->assertNotNull($aggregatesGroup);
+        $this->assertEquals($this->materialGroupAggregates->id, $aggregatesGroup['material_group_id']);
+        $this->assertCount(1, $aggregatesGroup['items']);
+        $this->assertEquals(1, $aggregatesGroup['total_count']);
+        $this->assertEquals(15, $aggregatesGroup['items'][0]['total_budget_quantity']);
+        $this->assertEquals('Bags', $aggregatesGroup['items'][0]['unit']);
+
+        // Group 2: Construction Materials
+        $constructionGroup = collect($materialSummary)->firstWhere('material_group_name', 'Construction Materials');
+        $this->assertNotNull($constructionGroup);
+        $this->assertEquals($this->materialGroupConstruction->id, $constructionGroup['material_group_id']);
+        $this->assertCount(2, $constructionGroup['items']); // Cement Bags and Cement Pcs
+        $this->assertEquals(3, $constructionGroup['total_count']);
+        $this->assertEquals(4200, $constructionGroup['total_po_amount']);
+
+        $cementBags = collect($constructionGroup['items'])->firstWhere('unit', 'Bags');
         $this->assertNotNull($cementBags);
         $this->assertEquals(2, $cementBags['count']);
         $this->assertEquals(80, $cementBags['total_budget_quantity']);
@@ -286,29 +304,24 @@ class ProjectReportTest extends TestCase
         $this->assertEquals(20, $cementBags['total_po_quantity']);
         $this->assertEquals(4200, $cementBags['total_po_amount']);
 
-        $cementPcs = collect($materialSummary)->first(function($item) {
-            return $item['material_item_id'] == $this->materialCement->id && $item['unit'] === 'Pcs';
-        });
+        $cementPcs = collect($constructionGroup['items'])->firstWhere('unit', 'Pcs');
         $this->assertNotNull($cementPcs);
         $this->assertEquals(1, $cementPcs['count']);
         $this->assertEquals(20, $cementPcs['total_budget_quantity']);
 
-        $sandBags = collect($materialSummary)->first(function($item) {
-            return $item['material_item_id'] == $this->materialSand->id && $item['unit'] === 'Bags';
-        });
-        $this->assertNotNull($sandBags);
-        $this->assertEquals(1, $sandBags['count']);
-        $this->assertEquals(15, $sandBags['total_budget_quantity']);
-
         // Check HTML content
         $response->assertSee('Summary of Materials Quantity');
+        $response->assertSee('Construction Materials');
+        $response->assertSee('Aggregates');
         $response->assertSee('Holcim Portland Cement 40kg Bag');
         $response->assertSee('Local Washed Sand cu.m');
 
-        // Check print page renders with materials summary
+        // Check print page renders with materials summary grouped by material group
         $printResponse = $this->actingAs($this->user)->get('/report/project/print?project_id=' . $this->project->id . '&section_id=' . $this->section->id);
         $printResponse->assertStatus(200);
         $printResponse->assertSee('Summary of Materials Quantity');
+        $printResponse->assertSee('Construction Materials');
+        $printResponse->assertSee('Aggregates');
         $printResponse->assertSee('Holcim Portland Cement 40kg Bag');
         $printResponse->assertSee('Local Washed Sand cu.m');
     }
@@ -376,7 +389,9 @@ class ProjectReportTest extends TestCase
 
         $materialSummary = $response->viewData('material_summary');
         $this->assertCount(1, $materialSummary);
-        $this->assertEquals(40, $materialSummary[0]['total_budget_quantity']);
-        $this->assertEquals($this->materialCement->id, $materialSummary[0]['material_item_id']);
+        $this->assertEquals('Construction Materials', $materialSummary[0]['material_group_name']);
+        $this->assertCount(1, $materialSummary[0]['items']);
+        $this->assertEquals(40, $materialSummary[0]['items'][0]['total_budget_quantity']);
+        $this->assertEquals($this->materialCement->id, $materialSummary[0]['items'][0]['material_item_id']);
     }
 }
