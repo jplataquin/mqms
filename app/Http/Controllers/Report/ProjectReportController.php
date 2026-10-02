@@ -17,6 +17,7 @@ use App\Models\PurchaseOrderItem;
 use App\Models\PurchaseOrder;
 use App\Models\MaterialItem;
 use App\Models\MaterialGroup;
+use App\Models\Unit;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
@@ -140,6 +141,7 @@ class ProjectReportController extends Controller {
         }
 
         $report                                 = [];
+        $material_summary                       = [];
         $contract_item_arr                      = [];
         $component_arr                          = [];
         $component_item_arr                     = [];
@@ -148,6 +150,8 @@ class ProjectReportController extends Controller {
         $total_po_overhead_arr                  = [];
         $valid_po_ids                           = [];
         $valid_material_quantity_request_ids    = [];
+
+        $unit_options = Unit::withTrashed()->get()->keyBy('id');
 
         $contract_items = ContractItem::where('section_id',$section_id)->where('deleted_at',null)->orderBy('item_code','ASC');
 
@@ -169,7 +173,10 @@ class ProjectReportController extends Controller {
         
             if($component_id){
 
-                $components = $components->where('id',$component_id)->where('deleted_at',null)->where('status','APRV');
+                $components = $contract_item->Components()
+                ->where('id',$component_id)
+                ->where('status','APRV')
+                ->where('deleted_at',null);
             
             }else{
 
@@ -264,25 +271,29 @@ class ProjectReportController extends Controller {
                   
                         }
 
-                        
-                        $material_item_arr[ $material_quantity->material_item_id ] = MaterialItem::find($material_quantity->material_item_id);
+                        $mat_item_id = $material_quantity->material_item_id;
+
+                        if(!isset($material_item_arr[ $mat_item_id ])){
+                            $material_item_arr[ $mat_item_id ] = MaterialItem::find($mat_item_id);
+                        }
+                        $material_item = $material_item_arr[ $mat_item_id ];
 
                         //Get total request quantity
                         $total_requested_quantity = MaterialQuantityRequestItem::where('component_item_id',$component_item->id)
-                        ->where('material_item_id', $material_quantity->material_item_id)
+                        ->where('material_item_id', $mat_item_id)
                         ->where('status','APRV')
                         ->whereIn('material_quantity_request_id',$valid_material_quantity_request_ids)
                         ->sum('requested_quantity');
 
                         $total_po_quantity = PurchaseOrderItem::where('component_item_id',$component_item->id)
-                        ->where('material_item_id',$material_quantity->material_item_id)
+                        ->where('material_item_id',$mat_item_id)
                         ->where('status','APRV')
                         ->whereIn('purchase_order_id',$valid_po_ids)
                         ->sum('quantity');
 
 
                         $total_po_amount = PurchaseOrderItem::where('component_item_id',$component_item->id)
-                        ->where('material_item_id',$material_quantity->material_item_id)
+                        ->where('material_item_id',$mat_item_id)
                         ->where('status','APRV')
                         ->whereIn('purchase_order_id',$valid_po_ids)
                         ->select( DB::raw('SUM(quantity * price) as total') )
@@ -293,6 +304,39 @@ class ProjectReportController extends Controller {
                         $report[ $contract_item->id ][ $component->id ][ $component_item->id ][ $material_quantity->id ]['po_quantity']      = $total_po_quantity;
                         $report[ $contract_item->id ][ $component->id ][ $component_item->id ][ $material_quantity->id ]['po_amount']        = $total_po_amount->total;
                         
+                        // Summary of materials quantity count grouped by material and unit
+                        $unit_text = '';
+                        if($component_item->unit_id && isset($unit_options[$component_item->unit_id])){
+                            $unit_model = $unit_options[$component_item->unit_id];
+                            $unit_text = $unit_model->text . ($unit_model->deleted_at ? ' [Deleted]' : '');
+                        }elseif(!empty($component_item->unit)){
+                            $unit_text = $component_item->unit;
+                        }else{
+                            $unit_text = '-';
+                        }
+
+                        $summary_key = $mat_item_id . '_' . $unit_text;
+
+                        if(!isset($material_summary[$summary_key])){
+                            $material_summary[$summary_key] = [
+                                'material_item_id'       => $mat_item_id,
+                                'material_item'          => $material_item,
+                                'material_name'          => $material_item ? $material_item->formatted_name : ('Material #' . $mat_item_id),
+                                'unit'                   => $unit_text,
+                                'count'                  => 0,
+                                'total_budget_quantity'  => 0,
+                                'total_request_quantity' => 0,
+                                'total_po_quantity'      => 0,
+                                'total_po_amount'        => 0,
+                            ];
+                        }
+
+                        $material_summary[$summary_key]['count']++;
+                        $material_summary[$summary_key]['total_budget_quantity']  += (float) $material_quantity->quantity;
+                        $material_summary[$summary_key]['total_request_quantity'] += (float) $total_requested_quantity;
+                        $material_summary[$summary_key]['total_po_quantity']      += (float) $total_po_quantity;
+                        $material_summary[$summary_key]['total_po_amount']        += (float) ($total_po_amount->total ?? 0);
+
                     }//material quantity
 
                 }//component item
@@ -300,6 +344,14 @@ class ProjectReportController extends Controller {
             }//component
 
         }//contract item
+
+        usort($material_summary, function($a, $b) {
+            $cmp = strcasecmp($a['material_name'], $b['material_name']);
+            if ($cmp === 0) {
+                return strcasecmp($a['unit'], $b['unit']);
+            }
+            return $cmp;
+        });
 
         return [
             'project_name'          => $project_name,
@@ -313,6 +365,7 @@ class ProjectReportController extends Controller {
             'material_item_arr'     => $material_item_arr,
             'total_po_overhead_arr' => $total_po_overhead_arr,
             'report'                => $report,
+            'material_summary'      => array_values($material_summary),
             'as_of_display'         => $as_of_display,
             'url'                   => $url,
 

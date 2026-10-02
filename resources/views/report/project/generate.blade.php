@@ -344,6 +344,81 @@
             z-index: 9;
         }
     }
+
+    /* Material Summary Card and Table Styles */
+    .material-summary-card {
+        background: rgba(15, 23, 42, 0.6) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        margin-top: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .material-summary-header {
+        background-color: #1e293b;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 1.1rem 1.25rem;
+    }
+    .material-summary-table {
+        margin-bottom: 0 !important;
+        border-collapse: separate !important;
+        border-spacing: 0;
+        width: 100%;
+    }
+    .material-summary-table th {
+        background-color: #1e293b !important;
+        color: #94a3b8 !important;
+        font-weight: 700 !important;
+        font-size: 11px !important;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding: 0.75rem 1rem !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-top: none !important;
+        border-left: none !important;
+        border-right: none !important;
+    }
+    .material-summary-table td {
+        padding: 0.75rem 1rem !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+        border-top: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        font-size: 12.5px;
+        color: #e2e8f0;
+        vertical-align: middle;
+    }
+    .material-summary-table tr:hover td {
+        background-color: rgba(255, 255, 255, 0.02) !important;
+    }
+    .material-summary-footer td {
+        background-color: #1e293b !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+        padding: 0.85rem 1rem !important;
+    }
+    .unit-badge {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        font-size: 11px;
+        font-weight: 600;
+        border-radius: 6px;
+        background-color: rgba(99, 102, 241, 0.15);
+        color: #a5b4fc;
+        border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+    .count-badge {
+        display: inline-block;
+        padding: 0.15rem 0.55rem;
+        font-size: 11px;
+        font-weight: 700;
+        border-radius: 9999px;
+        background-color: rgba(148, 163, 184, 0.15);
+        color: #cbd5e1;
+    }
+    .text-amber {
+        color: #fbbf24 !important;
+    }
 </style>
 <div id="content">
     <div class="container">
@@ -450,6 +525,96 @@
             </div>
         </div>
 
+
+        <!-- Materials Quantity Count Summary -->
+        <div class="material-summary-card mb-4" id="material-summary-section">
+            <div class="material-summary-header d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                <div>
+                    <h5 class="mb-1 text-white fw-bold d-flex align-items-center gap-2">
+                        <i class="bi bi-boxes text-primary"></i> Summary of Materials Quantity
+                    </h5>
+                    <p class="text-secondary small mb-0">Summary of materials quantity count grouped by material and unit.</p>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <div class="input-group input-group-sm" style="max-width: 260px;">
+                        <span class="input-group-text bg-dark border-secondary text-secondary"><i class="bi bi-search"></i></span>
+                        <input type="text" id="materialSummarySearch" class="form-control bg-dark border-secondary text-white form-control-sm" placeholder="Search material or unit...">
+                    </div>
+                    <span class="badge bg-primary px-3 py-2 rounded-pill fw-bold">
+                        {{ count($material_summary) }} {{ count($material_summary) == 1 ? 'Group' : 'Groups' }}
+                    </span>
+                </div>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table material-summary-table align-middle" id="materialSummaryTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;" class="text-center">#</th>
+                            <th>Material Item</th>
+                            <th style="width: 130px;" class="text-center">Unit</th>
+                            <th style="width: 110px;" class="text-center">Item Count</th>
+                            <th style="width: 140px;" class="text-end">Budget Qty</th>
+                            <th style="width: 140px;" class="text-end">Requested Qty</th>
+                            <th style="width: 140px;" class="text-end">PO Qty</th>
+                            <th style="width: 150px;" class="text-end">PO Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($material_summary as $index => $summary_item)
+                        <tr class="material-summary-row">
+                            <td class="text-center text-secondary small">{{ $index + 1 }}</td>
+                            <td class="material-name-cell">
+                                <div class="fw-semibold text-white">{{ $summary_item['material_name'] }}</div>
+                                @if($summary_item['material_item'] && $summary_item['material_item']->brand)
+                                    <small class="text-secondary">{{ $summary_item['material_item']->brand }}</small>
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                <span class="unit-badge">{{ $summary_item['unit'] }}</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="count-badge">{{ number_format($summary_item['count']) }}</span>
+                            </td>
+                            <td class="text-end fw-semibold text-light">
+                                {{ number_format($summary_item['total_budget_quantity'], 2) }}
+                            </td>
+                            <td class="text-end fw-semibold text-info">
+                                {{ number_format($summary_item['total_request_quantity'], 2) }}
+                            </td>
+                            <td class="text-end fw-semibold text-primary">
+                                {{ number_format($summary_item['total_po_quantity'], 2) }}
+                            </td>
+                            <td class="text-end fw-bold text-amber">
+                                P {{ number_format($summary_item['total_po_amount'], 2) }}
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="8" class="text-center text-secondary py-4">
+                                <i class="bi bi-inbox fs-3 d-block mb-2 text-muted"></i>
+                                No material quantities found for the selected scope.
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                    @if(count($material_summary) > 0)
+                    <tfoot>
+                        <tr class="material-summary-footer">
+                            <td colspan="3" class="text-end fw-bold text-uppercase small" style="color: #94a3b8;">Total Items Count:</td>
+                            <td class="text-center fw-bold text-white">
+                                <span class="count-badge bg-secondary-subtle text-white">{{ number_format(array_sum(array_column($material_summary, 'count'))) }}</span>
+                            </td>
+                            <td colspan="3" class="text-end fw-bold text-uppercase small" style="color: #94a3b8;">Total PO Amount:</td>
+                            <td class="text-end fw-bold text-amber fs-6">
+                                P {{ number_format(array_sum(array_column($material_summary, 'total_po_amount')), 2) }}
+                            </td>
+                        </tr>
+                    </tfoot>
+                    @endif
+                </table>
+            </div>
+        </div>
 
 
         <table class="table report-table">
@@ -1017,6 +1182,18 @@
         grand_total_material_percentage();
 
         check();
+
+        const materialSummarySearch = document.getElementById('materialSummarySearch');
+        if(materialSummarySearch){
+            materialSummarySearch.addEventListener('input', function(e){
+                let q = e.target.value.toLowerCase().trim();
+                let rows = document.querySelectorAll('.material-summary-row');
+                rows.forEach(row => {
+                    let text = row.textContent.toLowerCase();
+                    row.style.display = text.includes(q) ? '' : 'none';
+                });
+            });
+        }
     </script>
 </div>
 @endsection

@@ -18,6 +18,7 @@ class PurchaseOrderItem extends Model
     use HasFactory;
 
     protected $table = 'purchase_order_items';
+    public $timestamps = false;
     public $deleteException = null;
 
     public function MaterialQuantityRequestItem(): HasOne
