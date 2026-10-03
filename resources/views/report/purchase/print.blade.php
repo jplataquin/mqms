@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Purchase Report</title>
+        <title>Purchase Report - {{ $project->name }} - {{ date('Y-m-d') }}</title>
 
         <style>
             body {

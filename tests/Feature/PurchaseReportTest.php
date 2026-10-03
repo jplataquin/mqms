@@ -253,5 +253,6 @@ class PurchaseReportTest extends TestCase
         $response->assertSee('PO # ' . $po1Number);
         $response->assertSee('50.00');
         $response->assertSee('font-size: 11px', false);
+        $response->assertSee('<title>Purchase Report - ' . $this->project->name . ' - ' . date('Y-m-d') . '</title>', false);
     }
 }
