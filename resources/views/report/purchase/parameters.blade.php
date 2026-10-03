@@ -424,7 +424,7 @@
             }
 
             if(to_val){
-                query>append('to',to_val);
+                query.append('to',to_val);
             }
 
             window.open('/report/purchase/print?'+query,'_blank').focus();

@@ -49,7 +49,7 @@ class PurchaseReportController extends Controller{
         $from                   = $request->input('from');
         $to                     = $request->input('to');
         $material_items         = $request->input('material_items');
-        $suppliers              = $request->input('suppliers');
+        $suppliers              = $request->input('suppliers') ?? $request->input('supplier_id');
 
         //for supplier filter by id
         $supplier_id_arr        = [];
@@ -58,7 +58,11 @@ class PurchaseReportController extends Controller{
         $material_item_id_arr   = [];
 
         if($suppliers){
-            $supplier_id_arr = explode(',',$suppliers);
+            if(is_array($suppliers)){
+                $supplier_id_arr = array_values(array_filter($suppliers));
+            }else{
+                $supplier_id_arr = array_values(array_filter(explode(',', (string)$suppliers)));
+            }
         }
 
          //If material group id exists but material items list is empty

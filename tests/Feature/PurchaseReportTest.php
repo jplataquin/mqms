@@ -67,6 +67,13 @@ class PurchaseReportTest extends TestCase
         $this->supplier->created_by = $this->user->id;
         $this->supplier->save();
 
+        $this->supplier2 = new Supplier();
+        $this->supplier2->name = 'Zenith Supplies';
+        $this->supplier2->address = '456 Side St';
+        $this->supplier2->primary_contact_no = '09987654321';
+        $this->supplier2->created_by = $this->user->id;
+        $this->supplier2->save();
+
         $this->paymentTerm = new PaymentTerm();
         $this->paymentTerm->text = 'Cash on Delivery';
         $this->paymentTerm->created_by = $this->user->id;
@@ -168,7 +175,7 @@ class PurchaseReportTest extends TestCase
         $this->po2->component_id = $this->component->id;
         $this->po2->contract_item_id = $this->contractItem->id;
         $this->po2->material_quantity_request_id = 1;
-        $this->po2->supplier_id = $this->supplier->id;
+        $this->po2->supplier_id = $this->supplier2->id;
         $this->po2->payment_term_id = $this->paymentTerm->id;
         $this->po2->status = 'APRV';
         $this->po2->created_by = $this->user->id;
@@ -236,6 +243,50 @@ class PurchaseReportTest extends TestCase
         $response->assertSee('50.00');
         // Sand was 20.00, should not appear in this filtered report
         $response->assertDontSee('20.00');
+    }
+
+    /** @test */
+    public function it_filters_purchase_report_by_supplier_id()
+    {
+        $response = $this->actingAs($this->user)->get('/report/purchase/generate?' . http_build_query([
+            'project_id' => $this->project->id,
+            'section_id' => $this->section->id,
+            'supplier_id' => $this->supplier->id,
+        ]));
+
+        $response->assertStatus(200);
+
+        // Should include PO 1 from Apex Hardware
+        $po1Number = str_pad($this->po1->id, 6, '0', STR_PAD_LEFT);
+        $response->assertSee('PO # ' . $po1Number);
+        $response->assertSee('Apex Hardware');
+
+        // Should NOT include PO 2 from Zenith Supplies
+        $po2Number = str_pad($this->po2->id, 6, '0', STR_PAD_LEFT);
+        $response->assertDontSee('PO # ' . $po2Number);
+        $response->assertDontSee('Zenith Supplies');
+    }
+
+    /** @test */
+    public function it_filters_purchase_report_by_suppliers_parameter()
+    {
+        $response = $this->actingAs($this->user)->get('/report/purchase/generate?' . http_build_query([
+            'project_id' => $this->project->id,
+            'section_id' => $this->section->id,
+            'suppliers' => $this->supplier2->id,
+        ]));
+
+        $response->assertStatus(200);
+
+        // Should include PO 2 from Zenith Supplies
+        $po2Number = str_pad($this->po2->id, 6, '0', STR_PAD_LEFT);
+        $response->assertSee('PO # ' . $po2Number);
+        $response->assertSee('Zenith Supplies');
+
+        // Should NOT include PO 1 from Apex Hardware
+        $po1Number = str_pad($this->po1->id, 6, '0', STR_PAD_LEFT);
+        $response->assertDontSee('PO # ' . $po1Number);
+        $response->assertDontSee('Apex Hardware');
     }
 
     /** @test */
