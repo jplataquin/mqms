@@ -175,4 +175,153 @@ class NodeController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Renames a project studio node in place.
+     */
+    public function rename(Request $request)
+    {
+        try {
+            $type = $request->input('type');
+            $id = (int) $request->input('id');
+            $name = trim($request->input('name') ?? '');
+
+            if (!$name) {
+                return response()->json([
+                    'status'  => -2,
+                    'message' => 'Name cannot be empty.'
+                ], 422);
+            }
+
+            if ($type === 'project') {
+                $project = Project::find($id);
+                if (!$project) {
+                    return response()->json(['status' => 0, 'message' => 'Project not found.'], 404);
+                }
+
+                if (!$this->hasProjectAccess($project)) {
+                    return response()->json(['status' => 0, 'message' => 'Access Denied.'], 403);
+                }
+
+                $project->name = $name;
+                $project->save();
+
+                return response()->json([
+                    'status'  => 1,
+                    'message' => 'Project renamed successfully.',
+                    'data'    => [
+                        'id'   => $project->id,
+                        'type' => 'project',
+                        'text' => $project->name
+                    ]
+                ]);
+            } elseif ($type === 'section') {
+                $section = Section::find($id);
+                if (!$section) {
+                    return response()->json(['status' => 0, 'message' => 'Section not found.'], 404);
+                }
+
+                if (!$this->hasProjectAccess($section->Project)) {
+                    return response()->json(['status' => 0, 'message' => 'Access Denied.'], 403);
+                }
+
+                $section->name = $name;
+                $section->save();
+
+                return response()->json([
+                    'status'  => 1,
+                    'message' => 'Section renamed successfully.',
+                    'data'    => [
+                        'id'   => $section->id,
+                        'type' => 'section',
+                        'text' => $section->name
+                    ]
+                ]);
+            } elseif ($type === 'contract_item') {
+                $contractItem = ContractItem::find($id);
+                if (!$contractItem) {
+                    return response()->json(['status' => 0, 'message' => 'Contract item not found.'], 404);
+                }
+
+                if (!$this->hasProjectAccess($contractItem->Section->Project)) {
+                    return response()->json(['status' => 0, 'message' => 'Access Denied.'], 403);
+                }
+
+                // If user entered item_code in the name, strip it to extract description
+                $itemCode = $contractItem->item_code;
+                if ($itemCode && str_starts_with($name, $itemCode)) {
+                    $desc = trim(substr($name, strlen($itemCode)));
+                    $contractItem->description = !empty($desc) ? $desc : $name;
+                } else {
+                    $contractItem->description = $name;
+                }
+
+                $contractItem->save();
+
+                return response()->json([
+                    'status'  => 1,
+                    'message' => 'Contract item renamed successfully.',
+                    'data'    => [
+                        'id'   => $contractItem->id,
+                        'type' => 'contract_item',
+                        'text' => $contractItem->name
+                    ]
+                ]);
+            } elseif ($type === 'component') {
+                $component = Component::find($id);
+                if (!$component) {
+                    return response()->json(['status' => 0, 'message' => 'Component not found.'], 404);
+                }
+
+                if (!$this->hasProjectAccess($component->ContractItem->Section->Project)) {
+                    return response()->json(['status' => 0, 'message' => 'Access Denied.'], 403);
+                }
+
+                $component->name = $name;
+                $component->save();
+
+                return response()->json([
+                    'status'  => 1,
+                    'message' => 'Component renamed successfully.',
+                    'data'    => [
+                        'id'   => $component->id,
+                        'type' => 'component',
+                        'text' => $component->name
+                    ]
+                ]);
+            } elseif ($type === 'component_item') {
+                $componentItem = ComponentItem::find($id);
+                if (!$componentItem) {
+                    return response()->json(['status' => 0, 'message' => 'Component item not found.'], 404);
+                }
+
+                if (!$this->hasProjectAccess($componentItem->Component->ContractItem->Section->Project)) {
+                    return response()->json(['status' => 0, 'message' => 'Access Denied.'], 403);
+                }
+
+                $componentItem->name = $name;
+                $componentItem->save();
+
+                return response()->json([
+                    'status'  => 1,
+                    'message' => 'Component item renamed successfully.',
+                    'data'    => [
+                        'id'   => $componentItem->id,
+                        'type' => 'component_item',
+                        'text' => $componentItem->name
+                    ]
+                ]);
+            }
+
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Invalid node type.'
+            ], 400);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }

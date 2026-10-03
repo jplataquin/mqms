@@ -118,6 +118,103 @@ class ProjectStudioTest extends TestCase
         $response->assertSee('Metropolis Tower');
         $response->assertSee('update-node', false);
         $response->assertSee('tree.rename_node', false);
+        $response->assertSee('renameNodePrompt', false);
+        $response->assertSee("'label': 'Rename'", false);
+    }
+
+    /** @test */
+    public function it_can_rename_records_via_api()
+    {
+        // 1. Rename Project
+        $response = $this->actingAs($this->user)->postJson('/api/project/studio/node/rename', [
+            'type' => 'project',
+            'id' => $this->project->id,
+            'name' => 'Metropolis Grand Tower'
+        ]);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+            'data' => [
+                'type' => 'project',
+                'text' => 'Metropolis Grand Tower'
+            ]
+        ]);
+        $this->assertEquals('Metropolis Grand Tower', $this->project->fresh()->name);
+
+        // 2. Rename Section
+        $response = $this->actingAs($this->user)->postJson('/api/project/studio/node/rename', [
+            'type' => 'section',
+            'id' => $this->section->id,
+            'name' => 'Substructure Phase A'
+        ]);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+            'data' => [
+                'type' => 'section',
+                'text' => 'Substructure Phase A'
+            ]
+        ]);
+        $this->assertEquals('Substructure Phase A', $this->section->fresh()->name);
+
+        // 3. Rename Contract Item
+        $response = $this->actingAs($this->user)->postJson('/api/project/studio/node/rename', [
+            'type' => 'contract_item',
+            'id' => $this->contractItem->id,
+            'name' => 'CI-101 Deep Bulk Excavation'
+        ]);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+            'data' => [
+                'type' => 'contract_item',
+                'text' => 'CI-101 Deep Bulk Excavation'
+            ]
+        ]);
+        $this->assertEquals('Deep Bulk Excavation', $this->contractItem->fresh()->description);
+
+        // 4. Rename Component
+        $response = $this->actingAs($this->user)->postJson('/api/project/studio/node/rename', [
+            'type' => 'component',
+            'id' => $this->component->id,
+            'name' => 'Heavy Piles Foundation'
+        ]);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+            'data' => [
+                'type' => 'component',
+                'text' => 'Heavy Piles Foundation'
+            ]
+        ]);
+        $this->assertEquals('Heavy Piles Foundation', $this->component->fresh()->name);
+
+        // 5. Rename Component Item
+        $response = $this->actingAs($this->user)->postJson('/api/project/studio/node/rename', [
+            'type' => 'component_item',
+            'id' => $this->componentItem->id,
+            'name' => 'Deformed Rebar #8'
+        ]);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+            'data' => [
+                'type' => 'component_item',
+                'text' => 'Deformed Rebar #8'
+            ]
+        ]);
+        $this->assertEquals('Deformed Rebar #8', $this->componentItem->fresh()->name);
+
+        // 6. Validation: Empty name
+        $response = $this->actingAs($this->user)->postJson('/api/project/studio/node/rename', [
+            'type' => 'section',
+            'id' => $this->section->id,
+            'name' => '   '
+        ]);
+        $response->assertStatus(422);
+        $response->assertJson([
+            'status' => -2
+        ]);
     }
 
     /** @test */

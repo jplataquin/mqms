@@ -483,12 +483,26 @@
                                     openDrawerForNode('/project/' + realId + '?studio=1', 'Project: ' + node.text, iconMapping.project, 'createBtn', node);
                                 }
                             };
+                            items['rename'] = {
+                                'label': 'Rename',
+                                'icon': 'bi bi-pencil-square text-info',
+                                'action': function() {
+                                    renameNodePrompt(node);
+                                }
+                            };
                         } else if (type === 'section') {
                             items['add_contract_item'] = {
                                 'label': 'Add Contract Item',
                                 'icon': 'bi bi-file-earmark-plus text-success',
                                 'action': function() {
                                     openDrawerForNode('/project/section/' + realId + '?studio=1', 'Section: ' + node.text, iconMapping.section, 'createBtn', node);
+                                }
+                            };
+                            items['rename'] = {
+                                'label': 'Rename',
+                                'icon': 'bi bi-pencil-square text-info',
+                                'action': function() {
+                                    renameNodePrompt(node);
                                 }
                             };
                             items['delete_section'] = {
@@ -506,6 +520,13 @@
                                     openDrawerForNode('/project/section/contract_item/' + realId + '?studio=1', 'Contract Item: ' + node.text, iconMapping.contract_item, 'createComponentBtn', node);
                                 }
                             };
+                            items['rename'] = {
+                                'label': 'Rename',
+                                'icon': 'bi bi-pencil-square text-info',
+                                'action': function() {
+                                    renameNodePrompt(node);
+                                }
+                            };
                             items['delete_contract_item'] = {
                                 'label': 'Delete Contract Item',
                                 'icon': 'bi bi-trash text-danger',
@@ -521,6 +542,13 @@
                                     openDrawerForNode('/project/section/contract_item/component/' + realId + '?studio=1', 'Component: ' + node.text, iconMapping.component, 'addComponentItemBtn', node);
                                 }
                             };
+                            items['rename'] = {
+                                'label': 'Rename',
+                                'icon': 'bi bi-pencil-square text-info',
+                                'action': function() {
+                                    renameNodePrompt(node);
+                                }
+                            };
                             items['delete_component'] = {
                                 'label': 'Delete Component',
                                 'icon': 'bi bi-trash text-danger',
@@ -529,6 +557,13 @@
                                 }
                             };
                         } else if (type === 'component_item') {
+                            items['rename'] = {
+                                'label': 'Rename',
+                                'icon': 'bi bi-pencil-square text-info',
+                                'action': function() {
+                                    renameNodePrompt(node);
+                                }
+                            };
                             items['delete_component_item'] = {
                                 'label': 'Delete Component Item',
                                 'icon': 'bi bi-trash text-danger',
@@ -672,6 +707,100 @@
                 } else {
                     tree.refresh();
                 }
+            }
+
+            // Rename Node Prompt
+            function renameNodePrompt(node) {
+                const type = node.original.type;
+                const realId = node.original.real_id;
+                const currentName = node.text;
+
+                const displayType = type.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+                Swal.fire({
+                    title: 'Rename ' + displayType,
+                    input: 'text',
+                    inputValue: currentName,
+                    inputLabel: 'Name',
+                    inputPlaceholder: 'Enter new name...',
+                    showCancelButton: true,
+                    confirmButtonText: 'Save',
+                    cancelButtonText: 'Cancel',
+                    confirmButtonColor: '#007acc',
+                    cancelButtonColor: '#3c3c3c',
+                    inputValidator: (value) => {
+                        if (!value || !value.trim()) {
+                            return 'Name cannot be empty!';
+                        }
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed && result.value) {
+                        const newName = result.value.trim();
+                        if (newName === currentName) {
+                            return; // No change
+                        }
+
+                        $.post('/api/project/studio/node/rename', {
+                            type: type,
+                            id: realId,
+                            name: newName
+                        }, function(res) {
+                            if (res.status > 0) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Renamed!',
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                });
+
+                                // Update node text in the tree in-place without refreshing or collapsing
+                                const tree = $('#jstree-workspace').jstree(true);
+                                const updatedText = res.data && res.data.text ? res.data.text : newName;
+                                if (tree) {
+                                    tree.rename_node(node, updatedText);
+                                }
+
+                                // Update active tab title if the currently edited node is open
+                                const prefixMap = {
+                                    'project': 'Project: ',
+                                    'section': 'Section: ',
+                                    'contract_item': 'Contract Item: ',
+                                    'component': 'Component: ',
+                                    'component_item': 'Component Item: '
+                                };
+
+                                if (tree) {
+                                    const selectedNodes = tree.get_selected(true);
+                                    if (selectedNodes.length > 0 && selectedNodes[0].id === node.id) {
+                                        const prefix = prefixMap[type] || '';
+                                        activeTabTitle.text(prefix + updatedText);
+                                    }
+                                }
+
+                                // If project was edited, also update project name in top bar and window title
+                                if (type === 'project') {
+                                    $('.studio-project-name').text(updatedText);
+                                    document.title = 'MQMS Project Studio - ' + updatedText;
+                                }
+
+                                // If the node's form is currently loaded in the iframe, notify it
+                                if (iframe[0] && iframe[0].contentWindow) {
+                                    iframe[0].contentWindow.postMessage({
+                                        action: 'update-node',
+                                        type: type,
+                                        id: realId,
+                                        text: updatedText
+                                    }, '*');
+                                }
+                            } else {
+                                Swal.fire('Error', res.message || 'Could not rename record.', 'error');
+                            }
+                        }).fail(function(xhr) {
+                            const msg = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : 'API request failed.';
+                            Swal.fire('Error', msg, 'error');
+                        });
+                    }
+                });
             }
 
             // Beautified prompts for node creation
