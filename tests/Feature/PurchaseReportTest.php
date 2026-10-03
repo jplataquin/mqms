@@ -216,6 +216,10 @@ class PurchaseReportTest extends TestCase
         $response->assertSee('20.00');
         $response->assertSee('30.00');
 
+        // Check price format (e.g., P 220.00, P 800.00)
+        $response->assertSee('P 220.00');
+        $response->assertSee('P 800.00');
+
         // Check print button at the top
         $response->assertSee('id="printBtn"', false);
         $response->assertSee("window.open('/report/purchase/print?", false);
@@ -241,8 +245,9 @@ class PurchaseReportTest extends TestCase
 
         // Cement should be present
         $response->assertSee('50.00');
-        // Sand was 20.00, should not appear in this filtered report
-        $response->assertDontSee('20.00');
+        $response->assertSee('Holcim Portland Cement');
+        // Sand should not appear in this filtered report
+        $response->assertDontSee('Washed Sand');
     }
 
     /** @test */

@@ -387,7 +387,12 @@
             }
 
             if (window.parent && window.parent !== window) {
-                window.parent.postMessage('reload-tree', '*');
+                window.parent.postMessage({
+                    action: 'update-node',
+                    type: 'component',
+                    id: '{{$component->id}}',
+                    text: component.value
+                }, '*');
             }
 
             window.util.navReload();

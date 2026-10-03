@@ -620,9 +620,47 @@
                 iframe.attr('src', url);
             }
 
-            // Real-time communication: Refresh tree when sub-frame updates/reloads/saves
+            // Real-time communication: Update tree node without refresh/collapse, or reload tree if needed
             window.addEventListener('message', function(event) {
-                if (event.data === 'reload-tree') {
+                if (!event.data) return;
+
+                if (typeof event.data === 'object' && (event.data.action === 'update-node' || event.data.type)) {
+                    const type = event.data.type;
+                    const realId = event.data.id;
+                    const newText = event.data.text || event.data.name;
+                    const nodeId = type + '_' + realId;
+
+                    const tree = $('#jstree-workspace').jstree(true);
+                    if (tree) {
+                        const node = tree.get_node(nodeId) || tree.get_node(realId);
+                        if (node && newText) {
+                            tree.rename_node(node, newText);
+                        }
+                    }
+
+                    // Update active tab title if the currently edited node is open
+                    const prefixMap = {
+                        'project': 'Project: ',
+                        'section': 'Section: ',
+                        'contract_item': 'Contract Item: ',
+                        'component': 'Component: ',
+                        'component_item': 'Component Item: '
+                    };
+
+                    if (tree) {
+                        const selectedNodes = tree.get_selected(true);
+                        if (selectedNodes.length > 0 && (selectedNodes[0].id === nodeId || (selectedNodes[0].original && selectedNodes[0].original.real_id == realId))) {
+                            const prefix = prefixMap[type] || '';
+                            activeTabTitle.text(prefix + newText);
+                        }
+                    }
+
+                    // If project was edited, also update project name in top bar and window title
+                    if (type === 'project' && newText) {
+                        $('.studio-project-name').text(newText);
+                        document.title = 'MQMS Project Studio - ' + newText;
+                    }
+                } else if (event.data === 'reload-tree') {
                     refreshTree();
                 }
             });

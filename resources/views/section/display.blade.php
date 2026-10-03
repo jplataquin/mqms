@@ -308,7 +308,12 @@
             }
 
             if (window.parent && window.parent !== window) {
-                window.parent.postMessage('reload-tree', '*');
+                window.parent.postMessage({
+                    action: 'update-node',
+                    type: 'section',
+                    id: '{{$section->id}}',
+                    text: sectionName.value
+                }, '*');
             }
 
             window.util.navReload();

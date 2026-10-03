@@ -155,7 +155,12 @@
             }
 
             if (window.parent && window.parent !== window) {
-                window.parent.postMessage('reload-tree', '*');
+                window.parent.postMessage({
+                    action: 'update-node',
+                    type: 'project',
+                    id: '{{$project->id}}',
+                    text: project_name.value
+                }, '*');
             }
 
             window.util.navReload();

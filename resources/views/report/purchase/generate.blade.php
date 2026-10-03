@@ -120,7 +120,7 @@
                         {{ number_format($po_item->total_quantity,2) }}
                     </td>
                     <td class="text-end">
-                        P {{$po_item->price}}
+                        P {{ number_format($po_item->price, 2) }}
                     </td>
                     <td class="text-end">
                         P {{ number_format( ($po_item->total_quantity * $po_item->price), 2) }}

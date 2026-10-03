@@ -332,7 +332,12 @@
             }
 
             if (window.parent && window.parent !== window) {
-                window.parent.postMessage('reload-tree', '*');
+                window.parent.postMessage({
+                    action: 'update-node',
+                    type: 'contract_item',
+                    id: '{{$contract_item->id}}',
+                    text: (item_code.value + ' ' + description.value).trim()
+                }, '*');
             }
 
             window.util.navReload();

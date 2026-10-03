@@ -691,6 +691,15 @@ class ComponentItem extends ComponentV2{
             this.setState('component_item_editable',false);
 
             signal.broadcast('component-item-update');
+
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({
+                    action: 'update-node',
+                    type: 'component_item',
+                    id: this._model.id,
+                    text: this.getState('component_item_name')
+                }, '*');
+            }
         });
     }
 
