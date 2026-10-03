@@ -208,6 +208,11 @@ class PurchaseReportTest extends TestCase
         $response->assertSee('50.00');
         $response->assertSee('20.00');
         $response->assertSee('30.00');
+
+        // Check print button at the top
+        $response->assertSee('id="printBtn"', false);
+        $response->assertSee("window.open('/report/purchase/print?", false);
+        $response->assertSee("'_blank'", false);
     }
 
     /** @test */
@@ -247,5 +252,6 @@ class PurchaseReportTest extends TestCase
         $po1Number = str_pad($this->po1->id, 6, '0', STR_PAD_LEFT);
         $response->assertSee('PO # ' . $po1Number);
         $response->assertSee('50.00');
+        $response->assertSee('font-size: 11px', false);
     }
 }

@@ -23,7 +23,12 @@
         </div>
         <hr>
         <div class="mb-5">
-            <h1 class="mb-3">Purchase Report</h1>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1 class="mb-0">Purchase Report</h1>
+                <button class="btn btn-warning" id="printBtn" onclick="window.open('/report/purchase/print?{{ request()->getQueryString() }}', '_blank')">
+                    <i class="bi bi-printer me-1"></i> Print
+                </button>
+            </div>
             <table class="record-table-horizontal">
                 <tbody>
                     <tr>

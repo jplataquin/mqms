@@ -3,10 +3,19 @@
         <title>Purchase Report</title>
 
         <style>
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 11px;
+                color: #000000;
+                background-color: #ffffff;
+                margin: 20px;
+            }
+
             table, tr, td, th {
                 border: solid 1px #000000;
                 border-collapse: collapse;
                 font-size: 11px;
+                color: #000000;
             }
             
             table {
@@ -15,10 +24,18 @@
 
             th{
                 text-align: center;
+                background-color: #f2f2f2;
             }
 
             td, th {
                 padding: 5px;
+                font-size: 11px;
+            }
+
+            .record-table-horizontal th {
+                text-align: left;
+                width: 200px;
+                background-color: #f2f2f2;
             }
 
             .text-end{
@@ -55,11 +72,32 @@
                 word-wrap: break-word;
             }
 
+            .no-print {
+                margin-bottom: 15px;
+                text-align: right;
+            }
+
+            .no-print button {
+                padding: 6px 14px;
+                font-weight: bold;
+                font-size: 11px;
+                cursor: pointer;
+                background-color: #ffffff;
+                border: 1px solid #000000;
+            }
             
             @media print {
 
+                body {
+                    margin: 10px;
+                }
+
+                .no-print {
+                    display: none !important;
+                }
+
                 td, th{
-                    font-size:10px;
+                    font-size:11px;
                 }
 
                 .page-break{
@@ -75,8 +113,9 @@
     <body>
     
 
-       
-           
+        <div class="no-print">
+            <button onclick="window.print()">Print</button>
+        </div>
 
         <div class="mb-5">
             <h1 class="mb-3">Purchase Report</h1>
