@@ -222,23 +222,31 @@
         <hr>
 
         <h2 class="mb-3 text-center">-- Per Purchase Order --</h2>
-        @foreach($per_po as $po_id => $po_data)
-        <div class="mb-5">
-            <h3 class="mb-3">PO # {{ $po_data['po_number'] }}</h3>
+        <div>
             <table class="table w-100 table-hover table-striped">
-                <tr>
-                    <th>Material Item</th>
-                    <th class="text-center">Quantity</th>
-                </tr>
-                @foreach($po_data['items'] as $item)
-                <tr>
-                    <td>{{ $item->MaterialItem->formatted_name }}</td>
-                    <td class="text-center">{{ number_format($item->total_quantity, 2) }}</td>
-                </tr>
-                @endforeach
+                <thead>
+                    <tr>
+                        <th class="text-start">Material Item</th>
+                        <th class="text-center" style="width: 150px;">Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($per_po as $po_id => $po_data)
+                    <tr style="background-color: #f2f2f2;">
+                        <th colspan="2" class="text-start" style="padding: 6px;">
+                            PO # {{ $po_data['po_number'] }}
+                        </th>
+                    </tr>
+                    @foreach($po_data['items'] as $item)
+                    <tr>
+                        <td style="padding-left: 15px;">{{ $item->MaterialItem->formatted_name }}</td>
+                        <td class="text-center">{{ number_format($item->total_quantity, 2) }}</td>
+                    </tr>
+                    @endforeach
+                    @endforeach
+                </tbody>
             </table>
         </div>
-        @endforeach
           
 
       

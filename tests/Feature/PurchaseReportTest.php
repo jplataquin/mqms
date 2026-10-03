@@ -202,6 +202,7 @@ class PurchaseReportTest extends TestCase
 
         $response->assertSee('PO # ' . $po1Number);
         $response->assertSee('PO # ' . $po2Number);
+        $response->assertSee('colspan="2"', false);
 
         // Check quantities
         $response->assertSee('50.00');
