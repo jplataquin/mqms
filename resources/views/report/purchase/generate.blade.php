@@ -176,7 +176,7 @@
                 </thead>
                 <tbody>
                     @foreach($per_po as $po_id => $po_data)
-                    <tr class="table-secondary">
+                    <tr>
                         <th colspan="2" class="text-start">
                             PO # {{ $po_data['po_number'] }}
                         </th>
