@@ -276,8 +276,9 @@ class UserController extends Controller
 
         //todo check role
 
-        $page       = (int) $request->input('page')     ?? 1;
-        $limit      = (int) $request->input('limit')    ?? 10;
+        $page       = (int) ($request->input('page') ?? 1);
+        if($page < 1) $page = 1;
+        $limit      = (int) ($request->input('limit') ?? 10);
         $orderBy    = $request->input('order_by')       ?? 'id';
         $order      = $request->input('order')          ?? 'DESC';
         $query      = $request->input('query')          ?? '';

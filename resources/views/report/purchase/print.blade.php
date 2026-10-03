@@ -214,10 +214,31 @@
                 <tr>
                     <td>{{$m->MaterialItem->formatted_name}}</td>
                     <td class="text-center">{{ number_format($m->total_quantity,2) }}</td>
-                </td>
+                </tr>
                 @endforeach
             </table>
         </div>
+
+        <hr>
+
+        <h2 class="mb-3 text-center">-- Per Purchase Order --</h2>
+        @foreach($per_po as $po_id => $po_data)
+        <div class="mb-5">
+            <h3 class="mb-3">PO # {{ $po_data['po_number'] }}</h3>
+            <table class="table w-100 table-hover table-striped">
+                <tr>
+                    <th>Material Item</th>
+                    <th class="text-center">Quantity</th>
+                </tr>
+                @foreach($po_data['items'] as $item)
+                <tr>
+                    <td>{{ $item->MaterialItem->formatted_name }}</td>
+                    <td class="text-center">{{ number_format($item->total_quantity, 2) }}</td>
+                </tr>
+                @endforeach
+            </table>
+        </div>
+        @endforeach
           
 
       

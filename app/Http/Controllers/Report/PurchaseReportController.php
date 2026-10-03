@@ -238,10 +238,38 @@ class PurchaseReportController extends Controller{
             
             $per_material = $per_material->with('MaterialItem')->get();
         }
+
+        $per_po = [];
+
+        if($po_id_arr){
+            $per_po_items = PurchaseOrderItem::whereIn('purchase_order_id',$po_id_arr)
+            ->selectRaw('SUM(quantity) as total_quantity, material_item_id, purchase_order_id')
+            ->groupBy('purchase_order_id', 'material_item_id');
+            
+            //Filter material item
+            if($material_item_id_arr){
+                $per_po_items = $per_po_items->whereIn('material_item_id',$material_item_id_arr);
+            }
+            
+            $per_po_items = $per_po_items->with(['MaterialItem', 'PurchaseOrder'])->get();
+
+            foreach($per_po_items as $item){
+                $po_id = $item->purchase_order_id;
+                if(!isset($per_po[$po_id])){
+                    $per_po[$po_id] = [
+                        'purchase_order' => $item->PurchaseOrder,
+                        'po_number'      => str_pad($po_id, 6, '0', STR_PAD_LEFT),
+                        'items'          => []
+                    ];
+                }
+                $per_po[$po_id]['items'][] = $item;
+            }
+        }
        
         return [
             'per_supplier'  => $per_supplier,
             'per_material'  => $per_material,
+            'per_po'        => $per_po,
             'project'       => $project,
             'section'       => $section,
             'contract_item' => $contract_item,

@@ -100,9 +100,22 @@
         
         data.map(item=>{
 
-            let row = t.div({class:'item-container fade-in'},()=>{
-                t.div({class:'item-header'},item.name);
-                t.div({class:'item-body'},item.email);
+            let row = t.div({class:'item-container fade-in d-flex justify-content-between align-items-center'},()=>{
+                t.div({},()=>{
+                    t.div({class:'item-header'},item.name);
+                    t.div({class:'item-body'},item.email);
+                });
+
+                t.div({class:'pe-3 text-end'},()=>{
+                    let statusClass = 'badge bg-secondary';
+                    if(item.status === 'ACTV' || item.status === 'Active'){
+                        statusClass = 'badge bg-success';
+                    }else if(item.status === 'DCTV' || item.status === 'Deactivated'){
+                        statusClass = 'badge bg-danger';
+                    }
+
+                    t.span({class: statusClass, title: item.status === 'ACTV' ? 'Active' : (item.status === 'DCTV' ? 'Deactivated' : item.status)}, item.status);
+                });
             });
 
             row.onclick = ()=>{

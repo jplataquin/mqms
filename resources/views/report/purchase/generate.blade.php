@@ -158,10 +158,35 @@
                 <tr>
                     <td>{{$m->MaterialItem->formatted_name}}</td>
                     <td class="text-center">{{ number_format($m->total_quantity,2) }}</td>
-                </td>
+                </tr>
                 @endforeach
             </table>
         </div>
+
+        <hr>
+
+        <h2 class="mb-3 text-center">-- Per Purchase Order --</h2>
+        @foreach($per_po as $po_id => $po_data)
+        <div class="mb-4">
+            <h4 class="mb-2">PO # {{ $po_data['po_number'] }}</h4>
+            <table class="table w-100 table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Material Item</th>
+                        <th class="text-center">Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($po_data['items'] as $item)
+                    <tr>
+                        <td>{{ $item->MaterialItem->formatted_name }}</td>
+                        <td class="text-center">{{ number_format($item->total_quantity, 2) }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        @endforeach
     </div>
     <script type="module">
         import {$q,Template,$el,$util} from '/adarna.js';
