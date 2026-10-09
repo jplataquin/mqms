@@ -460,10 +460,12 @@
                 const items = [];
                 const inputs = document.querySelectorAll('.receive-item-input');
                 inputs.forEach(input => {
-                    const qty = parseFloat(input.value);
-                    if (qty > 0) {
+                    const val = input.value.trim();
+                    const qty = parseFloat(val);
+                    if (!isNaN(qty) && qty > 0) {
+                        const poItemId = input.getAttribute('data-po-item-id') || input.dataset.poItemId;
                         items.push({
-                            purchase_order_item_id: parseInt(input.dataset.poItemId),
+                            purchase_order_item_id: parseInt(poItemId),
                             quantity_received: qty
                         });
                     }
@@ -485,7 +487,7 @@
                     receipt_no: receipt_no,
                     received_date: received_date,
                     remarks: remarks,
-                    items: items
+                    items: JSON.stringify(items)
                 }).then(reply => {
                     window.util.unblockUI();
 

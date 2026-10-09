@@ -55,7 +55,14 @@ class PurchaseOrderReceivedController extends Controller
             ]);
         }
 
-        $items = is_array($request->input('items')) ? $request->input('items') : json_decode($request->input('items'), true);
+        $rawItems = $request->input('items');
+        if (is_array($rawItems)) {
+            $items = $rawItems;
+        } elseif (is_string($rawItems)) {
+            $items = json_decode($rawItems, true);
+        } else {
+            $items = null;
+        }
 
         if (empty($items) || !is_array($items)) {
             return response()->json([

@@ -334,4 +334,34 @@ class PurchaseOrderReceivedTest extends TestCase
         $response->assertSee('DR-999');
         $response->assertSee('Receive Items');
     }
+
+    public function test_receiving_with_json_string_items_payload()
+    {
+        $this->actingAs($this->user);
+
+        $itemsJson = json_encode([
+            [
+                'purchase_order_item_id' => $this->poItem->id,
+                'quantity_received'      => 30,
+            ]
+        ]);
+
+        $response = $this->post('/api/purchase_order/received/create', [
+            'purchase_order_id' => $this->po->id,
+            'receipt_no'        => 'DR-JSON',
+            'received_date'     => '2026-10-09',
+            'items'             => $itemsJson,
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+            'data'   => [
+                'received_status' => 'PART'
+            ]
+        ]);
+
+        $this->poItem->refresh();
+        $this->assertEquals(30, $this->poItem->received_quantity);
+    }
 }
