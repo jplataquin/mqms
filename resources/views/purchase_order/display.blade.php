@@ -492,12 +492,33 @@
                     window.util.unblockUI();
 
                     if (reply.status <= 0) {
+                        // Dismiss receive modal so error modal is clearly visible
+                        const receiveModalEl = document.getElementById('receiveModal');
+                        if (receiveModalEl) {
+                            const closeBtn = receiveModalEl.querySelector('[data-bs-dismiss="modal"]');
+                            if (closeBtn) closeBtn.click();
+                        }
                         window.util.showMsg(reply);
                         return false;
                     }
 
-                    window.util.showMsg({ status: 1, message: 'Items received successfully!' });
+                    // Successfully saved: dismiss the modal
+                    const receiveModalEl = document.getElementById('receiveModal');
+                    if (receiveModalEl) {
+                        const closeBtn = receiveModalEl.querySelector('[data-bs-dismiss="modal"]');
+                        if (closeBtn) closeBtn.click();
+                    }
+
+                    // Remove lingering modal backdrops and reset body classes
+                    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                    document.body.classList.remove('modal-open');
+                    document.body.style.removeProperty('overflow');
+                    document.body.style.removeProperty('padding-right');
+
                     window.util.navReload();
+                }).catch(err => {
+                    window.util.unblockUI();
+                    alert('An unexpected error occurred: ' + (err.message || err));
                 });
             };
         }
