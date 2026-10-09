@@ -67,10 +67,12 @@
             <table class="table">    
                 <thead>
                     <tr>
-                        <th style="min-width:500px">Material Item</th>
-                        <th style="min-width:200px">Price</th>
-                        <th style="min-width:200px">Qantity</th>
-                        <th style="min-width:200px">Total</th>
+                        <th style="min-width:350px">Material Item</th>
+                        <th style="min-width:150px">Price</th>
+                        <th style="min-width:120px">Ordered</th>
+                        <th style="min-width:120px">Received</th>
+                        <th style="min-width:120px">Remaining</th>
+                        <th style="min-width:150px">Total</th>
                     </tr>
                 <thead>
 
@@ -84,7 +86,7 @@
                 
                         @foreach($items as $item)
                             <tr>
-                                <td colspan="4">
+                                <td colspan="6">
                                     {{ $componentItemArr[$component_item_id]->name }}
                                 </td>
                             </tr>
@@ -97,6 +99,12 @@
                                 </td>    
                                 <td>
                                     <input type="text" class="form-control text-center" disabled="true" value="{{$item->quantity}}"/>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control text-center" disabled="true" value="{{$item->received_quantity}}"/>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control text-center" disabled="true" value="{{$item->remaining_quantity}}"/>
                                 </td>    
                                 <td>
                                     <input type="text" class="form-control text-end" disabled="true" value="{{ number_format( $item->quantity * $item->price ) }}"/>
@@ -105,7 +113,7 @@
 
                             @if( $check_quantity[ $item->material_item_id ] )
                                 <tr>
-                                    <td class="text-danger" colspan="4">
+                                    <td class="text-danger" colspan="6">
                                         @foreach($check_quantity[$item->material_item_id] as $msg)
                                             <div>{{$msg}}</div>
                                         @endforeach
@@ -121,7 +129,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="2"></td>
+                        <td colspan="4"></td>
                         <th class="text-center">Sub Total</th>
                         <td>
                              <input type="text" id="sub_total" disabled="true" value="{{ number_format($sub_total, 2) }}" class="form-control text-end"/>
@@ -130,7 +138,7 @@
 
                     @if($extras)
                     <tr>
-                        <th colspan="2"></th>
+                        <th colspan="4"></th>
                         <th colspan="2" class="text-center">Additional Charges / Discounts</th>
                     </tr>
                     @endif
@@ -139,7 +147,7 @@
 
                     @foreach($extras as $extra)
                         <tr class="extra">
-                            <td colspan="2"></td>
+                            <td colspan="4"></td>
                             <td>
                                 <input type="text" disabled="true" value="{{$extra->text}}" class="extra_text form-control"/>
                             </td>
@@ -153,7 +161,7 @@
                     @endforeach
 
                     <tr class="extra">
-                        <td colspan="2"></td>
+                        <td colspan="4"></td>
                         <th class="text-center">
                             Grand Total
                         </td>
@@ -163,6 +171,112 @@
                     </tr>
                 </tfoot>
             </table>
+        </div>
+
+        @if(isset($received_records) && $received_records->count() > 0)
+        <div class="card mt-4 mb-4">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Receiving History</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-bordered mb-0">
+                        <thead>
+                            <tr class="table-secondary">
+                                <th>Receipt / DR #</th>
+                                <th>Date Received</th>
+                                <th>Items & Quantities</th>
+                                <th>Remarks</th>
+                                <th>Received By</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($received_records as $rec)
+                            <tr>
+                                <td>{{ $rec->receipt_no ?? 'N/A' }}</td>
+                                <td>{{ \Carbon\Carbon::parse($rec->received_date)->format('Y-m-d') }}</td>
+                                <td>
+                                    <ul class="mb-0 ps-3">
+                                        @foreach($rec->Items as $rItem)
+                                        <li>
+                                            {{ $rItem->PurchaseOrderItem->MaterialItem->brand ?? '' }} {{ $rItem->PurchaseOrderItem->MaterialItem->name ?? '' }}: 
+                                            <strong>{{ $rItem->quantity_received }}</strong>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </td>
+                                <td>{{ $rec->remarks ?? '-' }}</td>
+                                <td>{{ $rec->CreatedByUser->name ?? 'User #'.$rec->created_by }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        @endif
+
+        <!-- Modal for Receiving Items -->
+        <div class="modal fade" id="receiveModal" tabindex="-1" aria-labelledby="receiveModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="receiveModalLabel">Receive Items for PO #{{ str_pad($purchase_order->id, 6, '0', STR_PAD_LEFT) }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="receiveForm">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Receipt / DR No.</label>
+                                    <input type="text" class="form-control" id="receipt_no" placeholder="e.g. DR-12345" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Date Received <span class="text-danger">*</span></label>
+                                    <input type="date" class="form-control" id="received_date" value="{{ date('Y-m-d') }}" required />
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Remarks</label>
+                                <textarea class="form-control" id="receive_remarks" rows="2" placeholder="Optional notes..."></textarea>
+                            </div>
+                            <h6 class="mt-4 mb-2">Items to Receive:</h6>
+                            <div class="table-responsive">
+                                <table class="table table-sm table-bordered">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Material Item</th>
+                                            <th class="text-center" style="width: 100px;">Ordered</th>
+                                            <th class="text-center" style="width: 100px;">Remaining</th>
+                                            <th class="text-center" style="width: 140px;">Receiving Qty</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($purchase_order->Items as $poItem)
+                                        @if($poItem->remaining_quantity > 0)
+                                        <tr>
+                                            <td>
+                                                {{ $materialItemArr[$poItem->material_item_id]->brand ?? '' }} {{ $materialItemArr[$poItem->material_item_id]->name ?? '' }} {{ $materialItemArr[$poItem->material_item_id]->specification_unit_packaging ?? '' }}
+                                            </td>
+                                            <td class="text-center">{{ $poItem->quantity }}</td>
+                                            <td class="text-center"><span class="badge bg-secondary">{{ $poItem->remaining_quantity }}</span></td>
+                                            <td>
+                                                <input type="number" step="any" min="0" max="{{ $poItem->remaining_quantity }}" class="form-control form-control-sm text-end receive-item-input" data-po-item-id="{{ $poItem->id }}" placeholder="0" />
+                                            </td>
+                                        </tr>
+                                        @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="submitReceiveBtn">Save Received</button>
+                    </div>
+                </div>
+            </div>
         </div>
     
 
@@ -178,6 +292,12 @@
                 
                 @if($purchase_order->status == 'DRFT')
                     <button id="submitForReviewBtn" class="btn btn-warning">For Review</button>
+                @endif
+
+                @if($purchase_order->status == 'APRV' && $purchase_order->received_status != 'COMP')
+                    <button id="openReceiveModalBtn" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#receiveModal">
+                        <i class="bi bi-box-seam me-1"></i> Receive Items
+                    </button>
                 @endif
 
                 @if($purchase_order->status == 'APRV')
@@ -321,6 +441,63 @@
             printBtn.onclick = (e)=>{
                 window.open('/purchase_order/print/{{$purchase_order->id}}','_blank').focus();
             }
+        }
+
+        const submitReceiveBtn = $q('#submitReceiveBtn').first();
+        if (submitReceiveBtn) {
+            submitReceiveBtn.onclick = async (e) => {
+                e.preventDefault();
+
+                const receipt_no = $q('#receipt_no').first().value;
+                const received_date = $q('#received_date').first().value;
+                const remarks = $q('#receive_remarks').first().value;
+
+                if (!received_date) {
+                    alert('Please select a received date.');
+                    return;
+                }
+
+                const items = [];
+                const inputs = document.querySelectorAll('.receive-item-input');
+                inputs.forEach(input => {
+                    const qty = parseFloat(input.value);
+                    if (qty > 0) {
+                        items.push({
+                            purchase_order_item_id: parseInt(input.dataset.poItemId),
+                            quantity_received: qty
+                        });
+                    }
+                });
+
+                if (items.length === 0) {
+                    alert('Please enter a received quantity for at least one item.');
+                    return;
+                }
+
+                if (!await window.util.confirm('Confirm saving received quantities?')) {
+                    return;
+                }
+
+                window.util.blockUI();
+
+                window.util.$post('/api/purchase_order/received/create', {
+                    purchase_order_id: '{{$purchase_order->id}}',
+                    receipt_no: receipt_no,
+                    received_date: received_date,
+                    remarks: remarks,
+                    items: items
+                }).then(reply => {
+                    window.util.unblockUI();
+
+                    if (reply.status <= 0) {
+                        window.util.showMsg(reply);
+                        return false;
+                    }
+
+                    window.util.showMsg({ status: 1, message: 'Items received successfully!' });
+                    window.util.navReload();
+                });
+            };
         }
     </script>
 </div>

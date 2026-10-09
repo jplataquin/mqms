@@ -337,6 +337,7 @@ class PurchaseOrderController extends PurchaseOrderSuperController
                 'href' => "/material_quantity_request/".$materialQuantityRequest->id
             ],
             "Status"                => $purchaseOrder->status,
+            "Received Status"       => $purchaseOrder->received_status ?? 'PEND',
             "Description"           => $materialQuantityRequest->description,
             "Created By"            => $purchaseOrder->CreatedByUser()->name.' '.$purchaseOrder->created_at            
         ];
@@ -356,7 +357,11 @@ class PurchaseOrderController extends PurchaseOrderSuperController
 
         $check_quantity = $this->__check_over_quantity($purchaseOrder);
 
-        
+        $received_records = $purchaseOrder->Received()
+            ->with(['Items.PurchaseOrderItem.MaterialItem', 'CreatedByUser'])
+            ->orderBy('received_date', 'DESC')
+            ->get();
+
         return view('purchase_order/display',[
             'check_quantity'                => $check_quantity,
             'purchase_order'                => $purchaseOrder,
@@ -366,7 +371,8 @@ class PurchaseOrderController extends PurchaseOrderSuperController
             'materialItemArr'               => $materialItemArr,
             'componentItemArr'              => $componentItemArr,
             'componentItemMaterialsArr'     => $componentItemMaterialsArr,
-            'po_details'                    => $po_details
+            'po_details'                    => $po_details,
+            'received_records'              => $received_records
         ]);
     }
 

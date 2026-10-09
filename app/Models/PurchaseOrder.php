@@ -18,6 +18,8 @@ use App\Models\Project;
 use App\Models\Section;
 use App\Models\Component;
 use App\Models\User;
+use App\Models\PurchaseOrderReceived;
+use App\Models\PurchaseOrderReceivedItem;
 
 class PurchaseOrder extends Model
 {
@@ -25,6 +27,11 @@ class PurchaseOrder extends Model
 
     protected $table = 'purchase_orders';
     public $deleteException = null;
+
+    public function Received(): HasMany
+    {
+        return $this->hasMany(PurchaseOrderReceived::class);
+    }
 
     public function Items(): HasMany
     {
@@ -128,5 +135,25 @@ class PurchaseOrder extends Model
         }
 
         return $grand_total;
+    }
+
+    public function updateReceivedStatus()
+    {
+        $totalOrdered = $this->Items()->sum('quantity');
+        
+        $itemIds = $this->Items()->pluck('id');
+        $totalReceived = PurchaseOrderReceivedItem::whereIn('purchase_order_item_id', $itemIds)
+            ->sum('quantity_received');
+
+        if ($totalReceived <= 0) {
+            $this->received_status = 'PEND';
+        } elseif ($totalReceived >= $totalOrdered) {
+            $this->received_status = 'COMP';
+        } else {
+            $this->received_status = 'PART';
+        }
+
+        $this->save();
+        return $this->received_status;
     }
 }

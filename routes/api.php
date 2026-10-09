@@ -164,6 +164,9 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::post('/purchase_order/request_void', [App\Http\Controllers\PurchaseOrderController::class, '_request_void']);
     Route::post('/purchase_order/delete', [App\Http\Controllers\PurchaseOrderController::class, '_delete']);
     Route::post('/purchase_order/submit_for_review', [App\Http\Controllers\PurchaseOrderController::class, '_submit_for_review']);
+
+    Route::get('/purchase_order/received/list', [App\Http\Controllers\PurchaseOrderReceivedController::class, '_list']);
+    Route::post('/purchase_order/received/create', [App\Http\Controllers\PurchaseOrderReceivedController::class, '_create']);
    
     
     Route::get('/contract_item/list', [App\Http\Controllers\ContractItemController::class, '_list']);

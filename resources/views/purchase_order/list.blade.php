@@ -144,6 +144,7 @@
                     <th style="width:300px">Project</th>
                     <th>PO #</th>
                     <th>Status</th>
+                    <th>Received Status</th>
                     <th>Date Created</th>
                 <thead>
                 <tbody id="list">
@@ -204,6 +205,9 @@
                     });
                     t.td({},()=>{
                         t.txt(item.status);
+                    });
+                    t.td({},()=>{
+                        t.txt(item.received_status || 'PEND');
                     });
                     t.td({},()=>{
                         t.txt(item.created_at);
