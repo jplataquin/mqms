@@ -174,11 +174,104 @@
         </div>
 
         @if(isset($received_records) && $received_records->count() > 0)
+        @php
+            $total_ordered_quantity = $purchase_order->Items->sum('quantity');
+            $total_received_quantity = $purchase_order->Items->sum(function($item) {
+                return (float) $item->received_quantity;
+            });
+            $total_remaining_quantity = $purchase_order->Items->sum(function($item) {
+                return (float) $item->remaining_quantity;
+            });
+        @endphp
         <div class="card mt-4 mb-4">
-            <div class="card-header bg-light">
-                <h5 class="mb-0">Receiving History</h5>
+            <div class="card-header bg-light d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <h5 class="mb-0 text-black">Receiving History</h5>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="text-dark small">
+                        Total Received Quantity: <strong class="text-success">{{ (float)$total_received_quantity == intval($total_received_quantity) ? number_format($total_received_quantity, 0) : number_format($total_received_quantity, 2) }}</strong>
+                    </span>
+                    <span class="text-dark small">
+                        Remaining Unreceived Quantity: <strong class="text-danger">{{ (float)$total_remaining_quantity == intval($total_remaining_quantity) ? number_format($total_remaining_quantity, 0) : number_format($total_remaining_quantity, 2) }}</strong>
+                    </span>
+                </div>
             </div>
             <div class="card-body p-0">
+                <!-- Summary of Items -->
+                <div class="p-3 bg-light border-bottom">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="fw-bold text-dark"><i class="bi bi-list-check me-1"></i> Receiving Summary</span>
+                    </div>
+                    <div class="table-responsive bg-white rounded border">
+                        <table class="table table-sm table-hover mb-0 align-middle">
+                            <thead class="table-secondary">
+                                <tr>
+                                    <th>Material Item</th>
+                                    <th class="text-center" style="width: 120px;">Ordered</th>
+                                    <th class="text-center" style="width: 180px;">Total Received Quantity</th>
+                                    <th class="text-center" style="width: 220px;">Remaining Unreceived Quantity</th>
+                                    <th class="text-center" style="width: 100px;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($purchase_order->Items as $poItem)
+                                @php
+                                    $po_mat = $materialItemArr[$poItem->material_item_id] ?? $poItem->MaterialItem;
+                                @endphp
+                                <tr>
+                                    <td>
+                                        <span class="fw-semibold text-dark">
+                                            {{ $po_mat->brand ?? '' }} {{ $po_mat->name ?? '' }}
+                                        </span>
+                                        @if(!empty($po_mat->specification_unit_packaging))
+                                        <small class="text-muted d-block">
+                                            {{ $po_mat->specification_unit_packaging }}
+                                        </small>
+                                        @endif
+                                    </td>
+                                    <td class="text-center text-dark">
+                                        {{ (float)$poItem->quantity == intval($poItem->quantity) ? number_format($poItem->quantity, 0) : number_format($poItem->quantity, 2) }}
+                                    </td>
+                                    <td class="text-center text-success fw-bold">
+                                        {{ (float)$poItem->received_quantity == intval($poItem->received_quantity) ? number_format($poItem->received_quantity, 0) : number_format($poItem->received_quantity, 2) }}
+                                    </td>
+                                    <td class="text-center text-danger fw-bold">
+                                        {{ (float)$poItem->remaining_quantity == intval($poItem->remaining_quantity) ? number_format($poItem->remaining_quantity, 0) : number_format($poItem->remaining_quantity, 2) }}
+                                    </td>
+                                    <td class="text-center">
+                                        @if($poItem->remaining_quantity <= 0)
+                                            <span class="badge bg-success">Completed</span>
+                                        @elseif($poItem->received_quantity > 0)
+                                            <span class="badge bg-warning text-dark">Partial</span>
+                                        @else
+                                            <span class="badge bg-secondary">Pending</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot class="table-light border-top">
+                                <tr class="fw-bold">
+                                    <td class="text-end text-dark">Total:</td>
+                                    <td class="text-center text-dark">
+                                        {{ (float)$total_ordered_quantity == intval($total_ordered_quantity) ? number_format($total_ordered_quantity, 0) : number_format($total_ordered_quantity, 2) }}
+                                    </td>
+                                    <td class="text-center text-success">
+                                        {{ (float)$total_received_quantity == intval($total_received_quantity) ? number_format($total_received_quantity, 0) : number_format($total_received_quantity, 2) }}
+                                    </td>
+                                    <td class="text-center text-danger">
+                                        {{ (float)$total_remaining_quantity == intval($total_remaining_quantity) ? number_format($total_remaining_quantity, 0) : number_format($total_remaining_quantity, 2) }}
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Receiving History Logs -->
+                <div class="p-3 bg-light border-bottom d-flex justify-content-between align-items-center">
+                    <span class="fw-bold text-dark"><i class="bi bi-clock-history me-1"></i> Delivery / Receiving Logs</span>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered mb-0">
                         <thead>
@@ -200,7 +293,7 @@
                                         @foreach($rec->Items as $rItem)
                                         <li>
                                             {{ $rItem->PurchaseOrderItem->MaterialItem->brand ?? '' }} {{ $rItem->PurchaseOrderItem->MaterialItem->name ?? '' }}: 
-                                            <strong>{{ $rItem->quantity_received }}</strong>
+                                            <strong>{{ (float)$rItem->quantity_received == intval($rItem->quantity_received) ? number_format($rItem->quantity_received, 0) : number_format($rItem->quantity_received, 2) }}</strong>
                                         </li>
                                         @endforeach
                                     </ul>
@@ -210,6 +303,20 @@
                             </tr>
                             @endforeach
                         </tbody>
+                        <tfoot class="table-light">
+                            <tr class="fw-bold text-dark">
+                                <td colspan="2" class="text-end">Summary:</td>
+                                <td>
+                                    <span class="text-success me-3">
+                                        Total Received Quantity: <strong>{{ (float)$total_received_quantity == intval($total_received_quantity) ? number_format($total_received_quantity, 0) : number_format($total_received_quantity, 2) }}</strong>
+                                    </span>
+                                    <span class="text-danger">
+                                        Remaining Unreceived Quantity: <strong>{{ (float)$total_remaining_quantity == intval($total_remaining_quantity) ? number_format($total_remaining_quantity, 0) : number_format($total_remaining_quantity, 2) }}</strong>
+                                    </span>
+                                </td>
+                                <td colspan="2"></td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

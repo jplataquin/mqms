@@ -331,6 +331,10 @@ class PurchaseOrderReceivedTest extends TestCase
         $response = $this->get('/purchase_order/' . $this->po->id);
         $response->assertStatus(200);
         $response->assertSee('Receiving History');
+        $response->assertSee('text-black');
+        $response->assertSee('Total Received Quantity');
+        $response->assertSee('Remaining Unreceived Quantity');
+        $response->assertSee('Receiving Summary');
         $response->assertSee('DR-999');
         $response->assertSee('Receive Items');
     }
