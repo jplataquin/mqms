@@ -15,9 +15,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/accomplishment/component/{{$component->id}}">
+                    <a href="/accomplishment/contract_item/{{$contract_item->id}}">
                         <span>
-                        Component
+                        {{$contract_item->item_code}}
                         </span>
                     </a>
                 </li>
@@ -36,7 +36,7 @@
 
         <div class="card mb-4 border-0 shadow-sm">
             <div class="card-header bg-light py-3">
-                <h5 class="mb-0 text-secondary fw-bold"><i class="bi bi-info-circle ms-1"></i> Component Reference Details</h5>
+                <h5 class="mb-0 text-secondary fw-bold"><i class="bi bi-info-circle ms-1"></i> Contract Item Reference Details</h5>
             </div>
             <div class="card-body p-0">
                 <table class="record-table-horizontal mb-0 w-100">
@@ -54,22 +54,18 @@
                             <td><strong>[{{$contract_item->item_code}}]</strong> {{$contract_item->description}}</td>
                         </tr>
                         <tr>
-                            <th>Component Name</th>
-                            <td>{{$component->name}}</td>
-                        </tr>
-                        <tr>
                             <th>Total Quantity</th>
-                            <td>{{$component->quantity}} {{$component->unit_text}}</td>
+                            <td>{{number_format($contract_item->contract_quantity, 2)}} {{$contract_item->contract_unit_text}}</td>
                         </tr>
                         <tr>
                             <th>Latest Quantity</th>
                             <td>
                                @if($latestActual)
                                    @php
-                                       $percentage = $component->quantity > 0 ? ($latestActual->quantity / $component->quantity) * 100 : 0;
+                                       $percentage = $contract_item->contract_quantity > 0 ? ($latestActual->quantity / $contract_item->contract_quantity) * 100 : 0;
                                        $formattedDate = $latestActual->entry_data ? $latestActual->entry_data->format('Y-m-d') : 'N/A';
                                    @endphp
-                                   {{ number_format($latestActual->quantity, 2) }} {{$component->unit_text}} ({{ number_format($percentage, 0) }}%) as of {{ $formattedDate }}.
+                                   {{ number_format($latestActual->quantity, 2) }} {{$contract_item->contract_unit_text}} ({{ number_format($percentage, 0) }}%) as of {{ $formattedDate }}.
                                @else
                                    -
                                @endif
@@ -111,8 +107,8 @@
 
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label class="form-label fw-semibold">Quantity Accomplished</label>
-                            <input type="text" class="form-control" disabled value="{{ number_format($accomplishment->quantity, 2) }} {{ $component->unit_text }}"/>
+                            <label class="form-label fw-semibold">Quantity</label>
+                            <input type="text" class="form-control" disabled value="{{ number_format($accomplishment->quantity, 2) }} {{$contract_item->contract_unit_text}}"/>
                         </div>
                     </div>
                 </div>
@@ -130,7 +126,7 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label class="form-label fw-semibold">Created By</label>
-                            <input type="text" class="form-control" disabled value="{{ $accomplishment->CreatedBy ? $accomplishment->CreatedBy->name : 'System' }}"/>
+                            <input type="text" class="form-control" disabled value="{{ $accomplishment->CreatedBy ? $accomplishment->CreatedBy->name : 'N/A' }}"/>
                         </div>
                     </div>
 
@@ -162,7 +158,7 @@
             
                 <div class="row mt-4">
                     <div class="col-12 text-end">
-                        <a href="/accomplishment/component/{{$component->id}}" class="btn btn-secondary px-4" id="backBtn">Back to Component</a>
+                        <a href="/accomplishment/contract_item/{{$contract_item->id}}" class="btn btn-secondary px-4" id="backBtn">Back to Contract Item</a>
                     </div>
                 </div>
             </div>

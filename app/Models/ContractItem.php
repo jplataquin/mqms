@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Models\Unit;
 use App\Models\Section;
 use App\Models\Component;
+use App\Models\Accomplishment;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class ContractItem extends Model
@@ -52,6 +53,11 @@ class ContractItem extends Model
     public function Components(): HasMany
     {
         return $this->hasMany(Component::class);
+    }
+
+    public function Accomplishments(): HasMany
+    {
+        return $this->hasMany(Accomplishment::class);
     }
 
     public function CreatedByUser(){   

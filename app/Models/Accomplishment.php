@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Component;
+use App\Models\ContractItem;
 use App\Models\User;
 
 class Accomplishment extends Model
@@ -20,7 +20,7 @@ class Accomplishment extends Model
     ];
 
     protected $fillable = [
-        'component_id',
+        'contract_item_id',
         'type',
         'entry_data',
         'quantity',
@@ -40,9 +40,9 @@ class Accomplishment extends Model
         return $this->CreatedBy ? $this->CreatedBy->name : 'System';
     }
 
-    public function Component(): BelongsTo
+    public function ContractItem(): BelongsTo
     {
-        return $this->belongsTo(Component::class);
+        return $this->belongsTo(ContractItem::class);
     }
 
     public function CreatedBy(): BelongsTo

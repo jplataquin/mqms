@@ -35,13 +35,14 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::get('/accomplishment/project/list', [App\Http\Controllers\AccomplishmentController::class, '_list']);
     Route::get('/accomplishment/section/list', [App\Http\Controllers\AccomplishmentController::class, '_section_list']);
     Route::get('/accomplishment/contract_item/list', [App\Http\Controllers\AccomplishmentController::class, '_contract_item_list']);
-    Route::get('/accomplishment/component/list', [App\Http\Controllers\AccomplishmentController::class, '_component_list']);
     Route::post('/accomplishment/create', [App\Http\Controllers\AccomplishmentController::class, '_create']);
     Route::post('/accomplishment/add', [App\Http\Controllers\AccomplishmentController::class, '_add']);
     Route::get('/accomplishment/record/list', [App\Http\Controllers\AccomplishmentController::class, '_record_list']);
     Route::post('/accomplishment/delete', [App\Http\Controllers\AccomplishmentController::class, '_delete']);
-    Route::post('/accomplishment/component/exclude', [App\Http\Controllers\AccomplishmentController::class, '_exclude_component']);
-    Route::post('/accomplishment/component/include', [App\Http\Controllers\AccomplishmentController::class, '_include_component']);
+    Route::post('/accomplishment/contract_item/exclude', [App\Http\Controllers\AccomplishmentController::class, '_exclude_contract_item']);
+    Route::post('/accomplishment/contract_item/include', [App\Http\Controllers\AccomplishmentController::class, '_include_contract_item']);
+    Route::post('/accomplishment/component/exclude', [App\Http\Controllers\AccomplishmentController::class, '_exclude_contract_item']);
+    Route::post('/accomplishment/component/include', [App\Http\Controllers\AccomplishmentController::class, '_include_contract_item']);
     Route::get('/accomplishment/project/{id}/studio-data', [App\Http\Controllers\AccomplishmentController::class, '_studio_data']);
 
 

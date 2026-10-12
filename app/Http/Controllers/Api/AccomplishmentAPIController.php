@@ -18,14 +18,14 @@ class AccomplishmentAPIController extends Controller
         $limit            = (int) $request->input('limit')    ?? 10;
         $orderBy          = $request->input('order_by')       ?? 'id';
         $order            = $request->input('order')          ?? 'DESC';
-        $componentId      = $request->input('component_id');
+        $contractItemId   = $request->input('contract_item_id') ?? $request->input('component_id');
         $type             = $request->input('type');
         $entryData        = $request->input('entry_data');
 
         $query = Accomplishment::query();
 
-        if ($componentId) {
-            $query = $query->where('component_id', '=', $componentId);
+        if ($contractItemId) {
+            $query = $query->where('contract_item_id', '=', $contractItemId);
         }
 
         if ($type != '') {

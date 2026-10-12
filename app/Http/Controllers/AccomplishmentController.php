@@ -76,15 +76,15 @@ class AccomplishmentController extends Controller
                 $q->whereNull('deleted_at')->orderBy('name', 'asc'); 
             },
             'Sections.ContractItems' => function($q) { 
-                $q->whereNull('deleted_at')->orderBy('item_code', 'asc')->orderBy('description', 'asc'); 
-            },
-            'Sections.ContractItems.Components' => function($q) { 
                 $q->whereNull('deleted_at')
                   ->where(function($sq) {
                       $sq->where('exclude_from_monitoring', '!=', 1)
                          ->orWhereNull('exclude_from_monitoring');
                   })
-                  ->orderBy('name', 'asc'); 
+                  ->orderBy('item_code', 'asc')->orderBy('description', 'asc'); 
+            },
+            'Sections.ContractItems.Accomplishments' => function($q) {
+                $q->orderBy('entry_data', 'desc');
             }
         ])->findOrFail($id);
 
@@ -186,95 +186,40 @@ class AccomplishmentController extends Controller
         ]);
     }
 
-    public function component_list($id){
+    public function contract_item_display($id){
         
         $contract_item = ContractItem::findOrFail($id);
-
         $section       = $contract_item->Section;
         $project       = $section->Project;
 
-        return view('accomplishment/component_list',[
-            'contract_item' => $contract_item,
-            'section'       => $section,
-            'project'       => $project
-        ]);
-    }
+        $accomplishments = $contract_item->Accomplishments()->orderBy('entry_data', 'desc')->get();
 
-
-    public function _component_list(Request $request){
-
-        $contract_item_id   = (int) $request->input('contract_item_id') ?? 0;
-        $page               = (int) $request->input('page')     ?? 1;
-        $limit              = (int) $request->input('limit')    ?? 0;
-        $orderBy            = $request->input('order_by')       ?? 'id';
-        $order              = $request->input('order')          ?? 'DESC';
-        $query              = $request->input('query')          ?? '';
-        $result             = [];
-
-        $component = new Component();
-
-        if($contract_item_id){
-            $component = $component->where('contract_item_id',$contract_item_id);
-        }
-
-        if($query != ''){
-            $component = $component->where('name','LIKE','%'.$query.'%');
-        }
-
-        //Filter out deleted records
-        $component = $component->where('deleted_at','=',null);
-
-        //Filter out approved component
-        $component = $component->where('status','APRV');
-
-        if($limit > 0){
-            $page   = ($page-1) * $limit;
-            
-            $result = $component->orderBy($orderBy,$order)->skip($page)->take($limit)->get();
-            
-        }else{
-
-            $result = $component->orderBy($orderBy,$order)->get();
-        }
-        
-
-        return response()->json([
-            'status'    => 1,
-            'message'   =>'',
-            'data'      => $result
-        ]);
-    }
-
-
-    public function component_display($id){
-        
-        $component     = Component::findOrFail($id);
-        $contract_item = $component->ContractItem;
-        $section       = $contract_item->Section;
-        $project       = $section->Project;
-
-        $accomplishments = $component->Accomplishments()->orderBy('entry_data', 'desc')->get();
-
-        $latestActual = $component->Accomplishments()
+        $latestActual = $contract_item->Accomplishments()
             ->where('type', 'ACTUAL')
             ->orderBy('entry_data', 'desc')
             ->orderBy('created_at', 'desc')
             ->first();
 
-        return view('accomplishment/component_display',[
+        return view('accomplishment/contract_item_display',[
             'project'               => $project,
             'section'               => $section,
             'contract_item'         => $contract_item,
-            'component'             => $component,
             'accomplishments'       => $accomplishments,
             'latestActual'          => $latestActual
         ]);
     }
 
-    public function create($component_id){
+    public function component_display($id){
+        $component = Component::find($id);
+        if ($component && $component->contract_item_id) {
+            return redirect('/accomplishment/contract_item/' . $component->contract_item_id);
+        }
+        return redirect('/accomplishment');
+    }
 
-        $component     = Component::findOrFail($component_id);
-        $contract_item = $component->ContractItem;
+    public function create($contract_item_id){
+
+        $contract_item = ContractItem::findOrFail($contract_item_id);
         $section       = $contract_item->Section;
         $project       = $section->Project;
 
@@ -282,18 +227,30 @@ class AccomplishmentController extends Controller
             'project'               => $project,
             'section'               => $section,
             'contract_item'         => $contract_item,
-            'component'             => $component
         ]);
     }
 
     public function _create(Request $request){
 
-        $validator = Validator::make($request->all(), [
-            'component_id' => 'required|integer|exists:components,id',
-            'type'         => 'required|in:ACTUAL,TARGET',
-            'entry_date'   => 'required|date',
-            'quantity'     => 'required|numeric',
-            'remarks'      => 'nullable|string'
+        $contract_item_id = $request->input('contract_item_id');
+        if(!$contract_item_id && $request->input('component_id')) {
+            $comp = Component::find($request->input('component_id'));
+            if($comp) {
+                $contract_item_id = $comp->contract_item_id;
+            }
+        }
+
+        $entry_date = $request->input('entry_date') ?? $request->input('entry_data');
+
+        $validator = Validator::make(array_merge($request->all(), [
+            'contract_item_id' => $contract_item_id,
+            'entry_date'       => $entry_date
+        ]), [
+            'contract_item_id' => 'required|integer|exists:contract_items,id',
+            'type'             => 'required|in:ACTUAL,TARGET',
+            'entry_date'       => 'required|date',
+            'quantity'         => 'required|numeric',
+            'remarks'          => 'nullable|string'
         ]);
 
         if ($validator->fails()) {
@@ -304,19 +261,19 @@ class AccomplishmentController extends Controller
             ]);
         }
 
-        $component = Component::findOrFail($request->input('component_id'));
-        if ($request->input('quantity') > $component->quantity) {
+        $contract_item = ContractItem::findOrFail($contract_item_id);
+        if ($request->input('quantity') > $contract_item->contract_quantity) {
             return response()->json([
                 'status'    => -2,
                 'message'   => 'Failed Validation',
                 'data'      => [
-                    'quantity' => ['The quantity must not be greater than the total quantity of the component.']
+                    'quantity' => ['The quantity must not be greater than the total quantity of the contract item.']
                 ]
             ]);
         }
 
         $type = $request->input('type');
-        $latestAccomplishment = $component->Accomplishments()
+        $latestAccomplishment = $contract_item->Accomplishments()
             ->where('type', $type)
             ->orderBy('entry_data', 'desc')
             ->orderBy('created_at', 'desc')
@@ -336,12 +293,12 @@ class AccomplishmentController extends Controller
         $user_id = Auth::user()->id;
 
         $accomplishment = new Accomplishment();
-        $accomplishment->component_id   = $request->input('component_id');
-        $accomplishment->type           = $type;
-        $accomplishment->entry_data     = $request->input('entry_date');
-        $accomplishment->quantity       = $request->input('quantity');
-        $accomplishment->remarks        = $request->input('remarks');
-        $accomplishment->created_by     = $user_id;
+        $accomplishment->contract_item_id = $contract_item_id;
+        $accomplishment->type             = $type;
+        $accomplishment->entry_data       = $entry_date;
+        $accomplishment->quantity         = $request->input('quantity');
+        $accomplishment->remarks          = $request->input('remarks');
+        $accomplishment->created_by       = $user_id;
 
         $accomplishment->save();
 
@@ -362,12 +319,25 @@ class AccomplishmentController extends Controller
             ]);
         }
 
-        $validator = Validator::make($request->all(), [
-            'component_id' => 'required|integer|exists:components,id',
-            'entry_data'   => 'required|date',
-            'quantity'     => 'required|numeric',
-            'remarks'      => 'required|string',
-            'type'         => 'nullable|in:ACTUAL,TARGET'
+        $contract_item_id = $request->input('contract_item_id');
+        if(!$contract_item_id && $request->input('component_id')) {
+            $comp = Component::find($request->input('component_id'));
+            if($comp) {
+                $contract_item_id = $comp->contract_item_id;
+            }
+        }
+
+        $entry_data = $request->input('entry_data') ?? $request->input('entry_date');
+
+        $validator = Validator::make(array_merge($request->all(), [
+            'contract_item_id' => $contract_item_id,
+            'entry_data'       => $entry_data
+        ]), [
+            'contract_item_id' => 'required|integer|exists:contract_items,id',
+            'entry_data'       => 'required|date',
+            'quantity'         => 'required|numeric',
+            'remarks'          => 'required|string',
+            'type'             => 'nullable|in:ACTUAL,TARGET'
         ]);
 
         if ($validator->fails()) {
@@ -378,19 +348,19 @@ class AccomplishmentController extends Controller
             ]);
         }
 
-        $component = Component::findOrFail($request->input('component_id'));
-        if ($request->input('quantity') > $component->quantity) {
+        $contract_item = ContractItem::findOrFail($contract_item_id);
+        if ($request->input('quantity') > $contract_item->contract_quantity) {
             return response()->json([
                 'status'    => -2,
                 'message'   => 'Failed Validation',
                 'data'      => [
-                    'quantity' => ['The quantity must not be greater than the total quantity of the component.']
+                    'quantity' => ['The quantity must not be greater than the total quantity of the contract item.']
                 ]
             ]);
         }
 
         $type = $request->input('type') ?? 'ACTUAL';
-        $latestAccomplishment = $component->Accomplishments()
+        $latestAccomplishment = $contract_item->Accomplishments()
             ->where('type', $type)
             ->orderBy('entry_data', 'desc')
             ->orderBy('created_at', 'desc')
@@ -410,12 +380,12 @@ class AccomplishmentController extends Controller
         $user_id = Auth::user()->id;
 
         $accomplishment = new Accomplishment();
-        $accomplishment->component_id   = $request->input('component_id');
-        $accomplishment->type           = $type;
-        $accomplishment->entry_data     = $request->input('entry_data');
-        $accomplishment->quantity       = $request->input('quantity');
-        $accomplishment->remarks        = $request->input('remarks');
-        $accomplishment->created_by     = $user_id;
+        $accomplishment->contract_item_id = $contract_item_id;
+        $accomplishment->type             = $type;
+        $accomplishment->entry_data       = $entry_data;
+        $accomplishment->quantity         = $request->input('quantity');
+        $accomplishment->remarks          = $request->input('remarks');
+        $accomplishment->created_by       = $user_id;
 
         $accomplishment->save();
 
@@ -428,16 +398,16 @@ class AccomplishmentController extends Controller
 
     public function _record_list(Request $request){
 
-        $component_id = (int) $request->input('component_id') ?? 0;
-        $page         = (int) ($request->input('page') ?? 1);
-        $limit        = (int) ($request->input('limit') ?? 10);
-        $type         = $request->input('type')           ?? 'ACTUAL';
-        $orderBy      = $request->input('order_by')       ?? 'entry_data';
-        $order        = $request->input('order')          ?? 'DESC';
-        $result       = [];
+        $contract_item_id = (int) ($request->input('contract_item_id') ?? $request->input('component_id') ?? 0);
+        $page             = (int) ($request->input('page') ?? 1);
+        $limit            = (int) ($request->input('limit') ?? 10);
+        $type             = $request->input('type')           ?? 'ACTUAL';
+        $orderBy          = $request->input('order_by')       ?? 'entry_data';
+        $order            = $request->input('order')          ?? 'DESC';
+        $result           = [];
 
         $query = Accomplishment::with('CreatedBy')
-                    ->where('component_id', $component_id)
+                    ->where('contract_item_id', $contract_item_id)
                     ->where('type', $type);
 
         if($limit > 0){
@@ -475,55 +445,62 @@ class AccomplishmentController extends Controller
         ]);
     }
 
-    public function _exclude_component(Request $request){
-        $component_id = (int) $request->input('component_id');
-        $component = Component::find($component_id);
+    public function _exclude_contract_item(Request $request){
+        $contract_item_id = (int) ($request->input('contract_item_id') ?? $request->input('component_id'));
+        $contract_item = ContractItem::find($contract_item_id);
 
-        if (!$component) {
+        if (!$contract_item) {
             return response()->json([
                 'status'  => 0,
-                'message' => 'Component not found'
+                'message' => 'Contract Item not found'
             ]);
         }
 
-        $component->exclude_from_monitoring = 1;
-        $component->save();
+        $contract_item->exclude_from_monitoring = 1;
+        $contract_item->save();
 
         return response()->json([
             'status'  => 1,
-            'message' => 'Component successfully excluded from accomplishment monitoring.'
+            'message' => 'Contract Item successfully excluded from accomplishment monitoring.'
         ]);
     }
 
-    public function _include_component(Request $request){
-        $component_id = (int) $request->input('component_id');
-        $component = Component::find($component_id);
+    public function _include_contract_item(Request $request){
+        $contract_item_id = (int) ($request->input('contract_item_id') ?? $request->input('component_id'));
+        $contract_item = ContractItem::find($contract_item_id);
 
-        if (!$component) {
+        if (!$contract_item) {
             return response()->json([
                 'status'  => 0,
-                'message' => 'Component not found'
+                'message' => 'Contract Item not found'
             ]);
         }
 
-        $component->exclude_from_monitoring = 0;
-        $component->save();
+        $contract_item->exclude_from_monitoring = 0;
+        $contract_item->save();
 
         return response()->json([
             'status'  => 1,
-            'message' => 'Component successfully included in accomplishment monitoring.'
+            'message' => 'Contract Item successfully included in accomplishment monitoring.'
         ]);
+    }
+
+    public function _exclude_component(Request $request){
+        return $this->_exclude_contract_item($request);
+    }
+
+    public function _include_component(Request $request){
+        return $this->_include_contract_item($request);
     }
 
     public function display_record($id){
 
         $accomplishment = Accomplishment::findOrFail($id);
-        $component      = $accomplishment->Component;
-        $contract_item  = $component->ContractItem;
+        $contract_item  = $accomplishment->ContractItem;
         $section        = $contract_item->Section;
         $project        = $section->Project;
 
-        $latestActual = $component->Accomplishments()
+        $latestActual = $contract_item->Accomplishments()
             ->where('id', '!=', $id)
             ->where('type', 'ACTUAL')
             ->orderBy('entry_data', 'desc')
@@ -534,7 +511,6 @@ class AccomplishmentController extends Controller
             'project'               => $project,
             'section'               => $section,
             'contract_item'         => $contract_item,
-            'component'             => $component,
             'accomplishment'        => $accomplishment,
             'latestActual'          => $latestActual
         ]);
@@ -556,10 +532,7 @@ class AccomplishmentController extends Controller
             'Sections.ContractItems' => function($q){
                 $q->whereNull('deleted_at')->orderBy('item_code', 'asc');
             },
-            'Sections.ContractItems.Components' => function($q){
-                $q->whereNull('deleted_at')->orderBy('name', 'asc');
-            },
-            'Sections.ContractItems.Components.Accomplishments' => function($q){
+            'Sections.ContractItems.Accomplishments' => function($q){
                 $q->orderBy('entry_data', 'asc');
             }
         ])->findOrFail($id);

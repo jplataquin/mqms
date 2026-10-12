@@ -42,11 +42,6 @@ class Component extends Model
     {
         return $this->hasMany(ComponentItem::class);
     }
-
-    public function Accomplishments(): HasMany
-    {
-        return $this->hasMany(Accomplishment::class);
-    }
     
     
     public function getUnitTextAttribute(){

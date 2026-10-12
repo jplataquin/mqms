@@ -4,6 +4,7 @@ class CreateAccomplishmentForm extends Component {
 
     model() {
         return {
+            contract_item_id: '',
             component_id: '',
             total_quantity: '',
             unit: '',
@@ -121,7 +122,8 @@ class CreateAccomplishmentForm extends Component {
         window.util.blockUI();
 
         window.util.$post('/api/accomplishment/add', {
-            component_id: this._model.component_id,
+            contract_item_id: this._model.contract_item_id || this._model.component_id,
+            component_id: this._model.contract_item_id || this._model.component_id,
             type: this._model.type,
             entry_data: this.el.entry_data.value,
             quantity: this.el.quantity.value,

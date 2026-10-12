@@ -15,9 +15,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/accomplishment/component/{{$component->id}}">
+                    <a href="/accomplishment/contract_item/{{$contract_item->id}}">
                         <span>
-                        Component
+                        {{$contract_item->item_code}}
                         </span>
                     </a>
                 </li>
@@ -46,11 +46,11 @@
                 </tr>
                 <tr>
                     <th>Contract Item</th>
-                    <td>{{$contract_item->name}}</td>
+                    <td><strong>[{{$contract_item->item_code}}]</strong> {{$contract_item->description}}</td>
                 </tr>
                 <tr>
-                    <th>Component</th>
-                    <td>{{$component->name}}</td>
+                    <th>Total Quantity</th>
+                    <td>{{number_format($contract_item->contract_quantity, 2)}} {{$contract_item->contract_unit_text}}</td>
                 </tr>
             </tbody>
         </table>
@@ -127,11 +127,11 @@
             window.util.blockUI();
 
             window.util.$post('/api/accomplishment/create', {
-                component_id : '{{$component->id}}',
-                type         : type.value,
-                entry_date   : entry_date.value,
-                quantity     : quantity.value,
-                remarks      : remarks.value
+                contract_item_id : '{{$contract_item->id}}',
+                type             : type.value,
+                entry_date       : entry_date.value,
+                quantity         : quantity.value,
+                remarks          : remarks.value
             }).then(reply => {
                 
                 window.util.unblockUI();
@@ -142,15 +142,14 @@
                 }
         
                 const isStudio = new URLSearchParams(window.location.search).has('studio') ? '&studio=1' : '';
-                window.util.navTo('/accomplishment/component/{{$component->id}}?type=' + type.value + isStudio);
+                window.util.navTo('/accomplishment/contract_item/{{$contract_item->id}}?type=' + type.value + isStudio);
             });
         }
 
         cancelBtn.onclick = (e) => {
             const isStudio = new URLSearchParams(window.location.search).has('studio') ? '&studio=1' : '';
-            window.util.navTo('/accomplishment/component/{{$component->id}}?type=' + type.value + isStudio);
+            window.util.navTo('/accomplishment/contract_item/{{$contract_item->id}}?type=' + type.value + isStudio);
         }
-
     </script>
 </div>
 @endsection

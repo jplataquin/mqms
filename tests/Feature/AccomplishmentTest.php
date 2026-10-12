@@ -9,6 +9,7 @@ use App\Models\Section;
 use App\Models\ContractItem;
 use App\Models\Component;
 use App\Models\Unit;
+use App\Models\Accomplishment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AccomplishmentTest extends TestCase
@@ -50,7 +51,7 @@ class AccomplishmentTest extends TestCase
         $this->unit->created_by = $this->user->id;
         $this->unit->save();
 
-        // Create project, section, contract item, and component
+        // Create project, section, and contract item
         $this->project = new Project();
         $this->project->name = 'Test Project 123';
         $this->project->status = 'ACTV';
@@ -112,34 +113,24 @@ class AccomplishmentTest extends TestCase
     }
 
     /** @test */
-    public function it_can_render_the_accomplishment_components_list_page()
+    public function it_can_render_the_blank_accomplishment_contract_item_page()
     {
         $response = $this->actingAs($this->user)->get('/accomplishment/contract_item/' . $this->contractItem->id);
         $response->assertStatus(200);
         $response->assertSee('Test Contract Item 123');
-    }
-
-    /** @test */
-    public function it_can_render_the_blank_accomplishment_component_page()
-    {
-        $response = $this->actingAs($this->user)->get('/accomplishment/component/' . $this->component->id);
-        $response->assertStatus(200);
-        $response->assertSee('Test Component 123');
         $response->assertSee('Add Registry Entry');
-        $response->assertSee('/accomplishment/component/' . $this->component->id . '/add');
         $response->assertSee('Total Quantity');
-        $response->assertSee('50 Pcs');
+        $response->assertSee('100.00 Pcs');
         $response->assertSee('No accomplishment records found');
-        // Ensure container exists
         $response->assertSee('id="list"', false);
     }
 
     /** @test */
-    public function it_can_render_the_accomplishment_component_page_with_records()
+    public function it_can_render_the_accomplishment_contract_item_page_with_records()
     {
-        // Create an accomplishment record for this component
-        $accomplishment = new \App\Models\Accomplishment();
-        $accomplishment->component_id = $this->component->id;
+        // Create an accomplishment record for this contract item
+        $accomplishment = new Accomplishment();
+        $accomplishment->contract_item_id = $this->contractItem->id;
         $accomplishment->type = 'ACTUAL';
         $accomplishment->entry_data = '2026-09-21';
         $accomplishment->quantity = 35.50;
@@ -148,17 +139,17 @@ class AccomplishmentTest extends TestCase
         $accomplishment->save();
 
         // 1. Verify page renders successfully
-        $response = $this->actingAs($this->user)->get('/accomplishment/component/' . $this->component->id);
+        $response = $this->actingAs($this->user)->get('/accomplishment/contract_item/' . $this->contractItem->id);
         $response->assertStatus(200);
-        $response->assertSee('Test Component 123');
+        $response->assertSee('Test Contract Item 123');
         $response->assertSee('Latest Quantity');
-        $response->assertSee('35.50 Pcs (71%) as of 2026-09-21.');
+        $response->assertSee('35.50 Pcs (36%) as of 2026-09-21.');
 
-        // 2. Verify API returns accomplishment list correctly (since records are loaded via AJAX)
-        $apiResponse = $this->actingAs($this->user)->get('/api/accomplishment/record/list?component_id=' . $this->component->id);
+        // 2. Verify API returns accomplishment list correctly
+        $apiResponse = $this->actingAs($this->user)->get('/api/accomplishment/record/list?contract_item_id=' . $this->contractItem->id);
         $apiResponse->assertStatus(200);
         $apiResponse->assertJsonFragment([
-            'component_id' => $this->component->id,
+            'contract_item_id' => $this->contractItem->id,
             'type' => 'ACTUAL',
             'quantity' => 35.50,
             'remarks' => 'Completed most of it',
@@ -169,20 +160,21 @@ class AccomplishmentTest extends TestCase
     /** @test */
     public function it_can_fetch_projects_via_api()
     {
-        $response = $this->actingAs($this->user)->get('/api/accomplishment/project/list?query=Test Project 123');
+        $response = $this->actingAs($this->user)->getJson('/api/accomplishment/project/list');
         $response->assertStatus(200);
         $response->assertJsonFragment([
-            'name' => 'Test Project 123',
-            'status' => 'ACTV'
+            'id' => $this->project->id,
+            'name' => 'Test Project 123'
         ]);
     }
 
     /** @test */
     public function it_can_fetch_sections_via_api()
     {
-        $response = $this->actingAs($this->user)->get('/api/accomplishment/section/list?project_id=' . $this->project->id);
+        $response = $this->actingAs($this->user)->getJson('/api/accomplishment/section/list?project_id=' . $this->project->id);
         $response->assertStatus(200);
         $response->assertJsonFragment([
+            'id' => $this->section->id,
             'name' => 'Test Section 123'
         ]);
     }
@@ -190,21 +182,11 @@ class AccomplishmentTest extends TestCase
     /** @test */
     public function it_can_fetch_contract_items_via_api()
     {
-        $response = $this->actingAs($this->user)->get('/api/accomplishment/contract_item/list?section_id=' . $this->section->id);
+        $response = $this->actingAs($this->user)->getJson('/api/accomplishment/contract_item/list?section_id=' . $this->section->id);
         $response->assertStatus(200);
         $response->assertJsonFragment([
+            'id' => $this->contractItem->id,
             'description' => 'Test Contract Item 123'
-        ]);
-    }
-
-    /** @test */
-    public function it_can_fetch_components_via_api()
-    {
-        $response = $this->actingAs($this->user)->get('/api/accomplishment/component/list?contract_item_id=' . $this->contractItem->id);
-        $response->assertStatus(200);
-        $response->assertJsonFragment([
-            'name' => 'Test Component 123',
-            'status' => 'APRV'
         ]);
     }
 
@@ -212,30 +194,30 @@ class AccomplishmentTest extends TestCase
     public function it_can_create_and_manage_accomplishment_records()
     {
         // 1. Create Accomplishment record
-        $accomplishment = new \App\Models\Accomplishment();
-        $accomplishment->component_id = $this->component->id;
+        $accomplishment = new Accomplishment();
+        $accomplishment->contract_item_id = $this->contractItem->id;
         $accomplishment->type = 'ACTUAL';
         $accomplishment->entry_data = '2026-08-12';
         $accomplishment->quantity = 25.5;
-        $accomplishment->remarks = 'Completed half the component';
+        $accomplishment->remarks = 'Completed quarter of contract item';
         $accomplishment->created_by = $this->user->id;
         $accomplishment->save();
 
         $this->assertDatabaseHas('accomplishment_registry', [
             'id' => $accomplishment->id,
-            'component_id' => $this->component->id,
+            'contract_item_id' => $this->contractItem->id,
             'type' => 'ACTUAL',
             'quantity' => 25.5,
-            'remarks' => 'Completed half the component',
+            'remarks' => 'Completed quarter of contract item',
         ]);
 
         // 2. Test relationships
-        $this->assertEquals($this->component->id, $accomplishment->Component->id);
+        $this->assertEquals($this->contractItem->id, $accomplishment->ContractItem->id);
         $this->assertEquals($this->user->id, $accomplishment->CreatedBy->id);
 
-        // 3. Test Component relationship
-        $this->assertCount(1, $this->component->fresh()->Accomplishments);
-        $this->assertEquals($accomplishment->id, $this->component->fresh()->Accomplishments->first()->id);
+        // 3. Test ContractItem relationship
+        $this->assertCount(1, $this->contractItem->fresh()->Accomplishments);
+        $this->assertEquals($accomplishment->id, $this->contractItem->fresh()->Accomplishments->first()->id);
 
         // 4. Test Soft Delete
         $accomplishment->delete();
@@ -247,21 +229,21 @@ class AccomplishmentTest extends TestCase
     /** @test */
     public function it_can_render_the_accomplishment_create_page()
     {
-        $response = $this->actingAs($this->user)->get('/accomplishment/component/' . $this->component->id . '/create');
+        $response = $this->actingAs($this->user)->get('/accomplishment/contract_item/' . $this->contractItem->id . '/create');
         $response->assertStatus(200);
         $response->assertSee('Create Accomplishment');
-        $response->assertSee('Test Component 123');
+        $response->assertSee('Test Contract Item 123');
     }
 
     /** @test */
     public function it_can_create_an_accomplishment_via_api()
     {
         $response = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
-            'component_id' => $this->component->id,
-            'type'         => 'TARGET',
-            'entry_date'   => '2026-08-12',
-            'quantity'     => 20.4,
-            'remarks'      => 'Target accomplishment for project phase'
+            'contract_item_id' => $this->contractItem->id,
+            'type'             => 'TARGET',
+            'entry_date'       => '2026-08-12',
+            'quantity'         => 20.4,
+            'remarks'          => 'Target accomplishment for contract item phase'
         ]);
 
         $response->assertStatus(200);
@@ -271,11 +253,11 @@ class AccomplishmentTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('accomplishment_registry', [
-            'component_id' => $this->component->id,
-            'type'         => 'TARGET',
-            'quantity'     => 20.4,
-            'remarks'      => 'Target accomplishment for project phase',
-            'created_by'   => $this->user->id
+            'contract_item_id' => $this->contractItem->id,
+            'type'             => 'TARGET',
+            'quantity'         => 20.4,
+            'remarks'          => 'Target accomplishment for contract item phase',
+            'created_by'       => $this->user->id
         ]);
     }
 
@@ -283,10 +265,10 @@ class AccomplishmentTest extends TestCase
     public function it_fails_accomplishment_api_creation_due_to_validation()
     {
         $response = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
-            'component_id' => $this->component->id,
-            'type'         => 'INVALID_TYPE', // Invalid enum
-            'entry_date'   => 'not-a-date',   // Invalid date
-            'quantity'     => 'not-numeric'   // Invalid quantity
+            'contract_item_id' => $this->contractItem->id,
+            'type'             => 'INVALID_TYPE', // Invalid enum
+            'entry_date'       => 'not-a-date',   // Invalid date
+            'quantity'         => 'not-numeric'   // Invalid quantity
         ]);
 
         $response->assertStatus(200);
@@ -297,33 +279,15 @@ class AccomplishmentTest extends TestCase
     }
 
     /** @test */
-    public function it_can_render_the_new_accomplishment_add_page_with_component_details()
-    {
-        $response = $this->actingAs($this->user)->get('/accomplishment/component/' . $this->component->id . '/add');
-        $response->assertStatus(200);
-        
-        // Assert view content
-        $response->assertSee('Add Registry');
-        $response->assertSee('Component Reference Details');
-        $response->assertSee('Test Component 123');
-        $response->assertSee('Test Project 123');
-        $response->assertSee('Test Section 123');
-        $response->assertSee('Test Contract Item 123');
-        $response->assertSee('Total Quantity');
-        $response->assertSee('50 Pcs');
-        $response->assertSee('Latest Quantity');
-    }
-
-    /** @test */
     public function it_can_create_an_accomplishment_via_new_api_with_required_fields()
     {
         $this->grantAccessCode($this->user, 'accomplishment:all:create');
 
         $response = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
-            'component_id' => $this->component->id,
-            'entry_data'   => '2026-09-21',
-            'quantity'     => 45.2,
-            'remarks'      => 'Highly critical required remarks'
+            'contract_item_id' => $this->contractItem->id,
+            'entry_data'       => '2026-09-21',
+            'quantity'         => 45.2,
+            'remarks'          => 'Highly critical required remarks'
         ]);
 
         $response->assertStatus(200);
@@ -333,11 +297,11 @@ class AccomplishmentTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('accomplishment_registry', [
-            'component_id' => $this->component->id,
-            'type'         => 'ACTUAL',
-            'quantity'     => 45.2,
-            'remarks'      => 'Highly critical required remarks',
-            'created_by'   => $this->user->id
+            'contract_item_id' => $this->contractItem->id,
+            'type'             => 'ACTUAL',
+            'quantity'         => 45.2,
+            'remarks'          => 'Highly critical required remarks',
+            'created_by'       => $this->user->id
         ]);
     }
 
@@ -346,12 +310,12 @@ class AccomplishmentTest extends TestCase
     {
         $this->grantAccessCode($this->user, 'accomplishment:all:create');
 
-        // 1. Missing remarks (which is now required in the new API)
+        // 1. Missing remarks (which is required in the add API)
         $response = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
-            'component_id' => $this->component->id,
-            'entry_data'   => '2026-09-21',
-            'quantity'     => 45.2,
-            'remarks'      => '' // empty
+            'contract_item_id' => $this->contractItem->id,
+            'entry_data'       => '2026-09-21',
+            'quantity'         => 45.2,
+            'remarks'          => '' // empty
         ]);
 
         $response->assertStatus(200);
@@ -362,9 +326,9 @@ class AccomplishmentTest extends TestCase
 
         // 2. Missing entry_data
         $response = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
-            'component_id' => $this->component->id,
-            'quantity'     => 45.2,
-            'remarks'      => 'Some remarks'
+            'contract_item_id' => $this->contractItem->id,
+            'quantity'         => 45.2,
+            'remarks'          => 'Some remarks'
         ]);
 
         $response->assertStatus(200);
@@ -378,10 +342,10 @@ class AccomplishmentTest extends TestCase
     public function it_denies_new_api_creation_if_user_lacks_access_code()
     {
         $response = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
-            'component_id' => $this->component->id,
-            'entry_data'   => '2026-09-21',
-            'quantity'     => 45.2,
-            'remarks'      => 'Some remarks'
+            'contract_item_id' => $this->contractItem->id,
+            'entry_data'       => '2026-09-21',
+            'quantity'         => 45.2,
+            'remarks'          => 'Some remarks'
         ]);
 
         $response->assertStatus(200);
@@ -395,18 +359,18 @@ class AccomplishmentTest extends TestCase
     public function it_can_render_the_accomplishment_record_display_page()
     {
         // 1. Create a prior accomplishment record
-        $priorAccomplishment = new \App\Models\Accomplishment();
-        $priorAccomplishment->component_id = $this->component->id;
+        $priorAccomplishment = new Accomplishment();
+        $priorAccomplishment->contract_item_id = $this->contractItem->id;
         $priorAccomplishment->type = 'ACTUAL';
         $priorAccomplishment->entry_data = '2026-09-20';
-        $priorAccomplishment->quantity = 15.00; // 30% of 50
+        $priorAccomplishment->quantity = 15.00; // 15% of 100
         $priorAccomplishment->remarks = 'First entry';
         $priorAccomplishment->created_by = $this->user->id;
         $priorAccomplishment->save();
 
         // 2. Create the current accomplishment record being displayed
-        $accomplishment = new \App\Models\Accomplishment();
-        $accomplishment->component_id = $this->component->id;
+        $accomplishment = new Accomplishment();
+        $accomplishment->contract_item_id = $this->contractItem->id;
         $accomplishment->type = 'ACTUAL';
         $accomplishment->entry_data = '2026-09-21';
         $accomplishment->quantity = 45.75;
@@ -418,16 +382,14 @@ class AccomplishmentTest extends TestCase
         $response->assertStatus(200);
         
         // Assert reference details are shown
-        $response->assertSee('Component Reference Details');
-        $response->assertSee('Test Component 123');
+        $response->assertSee('Contract Item Reference Details');
         $response->assertSee('Test Project 123');
         $response->assertSee('Test Section 123');
         $response->assertSee('Test Contract Item 123');
         $response->assertSee('Total Quantity');
-        $response->assertSee('50 Pcs');
+        $response->assertSee('100.00 Pcs');
         $response->assertSee('Latest Quantity');
-        // It must show the PRIOR accomplishment because the CURRENT one is excluded!
-        $response->assertSee('15.00 Pcs (30%) as of 2026-09-20.');
+        $response->assertSee('15.00 Pcs (15%) as of 2026-09-20.');
 
         // Assert record details are shown
         $response->assertSee('Accomplishment Registry Record Details');
@@ -438,17 +400,17 @@ class AccomplishmentTest extends TestCase
     }
 
     /** @test */
-    public function it_fails_creation_if_quantity_exceeds_component_total_quantity()
+    public function it_fails_creation_if_quantity_exceeds_contract_item_total_quantity()
     {
         $this->grantAccessCode($this->user, 'accomplishment:all:create');
 
         // 1. Test original API (_create)
         $response1 = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
-            'component_id' => $this->component->id,
-            'type'         => 'ACTUAL',
-            'entry_date'   => '2026-09-21',
-            'quantity'     => 105.0, // exceeds component total of 50
-            'remarks'      => 'Exceeds limit'
+            'contract_item_id' => $this->contractItem->id,
+            'type'             => 'ACTUAL',
+            'entry_date'       => '2026-09-21',
+            'quantity'         => 105.0, // exceeds contract quantity of 100
+            'remarks'          => 'Exceeds limit'
         ]);
 
         $response1->assertStatus(200);
@@ -459,10 +421,10 @@ class AccomplishmentTest extends TestCase
 
         // 2. Test new API (_add)
         $response2 = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
-            'component_id' => $this->component->id,
-            'entry_data'   => '2026-09-21',
-            'quantity'     => 105.0, // exceeds component total of 50
-            'remarks'      => 'Exceeds limit'
+            'contract_item_id' => $this->contractItem->id,
+            'entry_data'       => '2026-09-21',
+            'quantity'         => 105.0, // exceeds contract quantity of 100
+            'remarks'          => 'Exceeds limit'
         ]);
 
         $response2->assertStatus(200);
@@ -478,8 +440,8 @@ class AccomplishmentTest extends TestCase
         $this->grantAccessCode($this->user, 'accomplishment:all:create');
 
         // Create an initial accomplishment record (quantity = 25.0)
-        $prior = new \App\Models\Accomplishment();
-        $prior->component_id = $this->component->id;
+        $prior = new Accomplishment();
+        $prior->contract_item_id = $this->contractItem->id;
         $prior->type = 'ACTUAL';
         $prior->entry_data = '2026-09-20';
         $prior->quantity = 25.0;
@@ -489,11 +451,11 @@ class AccomplishmentTest extends TestCase
 
         // 1. Test _create API with strictly lower quantity (20.0 <= 25.0)
         $response1 = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
-            'component_id' => $this->component->id,
-            'type'         => 'ACTUAL',
-            'entry_date'   => '2026-09-21',
-            'quantity'     => 20.0,
-            'remarks'      => 'Lower quantity'
+            'contract_item_id' => $this->contractItem->id,
+            'type'             => 'ACTUAL',
+            'entry_date'       => '2026-09-21',
+            'quantity'         => 20.0,
+            'remarks'          => 'Lower quantity'
         ]);
 
         $response1->assertStatus(200);
@@ -507,11 +469,11 @@ class AccomplishmentTest extends TestCase
 
         // 2. Test _create API with equal quantity (25.0 <= 25.0)
         $response2 = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
-            'component_id' => $this->component->id,
-            'type'         => 'ACTUAL',
-            'entry_date'   => '2026-09-21',
-            'quantity'     => 25.0,
-            'remarks'      => 'Equal quantity'
+            'contract_item_id' => $this->contractItem->id,
+            'type'             => 'ACTUAL',
+            'entry_date'       => '2026-09-21',
+            'quantity'         => 25.0,
+            'remarks'          => 'Equal quantity'
         ]);
 
         $response2->assertStatus(200);
@@ -525,11 +487,11 @@ class AccomplishmentTest extends TestCase
 
         // 3. Test _add API with strictly lower quantity (20.0 <= 25.0)
         $response3 = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
-            'component_id' => $this->component->id,
-            'entry_data'   => '2026-09-21',
-            'quantity'     => 20.0,
-            'remarks'      => 'Lower quantity',
-            'type'         => 'ACTUAL'
+            'contract_item_id' => $this->contractItem->id,
+            'entry_data'       => '2026-09-21',
+            'quantity'         => 20.0,
+            'remarks'          => 'Lower quantity',
+            'type'             => 'ACTUAL'
         ]);
 
         $response3->assertStatus(200);
@@ -543,11 +505,11 @@ class AccomplishmentTest extends TestCase
 
         // 4. Test _add API with equal quantity (25.0 <= 25.0)
         $response4 = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
-            'component_id' => $this->component->id,
-            'entry_data'   => '2026-09-21',
-            'quantity'     => 25.0,
-            'remarks'      => 'Equal quantity',
-            'type'         => 'ACTUAL'
+            'contract_item_id' => $this->contractItem->id,
+            'entry_data'       => '2026-09-21',
+            'quantity'         => 25.0,
+            'remarks'          => 'Equal quantity',
+            'type'             => 'ACTUAL'
         ]);
 
         $response4->assertStatus(200);
@@ -566,8 +528,8 @@ class AccomplishmentTest extends TestCase
         $this->grantAccessCode($this->user, 'accomplishment:all:create');
 
         // Create an initial accomplishment record (quantity = 25.0)
-        $prior = new \App\Models\Accomplishment();
-        $prior->component_id = $this->component->id;
+        $prior = new Accomplishment();
+        $prior->contract_item_id = $this->contractItem->id;
         $prior->type = 'ACTUAL';
         $prior->entry_data = '2026-09-20';
         $prior->quantity = 25.0;
@@ -577,11 +539,11 @@ class AccomplishmentTest extends TestCase
 
         // 1. Test _create API with greater quantity (30.0 > 25.0)
         $response1 = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
-            'component_id' => $this->component->id,
-            'type'         => 'ACTUAL',
-            'entry_date'   => '2026-09-21',
-            'quantity'     => 30.0,
-            'remarks'      => 'Higher quantity via create'
+            'contract_item_id' => $this->contractItem->id,
+            'type'             => 'ACTUAL',
+            'entry_date'       => '2026-09-21',
+            'quantity'         => 30.0,
+            'remarks'          => 'Higher quantity via create'
         ]);
 
         $response1->assertStatus(200);
@@ -591,18 +553,18 @@ class AccomplishmentTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('accomplishment_registry', [
-            'component_id' => $this->component->id,
-            'type'         => 'ACTUAL',
-            'quantity'     => 30.0,
+            'contract_item_id' => $this->contractItem->id,
+            'type'             => 'ACTUAL',
+            'quantity'         => 30.0,
         ]);
 
         // 2. Test _add API with even higher quantity (35.0 > 30.0)
         $response2 = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
-            'component_id' => $this->component->id,
-            'entry_data'   => '2026-09-22',
-            'quantity'     => 35.0,
-            'remarks'      => 'Higher quantity via add',
-            'type'         => 'ACTUAL'
+            'contract_item_id' => $this->contractItem->id,
+            'entry_data'       => '2026-09-22',
+            'quantity'         => 35.0,
+            'remarks'          => 'Higher quantity via add',
+            'type'             => 'ACTUAL'
         ]);
 
         $response2->assertStatus(200);
@@ -612,9 +574,9 @@ class AccomplishmentTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('accomplishment_registry', [
-            'component_id' => $this->component->id,
-            'type'         => 'ACTUAL',
-            'quantity'     => 35.0,
+            'contract_item_id' => $this->contractItem->id,
+            'type'             => 'ACTUAL',
+            'quantity'         => 35.0,
         ]);
     }
 
@@ -624,8 +586,8 @@ class AccomplishmentTest extends TestCase
         $this->grantAccessCode($this->user, 'accomplishment:all:create');
 
         // Create an ACTUAL accomplishment record (quantity = 30.0)
-        $priorActual = new \App\Models\Accomplishment();
-        $priorActual->component_id = $this->component->id;
+        $priorActual = new Accomplishment();
+        $priorActual->contract_item_id = $this->contractItem->id;
         $priorActual->type = 'ACTUAL';
         $priorActual->entry_data = '2026-09-20';
         $priorActual->quantity = 30.0;
@@ -635,11 +597,11 @@ class AccomplishmentTest extends TestCase
 
         // 1. Create a TARGET accomplishment with quantity 10.0 (lower than ACTUAL 30.0, but no prior TARGET exists)
         $response1 = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
-            'component_id' => $this->component->id,
-            'type'         => 'TARGET',
-            'entry_date'   => '2026-09-21',
-            'quantity'     => 10.0,
-            'remarks'      => 'First target'
+            'contract_item_id' => $this->contractItem->id,
+            'type'             => 'TARGET',
+            'entry_date'       => '2026-09-21',
+            'quantity'         => 10.0,
+            'remarks'          => 'First target'
         ]);
 
         $response1->assertStatus(200);
@@ -650,11 +612,11 @@ class AccomplishmentTest extends TestCase
 
         // 2. Creating another TARGET with quantity 8.0 (lower than TARGET 10.0) should fail
         $response2 = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
-            'component_id' => $this->component->id,
-            'type'         => 'TARGET',
-            'entry_date'   => '2026-09-22',
-            'quantity'     => 8.0,
-            'remarks'      => 'Lower target'
+            'contract_item_id' => $this->contractItem->id,
+            'type'             => 'TARGET',
+            'entry_date'       => '2026-09-22',
+            'quantity'         => 8.0,
+            'remarks'          => 'Lower target'
         ]);
 
         $response2->assertStatus(200);
@@ -668,11 +630,11 @@ class AccomplishmentTest extends TestCase
 
         // 3. Creating another TARGET with quantity 15.0 (greater than TARGET 10.0) should succeed
         $response3 = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
-            'component_id' => $this->component->id,
-            'type'         => 'TARGET',
-            'entry_data'   => '2026-09-23',
-            'quantity'     => 15.0,
-            'remarks'      => 'Higher target'
+            'contract_item_id' => $this->contractItem->id,
+            'type'             => 'TARGET',
+            'entry_date'       => '2026-09-23',
+            'quantity'         => 15.0,
+            'remarks'          => 'Higher target'
         ]);
 
         $response3->assertStatus(200);
@@ -710,7 +672,7 @@ class AccomplishmentTest extends TestCase
     /** @test */
     public function it_can_activate_target_tab_via_query_param()
     {
-        $response = $this->actingAs($this->user)->get('/accomplishment/component/' . $this->component->id . '?type=TARGET');
+        $response = $this->actingAs($this->user)->get('/accomplishment/contract_item/' . $this->contractItem->id . '?type=TARGET');
         $response->assertStatus(200);
         $response->assertSee('btn-success');
     }
@@ -719,8 +681,8 @@ class AccomplishmentTest extends TestCase
     public function it_can_fetch_studio_mode_data_via_api()
     {
         // Add an accomplishment record to verify it's loaded in the hierarchy
-        $acc = new \App\Models\Accomplishment();
-        $acc->component_id = $this->component->id;
+        $acc = new Accomplishment();
+        $acc->contract_item_id = $this->contractItem->id;
         $acc->type = 'ACTUAL';
         $acc->entry_data = '2026-09-25';
         $acc->quantity = 15.0;
@@ -743,17 +705,15 @@ class AccomplishmentTest extends TestCase
         $this->assertEquals($this->section->id, $responseData['sections'][0]['id']);
         $this->assertNotEmpty($responseData['sections'][0]['contract_items']);
         $this->assertEquals($this->contractItem->id, $responseData['sections'][0]['contract_items'][0]['id']);
-        $this->assertNotEmpty($responseData['sections'][0]['contract_items'][0]['components']);
-        $this->assertEquals($this->component->id, $responseData['sections'][0]['contract_items'][0]['components'][0]['id']);
-        $this->assertNotEmpty($responseData['sections'][0]['contract_items'][0]['components'][0]['accomplishments']);
-        $this->assertEquals(15.0, $responseData['sections'][0]['contract_items'][0]['components'][0]['accomplishments'][0]['quantity']);
+        $this->assertNotEmpty($responseData['sections'][0]['contract_items'][0]['accomplishments']);
+        $this->assertEquals(15.0, $responseData['sections'][0]['contract_items'][0]['accomplishments'][0]['quantity']);
     }
 
     /** @test */
     public function it_can_delete_an_accomplishment_via_api()
     {
-        $acc = new \App\Models\Accomplishment();
-        $acc->component_id = $this->component->id;
+        $acc = new Accomplishment();
+        $acc->contract_item_id = $this->contractItem->id;
         $acc->type = 'ACTUAL';
         $acc->entry_data = '2026-09-25';
         $acc->quantity = 15.0;
@@ -838,8 +798,8 @@ class AccomplishmentTest extends TestCase
         $credential->save();
 
         // 2. Create Accomplishment
-        $acc = new \App\Models\Accomplishment();
-        $acc->component_id = $this->component->id;
+        $acc = new Accomplishment();
+        $acc->contract_item_id = $this->contractItem->id;
         $acc->type = 'ACTUAL';
         $acc->entry_data = '2026-09-27';
         $acc->quantity = 42.5;
@@ -863,7 +823,7 @@ class AccomplishmentTest extends TestCase
         ];
 
         // 4. Send request
-        $response = $this->withHeaders($headers)->get('/' . $path . '?component_id=' . $this->component->id);
+        $response = $this->withHeaders($headers)->get('/' . $path . '?contract_item_id=' . $this->contractItem->id);
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -875,7 +835,7 @@ class AccomplishmentTest extends TestCase
         $this->assertNotEmpty($data);
         $this->assertEquals(42.5, $data[0]['quantity']);
         $this->assertEquals('ACTUAL', $data[0]['type']);
-        $this->assertEquals($this->component->id, $data[0]['component_id']);
+        $this->assertEquals($this->contractItem->id, $data[0]['contract_item_id']);
     }
 
     /** @test */
@@ -890,24 +850,12 @@ class AccomplishmentTest extends TestCase
     /** @test */
     public function it_renders_printable_project_report()
     {
-        // Create an empty section with no components
-        $emptySection = new \App\Models\Section();
+        // Create an empty section with no contract items
+        $emptySection = new Section();
         $emptySection->project_id = $this->project->id;
         $emptySection->name = 'Empty Ghost Section';
         $emptySection->created_by = $this->user->id;
         $emptySection->save();
-
-        // Create an empty contract item with no components
-        $emptyCi = new \App\Models\ContractItem();
-        $emptyCi->section_id = $this->section->id;
-        $emptyCi->item_code = 'GHOST-01';
-        $emptyCi->description = 'Empty Ghost Contract Item';
-        $emptyCi->item_type = 'MAT';
-        $emptyCi->contract_quantity = 50;
-        $emptyCi->unit_id = $this->unit->id;
-        $emptyCi->contract_unit_price = 100;
-        $emptyCi->created_by = $this->user->id;
-        $emptyCi->save();
 
         $response = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/print');
         $response->assertStatus(200);
@@ -916,30 +864,27 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('SECTION: ' . $this->section->name);
         $response->assertSee($this->contractItem->item_code);
         $response->assertSee($this->contractItem->description);
-        $response->assertSee($this->component->name);
         $response->assertSee('window.print()', false);
 
-        // Verify rows without any components are hidden
+        // Verify sections without any contract items are hidden
         $response->assertDontSee('SECTION: Empty Ghost Section');
-        $response->assertDontSee('Empty Ghost Contract Item');
     }
 
     /** @test */
     public function it_applies_page_break_after_every_30_rows_in_printable_form()
     {
-        // Seed additional components so total rows exceed 30
-        // (1 section + 1 CI + existing 1 component = 3 rows, so we add 30 more components)
+        // Seed additional contract items so total rows exceed 30
         for ($i = 1; $i <= 30; $i++) {
-            $comp = new \App\Models\Component();
-            $comp->name = 'Bulk Component ' . $i;
-            $comp->contract_item_id = $this->contractItem->id;
-            $comp->quantity = 10;
-            $comp->unit_id = $this->unit->id;
-            $comp->use_count = 1;
-            $comp->status = 'APRV';
-            $comp->section_id = $this->section->id;
-            $comp->created_by = $this->user->id;
-            $comp->save();
+            $ci = new ContractItem();
+            $ci->section_id = $this->section->id;
+            $ci->item_code = 'BULK-' . $i;
+            $ci->description = 'Bulk Contract Item ' . $i;
+            $ci->item_type = 'MAT';
+            $ci->contract_quantity = 10;
+            $ci->unit_id = $this->unit->id;
+            $ci->contract_unit_price = 100;
+            $ci->created_by = $this->user->id;
+            $ci->save();
         }
 
         $response = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/print');
@@ -948,65 +893,63 @@ class AccomplishmentTest extends TestCase
     }
 
     /** @test */
-    public function it_excludes_components_with_exclude_from_monitoring_from_studio_and_print_form()
+    public function it_excludes_contract_items_with_exclude_from_monitoring_from_studio_and_print_form()
     {
-        // 1. Create a normal component (already exists in setUp: $this->component)
-        // 2. Create an excluded component
-        $excludedComp = new \App\Models\Component();
-        $excludedComp->name = 'Excluded Special Component';
-        $excludedComp->contract_item_id = $this->contractItem->id;
-        $excludedComp->quantity = 100;
-        $excludedComp->unit_id = $this->unit->id;
-        $excludedComp->use_count = 1;
-        $excludedComp->status = 'APRV';
-        $excludedComp->section_id = $this->section->id;
-        $excludedComp->exclude_from_monitoring = 1;
-        $excludedComp->created_by = $this->user->id;
-        $excludedComp->save();
+        $excludedCi = new ContractItem();
+        $excludedCi->section_id = $this->section->id;
+        $excludedCi->item_code = 'EXCL-01';
+        $excludedCi->description = 'Excluded Special Contract Item';
+        $excludedCi->item_type = 'MAT';
+        $excludedCi->contract_quantity = 100;
+        $excludedCi->unit_id = $this->unit->id;
+        $excludedCi->contract_unit_price = 100;
+        $excludedCi->exclude_from_monitoring = 1;
+        $excludedCi->created_by = $this->user->id;
+        $excludedCi->save();
 
-        // Check studio data API returns components with exclude_from_monitoring flag for client toggle
+        // Check studio data API returns contract items with exclude_from_monitoring flag
         $studioResponse = $this->actingAs($this->user)->getJson('/api/accomplishment/project/' . $this->project->id . '/studio-data');
         $studioResponse->assertStatus(200);
-        $components = $studioResponse->json('data.sections.0.contract_items.0.components');
-        $excludedItem = collect($components)->firstWhere('name', 'Excluded Special Component');
+        $items = $studioResponse->json('data.sections.0.contract_items');
+        $excludedItem = collect($items)->firstWhere('item_code', 'EXCL-01');
         $this->assertNotNull($excludedItem);
         $this->assertEquals(1, $excludedItem['exclude_from_monitoring']);
 
         // Check printable form
         $printResponse = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/print');
         $printResponse->assertStatus(200);
-        $printResponse->assertSee($this->component->name);
-        $printResponse->assertDontSee('Excluded Special Component');
+        $printResponse->assertSee($this->contractItem->description);
+        $printResponse->assertDontSee('Excluded Special Contract Item');
     }
 
     /** @test */
-    public function it_can_exclude_a_component_via_api_and_context_menu_option()
+    public function it_can_exclude_a_contract_item_via_api_and_context_menu_option()
     {
-        $compToExclude = new \App\Models\Component();
-        $compToExclude->name = 'Component to Exclude Now';
-        $compToExclude->contract_item_id = $this->contractItem->id;
-        $compToExclude->quantity = 75;
-        $compToExclude->unit_id = $this->unit->id;
-        $compToExclude->use_count = 1;
-        $compToExclude->status = 'APRV';
-        $compToExclude->section_id = $this->section->id;
-        $compToExclude->created_by = $this->user->id;
-        $compToExclude->save();
+        $ciToExclude = new ContractItem();
+        $ciToExclude->section_id = $this->section->id;
+        $ciToExclude->item_code = 'EXCL-NOW';
+        $ciToExclude->description = 'Contract Item to Exclude Now';
+        $ciToExclude->item_type = 'MAT';
+        $ciToExclude->contract_quantity = 75;
+        $ciToExclude->unit_id = $this->unit->id;
+        $ciToExclude->contract_unit_price = 100;
+        $ciToExclude->created_by = $this->user->id;
+        $ciToExclude->save();
 
-        $this->assertEquals(0, $compToExclude->exclude_from_monitoring);
+        $this->assertEquals(0, $ciToExclude->exclude_from_monitoring);
 
-        $response = $this->actingAs($this->user)->postJson('/api/accomplishment/component/exclude', [
-            'component_id' => $compToExclude->id
+        $response = $this->actingAs($this->user)->postJson('/api/accomplishment/contract_item/exclude', [
+            'contract_item_id' => $ciToExclude->id
         ]);
 
         $response->assertStatus(200);
         $response->assertJson([
             'status' => 1,
-            'message' => 'Component successfully excluded from accomplishment monitoring.'
+            'message' => 'Contract Item successfully excluded from accomplishment monitoring.'
         ]);
 
-        $compToExclude->refresh();
-        $this->assertEquals(1, $compToExclude->exclude_from_monitoring);
+        $ciToExclude->refresh();
+        $this->assertEquals(1, $ciToExclude->exclude_from_monitoring);
 
         // Verify context menu option in Studio Mode view
         $studioView = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/studio');
@@ -1019,34 +962,34 @@ class AccomplishmentTest extends TestCase
     }
 
     /** @test */
-    public function it_can_include_an_excluded_component_via_api()
+    public function it_can_include_an_excluded_contract_item_via_api()
     {
-        $compToInclude = new \App\Models\Component();
-        $compToInclude->name = 'Component to Re-Include';
-        $compToInclude->contract_item_id = $this->contractItem->id;
-        $compToInclude->quantity = 75;
-        $compToInclude->unit_id = $this->unit->id;
-        $compToInclude->use_count = 1;
-        $compToInclude->status = 'APRV';
-        $compToInclude->section_id = $this->section->id;
-        $compToInclude->exclude_from_monitoring = 1;
-        $compToInclude->created_by = $this->user->id;
-        $compToInclude->save();
+        $ciToInclude = new ContractItem();
+        $ciToInclude->section_id = $this->section->id;
+        $ciToInclude->item_code = 'REINC-01';
+        $ciToInclude->description = 'Contract Item to Re-Include';
+        $ciToInclude->item_type = 'MAT';
+        $ciToInclude->contract_quantity = 75;
+        $ciToInclude->unit_id = $this->unit->id;
+        $ciToInclude->contract_unit_price = 100;
+        $ciToInclude->exclude_from_monitoring = 1;
+        $ciToInclude->created_by = $this->user->id;
+        $ciToInclude->save();
 
-        $this->assertEquals(1, $compToInclude->exclude_from_monitoring);
+        $this->assertEquals(1, $ciToInclude->exclude_from_monitoring);
 
-        $response = $this->actingAs($this->user)->postJson('/api/accomplishment/component/include', [
-            'component_id' => $compToInclude->id
+        $response = $this->actingAs($this->user)->postJson('/api/accomplishment/contract_item/include', [
+            'contract_item_id' => $ciToInclude->id
         ]);
 
         $response->assertStatus(200);
         $response->assertJson([
             'status' => 1,
-            'message' => 'Component successfully included in accomplishment monitoring.'
+            'message' => 'Contract Item successfully included in accomplishment monitoring.'
         ]);
 
-        $compToInclude->refresh();
-        $this->assertEquals(0, $compToInclude->exclude_from_monitoring);
+        $ciToInclude->refresh();
+        $this->assertEquals(0, $ciToInclude->exclude_from_monitoring);
     }
 
     /** @test */
@@ -1059,7 +1002,6 @@ class AccomplishmentTest extends TestCase
 
     protected function grantAccessCode($user, $codeString)
     {
-        // 1. Create or find the AccessCode
         $accessCode = \App\Models\AccessCode::where('code', $codeString)->first();
         if (!$accessCode) {
             $accessCode = new \App\Models\AccessCode();
@@ -1068,19 +1010,16 @@ class AccomplishmentTest extends TestCase
             $accessCode->save();
         }
 
-        // 2. Create a Role
         $role = new \App\Models\Role();
         $role->name = 'Test Role ' . uniqid();
         $role->description = 'Test Description';
         $role->save();
 
-        // 3. Link Role to AccessCode
         $roleAccessCode = new \App\Models\RoleAccessCode();
         $roleAccessCode->role_id = $role->id;
         $roleAccessCode->access_code_id = $accessCode->id;
         $roleAccessCode->save();
 
-        // 4. Link User to Role
         $userRole = new \App\Models\UserRole();
         $userRole->user_id = $user->id;
         $userRole->role_id = $role->id;

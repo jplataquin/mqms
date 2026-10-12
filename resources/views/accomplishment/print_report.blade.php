@@ -234,25 +234,20 @@
         </thead>
         <tbody>
             @php
-                $sectionsWithComponents = $project->Sections->filter(function($section) {
-                    return $section->ContractItems->some(function($ci) {
-                        return $ci->Components->isNotEmpty();
-                    });
+                $sectionsWithContractItems = $project->Sections->filter(function($section) {
+                    return $section->ContractItems->isNotEmpty();
                 });
 
                 $totalRows = 0;
-                foreach ($sectionsWithComponents as $s) {
+                foreach ($sectionsWithContractItems as $s) {
                     $totalRows++;
-                    foreach ($s->ContractItems->filter(fn($ci) => $ci->Components->isNotEmpty()) as $ci) {
-                        $totalRows++;
-                        $totalRows += $ci->Components->count();
-                    }
+                    $totalRows += $s->ContractItems->count();
                 }
 
                 $currentRow = 0;
             @endphp
 
-            @forelse($sectionsWithComponents as $section)
+            @forelse($sectionsWithContractItems as $section)
                 @php
                     $currentRow++;
                     $pbClass = ($currentRow % 30 === 0 && $currentRow < $totalRows) ? 'page-break' : '';
@@ -260,33 +255,24 @@
                 <tr class="section-row {{ $pbClass }}">
                     <td colspan="5">SECTION: {{ $section->name }}</td>
                 </tr>
-                @foreach($section->ContractItems->filter(fn($ci) => $ci->Components->isNotEmpty()) as $ci)
+                @foreach($section->ContractItems as $ci)
                     @php
                         $currentRow++;
                         $pbClass = ($currentRow % 30 === 0 && $currentRow < $totalRows) ? 'page-break' : '';
                     @endphp
-                    <tr class="ci-row {{ $pbClass }}">
-                        <td colspan="5" style="padding-left: 18px;">
-                            CONTRACT ITEM: {{ $ci->item_code ? $ci->item_code . ' - ' : '' }}{{ $ci->description ?: $ci->name }}
+                    <tr class="comp-row {{ $pbClass }}">
+                        <td style="padding-left: 20px;">
+                            <strong>[{{ $ci->item_code }}]</strong> {{ $ci->description ?: $ci->name }}
                         </td>
+                        <td class="text-right">{{ number_format($ci->contract_quantity, 2) }}</td>
+                        <td class="text-center">{{ $ci->contract_unit_text }}</td>
+                        <td class="fill-box"></td>
+                        <td class="fill-box"></td>
                     </tr>
-                    @foreach($ci->Components as $comp)
-                        @php
-                            $currentRow++;
-                            $pbClass = ($currentRow % 30 === 0 && $currentRow < $totalRows) ? 'page-break' : '';
-                        @endphp
-                        <tr class="comp-row {{ $pbClass }}">
-                            <td style="padding-left: 36px;">{{ $comp->name }}</td>
-                            <td class="text-right">{{ number_format($comp->quantity, 2) }}</td>
-                            <td class="text-center">{{ $comp->unit_text }}</td>
-                            <td class="fill-box"></td>
-                            <td class="fill-box"></td>
-                        </tr>
-                    @endforeach
                 @endforeach
             @empty
                 <tr>
-                    <td colspan="5" class="text-center" style="padding: 20px; font-style: italic;">No components found for this project.</td>
+                    <td colspan="5" class="text-center" style="padding: 20px; font-style: italic;">No contract items found for this project.</td>
                 </tr>
             @endforelse
         </tbody>

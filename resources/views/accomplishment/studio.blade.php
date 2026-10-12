@@ -836,14 +836,11 @@
             }
 
             projectData.sections.forEach(section => {
-                // Check if section has any visible components based on toggle
-                const sectionValidComponentsCount = (section.contract_items || []).reduce((sum, ci) => {
-                    return sum + (ci.components || []).filter(c => {
-                        if (showExcludedComponents) return true;
-                        return !c.exclude_from_monitoring || c.exclude_from_monitoring == 0;
-                    }).length;
-                }, 0);
-                if (sectionValidComponentsCount === 0) return;
+                const validContractItems = (section.contract_items || []).filter(ci => {
+                    if (showExcludedComponents) return true;
+                    return !ci.exclude_from_monitoring || ci.exclude_from_monitoring == 0;
+                });
+                if (validContractItems.length === 0) return;
 
                 const sectionMatches = !filter || section.name.toLowerCase().includes(filter);
                 const isSectionCollapsed = collapsedSections.has(section.id);
@@ -868,262 +865,223 @@
                 bodyHtml += `</tr>`;
 
                 // Contract Items
-                if (section.contract_items) {
-                    section.contract_items.forEach(ci => {
-                        // Skip contract items with empty components or where all components are excluded (unless showExcludedComponents is active)
-                        const validComponents = (ci.components || []).filter(c => {
-                            if (showExcludedComponents) return true;
-                            return !c.exclude_from_monitoring || c.exclude_from_monitoring == 0;
-                        });
-                        if (validComponents.length === 0) return;
+                validContractItems.forEach(ci => {
+                    const ciName = (ci.item_code ? `[${ci.item_code}] ` : '') + (ci.description || ci.name || '');
+                    const ciMatches = !filter || ciName.toLowerCase().includes(filter) || sectionMatches;
+                    if (filter && !ciMatches) return;
 
-                        const ciName = (ci.item_code ? ci.item_code + ' ' : '') + (ci.description || ci.name || '');
-                        const ciMatches = !filter || ciName.toLowerCase().includes(filter);
-                        const isCiCollapsed = collapsedContractItems.has(ci.id);
-                        const ciChevronIcon = isCiCollapsed ? 'bi-chevron-right' : 'bi-chevron-down';
-                        const displayCi = isSectionCollapsed ? 'display: none;' : '';
+                    const displayCi = isSectionCollapsed ? 'display: none;' : '';
+                    const isActive = selectedComponentId === ci.id ? 'active' : '';
 
-                        bodyHtml += `
-                        <tr class="row-contract-item" style="${displayCi}" data-section-parent="${section.id}" data-ci-id="${ci.id}" onclick="toggleContractItem(${ci.id}, event)">
-                            <td class="sticky-col-tree" style="padding-left: 28px;">
-                                <i class="bi ${ciChevronIcon} me-1 text-muted" id="ci-chevron-${ci.id}"></i>
-                                <i class="bi bi-diagram-3 text-info me-1"></i>
-                                <span>${escapeHtml(ciName)}</span>
-                            </td>
-                            <td class="sticky-col-metric text-muted">-</td>
-                            <td class="sticky-col-progress text-muted">-</td>`;
+                    const isCiExcluded = (ci.exclude_from_monitoring == 1);
+                    const excludedClass = isCiExcluded ? 'row-component-excluded' : '';
+                    const excludedBadge = isCiExcluded ? `<span class="badge bg-danger ms-1" style="font-size: 8.5px; vertical-align: middle;">Excluded</span>` : '';
 
-                        columns.forEach(col => {
-                            const currentClass = getHighlightColClass(col);
-                            const cellClass = currentViewMode === 'day' ? 'day-cell' : 'month-cell';
-                            bodyHtml += `<td class="${cellClass}${currentClass}" data-month="${col.monthKey}"></td>`;
-                        });
-                        bodyHtml += `</tr>`;
+                    // Scope and Accomplishment metrics
+                    const totalScope = parseFloat(ci.contract_quantity) || 0;
+                    const unitText = ci.contract_unit_text || '';
+                    
+                    let overallLatestActual = null;
+                    let firstActual = null;
+                    let allTimeLatestTarget = null;
+                    const timeKeyAccomplishments = {};
 
-                        // Components
-                        validComponents.forEach(comp => {
-                                const compMatches = !filter || comp.name.toLowerCase().includes(filter) || sectionMatches || ciMatches;
-                                if (filter && !compMatches) return;
-
-                                const displayComp = (isSectionCollapsed || isCiCollapsed) ? 'display: none;' : '';
-                                const isActive = selectedComponentId === comp.id ? 'active' : '';
-
-                                const isCompExcluded = (comp.exclude_from_monitoring == 1);
-                                const excludedClass = isCompExcluded ? 'row-component-excluded' : '';
-                                const excludedBadge = isCompExcluded ? `<span class="badge bg-danger ms-1" style="font-size: 8.5px; vertical-align: middle;">Excluded</span>` : '';
-
-                                // Scope and Accomplishment metrics
-                                const totalScope = parseFloat(comp.quantity) || 0;
-                                const unitText = comp.unit_text || '';
-                                
-                                let overallLatestActual = null;
-                                let firstActual = null;
-                                let allTimeLatestTarget = null;
-                                const timeKeyAccomplishments = {};
-
-                                if (comp.accomplishments) {
-                                    comp.accomplishments.forEach(acc => {
-                                        // Track overall latest and first actual
-                                        if (acc.type === 'ACTUAL') {
-                                            if (!firstActual || new Date(acc.entry_data || acc.created_at || 0) < new Date(firstActual.entry_data || firstActual.created_at || 0)) {
-                                                firstActual = acc;
-                                            }
-
-                                            if (!overallLatestActual) {
-                                                overallLatestActual = acc;
-                                            } else {
-                                                const dateCurr = new Date(acc.entry_data || acc.created_at || 0);
-                                                const dateLatest = new Date(overallLatestActual.entry_data || overallLatestActual.created_at || 0);
-                                                if (dateCurr > dateLatest || (dateCurr.getTime() === dateLatest.getTime() && (acc.id || 0) > (overallLatestActual.id || 0))) {
-                                                    overallLatestActual = acc;
-                                                }
-                                            }
-                                        }
-
-                                        // Track all-time latest target
-                                        if (acc.type === 'TARGET' && acc.entry_data) {
-                                            if (!allTimeLatestTarget || new Date(acc.entry_data) > new Date(allTimeLatestTarget.entry_data) || (acc.entry_data === allTimeLatestTarget.entry_data && (acc.id || 0) > (allTimeLatestTarget.id || 0))) {
-                                                allTimeLatestTarget = acc;
-                                            }
-                                        }
-
-                                        // Track latest Target and latest Actual per month or day
-                                        if (acc.entry_data) {
-                                            const timeKey = currentViewMode === 'month' 
-                                                ? acc.entry_data.substring(0, 7) 
-                                                : acc.entry_data.substring(0, 10);
-
-                                            if (!timeKeyAccomplishments[timeKey]) {
-                                                timeKeyAccomplishments[timeKey] = {
-                                                    latestTarget: null,
-                                                    latestActual: null
-                                                };
-                                            }
-
-                                            const entry = timeKeyAccomplishments[timeKey];
-
-                                            if (acc.type === 'TARGET') {
-                                                if (!entry.latestTarget) {
-                                                    entry.latestTarget = acc;
-                                                } else {
-                                                    const dateCurr = new Date(acc.entry_data || acc.created_at || 0);
-                                                    const dateLatest = new Date(entry.latestTarget.entry_data || entry.latestTarget.created_at || 0);
-                                                    if (dateCurr > dateLatest || (dateCurr.getTime() === dateLatest.getTime() && (acc.id || 0) > (entry.latestTarget.id || 0))) {
-                                                        entry.latestTarget = acc;
-                                                    }
-                                                }
-                                            } else if (acc.type === 'ACTUAL') {
-                                                if (!entry.latestActual) {
-                                                    entry.latestActual = acc;
-                                                } else {
-                                                    const dateCurr = new Date(acc.entry_data || acc.created_at || 0);
-                                                    const dateLatest = new Date(entry.latestActual.entry_data || entry.latestActual.created_at || 0);
-                                                    if (dateCurr > dateLatest || (dateCurr.getTime() === dateLatest.getTime() && (acc.id || 0) > (entry.latestActual.id || 0))) {
-                                                        entry.latestActual = acc;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    });
+                    if (ci.accomplishments) {
+                        ci.accomplishments.forEach(acc => {
+                            if (acc.type === 'ACTUAL') {
+                                if (!firstActual || new Date(acc.entry_data || acc.created_at || 0) < new Date(firstActual.entry_data || firstActual.created_at || 0)) {
+                                    firstActual = acc;
                                 }
 
-                                const totalActual = overallLatestActual ? (parseFloat(overallLatestActual.quantity) || 0) : 0;
-                                const percentActual = totalScope > 0 ? Math.min(100, Math.round((totalActual / totalScope) * 100)) : 0;
-                                const actualDateStr = overallLatestActual && overallLatestActual.entry_data ? overallLatestActual.entry_data.substring(0, 10) : '';
+                                if (!overallLatestActual) {
+                                    overallLatestActual = acc;
+                                } else {
+                                    const dateCurr = new Date(acc.entry_data || acc.created_at || 0);
+                                    const dateLatest = new Date(overallLatestActual.entry_data || overallLatestActual.created_at || 0);
+                                    if (dateCurr > dateLatest || (dateCurr.getTime() === dateLatest.getTime() && (acc.id || 0) > (overallLatestActual.id || 0))) {
+                                        overallLatestActual = acc;
+                                    }
+                                }
+                            }
 
-                                let compVelocity = 0;
-                                let compEtaDateStr = null;
-                                let daysElapsed = 0;
-                                if (firstActual && overallLatestActual) {
-                                    const d1Str = (firstActual.entry_data || firstActual.created_at || '').substring(0, 10);
-                                    const d2Str = (overallLatestActual.entry_data || overallLatestActual.created_at || '').substring(0, 10);
-                                    if (d1Str && d2Str) {
-                                        const d1 = new Date(d1Str);
-                                        const d2 = new Date(d2Str);
-                                        daysElapsed = Math.max(1, Math.ceil((d2 - d1) / (1000 * 60 * 60 * 24)) + 1);
-                                        compVelocity = totalActual / daysElapsed;
-                                        if (compVelocity > 0 && totalActual < totalScope) {
-                                            const remainingQty = totalScope - totalActual;
-                                            const remainingDays = Math.ceil(remainingQty / compVelocity);
-                                            const etaDate = new Date(d2);
-                                            etaDate.setDate(etaDate.getDate() + remainingDays);
-                                            compEtaDateStr = etaDate.toISOString().substring(0, 10);
+                            if (acc.type === 'TARGET' && acc.entry_data) {
+                                if (!allTimeLatestTarget || new Date(acc.entry_data) > new Date(allTimeLatestTarget.entry_data) || (acc.entry_data === allTimeLatestTarget.entry_data && (acc.id || 0) > (allTimeLatestTarget.id || 0))) {
+                                    allTimeLatestTarget = acc;
+                                }
+                            }
+
+                            if (acc.entry_data) {
+                                const timeKey = currentViewMode === 'month' 
+                                    ? acc.entry_data.substring(0, 7) 
+                                    : acc.entry_data.substring(0, 10);
+
+                                if (!timeKeyAccomplishments[timeKey]) {
+                                    timeKeyAccomplishments[timeKey] = {
+                                        latestTarget: null,
+                                        latestActual: null
+                                    };
+                                }
+
+                                const entry = timeKeyAccomplishments[timeKey];
+
+                                if (acc.type === 'TARGET') {
+                                    if (!entry.latestTarget) {
+                                        entry.latestTarget = acc;
+                                    } else {
+                                        const dateCurr = new Date(acc.entry_data || acc.created_at || 0);
+                                        const dateLatest = new Date(entry.latestTarget.entry_data || entry.latestTarget.created_at || 0);
+                                        if (dateCurr > dateLatest || (dateCurr.getTime() === dateLatest.getTime() && (acc.id || 0) > (entry.latestTarget.id || 0))) {
+                                            entry.latestTarget = acc;
+                                        }
+                                    }
+                                } else if (acc.type === 'ACTUAL') {
+                                    if (!entry.latestActual) {
+                                        entry.latestActual = acc;
+                                    } else {
+                                        const dateCurr = new Date(acc.entry_data || acc.created_at || 0);
+                                        const dateLatest = new Date(entry.latestActual.entry_data || entry.latestActual.created_at || 0);
+                                        if (dateCurr > dateLatest || (dateCurr.getTime() === dateLatest.getTime() && (acc.id || 0) > (entry.latestActual.id || 0))) {
+                                            entry.latestActual = acc;
                                         }
                                     }
                                 }
+                            }
+                        });
+                    }
 
-                                let requiredVelocity = 0;
-                                let reqDaysLeft = 0;
-                                if (allTimeLatestTarget && totalActual < totalScope) {
-                                    const dTargetStr = (allTimeLatestTarget.entry_data || '').substring(0, 10);
-                                    if (dTargetStr) {
-                                        const dTarget = new Date(dTargetStr);
-                                        const today = new Date();
-                                        today.setHours(0,0,0,0);
-                                        dTarget.setHours(0,0,0,0);
-                                        reqDaysLeft = Math.max(1, Math.ceil((dTarget - today) / (1000 * 60 * 60 * 24)));
-                                        const remainingQty = totalScope - totalActual;
-                                        requiredVelocity = remainingQty / reqDaysLeft;
-                                    }
-                                }
+                    const totalActual = overallLatestActual ? (parseFloat(overallLatestActual.quantity) || 0) : 0;
+                    const percentActual = totalScope > 0 ? Math.min(100, Math.round((totalActual / totalScope) * 100)) : 0;
+                    const actualDateStr = overallLatestActual && overallLatestActual.entry_data ? overallLatestActual.entry_data.substring(0, 10) : '';
 
-                                const compStats = { 
-                                    velocity: compVelocity, 
-                                    reqVelocity: requiredVelocity,
-                                    reqDaysLeft: reqDaysLeft,
-                                    targetDeadline: allTimeLatestTarget ? (allTimeLatestTarget.entry_data || '').substring(0, 10) : null,
-                                    eta: compEtaDateStr, 
-                                    days: daysElapsed,
-                                    totalActual: totalActual,
-                                    totalScope: totalScope,
-                                    percentActual: percentActual
-                                };
+                    let ciVelocity = 0;
+                    let ciEtaDateStr = null;
+                    let daysElapsed = 0;
+                    if (firstActual && overallLatestActual) {
+                        const d1Str = (firstActual.entry_data || firstActual.created_at || '').substring(0, 10);
+                        const d2Str = (overallLatestActual.entry_data || overallLatestActual.created_at || '').substring(0, 10);
+                        if (d1Str && d2Str) {
+                            const d1 = new Date(d1Str);
+                            const d2 = new Date(d2Str);
+                            daysElapsed = Math.max(1, Math.ceil((d2 - d1) / (1000 * 60 * 60 * 24)) + 1);
+                            ciVelocity = totalActual / daysElapsed;
+                            if (ciVelocity > 0 && totalActual < totalScope) {
+                                const remainingQty = totalScope - totalActual;
+                                const remainingDays = Math.ceil(remainingQty / ciVelocity);
+                                const etaDate = new Date(d2);
+                                etaDate.setDate(etaDate.getDate() + remainingDays);
+                                ciEtaDateStr = etaDate.toISOString().substring(0, 10);
+                            }
+                        }
+                    }
 
+                    let requiredVelocity = 0;
+                    let reqDaysLeft = 0;
+                    if (allTimeLatestTarget && totalActual < totalScope) {
+                        const dTargetStr = (allTimeLatestTarget.entry_data || '').substring(0, 10);
+                        if (dTargetStr) {
+                            const dTarget = new Date(dTargetStr);
+                            const today = new Date();
+                            today.setHours(0,0,0,0);
+                            dTarget.setHours(0,0,0,0);
+                            reqDaysLeft = Math.max(1, Math.ceil((dTarget - today) / (1000 * 60 * 60 * 24)));
+                            const remainingQty = totalScope - totalActual;
+                            requiredVelocity = remainingQty / reqDaysLeft;
+                        }
+                    }
+
+                    const compStats = { 
+                        velocity: ciVelocity, 
+                        reqVelocity: requiredVelocity,
+                        reqDaysLeft: reqDaysLeft,
+                        targetDeadline: allTimeLatestTarget ? (allTimeLatestTarget.entry_data || '').substring(0, 10) : null,
+                        eta: ciEtaDateStr, 
+                        days: daysElapsed,
+                        totalActual: totalActual,
+                        totalScope: totalScope,
+                        percentActual: percentActual
+                    };
+
+                    bodyHtml += `
+                    <tr class="row-component ${excludedClass} ${isActive}" id="comp-row-${ci.id}" style="${displayCi}" data-section-parent="${section.id}" data-ci-parent="${ci.id}" data-comp-id="${ci.id}" data-comp-name="${escapeHtml(ciName)}" data-comp-qty="${ci.contract_quantity || ''}" data-comp-unit="${escapeHtml(unitText)}" data-comp-excluded="${isCiExcluded ? '1' : '0'}" onclick="selectComponent(${ci.id}, '${escapeHtml(ciName)}')">
+                        <td class="sticky-col-tree" style="padding-left: 28px; cursor: pointer;" title="Double-click to view progress & performance">
+                            <i class="bi bi-diagram-3 ${isCiExcluded ? 'text-danger' : 'text-info'} me-1"></i>
+                            <span class="comp-name-text" title="${escapeHtml(ciName)}">${escapeHtml(ciName)}</span>
+                            ${excludedBadge}
+                        </td>
+                        <td class="sticky-col-metric">
+                            <span class="fw-semibold">${formatNumber(totalScope)}</span>
+                            <small class="text-muted ms-1">${escapeHtml(unitText)}</small>
+                        </td>
+                        <td class="sticky-col-progress">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="small fw-semibold text-primary">${formatNumber(totalActual)}</span>
+                                <span class="badge ${percentActual >= 100 ? 'bg-primary' : 'bg-secondary'}" style="font-size: 10px;">${percentActual}%</span>
+                            </div>
+                            <div class="gantt-progress-bar">
+                                <div class="progress-actual" style="width: ${percentActual}%;"></div>
+                            </div>
+                            ${actualDateStr ? `<div class="text-truncate" style="font-size: 9px; color: var(--text-muted); line-height: 1.2; margin-top: 2px;" title="As of ${escapeHtml(actualDateStr)}">as of ${escapeHtml(actualDateStr)}</div>` : ''}
+                        </td>`;
+
+                    // Timeline Columns Cells (Month or Day)
+                    columns.forEach(col => {
+                        const entry = timeKeyAccomplishments[col.key];
+                        const hasTarget = !!(entry && entry.latestTarget);
+                        const hasActual = !!(entry && entry.latestActual);
+                        const currentClass = getHighlightColClass(col);
+                        const cellClass = currentViewMode === 'day' ? 'day-cell' : 'month-cell';
+
+                        bodyHtml += `<td class="${cellClass}${currentClass}" data-month="${col.monthKey}" data-comp-id="${ci.id}" data-comp-name="${escapeHtml(ciName)}" data-comp-qty="${ci.contract_quantity || ''}" data-comp-unit="${escapeHtml(unitText)}" data-cell-key="${col.key}" data-cell-label="${escapeHtml(col.label)}">`;
+                        if (hasTarget || hasActual) {
+                            if (hasTarget) {
+                                const targetQty = parseFloat(entry.latestTarget.quantity) || 0;
+                                const targetDateStr = entry.latestTarget.entry_data ? entry.latestTarget.entry_data.substring(0, 10) : '';
+                                const targetData = { ...entry.latestTarget, unitText: unitText, compName: ciName, compStats: compStats };
+                                const targetDataEncoded = encodeURIComponent(JSON.stringify(targetData));
                                 bodyHtml += `
-                                <tr class="row-component ${excludedClass} ${isActive}" id="comp-row-${comp.id}" style="${displayComp}" data-section-parent="${section.id}" data-ci-parent="${ci.id}" data-comp-id="${comp.id}" data-comp-name="${escapeHtml(comp.name)}" data-comp-qty="${comp.quantity || ''}" data-comp-unit="${escapeHtml(unitText)}" data-comp-excluded="${isCompExcluded ? '1' : '0'}" onclick="selectComponent(${comp.id}, '${escapeHtml(comp.name)}')">
-                                    <td class="sticky-col-tree" style="padding-left: 48px; cursor: pointer;" title="Double-click to view progress & performance">
-                                        <i class="bi bi-box-seam ${isCompExcluded ? 'text-danger' : 'text-secondary'} me-1"></i>
-                                        <span class="comp-name-text" title="${escapeHtml(comp.name)}">${escapeHtml(comp.name)}</span>
-                                        ${excludedBadge}
-                                    </td>
-                                    <td class="sticky-col-metric">
-                                        <span class="fw-semibold">${formatNumber(totalScope)}</span>
-                                        <small class="text-muted ms-1">${escapeHtml(unitText)}</small>
-                                    </td>
-                                    <td class="sticky-col-progress">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="small fw-semibold text-primary">${formatNumber(totalActual)}</span>
-                                            <span class="badge ${percentActual >= 100 ? 'bg-primary' : 'bg-secondary'}" style="font-size: 10px;">${percentActual}%</span>
-                                        </div>
-                                        <div class="gantt-progress-bar">
-                                            <div class="progress-actual" style="width: ${percentActual}%;"></div>
-                                        </div>
-                                        ${actualDateStr ? `<div class="text-truncate" style="font-size: 9px; color: var(--text-muted); line-height: 1.2; margin-top: 2px;" title="As of ${escapeHtml(actualDateStr)}">as of ${escapeHtml(actualDateStr)}</div>` : ''}
-                                    </td>`;
+                                <div class="gantt-pill pill-target" style="cursor: pointer;" onclick="viewAccomplishment('${targetDataEncoded}')" title="Target: ${formatNumber(targetQty)} ${escapeHtml(unitText)} as of ${escapeHtml(targetDateStr)}">
+                                    <span>🎯 ${formatNumber(targetQty)}&nbsp;</span>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <small class="ms-1">${escapeHtml(unitText)}</small>
+                                        <i class="bi bi-x-circle text-danger ms-1 delete-pill-btn" onclick="event.stopPropagation(); deleteAccomplishment(${entry.latestTarget.id})" title="Delete Target"></i>
+                                    </div>
+                                </div>`;
+                            } else {
+                                bodyHtml += `
+                                <div class="gantt-pill pill-placeholder pill-placeholder-target" title="No Target">
+                                    <span>&mdash;</span>
+                                </div>`;
+                            }
 
-                                // Timeline Columns Cells (Month or Day)
-                                columns.forEach(col => {
-                                    const entry = timeKeyAccomplishments[col.key];
-                                    const hasTarget = !!(entry && entry.latestTarget);
-                                    const hasActual = !!(entry && entry.latestActual);
-                                    const currentClass = getHighlightColClass(col);
-                                    const cellClass = currentViewMode === 'day' ? 'day-cell' : 'month-cell';
-
-                                    bodyHtml += `<td class="${cellClass}${currentClass}" data-month="${col.monthKey}" data-comp-id="${comp.id}" data-comp-name="${escapeHtml(comp.name)}" data-comp-qty="${comp.quantity || ''}" data-comp-unit="${escapeHtml(unitText)}" data-cell-key="${col.key}" data-cell-label="${escapeHtml(col.label)}">`;
-                                    if (hasTarget || hasActual) {
-                                        // Target row (always on top)
-                                        if (hasTarget) {
-                                            const targetQty = parseFloat(entry.latestTarget.quantity) || 0;
-                                            const targetDateStr = entry.latestTarget.entry_data ? entry.latestTarget.entry_data.substring(0, 10) : '';
-                                            const targetData = { ...entry.latestTarget, unitText: unitText, compName: comp.name, compStats: compStats };
-                                            const targetDataEncoded = encodeURIComponent(JSON.stringify(targetData));
-                                            bodyHtml += `
-                                            <div class="gantt-pill pill-target" style="cursor: pointer;" onclick="viewAccomplishment('${targetDataEncoded}')" title="Target: ${formatNumber(targetQty)} ${escapeHtml(unitText)} as of ${escapeHtml(targetDateStr)}">
-                                                <span>🎯 ${formatNumber(targetQty)}&nbsp;</span>
-                                                <div class="d-flex align-items-center gap-1">
-                                                    <small class="ms-1">${escapeHtml(unitText)}</small>
-                                                    <i class="bi bi-x-circle text-danger ms-1 delete-pill-btn" onclick="event.stopPropagation(); deleteAccomplishment(${entry.latestTarget.id})" title="Delete Target"></i>
-                                                </div>
-                                            </div>`;
-                                        } else {
-                                            bodyHtml += `
-                                            <div class="gantt-pill pill-placeholder pill-placeholder-target" title="No Target">
-                                                <span>&mdash;</span>
-                                            </div>`;
-                                        }
-
-                                        // Actual row (always on bottom)
-                                        if (hasActual) {
-                                            const actualQty = parseFloat(entry.latestActual.quantity) || 0;
-                                            const monthActualDateStr = entry.latestActual.entry_data ? entry.latestActual.entry_data.substring(0, 10) : '';
-                                            const actualData = { ...entry.latestActual, unitText: unitText, compName: comp.name, compStats: compStats };
-                                            const actualDataEncoded = encodeURIComponent(JSON.stringify(actualData));
-                                            bodyHtml += `
-                                            <div class="gantt-pill pill-actual" style="cursor: pointer;" onclick="viewAccomplishment('${actualDataEncoded}')" title="Actual: ${formatNumber(actualQty)} ${escapeHtml(unitText)} as of ${escapeHtml(monthActualDateStr)}">
-                                                <span>✅ ${formatNumber(actualQty)}&nbsp;</span>
-                                                <div class="d-flex align-items-center gap-1">
-                                                    <small class="ms-1">${escapeHtml(unitText)}</small>
-                                                    <i class="bi bi-x-circle text-danger ms-1 delete-pill-btn" onclick="event.stopPropagation(); deleteAccomplishment(${entry.latestActual.id})" title="Delete Actual"></i>
-                                                </div>
-                                            </div>`;
-                                        } else {
-                                            bodyHtml += `
-                                            <div class="gantt-pill pill-placeholder pill-placeholder-actual" title="No Actual">
-                                                <span>&mdash;</span>
-                                            </div>`;
-                                        }
-                                    }
-                                    bodyHtml += `</td>`;
-                                });
-
-                                bodyHtml += `</tr>`;
-                            });
+                            if (hasActual) {
+                                const actualQty = parseFloat(entry.latestActual.quantity) || 0;
+                                const monthActualDateStr = entry.latestActual.entry_data ? entry.latestActual.entry_data.substring(0, 10) : '';
+                                const actualData = { ...entry.latestActual, unitText: unitText, compName: ciName, compStats: compStats };
+                                const actualDataEncoded = encodeURIComponent(JSON.stringify(actualData));
+                                bodyHtml += `
+                                <div class="gantt-pill pill-actual" style="cursor: pointer;" onclick="viewAccomplishment('${actualDataEncoded}')" title="Actual: ${formatNumber(actualQty)} ${escapeHtml(unitText)} as of ${escapeHtml(monthActualDateStr)}">
+                                    <span>✅ ${formatNumber(actualQty)}&nbsp;</span>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <small class="ms-1">${escapeHtml(unitText)}</small>
+                                        <i class="bi bi-x-circle text-danger ms-1 delete-pill-btn" onclick="event.stopPropagation(); deleteAccomplishment(${entry.latestActual.id})" title="Delete Actual"></i>
+                                    </div>
+                                </div>`;
+                            } else {
+                                bodyHtml += `
+                                <div class="gantt-pill pill-placeholder pill-placeholder-actual" title="No Actual">
+                                    <span>&mdash;</span>
+                                </div>`;
+                            }
+                        }
+                        bodyHtml += `</td>`;
                     });
-                }
+
+                    bodyHtml += `</tr>`;
+                });
             });
 
             if (!bodyHtml) {
-                bodyHtml = `<tr><td colspan="${3 + columns.length}" class="text-center py-4 text-muted">No monitored components found in this project.</td></tr>`;
+                bodyHtml = `<tr><td colspan="${3 + columns.length}" class="text-center py-4 text-muted">No monitored contract items found in this project.</td></tr>`;
             }
 
             ganttBody.innerHTML = bodyHtml;
@@ -1281,7 +1239,7 @@
 
             const confirmed = await window.util.confirm(`Are you sure you want to exclude "${contextMenuTarget.compName}" from accomplishment monitoring? It will be removed from this chart.`);
             if (confirmed) {
-                fetch('/api/accomplishment/component/exclude', {
+                fetch('/api/accomplishment/contract_item/exclude', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1289,14 +1247,14 @@
                         'X-Requested-With': 'XMLHttpRequest',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     },
-                    body: JSON.stringify({ component_id: contextMenuTarget.compId })
+                    body: JSON.stringify({ contract_item_id: contextMenuTarget.compId, component_id: contextMenuTarget.compId })
                 })
                 .then(res => res.json())
                 .then(data => {
                     if (data.status === 1) {
                         loadProjectData();
                     } else {
-                        alert(data.message || 'Error excluding component');
+                        alert(data.message || 'Error excluding item');
                     }
                 })
                 .catch(err => {
@@ -1312,7 +1270,7 @@
 
             const confirmed = await window.util.confirm(`Are you sure you want to include "${contextMenuTarget.compName}" back in accomplishment monitoring?`);
             if (confirmed) {
-                fetch('/api/accomplishment/component/include', {
+                fetch('/api/accomplishment/contract_item/include', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1320,14 +1278,14 @@
                         'X-Requested-With': 'XMLHttpRequest',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     },
-                    body: JSON.stringify({ component_id: contextMenuTarget.compId })
+                    body: JSON.stringify({ contract_item_id: contextMenuTarget.compId, component_id: contextMenuTarget.compId })
                 })
                 .then(res => res.json())
                 .then(data => {
                     if (data.status === 1) {
                         loadProjectData();
                     } else {
-                        alert(data.message || 'Error including component');
+                        alert(data.message || 'Error including item');
                     }
                 })
                 .catch(err => {
@@ -1354,6 +1312,7 @@
 
             const title = `Add ${type === 'TARGET' ? 'Target' : 'Actual'} Accomplishment - ${contextMenuTarget.compName}`;
             window.util.drawerModal.content(title, CreateAccomplishmentForm({
+                contract_item_id: contextMenuTarget.compId,
                 component_id: contextMenuTarget.compId,
                 total_quantity: contextMenuTarget.compQty,
                 unit: contextMenuTarget.compUnit,
@@ -1628,75 +1587,71 @@
             projectData.sections.forEach(section => {
                 if (section.contract_items) {
                     section.contract_items.forEach(ci => {
-                        if (ci.components) {
-                            ci.components.forEach(comp => {
-                                if (comp.exclude_from_monitoring == 1) return;
-                                totalComponents++;
-                                const totalScope = parseFloat(comp.quantity) || 0;
-                                let targetQty = 0;
-                                let actualQty = 0;
+                        if (ci.exclude_from_monitoring == 1) return;
+                        totalComponents++;
+                        const totalScope = parseFloat(ci.contract_quantity) || 0;
+                        let targetQty = 0;
+                        let actualQty = 0;
 
-                                let allTimeLatestActual = null;
+                        let allTimeLatestActual = null;
 
-                                if (comp.accomplishments && comp.accomplishments.length > 0) {
-                                    let latestTarget = null;
-                                    let latestActual = null;
-                                    
-                                    comp.accomplishments.forEach(acc => {
-                                        const accDateStr = acc.entry_data ? acc.entry_data.substring(0, 10) : '';
-                                        
-                                        // Scoped snapshot check
-                                        if (accDateStr <= asOfDate) {
-                                            if (acc.type === 'TARGET') {
-                                                if (!latestTarget || new Date(acc.entry_data) > new Date(latestTarget.entry_data) || (acc.entry_data === latestTarget.entry_data && acc.id > latestTarget.id)) {
-                                                    latestTarget = acc;
-                                                }
-                                            } else if (acc.type === 'ACTUAL') {
-                                                if (!latestActual || new Date(acc.entry_data) > new Date(latestActual.entry_data) || (acc.entry_data === latestActual.entry_data && acc.id > latestActual.id)) {
-                                                    latestActual = acc;
-                                                }
-                                            }
+                        if (ci.accomplishments && ci.accomplishments.length > 0) {
+                            let latestTarget = null;
+                            let latestActual = null;
+                            
+                            ci.accomplishments.forEach(acc => {
+                                const accDateStr = acc.entry_data ? acc.entry_data.substring(0, 10) : '';
+                                
+                                // Scoped snapshot check
+                                if (accDateStr <= asOfDate) {
+                                    if (acc.type === 'TARGET') {
+                                        if (!latestTarget || new Date(acc.entry_data) > new Date(latestTarget.entry_data) || (acc.entry_data === latestTarget.entry_data && acc.id > latestTarget.id)) {
+                                            latestTarget = acc;
                                         }
-
-                                        // Running calculation (all time)
-                                        if (acc.type === 'ACTUAL' && accDateStr) {
-                                            if (!projectFirstActualDate || new Date(accDateStr) < new Date(projectFirstActualDate)) {
-                                                projectFirstActualDate = accDateStr;
-                                            }
-                                            if (!projectLatestActualDate || new Date(accDateStr) > new Date(projectLatestActualDate)) {
-                                                projectLatestActualDate = accDateStr;
-                                            }
-                                            if (!allTimeLatestActual || new Date(acc.entry_data) > new Date(allTimeLatestActual.entry_data) || (acc.entry_data === allTimeLatestActual.entry_data && acc.id > allTimeLatestActual.id)) {
-                                                allTimeLatestActual = acc;
-                                            }
+                                    } else if (acc.type === 'ACTUAL') {
+                                        if (!latestActual || new Date(acc.entry_data) > new Date(latestActual.entry_data) || (acc.entry_data === latestActual.entry_data && acc.id > latestActual.id)) {
+                                            latestActual = acc;
                                         }
-
-                                        if (acc.type === 'TARGET' && accDateStr) {
-                                            if (!projectLatestTargetDate || new Date(accDateStr) > new Date(projectLatestTargetDate)) {
-                                                projectLatestTargetDate = accDateStr;
-                                            }
-                                        }
-                                    });
-                                    
-                                    if (latestTarget) targetQty = parseFloat(latestTarget.quantity) || 0;
-                                    if (latestActual) actualQty = parseFloat(latestActual.quantity) || 0;
+                                    }
                                 }
 
-                                let percentTarget = 0;
-                                let percentActual = 0;
-                                if (totalScope > 0) {
-                                    percentTarget = Math.min(100, (targetQty / totalScope) * 100);
-                                    percentActual = Math.min(100, (actualQty / totalScope) * 100);
+                                // Running calculation (all time)
+                                if (acc.type === 'ACTUAL' && accDateStr) {
+                                    if (!projectFirstActualDate || new Date(accDateStr) < new Date(projectFirstActualDate)) {
+                                        projectFirstActualDate = accDateStr;
+                                    }
+                                    if (!projectLatestActualDate || new Date(accDateStr) > new Date(projectLatestActualDate)) {
+                                        projectLatestActualDate = accDateStr;
+                                    }
+                                    if (!allTimeLatestActual || new Date(acc.entry_data) > new Date(allTimeLatestActual.entry_data) || (acc.entry_data === allTimeLatestActual.entry_data && acc.id > allTimeLatestActual.id)) {
+                                        allTimeLatestActual = acc;
+                                    }
                                 }
-                                sumTargetPercentages += percentTarget;
-                                sumActualPercentages += percentActual;
 
-                                // Running all-time actual percent
-                                const allTimeActualQty = allTimeLatestActual ? (parseFloat(allTimeLatestActual.quantity) || 0) : 0;
-                                const allTimePercent = totalScope > 0 ? Math.min(100, (allTimeActualQty / totalScope) * 100) : 0;
-                                sumAllTimeActualPercent += allTimePercent;
+                                if (acc.type === 'TARGET' && accDateStr) {
+                                    if (!projectLatestTargetDate || new Date(accDateStr) > new Date(projectLatestTargetDate)) {
+                                        projectLatestTargetDate = accDateStr;
+                                    }
+                                }
                             });
+                            
+                            if (latestTarget) targetQty = parseFloat(latestTarget.quantity) || 0;
+                            if (latestActual) actualQty = parseFloat(latestActual.quantity) || 0;
                         }
+
+                        let percentTarget = 0;
+                        let percentActual = 0;
+                        if (totalScope > 0) {
+                            percentTarget = Math.min(100, (targetQty / totalScope) * 100);
+                            percentActual = Math.min(100, (actualQty / totalScope) * 100);
+                        }
+                        sumTargetPercentages += percentTarget;
+                        sumActualPercentages += percentActual;
+
+                        // Running all-time actual percent
+                        const allTimeActualQty = allTimeLatestActual ? (parseFloat(allTimeLatestActual.quantity) || 0) : 0;
+                        const allTimePercent = totalScope > 0 ? Math.min(100, (allTimeActualQty / totalScope) * 100) : 0;
+                        sumAllTimeActualPercent += allTimePercent;
                     });
                 }
             });
@@ -1808,7 +1763,7 @@
                     <span class="badge bg-dark border border-secondary text-light fs-6 py-2 px-4 shadow-sm">
                         Variance: <span class="${varianceClass} ms-2 fw-bold">${varianceText}</span>
                     </span>
-                    <div class="text-muted small mt-2">Calculated across ${totalComponents} tracked components.</div>
+                    <div class="text-muted small mt-2">Calculated across ${totalComponents} tracked contract items.</div>
                 </div>
 
                 <div class="text-end mt-5">
@@ -1828,14 +1783,10 @@
             let comp = null;
             for (const section of projectData.sections) {
                 if (section.contract_items) {
-                    for (const ci of section.contract_items) {
-                        if (ci.components) {
-                            const found = ci.components.find(c => c.id === compId);
-                            if (found) {
-                                comp = found;
-                                break;
-                            }
-                        }
+                    const found = section.contract_items.find(c => c.id === compId);
+                    if (found) {
+                        comp = found;
+                        break;
                     }
                 }
                 if (comp) break;
@@ -1848,8 +1799,8 @@
             const d = String(now.getDate()).padStart(2, '0');
             const asOfDate = typeof asOfDateOverride === 'string' ? asOfDateOverride : `${y}-${m}-${d}`;
 
-            const totalScope = parseFloat(comp.quantity) || 0;
-            const unitText = comp.unit_text || '';
+            const totalScope = parseFloat(comp.contract_quantity) || 0;
+            const unitText = comp.contract_unit_text || '';
 
             let targetQty = 0;
             let actualQty = 0;

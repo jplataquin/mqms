@@ -13,9 +13,16 @@
                 </a>
             </li>
             <li>
+                <a href="/accomplishment/section/{{$section->id}}">
+                    <span>
+                       {{$section->name}}
+                    </span>
+                </a>
+            </li>
+            <li>
                 <a href="#" class="active">
                     <span>
-                       Component
+                       {{$contract_item->item_code}}
                     </span>
                     <i class="ms-2 bi bi-list-ul"></i>
                 </a>
@@ -24,7 +31,7 @@
     </div>
     <hr>
 
-    <table class="record-table-horizontal mb-3"  hx-boost="true" hx-select="#content" hx-target="#main">
+    <table class="record-table-horizontal mb-3" hx-boost="true" hx-select="#content" hx-target="#main">
         <tbody>
             <tr>
                 <th>Project</th>
@@ -41,19 +48,13 @@
             <tr>
                 <th>Contract Item</th>
                 <td>
-                    <a href="/accomplishment/contract_item/{{$contract_item->id}}">{{$contract_item->name}}</a>
-                </td>
-            </tr>
-            <tr>
-                <th>Component</th>
-                <td>
-                   {{$component->name}}
+                    <strong>[{{$contract_item->item_code}}]</strong> {{$contract_item->description}}
                 </td>
             </tr>
             <tr>
                 <th>Total Quantity</th>
                 <td>
-                   {{ number_format($component->quantity) }} {{$component->unit_text}}
+                   {{ number_format($contract_item->contract_quantity, 2) }} {{$contract_item->contract_unit_text}}
                 </td>
             </tr>
             <tr>
@@ -61,10 +62,10 @@
                 <td>
                    @if($latestActual)
                        @php
-                           $percentage = $component->quantity > 0 ? ($latestActual->quantity / $component->quantity) * 100 : 0;
+                           $percentage = $contract_item->contract_quantity > 0 ? ($latestActual->quantity / $contract_item->contract_quantity) * 100 : 0;
                            $formattedDate = $latestActual->entry_data ? $latestActual->entry_data->format('Y-m-d') : 'N/A';
                        @endphp
-                       {{ number_format($latestActual->quantity, 2) }} {{$component->unit_text}} ({{ number_format($percentage, 0) }}%) as of {{ $formattedDate }}.
+                       {{ number_format($latestActual->quantity, 2) }} {{$contract_item->contract_unit_text}} ({{ number_format($percentage, 0) }}%) as of {{ $formattedDate }}.
                    @else
                        -
                    @endif
@@ -136,7 +137,7 @@
         data.map(item => {
             let displayEntryData = item.entry_data ? item.entry_data.substring(0, 10) : 'N/A';
             let displayCreatedAt = item.created_at ? $util.dateTime(new Date(item.created_at)).full() : 'N/A';
-            let formattedQty = parseFloat(item.quantity).toFixed(2) + ' {{ $component->unit_text }}';
+            let formattedQty = parseFloat(item.quantity).toFixed(2) + ' {{ $contract_item->contract_unit_text }}';
 
             let qtyClass = item.type === 'TARGET' ? 'fw-bold text-success' : 'fw-bold text-primary';
 
@@ -167,7 +168,7 @@
         window.util.blockUI();
 
         window.util.$get('/api/accomplishment/record/list', {
-            component_id: '{{ $component->id }}',
+            contract_item_id: '{{ $contract_item->id }}',
             type: currentType,
             page: page,
             limit: limit,
@@ -247,9 +248,9 @@
 
     addRegistryBtn.onclick = () => {
         window.util.drawerModal.content('Add Accomplishment Registry Entry', CreateAccomplishmentForm({
-            component_id: '{{$component->id}}',
-            total_quantity: '{{$component->quantity}}',
-            unit: '{{$component->unit_text}}',
+            contract_item_id: '{{$contract_item->id}}',
+            total_quantity: '{{$contract_item->contract_quantity}}',
+            unit: '{{$contract_item->contract_unit_text}}',
             type: currentType,
             successCallback: () => {
                 if (window.parent && typeof window.parent.refreshGanttChart === 'function') {
