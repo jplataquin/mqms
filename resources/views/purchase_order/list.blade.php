@@ -131,12 +131,17 @@
                         <div class="col-lg-12 mt-3 mb-3">
                             <div class="form-group">
                                 <label>Contains</label>
-                                <select class="form-select" id="materialSelect">
-                                    <option value=""> - </option>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                    <input type="text" class="form-control" id="materialInput" list="materialList" placeholder="Search material item..." autocomplete="off">
+                                    <button class="btn btn-outline-secondary" type="button" id="clearMaterialBtn" title="Clear Material"><i class="bi bi-x-lg"></i></button>
+                                </div>
+                                <datalist id="materialList">
                                     @foreach($material_items as $material_item)
-                                        <option value="{{$material_item->id}}">{{$material_item->formattedName}}</option>
+                                        <option value="{{$material_item->formattedName}}" data-id="{{$material_item->id}}"></option>
                                     @endforeach
-                                </select>
+                                </datalist>
+                                <input type="hidden" id="materialSelect" value="">
                             </div>
                         </div>
                     </div>
@@ -194,7 +199,10 @@
         const componentSelect       = $q('#componentSelect').first();
         const contractItemSelect    = $q('#contractItemSelect').first();
         const statusSelect          = $q('#statusSelect').first();
+        const materialInput         = $q('#materialInput').first();
+        const materialList          = $q('#materialList').first();
         const materialSelect        = $q('#materialSelect').first();
+        const clearMaterialBtn      = $q('#clearMaterialBtn').first();
         const createdByInput        = $q('#createdByInput').first();
         const createdByList         = $q('#createdByList').first();
         const createdBySelect       = $q('#createdBySelect').first();
@@ -227,6 +235,10 @@
             createdBySelect.value = findOptionId(createdByInput, createdByList);
         }
 
+        function updateMaterial() {
+            materialSelect.value = findOptionId(materialInput, materialList);
+        }
+
         if (createdByInput) {
             createdByInput.oninput = updateCreatedBy;
             createdByInput.onchange = updateCreatedBy;
@@ -244,6 +256,26 @@
                 createdByInput.value = '';
                 createdBySelect.value = '';
                 createdByInput.focus();
+            };
+        }
+
+        if (materialInput) {
+            materialInput.oninput = updateMaterial;
+            materialInput.onchange = updateMaterial;
+            materialInput.onkeydown = (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    updateMaterial();
+                    searchBtn.click();
+                }
+            };
+        }
+
+        if (clearMaterialBtn) {
+            clearMaterialBtn.onclick = () => {
+                materialInput.value = '';
+                materialSelect.value = '';
+                materialInput.focus();
             };
         }
 
@@ -332,6 +364,7 @@
     
         searchBtn.onclick = ()=>{
             updateCreatedBy();
+            updateMaterial();
             showMoreBtn.style.display = 'block';
             reinitalize();
             showData();

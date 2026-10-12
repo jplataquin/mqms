@@ -122,19 +122,12 @@ class PurchaseOrderController extends PurchaseOrderSuperController
 
 
          if($material_item_id){
+            $po_id_filter = PurchaseOrderItem::where('material_item_id', $material_item_id)
+                ->pluck('purchase_order_id')
+                ->unique()
+                ->toArray();
 
-            
-            $po_id_filter = [];
-            
-            $purchase_order_items = PurchaseOrderItem::select('purchase_order_id')->where('material_item_id',$material_item_id)->groupBy('purchase_order_id')->get();
-
-            foreach($purchase_order_items as $po_item){
-                $po_id_filter[] = $po_item->purchase_order_id;
-            }
-
-            if($po_id_filter){
-                $purchaseOrder = $purchaseOrder->whereIn('id',$po_id_filter);
-            }
+            $purchaseOrder = $purchaseOrder->whereIn('id', $po_id_filter);
          }
 
          if($limit > 0){

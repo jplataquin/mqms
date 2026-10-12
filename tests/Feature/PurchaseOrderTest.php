@@ -10,6 +10,9 @@ use App\Models\AccessCode;
 use App\Models\RoleAccessCode;
 use App\Models\Project;
 use App\Models\PurchaseOrder;
+use App\Models\PurchaseOrderItem;
+use App\Models\MaterialGroup;
+use App\Models\MaterialItem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PurchaseOrderTest extends TestCase
@@ -19,6 +22,9 @@ class PurchaseOrderTest extends TestCase
     protected $user;
     protected $otherUser;
     protected $project;
+    protected $materialGroup;
+    protected $material1;
+    protected $material2;
 
     public function createApplication()
     {
@@ -54,6 +60,27 @@ class PurchaseOrderTest extends TestCase
         $this->project->status = 'ACTV';
         $this->project->created_by = $this->user->id;
         $this->project->save();
+
+        $this->materialGroup = new MaterialGroup();
+        $this->materialGroup->name = 'Metals';
+        $this->materialGroup->created_by = $this->user->id;
+        $this->materialGroup->save();
+
+        $this->material1 = new MaterialItem();
+        $this->material1->material_group_id = $this->materialGroup->id;
+        $this->material1->name = 'Deformed Bar 16mm';
+        $this->material1->specification_unit_packaging = '6m Length';
+        $this->material1->brand = 'SteelCorp';
+        $this->material1->created_by = $this->user->id;
+        $this->material1->save();
+
+        $this->material2 = new MaterialItem();
+        $this->material2->material_group_id = $this->materialGroup->id;
+        $this->material2->name = 'Portland Cement';
+        $this->material2->specification_unit_packaging = '40kg Bag';
+        $this->material2->brand = 'Holcim';
+        $this->material2->created_by = $this->user->id;
+        $this->material2->save();
     }
 
     protected function grantAccessCode($user, $codeString)
@@ -128,6 +155,67 @@ class PurchaseOrderTest extends TestCase
         $response->assertSee('data-id="' . $this->user->id . '"', false);
         $response->assertSee('value="Bob Builder"', false);
         $response->assertSee('data-id="' . $this->otherUser->id . '"', false);
+
+        // Searchable Contains (Material Items)
+        $response->assertSee('id="materialInput"', false);
+        $response->assertSee('list="materialList"', false);
+        $response->assertSee('placeholder="Search material item..."', false);
+        $response->assertSee('id="clearMaterialBtn"', false);
+        $response->assertSee('id="materialSelect"', false);
+        $response->assertSee('id="materialList"', false);
+        $response->assertSee('value="' . $this->material1->formattedName . '"', false);
+        $response->assertSee('data-id="' . $this->material1->id . '"', false);
+        $response->assertSee('value="' . $this->material2->formattedName . '"', false);
+        $response->assertSee('data-id="' . $this->material2->id . '"', false);
+    }
+
+    /** @test */
+    public function it_filters_purchase_order_api_list_by_contains_material_item()
+    {
+        $this->grantAccessCode($this->user, 'purchase_order:all:list');
+
+        $po1 = $this->createPurchaseOrder($this->user->id);
+        $poItem1 = new PurchaseOrderItem();
+        $poItem1->purchase_order_id = $po1->id;
+        $poItem1->component_item_id = 1;
+        $poItem1->material_quantity_request_item_id = 1;
+        $poItem1->material_canvass_id = 1;
+        $poItem1->material_item_id = $this->material1->id;
+        $poItem1->status = 'APRV';
+        $poItem1->quantity = 10;
+        $poItem1->price = 100.00;
+        $poItem1->save();
+
+        $po2 = $this->createPurchaseOrder($this->otherUser->id);
+        $poItem2 = new PurchaseOrderItem();
+        $poItem2->purchase_order_id = $po2->id;
+        $poItem2->component_item_id = 1;
+        $poItem2->material_quantity_request_item_id = 1;
+        $poItem2->material_canvass_id = 1;
+        $poItem2->material_item_id = $this->material2->id;
+        $poItem2->status = 'APRV';
+        $poItem2->quantity = 20;
+        $poItem2->price = 200.00;
+        $poItem2->save();
+
+        // Query by Material 1
+        $response1 = $this->actingAs($this->user)->getJson('/api/purchase_order/list?material_item_id=' . $this->material1->id);
+        $response1->assertStatus(200);
+        $poIds1 = array_column($response1->json('data'), 'id');
+        $this->assertContains($po1->id, $poIds1);
+        $this->assertNotContains($po2->id, $poIds1);
+
+        // Query by Material 2
+        $response2 = $this->actingAs($this->user)->getJson('/api/purchase_order/list?material_item_id=' . $this->material2->id);
+        $response2->assertStatus(200);
+        $poIds2 = array_column($response2->json('data'), 'id');
+        $this->assertContains($po2->id, $poIds2);
+        $this->assertNotContains($po1->id, $poIds2);
+
+        // Query by non-existent / non-matching material ID
+        $responseEmpty = $this->actingAs($this->user)->getJson('/api/purchase_order/list?material_item_id=-1');
+        $responseEmpty->assertStatus(200);
+        $this->assertEmpty($responseEmpty->json('data'));
     }
 
     /** @test */
