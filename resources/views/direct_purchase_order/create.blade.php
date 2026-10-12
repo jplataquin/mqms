@@ -30,12 +30,17 @@
                     <div class="col-lg-6">
                         <div class="form-group mb-3">
                             <label class="form-label">Supplier <span class="text-danger">*</span></label>
-                            <select class="form-select" id="supplierSelect" required>
-                                <option value="">Select Supplier</option>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control" id="supplierInput" list="supplierList" placeholder="Type to search supplier..." autocomplete="off" required>
+                                <button class="btn btn-outline-secondary" type="button" id="clearSupplierBtn" title="Clear Supplier"><i class="bi bi-x-lg"></i></button>
+                            </div>
+                            <datalist id="supplierList">
                                 @foreach($suppliers as $supplier)
-                                    <option value="{{$supplier->id}}">{{$supplier->name}}</option>
+                                    <option value="{{$supplier->name}}" data-id="{{$supplier->id}}"></option>
                                 @endforeach
-                            </select>
+                            </datalist>
+                            <input type="hidden" id="supplierSelect" value="">
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -55,20 +60,30 @@
                     <div class="col-lg-6">
                         <div class="form-group mb-3">
                             <label class="form-label">Project (Optional)</label>
-                            <select class="form-select" id="projectSelect">
-                                <option value="">None</option>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control" id="projectInput" list="projectList" placeholder="Type to search project (Optional)..." autocomplete="off">
+                                <button class="btn btn-outline-secondary" type="button" id="clearProjectBtn" title="Clear Project"><i class="bi bi-x-lg"></i></button>
+                            </div>
+                            <datalist id="projectList">
                                 @foreach($projects as $project)
-                                    <option value="{{$project->id}}">{{$project->name}}</option>
+                                    <option value="{{$project->name}}" data-id="{{$project->id}}"></option>
                                 @endforeach
-                            </select>
+                            </datalist>
+                            <input type="hidden" id="projectSelect" value="">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group mb-3">
                             <label class="form-label">Section (Optional)</label>
-                            <select class="form-select" id="sectionSelect">
-                                <option value="">None</option>
-                            </select>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control" id="sectionInput" list="sectionList" placeholder="Select a Project first" autocomplete="off" disabled>
+                                <button class="btn btn-outline-secondary" type="button" id="clearSectionBtn" title="Clear Section"><i class="bi bi-x-lg"></i></button>
+                            </div>
+                            <datalist id="sectionList">
+                            </datalist>
+                            <input type="hidden" id="sectionSelect" value="">
                         </div>
                     </div>
                 </div>
@@ -148,10 +163,23 @@
     <script type="module">
         import {$q, Template, $el} from '/adarna.js';
 
+        const supplierInput     = $q('#supplierInput').first();
+        const supplierList      = $q('#supplierList').first();
         const supplierSelect    = $q('#supplierSelect').first();
+        const clearSupplierBtn  = $q('#clearSupplierBtn').first();
+
         const paymentTermSelect = $q('#paymentTermSelect').first();
+
+        const projectInput      = $q('#projectInput').first();
+        const projectList       = $q('#projectList').first();
         const projectSelect     = $q('#projectSelect').first();
+        const clearProjectBtn   = $q('#clearProjectBtn').first();
+
+        const sectionInput      = $q('#sectionInput').first();
+        const sectionList       = $q('#sectionList').first();
         const sectionSelect     = $q('#sectionSelect').first();
+        const clearSectionBtn   = $q('#clearSectionBtn').first();
+
         const itemsTableBody    = $q('#itemsTableBody').first();
         const extrasTableBody   = $q('#extrasTableBody').first();
         const addItemBtn        = $q('#addItemBtn').first();
@@ -162,24 +190,85 @@
 
         const t = new Template();
 
-        projectSelect.onchange = async () => {
-            $el.clear(sectionSelect);
-            sectionSelect.appendChild(t.option({value: ''}, 'None'));
-            if (!projectSelect.value) return;
-
-            window.util.blockUI();
-            let res = await window.util.$get('/api/section/list', {
-                project_id: projectSelect.value,
-                orderBy: 'name',
-                order: 'ASC'
-            });
-            window.util.unblockUI();
-
-            if (res.status === 1) {
-                res.data.forEach(s => {
-                    sectionSelect.appendChild(t.option({value: s.id}, s.name));
-                });
+        function findOptionId(input, datalist) {
+            const val = input.value.trim().toLowerCase();
+            if (!val || !datalist) return '';
+            const options = datalist.options;
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].value.trim().toLowerCase() === val) {
+                    return options[i].getAttribute('data-id') || '';
+                }
             }
+            return '';
+        }
+
+        supplierInput.oninput = () => {
+            supplierSelect.value = findOptionId(supplierInput, supplierList);
+        };
+
+        clearSupplierBtn.onclick = () => {
+            supplierInput.value = '';
+            supplierSelect.value = '';
+            supplierInput.focus();
+        };
+
+        projectInput.oninput = async () => {
+            const newProjId = findOptionId(projectInput, projectList);
+            const currProjId = projectSelect.value;
+
+            if (newProjId !== currProjId) {
+                projectSelect.value = newProjId;
+                sectionInput.value = '';
+                sectionSelect.value = '';
+                $el.clear(sectionList);
+
+                if (!newProjId) {
+                    sectionInput.disabled = true;
+                    sectionInput.placeholder = 'Select a Project first';
+                    return;
+                }
+
+                sectionInput.disabled = false;
+                sectionInput.placeholder = 'Type to search section (Optional)...';
+
+                window.util.blockUI();
+                let res = await window.util.$get('/api/section/list', {
+                    project_id: newProjId,
+                    orderBy: 'name',
+                    order: 'ASC'
+                });
+                window.util.unblockUI();
+
+                if (res.status === 1 && res.data) {
+                    res.data.forEach(s => {
+                        const opt = document.createElement('option');
+                        opt.value = s.name;
+                        opt.setAttribute('data-id', s.id);
+                        sectionList.appendChild(opt);
+                    });
+                }
+            }
+        };
+
+        clearProjectBtn.onclick = () => {
+            projectInput.value = '';
+            projectSelect.value = '';
+            sectionInput.value = '';
+            sectionSelect.value = '';
+            $el.clear(sectionList);
+            sectionInput.disabled = true;
+            sectionInput.placeholder = 'Select a Project first';
+            projectInput.focus();
+        };
+
+        sectionInput.oninput = () => {
+            sectionSelect.value = findOptionId(sectionInput, sectionList);
+        };
+
+        clearSectionBtn.onclick = () => {
+            sectionInput.value = '';
+            sectionSelect.value = '';
+            sectionInput.focus();
         };
 
         function recalculate() {
@@ -265,13 +354,42 @@
         createItemRow();
 
         saveBtn.onclick = async () => {
-            if (!supplierSelect.value) {
-                alert('Please select a Supplier');
+            const matchedSupplierId = findOptionId(supplierInput, supplierList);
+            if (!matchedSupplierId) {
+                alert('Please select a valid Supplier from the list.');
+                supplierInput.focus();
                 return;
             }
-            if (!paymentTermSelect.value) {
-                alert('Please select a Payment Term');
+            supplierSelect.value = matchedSupplierId;
+
+            if (!paymentTermSelect.value || parseInt(paymentTermSelect.value) <= 0) {
+                alert('Please select a Payment Term.');
+                paymentTermSelect.focus();
                 return;
+            }
+
+            if (projectInput.value.trim() !== '') {
+                const matchedProjId = findOptionId(projectInput, projectList);
+                if (!matchedProjId) {
+                    alert('Please select a valid Project from the list, or clear the Project field.');
+                    projectInput.focus();
+                    return;
+                }
+                projectSelect.value = matchedProjId;
+            } else {
+                projectSelect.value = '';
+            }
+
+            if (sectionInput.value.trim() !== '') {
+                const matchedSecId = findOptionId(sectionInput, sectionList);
+                if (!matchedSecId) {
+                    alert('Please select a valid Section from the list, or clear the Section field.');
+                    sectionInput.focus();
+                    return;
+                }
+                sectionSelect.value = matchedSecId;
+            } else {
+                sectionSelect.value = '';
             }
 
             const items = [];

@@ -160,11 +160,23 @@ class DirectPurchaseOrderController extends Controller
             ]);
         }
 
-        $validation = Validator::make($request->all(), [
-            'supplier_id'     => ['required', 'integer'],
-            'payment_term_id' => ['required', 'integer'],
-            'project_id'      => ['nullable', 'integer'],
-            'section_id'      => ['nullable', 'integer'],
+        $validation = Validator::make([
+            'supplier_id'     => $supplier_id,
+            'payment_term_id' => $payment_term_id,
+            'project_id'      => $project_id,
+            'section_id'      => $section_id,
+        ], [
+            'supplier_id'     => ['required', 'integer', 'min:1', 'exists:suppliers,id'],
+            'payment_term_id' => ['required', 'integer', 'min:1', 'exists:payment_terms,id'],
+            'project_id'      => ['nullable', 'integer', 'min:1', 'exists:projects,id'],
+            'section_id'      => ['nullable', 'integer', 'min:1', 'exists:sections,id'],
+        ], [
+            'payment_term_id.required' => 'Payment Term is required.',
+            'payment_term_id.min'      => 'Payment Term is required.',
+            'payment_term_id.exists'   => 'The selected Payment Term is invalid.',
+            'supplier_id.required'     => 'Supplier is required.',
+            'supplier_id.min'          => 'Supplier is required.',
+            'supplier_id.exists'       => 'The selected Supplier is invalid.',
         ]);
 
         if ($validation->fails()) {
@@ -173,6 +185,17 @@ class DirectPurchaseOrderController extends Controller
                 'message' => 'Failed Validation',
                 'data'    => $validation->messages()
             ]);
+        }
+
+        if ($section_id && $project_id) {
+            $sectionExists = Section::where('id', $section_id)->where('project_id', $project_id)->exists();
+            if (!$sectionExists) {
+                return response()->json([
+                    'status'  => -2,
+                    'message' => 'The selected Section does not belong to the selected Project.',
+                    'data'    => []
+                ]);
+            }
         }
 
         $user_id = Auth::user()->id;
