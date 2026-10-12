@@ -15,6 +15,15 @@ class PaymentTerm extends Model
 
     protected $table = 'payment_terms';
 
+    protected $appends = [
+        'name'
+    ];
+
+    public function getNameAttribute()
+    {
+        return $this->text;
+    }
+
     //To do make this into a callback later on
     public static function toOptions(Array $ids = []){
 

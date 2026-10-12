@@ -44,7 +44,7 @@
                             <select class="form-select" id="paymentTermSelect" required>
                                 <option value="">Select Payment Term</option>
                                 @foreach($payment_terms as $term)
-                                    <option value="{{$term->id}}">{{$term->name}}</option>
+                                    <option value="{{$term->id}}">{{$term->text}}</option>
                                 @endforeach
                             </select>
                         </div>

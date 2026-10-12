@@ -58,7 +58,7 @@
                 <td class="bold">Date Created</td>
                 <td>{{ $direct_purchase_order->created_at }}</td>
                 <td class="bold">Payment Term</td>
-                <td>{{ $payment_term ? $payment_term->name : 'N/A' }}</td>
+                <td>{{ $payment_term ? ($payment_term->text ?? $payment_term->name) : 'N/A' }}</td>
             </tr>
             <tr>
                 <td class="bold">Project</td>

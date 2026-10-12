@@ -160,7 +160,7 @@
                         t.a({href: '/direct_purchase_order/' + item.id}, String(item.id).padStart(6, '0'));
                     });
                     t.td({}, item.supplier ? item.supplier.name : '-');
-                    t.td({}, item.payment_term ? item.payment_term.name : '-');
+                    t.td({}, item.payment_term ? (item.payment_term.text || item.payment_term.name) : '-');
                     t.td({}, item.project ? item.project.name : '-');
                     t.td({}, item.section ? item.section.name : '-');
                     t.td({}, item.status);

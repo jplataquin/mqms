@@ -101,7 +101,7 @@ class DirectPurchaseOrderController extends Controller
 
         $projects       = Project::orderBy('name', 'ASC')->where('status', '=', 'ACTV')->get();
         $suppliers      = Supplier::orderBy('name', 'ASC')->whereNull('deleted_at')->get();
-        $payment_terms  = PaymentTerm::orderBy('name', 'ASC')->get();
+        $payment_terms  = PaymentTerm::orderBy('text', 'ASC')->get();
         $material_items = MaterialItem::orderBy('name', 'ASC')->get();
 
         return view('direct_purchase_order/create', [
@@ -242,7 +242,7 @@ class DirectPurchaseOrderController extends Controller
         $dpo_details = [
             "DPO Number"      => str_pad($dpo->id, 6, '0', STR_PAD_LEFT),
             "Supplier"        => $dpo->Supplier ? $dpo->Supplier->name : 'N/A',
-            "Payment Term"    => $dpo->PaymentTerm ? $dpo->PaymentTerm->name : 'N/A',
+            "Payment Term"    => $dpo->PaymentTerm ? $dpo->PaymentTerm->text : 'N/A',
             "Project"         => $dpo->Project ? $dpo->Project->name : 'None',
             "Section"         => $dpo->Section ? $dpo->Section->name : 'None',
             "Status"          => $dpo->status,
