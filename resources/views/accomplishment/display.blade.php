@@ -54,6 +54,14 @@
                             <td><strong>[{{$contract_item->item_code}}]</strong> {{$contract_item->description}}</td>
                         </tr>
                         <tr>
+                            <th>Unit Price</th>
+                            <td>PHP {{ number_format($contract_item->contract_unit_price, 2) }}</td>
+                        </tr>
+                        <tr>
+                            <th>Total Contract Amount</th>
+                            <td>PHP {{ number_format($contract_item->contract_amount, 2) }}</td>
+                        </tr>
+                        <tr>
                             <th>Total Quantity</th>
                             <td>{{number_format($contract_item->contract_quantity, 2)}} {{$contract_item->contract_unit_text}}</td>
                         </tr>
@@ -68,6 +76,19 @@
                                    {{ number_format($latestActual->quantity, 2) }} {{$contract_item->contract_unit_text}} ({{ number_format($percentage, 0) }}%) as of {{ $formattedDate }}.
                                @else
                                    -
+                               @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Latest Accomplished Amount</th>
+                            <td>
+                               @if($latestActual)
+                                   @php
+                                       $latestAmount = (float)$latestActual->quantity * (float)$contract_item->contract_unit_price;
+                                   @endphp
+                                   <strong>PHP {{ number_format($latestAmount, 2) }}</strong>
+                               @else
+                                   PHP 0.00
                                @endif
                             </td>
                         </tr>
@@ -98,17 +119,24 @@
                 </div>
 
                 <div class="row mb-3">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="form-group">
                             <label class="form-label fw-semibold">Entry Date</label>
                             <input type="text" class="form-control" disabled value="{{ $accomplishment->entry_data ? $accomplishment->entry_data->format('Y-m-d') : 'N/A' }}"/>
                         </div>
                     </div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="form-group">
                             <label class="form-label fw-semibold">Quantity</label>
                             <input type="text" class="form-control" disabled value="{{ number_format($accomplishment->quantity, 2) }} {{$contract_item->contract_unit_text}}"/>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-label fw-semibold">Accomplished Amount (PHP)</label>
+                            <input type="text" class="form-control fw-bold text-primary" disabled value="PHP {{ number_format((float)$accomplishment->quantity * (float)$contract_item->contract_unit_price, 2) }}"/>
                         </div>
                     </div>
                 </div>

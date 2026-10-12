@@ -27,6 +27,7 @@ class ContractItem extends Model
         'budget_unit_text',
         'ref_1_amount',
         'contract_amount',
+        'accomplished_amount',
         'budget_quantity_overwrite',
         'budget_total_amount_overwrite',
         'name'
@@ -117,6 +118,21 @@ class ContractItem extends Model
         $val = $qty * $price;
  
         return $val;
+    }
+
+    public function getAccomplishedAmountAttribute(){
+
+        $latest = $this->Accomplishments()
+            ->where('type', 'ACTUAL')
+            ->orderBy('entry_data', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->first();
+
+        if ($latest) {
+            return (float) $latest->quantity * (float) $this->contract_unit_price;
+        }
+
+        return 0.0;
     }
 
     public function getRef1AmountAttribute(){

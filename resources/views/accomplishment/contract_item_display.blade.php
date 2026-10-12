@@ -52,6 +52,18 @@
                 </td>
             </tr>
             <tr>
+                <th>Unit Price</th>
+                <td>
+                    PHP {{ number_format($contract_item->contract_unit_price, 2) }}
+                </td>
+            </tr>
+            <tr>
+                <th>Total Contract Amount</th>
+                <td>
+                    PHP {{ number_format($contract_item->contract_amount, 2) }}
+                </td>
+            </tr>
+            <tr>
                 <th>Total Quantity</th>
                 <td>
                    {{ number_format($contract_item->contract_quantity, 2) }} {{$contract_item->contract_unit_text}}
@@ -68,6 +80,19 @@
                        {{ number_format($latestActual->quantity, 2) }} {{$contract_item->contract_unit_text}} ({{ number_format($percentage, 0) }}%) as of {{ $formattedDate }}.
                    @else
                        -
+                   @endif
+                </td>
+            </tr>
+            <tr>
+                <th>Accomplished Amount</th>
+                <td>
+                   @if($latestActual)
+                       @php
+                           $accomplishedAmount = (float)$latestActual->quantity * (float)$contract_item->contract_unit_price;
+                       @endphp
+                       <strong class="text-primary">PHP {{ number_format($accomplishedAmount, 2) }}</strong>
+                   @else
+                       PHP 0.00
                    @endif
                 </td>
             </tr>
@@ -138,6 +163,10 @@
             let displayEntryData = item.entry_data ? item.entry_data.substring(0, 10) : 'N/A';
             let displayCreatedAt = item.created_at ? $util.dateTime(new Date(item.created_at)).full() : 'N/A';
             let formattedQty = parseFloat(item.quantity).toFixed(2) + ' {{ $contract_item->contract_unit_text }}';
+            let itemQty = parseFloat(item.quantity) || 0;
+            let unitPrice = parseFloat('{{ $contract_item->contract_unit_price }}') || 0;
+            let itemAmount = itemQty * unitPrice;
+            let formattedAmount = 'PHP ' + itemAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
             let qtyClass = item.type === 'TARGET' ? 'fw-bold text-success' : 'fw-bold text-primary';
 
@@ -145,8 +174,11 @@
                 t.div({class: 'item-header'}, `Entry Date: ${displayEntryData} [${item.type}]`);
                 t.div({class: 'item-body'}, () => {
                     t.div({class: 'row'}, () => {
-                        t.div({class: 'col-12'}, () => {
+                        t.div({class: 'col-md-6'}, () => {
                             t.span({class: qtyClass}, `Quantity: ${formattedQty}`);
+                        });
+                        t.div({class: 'col-md-6 text-md-end'}, () => {
+                            t.span({class: 'fw-semibold text-light'}, `Accomplished Amount: ${formattedAmount}`);
                         });
                     });
                     

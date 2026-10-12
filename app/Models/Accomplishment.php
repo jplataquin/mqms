@@ -16,7 +16,8 @@ class Accomplishment extends Model
     protected $table = 'accomplishment_registry';
 
     protected $appends = [
-        'creator_name'
+        'creator_name',
+        'accomplished_amount'
     ];
 
     protected $fillable = [
@@ -38,6 +39,14 @@ class Accomplishment extends Model
     public function getCreatorNameAttribute()
     {
         return $this->CreatedBy ? $this->CreatedBy->name : 'System';
+    }
+
+    public function getAccomplishedAmountAttribute()
+    {
+        if ($this->ContractItem) {
+            return (float) $this->quantity * (float) $this->ContractItem->contract_unit_price;
+        }
+        return 0.0;
     }
 
     public function ContractItem(): BelongsTo

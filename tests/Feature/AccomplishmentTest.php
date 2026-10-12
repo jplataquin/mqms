@@ -144,6 +144,9 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('Test Contract Item 123');
         $response->assertSee('Latest Quantity');
         $response->assertSee('35.50 Pcs (36%) as of 2026-09-21.');
+        $response->assertSee('PHP 1,500.00');
+        $response->assertSee('PHP 150,000.00');
+        $response->assertSee('PHP 53,250.00');
 
         // 2. Verify API returns accomplishment list correctly
         $apiResponse = $this->actingAs($this->user)->get('/api/accomplishment/record/list?contract_item_id=' . $this->contractItem->id);
@@ -152,6 +155,7 @@ class AccomplishmentTest extends TestCase
             'contract_item_id' => $this->contractItem->id,
             'type' => 'ACTUAL',
             'quantity' => 35.50,
+            'accomplished_amount' => 53250.0,
             'remarks' => 'Completed most of it',
             'creator_name' => $this->user->name
         ]);
@@ -396,7 +400,29 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('Record ID');
         $response->assertSee('ACTUAL');
         $response->assertSee('45.75');
+        $response->assertSee('PHP 1,500.00');
+        $response->assertSee('PHP 150,000.00');
+        $response->assertSee('PHP 22,500.00');
+        $response->assertSee('Accomplished Amount (PHP)');
+        $response->assertSee('PHP 68,625.00');
         $response->assertSee('Highly targeted remarks for specific record');
+    }
+
+    /** @test */
+    public function it_calculates_accomplished_amount_in_php_on_contract_item_and_accomplishment_models()
+    {
+        $accomplishment = new Accomplishment();
+        $accomplishment->contract_item_id = $this->contractItem->id;
+        $accomplishment->type = 'ACTUAL';
+        $accomplishment->entry_data = '2026-09-21';
+        $accomplishment->quantity = 40.0;
+        $accomplishment->remarks = 'Calculated amount test';
+        $accomplishment->created_by = $this->user->id;
+        $accomplishment->save();
+
+        // 40.0 * 1500.00 = 60,000.00 PHP
+        $this->assertEquals(60000.0, $accomplishment->accomplished_amount);
+        $this->assertEquals(60000.0, $this->contractItem->fresh()->accomplished_amount);
     }
 
     /** @test */

@@ -989,6 +989,9 @@
                         }
                     }
 
+                    const unitPrice = parseFloat(ci.contract_unit_price) || 0;
+                    const accomplishedAmount = totalActual * unitPrice;
+
                     const compStats = { 
                         velocity: ciVelocity, 
                         reqVelocity: requiredVelocity,
@@ -998,7 +1001,10 @@
                         days: daysElapsed,
                         totalActual: totalActual,
                         totalScope: totalScope,
-                        percentActual: percentActual
+                        percentActual: percentActual,
+                        unitPrice: unitPrice,
+                        accomplishedAmount: accomplishedAmount,
+                        totalContractAmount: totalScope * unitPrice
                     };
 
                     bodyHtml += `
@@ -1011,6 +1017,7 @@
                         <td class="sticky-col-metric">
                             <span class="fw-semibold">${formatNumber(totalScope)}</span>
                             <small class="text-muted ms-1">${escapeHtml(unitText)}</small>
+                            <div class="text-truncate text-muted" style="font-size: 10px;" title="Unit Price: PHP ${formatNumber(unitPrice)}">@ PHP ${formatNumber(unitPrice)}</div>
                         </td>
                         <td class="sticky-col-progress">
                             <div class="d-flex justify-content-between align-items-center">
@@ -1020,7 +1027,10 @@
                             <div class="gantt-progress-bar">
                                 <div class="progress-actual" style="width: ${percentActual}%;"></div>
                             </div>
-                            ${actualDateStr ? `<div class="text-truncate" style="font-size: 9px; color: var(--text-muted); line-height: 1.2; margin-top: 2px;" title="As of ${escapeHtml(actualDateStr)}">as of ${escapeHtml(actualDateStr)}</div>` : ''}
+                            <div class="d-flex justify-content-between text-muted" style="font-size: 9.5px; margin-top: 2px;">
+                                <span class="text-primary fw-semibold" title="Accomplished Amount: PHP ${formatNumber(accomplishedAmount)}">PHP ${formatNumber(accomplishedAmount)}</span>
+                                ${actualDateStr ? `<span title="As of ${escapeHtml(actualDateStr)}">as of ${escapeHtml(actualDateStr)}</span>` : ''}
+                            </div>
                         </td>`;
 
                     // Timeline Columns Cells (Month or Day)
@@ -1578,6 +1588,10 @@
             let sumTargetPercentages = 0;
             let sumActualPercentages = 0;
 
+            let totalContractAmount = 0;
+            let totalAccomplishedAmount = 0;
+            let totalTargetAmount = 0;
+
             // Running calculation tracking (independent of scope date)
             let projectFirstActualDate = null;
             let projectLatestActualDate = null;
@@ -1590,6 +1604,10 @@
                         if (ci.exclude_from_monitoring == 1) return;
                         totalComponents++;
                         const totalScope = parseFloat(ci.contract_quantity) || 0;
+                        const unitPrice = parseFloat(ci.contract_unit_price) || 0;
+                        const ciContractAmount = totalScope * unitPrice;
+                        totalContractAmount += ciContractAmount;
+
                         let targetQty = 0;
                         let actualQty = 0;
 
@@ -1639,6 +1657,9 @@
                             if (latestActual) actualQty = parseFloat(latestActual.quantity) || 0;
                         }
 
+                        totalTargetAmount += targetQty * unitPrice;
+                        totalAccomplishedAmount += actualQty * unitPrice;
+
                         let percentTarget = 0;
                         let percentActual = 0;
                         if (totalScope > 0) {
@@ -1659,6 +1680,7 @@
             const overallTarget = totalComponents > 0 ? (sumTargetPercentages / totalComponents) : 0;
             const overallActual = totalComponents > 0 ? (sumActualPercentages / totalComponents) : 0;
             const variance = overallActual - overallTarget;
+            const financialPercent = totalContractAmount > 0 ? Math.min(100, (totalAccomplishedAmount / totalContractAmount) * 100) : 0;
             
             // Running velocity across the full project lifecycle
             const currentOverallActual = totalComponents > 0 ? (sumAllTimeActualPercent / totalComponents) : 0;
@@ -1710,6 +1732,29 @@
                 <div class="mb-4">
                     <label class="form-label text-muted small fw-semibold">Scope Date (As Of)</label>
                     <input type="date" class="form-control bg-dark border-secondary text-light" value="${asOfDate}" onchange="showOverallProgress(this.value)">
+                </div>
+
+                <div class="card mb-3 border-secondary bg-dark">
+                    <div class="card-header bg-dark border-secondary py-2 d-flex justify-content-between align-items-center">
+                        <span class="text-light fw-bold small"><i class="bi bi-cash-stack text-success me-1"></i> Financial Accomplishment (PHP)</span>
+                        <span class="badge ${totalContractAmount > 0 && totalAccomplishedAmount >= totalTargetAmount ? 'bg-success' : 'bg-primary'}">${totalContractAmount > 0 ? ((totalAccomplishedAmount / totalContractAmount) * 100).toFixed(1) : 0}%</span>
+                    </div>
+                    <div class="card-body py-2">
+                        <div class="row g-2">
+                            <div class="col-4">
+                                <div class="text-muted small" style="font-size: 11px;">Total Contract Value</div>
+                                <div class="fw-semibold text-light">PHP ${formatNumber(totalContractAmount)}</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="text-muted small" style="font-size: 11px;">Accomplished Amount</div>
+                                <div class="fw-semibold text-primary">PHP ${formatNumber(totalAccomplishedAmount)}</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="text-muted small" style="font-size: 11px;">Target Planned</div>
+                                <div class="fw-semibold text-success">PHP ${formatNumber(totalTargetAmount)}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="card mb-3 border-secondary bg-dark">
@@ -1801,6 +1846,7 @@
 
             const totalScope = parseFloat(comp.contract_quantity) || 0;
             const unitText = comp.contract_unit_text || '';
+            const unitPrice = parseFloat(comp.contract_unit_price) || 0;
 
             let targetQty = 0;
             let actualQty = 0;
@@ -1849,6 +1895,11 @@
             const percentTarget = totalScope > 0 ? Math.min(100, (targetQty / totalScope) * 100) : 0;
             const percentActual = totalScope > 0 ? Math.min(100, (actualQty / totalScope) * 100) : 0;
             const variance = percentActual - percentTarget;
+
+            const totalContractAmount = totalScope * unitPrice;
+            const targetAmount = targetQty * unitPrice;
+            const accomplishedAmount = actualQty * unitPrice;
+            const remainingAmount = Math.max(0, (totalScope - actualQty) * unitPrice);
 
             // Running Velocity & ETA calculation across entire component lifecycle
             let compVelocity = 0;
@@ -1916,6 +1967,29 @@
 
                 <div class="card mb-3 border-secondary bg-dark">
                     <div class="card-header bg-dark border-secondary py-2 d-flex justify-content-between align-items-center">
+                        <span class="text-light fw-bold small"><i class="bi bi-cash-stack text-success me-1"></i> Accomplished Amount (PHP)</span>
+                        <small class="text-muted">Unit Price: PHP ${formatNumber(unitPrice)}</small>
+                    </div>
+                    <div class="card-body py-2">
+                        <div class="row g-2">
+                            <div class="col-4">
+                                <div class="text-muted small" style="font-size: 11px;">Total Contract Value</div>
+                                <div class="fw-semibold text-light">PHP ${formatNumber(totalContractAmount)}</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="text-muted small" style="font-size: 11px;">Accomplished Amount</div>
+                                <div class="fw-semibold text-primary">PHP ${formatNumber(accomplishedAmount)}</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="text-muted small" style="font-size: 11px;">Remaining Value</div>
+                                <div class="fw-semibold text-warning">PHP ${formatNumber(remainingAmount)}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-3 border-secondary bg-dark">
+                    <div class="card-header bg-dark border-secondary py-2 d-flex justify-content-between align-items-center">
                         <span class="text-light fw-bold small"><i class="bi bi-speedometer2 text-info me-1"></i> Velocity & Target Rate</span>
                         <small class="text-muted">${daysElapsed > 0 ? daysElapsed + ' day(s) active' : ''}</small>
                     </div>
@@ -1947,8 +2021,8 @@
                             <div class="progress-bar bg-success" role="progressbar" style="width: ${percentTarget}%"></div>
                         </div>
                         <div class="d-flex justify-content-between small text-muted">
-                            <span>${formatNumber(targetQty)} ${escapeHtml(unitText)}</span>
-                            <span>of ${formatNumber(totalScope)} ${escapeHtml(unitText)}</span>
+                            <span>${formatNumber(targetQty)} ${escapeHtml(unitText)} (PHP ${formatNumber(targetAmount)})</span>
+                            <span>of ${formatNumber(totalScope)} ${escapeHtml(unitText)} (PHP ${formatNumber(totalContractAmount)})</span>
                         </div>
                     </div>
                 </div>
@@ -1963,8 +2037,8 @@
                             <div class="progress-bar bg-primary" role="progressbar" style="width: ${percentActual}%"></div>
                         </div>
                         <div class="d-flex justify-content-between small text-muted">
-                            <span>${formatNumber(actualQty)} ${escapeHtml(unitText)}</span>
-                            <span>of ${formatNumber(totalScope)} ${escapeHtml(unitText)}</span>
+                            <span>${formatNumber(actualQty)} ${escapeHtml(unitText)} (PHP ${formatNumber(accomplishedAmount)})</span>
+                            <span>of ${formatNumber(totalScope)} ${escapeHtml(unitText)} (PHP ${formatNumber(totalContractAmount)})</span>
                         </div>
                     </div>
                 </div>
