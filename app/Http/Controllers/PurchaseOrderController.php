@@ -16,6 +16,7 @@ use App\Models\Supplier;
 use App\Models\PaymentTerm;
 use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderItem;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -36,9 +37,12 @@ class PurchaseOrderController extends PurchaseOrderSuperController
 
         $material_items = MaterialItem::orderBy('name','ASC')->get();
 
+        $users = User::orderBy('name','ASC')->get();
+
         return view('purchase_order/list',[
             'projects'          => $projects,
-            'material_items'    => $material_items
+            'material_items'    => $material_items,
+            'users'             => $users
         ]);
     }
 
@@ -48,14 +52,18 @@ class PurchaseOrderController extends PurchaseOrderSuperController
 
         $user = auth()->user();
 
-        $page              = (int) $request->input('page')     ?? 1;
-        $limit             = (int) $request->input('limit')    ?? 10;
+        $page              = (int) ($request->input('page') ?? 1);
+        if ($page < 1) {
+            $page = 1;
+        }
+        $limit             = (int) ($request->input('limit') ?? 10);
         $project_id        = (int) $request->input('project_id')  ?? 0;
         $section_id        = (int) $request->input('section_id')  ?? 0;
         $contract_item_id  = (int) $request->input('contract_item_id') ?? 0;
         $component_id      = (int) $request->input('component_id')  ?? 0;
         $query             = (int) $request->input('query')    ?? 0;
         $material_item_id  = (int) $request->input('material_item_id') ?? 0;
+        $created_by        = (int) $request->input('created_by') ?? 0;
         $status            = $request->input('status')         ?? '';
         $orderBy           = $request->input('order_by')       ?? 'id';
         $order             = $request->input('order')          ?? 'DESC';
@@ -106,6 +114,10 @@ class PurchaseOrderController extends PurchaseOrderSuperController
          
          if($status){
             $purchaseOrder = $purchaseOrder->where('status','=',$status);           
+         }
+
+         if($created_by){
+            $purchaseOrder = $purchaseOrder->where('created_by','=',$created_by);
          }
 
 

@@ -108,6 +108,25 @@
                             
                     </div>
 
+                    <div class="row mt-3">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Created By</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                    <input type="text" class="form-control" id="createdByInput" list="createdByList" placeholder="Search user..." autocomplete="off" value="{{ auth()->user() ? auth()->user()->name : '' }}">
+                                    <button class="btn btn-outline-secondary" type="button" id="clearCreatedByBtn" title="Clear User"><i class="bi bi-x-lg"></i></button>
+                                </div>
+                                <datalist id="createdByList">
+                                    @foreach($users as $user)
+                                        <option value="{{$user->name}}" data-id="{{$user->id}}"></option>
+                                    @endforeach
+                                </datalist>
+                                <input type="hidden" id="createdBySelect" value="{{ auth()->user() ? auth()->user()->id : '' }}">
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-lg-12 mt-3 mb-3">
                             <div class="form-group">
@@ -167,6 +186,7 @@
         const query                 = $q('#query').first();
         const searchBtn             = $q('#searchBtn').first();
         const createBtn             = $q('#createBtn').first();
+        const cancelBtn             = $q('#cancelBtn').first();
         const showMoreBtn           = $q('#showMoreBtn').first();
         const sortSelect            = $q('#sortSelect').first();
         const projectSelect         = $q('#projectSelect').first();
@@ -175,6 +195,10 @@
         const contractItemSelect    = $q('#contractItemSelect').first();
         const statusSelect          = $q('#statusSelect').first();
         const materialSelect        = $q('#materialSelect').first();
+        const createdByInput        = $q('#createdByInput').first();
+        const createdByList         = $q('#createdByList').first();
+        const createdBySelect       = $q('#createdBySelect').first();
+        const clearCreatedByBtn     = $q('#clearCreatedByBtn').first();
 
         window.util.quickNav = {
             title:'Purchase Order',
@@ -186,6 +210,48 @@
         let orderBy         = 'id';
         
         const t = new Template();
+
+        function findOptionId(input, datalist) {
+            const val = input.value.trim().toLowerCase();
+            if (!val || !datalist) return '';
+            const options = datalist.options;
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].value.trim().toLowerCase() === val) {
+                    return options[i].getAttribute('data-id') || '';
+                }
+            }
+            return '-1';
+        }
+
+        function updateCreatedBy() {
+            createdBySelect.value = findOptionId(createdByInput, createdByList);
+        }
+
+        if (createdByInput) {
+            createdByInput.oninput = updateCreatedBy;
+            createdByInput.onchange = updateCreatedBy;
+            createdByInput.onkeydown = (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    updateCreatedBy();
+                    searchBtn.click();
+                }
+            };
+        }
+
+        if (clearCreatedByBtn) {
+            clearCreatedByBtn.onclick = () => {
+                createdByInput.value = '';
+                createdBySelect.value = '';
+                createdByInput.focus();
+            };
+        }
+
+        if (cancelBtn) {
+            cancelBtn.onclick = () => {
+                window.util.navTo('/home');
+            };
+        }
         
         function reinitalize(){
             page = 1;
@@ -239,6 +305,7 @@
                 component_id        : componentSelect.value,
                 status              : statusSelect.value,
                 material_item_id    : materialSelect.value,   
+                created_by          : createdBySelect.value,
                 limit: 10
             }).then(reply=>{
 
@@ -264,6 +331,7 @@
         }
     
         searchBtn.onclick = ()=>{
+            updateCreatedBy();
             showMoreBtn.style.display = 'block';
             reinitalize();
             showData();
