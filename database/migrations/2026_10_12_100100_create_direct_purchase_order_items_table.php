@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('direct_purchase_order_items', function (Blueprint $table) {
+            $table->id();
+            $table->bigInteger('direct_purchase_order_id');
+            $table->bigInteger('material_item_id');
+            $table->char('status', 4)->default('PEND');
+            $table->double('quantity');
+            $table->decimal('price', 10, 2);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('direct_purchase_order_items');
+    }
+};

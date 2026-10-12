@@ -167,6 +167,13 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
 
     Route::get('/purchase_order/received/list', [App\Http\Controllers\PurchaseOrderReceivedController::class, '_list']);
     Route::post('/purchase_order/received/create', [App\Http\Controllers\PurchaseOrderReceivedController::class, '_create']);
+
+    // Direct Purchase Order
+    Route::get('/direct_purchase_order/list', [App\Http\Controllers\DirectPurchaseOrderController::class, '_list']);
+    Route::post('/direct_purchase_order/create', [App\Http\Controllers\DirectPurchaseOrderController::class, '_create']);
+    Route::post('/direct_purchase_order/submit_for_review', [App\Http\Controllers\DirectPurchaseOrderController::class, '_submit_for_review']);
+    Route::post('/direct_purchase_order/delete', [App\Http\Controllers\DirectPurchaseOrderController::class, '_delete']);
+    Route::post('/direct_purchase_order/request_void', [App\Http\Controllers\DirectPurchaseOrderController::class, '_request_void']);
    
     
     Route::get('/contract_item/list', [App\Http\Controllers\ContractItemController::class, '_list']);

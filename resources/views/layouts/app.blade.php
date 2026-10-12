@@ -163,6 +163,9 @@
                                     <a href="/purchase_orders" hx-select="#content" hx-target="#main">Purchase Order</a>
                                 </li>
                                 <li class="nav-sub-item">
+                                    <a href="/direct_purchase_orders" hx-select="#content" hx-target="#main">Direct Purchase Order</a>
+                                </li>
+                                <li class="nav-sub-item">
                                     <a href="/coupons" hx-select="#content" hx-target="#main">Coupon</a>
                                 </li>
                             </ul>
