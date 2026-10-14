@@ -1,7 +1,73 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="content" class="pb-4">
+<style>
+    @keyframes defectSlideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(18px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    @keyframes defectSlideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-18px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    .defect-slide-next {
+        animation: defectSlideInRight 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .defect-slide-prev {
+        animation: defectSlideInLeft 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Fixed Bottom Action Bar: Constrained on Desktop, Full Width & Horizontally Scrollable on Mobile */
+    .bulk-action-bar {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        left: 250px;
+        z-index: 1050;
+        background-color: #1e2227;
+        border-top: 1px solid #373b3e;
+        box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    @media (max-width: 961px) {
+        .bulk-action-bar {
+            left: 0 !important;
+            width: 100vw !important;
+        }
+    }
+
+    .bulk-action-bar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        padding: 0.75rem 1.25rem;
+    }
+
+    .bulk-action-bar-inner::-webkit-scrollbar {
+        height: 4px;
+    }
+    .bulk-action-bar-inner::-webkit-scrollbar-thumb {
+        background: #495057;
+        border-radius: 4px;
+    }
+</style>
+<div id="content" class="pb-5 mb-4">
     <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
@@ -278,20 +344,20 @@
         </div>
     </div>
 
-    {{-- Bottom Action Bar Constrained to Main Content --}}
-    <div class="sticky-bottom py-3 mt-4" style="z-index: 100;">
-        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3 p-3 rounded border border-secondary bg-dark shadow">
-            <div class="text-muted small">
+    {{-- Fixed Bottom Action Bar: Full Width & Scrollable on Mobile, Constrained to Main on Desktop --}}
+    <div class="bulk-action-bar">
+        <div class="bulk-action-bar-inner">
+            <div class="text-muted small flex-shrink-0 d-flex align-items-center">
                 <i class="bi bi-info-circle text-warning fs-5 me-2 align-middle"></i>
                 <span>You can revert this batch operation once before leaving this page.</span>
             </div>
 
-            <div class="d-flex align-items-center gap-2 w-100 w-sm-auto justify-content-end">
-                <button class="btn btn-warning px-4 py-2 fw-semibold d-flex align-items-center justify-content-center text-dark" id="revertBtn">
-                    <i class="bi bi-arrow-counterclockwise me-2 fs-6"></i> Revert
+            <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                <button class="btn btn-warning px-3 py-2 fw-semibold d-flex align-items-center justify-content-center text-dark text-nowrap flex-shrink-0" id="revertBtn">
+                    <i class="bi bi-arrow-counterclockwise me-1 fs-6"></i> Revert
                 </button>
-                <button id="cancelBtn" class="btn btn-secondary px-4 py-2 d-flex align-items-center justify-content-center">
-                    <i class="bi bi-check2 me-2 fs-6"></i> Done
+                <button id="cancelBtn" class="btn btn-secondary px-3 py-2 d-flex align-items-center justify-content-center text-nowrap flex-shrink-0">
+                    <i class="bi bi-check2 me-1 fs-6"></i> Done
                 </button>
             </div>
         </div>
@@ -364,9 +430,16 @@
         const prevBtn = carousel.querySelector('.defect-prev');
         const nextBtn = carousel.querySelector('.defect-next');
 
-        function updateSlide(idx) {
+        function updateSlide(idx, dir) {
             slides.forEach((s, i) => {
-                s.classList.toggle('d-none', i !== idx);
+                if (i === idx) {
+                    s.classList.remove('d-none', 'defect-slide-next', 'defect-slide-prev');
+                    void s.offsetWidth;
+                    s.classList.add(dir === 'next' ? 'defect-slide-next' : 'defect-slide-prev');
+                } else {
+                    s.classList.add('d-none');
+                    s.classList.remove('defect-slide-next', 'defect-slide-prev');
+                }
             });
             if (counter) counter.innerText = `${idx + 1}/${total}`;
         }
@@ -376,7 +449,7 @@
                 e.preventDefault();
                 e.stopPropagation();
                 current = (current - 1 + total) % total;
-                updateSlide(current);
+                updateSlide(current, 'prev');
             };
         }
 
@@ -385,7 +458,7 @@
                 e.preventDefault();
                 e.stopPropagation();
                 current = (current + 1) % total;
-                updateSlide(current);
+                updateSlide(current, 'next');
             };
         }
     });
