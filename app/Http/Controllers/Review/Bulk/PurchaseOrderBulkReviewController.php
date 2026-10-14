@@ -84,16 +84,16 @@ class PurchaseOrderBulkReviewController extends Controller
 
 
         $project = $po->Project;
-        
-        
         $total = 0;
+        $created_at = $po->created_at ? $po->created_at->format('M d, Y H:i') : '';
 
         if(!$project){
             return [
-                'po'        => $po,
-                'total'     => $total,
-                'flag'      => false,
-                'failed'    => ['Project does not exists (id:'.$po->project_id.')']
+                'po'         => $po,
+                'created_at' => $created_at,
+                'total'      => $total,
+                'flag'       => false,
+                'failed'     => ['Project does not exist (id:'.$po->project_id.')']
             ];
         }
 
@@ -102,10 +102,11 @@ class PurchaseOrderBulkReviewController extends Controller
         if($project->status != 'ACTV'){
             
             return [
-                'po'        => $po,
-                'total'     => $total,
-                'flag'      => false,
-                'failed'    => ['Project status is not active']
+                'po'         => $po,
+                'created_at' => $created_at,
+                'total'      => $total,
+                'flag'       => false,
+                'failed'     => ['Project status is not active']
             ];
         }
 
@@ -113,10 +114,11 @@ class PurchaseOrderBulkReviewController extends Controller
 
         if(!$component){
             return [
-                'po'        => $po,
-                'total'     => $total,
-                'flag'      => false,
-                'failed'    => ['Component does not exists (id:'.$po->component_id.')']
+                'po'         => $po,
+                'created_at' => $created_at,
+                'total'      => $total,
+                'flag'       => false,
+                'failed'     => ['Component does not exist (id:'.$po->component_id.')']
             ];
         }
 
@@ -124,14 +126,25 @@ class PurchaseOrderBulkReviewController extends Controller
         if($component->status != 'APRV'){
            
              return [
-                'po'        => $po,
-                'total'     => $total,
-                'flag'      => false,
-                'failed'    => ['Component status is not active']
+                'po'         => $po,
+                'created_at' => $created_at,
+                'total'      => $total,
+                'flag'       => false,
+                'failed'     => ['Component status is not active']
             ];
         }
 
-        $mr                     = $po->MaterialQuantityRequest;
+        $mr = $po->MaterialQuantityRequest;
+        if(!$mr){
+            return [
+                'po'         => $po,
+                'created_at' => $created_at,
+                'total'      => $total,
+                'flag'       => false,
+                'failed'     => ['Material Request does not exist']
+            ];
+        }
+
         $mr_items               = $mr->Items;
         $remaining_quantity_arr = [];
 
@@ -186,14 +199,16 @@ class PurchaseOrderBulkReviewController extends Controller
 
         $extras = json_decode($po->extras);
 
-        foreach($extras as $extra){
-           $total = $total + (float) $extra->value;
+        if(is_array($extras) || is_object($extras)){
+            foreach($extras as $extra){
+               $total = $total + (float) $extra->value;
+            }
         }
 
 
         return [
             'po'            => $po,
-            'created_at'    => $po->created_at->format('M d, Y H:i'),
+            'created_at'    => $created_at,
             'total'         => $total,
             'flag'          => $flag,
             'failed'        => $failed    
@@ -337,12 +352,8 @@ class PurchaseOrderBulkReviewController extends Controller
         $user_id = Auth::user()->id;
 
         DB::beginTransaction();
-        
-        $projects = Project::where('status','ACTV')->get();
 
         $project_arr = [];
-
-    
 
         try {
 
@@ -356,20 +367,10 @@ class PurchaseOrderBulkReviewController extends Controller
 
                 if($po->status != 'PEND' && $po->status != 'REVO') continue;
                 
-                $component = $po->Component;
-
-                if(!$component) continue;
-                
-                if($component->status != 'APRV') continue;
-
                 $project = $po->Project;
-
-                if(!$project) continue;
-
-                if($project->status != 'ACTV') continue;
-
-                $project_arr[$project->id] = $project;
-
+                if($project){
+                    $project_arr[$project->id] = $project;
+                }
 
                 if($po->status == 'PEND'){
                     
@@ -377,38 +378,36 @@ class PurchaseOrderBulkReviewController extends Controller
                     $po->status         = 'REJC';
                     $po->rejected_by    = $user_id;
                     $po->rejected_at    = Carbon::now();
+                    $po->save();
 
                     DB::table('purchase_order_items')->where('purchase_order_id',$po->id)->update(['status'=>'REJC']);
-                    $po->save();
 
                 }else if($po->status == 'REVO'){
 
                     $original_statuses[$po->id] = 'REVO';
                     $po->status     = 'PEND';
+                    $po->save();
 
                     DB::table('purchase_order_items')->where('purchase_order_id',$po->id)->update(['status'=>'PEND']);
                     
-                    $po->save();
-                    
                 }
 
-                
                 if(!isset($total_per_payment_terms[$po->payment_term_id])){
                     $total_per_payment_terms[$po->payment_term_id] = 0;
                 }
 
                 $gt = $po->getGrandTotal();
                 
-                
                 $total_per_payment_terms[$po->payment_term_id] = $total_per_payment_terms[$po->payment_term_id] + $gt;
                 
                 $grand_total = $grand_total + $gt;
 
-                if(!isset($pos[$po->project_id])){
-                    $pos[$po->project_id] = [];
+                $p_id = $po->project_id ?? 0;
+                if(!isset($pos[$p_id])){
+                    $pos[$p_id] = [];
                 }
 
-                $pos[$po->project_id][] = $this->audit_po($po);
+                $pos[$p_id][] = $this->audit_po($po);
             }
 
 

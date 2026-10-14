@@ -29,13 +29,13 @@
         <form id="form">
             @foreach($pos as $project_id => $po_list)
                 <div>
-                    <h3>{{$project_arr[$project_id]->name}}</h3>
+                    <h3>{{ $project_arr[$project_id]->name ?? ('Project #' . $project_id) }}</h3>
 
                     <div class="d-flex flex-wrap justify-content-evenly">
                         @foreach($po_list as $item)
                             <input type="hidden" value="{{$item['po']->id}}" name="po[]"/>
                             @php
-                                $orig_status = $original_statuses[$item['po']->id] ?? ($item['po']->status == 'VOID' ? 'REVO' : 'PEND');
+                                $orig_status = $original_statuses[$item['po']->id] ?? ($item['po']->status == 'VOID' ? 'REVO' : ($item['po']->status == 'PEND' ? 'REVO' : 'PEND'));
                             @endphp
                             <input type="hidden" class="revert-status-input" data-id="{{$item['po']->id}}" value="{{$orig_status}}" name="original_status[{{$item['po']->id}}]"/>
                             <div class="border border-secondary p-2">
@@ -53,20 +53,29 @@
                                     P {{ number_format($item['total'],2) }}
                                 </div>
                                 <div>
-                                    {{ $item['created_at'] }}
+                                    {{ $item['created_at'] ?? '' }}
                                 </div>
 
                                 <div>
-                                    @if($item['po']->status == 'APRV')
-                                        PEND > <span class="text-success">APRV</span>
-                                    @endif
-
-                                    @if($item['po']->status == 'REJC')
-                                        PEND > <span class="text-danger">REJC</span>
-                                    @endif
-
-                                    @if($item['po']->status == 'VOID')
-                                        REVO > <span class="text-primary">VOID</span>
+                                    @if(isset($original_statuses[$item['po']->id]))
+                                        {{ $original_statuses[$item['po']->id] }} >
+                                        @if($item['po']->status == 'APRV')
+                                            <span class="text-success">APRV</span>
+                                        @elseif($item['po']->status == 'REJC')
+                                            <span class="text-danger">REJC</span>
+                                        @elseif($item['po']->status == 'VOID')
+                                            <span class="text-primary">VOID</span>
+                                        @else
+                                            <span class="text-secondary">{{ $item['po']->status }}</span>
+                                        @endif
+                                    @else
+                                        @if($item['po']->status == 'APRV')
+                                            PEND > <span class="text-success">APRV</span>
+                                        @elseif($item['po']->status == 'REJC')
+                                            PEND > <span class="text-danger">REJC</span>
+                                        @elseif($item['po']->status == 'VOID')
+                                            REVO > <span class="text-primary">VOID</span>
+                                        @endif
                                     @endif
                                 </div>
                             </div>
