@@ -328,7 +328,8 @@ class PurchaseOrderBulkReviewController extends Controller
                 'project_arr'               => $project_arr,
                 'total_per_payment_terms'   => $total_per_payment_terms,
                 'target_status_text'        => 'Approve',
-                'original_statuses'         => $original_statuses
+                'original_statuses'         => $original_statuses,
+                'payment_terms_arr'         => PaymentTerm::all()->keyBy('id')
             ]);
 
         } catch(\Exception $e) {
@@ -419,7 +420,8 @@ class PurchaseOrderBulkReviewController extends Controller
                 'project_arr'               => $project_arr,
                 'total_per_payment_terms'   => $total_per_payment_terms,
                 'target_status_text'        => 'Reject',
-                'original_statuses'         => $original_statuses
+                'original_statuses'         => $original_statuses,
+                'payment_terms_arr'         => PaymentTerm::all()->keyBy('id')
             ]);
 
         } catch(\Exception $e) {
