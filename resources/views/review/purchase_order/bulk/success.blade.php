@@ -1,70 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<style>
-    /* Scope dark-on-white high contrast theme for bulk action result */
-    #bulk-action-content {
-        color: #1e293b;
-        padding-bottom: 130px;
-    }
-    #bulk-action-content .card {
-        background-color: #ffffff !important;
-        color: #1e293b !important;
-        border: 1px solid #e2e8f0 !important;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
-    }
-    #bulk-action-content .card-header {
-        background-color: #ffffff !important;
-        color: #0f172a !important;
-        border-bottom: 1px solid #e2e8f0 !important;
-    }
-    #bulk-action-content .po-item-card {
-        background-color: #ffffff !important;
-        border: 1px solid #e2e8f0 !important;
-        border-radius: 0.625rem;
-        transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-    }
-    #bulk-action-content .po-item-card:hover {
-        border-color: #cbd5e1 !important;
-        box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08);
-    }
-    #bulk-action-content .summary-box {
-        background-color: #f8fafc !important;
-        border: 1px solid #e2e8f0 !important;
-        color: #1e293b !important;
-    }
-    #bulk-action-content .summary-grand-total {
-        background-color: #eff6ff !important;
-        border: 1.5px solid #3b82f6 !important;
-        color: #1e3a8a !important;
-    }
-    #bulk-action-content .text-muted {
-        color: #64748b !important;
-    }
-    #bulk-action-content .text-dark {
-        color: #0f172a !important;
-    }
-    #bulk-action-content .stat-badge {
-        background-color: #f8fafc !important;
-        border: 1px solid #e2e8f0 !important;
-        color: #1e293b !important;
-    }
-
-    /* Full-width sticky action bar */
-    .bulk-action-footer {
-        position: fixed !important;
-        left: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        width: 100vw !important;
-        z-index: 1050 !important;
-        background-color: #ffffff !important;
-        border-top: 1px solid #e2e8f0 !important;
-        box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08) !important;
-    }
-</style>
-
-<div id="bulk-action-content">
+<div id="content" class="pb-4">
     <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
@@ -94,12 +31,12 @@
     <hr>
 
     {{-- Result Header Banner --}}
-    <div class="card border-0 shadow-sm mb-4">
+    <div class="card border border-secondary mb-4">
         <div class="card-body p-3 p-md-4">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
                 <div class="d-flex align-items-center gap-3">
                     @if($target_status_text == 'Approve')
-                        <div class="rounded-circle p-3 d-flex align-items-center justify-content-center bg-success bg-opacity-10 text-success" style="width: 56px; height: 56px; min-width: 56px;">
+                        <div class="rounded-circle p-3 d-flex align-items-center justify-content-center bg-success bg-opacity-25 text-success" style="width: 56px; height: 56px; min-width: 56px;">
                             <i class="bi bi-check-circle-fill fs-3"></i>
                         </div>
                         <div>
@@ -107,7 +44,7 @@
                             <p class="text-muted mb-0 small">The selected purchase orders have been approved and updated in the system.</p>
                         </div>
                     @else
-                        <div class="rounded-circle p-3 d-flex align-items-center justify-content-center bg-danger bg-opacity-10 text-danger" style="width: 56px; height: 56px; min-width: 56px;">
+                        <div class="rounded-circle p-3 d-flex align-items-center justify-content-center bg-danger bg-opacity-25 text-danger" style="width: 56px; height: 56px; min-width: 56px;">
                             <i class="bi bi-x-circle-fill fs-3"></i>
                         </div>
                         <div>
@@ -118,9 +55,9 @@
                 </div>
 
                 <div class="d-flex flex-wrap gap-2 align-items-center">
-                    <div class="stat-badge rounded px-3 py-2 text-center">
+                    <div class="border border-secondary rounded px-3 py-2 text-center bg-dark bg-opacity-50">
                         <div class="text-muted small">Projects</div>
-                        <div class="fw-bold fs-6 text-dark">{{ count($pos) }}</div>
+                        <div class="fw-bold fs-6">{{ count($pos) }}</div>
                     </div>
                     @php
                         $total_po_count = 0;
@@ -128,13 +65,13 @@
                             $total_po_count += count($p_items);
                         }
                     @endphp
-                    <div class="stat-badge rounded px-3 py-2 text-center">
+                    <div class="border border-secondary rounded px-3 py-2 text-center bg-dark bg-opacity-50">
                         <div class="text-muted small">Total Orders</div>
-                        <div class="fw-bold fs-6 text-dark">{{ $total_po_count }}</div>
+                        <div class="fw-bold fs-6">{{ $total_po_count }}</div>
                     </div>
-                    <div class="stat-badge rounded px-3 py-2 text-center">
-                        <div class="text-muted small">Total Amount</div>
-                        <div class="fw-bold fs-6 text-primary">₱ {{ number_format($grand_total, 2) }}</div>
+                    <div class="border border-info border-opacity-50 rounded px-3 py-2 text-center bg-info bg-opacity-10">
+                        <div class="text-info small">Total Amount</div>
+                        <div class="fw-bold fs-6 text-info">₱ {{ number_format($grand_total, 2) }}</div>
                     </div>
                 </div>
             </div>
@@ -152,16 +89,16 @@
                 }
             @endphp
 
-            <div class="card border-0 shadow-sm mb-4">
-                <div class="card-header bg-white py-3 px-3 px-md-4">
+            <div class="card border border-secondary mb-4">
+                <div class="card-header bg-dark bg-opacity-50 border-bottom border-secondary py-3 px-3 px-md-4">
                     <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2">
                         <div class="d-flex align-items-center gap-2">
-                            <span class="text-primary"><i class="bi bi-folder2-open fs-5"></i></span>
-                            <h5 class="fw-bold mb-0 text-dark">{{ $project_arr[$project_id]->name ?? ('Project #' . $project_id) }}</h5>
-                            <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill ms-2">{{ count($po_list) }} PO{{ count($po_list) > 1 ? 's' : '' }}</span>
+                            <span class="text-info fs-5"><i class="bi bi-folder2-open"></i></span>
+                            <h5 class="fw-bold mb-0">{{ $project_arr[$project_id]->name ?? ('Project #' . $project_id) }}</h5>
+                            <span class="badge bg-secondary rounded-pill ms-2">{{ count($po_list) }} PO{{ count($po_list) > 1 ? 's' : '' }}</span>
                         </div>
                         <div class="text-muted small">
-                            Subtotal: <span class="fw-bold text-dark fs-6">₱ {{ number_format($project_subtotal, 2) }}</span>
+                            Subtotal: <span class="fw-bold text-light fs-6">₱ {{ number_format($project_subtotal, 2) }}</span>
                         </div>
                     </div>
                 </div>
@@ -176,34 +113,34 @@
                             <input type="hidden" class="revert-status-input" data-id="{{$item['po']->id}}" value="{{$orig_status}}" name="original_status[{{$item['po']->id}}]"/>
 
                             <div class="col">
-                                <div class="po-item-card h-100 p-3 d-flex flex-column justify-content-between">
+                                <div class="card h-100 border border-secondary p-3 d-flex flex-column justify-content-between bg-dark bg-opacity-25">
                                     {{-- PO Header: ID & Status Transition Pill --}}
                                     <div>
                                         <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <a href="/review/purchase_order/{{$item['po']->id}}" target="_blank" class="fw-bold font-monospace text-decoration-none text-primary fs-6">
+                                            <a href="/review/purchase_order/{{$item['po']->id}}" target="_blank" class="fw-bold font-monospace text-decoration-none text-info fs-6">
                                                 <i class="bi bi-file-earmark-text me-1"></i>#{{ str_pad($item['po']->id, 6, '0', STR_PAD_LEFT) }}
                                             </a>
 
                                             <div class="d-flex align-items-center">
                                                 @if(isset($original_statuses[$item['po']->id]))
-                                                    <span class="badge bg-light text-dark border py-1 px-2 font-monospace">{{ $original_statuses[$item['po']->id] }}</span>
+                                                    <span class="badge bg-white text-dark py-1 px-2 font-monospace">{{ $original_statuses[$item['po']->id] }}</span>
                                                     <i class="bi bi-arrow-right text-muted small mx-1"></i>
                                                     @if($item['po']->status == 'APRV')
-                                                        <span class="badge bg-success py-1 px-2 font-monospace">APRV</span>
+                                                        <span class="badge bg-success text-white py-1 px-2 font-monospace">APRV</span>
                                                     @elseif($item['po']->status == 'REJC')
-                                                        <span class="badge bg-danger py-1 px-2 font-monospace">REJC</span>
+                                                        <span class="badge bg-danger text-white py-1 px-2 font-monospace">REJC</span>
                                                     @elseif($item['po']->status == 'VOID')
-                                                        <span class="badge bg-dark py-1 px-2 font-monospace">VOID</span>
+                                                        <span class="badge bg-secondary text-white py-1 px-2 font-monospace">VOID</span>
                                                     @else
-                                                        <span class="badge bg-secondary py-1 px-2 font-monospace">{{ $item['po']->status }}</span>
+                                                        <span class="badge bg-warning text-dark py-1 px-2 font-monospace">{{ $item['po']->status }}</span>
                                                     @endif
                                                 @else
                                                     @if($item['po']->status == 'APRV')
-                                                        <span class="badge bg-success py-1 px-2 font-monospace">APRV</span>
+                                                        <span class="badge bg-success text-white py-1 px-2 font-monospace">APRV</span>
                                                     @elseif($item['po']->status == 'REJC')
-                                                        <span class="badge bg-danger py-1 px-2 font-monospace">REJC</span>
+                                                        <span class="badge bg-danger text-white py-1 px-2 font-monospace">REJC</span>
                                                     @elseif($item['po']->status == 'VOID')
-                                                        <span class="badge bg-dark py-1 px-2 font-monospace">VOID</span>
+                                                        <span class="badge bg-secondary text-white py-1 px-2 font-monospace">VOID</span>
                                                     @endif
                                                 @endif
                                             </div>
@@ -212,20 +149,20 @@
                                         {{-- Amount --}}
                                         <div class="my-2">
                                             <div class="text-muted small">Total Amount</div>
-                                            <div class="fs-5 fw-bold text-dark font-monospace">
+                                            <div class="fs-5 fw-bold text-light font-monospace">
                                                 ₱ {{ number_format($item['total'], 2) }}
                                             </div>
                                         </div>
 
                                         {{-- Supplier & Payment Term --}}
                                         <div class="small mb-2">
-                                            <div class="d-flex align-items-center gap-1 text-truncate mb-1" style="color: #475569;" title="{{ $item['po']->Supplier->name ?? 'No Supplier' }}">
-                                                <i class="bi bi-shop text-muted"></i>
+                                            <div class="d-flex align-items-center gap-1 text-truncate mb-1 text-muted" title="{{ $item['po']->Supplier->name ?? 'No Supplier' }}">
+                                                <i class="bi bi-shop"></i>
                                                 <span class="text-truncate">{{ $item['po']->Supplier->name ?? 'N/A' }}</span>
                                             </div>
                                             @if(isset($item['po']->PaymentTerm))
-                                                <div class="d-flex align-items-center gap-1 text-truncate" style="color: #475569;">
-                                                    <i class="bi bi-credit-card text-muted"></i>
+                                                <div class="d-flex align-items-center gap-1 text-truncate text-muted">
+                                                    <i class="bi bi-credit-card"></i>
                                                     <span class="text-truncate">{{ $item['po']->PaymentTerm->name }}</span>
                                                 </div>
                                             @endif
@@ -233,27 +170,27 @@
                                     </div>
 
                                     <div>
-                                        <hr class="my-2" style="border-color: #e2e8f0;">
+                                        <hr class="my-2 border-secondary">
 
                                         {{-- Footer Metadata: Date & Validation Flag --}}
                                         <div class="d-flex justify-content-between align-items-center pt-1">
-                                            <span class="small" style="color: #64748b;">
+                                            <span class="small text-muted">
                                                 <i class="bi bi-clock me-1"></i>{{ $item['created_at'] ?? '' }}
                                             </span>
 
                                             @if($item['flag'])
-                                                <span class="badge rounded-pill py-1 px-2 small" style="background-color: #dcfce7; color: #15803d; border: 1px solid #bbf7d0;">
+                                                <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 rounded-pill py-1 px-2 small">
                                                     <i class="bi bi-check-circle-fill me-1"></i>Valid
                                                 </span>
                                             @else
-                                                <span class="badge rounded-pill py-1 px-2 small" style="background-color: #fee2e2; color: #b91c1c; border: 1px solid #fecaca;" title="{{ implode('; ', $item['failed'] ?? []) }}">
+                                                <span class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-50 rounded-pill py-1 px-2 small" title="{{ implode('; ', $item['failed'] ?? []) }}">
                                                     <i class="bi bi-exclamation-circle-fill me-1"></i>Issues
                                                 </span>
                                             @endif
                                         </div>
 
                                         @if(!$item['flag'] && !empty($item['failed']))
-                                            <div class="mt-2 p-2 rounded small" style="background-color: #fef2f2; color: #991b1b; border: 1px solid #fecaca;">
+                                            <div class="mt-2 p-2 rounded small bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25">
                                                 @foreach($item['failed'] as $f)
                                                     <div><i class="bi bi-dot"></i> {{ $f }}</div>
                                                 @endforeach
@@ -270,23 +207,23 @@
     </form>
 
     {{-- Payment Terms Summary Section --}}
-    <div class="card border-0 shadow-sm mt-4 mb-4">
-        <div class="card-header bg-white py-3 px-3 px-md-4">
+    <div class="card border border-secondary mb-4">
+        <div class="card-header bg-dark bg-opacity-50 border-bottom border-secondary py-3 px-3 px-md-4">
             <div class="d-flex align-items-center gap-2">
-                <span class="text-primary fs-5"><i class="bi bi-wallet2"></i></span>
-                <h5 class="fw-bold mb-0 text-dark">Summary by Payment Terms</h5>
+                <span class="text-info fs-5"><i class="bi bi-wallet2"></i></span>
+                <h5 class="fw-bold mb-0">Summary by Payment Terms</h5>
             </div>
         </div>
         <div class="card-body p-3 p-md-4">
             <div class="row g-3 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
                 @foreach($total_per_payment_terms as $term_id => $amount)
                     <div class="col">
-                        <div class="summary-box p-3 rounded-3 h-100 d-flex flex-column justify-content-between">
-                            <div class="small fw-semibold mb-2 text-truncate" style="color: #475569;">
-                                <i class="bi bi-credit-card me-1 text-muted"></i>
+                        <div class="p-3 rounded border border-secondary bg-dark bg-opacity-25 h-100 d-flex flex-column justify-content-between">
+                            <div class="small fw-semibold text-muted mb-2 text-truncate">
+                                <i class="bi bi-credit-card me-1"></i>
                                 {{ $payment_terms_arr[$term_id]->name ?? ('Term #' . $term_id) }}
                             </div>
-                            <div class="fs-5 fw-bold text-dark font-monospace">
+                            <div class="fs-5 fw-bold font-monospace text-light">
                                 ₱ {{ number_format($amount, 2) }}
                             </div>
                         </div>
@@ -295,14 +232,14 @@
 
                 {{-- Grand Total Card --}}
                 <div class="col">
-                    <div class="summary-grand-total p-3 rounded-3 h-100 d-flex flex-column justify-content-between">
+                    <div class="p-3 rounded border border-info border-opacity-50 bg-info bg-opacity-10 h-100 d-flex flex-column justify-content-between">
                         <div class="d-flex justify-content-between align-items-start mb-2">
-                            <span class="small fw-bold text-primary">
+                            <span class="small fw-bold text-info">
                                 <i class="bi bi-cash-stack me-1"></i> Grand Total
                             </span>
-                            <span class="badge bg-primary text-white rounded-pill">{{ $total_po_count }} PO{{ $total_po_count > 1 ? 's' : '' }}</span>
+                            <span class="badge bg-info text-dark rounded-pill">{{ $total_po_count }} PO{{ $total_po_count > 1 ? 's' : '' }}</span>
                         </div>
-                        <div class="fs-4 fw-bold text-primary font-monospace">
+                        <div class="fs-4 fw-bold font-monospace text-info">
                             ₱ {{ number_format($grand_total, 2) }}
                         </div>
                     </div>
@@ -311,11 +248,11 @@
         </div>
     </div>
 
-    {{-- Full-Width Bottom Action Bar --}}
-    <div class="bulk-action-footer py-3 px-3 px-md-5">
-        <div class="container-fluid d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3">
-            <div class="d-flex align-items-center small" style="color: #475569;">
-                <i class="bi bi-info-circle text-warning fs-5 me-2"></i>
+    {{-- Bottom Action Bar Constrained to Main Content --}}
+    <div class="sticky-bottom py-3 mt-4" style="z-index: 100;">
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3 p-3 rounded border border-secondary bg-dark shadow">
+            <div class="text-muted small">
+                <i class="bi bi-info-circle text-warning fs-5 me-2 align-middle"></i>
                 <span>You can revert this batch operation once before leaving this page.</span>
             </div>
 
