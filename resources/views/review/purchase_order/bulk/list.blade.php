@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="content">
-<div class="container">
+<div id="content" class="pb-4">
     <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
@@ -24,166 +23,199 @@
     </div>
     <hr>
 
-    
+    {{-- Header Banner matching success.blade.php --}}
+    <div class="card border border-secondary mb-4">
+        <div class="card-body p-3 p-md-4">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="rounded-circle p-3 d-flex align-items-center justify-content-center bg-info bg-opacity-25 text-info" style="width: 56px; height: 56px; min-width: 56px;">
+                        <i class="bi bi-stack fs-3"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-bold mb-1 text-light">Bulk Purchase Order Review</h3>
+                        <p class="text-muted mb-0 small">Select purchase orders below to approve or reject in batch.</p>
+                    </div>
+                </div>
 
+                {{-- Master Batch Toggles --}}
+                <div class="d-flex flex-wrap gap-3 align-items-center bg-dark bg-opacity-50 border border-secondary rounded p-2 px-3">
+                    <div class="form-check m-0 d-flex align-items-center gap-2">
+                        <input class="form-check-input" type="checkbox" value="" id="all_ok"/>
+                        <label class="form-check-label text-success fw-semibold small" for="all_ok" style="cursor: pointer;">
+                            <i class="bi bi-check-circle-fill me-1"></i>Select All Valid [✔]
+                        </label>
+                    </div>
 
+                    <div class="vr bg-secondary opacity-50 d-none d-sm-block"></div>
 
-      <div class="d-flex flex-wrap justify-content-between mb-5">
-        <h1 class="mb-3">PO List</h1>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="all_not_ok"/>
-            <label class="form-check-label text-danger">
-            All [✖]
-            </label>
+                    <div class="form-check m-0 d-flex align-items-center gap-2">
+                        <input class="form-check-input" type="checkbox" value="" id="all_not_ok"/>
+                        <label class="form-check-label text-danger fw-semibold small" for="all_not_ok" style="cursor: pointer;">
+                            <i class="bi bi-exclamation-circle-fill me-1"></i>Select All Invalid [✖]
+                        </label>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="all_ok"/>
-            <label class="form-check-label text-success">
-            All [✔]
-            </label>
-        </div>   
     </div>
 
+    {{-- Result Container where per-project cards are rendered --}}
     <div id="result_container"></div>
-    
-    <hr>
-    
-  
-    <h2 class="mb-3">Payment Summary</h2>
-      
 
-    <div id="payment_terms_summary" class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3 mt-2 mb-4"></div>
-    
+    {{-- Payment Terms Summary Section matching success.blade.php --}}
+    <div class="card border border-secondary mb-4">
+        <div class="card-header bg-dark bg-opacity-50 border-bottom border-secondary py-3 px-3 px-md-4">
+            <div class="d-flex align-items-center gap-2">
+                <span class="text-info fs-5"><i class="bi bi-wallet2"></i></span>
+                <h5 class="fw-bold mb-0">Summary by Payment Terms</h5>
+            </div>
+        </div>
+        <div class="card-body p-3 p-md-4">
+            <div id="payment_terms_summary" class="row g-3 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4"></div>
+        </div>
+    </div>
 
-    <div class="row mt-5">
-        <div class="col-lg-12 text-end shadow bg-white rounded footer-action-menu p-2">
-            <button id="rejectBtn" class="btn btn-danger">Reject</button>
-            <button id="approveBtn" class="btn btn-primary">Approve</button>
-            <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+    {{-- Bottom Action Bar Constrained to Main Content --}}
+    <div class="sticky-bottom py-3 mt-4" style="z-index: 100;">
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3 p-3 rounded border border-secondary bg-dark shadow">
+            <div class="text-muted small">
+                <i class="bi bi-check2-square text-info fs-5 me-2 align-middle"></i>
+                <span>Selected: <strong class="text-light fs-6 font-monospace" id="selected_po_count">0</strong> purchase order(s)</span>
+            </div>
+
+            <div class="d-flex align-items-center gap-2 w-100 w-sm-auto justify-content-end">
+                <button id="rejectBtn" class="btn btn-danger px-4 py-2 fw-semibold d-flex align-items-center justify-content-center">
+                    <i class="bi bi-x-circle me-2 fs-6"></i> Reject
+                </button>
+                <button id="approveBtn" class="btn btn-primary px-4 py-2 fw-semibold d-flex align-items-center justify-content-center">
+                    <i class="bi bi-check-circle me-2 fs-6"></i> Approve
+                </button>
+                <button id="cancelBtn" class="btn btn-secondary px-4 py-2 d-flex align-items-center justify-content-center">
+                    <i class="bi bi-arrow-left me-2 fs-6"></i> Back
+                </button>
+            </div>
         </div>
     </div>
 </div>
+
 <script type="module">
-    import {$q,Template,$el} from '/adarna.js';
+    import {$q, Template, $el} from '/adarna.js';
 
-
-    const result_container          = $q('#result_container').first();
-    const payment_terms_summary     = $q('#payment_terms_summary').first();
-    const all_ok                    = $q('#all_ok').first();
-    const all_not_ok                = $q('#all_not_ok').first();
-    const approveBtn                = $q('#approveBtn').first();
-    const rejectBtn                 = $q('#rejectBtn').first();
-    const cancelBtn                 = $q('#cancelBtn').first();
+    const result_container      = $q('#result_container').first();
+    const payment_terms_summary = $q('#payment_terms_summary').first();
+    const selected_po_count     = $q('#selected_po_count').first();
+    const all_ok                = $q('#all_ok').first();
+    const all_not_ok            = $q('#all_not_ok').first();
+    const approveBtn            = $q('#approveBtn').first();
+    const rejectBtn             = $q('#rejectBtn').first();
+    const cancelBtn             = $q('#cancelBtn').first();
 
     const t = new Template();
-
+    let global_payment_terms = {};
 
     approveBtn.onclick = async ()=>{
-
         await approveSelection();
-      
-    }
-
+    };
 
     rejectBtn.onclick = async ()=>{
-
         await rejectSelection();
-      
-    }
+    };
+
+    cancelBtn.onclick = ()=>{
+        window.location.href = '/review/purchase_orders';
+    };
 
     function updatePaymentTermsTotal(payment_terms){
+        if (!payment_terms) {
+            payment_terms = global_payment_terms;
+        }
 
         payment_terms_summary.innerHTML = '';
 
         const t = new Template();
-
         let checkboxes = $q('.po[type="checkbox"]:checked').items();
-
         let summary = {};
+        let selected_count = checkboxes.length;
 
-        checkboxes.map(c=>{
+        if (selected_po_count) {
+            selected_po_count.innerText = selected_count;
+        }
+
+        checkboxes.forEach(c => {
             let payment_term_id = c.getAttribute('data-payment_term_id');
-
-            if(typeof summary[payment_term_id] == 'undefined'){
+            if (typeof summary[payment_term_id] === 'undefined') {
                 summary[payment_term_id] = 0;
             }
-
-            summary[payment_term_id] += parseFloat( c.getAttribute('data-amount') );
+            summary[payment_term_id] += parseFloat(c.getAttribute('data-amount') || 0);
         });
 
-        
         let grand_total = 0;
 
-        for(let id in summary){
+        for (let id in summary) {
+            let term_name = (payment_terms && payment_terms[id]) ? (payment_terms[id].text || payment_terms[id].name) : ('Term #' + id);
 
-            const summary_el = t.div({class:'col'},()=>{
-                t.div({class:'card h-100 text-center border-secondary shadow-sm'}, () => {
-                    t.div({class:'card-body d-flex flex-column justify-content-center p-3'}, () => {
-                        t.h6({class:'card-title text-muted small text-uppercase mb-2 fw-bold'}, payment_terms[id].text);
-                        t.h4({class:'card-text fw-bold text-dark m-0'}, 'P '+window.util.numberFormat(summary[id],2));
+            const summary_el = t.div({class: 'col'}, () => {
+                t.div({class: 'p-3 rounded border border-secondary bg-dark bg-opacity-25 h-100 d-flex flex-column justify-content-between'}, () => {
+                    t.div({class: 'small fw-semibold text-muted mb-2 text-truncate'}, () => {
+                        t.i({class: 'bi bi-credit-card me-1'});
+                        t.span(term_name);
                     });
+                    t.div({class: 'fs-5 fw-bold font-monospace text-light'}, '₱ ' + window.util.numberFormat(summary[id], 2));
                 });
             });
 
             grand_total += summary[id];
-
             payment_terms_summary.appendChild(summary_el);
         }
 
-        payment_terms_summary.appendChild(t.div({class:'col'},()=>{
-            t.div({class:'card h-100 text-center border-warning bg-warning bg-opacity-10 shadow-sm'}, () => {
-                t.div({class:'card-body d-flex flex-column justify-content-center p-3'}, () => {
-                    t.h6({class:'card-title text-warning small text-uppercase mb-2 fw-bold'}, 'Grand Total');
-                    t.h4({class:'card-text fw-bold text-dark m-0'}, 'P '+window.util.numberFormat(grand_total,2));
+        // Grand Total Card matching success.blade.php
+        payment_terms_summary.appendChild(t.div({class: 'col'}, () => {
+            t.div({class: 'p-3 rounded border border-info border-opacity-50 bg-info bg-opacity-10 h-100 d-flex flex-column justify-content-between'}, () => {
+                t.div({class: 'd-flex justify-content-between align-items-start mb-2'}, () => {
+                    t.span({class: 'small fw-bold text-info'}, () => {
+                        t.i({class: 'bi bi-cash-stack me-1'});
+                        t.span('Grand Total');
+                    });
+                    t.span({class: 'badge bg-info text-dark rounded-pill'}, selected_count + ' PO' + (selected_count !== 1 ? 's' : ''));
                 });
+                t.div({class: 'fs-4 fw-bold font-monospace text-info'}, '₱ ' + window.util.numberFormat(grand_total, 2));
             });
         }));
-
     }
 
     function checkboxOnchangeController(payment_terms){
-
         updatePaymentTermsTotal(payment_terms);
-       
-        
     }
 
-
-    async function submitAction(action,els){
-
+    async function submitAction(action, els){
         let ids = [];
-
-        els.map(el=>{
+        els.forEach(el => {
             ids.push(el.value);
         });
 
         const form = t.form({
-            method:'POST',
-            action:'/review/bulk/purchase_order/action'
+            method: 'POST',
+            action: '/review/bulk/purchase_order/action'
         });
 
-        ids.map(id=>{
-            
-            const input = t.input({type:'hidden',name:'ids[]',value:id});
-
+        ids.forEach(id => {
+            const input = t.input({type: 'hidden', name: 'ids[]', value: id});
             form.appendChild(input);
         });
 
         form.appendChild(
-            t.input({type:'hidden',name:'action',value:action})
+            t.input({type: 'hidden', name: 'action', value: action})
         );
 
         form.appendChild(
-            t.input({type:'hidden',name:'_token',value:'{{ csrf_token() }}'})
+            t.input({type: 'hidden', name: '_token', value: '{{ csrf_token() }}'})
         );
 
         result_container.appendChild(form);
 
-        setTimeout(()=>{
+        setTimeout(() => {
             form.submit();
-        },100);
-    
+        }, 100);
     }
 
     async function approveSelection(){
@@ -194,13 +226,13 @@
             return false;
         }
 
-        let ans = await window.util.confirm('Are you sure you want to APPROVE '+po.length+' items?');
+        let ans = await window.util.confirm('Are you sure you want to APPROVE ' + po.length + ' items?');
 
-        if(!ans){
+        if (!ans) {
             return false;
         }
 
-        submitAction('APRV',po);
+        submitAction('APRV', po);
     }
 
     async function rejectSelection(){
@@ -211,190 +243,231 @@
             return false;
         }
 
-        let ans = await window.util.confirm('Are you sure you want to REJECT '+po.length+' items?');
+        let ans = await window.util.confirm('Are you sure you want to REJECT ' + po.length + ' items?');
 
-        if(!ans){
+        if (!ans) {
             return false;
         }
 
-        submitAction('REJC',po);
+        submitAction('REJC', po);
     }
 
-    cancelBtn.onclick = ()=>{
-        window.location.href = '/review/purchase_orders';
-    };
-
-
-    all_ok.onchange = ()=>{
-
+    all_ok.onchange = () => {
         let last_item = null;
-
-        $q('.ok').items().map(item=>{
+        $q('.ok').items().forEach(item => {
             item.checked = all_ok.checked;
             last_item = item;
         });
 
-        
-        if(last_item){
+        if (last_item) {
             last_item.onchange();
+        } else {
+            updatePaymentTermsTotal(global_payment_terms);
         }
-    }
+    };
 
-    all_not_ok.onchange = ()=>{
-
+    all_not_ok.onchange = () => {
         let last_item = null;
-
-        $q('.invalid').items().map(item=>{
+        $q('.invalid').items().forEach(item => {
             item.checked = all_not_ok.checked;
             last_item = item;
         });
 
-        if(last_item){
+        if (last_item) {
             last_item.onchange();
+        } else {
+            updatePaymentTermsTotal(global_payment_terms);
         }
-    }
+    };
 
     window.util.blockUI();
 
-    window.util.$get('/api/review/bulk/purchase_order/list',{}).then(reply=>{
-
-        
+    window.util.$get('/api/review/bulk/purchase_order/list', {}).then(reply => {
         window.util.unblockUI();
 
-        if(reply.status <= 0 ){
-            
+        if (reply.status <= 0) {
             window.util.showMsg(reply);
             return false;
-        };
+        }
 
-        let result          = reply.data.result;
-        let projects        = reply.data.projects;
-        let suppliers       = reply.data.suppliers;
-        let payment_terms   = reply.data.payment_terms;
+        let result        = reply.data.result;
+        let projects      = reply.data.projects;
+        let suppliers     = reply.data.suppliers;
+        let payment_terms = reply.data.payment_terms;
+        global_payment_terms = payment_terms;
 
-        for(let project_id in result){
+        let project_keys = Object.keys(result);
 
+        if (project_keys.length === 0) {
+            result_container.appendChild(t.div({class: 'card border border-secondary p-5 text-center my-4'}, () => {
+                t.div({class: 'text-muted'}, () => {
+                    t.i({class: 'bi bi-inbox fs-1 d-block mb-3 text-secondary'});
+                    t.h5({class: 'fw-semibold text-light'}, 'No Pending Purchase Orders');
+                    t.p({class: 'small mb-0 text-muted'}, 'All purchase orders have been reviewed or none are currently pending.');
+                });
+            }));
+            updatePaymentTermsTotal(payment_terms);
+            return;
+        }
+
+        project_keys.forEach(project_id => {
             let items = result[project_id];
+            let proj_name = (projects && projects[project_id]) ? projects[project_id].name : ('Project #' + project_id);
 
-            const project_div = t.div({class:'mb-5'},()=>{
-                
-                t.div({class:'d-flex justify-content-between'},()=>{
-                    t.h5( projects[project_id].name );
-
-                    let chbx_project = t.input({class:'form-check-input', type:'checkbox'});
-                    
-                    chbx_project.onchange = ()=>{
-                       
-                        $q('.project_'+project_id).items().map(item=>{
-
-                            if(chbx_project.checked){
-                                item.checked = true;
-                            }else{
-                                item.checked = false;
-                            }
-                        });
-
-
-                        updatePaymentTermsTotal(payment_terms);
-                    }
-                });
-                
-
-                t.div({class:'ps-3'},()=>{
-
-                
-                    items.map(item => {
-
-                        t.div({class:'border border-secondary mb-2 p-3'},()=>{
-
-                            if(item.flag){
-                            
-                            
-                            
-                                t.div({class:'row'},()=>{
-                                    t.div({class:'col-6'},()=>{
-                                        t.span({class:'text-success'},'[✔] ');
-                                        t.a({href:'/review/purchase_order/'+item.po.id,target:'_blank'},String(item.po.id).padStart(6,0));
-                                    });
-                                    t.div({class:'col-6 d-flex justify-content-end'},()=>{
-
-                                        t.label({class:'me-3'},'P '+window.util.numberFormat(item.total,2));
-
-                                        let chbx = t.input({class:'po ok form-check-input project_'+project_id, 'data-payment_term_id':item.po.payment_term_id, 'data-amount': item.total, value:item.po.id, checked:true, type:'checkbox'});
-                                        
-                                        chbx.onchange = ()=>{
-                                            checkboxOnchangeController(payment_terms);
-                                        }
-                                    });
-                                });
-
-
-                        
-                            }else{
-
-
-                                t.div({class:'row'},()=>{
-                                    t.div({class:'col-6'},()=>{
-                                        t.span({class:'text-danger'},'[✖] ');
-                                        t.a({href:'/review/purchase_order/'+item.po.id,target:'_blank'},String(item.po.id).padStart(6,0));
-                                    });
-                                    t.div({class:'col-6 d-flex justify-content-end'},()=>{
-
-                                        t.label({class:'me-3'},'P '+window.util.numberFormat(item.total,2));
-
-                                        let chbx = t.input({class:'po invalid form-check-input project_'+project_id, 'data-payment_term_id':item.po.payment_term_id, 'data-amount': item.total, value:item.po.id, type:'checkbox'});
-                                        
-                                        chbx.onchange = ()=>{
-                                            checkboxOnchangeController(payment_terms);
-                                        }
-                                    });
-                                });
-
-                                t.div({class:'row'},()=>{
-                                    item.failed.map(fail=>{
-                                        t.span({class:'text-danger text-sm'},fail);
-                                    
-                                    });
-                                })
-                            }
-
-                            t.div({class:'row mt-2 pt-2 border-top text-secondary small'},()=>{
-                                t.div({class:'col-md-3 col-sm-6 mb-1'}, () => {
-                                    t.span({class:'fw-bold text-dark'}, 'Created: ');
-                                    t.span(item.created_at);
-                                });
-                                t.div({class:'col-md-3 col-sm-6 mb-1'}, () => {
-                                    t.span({class:'fw-bold text-dark'}, 'Status: ');
-                                    t.span({class: 'badge ' + (item.po.status === 'PEND' ? 'bg-warning text-dark' : 'bg-secondary')}, item.po.status);
-                                });
-                                t.div({class:'col-md-3 col-sm-6 mb-1'}, () => {
-                                    t.span({class:'fw-bold text-dark'}, 'Supplier: ');
-                                    t.span(suppliers[item.po.supplier_id].name);
-                                });
-                                t.div({class:'col-md-3 col-sm-6 mb-1'}, () => {
-                                    t.span({class:'fw-bold text-dark'}, 'Terms: ');
-                                    t.span(payment_terms[item.po.payment_term_id].text);
-                                });
-                            });
-
-                        });
-                        
-                    });//items
-                
-                });
-
+            let project_subtotal = 0;
+            items.forEach(it => {
+                project_subtotal += parseFloat(it.total || 0);
             });
 
+            const project_div = t.div({class: 'card border border-secondary mb-4'}, () => {
+                // Project Card Header matching success.blade.php
+                t.div({class: 'card-header bg-dark bg-opacity-50 border-bottom border-secondary py-3 px-3 px-md-4'}, () => {
+                    t.div({class: 'd-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2'}, () => {
+                        t.div({class: 'd-flex align-items-center gap-2'}, () => {
+                            t.span({class: 'text-info fs-5'}, () => {
+                                t.i({class: 'bi bi-folder2-open'});
+                            });
+                            t.h5({class: 'fw-bold mb-0 text-light'}, proj_name);
+                            t.span({class: 'badge bg-secondary rounded-pill ms-2'}, items.length + ' PO' + (items.length > 1 ? 's' : ''));
+                        });
+
+                        t.div({class: 'd-flex align-items-center gap-3'}, () => {
+                            t.div({class: 'text-muted small'}, () => {
+                                t.span('Subtotal: ');
+                                t.span({class: 'fw-bold text-light fs-6 font-monospace'}, '₱ ' + window.util.numberFormat(project_subtotal, 2));
+                            });
+
+                            t.div({class: 'form-check m-0 d-flex align-items-center gap-1'}, () => {
+                                let chbx_project = t.input({
+                                    class: 'form-check-input',
+                                    type: 'checkbox',
+                                    id: 'proj_chbx_' + project_id
+                                });
+                                t.label({
+                                    class: 'form-check-label text-muted small',
+                                    for: 'proj_chbx_' + project_id,
+                                    style: 'cursor: pointer;'
+                                }, 'Select All in Project');
+
+                                chbx_project.onchange = () => {
+                                    $q('.project_' + project_id).items().forEach(item => {
+                                        item.checked = chbx_project.checked;
+                                    });
+                                    updatePaymentTermsTotal(payment_terms);
+                                };
+                            });
+                        });
+                    });
+                });
+
+                // Project Card Body: Responsive Grid of POs
+                t.div({class: 'card-body p-3 p-md-4'}, () => {
+                    t.div({class: 'row g-3 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4'}, () => {
+                        items.forEach(item => {
+                            t.div({class: 'col'}, () => {
+                                t.div({class: 'card h-100 border border-secondary p-3 d-flex flex-column justify-content-between bg-dark bg-opacity-25'}, () => {
+                                    // PO Header: Checkbox, ID Link, Status Badge
+                                    t.div({}, () => {
+                                        t.div({class: 'd-flex justify-content-between align-items-center mb-2'}, () => {
+                                            t.div({class: 'd-flex align-items-center gap-2'}, () => {
+                                                let chbx_class = item.flag ? 'po ok form-check-input project_' + project_id : 'po invalid form-check-input project_' + project_id;
+                                                let chbx = t.input({
+                                                    class: chbx_class,
+                                                    type: 'checkbox',
+                                                    value: item.po.id,
+                                                    'data-payment_term_id': item.po.payment_term_id,
+                                                    'data-amount': item.total
+                                                });
+                                                chbx.onchange = () => {
+                                                    checkboxOnchangeController(payment_terms);
+                                                };
+
+                                                t.a({
+                                                    href: '/review/purchase_order/' + item.po.id,
+                                                    target: '_blank',
+                                                    class: 'fw-bold font-monospace text-decoration-none text-info fs-6'
+                                                }, () => {
+                                                    t.i({class: 'bi bi-file-earmark-text me-1'});
+                                                    t.span('#' + String(item.po.id).padStart(6, '0'));
+                                                });
+                                            });
+
+                                            t.span({
+                                                class: 'badge font-monospace py-1 px-2 ' + (item.po.status === 'PEND' ? 'bg-warning text-dark' : 'bg-secondary text-white')
+                                            }, item.po.status);
+                                        });
+
+                                        // Total Amount
+                                        t.div({class: 'my-2'}, () => {
+                                            t.div({class: 'text-muted small'}, 'Total Amount');
+                                            t.div({class: 'fs-5 fw-bold text-light font-monospace'}, '₱ ' + window.util.numberFormat(item.total, 2));
+                                        });
+
+                                        // Supplier & Payment Term
+                                        t.div({class: 'small mb-2'}, () => {
+                                            let sup_name = (suppliers && suppliers[item.po.supplier_id]) ? suppliers[item.po.supplier_id].name : 'N/A';
+                                            t.div({class: 'd-flex align-items-center gap-1 text-truncate mb-1 text-muted', title: sup_name}, () => {
+                                                t.i({class: 'bi bi-shop'});
+                                                t.span({class: 'text-truncate'}, sup_name);
+                                            });
+
+                                            let term_name = (payment_terms && payment_terms[item.po.payment_term_id]) ? payment_terms[item.po.payment_term_id].text : 'N/A';
+                                            t.div({class: 'd-flex align-items-center gap-1 text-truncate text-muted', title: term_name}, () => {
+                                                t.i({class: 'bi bi-credit-card'});
+                                                t.span({class: 'text-truncate'}, term_name);
+                                            });
+                                        });
+                                    });
+
+                                    // PO Footer: Date & Validation Pill
+                                    t.div({}, () => {
+                                        t.hr({class: 'my-2 border-secondary'});
+                                        t.div({class: 'd-flex justify-content-between align-items-center pt-1'}, () => {
+                                            t.span({class: 'small text-muted'}, () => {
+                                                t.i({class: 'bi bi-clock me-1'});
+                                                t.span(item.created_at || '');
+                                            });
+
+                                            if (item.flag) {
+                                                t.span({class: 'badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 rounded-pill py-1 px-2 small'}, () => {
+                                                    t.i({class: 'bi bi-check-circle-fill me-1'});
+                                                    t.span('Valid');
+                                                });
+                                            } else {
+                                                t.span({
+                                                    class: 'badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-50 rounded-pill py-1 px-2 small',
+                                                    title: (item.failed || []).join('; ')
+                                                }, () => {
+                                                    t.i({class: 'bi bi-exclamation-circle-fill me-1'});
+                                                    t.span('Issues');
+                                                });
+                                            }
+                                        });
+
+                                        if (!item.flag && item.failed && item.failed.length > 0) {
+                                            t.div({class: 'mt-2 p-2 rounded small bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25'}, () => {
+                                                item.failed.forEach(fail => {
+                                                    t.div({}, () => {
+                                                        t.i({class: 'bi bi-dot'});
+                                                        t.span(fail);
+                                                    });
+                                                });
+                                            });
+                                        }
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
 
             result_container.appendChild(project_div);
-        }//For
+        });
 
-        setTimeout(()=>{
+        setTimeout(() => {
             updatePaymentTermsTotal(payment_terms);
-        },500);
-        
-
-    });//End http call
+        }, 100);
+    });
 </script>
-</div>
 @endsection
