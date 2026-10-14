@@ -445,14 +445,73 @@
                                         });
 
                                         if (!item.flag && item.failed && item.failed.length > 0) {
-                                            t.div({class: 'mt-2 p-2 rounded small bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25'}, () => {
-                                                item.failed.forEach(fail => {
-                                                    t.div({}, () => {
-                                                        t.i({class: 'bi bi-dot'});
-                                                        t.span(fail);
+                                            let fails = item.failed;
+                                            let total_fails = fails.length;
+
+                                            if (total_fails === 1) {
+                                                t.div({class: 'mt-2 p-2 rounded small bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25', style: 'font-size: 0.75rem; line-height: 1.3;'}, () => {
+                                                    t.div({class: 'd-flex align-items-start gap-1'}, () => {
+                                                        t.i({class: 'bi bi-exclamation-triangle-fill text-danger me-1 flex-shrink-0 mt-1', style: 'font-size: 0.75rem;'});
+                                                        t.span(fails[0]);
                                                     });
                                                 });
-                                            });
+                                            } else {
+                                                let current_idx = 0;
+                                                t.div({class: 'mt-2 p-2 rounded small bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25'}, () => {
+                                                    let counter_span;
+                                                    t.div({class: 'd-flex justify-content-between align-items-center mb-1'}, () => {
+                                                        t.div({class: 'd-flex align-items-center gap-1 text-danger fw-semibold', style: 'font-size: 0.75rem;'}, () => {
+                                                            t.i({class: 'bi bi-exclamation-triangle-fill', style: 'font-size: 0.75rem;'});
+                                                            t.span('Defects');
+                                                        });
+
+                                                        t.div({class: 'd-flex align-items-center gap-1'}, () => {
+                                                            counter_span = t.span({class: 'font-monospace text-danger me-1', style: 'font-size: 0.7rem;'}, `1/${total_fails}`);
+
+                                                            let prev_btn = t.button({
+                                                                type: 'button',
+                                                                class: 'btn btn-sm btn-link p-0 text-danger text-decoration-none',
+                                                                style: 'line-height: 1; font-size: 0.85rem;'
+                                                            }, () => {
+                                                                t.i({class: 'bi bi-chevron-left'});
+                                                            });
+
+                                                            let next_btn = t.button({
+                                                                type: 'button',
+                                                                class: 'btn btn-sm btn-link p-0 text-danger text-decoration-none',
+                                                                style: 'line-height: 1; font-size: 0.85rem;'
+                                                            }, () => {
+                                                                t.i({class: 'bi bi-chevron-right'});
+                                                            });
+
+                                                            prev_btn.onclick = (e) => {
+                                                                e.stopPropagation();
+                                                                e.preventDefault();
+                                                                current_idx = (current_idx - 1 + total_fails) % total_fails;
+                                                                updateDefectSlide();
+                                                            };
+
+                                                            next_btn.onclick = (e) => {
+                                                                e.stopPropagation();
+                                                                e.preventDefault();
+                                                                current_idx = (current_idx + 1) % total_fails;
+                                                                updateDefectSlide();
+                                                            };
+                                                        });
+                                                    });
+
+                                                    let slide_text = t.div({
+                                                        style: 'min-height: 38px; max-height: 54px; overflow-y: auto; font-size: 0.75rem; line-height: 1.3;'
+                                                    }, fails[0]);
+
+                                                    function updateDefectSlide() {
+                                                        slide_text.innerText = fails[current_idx];
+                                                        if (counter_span) {
+                                                            counter_span.innerText = `${current_idx + 1}/${total_fails}`;
+                                                        }
+                                                    }
+                                                });
+                                            }
                                         }
                                     });
                                 });

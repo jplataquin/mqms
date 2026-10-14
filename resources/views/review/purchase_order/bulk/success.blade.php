@@ -190,11 +190,41 @@
                                         </div>
 
                                         @if(!$item['flag'] && !empty($item['failed']))
-                                            <div class="mt-2 p-2 rounded small bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25">
-                                                @foreach($item['failed'] as $f)
-                                                    <div><i class="bi bi-dot"></i> {{ $f }}</div>
-                                                @endforeach
-                                            </div>
+                                            @php
+                                                $fails = $item['failed'];
+                                                $total_fails = count($fails);
+                                            @endphp
+                                            @if($total_fails === 1)
+                                                <div class="mt-2 p-2 rounded small bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25" style="font-size: 0.75rem; line-height: 1.3;">
+                                                    <div class="d-flex align-items-start gap-1">
+                                                        <i class="bi bi-exclamation-triangle-fill text-danger me-1 flex-shrink-0 mt-1" style="font-size: 0.75rem;"></i>
+                                                        <span>{{ $fails[0] }}</span>
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <div class="mt-2 p-2 rounded small bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 defect-carousel" data-total="{{ $total_fails }}">
+                                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                                        <div class="d-flex align-items-center gap-1 text-danger fw-semibold" style="font-size: 0.75rem;">
+                                                            <i class="bi bi-exclamation-triangle-fill" style="font-size: 0.75rem;"></i>
+                                                            <span>Defects</span>
+                                                        </div>
+                                                        <div class="d-flex align-items-center gap-1">
+                                                            <span class="font-monospace text-danger me-1 defect-counter" style="font-size: 0.7rem;">1/{{ $total_fails }}</span>
+                                                            <button type="button" class="btn btn-sm btn-link p-0 text-danger text-decoration-none defect-prev" style="line-height: 1; font-size: 0.85rem;">
+                                                                <i class="bi bi-chevron-left"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-sm btn-link p-0 text-danger text-decoration-none defect-next" style="line-height: 1; font-size: 0.85rem;">
+                                                                <i class="bi bi-chevron-right"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="defect-slide-container" style="min-height: 38px; max-height: 54px; overflow-y: auto; font-size: 0.75rem; line-height: 1.3;">
+                                                        @foreach($fails as $fIdx => $fMsg)
+                                                            <div class="defect-slide {{ $fIdx === 0 ? '' : 'd-none' }}">{{ $fMsg }}</div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -325,5 +355,39 @@
             }
         };
     }
+
+    document.querySelectorAll('.defect-carousel').forEach(carousel => {
+        const total = parseInt(carousel.dataset.total);
+        let current = 0;
+        const counter = carousel.querySelector('.defect-counter');
+        const slides = carousel.querySelectorAll('.defect-slide');
+        const prevBtn = carousel.querySelector('.defect-prev');
+        const nextBtn = carousel.querySelector('.defect-next');
+
+        function updateSlide(idx) {
+            slides.forEach((s, i) => {
+                s.classList.toggle('d-none', i !== idx);
+            });
+            if (counter) counter.innerText = `${idx + 1}/${total}`;
+        }
+
+        if (prevBtn) {
+            prevBtn.onclick = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                current = (current - 1 + total) % total;
+                updateSlide(current);
+            };
+        }
+
+        if (nextBtn) {
+            nextBtn.onclick = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                current = (current + 1) % total;
+                updateSlide(current);
+            };
+        }
+    });
 </script>
 @endsection
