@@ -34,6 +34,9 @@
                     <div class="d-flex flex-wrap justify-content-evenly">
                         @foreach($po_list as $item)
                             <input type="hidden" value="{{$item['po']->id}}" name="po[]"/>
+                            @if(isset($original_statuses[$item['po']->id]))
+                                <input type="hidden" value="{{$original_statuses[$item['po']->id]}}" name="original_status[{{$item['po']->id}}]"/>
+                            @endif
                             <div class="border border-secondary p-2">
                                 <div>
                                     @if($item['flag'])
@@ -69,7 +72,7 @@
 
                         @endforeach
                     </div>
-                <div>
+                </div>
             @endforeach
         </form>
 
@@ -84,4 +87,58 @@
     </div>
 
 </div>
+
+<script type="module">
+    import {$q} from '/adarna.js';
+
+    const revertBtn = $q('#revertBtn').first();
+    const cancelBtn = $q('#cancelBtn').first();
+
+    if(cancelBtn){
+        cancelBtn.onclick = (e) => {
+            e.preventDefault();
+            window.location.href = '/review/bulk/purchase_orders';
+        };
+    }
+
+    if(revertBtn){
+        revertBtn.onclick = async (e) => {
+            e.preventDefault();
+
+            let ans = await window.util.confirm('Are you sure you want to revert these records? This can only be done once.');
+
+            if(ans){
+                window.util.blockUI();
+
+                const form = $q('#form').first();
+                const formData = new FormData(form);
+                const data = {};
+
+                for (let [key, value] of formData.entries()) {
+                    let match = key.match(/^original_status\[(\d+)\]$/);
+                    if (match) {
+                        data[match[1]] = value;
+                    }
+                }
+
+                window.util.$post('/api/review/bulk/purchase_order/revert', {
+                    data: data
+                }).then(reply => {
+                    window.util.unblockUI();
+
+                    if(reply.status == 1){
+                        window.util.alert('Records have been reverted successfully', 'success').then(() => {
+                            window.location.href = '/review/bulk/purchase_orders';
+                        });
+                    } else {
+                        window.util.alert(reply.message || 'An error occurred', 'error');
+                    }
+                }).catch(err => {
+                    window.util.unblockUI();
+                    window.util.alert('An unexpected error occurred', 'error');
+                });
+            }
+        };
+    }
+</script>
 @endsection

@@ -223,7 +223,7 @@ class PurchaseOrderBulkReviewController extends Controller
         $pos                        = [];
         $total_per_payment_terms    = [];
         $grand_total                = 0;
-        
+        $original_statuses          = [];
         
         $user_id = Auth::user()->id;
 
@@ -246,6 +246,7 @@ class PurchaseOrderBulkReviewController extends Controller
 
                 if($po->status != 'PEND' && $po->status != 'REVO') continue;
                 
+                $original_statuses[$po->id] = $po->status;
                 
                 $component = $po->Component;
 
@@ -311,7 +312,8 @@ class PurchaseOrderBulkReviewController extends Controller
                 'grand_total'               => $grand_total,
                 'project_arr'               => $project_arr,
                 'total_per_payment_terms'   => $total_per_payment_terms,
-                'target_status_text'        => 'Approve'
+                'target_status_text'        => 'Approve',
+                'original_statuses'         => $original_statuses
             ]);
 
         } catch(\Exception $e) {
@@ -330,6 +332,7 @@ class PurchaseOrderBulkReviewController extends Controller
         $pos                        = [];
         $total_per_payment_terms    = [];
         $grand_total                = 0;
+        $original_statuses          = [];
 
         $user_id = Auth::user()->id;
 
@@ -353,6 +356,7 @@ class PurchaseOrderBulkReviewController extends Controller
 
                 if($po->status != 'PEND' && $po->status != 'REVO') continue;
                 
+                $original_statuses[$po->id] = $po->status;
                 
                 $component = $po->Component;
 
@@ -415,7 +419,8 @@ class PurchaseOrderBulkReviewController extends Controller
                 'grand_total'               => $grand_total,
                 'project_arr'               => $project_arr,
                 'total_per_payment_terms'   => $total_per_payment_terms,
-                'target_status_text'        => 'Reject'
+                'target_status_text'        => 'Reject',
+                'original_statuses'         => $original_statuses
             ]);
 
         } catch(\Exception $e) {
@@ -423,6 +428,61 @@ class PurchaseOrderBulkReviewController extends Controller
             DB::rollBack();
 
             return view('review/purchase_order/bulk/fail',[
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function _revert(Request $request){
+        $data = $request->input('data');
+
+        if(!$data || !is_array($data)){
+            return response()->json([
+                'status'  => 0,
+                'message' => 'No revert data provided'
+            ]);
+        }
+
+        DB::beginTransaction();
+
+        try {
+            foreach($data as $id => $original_status){
+                $po = PurchaseOrder::find((int) $id);
+                if(!$po) continue;
+
+                if($original_status == 'PEND'){
+                    $po->status         = 'PEND';
+                    $po->approved_by    = null;
+                    $po->approved_at    = null;
+                    $po->rejected_by    = null;
+                    $po->rejected_at    = null;
+                    $po->void_by        = null;
+                    $po->void_at        = null;
+                    $po->save();
+
+                    DB::table('purchase_order_items')->where('purchase_order_id', $po->id)->update(['status' => 'PEND']);
+                }else if($original_status == 'REVO'){
+                    $po->status     = 'REVO';
+                    $po->void_by    = null;
+                    $po->void_at    = null;
+                    $po->save();
+
+                    DB::table('purchase_order_items')->where('purchase_order_id', $po->id)->update(['status' => 'APRV']);
+                }
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'status'  => 1,
+                'message' => 'Successfully reverted records'
+            ]);
+
+        } catch(\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'status'  => 0,
                 'message' => $e->getMessage()
             ]);
         }

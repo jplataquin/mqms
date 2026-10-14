@@ -140,6 +140,7 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::post('/review/purchase_order/reject_void', [App\Http\Controllers\Review\PurchaseOrderReviewController::class, '_reject_void']);
     Route::post('/review/purchase_order/void', [App\Http\Controllers\Review\PurchaseOrderReviewController::class, '_void']);
     Route::get('/review/bulk/purchase_order/list', [App\Http\Controllers\Review\Bulk\PurchaseOrderBulkReviewController::class, '_list']);
+    Route::post('/review/bulk/purchase_order/revert', [App\Http\Controllers\Review\Bulk\PurchaseOrderBulkReviewController::class, '_revert']);
  
 
     Route::get('/review/material_canvass/list', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, '_list']);
