@@ -77,7 +77,13 @@
                     
             </div>
             <div class="row mb-5">
-                    <div class="col-lg-8"></div>
+                    <div class="col-lg-6"></div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button id="bulkReviewBtn" class="btn w-100 btn-warning">Bulk Review</button>
+                        </div>
+                    </div>
                     <div class="col-lg-2">
                         <div class="form-group">
                             <label>&nbsp;</label>
@@ -121,6 +127,7 @@
     let query           = $q('#query').first();
     let searchBtn       = $q('#searchBtn').first();
     let cancelBtn       = $q('#cancelBtn').first();
+    let bulkReviewBtn   = $q('#bulkReviewBtn').first();
     let showMoreBtn     = $q('#showMoreBtn').first();
     let sortSelect      = $q('#sortSelect').first();
     let projectSelect   = $q('#projectSelect').first();
@@ -324,6 +331,12 @@
 
     cancelBtn.onclick = ()=>{
         window.util.navTo('/home');
+    }
+
+    if(bulkReviewBtn){
+        bulkReviewBtn.onclick = (e)=>{
+            window.util.navTo('/review/bulk/purchase_orders', e);
+        };
     }
 
     reinitalize();
