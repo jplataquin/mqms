@@ -133,17 +133,15 @@
                     window.util.unblockUI();
 
                     if(reply.status == 1){
-                        window.util.alert('Records have been reverted successfully', 'success').then(() => {
-                            window.location.href = '/review/bulk/purchase_orders';
-                        });
+                        window.util.navTo('/review/bulk/purchase_orders');
                     } else {
                         revertBtn.disabled = false;
-                        window.util.alert(reply.message || 'An error occurred', 'error');
+                        window.util.showMsg(reply);
                     }
                 }).catch(err => {
                     revertBtn.disabled = false;
                     window.util.unblockUI();
-                    window.util.alert('An unexpected error occurred', 'error');
+                    window.util.alert('Error', 'An unexpected error occurred');
                 });
             }
         };
