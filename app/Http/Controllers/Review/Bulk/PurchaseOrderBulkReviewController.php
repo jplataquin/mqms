@@ -246,8 +246,6 @@ class PurchaseOrderBulkReviewController extends Controller
 
                 if($po->status != 'PEND' && $po->status != 'REVO') continue;
                 
-                $original_statuses[$po->id] = $po->status;
-                
                 $component = $po->Component;
 
                 if(!$component) continue;
@@ -265,6 +263,7 @@ class PurchaseOrderBulkReviewController extends Controller
 
                 if($po->status == 'PEND'){
                     
+                    $original_statuses[$po->id] = 'PEND';
                     $po->status         = 'APRV';
                     $po->approved_by    = $user_id;
                     $po->approved_at    = Carbon::now();
@@ -275,6 +274,7 @@ class PurchaseOrderBulkReviewController extends Controller
 
                 }else if($po->status == 'REVO'){
 
+                    $original_statuses[$po->id] = 'REVO';
                     $po->status     = 'VOID';
                     $po->void_by    = $user_id;
                     $po->void_at    = Carbon::now();
@@ -356,8 +356,6 @@ class PurchaseOrderBulkReviewController extends Controller
 
                 if($po->status != 'PEND' && $po->status != 'REVO') continue;
                 
-                $original_statuses[$po->id] = $po->status;
-                
                 $component = $po->Component;
 
                 if(!$component) continue;
@@ -375,6 +373,7 @@ class PurchaseOrderBulkReviewController extends Controller
 
                 if($po->status == 'PEND'){
                     
+                    $original_statuses[$po->id] = 'PEND';
                     $po->status         = 'REJC';
                     $po->rejected_by    = $user_id;
                     $po->rejected_at    = Carbon::now();
@@ -384,6 +383,7 @@ class PurchaseOrderBulkReviewController extends Controller
 
                 }else if($po->status == 'REVO'){
 
+                    $original_statuses[$po->id] = 'REVO';
                     $po->status     = 'PEND';
 
                     DB::table('purchase_order_items')->where('purchase_order_id',$po->id)->update(['status'=>'PEND']);
@@ -436,7 +436,11 @@ class PurchaseOrderBulkReviewController extends Controller
     public function _revert(Request $request){
         $data = $request->input('data');
 
-        if(!$data || !is_array($data)){
+        if(is_string($data)){
+            $data = json_decode($data, true);
+        }
+
+        if(!$data || !is_array($data) || count($data) === 0){
             return response()->json([
                 'status'  => 0,
                 'message' => 'No revert data provided'

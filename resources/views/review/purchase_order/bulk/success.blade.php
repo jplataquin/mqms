@@ -34,9 +34,10 @@
                     <div class="d-flex flex-wrap justify-content-evenly">
                         @foreach($po_list as $item)
                             <input type="hidden" value="{{$item['po']->id}}" name="po[]"/>
-                            @if(isset($original_statuses[$item['po']->id]))
-                                <input type="hidden" value="{{$original_statuses[$item['po']->id]}}" name="original_status[{{$item['po']->id}}]"/>
-                            @endif
+                            @php
+                                $orig_status = $original_statuses[$item['po']->id] ?? ($item['po']->status == 'VOID' ? 'REVO' : 'PEND');
+                            @endphp
+                            <input type="hidden" class="revert-status-input" data-id="{{$item['po']->id}}" value="{{$orig_status}}" name="original_status[{{$item['po']->id}}]"/>
                             <div class="border border-secondary p-2">
                                 <div>
                                     @if($item['flag'])
@@ -110,19 +111,24 @@
             if(ans){
                 window.util.blockUI();
 
-                const form = $q('#form').first();
-                const formData = new FormData(form);
                 const data = {};
-
-                for (let [key, value] of formData.entries()) {
-                    let match = key.match(/^original_status\[(\d+)\]$/);
-                    if (match) {
-                        data[match[1]] = value;
+                const inputs = document.querySelectorAll('.revert-status-input');
+                inputs.forEach(input => {
+                    if (input.dataset.id && input.value) {
+                        data[input.dataset.id] = input.value;
                     }
+                });
+
+                if (Object.keys(data).length === 0) {
+                    window.util.unblockUI();
+                    window.util.alert('No records available to revert.', 'error');
+                    return;
                 }
 
+                revertBtn.disabled = true;
+
                 window.util.$post('/api/review/bulk/purchase_order/revert', {
-                    data: data
+                    data: JSON.stringify(data)
                 }).then(reply => {
                     window.util.unblockUI();
 
@@ -131,9 +137,11 @@
                             window.location.href = '/review/bulk/purchase_orders';
                         });
                     } else {
+                        revertBtn.disabled = false;
                         window.util.alert(reply.message || 'An error occurred', 'error');
                     }
                 }).catch(err => {
+                    revertBtn.disabled = false;
                     window.util.unblockUI();
                     window.util.alert('An unexpected error occurred', 'error');
                 });
