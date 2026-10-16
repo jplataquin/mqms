@@ -20,6 +20,7 @@ class DirectPurchaseOrderItem extends Model
         'status',
         'quantity',
         'price',
+        'remarks',
     ];
 
     public function DirectPurchaseOrder(): BelongsTo

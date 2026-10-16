@@ -5,18 +5,23 @@
 
     <div class="container">
         <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
-            <ul>
-                <li>
-                    <a href="/direct_purchase_order">
-                        <span>Direct Purchase Order</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="active">
-                        <span>{{ str_pad($direct_purchase_order->id, 6, '0', STR_PAD_LEFT) }}</span>
-                    </a>
-                </li>
-            </ul>
+            <div class="d-flex justify-content-between align-items-center">
+                <ul>
+                    <li>
+                        <a href="/direct_purchase_order">
+                            <span>Direct Purchase Order</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="active">
+                            <span>{{ str_pad($direct_purchase_order->id, 6, '0', STR_PAD_LEFT) }}</span>
+                        </a>
+                    </li>
+                </ul>
+                <button class="btn btn-outline-primary" id="reviewLinkBtn">
+                    <i class="bi bi-link-45deg"></i> Review Link
+                </button>
+            </div>
         </div>
         <hr>
 
@@ -47,6 +52,7 @@
                     <thead>
                         <tr>
                             <th>Item Description</th>
+                            <th>Remarks</th>
                             <th class="text-end">Quantity</th>
                             <th class="text-end">Price</th>
                             <th class="text-end">Total</th>
@@ -61,6 +67,7 @@
                             @endphp
                             <tr>
                                 <td>{{ $item->MaterialItem ? $item->MaterialItem->formattedName : 'Unknown Item' }}</td>
+                                <td>{{ $item->remarks ?: '-' }}</td>
                                 <td class="text-end">{{ number_format($item->quantity, 2) }}</td>
                                 <td class="text-end">{{ number_format($item->price, 2) }}</td>
                                 <td class="text-end font-monospace">{{ number_format($rowTotal, 2) }}</td>
@@ -114,11 +121,42 @@
                 <button type="button" class="btn btn-success" id="submitBtn">Submit for Review</button>
             @endif
 
+            @if($direct_purchase_order->status == 'PEND')
+                <a href="/review/direct_purchase_order/{{$direct_purchase_order->id}}" class="btn btn-outline-warning me-2">
+                    <i class="bi bi-journal-check"></i> Go to Review
+                </a>
+                @if(!empty($canReject))
+                    <button type="button" class="btn btn-danger me-2" id="rejectBtn">Reject</button>
+                @endif
+                @if(!empty($canApprove))
+                    <button type="button" class="btn btn-success me-2" id="approveBtn">Approve</button>
+                @endif
+            @endif
+
             @if($direct_purchase_order->status == 'APRV')
                 <a href="/direct_purchase_order/print/{{$direct_purchase_order->id}}" target="_blank" class="btn btn-info me-2 text-white">
                     <i class="bi bi-printer"></i> Print
                 </a>
-                <button type="button" class="btn btn-warning" id="voidBtn">Request Void</button>
+                @if(!empty($canVoid))
+                    <button type="button" class="btn btn-danger me-2" id="directVoidBtn">
+                        <i class="bi bi-x-octagon me-1"></i> Void
+                    </button>
+                @endif
+                @if(!empty($canRequestVoid) && empty($canVoid))
+                    <button type="button" class="btn btn-warning" id="voidBtn">Request Void</button>
+                @endif
+            @endif
+
+            @if($direct_purchase_order->status == 'REVO')
+                <a href="/review/direct_purchase_order/{{$direct_purchase_order->id}}" class="btn btn-outline-warning me-2">
+                    <i class="bi bi-journal-check"></i> Go to Review
+                </a>
+                @if(!empty($canRejectVoid))
+                    <button type="button" class="btn btn-secondary me-2" id="rejectVoidBtn">Reject Void</button>
+                @endif
+                @if(!empty($canVoid))
+                    <button type="button" class="btn btn-danger me-2" id="approveVoidBtn">Confirm Void</button>
+                @endif
             @endif
         </div>
 
@@ -127,11 +165,114 @@
     <script type="module">
         import {$q} from '/adarna.js';
 
-        const submitBtn = $q('#submitBtn').first();
-        const deleteBtn = $q('#deleteBtn').first();
-        const voidBtn   = $q('#voidBtn').first();
+        const submitBtn      = $q('#submitBtn').first();
+        const deleteBtn      = $q('#deleteBtn').first();
+        const voidBtn        = $q('#voidBtn').first();
+        const directVoidBtn  = $q('#directVoidBtn').first();
+        const approveBtn     = $q('#approveBtn').first();
+        const rejectBtn      = $q('#rejectBtn').first();
+        const approveVoidBtn = $q('#approveVoidBtn').first();
+        const rejectVoidBtn  = $q('#rejectVoidBtn').first();
+        const reviewLinkBtn  = $q('#reviewLinkBtn').first();
 
         const dpoId = {{ $direct_purchase_order->id }};
+
+        if (reviewLinkBtn) {
+            reviewLinkBtn.onclick = async () => {
+                await window.util.copyToClipboard('{{ url("/review/direct_purchase_order/".$direct_purchase_order->id) }}');
+                alert('Review Link for Direct Purchase Order #{{ str_pad($direct_purchase_order->id, 6, "0", STR_PAD_LEFT) }} copied!');
+            };
+        }
+
+        if (directVoidBtn) {
+            directVoidBtn.onclick = async () => {
+                if (!confirm('Are you sure you want to VOID this Direct Purchase Order? This action cannot be undone.')) return;
+
+                window.util.blockUI();
+                let res = await window.util.$post('/api/direct_purchase_order/void', {
+                    id: dpoId
+                });
+                window.util.unblockUI();
+
+                if (res.status === 1) {
+                    location.reload();
+                } else {
+                    alert(res.message || 'Failed to void.');
+                }
+            };
+        }
+
+        if (approveBtn) {
+            approveBtn.onclick = async () => {
+                if (!confirm('Are you sure you want to approve this Direct PO?')) return;
+
+                window.util.blockUI();
+                let res = await window.util.$post('/api/review/direct_purchase_order/approve', {
+                    id: dpoId
+                });
+                window.util.unblockUI();
+
+                if (res.status === 1) {
+                    location.reload();
+                } else {
+                    alert(res.message || 'Failed to approve.');
+                }
+            };
+        }
+
+        if (rejectBtn) {
+            rejectBtn.onclick = async () => {
+                if (!confirm('Are you sure you want to reject this Direct PO?')) return;
+
+                window.util.blockUI();
+                let res = await window.util.$post('/api/review/direct_purchase_order/reject', {
+                    id: dpoId
+                });
+                window.util.unblockUI();
+
+                if (res.status === 1) {
+                    location.reload();
+                } else {
+                    alert(res.message || 'Failed to reject.');
+                }
+            };
+        }
+
+        if (approveVoidBtn) {
+            approveVoidBtn.onclick = async () => {
+                if (!confirm('Are you sure you want to confirm void for this Direct PO?')) return;
+
+                window.util.blockUI();
+                let res = await window.util.$post('/api/review/direct_purchase_order/void', {
+                    id: dpoId
+                });
+                window.util.unblockUI();
+
+                if (res.status === 1) {
+                    location.reload();
+                } else {
+                    alert(res.message || 'Failed to void.');
+                }
+            };
+        }
+
+        if (rejectVoidBtn) {
+            rejectVoidBtn.onclick = async () => {
+                if (!confirm('Are you sure you want to reject the void request for this Direct PO?')) return;
+
+                window.util.blockUI();
+                let res = await window.util.$post('/api/review/direct_purchase_order/reject_void', {
+                    id: dpoId
+                });
+                window.util.unblockUI();
+
+                if (res.status === 1) {
+                    location.reload();
+                } else {
+                    alert(res.message || 'Failed to reject void request.');
+                }
+            };
+        }
 
         if (submitBtn) {
             submitBtn.onclick = async () => {

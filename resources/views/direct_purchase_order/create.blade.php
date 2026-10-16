@@ -102,9 +102,10 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th style="width: 40%">Material Item</th>
-                            <th style="width: 20%">Quantity</th>
-                            <th style="width: 20%">Price</th>
+                            <th style="width: 30%">Material Item</th>
+                            <th style="width: 20%">Remarks</th>
+                            <th style="width: 15%">Quantity</th>
+                            <th style="width: 15%">Price</th>
                             <th style="width: 15%">Total</th>
                             <th style="width: 5%"></th>
                         </tr>
@@ -301,6 +302,9 @@
                     </select>
                 </td>
                 <td>
+                    <input type="text" class="form-control item-remarks" placeholder="Optional remarks..." />
+                </td>
+                <td>
                     <input type="number" step="any" min="0" class="form-control item-qty" placeholder="0" required />
                 </td>
                 <td>
@@ -398,6 +402,7 @@
                 const material_item_id = row.querySelector('.item-material').value;
                 const order_quantity = parseFloat(row.querySelector('.item-qty').value);
                 const price = parseFloat(row.querySelector('.item-price').value);
+                const remarks = row.querySelector('.item-remarks') ? row.querySelector('.item-remarks').value.trim() : '';
 
                 if (!material_item_id || isNaN(order_quantity) || isNaN(price)) {
                     alert('Please complete all fields in the Items table.');
@@ -407,7 +412,8 @@
                 items.push({
                     material_item_id: parseInt(material_item_id),
                     order_quantity: order_quantity,
-                    price: price
+                    price: price,
+                    remarks: remarks
                 });
             }
 

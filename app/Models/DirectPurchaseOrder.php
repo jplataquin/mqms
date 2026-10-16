@@ -93,6 +93,12 @@ class DirectPurchaseOrder extends Model
         return $user ?: User::defaultAttirbutes();
     }
 
+    public function VoidByUser()
+    {
+        $user = User::find($this->void_by);
+        return $user ?: User::defaultAttirbutes();
+    }
+
     public function getGrandTotal()
     {
         $items = $this->Items;

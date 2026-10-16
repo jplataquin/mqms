@@ -150,6 +150,7 @@ class DirectPurchaseOrderController extends Controller
             'items.*.material_item_id' => ['required', 'integer'],
             'items.*.order_quantity'   => ['required', 'numeric', 'min:0.01'],
             'items.*.price'            => ['required', 'numeric', 'min:0'],
+            'items.*.remarks'          => ['nullable', 'string', 'max:255'],
         ]);
 
         if ($itemsValidation->fails()) {
@@ -221,6 +222,7 @@ class DirectPurchaseOrderController extends Controller
                     'status'                   => 'PEND',
                     'quantity'                 => $item['order_quantity'],
                     'price'                    => $item['price'],
+                    'remarks'                  => $item['remarks'] ?? null,
                     'created_at'               => Carbon::now(),
                     'updated_at'               => Carbon::now(),
                 ];
@@ -284,13 +286,28 @@ class DirectPurchaseOrderController extends Controller
             $dpo_details["Rejected By"] = $dpo->RejectedByUser()->name . ' ' . $dpo->rejected_at;
         }
 
+        if ($dpo->void_at && $dpo->VoidByUser()->name) {
+            $dpo_details["Void By"] = $dpo->VoidByUser()->name . ' ' . $dpo->void_at;
+        }
+
+        $canApprove     = $this->hasAccess(['purchase_order:all:approve', 'direct_purchase_order:all:approve']);
+        $canReject      = $this->hasAccess(['purchase_order:all:reject', 'direct_purchase_order:all:reject']);
+        $canVoid        = $this->hasAccess(['purchase_order:all:void', 'direct_purchase_order:all:void', 'purchase_order:own:void', 'direct_purchase_order:own:void']);
+        $canRequestVoid = $this->hasAccess(['purchase_order:all:request_void', 'direct_purchase_order:all:request_void', 'purchase_order:own:request_void', 'direct_purchase_order:own:request_void']);
+        $canRejectVoid  = $this->hasAccess(['purchase_order:all:reject_void_request', 'direct_purchase_order:all:reject_void_request']);
+
         return view('direct_purchase_order/display', [
             'direct_purchase_order' => $dpo,
             'supplier'              => $dpo->Supplier,
             'payment_term'          => $dpo->PaymentTerm,
             'items'                 => $dpo->Items,
             'extras'                => $extras,
-            'dpo_details'           => $dpo_details
+            'dpo_details'           => $dpo_details,
+            'canApprove'            => $canApprove,
+            'canReject'             => $canReject,
+            'canVoid'               => $canVoid,
+            'canRequestVoid'        => $canRequestVoid,
+            'canRejectVoid'         => $canRejectVoid
         ]);
     }
 
@@ -448,6 +465,72 @@ class DirectPurchaseOrderController extends Controller
                 'status'  => 1,
                 'message' => '',
                 'data'    => ['id' => $dpo->id]
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json([
+                'status'  => 0,
+                'message' => $e->getMessage(),
+                'data'    => []
+            ]);
+        }
+    }
+
+    public function _void(Request $request)
+    {
+        $id = (int) $request->input('id');
+        $dpo = DirectPurchaseOrder::find($id);
+
+        if (!$dpo) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Record not found',
+                'data'    => []
+            ]);
+        }
+
+        $user = auth()->user();
+        $canVoidAll = $this->hasAccess(['purchase_order:all:void', 'direct_purchase_order:all:void']);
+        $canVoidOwn = $this->hasAccess(['purchase_order:own:void', 'direct_purchase_order:own:void']);
+
+        if (!$canVoidAll) {
+            if (!$canVoidOwn || $dpo->created_by != $user->id) {
+                return response()->json([
+                    'status'  => 0,
+                    'message' => 'Access Denied',
+                    'data'    => []
+                ]);
+            }
+        }
+
+        if ($dpo->status != 'APRV' && $dpo->status != 'REVO') {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Record cannot be voided, status must be approved or void requested',
+                'data'    => []
+            ]);
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $dpo->void_by = $user->id;
+            $dpo->status  = 'VOID';
+            $dpo->void_at = Carbon::now();
+            $dpo->save();
+
+            DB::table('direct_purchase_order_items')->where('direct_purchase_order_id', $dpo->id)
+                ->update(['status' => 'VOID']);
+
+            DB::commit();
+
+            return response()->json([
+                'status'  => 1,
+                'message' => 'Direct Purchase Order voided successfully',
+                'data'    => [
+                    'id' => $dpo->id
+                ]
             ]);
         } catch (\Exception $e) {
             DB::rollback();

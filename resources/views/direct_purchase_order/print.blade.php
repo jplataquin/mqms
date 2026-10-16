@@ -73,6 +73,7 @@
                 <tr class="bg-grey">
                     <th>#</th>
                     <th>Item Description</th>
+                    <th>Remarks</th>
                     <th class="text-right">Quantity</th>
                     <th class="text-right">Price</th>
                     <th class="text-right">Total</th>
@@ -88,6 +89,7 @@
                     <tr>
                         <td class="text-center">{{ $index + 1 }}</td>
                         <td>{{ $item->MaterialItem ? $item->MaterialItem->formattedName : 'Unknown Item' }}</td>
+                        <td>{{ $item->remarks ?: '-' }}</td>
                         <td class="text-right">{{ number_format($item->quantity, 2) }}</td>
                         <td class="text-right">{{ number_format($item->price, 2) }}</td>
                         <td class="text-right">{{ number_format($rowTotal, 2) }}</td>
@@ -97,13 +99,13 @@
                 @if(!empty($extras))
                     @foreach($extras as $extra)
                         <tr>
-                            <td colspan="4" class="text-right italic">{{ $extra->text }}</td>
+                            <td colspan="5" class="text-right italic">{{ $extra->text }}</td>
                             <td class="text-right">{{ number_format($extra->value, 2) }}</td>
                         </tr>
                     @endforeach
                 @endif
                 <tr class="bg-grey">
-                    <td colspan="4" class="text-right bold">Grand Total</td>
+                    <td colspan="5" class="text-right bold">Grand Total</td>
                     <td class="text-right bold">{{ number_format($direct_purchase_order->getGrandTotal(), 2) }}</td>
                 </tr>
             </tbody>

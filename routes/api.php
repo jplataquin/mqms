@@ -141,6 +141,12 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::post('/review/purchase_order/void', [App\Http\Controllers\Review\PurchaseOrderReviewController::class, '_void']);
     Route::get('/review/bulk/purchase_order/list', [App\Http\Controllers\Review\Bulk\PurchaseOrderBulkReviewController::class, '_list']);
     Route::post('/review/bulk/purchase_order/revert', [App\Http\Controllers\Review\Bulk\PurchaseOrderBulkReviewController::class, '_revert']);
+
+    Route::get('/review/direct_purchase_order/list', [App\Http\Controllers\Review\DirectPurchaseOrderReviewController::class, '_list']);
+    Route::post('/review/direct_purchase_order/approve', [App\Http\Controllers\Review\DirectPurchaseOrderReviewController::class, '_approve']);
+    Route::post('/review/direct_purchase_order/reject', [App\Http\Controllers\Review\DirectPurchaseOrderReviewController::class, '_reject']);
+    Route::post('/review/direct_purchase_order/reject_void', [App\Http\Controllers\Review\DirectPurchaseOrderReviewController::class, '_reject_void']);
+    Route::post('/review/direct_purchase_order/void', [App\Http\Controllers\Review\DirectPurchaseOrderReviewController::class, '_void']);
  
 
     Route::get('/review/material_canvass/list', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, '_list']);
@@ -174,8 +180,12 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::get('/direct_purchase_order/list', [App\Http\Controllers\DirectPurchaseOrderController::class, '_list']);
     Route::post('/direct_purchase_order/create', [App\Http\Controllers\DirectPurchaseOrderController::class, '_create']);
     Route::post('/direct_purchase_order/submit_for_review', [App\Http\Controllers\DirectPurchaseOrderController::class, '_submit_for_review']);
+    Route::post('/direct_purchase_order/approve', [App\Http\Controllers\Review\DirectPurchaseOrderReviewController::class, '_approve']);
+    Route::post('/direct_purchase_order/reject', [App\Http\Controllers\Review\DirectPurchaseOrderReviewController::class, '_reject']);
     Route::post('/direct_purchase_order/delete', [App\Http\Controllers\DirectPurchaseOrderController::class, '_delete']);
     Route::post('/direct_purchase_order/request_void', [App\Http\Controllers\DirectPurchaseOrderController::class, '_request_void']);
+    Route::post('/direct_purchase_order/void', [App\Http\Controllers\DirectPurchaseOrderController::class, '_void']);
+    Route::post('/direct_purchase_order/reject_void', [App\Http\Controllers\Review\DirectPurchaseOrderReviewController::class, '_reject_void']);
    
     
     Route::get('/contract_item/list', [App\Http\Controllers\ContractItemController::class, '_list']);

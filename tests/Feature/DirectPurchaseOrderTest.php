@@ -12,6 +12,8 @@ use App\Models\Project;
 use App\Models\Supplier;
 use App\Models\PaymentTerm;
 use App\Models\MaterialItem;
+use App\Models\DirectPurchaseOrder;
+use App\Models\DirectPurchaseOrderItem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class DirectPurchaseOrderTest extends TestCase
@@ -261,5 +263,65 @@ class DirectPurchaseOrderTest extends TestCase
             'payment_term_id' => $paymentTerm->id,
             'status'          => 'DRFT',
         ]);
+    }
+
+    /** @test */
+    public function it_can_create_direct_purchase_order_with_line_item_remarks()
+    {
+        $this->grantAccessCode($this->user, 'direct_purchase_order:all:view');
+
+        $supplier = $this->createSupplier('Hardware Depot');
+
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Cash on Delivery';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $materialItem = $this->createMaterialItem('Deformed Bar 12mm');
+
+        $items = [
+            [
+                'material_item_id' => $materialItem->id,
+                'order_quantity'   => 20,
+                'price'            => 350.00,
+                'remarks'          => 'Deliver to Warehouse B',
+            ]
+        ];
+
+        $response = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/create', [
+            'supplier_id'     => $supplier->id,
+            'payment_term_id' => $paymentTerm->id,
+            'items'           => json_encode($items),
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+        ]);
+
+        $dpoId = $response->json('data.id');
+
+        $this->assertDatabaseHas('direct_purchase_order_items', [
+            'direct_purchase_order_id' => $dpoId,
+            'material_item_id'         => $materialItem->id,
+            'quantity'                 => 20,
+            'price'                    => 350.00,
+            'remarks'                  => 'Deliver to Warehouse B',
+        ]);
+
+        $displayResponse = $this->actingAs($this->user)->get('/direct_purchase_order/' . $dpoId);
+        $displayResponse->assertStatus(200);
+        $displayResponse->assertSee('Deliver to Warehouse B');
+        $displayResponse->assertSee('<th>Remarks</th>', false);
+
+        // Mark as APRV to allow print view
+        $dpo = DirectPurchaseOrder::find($dpoId);
+        $dpo->status = 'APRV';
+        $dpo->save();
+
+        $printResponse = $this->actingAs($this->user)->get('/direct_purchase_order/print/' . $dpoId);
+        $printResponse->assertStatus(200);
+        $printResponse->assertSee('Deliver to Warehouse B');
+        $printResponse->assertSee('<th>Remarks</th>', false);
     }
 }

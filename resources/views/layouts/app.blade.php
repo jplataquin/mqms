@@ -217,6 +217,9 @@
                                     <a href="/review/purchase_orders" hx-select="#content" hx-target="#main">Purchase Orders</a>
                                 </li>
                                 <li class="nav-sub-item">
+                                    <a href="/review/direct_purchase_orders" hx-select="#content" hx-target="#main">Direct Purchase Orders</a>
+                                </li>
+                                <li class="nav-sub-item">
                                     <a href="/review/coupons" hx-select="#content" hx-target="#main">Coupon</a>
                                 </li>
                             </ul>
