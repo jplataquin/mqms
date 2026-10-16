@@ -118,6 +118,28 @@ class DirectPurchaseOrderTest extends TestCase
         return $supplier;
     }
 
+    protected function createProject($name = 'Test Project')
+    {
+        $project = new Project();
+        $project->name = $name;
+        $project->status = 'ACTV';
+        $project->created_by = $this->user->id;
+        $project->save();
+
+        return $project;
+    }
+
+    protected function createSection($project, $name = 'Test Section')
+    {
+        $section = new \App\Models\Section();
+        $section->project_id = $project->id;
+        $section->name = $name;
+        $section->created_by = $this->user->id;
+        $section->save();
+
+        return $section;
+    }
+
     protected function createMaterialItem($name = 'Portland Cement')
     {
         $item = new MaterialItem();
@@ -155,12 +177,14 @@ class DirectPurchaseOrderTest extends TestCase
         $response->assertSee('list="supplierList"', false);
         $response->assertSee('Acme Hardware Supplies');
 
-        // Searchable Project
+        // Required Project with red asterisk
+        $response->assertSee('Project <span class="text-danger">*</span>', false);
         $response->assertSee('id="projectInput"', false);
         $response->assertSee('list="projectList"', false);
         $response->assertSee('Metro Expressway Phase 1');
 
-        // Searchable Section
+        // Optional Section
+        $response->assertSee('Section (Optional)', false);
         $response->assertSee('id="sectionInput"', false);
         $response->assertSee('list="sectionList"', false);
 
@@ -168,12 +192,108 @@ class DirectPurchaseOrderTest extends TestCase
         $response->assertSee('id="paymentTermSelect"', false);
         $response->assertSee('required', false);
         $response->assertSee('30 Days Credit');
+
+        // Single line item remove button management script
+        $response->assertSee('updateItemRemoveButtons', false);
+        $response->assertSee('At least one item is required to make a direct PO.', false);
+    }
+
+    /** @test */
+    public function it_fails_creation_when_project_is_missing_or_zero()
+    {
+        $supplier = $this->createSupplier('Concrete Pro');
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Net 30 Days';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $materialItem = $this->createMaterialItem('Portland Cement');
+
+        $items = [
+            [
+                'material_item_id' => $materialItem->id,
+                'order_quantity'   => 10,
+                'price'            => 250.00,
+            ]
+        ];
+
+        // Missing project_id
+        $response = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/create', [
+            'supplier_id'     => $supplier->id,
+            'payment_term_id' => $paymentTerm->id,
+            'project_id'      => null,
+            'items'           => json_encode($items),
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status'  => -2,
+            'message' => 'Failed Validation',
+        ]);
+        $this->assertArrayHasKey('project_id', $response->json('data'));
+        $this->assertEquals('Project is required.', $response->json('data.project_id.0'));
+
+        // Project ID = 0
+        $responseZero = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/create', [
+            'supplier_id'     => $supplier->id,
+            'payment_term_id' => $paymentTerm->id,
+            'project_id'      => 0,
+            'items'           => json_encode($items),
+        ]);
+
+        $responseZero->assertStatus(200);
+        $responseZero->assertJson([
+            'status'  => -2,
+            'message' => 'Failed Validation',
+        ]);
+        $this->assertArrayHasKey('project_id', $responseZero->json('data'));
+
+        // Non-existent project
+        $responseInvalid = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/create', [
+            'supplier_id'     => $supplier->id,
+            'payment_term_id' => $paymentTerm->id,
+            'project_id'      => 999999,
+            'items'           => json_encode($items),
+        ]);
+
+        $responseInvalid->assertStatus(200);
+        $responseInvalid->assertJson([
+            'status'  => -2,
+            'message' => 'Failed Validation',
+        ]);
+        $this->assertArrayHasKey('project_id', $responseInvalid->json('data'));
+        $this->assertEquals('The selected Project is invalid.', $responseInvalid->json('data.project_id.0'));
+    }
+
+    /** @test */
+    public function it_fails_creation_when_items_are_empty()
+    {
+        $supplier = $this->createSupplier('Concrete Pro');
+        $project = $this->createProject('Tower 1');
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Net 30 Days';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $response = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/create', [
+            'supplier_id'     => $supplier->id,
+            'payment_term_id' => $paymentTerm->id,
+            'project_id'      => $project->id,
+            'items'           => json_encode([]),
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status'  => 0,
+            'message' => 'At least one item is required to make a direct PO.',
+        ]);
     }
 
     /** @test */
     public function it_fails_creation_when_payment_term_is_missing_or_zero()
     {
         $supplier = $this->createSupplier('Concrete Pro');
+        $project = $this->createProject('Bridge Phase 2');
         $materialItem = $this->createMaterialItem('Portland Cement');
 
         $items = [
@@ -188,6 +308,7 @@ class DirectPurchaseOrderTest extends TestCase
         $response = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/create', [
             'supplier_id'     => $supplier->id,
             'payment_term_id' => 0,
+            'project_id'      => $project->id,
             'items'           => json_encode($items),
         ]);
 
@@ -203,6 +324,7 @@ class DirectPurchaseOrderTest extends TestCase
     public function it_fails_creation_when_payment_term_does_not_exist()
     {
         $supplier = $this->createSupplier('Concrete Pro');
+        $project = $this->createProject('Bridge Phase 2');
         $materialItem = $this->createMaterialItem('Portland Cement');
 
         $items = [
@@ -216,6 +338,7 @@ class DirectPurchaseOrderTest extends TestCase
         $response = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/create', [
             'supplier_id'     => $supplier->id,
             'payment_term_id' => 99999,
+            'project_id'      => $project->id,
             'items'           => json_encode($items),
         ]);
 
@@ -231,6 +354,7 @@ class DirectPurchaseOrderTest extends TestCase
     public function it_can_create_direct_purchase_order_with_valid_supplier_and_payment_term()
     {
         $supplier = $this->createSupplier('Concrete Pro');
+        $project = $this->createProject('Highway Rehabilitation');
 
         $paymentTerm = new PaymentTerm();
         $paymentTerm->text = 'Net 30 Days';
@@ -250,6 +374,7 @@ class DirectPurchaseOrderTest extends TestCase
         $response = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/create', [
             'supplier_id'     => $supplier->id,
             'payment_term_id' => $paymentTerm->id,
+            'project_id'      => $project->id,
             'items'           => json_encode($items),
         ]);
 
@@ -261,6 +386,52 @@ class DirectPurchaseOrderTest extends TestCase
         $this->assertDatabaseHas('direct_purchase_orders', [
             'supplier_id'     => $supplier->id,
             'payment_term_id' => $paymentTerm->id,
+            'project_id'      => $project->id,
+            'section_id'      => null,
+            'status'          => 'DRFT',
+        ]);
+    }
+
+    /** @test */
+    public function it_can_create_direct_purchase_order_with_optional_section()
+    {
+        $supplier = $this->createSupplier('Apex Hardware');
+        $project = $this->createProject('Coastal Road');
+        $section = $this->createSection($project, 'Section Alpha');
+
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Net 15 Days';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $materialItem = $this->createMaterialItem('Gravel 3/4');
+
+        $items = [
+            [
+                'material_item_id' => $materialItem->id,
+                'order_quantity'   => 15,
+                'price'            => 1200.00,
+            ]
+        ];
+
+        $response = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/create', [
+            'supplier_id'     => $supplier->id,
+            'payment_term_id' => $paymentTerm->id,
+            'project_id'      => $project->id,
+            'section_id'      => $section->id,
+            'items'           => json_encode($items),
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+        ]);
+
+        $this->assertDatabaseHas('direct_purchase_orders', [
+            'supplier_id'     => $supplier->id,
+            'payment_term_id' => $paymentTerm->id,
+            'project_id'      => $project->id,
+            'section_id'      => $section->id,
             'status'          => 'DRFT',
         ]);
     }
@@ -271,6 +442,7 @@ class DirectPurchaseOrderTest extends TestCase
         $this->grantAccessCode($this->user, 'direct_purchase_order:all:view');
 
         $supplier = $this->createSupplier('Hardware Depot');
+        $project = $this->createProject('Commercial Complex');
 
         $paymentTerm = new PaymentTerm();
         $paymentTerm->text = 'Cash on Delivery';
@@ -291,6 +463,7 @@ class DirectPurchaseOrderTest extends TestCase
         $response = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/create', [
             'supplier_id'     => $supplier->id,
             'payment_term_id' => $paymentTerm->id,
+            'project_id'      => $project->id,
             'items'           => json_encode($items),
         ]);
 

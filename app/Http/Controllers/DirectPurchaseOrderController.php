@@ -134,7 +134,7 @@ class DirectPurchaseOrderController extends Controller
             if (is_null($po_items) || !is_array($po_items) || count($po_items) === 0) {
                 return response()->json([
                     'status'  => 0,
-                    'message' => 'Please provide at least one material item.',
+                    'message' => 'At least one item is required to make a direct PO.',
                     'data'    => []
                 ]);
             }
@@ -169,7 +169,7 @@ class DirectPurchaseOrderController extends Controller
         ], [
             'supplier_id'     => ['required', 'integer', 'min:1', 'exists:suppliers,id'],
             'payment_term_id' => ['required', 'integer', 'min:1', 'exists:payment_terms,id'],
-            'project_id'      => ['nullable', 'integer', 'min:1', 'exists:projects,id'],
+            'project_id'      => ['required', 'integer', 'min:1', 'exists:projects,id'],
             'section_id'      => ['nullable', 'integer', 'min:1', 'exists:sections,id'],
         ], [
             'payment_term_id.required' => 'Payment Term is required.',
@@ -178,6 +178,9 @@ class DirectPurchaseOrderController extends Controller
             'supplier_id.required'     => 'Supplier is required.',
             'supplier_id.min'          => 'Supplier is required.',
             'supplier_id.exists'       => 'The selected Supplier is invalid.',
+            'project_id.required'      => 'Project is required.',
+            'project_id.min'           => 'Project is required.',
+            'project_id.exists'        => 'The selected Project is invalid.',
         ]);
 
         if ($validation->fails()) {

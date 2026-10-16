@@ -59,10 +59,10 @@
                 <div class="row mb-3">
                     <div class="col-lg-6">
                         <div class="form-group mb-3">
-                            <label class="form-label">Project (Optional)</label>
+                            <label class="form-label">Project <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-search"></i></span>
-                                <input type="text" class="form-control" id="projectInput" list="projectList" placeholder="Type to search project (Optional)..." autocomplete="off">
+                                <input type="text" class="form-control" id="projectInput" list="projectList" placeholder="Type to search project..." autocomplete="off" required>
                                 <button class="btn btn-outline-secondary" type="button" id="clearProjectBtn" title="Clear Project"><i class="bi bi-x-lg"></i></button>
                             </div>
                             <datalist id="projectList">
@@ -293,6 +293,22 @@
             grandTotalText.textContent = total.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
         }
 
+        function updateItemRemoveButtons() {
+            const rows = itemsTableBody.querySelectorAll('tr');
+            rows.forEach(row => {
+                const btn = row.querySelector('.remove-row-btn');
+                if (btn) {
+                    if (rows.length <= 1) {
+                        btn.disabled = true;
+                        btn.setAttribute('title', 'At least one item is required');
+                    } else {
+                        btn.disabled = false;
+                        btn.removeAttribute('title');
+                    }
+                }
+            });
+        }
+
         function createItemRow() {
             const tr = document.createElement('tr');
             tr.innerHTML = `
@@ -314,18 +330,25 @@
                     <span class="item-total">0.00</span>
                 </td>
                 <td class="text-center align-middle">
-                    <button type="button" class="btn btn-sm btn-danger remove-row-btn">&times;</button>
+                    <button type="button" class="btn btn-sm btn-danger remove-row-btn" title="At least one item is required">&times;</button>
                 </td>
             `;
 
             tr.querySelector('.item-qty').oninput = recalculate;
             tr.querySelector('.item-price').oninput = recalculate;
             tr.querySelector('.remove-row-btn').onclick = () => {
+                const currentRows = itemsTableBody.querySelectorAll('tr');
+                if (currentRows.length <= 1) {
+                    alert('At least one item is required to make a direct PO.');
+                    return;
+                }
                 tr.remove();
+                updateItemRemoveButtons();
                 recalculate();
             };
 
             itemsTableBody.appendChild(tr);
+            updateItemRemoveButtons();
         }
 
         function createExtraRow() {
@@ -372,17 +395,13 @@
                 return;
             }
 
-            if (projectInput.value.trim() !== '') {
-                const matchedProjId = findOptionId(projectInput, projectList);
-                if (!matchedProjId) {
-                    alert('Please select a valid Project from the list, or clear the Project field.');
-                    projectInput.focus();
-                    return;
-                }
-                projectSelect.value = matchedProjId;
-            } else {
-                projectSelect.value = '';
+            const matchedProjId = findOptionId(projectInput, projectList);
+            if (!matchedProjId) {
+                alert('Please select a valid Project from the list.');
+                projectInput.focus();
+                return;
             }
+            projectSelect.value = matchedProjId;
 
             if (sectionInput.value.trim() !== '') {
                 const matchedSecId = findOptionId(sectionInput, sectionList);
@@ -418,7 +437,7 @@
             }
 
             if (items.length === 0) {
-                alert('Please add at least one Item.');
+                alert('At least one item is required to make a direct PO.');
                 return;
             }
 
@@ -445,7 +464,7 @@
             let res = await window.util.$post('/api/direct_purchase_order/create', {
                 supplier_id: supplierSelect.value,
                 payment_term_id: paymentTermSelect.value,
-                project_id: projectSelect.value || null,
+                project_id: projectSelect.value,
                 section_id: sectionSelect.value || null,
                 items: JSON.stringify(items),
                 extras: JSON.stringify(extras)
