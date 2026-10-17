@@ -1752,6 +1752,8 @@
             let totalAccomplishedAmount = 0;
             let totalTargetAmount = 0;
             let sumAllTimeActualMoneyAmount = 0;
+            let sumWeightedTarget = 0;
+            let sumWeightedActual = 0;
             const itemBreakdownRows = [];
 
             // Second pass: compute target amounts and percentages based on the next nearest target date
@@ -1807,6 +1809,9 @@
                         const weightedTarget = percentTarget * ciWeight;
                         const weightedActual = percentActual * ciWeight;
 
+                        sumWeightedTarget += weightedTarget;
+                        sumWeightedActual += weightedActual;
+
                         const ciName = (ci.item_code ? `[${ci.item_code}] ` : '') + (ci.description || ci.name || '');
                         itemBreakdownRows.push({
                             name: ciName,
@@ -1820,13 +1825,13 @@
                 }
             });
 
-            const overallTarget = totalContractAmount > 0 ? (sumTargetMoneyAmount / totalContractAmount) * 100 : 0;
-            const overallActual = totalContractAmount > 0 ? (sumActualMoneyAmount / totalContractAmount) * 100 : 0;
+            const overallTarget = sumWeightedTarget;
+            const overallActual = sumWeightedActual;
             const variance = overallActual - overallTarget;
             const financialPercent = totalContractAmount > 0 ? Math.min(100, (totalAccomplishedAmount / totalContractAmount) * 100) : 0;
             
             // Running velocity across the full project lifecycle
-            const currentOverallActual = totalContractAmount > 0 ? (sumAllTimeActualMoneyAmount / totalContractAmount) * 100 : 0;
+            const currentOverallActual = sumWeightedActual;
             let runningDaysElapsed = 0;
             let runningVelocityPerDay = 0;
             let projectEtaStr = 'Insufficient Data';
@@ -1973,7 +1978,7 @@
                                         <th class="text-end">Weight %</th>
                                         <th class="text-end">Actual %</th>
                                         <th class="text-end">Accomplished Amount</th>
-                                        <th class="text-end">% of Total</th>
+                                        <th class="text-end">Weighted Actual %</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1998,7 +2003,7 @@
                     <span class="badge bg-dark border border-secondary text-light fs-6 py-2 px-4 shadow-sm">
                         Variance: <span class="${varianceClass} ms-2 fw-bold">${varianceText}</span>
                     </span>
-                    <div class="text-muted small mt-2">Calculated as the total accomplished money amount (PHP ${formatNumber(sumActualMoneyAmount)}) divided by total contract amount (PHP ${formatNumber(totalContractAmount)}) across ${totalComponents} contract items.</div>
+                    <div class="text-muted small mt-2">Calculated as the sum of weighted actual accomplishments (${formatNum(overallActual)}) across ${totalComponents} contract items.</div>
                 </div>
 
                 <div class="text-end mt-5">
