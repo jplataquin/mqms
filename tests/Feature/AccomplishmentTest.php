@@ -1059,6 +1059,7 @@ class AccomplishmentTest extends TestCase
         $accTarget->created_by = $this->user->id;
         $accTarget->save();
 
+        // Target on future date (2026-10-20) - Should NOT be delayed under Option 1 (milestone not yet reached)
         $response = $this->actingAs($this->user)->get('/accomplishment/contract_item/' . $this->contractItem->id);
         $response->assertStatus(200);
 
@@ -1073,6 +1074,32 @@ class AccomplishmentTest extends TestCase
         // Check Weighted Target display (60.0000%)
         $response->assertSee('Latest Target (Weighted)');
         $response->assertSee('60.0000%');
+
+        // Since the target on 2026-10-20 is in the future, it should NOT be marked as Behind Target yet
+        $response->assertDontSee('table-danger');
+        $response->assertDontSee('Behind Target');
+
+        // Now create a past target milestone: 50 units on 2026-10-10 (which has passed)
+        // Since actual is only 40 units (< 50 past target milestone), it IS now delayed!
+        $pastTarget = new Accomplishment();
+        $pastTarget->contract_item_id = $this->contractItem->id;
+        $pastTarget->type = 'TARGET';
+        $pastTarget->entry_data = '2026-10-10';
+        $pastTarget->quantity = 50.0;
+        $pastTarget->remarks = 'Past Target entry';
+        $pastTarget->created_by = $this->user->id;
+        $pastTarget->save();
+
+        $responseWithPastTarget = $this->actingAs($this->user)->get('/accomplishment/contract_item/' . $this->contractItem->id);
+        $responseWithPastTarget->assertStatus(200);
+        $responseWithPastTarget->assertSee('table-danger');
+        $responseWithPastTarget->assertSee('Behind Target');
+
+        // Check Accomplishment Studio has behind target highlighting class and styles
+        $responseStudio = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/studio');
+        $responseStudio->assertStatus(200);
+        $responseStudio->assertSee('.row-component-behind', false);
+        $responseStudio->assertSee('row-component-behind', false);
     }
 
     /** @test */

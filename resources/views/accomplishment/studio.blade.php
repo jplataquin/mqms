@@ -385,6 +385,40 @@
             text-decoration: line-through;
         }
 
+        /* Behind target contract item styling (highlighted red) */
+        .row-component-behind td {
+            background-color: rgba(220, 53, 69, 0.12) !important;
+        }
+        .row-component-behind td.sticky-col-tree,
+        .row-component-behind td.sticky-col-metric,
+        .row-component-behind td.sticky-col-progress {
+            background-color: #2c161c !important;
+        }
+        .row-component-behind:hover td {
+            background-color: rgba(220, 53, 69, 0.22) !important;
+        }
+        .row-component-behind:hover td.sticky-col-tree,
+        .row-component-behind:hover td.sticky-col-metric,
+        .row-component-behind:hover td.sticky-col-progress {
+            background-color: #3b1b24 !important;
+        }
+        .row-component-behind td.sticky-col-tree span.comp-name-text {
+            color: #ff6b7d !important;
+            font-weight: 600;
+        }
+        .row-component-behind.active td {
+            background-color: rgba(220, 53, 69, 0.25) !important;
+            border-top: 1px solid #dc3545 !important;
+            border-bottom: 1px solid #dc3545 !important;
+        }
+        .row-component-behind.active td.sticky-col-tree,
+        .row-component-behind.active td.sticky-col-metric,
+        .row-component-behind.active td.sticky-col-progress {
+            background-color: #421822 !important;
+            border-top: 1px solid #dc3545 !important;
+            border-bottom: 1px solid #dc3545 !important;
+        }
+
         /* Gantt Bars / Pills */
         .gantt-pill {
             font-size: 11px;
@@ -884,6 +918,9 @@
                     let overallLatestActual = null;
                     let firstActual = null;
                     let allTimeLatestTarget = null;
+                    let latestPastTarget = null;
+                    const todayTime = new Date();
+                    todayTime.setHours(0,0,0,0);
                     const timeKeyAccomplishments = {};
 
                     if (ci.accomplishments) {
@@ -904,9 +941,29 @@
                                 }
                             }
 
-                            if (acc.type === 'TARGET' && acc.entry_data) {
-                                if (!allTimeLatestTarget || new Date(acc.entry_data) > new Date(allTimeLatestTarget.entry_data) || (acc.entry_data === allTimeLatestTarget.entry_data && (acc.id || 0) > (allTimeLatestTarget.id || 0))) {
+                            if (acc.type === 'TARGET') {
+                                const targetDate = new Date(acc.entry_data || acc.created_at || 0);
+                                if (!allTimeLatestTarget) {
                                     allTimeLatestTarget = acc;
+                                } else {
+                                    const latestTargetDate = new Date(allTimeLatestTarget.entry_data || allTimeLatestTarget.created_at || 0);
+                                    if (targetDate > latestTargetDate || (targetDate.getTime() === latestTargetDate.getTime() && (acc.id || 0) > (allTimeLatestTarget.id || 0))) {
+                                        allTimeLatestTarget = acc;
+                                    }
+                                }
+
+                                const targetDateOnly = new Date(targetDate);
+                                targetDateOnly.setHours(0,0,0,0);
+                                if (targetDateOnly <= todayTime) {
+                                    if (!latestPastTarget) {
+                                        latestPastTarget = acc;
+                                    } else {
+                                        const pastTargetDate = new Date(latestPastTarget.entry_data || latestPastTarget.created_at || 0);
+                                        pastTargetDate.setHours(0,0,0,0);
+                                        if (targetDateOnly > pastTargetDate || (targetDateOnly.getTime() === pastTargetDate.getTime() && (acc.id || 0) > (latestPastTarget.id || 0))) {
+                                            latestPastTarget = acc;
+                                        }
+                                    }
                                 }
                             }
 
@@ -950,6 +1007,10 @@
                     }
 
                     const totalActual = overallLatestActual ? (parseFloat(overallLatestActual.quantity) || 0) : 0;
+                    const latestTargetQty = latestPastTarget ? (parseFloat(latestPastTarget.quantity) || 0) : 0;
+                    const isBehindTarget = !isCiExcluded && latestPastTarget && (totalActual < latestTargetQty);
+                    const behindClass = isBehindTarget ? 'row-component-behind' : '';
+                    const behindBadge = isBehindTarget ? `<span class="badge bg-danger ms-1" style="font-size: 8.5px; vertical-align: middle;">Behind Target</span>` : '';
                     const percentActual = totalScope > 0 ? Math.min(100, Math.round((totalActual / totalScope) * 100)) : 0;
                     const actualDateStr = overallLatestActual && overallLatestActual.entry_data ? overallLatestActual.entry_data.substring(0, 10) : '';
 
@@ -976,16 +1037,47 @@
 
                     let requiredVelocity = 0;
                     let reqDaysLeft = 0;
-                    if (allTimeLatestTarget && totalActual < totalScope) {
-                        const dTargetStr = (allTimeLatestTarget.entry_data || '').substring(0, 10);
-                        if (dTargetStr) {
-                            const dTarget = new Date(dTargetStr);
-                            const today = new Date();
-                            today.setHours(0,0,0,0);
-                            dTarget.setHours(0,0,0,0);
-                            reqDaysLeft = Math.max(1, Math.ceil((dTarget - today) / (1000 * 60 * 60 * 24)));
-                            const remainingQty = totalScope - totalActual;
-                            requiredVelocity = remainingQty / reqDaysLeft;
+                    let nextNearestTarget = null;
+                    if (ci.accomplishments) {
+                        const todayDate = new Date();
+                        todayDate.setHours(0,0,0,0);
+
+                        const sortedTargets = ci.accomplishments
+                            .filter(acc => acc.type === 'TARGET' && (acc.entry_data || acc.created_at))
+                            .map(acc => {
+                                const dStr = (acc.entry_data || acc.created_at).substring(0, 10);
+                                const d = new Date(dStr);
+                                d.setHours(0,0,0,0);
+                                return {
+                                    acc: acc,
+                                    date: d,
+                                    dateStr: dStr,
+                                    quantity: parseFloat(acc.quantity) || 0
+                                };
+                            })
+                            .sort((a, b) => a.date - b.date);
+
+                        // Find the next nearest upcoming target that has not yet been achieved
+                        nextNearestTarget = sortedTargets.find(t => t.date >= todayDate && t.quantity > totalActual);
+
+                        if (!nextNearestTarget) {
+                            nextNearestTarget = sortedTargets.find(t => t.date >= todayDate);
+                        }
+
+                        if (!nextNearestTarget && sortedTargets.length > 0) {
+                            nextNearestTarget = sortedTargets[sortedTargets.length - 1];
+                        }
+                    }
+
+                    if (nextNearestTarget) {
+                        const today = new Date();
+                        today.setHours(0,0,0,0);
+                        reqDaysLeft = Math.max(1, Math.ceil((nextNearestTarget.date - today) / (1000 * 60 * 60 * 24)));
+                        const remainingQtyToNextTarget = Math.max(0, nextNearestTarget.quantity - totalActual);
+                        if (remainingQtyToNextTarget > 0) {
+                            requiredVelocity = remainingQtyToNextTarget / reqDaysLeft;
+                        } else {
+                            requiredVelocity = 0;
                         }
                     }
 
@@ -996,7 +1088,7 @@
                         velocity: ciVelocity, 
                         reqVelocity: requiredVelocity,
                         reqDaysLeft: reqDaysLeft,
-                        targetDeadline: allTimeLatestTarget ? (allTimeLatestTarget.entry_data || '').substring(0, 10) : null,
+                        targetDeadline: nextNearestTarget ? nextNearestTarget.dateStr : (allTimeLatestTarget ? (allTimeLatestTarget.entry_data || '').substring(0, 10) : null),
                         eta: ciEtaDateStr, 
                         days: daysElapsed,
                         totalActual: totalActual,
@@ -1008,10 +1100,11 @@
                     };
 
                     bodyHtml += `
-                    <tr class="row-component ${excludedClass} ${isActive}" id="comp-row-${ci.id}" style="${displayCi}" data-section-parent="${section.id}" data-ci-parent="${ci.id}" data-comp-id="${ci.id}" data-comp-name="${escapeHtml(ciName)}" data-comp-qty="${ci.contract_quantity || ''}" data-comp-unit="${escapeHtml(unitText)}" data-comp-excluded="${isCiExcluded ? '1' : '0'}" onclick="selectComponent(${ci.id}, '${escapeHtml(ciName)}')">
+                    <tr class="row-component ${excludedClass} ${behindClass} ${isActive}" id="comp-row-${ci.id}" style="${displayCi}" data-section-parent="${section.id}" data-ci-parent="${ci.id}" data-comp-id="${ci.id}" data-comp-name="${escapeHtml(ciName)}" data-comp-qty="${ci.contract_quantity || ''}" data-comp-unit="${escapeHtml(unitText)}" data-comp-excluded="${isCiExcluded ? '1' : '0'}" onclick="selectComponent(${ci.id}, '${escapeHtml(ciName)}')">
                         <td class="sticky-col-tree" style="padding-left: 28px; cursor: pointer;" title="Double-click to view progress & performance">
-                            <i class="bi bi-diagram-3 ${isCiExcluded ? 'text-danger' : 'text-info'} me-1"></i>
+                            <i class="bi bi-diagram-3 ${isCiExcluded ? 'text-danger' : (isBehindTarget ? 'text-danger' : 'text-info')} me-1"></i>
                             <span class="comp-name-text" title="${escapeHtml(ciName)}">${escapeHtml(ciName)}</span>
+                            ${behindBadge}
                             ${excludedBadge}
                         </td>
                         <td class="sticky-col-metric">
@@ -1021,14 +1114,14 @@
                         </td>
                         <td class="sticky-col-progress">
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="small fw-semibold text-primary">${formatNumber(totalActual)}</span>
-                                <span class="badge ${percentActual >= 100 ? 'bg-primary' : 'bg-secondary'}" style="font-size: 10px;">${percentActual}%</span>
+                                <span class="small fw-semibold ${isBehindTarget ? 'text-danger' : 'text-primary'}">${formatNumber(totalActual)}</span>
+                                <span class="badge ${isBehindTarget ? 'bg-danger' : (percentActual >= 100 ? 'bg-primary' : 'bg-secondary')}" style="font-size: 10px;">${percentActual}%</span>
                             </div>
                             <div class="gantt-progress-bar">
-                                <div class="progress-actual" style="width: ${percentActual}%;"></div>
+                                <div class="progress-actual ${isBehindTarget ? 'bg-danger' : ''}" style="width: ${percentActual}%;"></div>
                             </div>
                             <div class="d-flex justify-content-between text-muted" style="font-size: 9.5px; margin-top: 2px;">
-                                <span class="text-primary fw-semibold" title="Accomplished Amount: PHP ${formatNumber(accomplishedAmount)}">PHP ${formatNumber(accomplishedAmount)}</span>
+                                <span class="${isBehindTarget ? 'text-danger' : 'text-primary'} fw-semibold" title="Accomplished Amount: PHP ${formatNumber(accomplishedAmount)}">PHP ${formatNumber(accomplishedAmount)}</span>
                                 ${actualDateStr ? `<span title="As of ${escapeHtml(actualDateStr)}">as of ${escapeHtml(actualDateStr)}</span>` : ''}
                             </div>
                         </td>`;
@@ -1596,6 +1689,7 @@
             let projectFirstActualDate = null;
             let projectLatestActualDate = null;
             let projectLatestTargetDate = null;
+            const projectAllTargetDates = new Set();
             let sumAllTimeActualPercent = 0;
 
             projectData.sections.forEach(section => {
@@ -1647,6 +1741,7 @@
                                 }
 
                                 if (acc.type === 'TARGET' && accDateStr) {
+                                    projectAllTargetDates.add(accDateStr);
                                     if (!projectLatestTargetDate || new Date(accDateStr) > new Date(projectLatestTargetDate)) {
                                         projectLatestTargetDate = accDateStr;
                                     }
@@ -1709,10 +1804,31 @@
 
             const formattedRunningVelocity = runningVelocityPerDay > 0 ? `${runningVelocityPerDay.toFixed(2)}%/day` : '0.00%/day';
 
+            let nextNearestProjectTargetDate = null;
+            if (projectAllTargetDates.size > 0) {
+                const today = new Date();
+                today.setHours(0,0,0,0);
+                const sortedProjectTargetDates = Array.from(projectAllTargetDates)
+                    .map(dStr => {
+                        const d = new Date(dStr);
+                        d.setHours(0,0,0,0);
+                        return { dateStr: dStr, date: d };
+                    })
+                    .sort((a, b) => a.date - b.date);
+
+                const upcoming = sortedProjectTargetDates.find(t => t.date >= today);
+                if (upcoming) {
+                    nextNearestProjectTargetDate = upcoming.dateStr;
+                } else {
+                    nextNearestProjectTargetDate = sortedProjectTargetDates[sortedProjectTargetDates.length - 1].dateStr;
+                }
+            }
+
             let requiredVelocityPerDay = 0;
             let projectDaysLeft = 0;
-            if (projectLatestTargetDate && currentOverallActual < 100) {
-                const dTarget = new Date(projectLatestTargetDate);
+            const targetDateToUse = nextNearestProjectTargetDate || projectLatestTargetDate;
+            if (targetDateToUse && currentOverallActual < 100) {
+                const dTarget = new Date(targetDateToUse);
                 const today = new Date();
                 today.setHours(0,0,0,0);
                 dTarget.setHours(0,0,0,0);
@@ -1949,16 +2065,47 @@
 
             let requiredVelocity = 0;
             let compDaysLeft = 0;
-            if (allTimeLatestTarget && allTimeActualQty < totalScope) {
-                const dTargetStr = (allTimeLatestTarget.entry_data || '').substring(0, 10);
-                if (dTargetStr) {
-                    const dTarget = new Date(dTargetStr);
-                    const today = new Date();
-                    today.setHours(0,0,0,0);
-                    dTarget.setHours(0,0,0,0);
-                    compDaysLeft = Math.max(1, Math.ceil((dTarget - today) / (1000 * 60 * 60 * 24)));
-                    const remainingQty = totalScope - allTimeActualQty;
-                    requiredVelocity = remainingQty / compDaysLeft;
+            let nextNearestTarget = null;
+            if (comp.accomplishments && comp.accomplishments.length > 0) {
+                const today = new Date();
+                today.setHours(0,0,0,0);
+
+                const sortedTargets = comp.accomplishments
+                    .filter(acc => acc.type === 'TARGET' && (acc.entry_data || acc.created_at))
+                    .map(acc => {
+                        const dStr = (acc.entry_data || acc.created_at).substring(0, 10);
+                        const d = new Date(dStr);
+                        d.setHours(0,0,0,0);
+                        return {
+                            acc: acc,
+                            date: d,
+                            dateStr: dStr,
+                            quantity: parseFloat(acc.quantity) || 0
+                        };
+                    })
+                    .sort((a, b) => a.date - b.date);
+
+                // Find next nearest upcoming target that has not yet been achieved
+                nextNearestTarget = sortedTargets.find(t => t.date >= today && t.quantity > allTimeActualQty);
+
+                if (!nextNearestTarget) {
+                    nextNearestTarget = sortedTargets.find(t => t.date >= today);
+                }
+
+                if (!nextNearestTarget && sortedTargets.length > 0) {
+                    nextNearestTarget = sortedTargets[sortedTargets.length - 1];
+                }
+            }
+
+            if (nextNearestTarget) {
+                const today = new Date();
+                today.setHours(0,0,0,0);
+                compDaysLeft = Math.max(1, Math.ceil((nextNearestTarget.date - today) / (1000 * 60 * 60 * 24)));
+                const remainingQtyToNextTarget = Math.max(0, nextNearestTarget.quantity - allTimeActualQty);
+                if (remainingQtyToNextTarget > 0) {
+                    requiredVelocity = remainingQtyToNextTarget / compDaysLeft;
+                } else {
+                    requiredVelocity = 0;
                 }
             }
 
@@ -1970,11 +2117,13 @@
             const compDaysText = compDaysLeft > 0 ? ` for ${compDaysLeft} day${compDaysLeft === 1 ? '' : 's'}` : '';
             const reqVelocityStr = requiredVelocity > 0 ? `${formatNumber(requiredVelocity)} ${escapeHtml(unitText)}/day${compDaysText}` : 'N/A';
             const speedStatusClass = (compVelocity && requiredVelocity) ? (compVelocity >= requiredVelocity ? 'text-success' : 'text-danger') : 'text-info';
+            const isCompBehindTarget = (targetQty > 0) && (actualQty < targetQty);
 
             const html = `
-                <div class="card mb-3 border-secondary bg-dark">
-                    <div class="card-header bg-dark border-secondary py-2">
-                        <span class="text-light fw-bold"><i class="bi bi-box-seam me-1"></i> ${escapeHtml(comp.name)}</span>
+                <div class="card mb-3 ${isCompBehindTarget ? 'border-danger' : 'border-secondary'} bg-dark">
+                    <div class="card-header ${isCompBehindTarget ? 'border-danger bg-danger text-white' : 'border-secondary bg-dark'} py-2 d-flex justify-content-between align-items-center">
+                        <span class="${isCompBehindTarget ? 'text-white' : 'text-light'} fw-bold"><i class="bi ${isCompBehindTarget ? 'bi-exclamation-triangle-fill' : 'bi-box-seam'} me-1"></i> ${escapeHtml(comp.name)}</span>
+                        ${isCompBehindTarget ? '<span class="badge bg-light text-danger fw-bold">Behind Target</span>' : ''}
                     </div>
                 </div>
 

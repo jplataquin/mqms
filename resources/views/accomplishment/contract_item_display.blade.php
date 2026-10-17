@@ -33,6 +33,25 @@
 
     <table class="record-table-horizontal mb-3" hx-boost="true" hx-select="#content" hx-target="#main">
         <tbody>
+            @php
+                $isBehindTarget = false;
+                $today = now()->startOfDay();
+                $latestPastTarget = null;
+                if (isset($accomplishments)) {
+                    $latestPastTarget = $accomplishments->where('type', 'TARGET')->filter(function($acc) use ($today) {
+                        $date = $acc->entry_data ? $acc->entry_data->startOfDay() : ($acc->created_at ? $acc->created_at->startOfDay() : null);
+                        return $date && $date <= $today;
+                    })->first();
+                }
+
+                if ($latestPastTarget) {
+                    $targetQty = (float)$latestPastTarget->quantity;
+                    $actualQty = $latestActual ? (float)$latestActual->quantity : 0;
+                    if ($actualQty < $targetQty) {
+                        $isBehindTarget = true;
+                    }
+                }
+            @endphp
             <tr>
                 <th>Project</th>
                 <td>
@@ -45,10 +64,14 @@
                     <a href="/accomplishment/section/{{$section->id}}">{{$section->name}}</a>
                 </td>
             </tr>
-            <tr>
+            <tr class="{{ $isBehindTarget ? 'table-danger' : '' }}">
                 <th>Contract Item</th>
                 <td>
-                    <strong>[{{$contract_item->item_code}}]</strong> {{$contract_item->description}}
+                    <strong class="{{ $isBehindTarget ? 'text-danger' : '' }}">[{{$contract_item->item_code}}]</strong> 
+                    <span class="{{ $isBehindTarget ? 'text-danger fw-semibold' : '' }}">{{$contract_item->description}}</span>
+                    @if($isBehindTarget)
+                        <span class="badge bg-danger ms-2">Behind Target</span>
+                    @endif
                 </td>
             </tr>
             <tr>
@@ -89,7 +112,7 @@
                    @endif
                 </td>
             </tr>
-            <tr>
+            <tr class="{{ $isBehindTarget ? 'table-danger' : '' }}">
                 <th>Latest Actual (Weighted)</th>
                 <td>
                    @if($latestActual)
@@ -98,8 +121,8 @@
                            $weightedActual = ($actualPercentage * ($contractItemWeight ?? 0));
                            $formattedDate = $latestActual->entry_data ? $latestActual->entry_data->format('Y-m-d') : 'N/A';
                        @endphp
-                       <strong class="text-primary">{{ number_format($weightedActual, 4) }}%</strong>
-                       <span class="text-muted ms-1">({{ number_format($latestActual->quantity, 2) }} {{$contract_item->contract_unit_text}} / {{ number_format($actualPercentage, 2) }}%) as of {{ $formattedDate }}</span>
+                       <strong class="{{ $isBehindTarget ? 'text-danger' : 'text-primary' }}">{{ number_format($weightedActual, 4) }}%</strong>
+                       <span class="{{ $isBehindTarget ? 'text-danger' : 'text-muted' }} ms-1">({{ number_format($latestActual->quantity, 2) }} {{$contract_item->contract_unit_text}} / {{ number_format($actualPercentage, 2) }}%) as of {{ $formattedDate }}</span>
                    @else
                        -
                    @endif
