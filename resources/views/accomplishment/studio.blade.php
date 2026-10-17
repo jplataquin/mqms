@@ -1747,11 +1747,11 @@
 
             const targetDateToUse = nextNearestProjectTargetDate || projectLatestTargetDate;
 
-            let sumTargetPercentages = 0;
-            let sumActualPercentages = 0;
+            let sumTargetMoneyAmount = 0;
+            let sumActualMoneyAmount = 0;
             let totalAccomplishedAmount = 0;
             let totalTargetAmount = 0;
-            let sumAllTimeActualPercent = 0;
+            let sumAllTimeActualMoneyAmount = 0;
             const itemBreakdownRows = [];
 
             // Second pass: compute target amounts and percentages based on the next nearest target date
@@ -1796,12 +1796,16 @@
                             percentTarget = Math.min(100, (targetQty / totalScope) * 100);
                             percentActual = Math.min(100, (actualQty / totalScope) * 100);
                         }
+
+                        const targetMoneyAmount = (percentTarget / 100) * ciContractAmount;
+                        const actualMoneyAmount = (percentActual / 100) * ciContractAmount;
+
+                        sumTargetMoneyAmount += targetMoneyAmount;
+                        sumActualMoneyAmount += actualMoneyAmount;
+                        sumAllTimeActualMoneyAmount += actualMoneyAmount;
+
                         const weightedTarget = percentTarget * ciWeight;
                         const weightedActual = percentActual * ciWeight;
-
-                        sumTargetPercentages += weightedTarget;
-                        sumActualPercentages += weightedActual;
-                        sumAllTimeActualPercent += weightedActual;
 
                         const ciName = (ci.item_code ? `[${ci.item_code}] ` : '') + (ci.description || ci.name || '');
                         itemBreakdownRows.push({
@@ -1815,13 +1819,13 @@
                 }
             });
 
-            const overallTarget = sumTargetPercentages;
-            const overallActual = sumActualPercentages;
+            const overallTarget = totalContractAmount > 0 ? (sumTargetMoneyAmount / totalContractAmount) * 100 : 0;
+            const overallActual = totalContractAmount > 0 ? (sumActualMoneyAmount / totalContractAmount) * 100 : 0;
             const variance = overallActual - overallTarget;
             const financialPercent = totalContractAmount > 0 ? Math.min(100, (totalAccomplishedAmount / totalContractAmount) * 100) : 0;
             
             // Running velocity across the full project lifecycle
-            const currentOverallActual = sumAllTimeActualPercent;
+            const currentOverallActual = totalContractAmount > 0 ? (sumAllTimeActualMoneyAmount / totalContractAmount) * 100 : 0;
             let runningDaysElapsed = 0;
             let runningVelocityPerDay = 0;
             let projectEtaStr = 'Insufficient Data';
