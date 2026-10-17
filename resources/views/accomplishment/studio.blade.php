@@ -1472,8 +1472,11 @@
                 const etaStr = stats.eta ? stats.eta : (stats.percentActual >= 100 ? 'Completed' : 'Insufficient Data');
                 const daysStr = stats.days ? `${stats.days} day(s) active` : '';
                 const speedStatusClass = (stats.velocity && stats.reqVelocity) ? (stats.velocity >= stats.reqVelocity ? 'text-success' : 'text-danger') : 'text-info';
-                const nextTargetInfo = (stats.nextTargetDate && stats.nextTargetQty !== null) 
-                    ? `<div class="text-info small text-truncate mt-1" style="font-size: 10px;" title="Target: ${formatNumber(stats.nextTargetQty)} ${escapeHtml(unit)} by ${stats.nextTargetDate}">Target: ${formatNumber(stats.nextTargetQty)} ${escapeHtml(unit)} (${stats.nextTargetDate})</div>` 
+                const nextTargetColValue = (stats.nextTargetDate && stats.nextTargetQty !== null) 
+                    ? `${formatNumber(stats.nextTargetQty)} ${escapeHtml(unit)}` 
+                    : 'N/A';
+                const nextTargetColSub = (stats.nextTargetDate && stats.nextTargetQty !== null) 
+                    ? `<div class="text-muted small" style="font-size: 10px;">by ${stats.nextTargetDate}</div>` 
                     : '';
 
                 const html = `
@@ -1486,25 +1489,26 @@
                     <div class="card mb-3 border-secondary bg-dark">
                         <div class="card-header bg-dark border-secondary py-2 d-flex justify-content-between align-items-center">
                             <span class="text-light fw-bold small"><i class="bi bi-speedometer2 text-info me-1"></i> Velocity & Target Rate</span>
-                            <div class="text-end">
-                                ${stats.nextTargetDate ? `<span class="badge bg-dark border border-secondary text-info fw-normal me-2" style="font-size: 10px;"><i class="bi bi-bullseye me-1"></i> Target: ${formatNumber(stats.nextTargetQty)} ${escapeHtml(unit)} (${stats.nextTargetDate})</span>` : ''}
-                                <small class="text-muted">${daysStr}</small>
-                            </div>
+                            <small class="text-muted">${daysStr}</small>
                         </div>
                         <div class="card-body py-2">
                             <div class="row g-2">
-                                <div class="col-4">
+                                <div class="col-3">
                                     <div class="text-muted small" style="font-size: 11px;">Running Speed</div>
                                     <div class="fw-semibold ${speedStatusClass}">${velocityStr}</div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-3">
                                     <div class="text-muted small" style="font-size: 11px;">Est. Completion</div>
                                     <div class="fw-semibold text-warning">${escapeHtml(etaStr)}</div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-3">
                                     <div class="text-muted small" style="font-size: 11px;">Required Speed</div>
                                     <div class="fw-semibold text-light">${reqVelocityStr}</div>
-                                    ${nextTargetInfo}
+                                </div>
+                                <div class="col-3">
+                                    <div class="text-muted small" style="font-size: 11px;">Next Target</div>
+                                    <div class="fw-semibold text-info">${nextTargetColValue}</div>
+                                    ${nextTargetColSub}
                                 </div>
                             </div>
                         </div>
@@ -1676,31 +1680,20 @@
         // Expose to window for external communication
         window.refreshGanttChart = loadProjectData;
 
-        window.showOverallProgress = function(asOfDateOverride) {
+        window.showOverallProgress = function() {
             if (!projectData || !projectData.sections) return;
 
-            // Default to today in local YYYY-MM-DD
-            const now = new Date();
-            const y = now.getFullYear();
-            const m = String(now.getMonth() + 1).padStart(2, '0');
-            const d = String(now.getDate()).padStart(2, '0');
-            const asOfDate = typeof asOfDateOverride === 'string' ? asOfDateOverride : `${y}-${m}-${d}`;
-
             let totalComponents = 0;
-            let sumTargetPercentages = 0;
-            let sumActualPercentages = 0;
-
             let totalContractAmount = 0;
-            let totalAccomplishedAmount = 0;
-            let totalTargetAmount = 0;
 
-            // Running calculation tracking (independent of scope date)
             let projectFirstActualDate = null;
             let projectLatestActualDate = null;
             let projectLatestTargetDate = null;
             const projectAllTargetDates = new Set();
-            let sumAllTimeActualPercent = 0;
+            const today = new Date();
+            today.setHours(0,0,0,0);
 
+            // First pass: collect dates and total contract amounts
             projectData.sections.forEach(section => {
                 if (section.contract_items) {
                     section.contract_items.forEach(ci => {
@@ -1708,35 +1701,11 @@
                         totalComponents++;
                         const totalScope = parseFloat(ci.contract_quantity) || 0;
                         const unitPrice = parseFloat(ci.contract_unit_price) || 0;
-                        const ciContractAmount = totalScope * unitPrice;
-                        totalContractAmount += ciContractAmount;
-
-                        let targetQty = 0;
-                        let actualQty = 0;
-
-                        let allTimeLatestActual = null;
+                        totalContractAmount += (totalScope * unitPrice);
 
                         if (ci.accomplishments && ci.accomplishments.length > 0) {
-                            let latestTarget = null;
-                            let latestActual = null;
-                            
                             ci.accomplishments.forEach(acc => {
                                 const accDateStr = acc.entry_data ? acc.entry_data.substring(0, 10) : '';
-                                
-                                // Scoped snapshot check
-                                if (accDateStr <= asOfDate) {
-                                    if (acc.type === 'TARGET') {
-                                        if (!latestTarget || new Date(acc.entry_data) > new Date(latestTarget.entry_data) || (acc.entry_data === latestTarget.entry_data && acc.id > latestTarget.id)) {
-                                            latestTarget = acc;
-                                        }
-                                    } else if (acc.type === 'ACTUAL') {
-                                        if (!latestActual || new Date(acc.entry_data) > new Date(latestActual.entry_data) || (acc.entry_data === latestActual.entry_data && acc.id > latestActual.id)) {
-                                            latestActual = acc;
-                                        }
-                                    }
-                                }
-
-                                // Running calculation (all time)
                                 if (acc.type === 'ACTUAL' && accDateStr) {
                                     if (!projectFirstActualDate || new Date(accDateStr) < new Date(projectFirstActualDate)) {
                                         projectFirstActualDate = accDateStr;
@@ -1744,11 +1713,7 @@
                                     if (!projectLatestActualDate || new Date(accDateStr) > new Date(projectLatestActualDate)) {
                                         projectLatestActualDate = accDateStr;
                                     }
-                                    if (!allTimeLatestActual || new Date(acc.entry_data) > new Date(allTimeLatestActual.entry_data) || (acc.entry_data === allTimeLatestActual.entry_data && acc.id > allTimeLatestActual.id)) {
-                                        allTimeLatestActual = acc;
-                                    }
                                 }
-
                                 if (acc.type === 'TARGET' && accDateStr) {
                                     projectAllTargetDates.add(accDateStr);
                                     if (!projectLatestTargetDate || new Date(accDateStr) > new Date(projectLatestTargetDate)) {
@@ -1756,11 +1721,70 @@
                                     }
                                 }
                             });
-                            
+                        }
+                    });
+                }
+            });
+
+            // Find next nearest project target date automatically
+            let nextNearestProjectTargetDate = null;
+            if (projectAllTargetDates.size > 0) {
+                const sortedProjectTargetDates = Array.from(projectAllTargetDates)
+                    .map(dStr => {
+                        const d = new Date(dStr);
+                        d.setHours(0,0,0,0);
+                        return { dateStr: dStr, date: d };
+                    })
+                    .sort((a, b) => a.date - b.date);
+
+                const upcoming = sortedProjectTargetDates.find(t => t.date >= today);
+                if (upcoming) {
+                    nextNearestProjectTargetDate = upcoming.dateStr;
+                } else {
+                    nextNearestProjectTargetDate = sortedProjectTargetDates[sortedProjectTargetDates.length - 1].dateStr;
+                }
+            }
+
+            const targetDateToUse = nextNearestProjectTargetDate || projectLatestTargetDate;
+
+            let sumTargetPercentages = 0;
+            let sumActualPercentages = 0;
+            let totalAccomplishedAmount = 0;
+            let totalTargetAmount = 0;
+            let sumAllTimeActualPercent = 0;
+
+            // Second pass: compute target amounts and percentages based on the next nearest target date
+            projectData.sections.forEach(section => {
+                if (section.contract_items) {
+                    section.contract_items.forEach(ci => {
+                        if (ci.exclude_from_monitoring == 1) return;
+                        const totalScope = parseFloat(ci.contract_quantity) || 0;
+                        const unitPrice = parseFloat(ci.contract_unit_price) || 0;
+
+                        let targetQty = 0;
+                        let allTimeLatestActual = null;
+
+                        if (ci.accomplishments && ci.accomplishments.length > 0) {
+                            let latestTarget = null;
+                            ci.accomplishments.forEach(acc => {
+                                const accDateStr = acc.entry_data ? acc.entry_data.substring(0, 10) : '';
+                                if (acc.type === 'TARGET' && accDateStr && targetDateToUse) {
+                                    if (accDateStr <= targetDateToUse) {
+                                        if (!latestTarget || new Date(acc.entry_data) > new Date(latestTarget.entry_data) || (acc.entry_data === latestTarget.entry_data && acc.id > latestTarget.id)) {
+                                            latestTarget = acc;
+                                        }
+                                    }
+                                }
+                                if (acc.type === 'ACTUAL' && accDateStr) {
+                                    if (!allTimeLatestActual || new Date(acc.entry_data) > new Date(allTimeLatestActual.entry_data) || (acc.entry_data === allTimeLatestActual.entry_data && acc.id > allTimeLatestActual.id)) {
+                                        allTimeLatestActual = acc;
+                                    }
+                                }
+                            });
                             if (latestTarget) targetQty = parseFloat(latestTarget.quantity) || 0;
-                            if (latestActual) actualQty = parseFloat(latestActual.quantity) || 0;
                         }
 
+                        const actualQty = allTimeLatestActual ? (parseFloat(allTimeLatestActual.quantity) || 0) : 0;
                         totalTargetAmount += targetQty * unitPrice;
                         totalAccomplishedAmount += actualQty * unitPrice;
 
@@ -1772,11 +1796,7 @@
                         }
                         sumTargetPercentages += percentTarget;
                         sumActualPercentages += percentActual;
-
-                        // Running all-time actual percent
-                        const allTimeActualQty = allTimeLatestActual ? (parseFloat(allTimeLatestActual.quantity) || 0) : 0;
-                        const allTimePercent = totalScope > 0 ? Math.min(100, (allTimeActualQty / totalScope) * 100) : 0;
-                        sumAllTimeActualPercent += allTimePercent;
+                        sumAllTimeActualPercent += percentActual;
                     });
                 }
             });
@@ -1813,29 +1833,8 @@
 
             const formattedRunningVelocity = runningVelocityPerDay > 0 ? `${runningVelocityPerDay.toFixed(2)}%/day` : '0.00%/day';
 
-            let nextNearestProjectTargetDate = null;
-            if (projectAllTargetDates.size > 0) {
-                const today = new Date();
-                today.setHours(0,0,0,0);
-                const sortedProjectTargetDates = Array.from(projectAllTargetDates)
-                    .map(dStr => {
-                        const d = new Date(dStr);
-                        d.setHours(0,0,0,0);
-                        return { dateStr: dStr, date: d };
-                    })
-                    .sort((a, b) => a.date - b.date);
-
-                const upcoming = sortedProjectTargetDates.find(t => t.date >= today);
-                if (upcoming) {
-                    nextNearestProjectTargetDate = upcoming.dateStr;
-                } else {
-                    nextNearestProjectTargetDate = sortedProjectTargetDates[sortedProjectTargetDates.length - 1].dateStr;
-                }
-            }
-
             let requiredVelocityPerDay = 0;
             let projectDaysLeft = 0;
-            const targetDateToUse = nextNearestProjectTargetDate || projectLatestTargetDate;
             if (targetDateToUse && currentOverallActual < 100) {
                 const dTarget = new Date(targetDateToUse);
                 const today = new Date();
@@ -1854,11 +1853,6 @@
             const varianceClass = variance >= 0 ? 'text-success' : 'text-danger';
 
             const html = `
-                <div class="mb-4">
-                    <label class="form-label text-muted small fw-semibold">Scope Date (As Of)</label>
-                    <input type="date" class="form-control bg-dark border-secondary text-light" value="${asOfDate}" onchange="showOverallProgress(this.value)">
-                </div>
-
                 <div class="card mb-3 border-secondary bg-dark">
                     <div class="card-header bg-dark border-secondary py-2 d-flex justify-content-between align-items-center">
                         <span class="text-light fw-bold small"><i class="bi bi-cash-stack text-success me-1"></i> Financial Accomplishment (PHP)</span>
@@ -1889,17 +1883,22 @@
                     </div>
                     <div class="card-body py-2">
                         <div class="row g-2">
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="text-muted small" style="font-size: 11px;">Running Speed</div>
                                 <div class="fw-semibold ${projectSpeedStatusClass}">${formattedRunningVelocity}</div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="text-muted small" style="font-size: 11px;">Est. Completion</div>
                                 <div class="fw-semibold text-warning">${escapeHtml(projectEtaStr)}</div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="text-muted small" style="font-size: 11px;">Required Speed</div>
                                 <div class="fw-semibold text-light">${formattedRequiredVelocity}</div>
+                            </div>
+                            <div class="col-3">
+                                <div class="text-muted small" style="font-size: 11px;">Next Target</div>
+                                <div class="fw-semibold text-info">${nextNearestProjectTargetDate ? nextNearestProjectTargetDate : 'N/A'}</div>
+                                ${nextNearestProjectTargetDate ? '<div class="text-muted small" style="font-size: 10px;">Target Date</div>' : ''}
                             </div>
                         </div>
                     </div>
@@ -1947,7 +1946,7 @@
             window.util.drawerModal.content('Overall Project Progress', contentEl).open();
         };
 
-        window.showComponentProgress = function(compId, asOfDateOverride) {
+        window.showComponentProgress = function(compId) {
             if (!projectData || !projectData.sections) return;
 
             let comp = null;
@@ -1963,38 +1962,20 @@
             }
             if (!comp) return;
 
-            const now = new Date();
-            const y = now.getFullYear();
-            const m = String(now.getMonth() + 1).padStart(2, '0');
-            const d = String(now.getDate()).padStart(2, '0');
-            const asOfDate = typeof asOfDateOverride === 'string' ? asOfDateOverride : `${y}-${m}-${d}`;
-
             const totalScope = parseFloat(comp.contract_quantity) || 0;
             const unitText = comp.contract_unit_text || '';
             const unitPrice = parseFloat(comp.contract_unit_price) || 0;
 
-            let targetQty = 0;
-            let actualQty = 0;
-            let latestActual = null;
-            let latestTarget = null;
             let allTimeFirstActual = null;
             let allTimeLatestActual = null;
             let allTimeLatestTarget = null;
+            let latestPastTarget = null;
+            const today = new Date();
+            today.setHours(0,0,0,0);
 
             if (comp.accomplishments && comp.accomplishments.length > 0) {
                 comp.accomplishments.forEach(acc => {
                     const accDateStr = acc.entry_data ? acc.entry_data.substring(0, 10) : '';
-                    if (accDateStr <= asOfDate) {
-                        if (acc.type === 'TARGET') {
-                            if (!latestTarget || new Date(acc.entry_data) > new Date(latestTarget.entry_data) || (acc.entry_data === latestTarget.entry_data && acc.id > latestTarget.id)) {
-                                latestTarget = acc;
-                            }
-                        } else if (acc.type === 'ACTUAL') {
-                            if (!latestActual || new Date(acc.entry_data) > new Date(latestActual.entry_data) || (acc.entry_data === latestActual.entry_data && acc.id > latestActual.id)) {
-                                latestActual = acc;
-                            }
-                        }
-                    }
 
                     // Running calculation (all time)
                     if (acc.type === 'ACTUAL' && accDateStr) {
@@ -2010,13 +1991,52 @@
                         if (!allTimeLatestTarget || new Date(acc.entry_data) > new Date(allTimeLatestTarget.entry_data) || (acc.entry_data === allTimeLatestTarget.entry_data && acc.id > allTimeLatestTarget.id)) {
                             allTimeLatestTarget = acc;
                         }
+
+                        const targetDate = new Date(acc.entry_data);
+                        targetDate.setHours(0,0,0,0);
+                        if (targetDate <= today) {
+                            if (!latestPastTarget || targetDate > new Date(latestPastTarget.entry_data) || (acc.entry_data === latestPastTarget.entry_data && acc.id > latestPastTarget.id)) {
+                                latestPastTarget = acc;
+                            }
+                        }
                     }
                 });
-
-                if (latestTarget) targetQty = parseFloat(latestTarget.quantity) || 0;
-                if (latestActual) actualQty = parseFloat(latestActual.quantity) || 0;
             }
 
+            const allTimeActualQty = allTimeLatestActual ? (parseFloat(allTimeLatestActual.quantity) || 0) : 0;
+            const actualQty = allTimeActualQty;
+
+            // Find next nearest target automatically
+            let nextNearestTarget = null;
+            if (comp.accomplishments && comp.accomplishments.length > 0) {
+                const sortedTargets = comp.accomplishments
+                    .filter(acc => acc.type === 'TARGET' && (acc.entry_data || acc.created_at))
+                    .map(acc => {
+                        const dStr = (acc.entry_data || acc.created_at).substring(0, 10);
+                        const d = new Date(dStr);
+                        d.setHours(0,0,0,0);
+                        return {
+                            acc: acc,
+                            date: d,
+                            dateStr: dStr,
+                            quantity: parseFloat(acc.quantity) || 0
+                        };
+                    })
+                    .sort((a, b) => a.date - b.date);
+
+                // Find next nearest upcoming target that has not yet been achieved
+                nextNearestTarget = sortedTargets.find(t => t.date >= today && t.quantity > allTimeActualQty);
+
+                if (!nextNearestTarget) {
+                    nextNearestTarget = sortedTargets.find(t => t.date >= today);
+                }
+
+                if (!nextNearestTarget && sortedTargets.length > 0) {
+                    nextNearestTarget = sortedTargets[sortedTargets.length - 1];
+                }
+            }
+
+            const targetQty = nextNearestTarget ? nextNearestTarget.quantity : (allTimeLatestTarget ? (parseFloat(allTimeLatestTarget.quantity) || 0) : 0);
             const percentTarget = totalScope > 0 ? Math.min(100, (targetQty / totalScope) * 100) : 0;
             const percentActual = totalScope > 0 ? Math.min(100, (actualQty / totalScope) * 100) : 0;
             const variance = percentActual - percentTarget;
@@ -2048,7 +2068,6 @@
             let compVelocity = 0;
             let compEtaDateStr = 'Insufficient Data';
             let daysElapsed = 0;
-            const allTimeActualQty = allTimeLatestActual ? (parseFloat(allTimeLatestActual.quantity) || 0) : 0;
 
             if (allTimeFirstActual && allTimeLatestActual) {
                 const d1Str = (allTimeFirstActual.entry_data || allTimeFirstActual.created_at || '').substring(0, 10);
@@ -2059,8 +2078,8 @@
                     daysElapsed = Math.max(1, Math.ceil((d2 - d1) / (1000 * 60 * 60 * 24)) + 1);
                     compVelocity = allTimeActualQty / daysElapsed;
                     if (compVelocity > 0 && allTimeActualQty < totalScope) {
-                        const remainingQty = totalScope - allTimeActualQty;
-                        const remainingDays = Math.ceil(remainingQty / compVelocity);
+                        const remQty = totalScope - allTimeActualQty;
+                        const remainingDays = Math.ceil(remQty / compVelocity);
                         const etaDate = new Date();
                         etaDate.setDate(etaDate.getDate() + remainingDays);
                         compEtaDateStr = etaDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ` (~${remainingDays} days)`;
@@ -2074,41 +2093,7 @@
 
             let requiredVelocity = 0;
             let compDaysLeft = 0;
-            let nextNearestTarget = null;
-            if (comp.accomplishments && comp.accomplishments.length > 0) {
-                const today = new Date();
-                today.setHours(0,0,0,0);
-
-                const sortedTargets = comp.accomplishments
-                    .filter(acc => acc.type === 'TARGET' && (acc.entry_data || acc.created_at))
-                    .map(acc => {
-                        const dStr = (acc.entry_data || acc.created_at).substring(0, 10);
-                        const d = new Date(dStr);
-                        d.setHours(0,0,0,0);
-                        return {
-                            acc: acc,
-                            date: d,
-                            dateStr: dStr,
-                            quantity: parseFloat(acc.quantity) || 0
-                        };
-                    })
-                    .sort((a, b) => a.date - b.date);
-
-                // Find next nearest upcoming target that has not yet been achieved
-                nextNearestTarget = sortedTargets.find(t => t.date >= today && t.quantity > allTimeActualQty);
-
-                if (!nextNearestTarget) {
-                    nextNearestTarget = sortedTargets.find(t => t.date >= today);
-                }
-
-                if (!nextNearestTarget && sortedTargets.length > 0) {
-                    nextNearestTarget = sortedTargets[sortedTargets.length - 1];
-                }
-            }
-
             if (nextNearestTarget) {
-                const today = new Date();
-                today.setHours(0,0,0,0);
                 compDaysLeft = Math.max(1, Math.ceil((nextNearestTarget.date - today) / (1000 * 60 * 60 * 24)));
                 const remainingQtyToNextTarget = Math.max(0, nextNearestTarget.quantity - allTimeActualQty);
                 if (remainingQtyToNextTarget > 0) {
@@ -2126,9 +2111,13 @@
             const compDaysText = compDaysLeft > 0 ? ` for ${compDaysLeft} day${compDaysLeft === 1 ? '' : 's'}` : '';
             const reqVelocityStr = requiredVelocity > 0 ? `${formatNumber(requiredVelocity)} ${escapeHtml(unitText)}/day${compDaysText}` : 'N/A';
             const speedStatusClass = (compVelocity && requiredVelocity) ? (compVelocity >= requiredVelocity ? 'text-success' : 'text-danger') : 'text-info';
-            const isCompBehindTarget = (targetQty > 0) && (actualQty < targetQty);
-            const nextTargetInfo = nextNearestTarget 
-                ? `<div class="text-info small text-truncate mt-1" style="font-size: 10px;" title="Target: ${formatNumber(nextNearestTarget.quantity)} ${escapeHtml(unitText)} by ${nextNearestTarget.dateStr}">Target: ${formatNumber(nextNearestTarget.quantity)} ${escapeHtml(unitText)} (${nextNearestTarget.dateStr})</div>` 
+            const pastTargetQty = latestPastTarget ? (parseFloat(latestPastTarget.quantity) || 0) : 0;
+            const isCompBehindTarget = latestPastTarget && (allTimeActualQty < pastTargetQty);
+            const nextTargetColValue = nextNearestTarget 
+                ? `${formatNumber(nextNearestTarget.quantity)} ${escapeHtml(unitText)}` 
+                : 'N/A';
+            const nextTargetColSub = nextNearestTarget 
+                ? `<div class="text-muted small" style="font-size: 10px;">by ${nextNearestTarget.dateStr}</div>` 
                 : '';
 
             const html = `
@@ -2137,11 +2126,6 @@
                         <span class="${isCompBehindTarget ? 'text-white' : 'text-light'} fw-bold"><i class="bi ${isCompBehindTarget ? 'bi-exclamation-triangle-fill' : 'bi-box-seam'} me-1"></i> ${escapeHtml(comp.name)}</span>
                         ${isCompBehindTarget ? '<span class="badge bg-light text-danger fw-bold">Behind Target</span>' : ''}
                     </div>
-                </div>
-
-                <div class="mb-4">
-                    <label class="form-label text-muted small fw-semibold">Scope Date (As Of)</label>
-                    <input type="date" class="form-control bg-dark border-secondary text-light" value="${asOfDate}" onchange="showComponentProgress(${compId}, this.value)">
                 </div>
 
                 <div class="card mb-3 border-secondary bg-dark">
@@ -2174,25 +2158,26 @@
                 <div class="card mb-3 border-secondary bg-dark">
                     <div class="card-header bg-dark border-secondary py-2 d-flex justify-content-between align-items-center">
                         <span class="text-light fw-bold small"><i class="bi bi-speedometer2 text-info me-1"></i> Velocity & Target Rate</span>
-                        <div class="text-end">
-                            ${nextNearestTarget ? `<span class="badge bg-dark border border-secondary text-info fw-normal me-2" style="font-size: 10px;"><i class="bi bi-bullseye me-1"></i> Target: ${formatNumber(nextNearestTarget.quantity)} ${escapeHtml(unitText)} (${nextNearestTarget.dateStr})</span>` : ''}
-                            <small class="text-muted">${daysElapsed > 0 ? daysElapsed + ' day(s) active' : ''}</small>
-                        </div>
+                        <small class="text-muted">${daysElapsed > 0 ? daysElapsed + ' day(s) active' : ''}</small>
                     </div>
                     <div class="card-body py-2">
                         <div class="row g-2">
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="text-muted small" style="font-size: 11px;">Running Speed</div>
                                 <div class="fw-semibold ${speedStatusClass}">${velocityStr}</div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="text-muted small" style="font-size: 11px;">Est. Completion</div>
                                 <div class="fw-semibold text-warning">${escapeHtml(compEtaDateStr)}</div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="text-muted small" style="font-size: 11px;">Required Speed</div>
                                 <div class="fw-semibold text-light">${reqVelocityStr}</div>
-                                ${nextTargetInfo}
+                            </div>
+                            <div class="col-3">
+                                <div class="text-muted small" style="font-size: 11px;">Next Target</div>
+                                <div class="fw-semibold text-info">${nextTargetColValue}</div>
+                                ${nextTargetColSub}
                             </div>
                         </div>
                     </div>
@@ -2201,7 +2186,7 @@
                 <div class="card bg-dark border-secondary text-light mb-3">
                     <div class="card-body py-3">
                         <div class="d-flex justify-content-between align-items-end mb-2">
-                            <span class="text-muted"><i class="bi bi-bullseye text-success me-1"></i> Target (Planned)</span>
+                            <span class="text-muted"><i class="bi bi-bullseye text-success me-1"></i> Target (Planned)${nextNearestTarget ? ` <small class="text-info">(${nextNearestTarget.dateStr})</small>` : ''}</span>
                             <div class="text-end">
                                 <span class="fw-bold fs-5 text-success">${formatNum(percentTarget)}</span>
                                 <span class="badge bg-success ms-2" style="font-size: 11px;">Weighted: ${formatNum(weightedTarget)}</span>

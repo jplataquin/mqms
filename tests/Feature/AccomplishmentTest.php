@@ -803,13 +803,16 @@ class AccomplishmentTest extends TestCase
         $this->assertStringContainsString('Running Speed', $content);
         $this->assertStringContainsString('Est. Completion', $content);
         $this->assertStringContainsString('Required Speed', $content);
+        $this->assertStringContainsString('Next Target', $content);
 
         $runningPos = strpos($content, 'Running Speed');
         $estCompPos = strpos($content, 'Est. Completion');
         $reqSpeedPos = strpos($content, 'Required Speed');
+        $nextTargetPos = strpos($content, 'Next Target');
 
         $this->assertTrue($runningPos < $estCompPos);
         $this->assertTrue($estCompPos < $reqSpeedPos);
+        $this->assertTrue($reqSpeedPos < $nextTargetPos);
     }
 
     /** @test */
