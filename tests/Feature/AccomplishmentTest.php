@@ -1127,7 +1127,10 @@ class AccomplishmentTest extends TestCase
         $responseStudio->assertSee('row-component-behind', false);
         $responseStudio->assertSee('Weighted Accomplishment Breakdown', false);
         $responseStudio->assertSee('Weight %', false);
+        $responseStudio->assertSee('Accomplished Amount', false);
+        $responseStudio->assertSee('% of Total', false);
         $responseStudio->assertSee('formatNum(row.weight)', false);
+        $responseStudio->assertSee('formatNumber(row.actualMoney)', false);
         $responseStudio->assertSee('formatNum(row.weightedActual)', false);
         $responseStudio->assertSee('sumActualMoneyAmount += actualMoneyAmount', false);
     }

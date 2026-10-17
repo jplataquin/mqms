@@ -1813,6 +1813,7 @@
                             amount: ciContractAmount,
                             weight: ciWeight * 100,
                             percentActual: percentActual,
+                            actualMoney: actualMoneyAmount,
                             weightedActual: weightedActual
                         });
                     });
@@ -1872,10 +1873,11 @@
 
             const breakdownHtml = itemBreakdownRows.map(row => `
                 <tr>
-                    <td class="text-truncate" style="max-width: 220px;" title="${escapeHtml(row.name)}">${escapeHtml(row.name)}</td>
+                    <td class="text-truncate" style="max-width: 180px;" title="${escapeHtml(row.name)}">${escapeHtml(row.name)}</td>
                     <td class="text-end">PHP ${formatNumber(row.amount)}</td>
                     <td class="text-end text-info">${formatNum(row.weight)}</td>
                     <td class="text-end">${formatNum(row.percentActual)}</td>
+                    <td class="text-end text-success">PHP ${formatNumber(row.actualMoney)}</td>
                     <td class="text-end fw-semibold text-primary">${formatNum(row.weightedActual)}</td>
                 </tr>
             `).join('');
@@ -1970,7 +1972,8 @@
                                         <th class="text-end">Contract Amount</th>
                                         <th class="text-end">Weight %</th>
                                         <th class="text-end">Actual %</th>
-                                        <th class="text-end">Weighted %</th>
+                                        <th class="text-end">Accomplished Amount</th>
+                                        <th class="text-end">% of Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1982,6 +1985,7 @@
                                         <td class="text-end">PHP ${formatNumber(totalContractAmount)}</td>
                                         <td class="text-end text-info">100.00%</td>
                                         <td class="text-end">-</td>
+                                        <td class="text-end text-success">PHP ${formatNumber(sumActualMoneyAmount)}</td>
                                         <td class="text-end text-primary">${formatNum(overallActual)}</td>
                                     </tr>
                                 </tfoot>
@@ -1994,7 +1998,7 @@
                     <span class="badge bg-dark border border-secondary text-light fs-6 py-2 px-4 shadow-sm">
                         Variance: <span class="${varianceClass} ms-2 fw-bold">${varianceText}</span>
                     </span>
-                    <div class="text-muted small mt-2">Calculated as the sum of weighted actual accomplishments across ${totalComponents} contract items.</div>
+                    <div class="text-muted small mt-2">Calculated as the total accomplished money amount (PHP ${formatNumber(sumActualMoneyAmount)}) divided by total contract amount (PHP ${formatNumber(totalContractAmount)}) across ${totalComponents} contract items.</div>
                 </div>
 
                 <div class="text-end mt-5">
