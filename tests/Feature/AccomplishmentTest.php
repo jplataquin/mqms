@@ -287,6 +287,15 @@ class AccomplishmentTest extends TestCase
     {
         $this->grantAccessCode($this->user, 'accomplishment:all:create');
 
+        $target = new Accomplishment();
+        $target->contract_item_id = $this->contractItem->id;
+        $target->type = 'TARGET';
+        $target->entry_data = '2026-09-30';
+        $target->quantity = 100.0;
+        $target->remarks = 'Target for contract item';
+        $target->created_by = $this->user->id;
+        $target->save();
+
         $response = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
             'contract_item_id' => $this->contractItem->id,
             'entry_data'       => '2026-09-21',
@@ -465,6 +474,16 @@ class AccomplishmentTest extends TestCase
     {
         $this->grantAccessCode($this->user, 'accomplishment:all:create');
 
+        // Create target on or after date to satisfy milestone validation
+        $target = new Accomplishment();
+        $target->contract_item_id = $this->contractItem->id;
+        $target->type = 'TARGET';
+        $target->entry_data = '2026-09-30';
+        $target->quantity = 100.0;
+        $target->remarks = 'Target for contract item';
+        $target->created_by = $this->user->id;
+        $target->save();
+
         // Create an initial accomplishment record (quantity = 25.0)
         $prior = new Accomplishment();
         $prior->contract_item_id = $this->contractItem->id;
@@ -552,6 +571,16 @@ class AccomplishmentTest extends TestCase
     public function it_allows_creation_if_quantity_is_greater_than_last_previous_accomplishment_quantity()
     {
         $this->grantAccessCode($this->user, 'accomplishment:all:create');
+
+        // Create target on or after date to satisfy milestone validation
+        $target = new Accomplishment();
+        $target->contract_item_id = $this->contractItem->id;
+        $target->type = 'TARGET';
+        $target->entry_data = '2026-09-30';
+        $target->quantity = 100.0;
+        $target->remarks = 'Target for contract item';
+        $target->created_by = $this->user->id;
+        $target->save();
 
         // Create an initial accomplishment record (quantity = 25.0)
         $prior = new Accomplishment();
@@ -1074,9 +1103,8 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('Latest Actual (Weighted)');
         $response->assertSee('30.0000%');
 
-        // Check Weighted Target display (60.0000%)
-        $response->assertSee('Latest Target (Weighted)');
-        $response->assertSee('60.0000%');
+        // Target progress was removed from drawer
+        $response->assertDontSee('Latest Target (Weighted)');
 
         // Since the target on 2026-10-20 is in the future, it should NOT be marked as Behind Target yet
         $response->assertDontSee('table-danger');
@@ -1103,6 +1131,83 @@ class AccomplishmentTest extends TestCase
         $responseStudio->assertStatus(200);
         $responseStudio->assertSee('.row-component-behind', false);
         $responseStudio->assertSee('row-component-behind', false);
+    }
+
+    /** @test */
+    public function it_fails_to_create_actual_accomplishment_if_no_target_exists_on_or_after_date()
+    {
+        $this->grantAccessCode($this->user, 'accomplishment:all:create');
+
+        // Only have a target in the past (e.g. 2026-09-10)
+        $pastTarget = new Accomplishment();
+        $pastTarget->contract_item_id = $this->contractItem->id;
+        $pastTarget->type = 'TARGET';
+        $pastTarget->entry_data = '2026-09-10';
+        $pastTarget->quantity = 50.0;
+        $pastTarget->remarks = 'Past target milestone';
+        $pastTarget->created_by = $this->user->id;
+        $pastTarget->save();
+
+        // 1. Try to create ACTUAL on 2026-09-15 via _create
+        $response1 = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
+            'contract_item_id' => $this->contractItem->id,
+            'type'             => 'ACTUAL',
+            'entry_date'       => '2026-09-15',
+            'quantity'         => 20.0,
+            'remarks'          => 'Actual after past target'
+        ]);
+
+        $response1->assertStatus(200);
+        $response1->assertJson([
+            'status' => -2,
+            'message' => 'Failed Validation',
+            'data' => [
+                'entry_date' => ['Cannot create an actual entry. No planned target exists on or after this date.']
+            ]
+        ]);
+
+        // 2. Try to create ACTUAL on 2026-09-15 via _add
+        $response2 = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
+            'contract_item_id' => $this->contractItem->id,
+            'entry_data'       => '2026-09-15',
+            'quantity'         => 20.0,
+            'remarks'          => 'Actual after past target via add',
+            'type'             => 'ACTUAL'
+        ]);
+
+        $response2->assertStatus(200);
+        $response2->assertJson([
+            'status' => -2,
+            'message' => 'Failed Validation',
+            'data' => [
+                'entry_data' => ['Cannot create an actual entry. No planned target exists on or after this date.']
+            ]
+        ]);
+
+        // 3. Now add a target on or after the entry date (e.g. 2026-09-20)
+        $futureTarget = new Accomplishment();
+        $futureTarget->contract_item_id = $this->contractItem->id;
+        $futureTarget->type = 'TARGET';
+        $futureTarget->entry_data = '2026-09-20';
+        $futureTarget->quantity = 80.0;
+        $futureTarget->remarks = 'Future target milestone';
+        $futureTarget->created_by = $this->user->id;
+        $futureTarget->save();
+
+        // 4. Retry creating ACTUAL on 2026-09-15 - should now succeed
+        $response3 = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
+            'contract_item_id' => $this->contractItem->id,
+            'type'             => 'ACTUAL',
+            'entry_date'       => '2026-09-15',
+            'quantity'         => 20.0,
+            'remarks'          => 'Valid actual accomplishment'
+        ]);
+
+        $response3->assertStatus(200);
+        $response3->assertJson([
+            'status' => 1,
+            'message' => ''
+        ]);
     }
 
     /** @test */

@@ -290,6 +290,24 @@ class AccomplishmentController extends Controller
         }
 
         $type = $request->input('type');
+
+        if ($type === 'ACTUAL') {
+            $hasTargetOnOrAfter = $contract_item->Accomplishments()
+                ->where('type', 'TARGET')
+                ->whereDate('entry_data', '>=', $entry_date)
+                ->exists();
+
+            if (!$hasTargetOnOrAfter) {
+                return response()->json([
+                    'status'    => -2,
+                    'message'   => 'Failed Validation',
+                    'data'      => [
+                        'entry_date' => ['Cannot create an actual entry. No planned target exists on or after this date.']
+                    ]
+                ]);
+            }
+        }
+
         $latestAccomplishment = $contract_item->Accomplishments()
             ->where('type', $type)
             ->orderBy('entry_data', 'desc')
@@ -377,6 +395,24 @@ class AccomplishmentController extends Controller
         }
 
         $type = $request->input('type') ?? 'ACTUAL';
+
+        if ($type === 'ACTUAL') {
+            $hasTargetOnOrAfter = $contract_item->Accomplishments()
+                ->where('type', 'TARGET')
+                ->whereDate('entry_data', '>=', $entry_data)
+                ->exists();
+
+            if (!$hasTargetOnOrAfter) {
+                return response()->json([
+                    'status'    => -2,
+                    'message'   => 'Failed Validation',
+                    'data'      => [
+                        'entry_data' => ['Cannot create an actual entry. No planned target exists on or after this date.']
+                    ]
+                ]);
+            }
+        }
+
         $latestAccomplishment = $contract_item->Accomplishments()
             ->where('type', $type)
             ->orderBy('entry_data', 'desc')

@@ -129,22 +129,6 @@
                 </td>
             </tr>
             <tr>
-                <th>Latest Target (Weighted)</th>
-                <td>
-                   @if(isset($latestTarget) && $latestTarget)
-                       @php
-                           $targetPercentage = $contract_item->contract_quantity > 0 ? ($latestTarget->quantity / $contract_item->contract_quantity) * 100 : 0;
-                           $weightedTarget = ($targetPercentage * ($contractItemWeight ?? 0));
-                           $formattedTargetDate = $latestTarget->entry_data ? $latestTarget->entry_data->format('Y-m-d') : 'N/A';
-                       @endphp
-                       <strong class="text-success">{{ number_format($weightedTarget, 4) }}%</strong>
-                       <span class="text-muted ms-1">({{ number_format($latestTarget->quantity, 2) }} {{$contract_item->contract_unit_text}} / {{ number_format($targetPercentage, 2) }}%) as of {{ $formattedTargetDate }}</span>
-                   @else
-                       -
-                   @endif
-                </td>
-            </tr>
-            <tr>
                 <th>Accomplished Amount</th>
                 <td>
                    @if($latestActual)

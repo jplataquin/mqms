@@ -1768,11 +1768,9 @@
                             let latestTarget = null;
                             ci.accomplishments.forEach(acc => {
                                 const accDateStr = acc.entry_data ? acc.entry_data.substring(0, 10) : '';
-                                if (acc.type === 'TARGET' && accDateStr && targetDateToUse) {
-                                    if (accDateStr <= targetDateToUse) {
-                                        if (!latestTarget || new Date(acc.entry_data) > new Date(latestTarget.entry_data) || (acc.entry_data === latestTarget.entry_data && acc.id > latestTarget.id)) {
-                                            latestTarget = acc;
-                                        }
+                                if (acc.type === 'TARGET' && accDateStr) {
+                                    if (!latestTarget || new Date(acc.entry_data) > new Date(latestTarget.entry_data) || (acc.entry_data === latestTarget.entry_data && acc.id > latestTarget.id)) {
+                                        latestTarget = acc;
                                     }
                                 }
                                 if (acc.type === 'ACTUAL' && accDateStr) {
@@ -2036,7 +2034,7 @@
                 }
             }
 
-            const targetQty = nextNearestTarget ? nextNearestTarget.quantity : (allTimeLatestTarget ? (parseFloat(allTimeLatestTarget.quantity) || 0) : 0);
+            const targetQty = allTimeLatestTarget ? (parseFloat(allTimeLatestTarget.quantity) || 0) : 0;
             const percentTarget = totalScope > 0 ? Math.min(100, (targetQty / totalScope) * 100) : 0;
             const percentActual = totalScope > 0 ? Math.min(100, (actualQty / totalScope) * 100) : 0;
             const variance = percentActual - percentTarget;
@@ -2179,25 +2177,6 @@
                                 <div class="fw-semibold text-info">${nextTargetColValue}</div>
                                 ${nextTargetColSub}
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card bg-dark border-secondary text-light mb-3">
-                    <div class="card-body py-3">
-                        <div class="d-flex justify-content-between align-items-end mb-2">
-                            <span class="text-muted"><i class="bi bi-bullseye text-success me-1"></i> Target (Planned)${nextNearestTarget ? ` <small class="text-info">(${nextNearestTarget.dateStr})</small>` : ''}</span>
-                            <div class="text-end">
-                                <span class="fw-bold fs-5 text-success">${formatNum(percentTarget)}</span>
-                                <span class="badge bg-success ms-2" style="font-size: 11px;">Weighted: ${formatNum(weightedTarget)}</span>
-                            </div>
-                        </div>
-                        <div class="progress mb-2" style="height: 12px; background-color: var(--bg-darker);">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: ${percentTarget}%"></div>
-                        </div>
-                        <div class="d-flex justify-content-between small text-muted">
-                            <span>${formatNumber(targetQty)} ${escapeHtml(unitText)} (PHP ${formatNumber(targetAmount)})</span>
-                            <span>of ${formatNumber(totalScope)} ${escapeHtml(unitText)} (PHP ${formatNumber(totalContractAmount)})</span>
                         </div>
                     </div>
                 </div>
