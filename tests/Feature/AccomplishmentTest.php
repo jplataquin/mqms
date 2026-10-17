@@ -1133,6 +1133,7 @@ class AccomplishmentTest extends TestCase
         $responseStudio->assertSee('formatNumber(row.actualMoney)', false);
         $responseStudio->assertSee('formatNum(row.weightedActual)', false);
         $responseStudio->assertSee('sumWeightedActual += weightedActual', false);
+        $responseStudio->assertSee('accDateStr <= todayDateStr', false);
     }
 
     /** @test */

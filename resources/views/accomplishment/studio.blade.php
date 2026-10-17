@@ -1692,6 +1692,10 @@
             const projectAllTargetDates = new Set();
             const today = new Date();
             today.setHours(0,0,0,0);
+            const todayYear = today.getFullYear();
+            const todayMonth = String(today.getMonth() + 1).padStart(2, '0');
+            const todayDay = String(today.getDate()).padStart(2, '0');
+            const todayDateStr = `${todayYear}-${todayMonth}-${todayDay}`;
 
             // First pass: collect dates and total contract amounts
             projectData.sections.forEach(section => {
@@ -1772,8 +1776,11 @@
                             ci.accomplishments.forEach(acc => {
                                 const accDateStr = acc.entry_data ? acc.entry_data.substring(0, 10) : '';
                                 if (acc.type === 'TARGET' && accDateStr) {
-                                    if (!latestTarget || new Date(acc.entry_data) > new Date(latestTarget.entry_data) || (acc.entry_data === latestTarget.entry_data && acc.id > latestTarget.id)) {
-                                        latestTarget = acc;
+                                    if (accDateStr <= todayDateStr) {
+                                        const currentLatestTargetDateStr = latestTarget && latestTarget.entry_data ? latestTarget.entry_data.substring(0, 10) : '';
+                                        if (!latestTarget || accDateStr > currentLatestTargetDateStr || (accDateStr === currentLatestTargetDateStr && acc.id > latestTarget.id)) {
+                                            latestTarget = acc;
+                                        }
                                     }
                                 }
                                 if (acc.type === 'ACTUAL' && accDateStr) {
