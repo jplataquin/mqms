@@ -124,8 +124,16 @@ class DirectPurchaseOrderController extends Controller
 
         $supplier_id     = (int) $request->input('supplier_id');
         $payment_term_id = (int) $request->input('payment_term_id');
-        $project_id      = $request->filled('project_id') ? (int) $request->input('project_id') : null;
-        $section_id      = $request->filled('section_id') ? (int) $request->input('section_id') : null;
+
+        $raw_project_id  = $request->input('project_id');
+        $project_id      = (!empty($raw_project_id) && $raw_project_id !== 'null' && $raw_project_id !== 'undefined' && is_numeric($raw_project_id))
+            ? (int) $raw_project_id
+            : null;
+
+        $raw_section_id  = $request->input('section_id');
+        $section_id      = (!empty($raw_section_id) && $raw_section_id !== 'null' && $raw_section_id !== 'undefined' && is_numeric($raw_section_id) && (int) $raw_section_id > 0)
+            ? (int) $raw_section_id
+            : null;
 
         try {
             $po_items = json_decode($request->input('items'), true);
@@ -170,7 +178,7 @@ class DirectPurchaseOrderController extends Controller
             'supplier_id'     => ['required', 'integer', 'min:1', 'exists:suppliers,id'],
             'payment_term_id' => ['required', 'integer', 'min:1', 'exists:payment_terms,id'],
             'project_id'      => ['required', 'integer', 'min:1', 'exists:projects,id'],
-            'section_id'      => ['nullable', 'integer', 'min:1', 'exists:sections,id'],
+            'section_id'      => ['nullable', 'integer', 'exists:sections,id'],
         ], [
             'payment_term_id.required' => 'Payment Term is required.',
             'payment_term_id.min'      => 'Payment Term is required.',
@@ -181,6 +189,7 @@ class DirectPurchaseOrderController extends Controller
             'project_id.required'      => 'Project is required.',
             'project_id.min'           => 'Project is required.',
             'project_id.exists'        => 'The selected Project is invalid.',
+            'section_id.exists'        => 'The selected Section is invalid.',
         ]);
 
         if ($validation->fails()) {

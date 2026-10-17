@@ -1019,6 +1019,63 @@ class AccomplishmentTest extends TestCase
     }
 
     /** @test */
+    public function it_displays_weighted_percentage_for_contract_item_in_drawer()
+    {
+        // Add a second contract item to test weighting:
+        // Item 1 ($this->contractItem): quantity = 100, unit price = 1500 => amount = 150,000
+        // Item 2: quantity = 50, unit price = 1000 => amount = 50,000
+        // Total project contract amount = 200,000
+        // Item 1 weight = 150,000 / 200,000 = 75% (0.75)
+        $ci2 = new ContractItem();
+        $ci2->section_id = $this->section->id;
+        $ci2->item_type = 'MAT';
+        $ci2->item_code = 'C-102';
+        $ci2->description = 'Second Item';
+        $ci2->contract_quantity = 50;
+        $ci2->unit_id = $this->unit->id;
+        $ci2->contract_unit_price = 1000.00;
+        $ci2->created_by = $this->user->id;
+        $ci2->save();
+
+        // Create latest actual accomplishment: 40 units out of 100 = 40% completion
+        // Weighted actual = 40% * 0.75 = 30%
+        $accActual = new Accomplishment();
+        $accActual->contract_item_id = $this->contractItem->id;
+        $accActual->type = 'ACTUAL';
+        $accActual->entry_data = '2026-10-15';
+        $accActual->quantity = 40.0;
+        $accActual->remarks = 'Actual test entry';
+        $accActual->created_by = $this->user->id;
+        $accActual->save();
+
+        // Create latest target accomplishment: 80 units out of 100 = 80% completion
+        // Weighted target = 80% * 0.75 = 60%
+        $accTarget = new Accomplishment();
+        $accTarget->contract_item_id = $this->contractItem->id;
+        $accTarget->type = 'TARGET';
+        $accTarget->entry_data = '2026-10-20';
+        $accTarget->quantity = 80.0;
+        $accTarget->remarks = 'Target test entry';
+        $accTarget->created_by = $this->user->id;
+        $accTarget->save();
+
+        $response = $this->actingAs($this->user)->get('/accomplishment/contract_item/' . $this->contractItem->id);
+        $response->assertStatus(200);
+
+        // Check Item Weight display (75.0000%)
+        $response->assertSee('Item Weight');
+        $response->assertSee('75.0000%');
+
+        // Check Weighted Actual display (30.0000%)
+        $response->assertSee('Latest Actual (Weighted)');
+        $response->assertSee('30.0000%');
+
+        // Check Weighted Target display (60.0000%)
+        $response->assertSee('Latest Target (Weighted)');
+        $response->assertSee('60.0000%');
+    }
+
+    /** @test */
     public function it_defaults_to_active_status_filter_on_projects_page()
     {
         $response = $this->actingAs($this->user)->get('/projects');

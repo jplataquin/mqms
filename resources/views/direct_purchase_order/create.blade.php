@@ -461,14 +461,18 @@
             saveBtn.disabled = true;
             window.util.blockUI();
 
-            let res = await window.util.$post('/api/direct_purchase_order/create', {
+            const payload = {
                 supplier_id: supplierSelect.value,
                 payment_term_id: paymentTermSelect.value,
                 project_id: projectSelect.value,
-                section_id: sectionSelect.value || null,
                 items: JSON.stringify(items),
                 extras: JSON.stringify(extras)
-            });
+            };
+            if (sectionSelect.value && parseInt(sectionSelect.value) > 0) {
+                payload.section_id = sectionSelect.value;
+            }
+
+            let res = await window.util.$post('/api/direct_purchase_order/create', payload);
             window.util.unblockUI();
 
             if (res.status === 1) {

@@ -1901,6 +1901,24 @@
             const accomplishedAmount = actualQty * unitPrice;
             const remainingAmount = Math.max(0, (totalScope - actualQty) * unitPrice);
 
+            // Calculate total contract amount across all contract items in the project
+            let projectTotalContractAmount = 0;
+            if (projectData && projectData.sections) {
+                projectData.sections.forEach(section => {
+                    if (section.contract_items) {
+                        section.contract_items.forEach(ci => {
+                            const ciQty = parseFloat(ci.contract_quantity) || 0;
+                            const ciPrice = parseFloat(ci.contract_unit_price) || 0;
+                            projectTotalContractAmount += (ciQty * ciPrice);
+                        });
+                    }
+                });
+            }
+
+            const itemWeight = projectTotalContractAmount > 0 ? (totalContractAmount / projectTotalContractAmount) : 0;
+            const weightedTarget = percentTarget * itemWeight;
+            const weightedActual = percentActual * itemWeight;
+
             // Running Velocity & ETA calculation across entire component lifecycle
             let compVelocity = 0;
             let compEtaDateStr = 'Insufficient Data';
@@ -1967,20 +1985,24 @@
 
                 <div class="card mb-3 border-secondary bg-dark">
                     <div class="card-header bg-dark border-secondary py-2 d-flex justify-content-between align-items-center">
-                        <span class="text-light fw-bold small"><i class="bi bi-cash-stack text-success me-1"></i> Accomplished Amount (PHP)</span>
+                        <span class="text-light fw-bold small"><i class="bi bi-cash-stack text-success me-1"></i> Accomplished Amount & Item Weight</span>
                         <small class="text-muted">Unit Price: PHP ${formatNumber(unitPrice)}</small>
                     </div>
                     <div class="card-body py-2">
                         <div class="row g-2">
-                            <div class="col-4">
+                            <div class="col-3">
+                                <div class="text-muted small" style="font-size: 11px;">Item Weight</div>
+                                <div class="fw-semibold text-info">${(itemWeight * 100).toFixed(4)}%</div>
+                            </div>
+                            <div class="col-3">
                                 <div class="text-muted small" style="font-size: 11px;">Total Contract Value</div>
                                 <div class="fw-semibold text-light">PHP ${formatNumber(totalContractAmount)}</div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="text-muted small" style="font-size: 11px;">Accomplished Amount</div>
                                 <div class="fw-semibold text-primary">PHP ${formatNumber(accomplishedAmount)}</div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="text-muted small" style="font-size: 11px;">Remaining Value</div>
                                 <div class="fw-semibold text-warning">PHP ${formatNumber(remainingAmount)}</div>
                             </div>
@@ -2015,7 +2037,10 @@
                     <div class="card-body py-3">
                         <div class="d-flex justify-content-between align-items-end mb-2">
                             <span class="text-muted"><i class="bi bi-bullseye text-success me-1"></i> Target (Planned)</span>
-                            <span class="fw-bold fs-5 text-success">${formatNum(percentTarget)}</span>
+                            <div class="text-end">
+                                <span class="fw-bold fs-5 text-success">${formatNum(percentTarget)}</span>
+                                <span class="badge bg-success ms-2" style="font-size: 11px;">Weighted: ${formatNum(weightedTarget)}</span>
+                            </div>
                         </div>
                         <div class="progress mb-2" style="height: 12px; background-color: var(--bg-darker);">
                             <div class="progress-bar bg-success" role="progressbar" style="width: ${percentTarget}%"></div>
@@ -2031,7 +2056,10 @@
                     <div class="card-body py-3">
                         <div class="d-flex justify-content-between align-items-end mb-2">
                             <span class="text-muted"><i class="bi bi-check-circle text-primary me-1"></i> Actual Accomplished</span>
-                            <span class="fw-bold fs-5 text-primary">${formatNum(percentActual)}</span>
+                            <div class="text-end">
+                                <span class="fw-bold fs-5 text-primary">${formatNum(percentActual)}</span>
+                                <span class="badge bg-primary ms-2" style="font-size: 11px;">Weighted: ${formatNum(weightedActual)}</span>
+                            </div>
                         </div>
                         <div class="progress mb-2" style="height: 12px; background-color: var(--bg-darker);">
                             <div class="progress-bar bg-primary" role="progressbar" style="width: ${percentActual}%"></div>

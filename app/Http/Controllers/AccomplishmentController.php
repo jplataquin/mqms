@@ -200,12 +200,29 @@ class AccomplishmentController extends Controller
             ->orderBy('created_at', 'desc')
             ->first();
 
+        $latestTarget = $contract_item->Accomplishments()
+            ->where('type', 'TARGET')
+            ->orderBy('entry_data', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->first();
+
+        $projectTotalAmount = 0;
+        if ($project && $project->Sections) {
+            foreach ($project->Sections as $sec) {
+                $projectTotalAmount += $sec->ContractItems->sum('contract_amount');
+            }
+        }
+
+        $contractItemWeight = $projectTotalAmount > 0 ? ((float)$contract_item->contract_amount / $projectTotalAmount) : 0;
+
         return view('accomplishment/contract_item_display',[
             'project'               => $project,
             'section'               => $section,
             'contract_item'         => $contract_item,
             'accomplishments'       => $accomplishments,
-            'latestActual'          => $latestActual
+            'latestActual'          => $latestActual,
+            'latestTarget'          => $latestTarget,
+            'contractItemWeight'    => $contractItemWeight,
         ]);
     }
 

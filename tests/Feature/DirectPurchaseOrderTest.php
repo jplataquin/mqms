@@ -393,6 +393,61 @@ class DirectPurchaseOrderTest extends TestCase
     }
 
     /** @test */
+    public function it_allows_section_to_be_null_or_empty_or_zero_or_string_null_without_validation_errors()
+    {
+        $supplier = $this->createSupplier('Steel Supply');
+        $project = $this->createProject('Bridge Repair');
+
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Net 30 Days';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $materialItem = $this->createMaterialItem('Rebar 16mm');
+
+        $items = [
+            [
+                'material_item_id' => $materialItem->id,
+                'order_quantity'   => 10,
+                'price'            => 500.00,
+            ]
+        ];
+
+        // Testing section_id as string "null" (FormData behavior)
+        $resStringNull = $this->actingAs($this->user)->post('/api/direct_purchase_order/create', [
+            'supplier_id'     => $supplier->id,
+            'payment_term_id' => $paymentTerm->id,
+            'project_id'      => $project->id,
+            'section_id'      => 'null',
+            'items'           => json_encode($items),
+        ]);
+        $resStringNull->assertStatus(200);
+        $resStringNull->assertJson(['status' => 1]);
+
+        // Testing section_id as 0
+        $resZero = $this->actingAs($this->user)->post('/api/direct_purchase_order/create', [
+            'supplier_id'     => $supplier->id,
+            'payment_term_id' => $paymentTerm->id,
+            'project_id'      => $project->id,
+            'section_id'      => 0,
+            'items'           => json_encode($items),
+        ]);
+        $resZero->assertStatus(200);
+        $resZero->assertJson(['status' => 1]);
+
+        // Testing section_id as empty string ""
+        $resEmpty = $this->actingAs($this->user)->post('/api/direct_purchase_order/create', [
+            'supplier_id'     => $supplier->id,
+            'payment_term_id' => $paymentTerm->id,
+            'project_id'      => $project->id,
+            'section_id'      => '',
+            'items'           => json_encode($items),
+        ]);
+        $resEmpty->assertStatus(200);
+        $resEmpty->assertJson(['status' => 1]);
+    }
+
+    /** @test */
     public function it_can_create_direct_purchase_order_with_optional_section()
     {
         $supplier = $this->createSupplier('Apex Hardware');
