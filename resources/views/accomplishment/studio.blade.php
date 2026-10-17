@@ -1089,6 +1089,8 @@
                         reqVelocity: requiredVelocity,
                         reqDaysLeft: reqDaysLeft,
                         targetDeadline: nextNearestTarget ? nextNearestTarget.dateStr : (allTimeLatestTarget ? (allTimeLatestTarget.entry_data || '').substring(0, 10) : null),
+                        nextTargetQty: nextNearestTarget ? nextNearestTarget.quantity : null,
+                        nextTargetDate: nextNearestTarget ? nextNearestTarget.dateStr : null,
                         eta: ciEtaDateStr, 
                         days: daysElapsed,
                         totalActual: totalActual,
@@ -1470,6 +1472,9 @@
                 const etaStr = stats.eta ? stats.eta : (stats.percentActual >= 100 ? 'Completed' : 'Insufficient Data');
                 const daysStr = stats.days ? `${stats.days} day(s) active` : '';
                 const speedStatusClass = (stats.velocity && stats.reqVelocity) ? (stats.velocity >= stats.reqVelocity ? 'text-success' : 'text-danger') : 'text-info';
+                const nextTargetInfo = (stats.nextTargetDate && stats.nextTargetQty !== null) 
+                    ? `<div class="text-info small text-truncate mt-1" style="font-size: 10px;" title="Target: ${formatNumber(stats.nextTargetQty)} ${escapeHtml(unit)} by ${stats.nextTargetDate}">Target: ${formatNumber(stats.nextTargetQty)} ${escapeHtml(unit)} (${stats.nextTargetDate})</div>` 
+                    : '';
 
                 const html = `
                     <div class="card mb-3 border-secondary bg-dark">
@@ -1481,7 +1486,10 @@
                     <div class="card mb-3 border-secondary bg-dark">
                         <div class="card-header bg-dark border-secondary py-2 d-flex justify-content-between align-items-center">
                             <span class="text-light fw-bold small"><i class="bi bi-speedometer2 text-info me-1"></i> Velocity & Target Rate</span>
-                            <small class="text-muted">${daysStr}</small>
+                            <div class="text-end">
+                                ${stats.nextTargetDate ? `<span class="badge bg-dark border border-secondary text-info fw-normal me-2" style="font-size: 10px;"><i class="bi bi-bullseye me-1"></i> Target: ${formatNumber(stats.nextTargetQty)} ${escapeHtml(unit)} (${stats.nextTargetDate})</span>` : ''}
+                                <small class="text-muted">${daysStr}</small>
+                            </div>
                         </div>
                         <div class="card-body py-2">
                             <div class="row g-2">
@@ -1496,6 +1504,7 @@
                                 <div class="col-4">
                                     <div class="text-muted small" style="font-size: 11px;">Required Speed</div>
                                     <div class="fw-semibold text-light">${reqVelocityStr}</div>
+                                    ${nextTargetInfo}
                                 </div>
                             </div>
                         </div>
@@ -2118,6 +2127,9 @@
             const reqVelocityStr = requiredVelocity > 0 ? `${formatNumber(requiredVelocity)} ${escapeHtml(unitText)}/day${compDaysText}` : 'N/A';
             const speedStatusClass = (compVelocity && requiredVelocity) ? (compVelocity >= requiredVelocity ? 'text-success' : 'text-danger') : 'text-info';
             const isCompBehindTarget = (targetQty > 0) && (actualQty < targetQty);
+            const nextTargetInfo = nextNearestTarget 
+                ? `<div class="text-info small text-truncate mt-1" style="font-size: 10px;" title="Target: ${formatNumber(nextNearestTarget.quantity)} ${escapeHtml(unitText)} by ${nextNearestTarget.dateStr}">Target: ${formatNumber(nextNearestTarget.quantity)} ${escapeHtml(unitText)} (${nextNearestTarget.dateStr})</div>` 
+                : '';
 
             const html = `
                 <div class="card mb-3 ${isCompBehindTarget ? 'border-danger' : 'border-secondary'} bg-dark">
@@ -2162,7 +2174,10 @@
                 <div class="card mb-3 border-secondary bg-dark">
                     <div class="card-header bg-dark border-secondary py-2 d-flex justify-content-between align-items-center">
                         <span class="text-light fw-bold small"><i class="bi bi-speedometer2 text-info me-1"></i> Velocity & Target Rate</span>
-                        <small class="text-muted">${daysElapsed > 0 ? daysElapsed + ' day(s) active' : ''}</small>
+                        <div class="text-end">
+                            ${nextNearestTarget ? `<span class="badge bg-dark border border-secondary text-info fw-normal me-2" style="font-size: 10px;"><i class="bi bi-bullseye me-1"></i> Target: ${formatNumber(nextNearestTarget.quantity)} ${escapeHtml(unitText)} (${nextNearestTarget.dateStr})</span>` : ''}
+                            <small class="text-muted">${daysElapsed > 0 ? daysElapsed + ' day(s) active' : ''}</small>
+                        </div>
                     </div>
                     <div class="card-body py-2">
                         <div class="row g-2">
@@ -2177,6 +2192,7 @@
                             <div class="col-4">
                                 <div class="text-muted small" style="font-size: 11px;">Required Speed</div>
                                 <div class="fw-semibold text-light">${reqVelocityStr}</div>
+                                ${nextTargetInfo}
                             </div>
                         </div>
                     </div>
