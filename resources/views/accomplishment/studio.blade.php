@@ -1752,6 +1752,7 @@
             let totalAccomplishedAmount = 0;
             let totalTargetAmount = 0;
             let sumAllTimeActualPercent = 0;
+            const itemBreakdownRows = [];
 
             // Second pass: compute target amounts and percentages based on the next nearest target date
             projectData.sections.forEach(section => {
@@ -1786,26 +1787,41 @@
                         totalTargetAmount += targetQty * unitPrice;
                         totalAccomplishedAmount += actualQty * unitPrice;
 
+                        const ciContractAmount = totalScope * unitPrice;
+                        const ciWeight = totalContractAmount > 0 ? (ciContractAmount / totalContractAmount) : 0;
+
                         let percentTarget = 0;
                         let percentActual = 0;
                         if (totalScope > 0) {
                             percentTarget = Math.min(100, (targetQty / totalScope) * 100);
                             percentActual = Math.min(100, (actualQty / totalScope) * 100);
                         }
-                        sumTargetPercentages += percentTarget;
-                        sumActualPercentages += percentActual;
-                        sumAllTimeActualPercent += percentActual;
+                        const weightedTarget = percentTarget * ciWeight;
+                        const weightedActual = percentActual * ciWeight;
+
+                        sumTargetPercentages += weightedTarget;
+                        sumActualPercentages += weightedActual;
+                        sumAllTimeActualPercent += weightedActual;
+
+                        const ciName = (ci.item_code ? `[${ci.item_code}] ` : '') + (ci.description || ci.name || '');
+                        itemBreakdownRows.push({
+                            name: ciName,
+                            amount: ciContractAmount,
+                            weight: ciWeight * 100,
+                            percentActual: percentActual,
+                            weightedActual: weightedActual
+                        });
                     });
                 }
             });
 
-            const overallTarget = totalComponents > 0 ? (sumTargetPercentages / totalComponents) : 0;
-            const overallActual = totalComponents > 0 ? (sumActualPercentages / totalComponents) : 0;
+            const overallTarget = sumTargetPercentages;
+            const overallActual = sumActualPercentages;
             const variance = overallActual - overallTarget;
             const financialPercent = totalContractAmount > 0 ? Math.min(100, (totalAccomplishedAmount / totalContractAmount) * 100) : 0;
             
             // Running velocity across the full project lifecycle
-            const currentOverallActual = totalComponents > 0 ? (sumAllTimeActualPercent / totalComponents) : 0;
+            const currentOverallActual = sumAllTimeActualPercent;
             let runningDaysElapsed = 0;
             let runningVelocityPerDay = 0;
             let projectEtaStr = 'Insufficient Data';
@@ -1849,6 +1865,16 @@
             const formatNum = (num) => num.toFixed(2) + '%';
             const varianceText = variance >= 0 ? `+${formatNum(variance)} Ahead` : `${formatNum(Math.abs(variance))} Behind`;
             const varianceClass = variance >= 0 ? 'text-success' : 'text-danger';
+
+            const breakdownHtml = itemBreakdownRows.map(row => `
+                <tr>
+                    <td class="text-truncate" style="max-width: 220px;" title="${escapeHtml(row.name)}">${escapeHtml(row.name)}</td>
+                    <td class="text-end">PHP ${formatNumber(row.amount)}</td>
+                    <td class="text-end text-info">${row.weight.toFixed(4)}%</td>
+                    <td class="text-end">${row.percentActual.toFixed(2)}%</td>
+                    <td class="text-end fw-semibold text-primary">${row.weightedActual.toFixed(4)}%</td>
+                </tr>
+            `).join('');
 
             const html = `
                 <div class="card mb-3 border-secondary bg-dark">
@@ -1926,11 +1952,45 @@
                     </div>
                 </div>
 
+                <div class="card mb-3 border-secondary bg-dark">
+                    <div class="card-header bg-dark border-secondary py-2 d-flex justify-content-between align-items-center">
+                        <span class="text-light fw-bold small"><i class="bi bi-pie-chart text-info me-1"></i> Weighted Accomplishment Breakdown</span>
+                        <small class="text-muted">${totalComponents} Contract Items</small>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive" style="max-height: 220px; overflow-y: auto;">
+                            <table class="table table-dark table-sm table-hover mb-0" style="font-size: 11px;">
+                                <thead class="table-secondary text-dark sticky-top" style="position: sticky; top: 0; z-index: 2;">
+                                    <tr>
+                                        <th>Contract Item</th>
+                                        <th class="text-end">Contract Amount</th>
+                                        <th class="text-end">Weight</th>
+                                        <th class="text-end">Actual %</th>
+                                        <th class="text-end">Weighted %</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${breakdownHtml}
+                                </tbody>
+                                <tfoot class="border-top border-secondary fw-bold bg-dark">
+                                    <tr>
+                                        <td>Total</td>
+                                        <td class="text-end">PHP ${formatNumber(totalContractAmount)}</td>
+                                        <td class="text-end text-info">100.00%</td>
+                                        <td class="text-end">-</td>
+                                        <td class="text-end text-primary">${formatNum(overallActual)}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="text-center mt-4">
                     <span class="badge bg-dark border border-secondary text-light fs-6 py-2 px-4 shadow-sm">
                         Variance: <span class="${varianceClass} ms-2 fw-bold">${varianceText}</span>
                     </span>
-                    <div class="text-muted small mt-2">Calculated across ${totalComponents} tracked contract items.</div>
+                    <div class="text-muted small mt-2">Calculated as the sum of weighted actual accomplishments across ${totalComponents} contract items.</div>
                 </div>
 
                 <div class="text-end mt-5">
@@ -2128,24 +2188,20 @@
 
                 <div class="card mb-3 border-secondary bg-dark">
                     <div class="card-header bg-dark border-secondary py-2 d-flex justify-content-between align-items-center">
-                        <span class="text-light fw-bold small"><i class="bi bi-cash-stack text-success me-1"></i> Accomplished Amount & Item Weight</span>
+                        <span class="text-light fw-bold small"><i class="bi bi-cash-stack text-success me-1"></i> Accomplished Amount (PHP)</span>
                         <small class="text-muted">Unit Price: PHP ${formatNumber(unitPrice)}</small>
                     </div>
                     <div class="card-body py-2">
                         <div class="row g-2">
-                            <div class="col-3">
-                                <div class="text-muted small" style="font-size: 11px;">Item Weight</div>
-                                <div class="fw-semibold text-info">${(itemWeight * 100).toFixed(4)}%</div>
-                            </div>
-                            <div class="col-3">
+                            <div class="col-4">
                                 <div class="text-muted small" style="font-size: 11px;">Total Contract Value</div>
                                 <div class="fw-semibold text-light">PHP ${formatNumber(totalContractAmount)}</div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-4">
                                 <div class="text-muted small" style="font-size: 11px;">Accomplished Amount</div>
                                 <div class="fw-semibold text-primary">PHP ${formatNumber(accomplishedAmount)}</div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-4">
                                 <div class="text-muted small" style="font-size: 11px;">Remaining Value</div>
                                 <div class="fw-semibold text-warning">PHP ${formatNumber(remainingAmount)}</div>
                             </div>
@@ -2187,7 +2243,6 @@
                             <span class="text-muted"><i class="bi bi-check-circle text-primary me-1"></i> Actual Accomplished</span>
                             <div class="text-end">
                                 <span class="fw-bold fs-5 text-primary">${formatNum(percentActual)}</span>
-                                <span class="badge bg-primary ms-2" style="font-size: 11px;">Weighted: ${formatNum(weightedActual)}</span>
                             </div>
                         </div>
                         <div class="progress mb-2" style="height: 12px; background-color: var(--bg-darker);">

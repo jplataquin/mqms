@@ -1095,15 +1095,9 @@ class AccomplishmentTest extends TestCase
         $response = $this->actingAs($this->user)->get('/accomplishment/contract_item/' . $this->contractItem->id);
         $response->assertStatus(200);
 
-        // Check Item Weight display (75.0000%)
-        $response->assertSee('Item Weight');
-        $response->assertSee('75.0000%');
-
-        // Check Weighted Actual display (30.0000%)
-        $response->assertSee('Latest Actual (Weighted)');
-        $response->assertSee('30.0000%');
-
-        // Target progress was removed from drawer
+        // Weighted percentage is now only calculated in overall progress, not in contract item drawer
+        $response->assertDontSee('Item Weight');
+        $response->assertDontSee('Latest Actual (Weighted)');
         $response->assertDontSee('Latest Target (Weighted)');
 
         // Since the target on 2026-10-20 is in the future, it should NOT be marked as Behind Target yet
@@ -1131,6 +1125,8 @@ class AccomplishmentTest extends TestCase
         $responseStudio->assertStatus(200);
         $responseStudio->assertSee('.row-component-behind', false);
         $responseStudio->assertSee('row-component-behind', false);
+        $responseStudio->assertSee('Weighted Accomplishment Breakdown', false);
+        $responseStudio->assertSee('sumActualPercentages += weightedActual', false);
     }
 
     /** @test */
