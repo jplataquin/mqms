@@ -1870,9 +1870,9 @@
                 <tr>
                     <td class="text-truncate" style="max-width: 220px;" title="${escapeHtml(row.name)}">${escapeHtml(row.name)}</td>
                     <td class="text-end">PHP ${formatNumber(row.amount)}</td>
-                    <td class="text-end text-info">${row.weight.toFixed(4)}%</td>
-                    <td class="text-end">${row.percentActual.toFixed(2)}%</td>
-                    <td class="text-end fw-semibold text-primary">${row.weightedActual.toFixed(4)}%</td>
+                    <td class="text-end text-info">${formatNum(row.weight)}</td>
+                    <td class="text-end">${formatNum(row.percentActual)}</td>
+                    <td class="text-end fw-semibold text-primary">${formatNum(row.weightedActual)}</td>
                 </tr>
             `).join('');
 
@@ -1964,7 +1964,7 @@
                                     <tr>
                                         <th>Contract Item</th>
                                         <th class="text-end">Contract Amount</th>
-                                        <th class="text-end">Weight</th>
+                                        <th class="text-end">Weight %</th>
                                         <th class="text-end">Actual %</th>
                                         <th class="text-end">Weighted %</th>
                                     </tr>
