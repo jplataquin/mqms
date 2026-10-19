@@ -40,7 +40,13 @@
         <button onclick="window.print()" style="padding: 10px 20px; font-size: 14px; cursor: pointer;">Print this document</button>
     </div>
 
-    @foreach(['Supplier', 'Accounting', 'Purchaser'] as $copy)
+    @php
+        $copies = ($direct_purchase_order->status == 'DRFT') 
+            ? ['Purchaser'] 
+            : ['Supplier', 'Accounting', 'Purchaser'];
+    @endphp
+
+    @foreach($copies as $copy)
     <div class="whole mb-10" style="margin-bottom: 30px;">
         <table class="table">
             <tr>
@@ -79,6 +85,53 @@
             </tr>
         </table>
 
+        @if($copy == 'Purchaser')
+        <table class="table" style="margin-top: 10px;">
+            <thead>
+                <tr class="bg-grey">
+                    <th style="width: 5%;">#</th>
+                    <th>Item Description</th>
+                    <th class="text-right" style="width: 15%;">Quantity</th>
+                    <th class="text-right" style="width: 15%;">Price</th>
+                    <th class="text-right" style="width: 15%;">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php $subtotal = 0; @endphp
+                @foreach($items as $index => $item)
+                    @php
+                        $rowTotal = $item->quantity * $item->price;
+                        $subtotal += $rowTotal;
+                    @endphp
+                    <tr>
+                        <td class="text-center">{{ $index + 1 }}</td>
+                        <td>{{ $item->MaterialItem ? $item->MaterialItem->formattedName : 'Unknown Item' }}</td>
+                        <td class="text-right">{{ number_format($item->quantity, 2) }}</td>
+                        <td class="text-right">{{ number_format($item->price, 2) }}</td>
+                        <td class="text-right">{{ number_format($rowTotal, 2) }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" style="padding-left: 20px;">
+                            <strong>Remarks:</strong> {{ $item->remarks ?: '-' }}
+                        </td>
+                    </tr>
+                @endforeach
+
+                @if(!empty($extras))
+                    @foreach($extras as $extra)
+                        <tr>
+                            <td colspan="4" class="text-right italic">{{ $extra->text }}</td>
+                            <td class="text-right">{{ number_format($extra->value, 2) }}</td>
+                        </tr>
+                    @endforeach
+                @endif
+                <tr class="bg-grey">
+                    <td colspan="4" class="text-right bold">Grand Total</td>
+                    <td class="text-right bold">{{ number_format($direct_purchase_order->getGrandTotal(), 2) }}</td>
+                </tr>
+            </tbody>
+        </table>
+        @else
         <table class="table" style="margin-top: 10px;">
             <thead>
                 <tr class="bg-grey">
@@ -121,6 +174,7 @@
                 </tr>
             </tbody>
         </table>
+        @endif
 
         <div style="margin-top: 15px;">
             <table class="table">
@@ -139,6 +193,8 @@
     </div>
     <hr style="border: 1px dashed #ccc; margin: 20px 0;">
     @endforeach
+
+    @if($direct_purchase_order->status != 'DRFT')
 
     <!-- Site Copy -->
     <div class="whole mb-10" style="margin-bottom: 30px;">
@@ -327,6 +383,7 @@
     </div>
     <hr style="border: 1px dashed #ccc; margin: 20px 0;">
     <!-- Warehouse Copy -->
+    @endif
 
 </body>
 </html>

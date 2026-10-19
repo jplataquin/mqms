@@ -118,19 +118,10 @@
 
             @if($direct_purchase_order->status == 'DRFT')
                 <button type="button" class="btn btn-danger me-2" id="deleteBtn">Delete</button>
-                <button type="button" class="btn btn-success" id="submitBtn">Submit for Review</button>
-            @endif
-
-            @if($direct_purchase_order->status == 'PEND')
-                <a href="/review/direct_purchase_order/{{$direct_purchase_order->id}}" class="btn btn-outline-warning me-2">
-                    <i class="bi bi-journal-check"></i> Go to Review
+                <button type="button" class="btn btn-success me-2" id="submitBtn">Submit for Review</button>
+                <a href="/direct_purchase_order/print/{{$direct_purchase_order->id}}" target="_blank" class="btn btn-info me-2 text-white">
+                    <i class="bi bi-printer"></i> Print
                 </a>
-                @if(!empty($canReject))
-                    <button type="button" class="btn btn-danger me-2" id="rejectBtn">Reject</button>
-                @endif
-                @if(!empty($canApprove))
-                    <button type="button" class="btn btn-success me-2" id="approveBtn">Approve</button>
-                @endif
             @endif
 
             @if($direct_purchase_order->status == 'APRV')
@@ -146,18 +137,6 @@
                     <button type="button" class="btn btn-warning" id="voidBtn">Request Void</button>
                 @endif
             @endif
-
-            @if($direct_purchase_order->status == 'REVO')
-                <a href="/review/direct_purchase_order/{{$direct_purchase_order->id}}" class="btn btn-outline-warning me-2">
-                    <i class="bi bi-journal-check"></i> Go to Review
-                </a>
-                @if(!empty($canRejectVoid))
-                    <button type="button" class="btn btn-secondary me-2" id="rejectVoidBtn">Reject Void</button>
-                @endif
-                @if(!empty($canVoid))
-                    <button type="button" class="btn btn-danger me-2" id="approveVoidBtn">Confirm Void</button>
-                @endif
-            @endif
         </div>
 
     </div>
@@ -169,10 +148,6 @@
         const deleteBtn      = $q('#deleteBtn').first();
         const voidBtn        = $q('#voidBtn').first();
         const directVoidBtn  = $q('#directVoidBtn').first();
-        const approveBtn     = $q('#approveBtn').first();
-        const rejectBtn      = $q('#rejectBtn').first();
-        const approveVoidBtn = $q('#approveVoidBtn').first();
-        const rejectVoidBtn  = $q('#rejectVoidBtn').first();
         const reviewLinkBtn  = $q('#reviewLinkBtn').first();
 
         const dpoId = {{ $direct_purchase_order->id }};
@@ -198,78 +173,6 @@
                     location.reload();
                 } else {
                     alert(res.message || 'Failed to void.');
-                }
-            };
-        }
-
-        if (approveBtn) {
-            approveBtn.onclick = async () => {
-                if (!confirm('Are you sure you want to approve this Direct PO?')) return;
-
-                window.util.blockUI();
-                let res = await window.util.$post('/api/review/direct_purchase_order/approve', {
-                    id: dpoId
-                });
-                window.util.unblockUI();
-
-                if (res.status === 1) {
-                    location.reload();
-                } else {
-                    alert(res.message || 'Failed to approve.');
-                }
-            };
-        }
-
-        if (rejectBtn) {
-            rejectBtn.onclick = async () => {
-                if (!confirm('Are you sure you want to reject this Direct PO?')) return;
-
-                window.util.blockUI();
-                let res = await window.util.$post('/api/review/direct_purchase_order/reject', {
-                    id: dpoId
-                });
-                window.util.unblockUI();
-
-                if (res.status === 1) {
-                    location.reload();
-                } else {
-                    alert(res.message || 'Failed to reject.');
-                }
-            };
-        }
-
-        if (approveVoidBtn) {
-            approveVoidBtn.onclick = async () => {
-                if (!confirm('Are you sure you want to confirm void for this Direct PO?')) return;
-
-                window.util.blockUI();
-                let res = await window.util.$post('/api/review/direct_purchase_order/void', {
-                    id: dpoId
-                });
-                window.util.unblockUI();
-
-                if (res.status === 1) {
-                    location.reload();
-                } else {
-                    alert(res.message || 'Failed to void.');
-                }
-            };
-        }
-
-        if (rejectVoidBtn) {
-            rejectVoidBtn.onclick = async () => {
-                if (!confirm('Are you sure you want to reject the void request for this Direct PO?')) return;
-
-                window.util.blockUI();
-                let res = await window.util.$post('/api/review/direct_purchase_order/reject_void', {
-                    id: dpoId
-                });
-                window.util.unblockUI();
-
-                if (res.status === 1) {
-                    location.reload();
-                } else {
-                    alert(res.message || 'Failed to reject void request.');
                 }
             };
         }

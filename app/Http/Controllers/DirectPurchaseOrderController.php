@@ -302,11 +302,8 @@ class DirectPurchaseOrderController extends Controller
             $dpo_details["Void By"] = $dpo->VoidByUser()->name . ' ' . $dpo->void_at;
         }
 
-        $canApprove     = $this->hasAccess(['purchase_order:all:approve', 'direct_purchase_order:all:approve']);
-        $canReject      = $this->hasAccess(['purchase_order:all:reject', 'direct_purchase_order:all:reject']);
         $canVoid        = $this->hasAccess(['purchase_order:all:void', 'direct_purchase_order:all:void', 'purchase_order:own:void', 'direct_purchase_order:own:void']);
         $canRequestVoid = $this->hasAccess(['purchase_order:all:request_void', 'direct_purchase_order:all:request_void', 'purchase_order:own:request_void', 'direct_purchase_order:own:request_void']);
-        $canRejectVoid  = $this->hasAccess(['purchase_order:all:reject_void_request', 'direct_purchase_order:all:reject_void_request']);
 
         return view('direct_purchase_order/display', [
             'direct_purchase_order' => $dpo,
@@ -315,11 +312,8 @@ class DirectPurchaseOrderController extends Controller
             'items'                 => $dpo->Items,
             'extras'                => $extras,
             'dpo_details'           => $dpo_details,
-            'canApprove'            => $canApprove,
-            'canReject'             => $canReject,
             'canVoid'               => $canVoid,
-            'canRequestVoid'        => $canRequestVoid,
-            'canRejectVoid'         => $canRejectVoid
+            'canRequestVoid'        => $canRequestVoid
         ]);
     }
 
@@ -569,7 +563,7 @@ class DirectPurchaseOrderController extends Controller
             }
         }
 
-        if ($dpo->status != 'APRV') {
+        if ($dpo->status != 'APRV' && $dpo->status != 'DRFT') {
             return abort(404);
         }
 

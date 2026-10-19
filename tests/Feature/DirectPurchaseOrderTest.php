@@ -640,4 +640,103 @@ class DirectPurchaseOrderTest extends TestCase
         $response->assertSee('Diff:');
         $response->assertSee('<img src="/storage/sys_images/header.png" style="width:500px"/>', false);
     }
+
+    /** @test */
+    public function it_does_not_render_approve_disapprove_or_go_to_review_buttons_on_display_page()
+    {
+        $this->grantAccessCode($this->user, 'direct_purchase_order:own:view');
+        $this->grantAccessCode($this->user, 'direct_purchase_order:all:view');
+        $this->grantAccessCode($this->user, 'direct_purchase_order:all:approve');
+        $this->grantAccessCode($this->user, 'direct_purchase_order:all:reject');
+
+        $project = $this->createProject('Display Test Project');
+        $supplier = $this->createSupplier('Display Test Supplier');
+
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Net 15';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $dpo = new DirectPurchaseOrder();
+        $dpo->supplier_id = $supplier->id;
+        $dpo->payment_term_id = $paymentTerm->id;
+        $dpo->project_id = $project->id;
+        $dpo->status = 'PEND';
+        $dpo->created_by = $this->user->id;
+        $dpo->updated_by = $this->user->id;
+        $dpo->save();
+
+        $response = $this->actingAs($this->user)->get('/direct_purchase_order/' . $dpo->id);
+        $response->assertStatus(200);
+
+        // Buttons must NOT be present on the regular display page
+        $response->assertDontSee('Go to Review');
+        $response->assertDontSee('id="approveBtn"', false);
+        $response->assertDontSee('id="rejectBtn"', false);
+        $response->assertDontSee('Disapprove');
+
+        // Review buttons MUST be available on the review page
+        $reviewResponse = $this->actingAs($this->user)->get('/review/direct_purchase_order/' . $dpo->id);
+        $reviewResponse->assertStatus(200);
+        $reviewResponse->assertSee('id="approveBtn"', false);
+        $reviewResponse->assertSee('id="rejectBtn"', false);
+    }
+
+    /** @test */
+    public function it_allows_printing_only_purchaser_copy_in_draft_status_with_remarks_as_row_after_item()
+    {
+        $this->grantAccessCode($this->user, 'direct_purchase_order:own:view');
+
+        $project = $this->createProject('Draft Print Project');
+        $supplier = $this->createSupplier('Draft Print Supplier');
+        $materialItem = $this->createMaterialItem('Gravel 3/4');
+
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Cash on Delivery';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $dpo = new DirectPurchaseOrder();
+        $dpo->supplier_id = $supplier->id;
+        $dpo->payment_term_id = $paymentTerm->id;
+        $dpo->project_id = $project->id;
+        $dpo->status = 'DRFT';
+        $dpo->created_by = $this->user->id;
+        $dpo->updated_by = $this->user->id;
+        $dpo->save();
+
+        $item = new DirectPurchaseOrderItem();
+        $item->direct_purchase_order_id = $dpo->id;
+        $item->material_item_id = $materialItem->id;
+        $item->quantity = 15;
+        $item->price = 1200.00;
+        $item->remarks = 'Pouring scheduled tomorrow';
+        $item->save();
+
+        // Check display page has print button for DRFT
+        $displayResponse = $this->actingAs($this->user)->get('/direct_purchase_order/' . $dpo->id);
+        $displayResponse->assertStatus(200);
+        $displayResponse->assertSee('/direct_purchase_order/print/' . $dpo->id);
+
+        // Check print page allows DRFT
+        $response = $this->actingAs($this->user)->get('/direct_purchase_order/print/' . $dpo->id);
+        $response->assertStatus(200);
+
+        // MUST see ONLY Purchaser copy
+        $response->assertSee('DIRECT PURCHASE ORDER (Purchaser Copy)');
+        $response->assertDontSee('DIRECT PURCHASE ORDER (Supplier Copy)');
+        $response->assertDontSee('DIRECT PURCHASE ORDER (Accounting Copy)');
+        $response->assertDontSee('DIRECT PURCHASE ORDER (Site Copy)');
+        $response->assertDontSee('DIRECT PURCHASE ORDER (Warehouse Copy)');
+
+        // Line item remarks must appear as a row after the item row
+        $response->assertSee('Gravel 3/4');
+        $response->assertSee('<strong>Remarks:</strong> Pouring scheduled tomorrow', false);
+
+        // Non-draft/non-approved status like PEND must abort 404
+        $dpo->status = 'PEND';
+        $dpo->save();
+        $pendingPrintResponse = $this->actingAs($this->user)->get('/direct_purchase_order/print/' . $dpo->id);
+        $pendingPrintResponse->assertStatus(404);
+    }
 }
