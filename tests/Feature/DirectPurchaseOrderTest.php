@@ -199,9 +199,31 @@ class DirectPurchaseOrderTest extends TestCase
         $response->assertSee('item-material-input', false);
         $response->assertSee('clear-item-material-btn', false);
 
+        // Remarks as a separate textarea row
+        $response->assertSee('item-remarks-row', false);
+        $response->assertSee('<textarea class="form-control item-remarks"', false);
+        $response->assertSee('colspan="5"', false);
+
         // Single line item remove button management script
         $response->assertSee('updateItemRemoveButtons', false);
         $response->assertSee('At least one item is required to make a direct PO.', false);
+    }
+
+    /** @test */
+    public function it_renders_remarks_as_separate_textarea_row_under_material_item()
+    {
+        $response = $this->actingAs($this->user)->get('/direct_purchase_order/create');
+        $response->assertStatus(200);
+
+        // Table headers should not have Remarks as a column
+        $content = $response->getContent();
+        $this->assertStringContainsString('<th style="width: 50%">Material Item</th>', $content);
+        $this->assertStringNotContainsString('<th style="width: 20%">Remarks</th>', $content);
+
+        // Should have remarks textarea row with colspan 5
+        $this->assertStringContainsString('item-remarks-row', $content);
+        $this->assertStringContainsString('<textarea class="form-control item-remarks" rows="2" placeholder="Optional remarks..."></textarea>', $content);
+        $this->assertStringContainsString('<td colspan="5"', $content);
     }
 
     /** @test */

@@ -102,8 +102,7 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th style="width: 30%">Material Item</th>
-                            <th style="width: 20%">Remarks</th>
+                            <th style="width: 50%">Material Item</th>
                             <th style="width: 15%">Quantity</th>
                             <th style="width: 15%">Price</th>
                             <th style="width: 15%">Total</th>
@@ -274,7 +273,7 @@
         function recalculate() {
             let total = 0;
 
-            const itemRows = itemsTableBody.querySelectorAll('tr');
+            const itemRows = itemsTableBody.querySelectorAll('tr.item-main-row');
             itemRows.forEach(row => {
                 const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
                 const price = parseFloat(row.querySelector('.item-price').value) || 0;
@@ -293,7 +292,7 @@
         }
 
         function updateItemRemoveButtons() {
-            const rows = itemsTableBody.querySelectorAll('tr');
+            const rows = itemsTableBody.querySelectorAll('tr.item-main-row');
             rows.forEach(row => {
                 const btn = row.querySelector('.remove-row-btn');
                 if (btn) {
@@ -309,8 +308,9 @@
         }
 
         function createItemRow() {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
+            const trMain = document.createElement('tr');
+            trMain.className = 'item-main-row';
+            trMain.innerHTML = `
                 <td>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-search"></i></span>
@@ -318,9 +318,6 @@
                         <button class="btn btn-outline-secondary clear-item-material-btn" type="button" title="Clear Material"><i class="bi bi-x-lg"></i></button>
                     </div>
                     <input type="hidden" class="item-material" value="">
-                </td>
-                <td>
-                    <input type="text" class="form-control item-remarks" placeholder="Optional remarks..." />
                 </td>
                 <td>
                     <input type="number" step="any" min="0" class="form-control item-qty" placeholder="0" required />
@@ -336,9 +333,22 @@
                 </td>
             `;
 
-            const matInput    = tr.querySelector('.item-material-input');
-            const matHidden   = tr.querySelector('.item-material');
-            const clearMatBtn = tr.querySelector('.clear-item-material-btn');
+            const trRemarks = document.createElement('tr');
+            trRemarks.className = 'item-remarks-row';
+            trRemarks.innerHTML = `
+                <td colspan="5" class="bg-light pt-1 pb-2">
+                    <div class="d-flex align-items-center mb-1">
+                        <span class="small text-muted fw-semibold"><i class="bi bi-card-text me-1"></i> Remarks</span>
+                    </div>
+                    <textarea class="form-control item-remarks" rows="2" placeholder="Optional remarks..."></textarea>
+                </td>
+            `;
+
+            trMain._remarksRow = trRemarks;
+
+            const matInput    = trMain.querySelector('.item-material-input');
+            const matHidden   = trMain.querySelector('.item-material');
+            const clearMatBtn = trMain.querySelector('.clear-item-material-btn');
 
             matInput.oninput = () => {
                 matHidden.value = findOptionId(matInput, materialList);
@@ -353,20 +363,22 @@
                 matInput.focus();
             };
 
-            tr.querySelector('.item-qty').oninput = recalculate;
-            tr.querySelector('.item-price').oninput = recalculate;
-            tr.querySelector('.remove-row-btn').onclick = () => {
-                const currentRows = itemsTableBody.querySelectorAll('tr');
+            trMain.querySelector('.item-qty').oninput = recalculate;
+            trMain.querySelector('.item-price').oninput = recalculate;
+            trMain.querySelector('.remove-row-btn').onclick = () => {
+                const currentRows = itemsTableBody.querySelectorAll('tr.item-main-row');
                 if (currentRows.length <= 1) {
                     alert('At least one item is required to make a direct PO.');
                     return;
                 }
-                tr.remove();
+                trMain.remove();
+                trRemarks.remove();
                 updateItemRemoveButtons();
                 recalculate();
             };
 
-            itemsTableBody.appendChild(tr);
+            itemsTableBody.appendChild(trMain);
+            itemsTableBody.appendChild(trRemarks);
             updateItemRemoveButtons();
         }
 
@@ -435,7 +447,7 @@
             }
 
             const items = [];
-            const itemRows = itemsTableBody.querySelectorAll('tr');
+            const itemRows = itemsTableBody.querySelectorAll('tr.item-main-row');
             for (let row of itemRows) {
                 const matInput = row.querySelector('.item-material-input');
                 const matHidden = row.querySelector('.item-material');
@@ -445,7 +457,10 @@
                 const material_item_id = matchedMatId;
                 const order_quantity = parseFloat(row.querySelector('.item-qty').value);
                 const price = parseFloat(row.querySelector('.item-price').value);
-                const remarks = row.querySelector('.item-remarks') ? row.querySelector('.item-remarks').value.trim() : '';
+                
+                const remarksRow = row._remarksRow || row.nextElementSibling;
+                const remarksTextarea = remarksRow ? remarksRow.querySelector('.item-remarks') : null;
+                const remarks = remarksTextarea ? remarksTextarea.value.trim() : '';
 
                 if (!material_item_id) {
                     alert('Please select a valid Material Item from the list.');
