@@ -336,7 +336,7 @@
             const trRemarks = document.createElement('tr');
             trRemarks.className = 'item-remarks-row';
             trRemarks.innerHTML = `
-                <td colspan="5" class="bg-light pt-1 pb-2">
+                <td colspan="5" class="pt-1 pb-2">
                     <div class="d-flex align-items-center mb-1">
                         <span class="small text-muted fw-semibold"><i class="bi bi-card-text me-1"></i> Remarks</span>
                     </div>
