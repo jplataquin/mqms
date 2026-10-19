@@ -193,9 +193,30 @@ class DirectPurchaseOrderTest extends TestCase
         $response->assertSee('required', false);
         $response->assertSee('30 Days Credit');
 
+        // Searchable Material Item
+        $response->assertSee('id="materialList"', false);
+        $response->assertSee('list="materialList"', false);
+        $response->assertSee('item-material-input', false);
+        $response->assertSee('clear-item-material-btn', false);
+
         // Single line item remove button management script
         $response->assertSee('updateItemRemoveButtons', false);
         $response->assertSee('At least one item is required to make a direct PO.', false);
+    }
+
+    /** @test */
+    public function it_renders_searchable_material_item_field_with_datalist_options_on_create_page()
+    {
+        $materialItem = $this->createMaterialItem('Deformed Rebar 16mm Grade 40');
+
+        $response = $this->actingAs($this->user)->get('/direct_purchase_order/create');
+        $response->assertStatus(200);
+
+        $response->assertSee('id="materialList"', false);
+        $response->assertSee('data-id="' . $materialItem->id . '"', false);
+        $response->assertSee('Deformed Rebar 16mm Grade 40', false);
+        $response->assertSee('item-material-input', false);
+        $response->assertSee('clear-item-material-btn', false);
     }
 
     /** @test */
@@ -738,5 +759,68 @@ class DirectPurchaseOrderTest extends TestCase
         $dpo->save();
         $pendingPrintResponse = $this->actingAs($this->user)->get('/direct_purchase_order/print/' . $dpo->id);
         $pendingPrintResponse->assertStatus(404);
+    }
+
+    /** @test */
+    public function it_removes_remarks_column_in_supplier_copy_and_indents_remarks_row_in_purchaser_and_accounting_copies()
+    {
+        $this->grantAccessCode($this->user, 'direct_purchase_order:own:view');
+
+        $project = $this->createProject('Copy Test Project');
+        $supplier = $this->createSupplier('Copy Test Supplier');
+        $materialItem = $this->createMaterialItem('Deformed Bar 12mm');
+
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Net 30';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $dpo = new DirectPurchaseOrder();
+        $dpo->supplier_id = $supplier->id;
+        $dpo->payment_term_id = $paymentTerm->id;
+        $dpo->project_id = $project->id;
+        $dpo->status = 'APRV';
+        $dpo->created_by = $this->user->id;
+        $dpo->updated_by = $this->user->id;
+        $dpo->approved_by = $this->user->id;
+        $dpo->approved_at = now();
+        $dpo->save();
+
+        $item = new DirectPurchaseOrderItem();
+        $item->direct_purchase_order_id = $dpo->id;
+        $item->material_item_id = $materialItem->id;
+        $item->quantity = 25;
+        $item->price = 320.00;
+        $item->remarks = 'Grade 60 Standard';
+        $item->save();
+
+        $response = $this->actingAs($this->user)->get('/direct_purchase_order/print/' . $dpo->id);
+        $response->assertStatus(200);
+
+        $content = $response->getContent();
+
+        // Split by copy sections
+        $supplierSection = strstr($content, 'DIRECT PURCHASE ORDER (Supplier Copy)');
+        $accountingSection = strstr($content, 'DIRECT PURCHASE ORDER (Accounting Copy)');
+        $purchaserSection = strstr($content, 'DIRECT PURCHASE ORDER (Purchaser Copy)');
+
+        // Cut sections to their boundary
+        $supplierHtml = substr($supplierSection, 0, strpos($supplierSection, 'DIRECT PURCHASE ORDER (Accounting Copy)'));
+        $accountingHtml = substr($accountingSection, 0, strpos($accountingSection, 'DIRECT PURCHASE ORDER (Purchaser Copy)'));
+        $purchaserHtml = substr($purchaserSection, 0, strpos($purchaserSection, '<!-- Site Copy -->'));
+
+        // Supplier copy: NO remarks column and NO remarks row
+        $this->assertStringNotContainsString('<th>Remarks</th>', $supplierHtml);
+        $this->assertStringNotContainsString('Grade 60 Standard', $supplierHtml);
+
+        // Accounting copy: remarks row with indent-left
+        $this->assertStringNotContainsString('<th>Remarks</th>', $accountingHtml);
+        $this->assertStringContainsString('class="indent-left"', $accountingHtml);
+        $this->assertStringContainsString('<strong>Remarks:</strong> Grade 60 Standard', $accountingHtml);
+
+        // Purchaser copy: remarks row with indent-left
+        $this->assertStringNotContainsString('<th>Remarks</th>', $purchaserHtml);
+        $this->assertStringContainsString('class="indent-left"', $purchaserHtml);
+        $this->assertStringContainsString('<strong>Remarks:</strong> Grade 60 Standard', $purchaserHtml);
     }
 }

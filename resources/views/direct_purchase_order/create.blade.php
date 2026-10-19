@@ -153,13 +153,12 @@
 
     </div>
 
-    <!-- Hidden Template Options for Material Items -->
-    <div id="materialOptions" style="display:none;">
-        <option value="">Select Material</option>
+    <!-- Datalist for Material Items -->
+    <datalist id="materialList">
         @foreach($material_items as $mi)
-            <option value="{{$mi->id}}">{{$mi->formattedName}}</option>
+            <option value="{{$mi->formattedName}}" data-id="{{$mi->id}}"></option>
         @endforeach
-    </div>
+    </datalist>
 
     <script type="module">
         import {$q, Template, $el} from '/adarna.js';
@@ -187,7 +186,7 @@
         const addExtraBtn       = $q('#addExtraBtn').first();
         const saveBtn           = $q('#saveBtn').first();
         const grandTotalText    = $q('#grandTotalText').first();
-        const materialOptions   = $q('#materialOptions').first().innerHTML;
+        const materialList      = $q('#materialList').first();
 
         const t = new Template();
 
@@ -313,9 +312,12 @@
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>
-                    <select class="form-select item-material" required>
-                        ${materialOptions}
-                    </select>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                        <input type="text" class="form-control item-material-input" list="materialList" placeholder="Type to search material..." autocomplete="off" required>
+                        <button class="btn btn-outline-secondary clear-item-material-btn" type="button" title="Clear Material"><i class="bi bi-x-lg"></i></button>
+                    </div>
+                    <input type="hidden" class="item-material" value="">
                 </td>
                 <td>
                     <input type="text" class="form-control item-remarks" placeholder="Optional remarks..." />
@@ -333,6 +335,23 @@
                     <button type="button" class="btn btn-sm btn-danger remove-row-btn" title="At least one item is required">&times;</button>
                 </td>
             `;
+
+            const matInput    = tr.querySelector('.item-material-input');
+            const matHidden   = tr.querySelector('.item-material');
+            const clearMatBtn = tr.querySelector('.clear-item-material-btn');
+
+            matInput.oninput = () => {
+                matHidden.value = findOptionId(matInput, materialList);
+            };
+            matInput.onchange = () => {
+                matHidden.value = findOptionId(matInput, materialList);
+            };
+
+            clearMatBtn.onclick = () => {
+                matInput.value = '';
+                matHidden.value = '';
+                matInput.focus();
+            };
 
             tr.querySelector('.item-qty').oninput = recalculate;
             tr.querySelector('.item-price').oninput = recalculate;
@@ -418,12 +437,23 @@
             const items = [];
             const itemRows = itemsTableBody.querySelectorAll('tr');
             for (let row of itemRows) {
-                const material_item_id = row.querySelector('.item-material').value;
+                const matInput = row.querySelector('.item-material-input');
+                const matHidden = row.querySelector('.item-material');
+                const matchedMatId = findOptionId(matInput, materialList);
+                matHidden.value = matchedMatId;
+
+                const material_item_id = matchedMatId;
                 const order_quantity = parseFloat(row.querySelector('.item-qty').value);
                 const price = parseFloat(row.querySelector('.item-price').value);
                 const remarks = row.querySelector('.item-remarks') ? row.querySelector('.item-remarks').value.trim() : '';
 
-                if (!material_item_id || isNaN(order_quantity) || isNaN(price)) {
+                if (!material_item_id) {
+                    alert('Please select a valid Material Item from the list.');
+                    matInput.focus();
+                    return;
+                }
+
+                if (isNaN(order_quantity) || order_quantity <= 0 || isNaN(price) || price < 0) {
                     alert('Please complete all fields in the Items table.');
                     return;
                 }

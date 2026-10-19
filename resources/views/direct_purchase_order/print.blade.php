@@ -24,6 +24,7 @@
         }
         .mb-10 { margin-bottom: 10px; }
         .bg-grey { background-color: #eee; }
+        .indent-left { padding-left: 30px; }
         @media print {
             .whole {
                 break-inside: avoid;
@@ -85,7 +86,7 @@
             </tr>
         </table>
 
-        @if($copy == 'Purchaser')
+        @if($copy == 'Purchaser' || $copy == 'Accounting')
         <table class="table" style="margin-top: 10px;">
             <thead>
                 <tr class="bg-grey">
@@ -111,7 +112,7 @@
                         <td class="text-right">{{ number_format($rowTotal, 2) }}</td>
                     </tr>
                     <tr>
-                        <td colspan="5" style="padding-left: 20px;">
+                        <td colspan="5" class="indent-left" style="padding-left: 30px;">
                             <strong>Remarks:</strong> {{ $item->remarks ?: '-' }}
                         </td>
                     </tr>
@@ -135,12 +136,11 @@
         <table class="table" style="margin-top: 10px;">
             <thead>
                 <tr class="bg-grey">
-                    <th>#</th>
+                    <th style="width: 5%;">#</th>
                     <th>Item Description</th>
-                    <th>Remarks</th>
-                    <th class="text-right">Quantity</th>
-                    <th class="text-right">Price</th>
-                    <th class="text-right">Total</th>
+                    <th class="text-right" style="width: 15%;">Quantity</th>
+                    <th class="text-right" style="width: 15%;">Price</th>
+                    <th class="text-right" style="width: 15%;">Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -153,7 +153,6 @@
                     <tr>
                         <td class="text-center">{{ $index + 1 }}</td>
                         <td>{{ $item->MaterialItem ? $item->MaterialItem->formattedName : 'Unknown Item' }}</td>
-                        <td>{{ $item->remarks ?: '-' }}</td>
                         <td class="text-right">{{ number_format($item->quantity, 2) }}</td>
                         <td class="text-right">{{ number_format($item->price, 2) }}</td>
                         <td class="text-right">{{ number_format($rowTotal, 2) }}</td>
@@ -163,13 +162,13 @@
                 @if(!empty($extras))
                     @foreach($extras as $extra)
                         <tr>
-                            <td colspan="5" class="text-right italic">{{ $extra->text }}</td>
+                            <td colspan="4" class="text-right italic">{{ $extra->text }}</td>
                             <td class="text-right">{{ number_format($extra->value, 2) }}</td>
                         </tr>
                     @endforeach
                 @endif
                 <tr class="bg-grey">
-                    <td colspan="5" class="text-right bold">Grand Total</td>
+                    <td colspan="4" class="text-right bold">Grand Total</td>
                     <td class="text-right bold">{{ number_format($direct_purchase_order->getGrandTotal(), 2) }}</td>
                 </tr>
             </tbody>
