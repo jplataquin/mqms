@@ -551,5 +551,93 @@ class DirectPurchaseOrderTest extends TestCase
         $printResponse->assertStatus(200);
         $printResponse->assertSee('Deliver to Warehouse B');
         $printResponse->assertSee('<th>Remarks</th>', false);
+        $printResponse->assertSee('/storage/sys_images/header_with_address.png');
+    }
+
+    /** @test */
+    public function it_displays_image_header_on_each_printed_copy()
+    {
+        $this->grantAccessCode($this->user, 'direct_purchase_order:own:view');
+
+        $project = $this->createProject('Header Project');
+        $supplier = $this->createSupplier('Header Supplier');
+
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Cash on Delivery';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $dpo = new DirectPurchaseOrder();
+        $dpo->supplier_id = $supplier->id;
+        $dpo->payment_term_id = $paymentTerm->id;
+        $dpo->project_id = $project->id;
+        $dpo->status = 'APRV';
+        $dpo->created_by = $this->user->id;
+        $dpo->updated_by = $this->user->id;
+        $dpo->approved_by = $this->user->id;
+        $dpo->approved_at = now();
+        $dpo->save();
+
+        $printResponse = $this->actingAs($this->user)->get('/direct_purchase_order/print/' . $dpo->id);
+        $printResponse->assertStatus(200);
+        $printResponse->assertSee('<img src="/storage/sys_images/header_with_address.png" style="width:500px"/>', false);
+        $this->assertEquals(3, substr_count($printResponse->getContent(), '/storage/sys_images/header_with_address.png'));
+        $printResponse->assertSee('DIRECT PURCHASE ORDER (Supplier Copy)');
+        $printResponse->assertSee('DIRECT PURCHASE ORDER (Accounting Copy)');
+        $printResponse->assertSee('DIRECT PURCHASE ORDER (Purchaser Copy)');
+        $printResponse->assertSee('DIRECT PURCHASE ORDER (Site Copy)');
+        $printResponse->assertSee('DIRECT PURCHASE ORDER (Warehouse Copy)');
+        $this->assertEquals(2, substr_count($printResponse->getContent(), '/storage/sys_images/header.png'));
+    }
+
+    /** @test */
+    public function it_includes_site_copy_and_warehouse_copy_in_print_view()
+    {
+        $this->grantAccessCode($this->user, 'direct_purchase_order:own:view');
+
+        $project = $this->createProject('Warehouse Project');
+        $supplier = $this->createSupplier('Site Supplier');
+        $materialItem = $this->createMaterialItem('Steel Rebar 16mm');
+
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Net 30';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $dpo = new DirectPurchaseOrder();
+        $dpo->supplier_id = $supplier->id;
+        $dpo->payment_term_id = $paymentTerm->id;
+        $dpo->project_id = $project->id;
+        $dpo->status = 'APRV';
+        $dpo->created_by = $this->user->id;
+        $dpo->updated_by = $this->user->id;
+        $dpo->approved_by = $this->user->id;
+        $dpo->approved_at = now();
+        $dpo->save();
+
+        $item = new DirectPurchaseOrderItem();
+        $item->direct_purchase_order_id = $dpo->id;
+        $item->material_item_id = $materialItem->id;
+        $item->quantity = 50;
+        $item->price = 450.00;
+        $item->remarks = 'For Foundation';
+        $item->save();
+
+        $response = $this->actingAs($this->user)->get('/direct_purchase_order/print/' . $dpo->id);
+        $response->assertStatus(200);
+
+        // Verify Site Copy
+        $response->assertSee('DIRECT PURCHASE ORDER (Site Copy)');
+        $response->assertSee('Received By');
+        $response->assertSee('Steel Rebar 16mm');
+        $response->assertSee('For Foundation');
+
+        // Verify Warehouse Copy
+        $response->assertSee('DIRECT PURCHASE ORDER (Warehouse Copy)');
+        $response->assertSee('Validated By');
+        $response->assertSee('Received');
+        $response->assertSee('Rejected');
+        $response->assertSee('Diff:');
+        $response->assertSee('<img src="/storage/sys_images/header.png" style="width:500px"/>', false);
     }
 }
