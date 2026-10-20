@@ -51,7 +51,7 @@
     <!-- Items with Canvass Cards -->
     @foreach($items as $item)
     <div class="card mb-4">
-        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+        <div class="card-header d-flex justify-content-between align-items-center">
             <h6 class="mb-0 fw-bold">
                 {{ $item->MaterialItem ? $item->MaterialItem->formattedName : 'Unknown Item' }}
                 <span class="badge bg-secondary ms-2">Qty: {{ number_format($item->quantity, 2) }}</span>

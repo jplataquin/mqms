@@ -46,7 +46,7 @@
     <!-- Items with Quotes for Approval -->
     @foreach($items as $item)
     <div class="card mb-4">
-        <div class="card-header bg-light">
+        <div class="card-header">
             <h6 class="mb-0 fw-bold">
                 {{ $item->MaterialItem ? $item->MaterialItem->formattedName : 'Unknown Item' }}
                 <span class="badge bg-secondary ms-2">Qty: {{ number_format($item->quantity, 2) }}</span>
