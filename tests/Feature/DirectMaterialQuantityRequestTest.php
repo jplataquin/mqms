@@ -17,6 +17,7 @@ use App\Models\MaterialItem;
 use App\Models\DirectMaterialQuantityRequest;
 use App\Models\DirectMaterialQuantityRequestItem;
 use App\Models\DirectMaterialCanvass;
+use App\Models\DirectPurchaseOrder;
 
 class DirectMaterialQuantityRequestTest extends TestCase
 {
@@ -137,7 +138,7 @@ class DirectMaterialQuantityRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_direct_material_quantity_request_in_draft_status()
+    public function it_can_create_direct_material_quantity_request_in_pending_status()
     {
         $project = $this->createProject('Highway Project');
         $material = $this->createMaterialItem('Asphalt 50kg');
@@ -159,17 +160,37 @@ class DirectMaterialQuantityRequestTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson(['status' => 1]);
 
+        $dmqrId = $response->json('data.id');
+
         $this->assertDatabaseHas('direct_material_quantity_requests', [
+            'id'          => $dmqrId,
             'project_id'  => $project->id,
             'description' => 'For highway repair',
-            'status'      => 'DRFT'
+            'status'      => 'PEND'
         ]);
 
         $this->assertDatabaseHas('direct_material_quantity_request_items', [
+            'direct_material_quantity_request_id' => $dmqrId,
             'material_item_id' => $material->id,
             'quantity'         => 100,
             'remarks'          => 'Emergency delivery needed',
             'status'           => 'PEND'
+        ]);
+
+        // Verify delete button is displayed on display page while in PEND status
+        $displayRes = $this->actingAs($this->user)->get('/direct_material_quantity_request/' . $dmqrId);
+        $displayRes->assertStatus(200);
+        $displayRes->assertSee('id="deleteBtn"', false);
+
+        // Verify deleting while in PEND status succeeds
+        $deleteRes = $this->actingAs($this->user)->postJson('/api/direct_material_quantity_request/delete', [
+            'id' => $dmqrId
+        ]);
+        $deleteRes->assertStatus(200);
+        $deleteRes->assertJson(['status' => 1]);
+
+        $this->assertDatabaseMissing('direct_material_quantity_requests', [
+            'id' => $dmqrId
         ]);
     }
 
@@ -359,5 +380,254 @@ class DirectMaterialQuantityRequestTest extends TestCase
         $resReviewCanvassDisplay = $this->actingAs($this->user)->get('/review/direct_material_canvass/' . $dmqr->id);
         $resReviewCanvassDisplay->assertStatus(200);
         $resReviewCanvassDisplay->assertSee('<div id="content">', false);
+    }
+
+    /** @test */
+    public function it_renders_print_view_with_qr_code_and_hash_code()
+    {
+        $project = $this->createProject('Print QR Project');
+        $material = $this->createMaterialItem('Print QR Item');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'PEND';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $item = new DirectMaterialQuantityRequestItem();
+        $item->direct_material_quantity_request_id = $dmqr->id;
+        $item->material_item_id = $material->id;
+        $item->quantity = 15;
+        $item->remarks = 'Fragile';
+        $item->save();
+
+        $hashCode = $dmqr->getHashCode();
+        $this->assertNotEmpty($hashCode);
+        $this->assertEquals(6, strlen($hashCode));
+
+        $res = $this->actingAs($this->user)->get('/direct_material_quantity_request/print/' . $dmqr->id);
+        $res->assertStatus(200);
+        $res->assertSee('class="qr_code"', false);
+        $res->assertSee('/qrcode?d=', false);
+        $res->assertSee('/review/direct_material_quantity_requests/qr/approve/' . $dmqr->id . '/' . $hashCode, false);
+        $res->assertSee($hashCode);
+    }
+
+    /** @test */
+    public function it_can_approve_direct_material_quantity_request_via_qr_code()
+    {
+        $project = $this->createProject('QR Approve Project');
+        $material = $this->createMaterialItem('QR Approve Item');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'PEND';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $item = new DirectMaterialQuantityRequestItem();
+        $item->direct_material_quantity_request_id = $dmqr->id;
+        $item->material_item_id = $material->id;
+        $item->quantity = 25;
+        $item->status = 'PEND';
+        $item->save();
+
+        $hashCode = $dmqr->getHashCode();
+
+        $res = $this->actingAs($this->user)->get('/review/direct_material_quantity_requests/qr/approve/' . $dmqr->id . '/' . $hashCode);
+        $res->assertStatus(200);
+        $res->assertSee('Approved');
+        $res->assertSee($hashCode);
+        $res->assertSee('DMR: ' . str_pad($dmqr->id, 6, '0', STR_PAD_LEFT));
+
+        $dmqr->refresh();
+        $this->assertEquals('APRV', $dmqr->status);
+        $this->assertEquals($this->user->id, $dmqr->approved_by);
+        $this->assertNotNull($dmqr->approved_at);
+
+        $item->refresh();
+        $this->assertEquals('APRV', $item->status);
+    }
+
+    /** @test */
+    public function it_denies_qr_approval_when_user_lacks_permission()
+    {
+        $unauthorizedUser = User::factory()->create(['status' => 'ACTV']);
+
+        $project = $this->createProject('Denied QR Project');
+        $material = $this->createMaterialItem('Denied QR Item');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'PEND';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $item = new DirectMaterialQuantityRequestItem();
+        $item->direct_material_quantity_request_id = $dmqr->id;
+        $item->material_item_id = $material->id;
+        $item->quantity = 5;
+        $item->save();
+
+        $hashCode = $dmqr->getHashCode();
+
+        $res = $this->actingAs($unauthorizedUser)->get('/review/direct_material_quantity_requests/qr/approve/' . $dmqr->id . '/' . $hashCode);
+        $res->assertStatus(200);
+        $res->assertSee('--Access Denied--');
+
+        $dmqr->refresh();
+        $this->assertEquals('PEND', $dmqr->status);
+    }
+
+    /** @test */
+    public function it_rejects_qr_approval_when_hash_code_is_invalid()
+    {
+        $project = $this->createProject('Invalid Hash Project');
+        $material = $this->createMaterialItem('Invalid Hash Item');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'PEND';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $item = new DirectMaterialQuantityRequestItem();
+        $item->direct_material_quantity_request_id = $dmqr->id;
+        $item->material_item_id = $material->id;
+        $item->quantity = 5;
+        $item->save();
+
+        $res = $this->actingAs($this->user)->get('/review/direct_material_quantity_requests/qr/approve/' . $dmqr->id . '/WRONG1');
+        $res->assertStatus(200);
+        $res->assertSee('The printed copy is not updated');
+
+        $dmqr->refresh();
+        $this->assertEquals('PEND', $dmqr->status);
+    }
+
+    /** @test */
+    public function it_rejects_qr_approval_when_record_is_not_in_pending_status()
+    {
+        $project = $this->createProject('Not Pending Project');
+        $material = $this->createMaterialItem('Not Pending Item');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $item = new DirectMaterialQuantityRequestItem();
+        $item->direct_material_quantity_request_id = $dmqr->id;
+        $item->material_item_id = $material->id;
+        $item->quantity = 5;
+        $item->save();
+
+        $hashCode = $dmqr->getHashCode();
+
+        $res = $this->actingAs($this->user)->get('/review/direct_material_quantity_requests/qr/approve/' . $dmqr->id . '/' . $hashCode);
+        $res->assertStatus(200);
+        $res->assertSee('The record is no longer in pending status');
+    }
+
+    /** @test */
+    public function it_can_revert_approved_direct_material_quantity_request_to_pending()
+    {
+        $project = $this->createProject('Revert Project');
+        $material = $this->createMaterialItem('Revert Item');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->approved_by = $this->user->id;
+        $dmqr->approved_at = now();
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $item = new DirectMaterialQuantityRequestItem();
+        $item->direct_material_quantity_request_id = $dmqr->id;
+        $item->material_item_id = $material->id;
+        $item->quantity = 10;
+        $item->status = 'APRV';
+        $item->save();
+
+        $res = $this->actingAs($this->user)->postJson('/api/direct_material_quantity_request/revert_to_pending', [
+            'id' => $dmqr->id
+        ]);
+
+        $res->assertStatus(200);
+        $res->assertJson(['status' => 1]);
+
+        $dmqr->refresh();
+        $this->assertEquals('PEND', $dmqr->status);
+        $this->assertNull($dmqr->approved_by);
+        $this->assertNull($dmqr->approved_at);
+
+        $item->refresh();
+        $this->assertEquals('PEND', $item->status);
+    }
+
+    /** @test */
+    public function it_prevents_reverting_when_dependent_direct_po_or_canvass_exists()
+    {
+        $project = $this->createProject('Dependency Project');
+        $material = $this->createMaterialItem('Dependency Item');
+        $supplier = $this->createSupplier('Dependency Supplier');
+
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Cash on Delivery';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $item = new DirectMaterialQuantityRequestItem();
+        $item->direct_material_quantity_request_id = $dmqr->id;
+        $item->material_item_id = $material->id;
+        $item->quantity = 10;
+        $item->status = 'APRV';
+        $item->save();
+
+        // 1. With approved canvass quote
+        $canvass = new DirectMaterialCanvass();
+        $canvass->direct_material_quantity_request_id = $dmqr->id;
+        $canvass->direct_material_quantity_request_item_id = $item->id;
+        $canvass->supplier_id = $supplier->id;
+        $canvass->payment_term_id = $paymentTerm->id;
+        $canvass->price = 50.00;
+        $canvass->status = 'APRV';
+        $canvass->created_by = $this->user->id;
+        $canvass->save();
+
+        $resCanvass = $this->actingAs($this->user)->postJson('/api/direct_material_quantity_request/revert_to_pending', [
+            'id' => $dmqr->id
+        ]);
+        $resCanvass->assertStatus(200);
+        $resCanvass->assertJson(['status' => 0]);
+        $this->assertStringContainsString('canvass', strtolower($resCanvass->json('message')));
+
+        // Delete the canvass to test PO dependency
+        $canvass->delete();
+
+        // 2. With dependent direct purchase order
+        $dpo = new DirectPurchaseOrder();
+        $dpo->project_id = $project->id;
+        $dpo->supplier_id = $supplier->id;
+        $dpo->payment_term_id = $paymentTerm->id;
+        $dpo->direct_material_quantity_request_id = $dmqr->id;
+        $dpo->status = 'APRV';
+        $dpo->created_by = $this->user->id;
+        $dpo->save();
+
+        $resPo = $this->actingAs($this->user)->postJson('/api/direct_material_quantity_request/revert_to_pending', [
+            'id' => $dmqr->id
+        ]);
+        $resPo->assertStatus(200);
+        $resPo->assertJson(['status' => 0]);
+        $this->assertStringContainsString('purchase order', strtolower($resPo->json('message')));
     }
 }

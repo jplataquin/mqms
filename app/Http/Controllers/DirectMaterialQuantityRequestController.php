@@ -173,7 +173,7 @@ class DirectMaterialQuantityRequestController extends Controller
             $dmqr->project_id   = $project_id;
             $dmqr->section_id   = $section_id;
             $dmqr->description  = $description;
-            $dmqr->status       = 'DRFT';
+            $dmqr->status       = 'PEND';
             $dmqr->created_by   = $user->id;
             $dmqr->save();
 
@@ -226,10 +226,15 @@ class DirectMaterialQuantityRequestController extends Controller
         $canUpdateOwn = $this->hasAccess(['material_request:own:update', 'direct_material_quantity_request:own:update']);
         $canEdit = $canUpdateAll || ($canUpdateOwn && $dmqr->created_by == $user->id);
 
+        $canDeleteAll = $this->hasAccess(['material_request:all:delete', 'direct_material_quantity_request:all:delete']);
+        $canDeleteOwn = $this->hasAccess(['material_request:own:delete', 'direct_material_quantity_request:own:delete']);
+        $canDelete = $canDeleteAll || ($canDeleteOwn && $dmqr->created_by == $user->id);
+
         return view('direct_material_quantity_request/display', [
-            'request' => $dmqr,
-            'items'   => $dmqr->Items,
-            'canEdit' => $canEdit
+            'request'   => $dmqr,
+            'items'     => $dmqr->Items,
+            'canEdit'   => $canEdit,
+            'canDelete' => $canDelete
         ]);
     }
 
@@ -346,11 +351,105 @@ class DirectMaterialQuantityRequestController extends Controller
             return view('access_denied');
         }
 
+        $hash_code = $dmqr->getHashCode();
+
         return view('direct_material_quantity_request/print', [
             'request'          => $dmqr,
             'items'            => $dmqr->Items,
+            'hash_code'        => $hash_code,
             'current_datetime' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
+    }
+
+    public function _revert_to_pending(Request $request)
+    {
+        $id = (int) $request->input('id');
+
+        $dmqr = DirectMaterialQuantityRequest::find($id);
+
+        if (!$dmqr) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Record not found',
+                'data'    => []
+            ]);
+        }
+
+        if ($dmqr->status != 'APRV') {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Direct Material Request is not in approved status.',
+                'data'    => []
+            ]);
+        }
+
+        $canRevertAll = $this->hasAccess(['material_request:all:revert_to_pending', 'direct_material_quantity_request:all:revert_to_pending', 'material_request:all:approve', 'direct_material_quantity_request:all:approve']);
+        $canRevertOwn = $this->hasAccess(['material_request:own:revert_to_pending', 'direct_material_quantity_request:own:revert_to_pending']);
+
+        if (!$canRevertAll && (!$canRevertOwn || $dmqr->created_by != auth()->user()->id)) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Access Denied',
+                'data'    => []
+            ]);
+        }
+
+        // Check if there are active dependent direct purchase orders
+        $countPo = \App\Models\DirectPurchaseOrder::where('direct_material_quantity_request_id', $id)
+            ->whereNotIn('status', ['VOID', 'REJC'])
+            ->whereNull('deleted_at')
+            ->count();
+
+        if ($countPo > 0) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Record dependency issue, this Direct Material Request has active Purchase Order(s) that are dependent.',
+                'data'    => []
+            ]);
+        }
+
+        // Check if there are approved canvass quotes
+        $countCanvass = \App\Models\DirectMaterialCanvass::where('direct_material_quantity_request_id', $id)
+            ->where('status', 'APRV')
+            ->whereNull('deleted_at')
+            ->count();
+
+        if ($countCanvass > 0) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Record dependency issue, this Direct Material Request has approved canvass quote(s) that are dependent.',
+                'data'    => []
+            ]);
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $dmqr->status      = 'PEND';
+            $dmqr->approved_by = null;
+            $dmqr->approved_at = null;
+            $dmqr->updated_by  = auth()->user()->id;
+            $dmqr->save();
+
+            DirectMaterialQuantityRequestItem::where('direct_material_quantity_request_id', $id)
+                ->update(['status' => 'PEND']);
+
+            DB::commit();
+
+            return response()->json([
+                'status'  => 1,
+                'message' => 'Direct Material Request reverted to pending.',
+                'data'    => []
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json([
+                'status'  => 0,
+                'message' => $e->getMessage(),
+                'data'    => []
+            ]);
+        }
     }
 
     public function _for_direct_po($id)

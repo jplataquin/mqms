@@ -204,6 +204,7 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::post('/direct_material_quantity_request/create', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_create']);
     Route::post('/direct_material_quantity_request/submit_for_review', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_submit_for_review']);
     Route::post('/direct_material_quantity_request/delete', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_delete']);
+    Route::post('/direct_material_quantity_request/revert_to_pending', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_revert_to_pending']);
 
     // Direct Material Canvass
     Route::get('/direct_material_canvass/list', [App\Http\Controllers\DirectMaterialCanvassController::class, '_list']);

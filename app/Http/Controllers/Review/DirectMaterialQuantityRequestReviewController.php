@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\DirectMaterialQuantityRequest;
+use App\Models\DirectMaterialQuantityRequestItem;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class DirectMaterialQuantityRequestReviewController extends Controller
 {
@@ -123,16 +126,33 @@ class DirectMaterialQuantityRequestReviewController extends Controller
         }
 
         $user = auth()->user();
-        $dmqr->status      = 'APRV';
-        $dmqr->approved_by = $user->id;
-        $dmqr->approved_at = Carbon::now();
-        $dmqr->save();
 
-        return response()->json([
-            'status'  => 1,
-            'message' => 'Direct Material Request approved successfully.',
-            'data'    => []
-        ]);
+        DB::beginTransaction();
+        try {
+            $dmqr->status      = 'APRV';
+            $dmqr->approved_by = $user->id;
+            $dmqr->approved_at = Carbon::now();
+            $dmqr->save();
+
+            DirectMaterialQuantityRequestItem::where('direct_material_quantity_request_id', $id)
+                ->update(['status' => 'APRV']);
+
+            DB::commit();
+
+            return response()->json([
+                'status'  => 1,
+                'message' => 'Direct Material Request approved successfully.',
+                'data'    => []
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json([
+                'status'  => 0,
+                'message' => $e->getMessage(),
+                'data'    => []
+            ]);
+        }
     }
 
     public function _reject(Request $request)
@@ -175,5 +195,81 @@ class DirectMaterialQuantityRequestReviewController extends Controller
             'message' => 'Direct Material Request rejected successfully.',
             'data'    => []
         ]);
+    }
+
+    public function qr_approve($id, $hash_code = null)
+    {
+        $id = (int) $id;
+
+        if (!$hash_code) {
+            return view('review/direct_material_quantity_request/qr/error', [
+                'message' => 'Hash code not found',
+                'data'    => [],
+                'id'      => $id
+            ]);
+        }
+
+        if (!$this->hasAccess(['material_request:all:approve', 'direct_material_quantity_request:all:approve'])) {
+            return view('review/direct_material_quantity_request/qr/access_denied', [
+                'id' => $id
+            ]);
+        }
+
+        $dmqr = DirectMaterialQuantityRequest::find($id);
+
+        if (!$dmqr) {
+            return view('review/direct_material_quantity_request/qr/error', [
+                'message' => 'Record not found',
+                'data'    => [],
+                'id'      => $id
+            ]);
+        }
+
+        $current_hash_code = $dmqr->getHashCode();
+
+        if ($hash_code != $current_hash_code) {
+            return view('review/direct_material_quantity_request/qr/error', [
+                'message' => 'The printed copy is not updated',
+                'data'    => [],
+                'id'      => $id
+            ]);
+        }
+
+        if ($dmqr->status != 'PEND') {
+            return view('review/direct_material_quantity_request/qr/error', [
+                'message' => 'The record is no longer in pending status',
+                'data'    => [],
+                'id'      => $id
+            ]);
+        }
+
+        $user_id = Auth::user()->id;
+
+        DB::beginTransaction();
+
+        try {
+            $dmqr->status      = 'APRV';
+            $dmqr->approved_by = $user_id;
+            $dmqr->approved_at = Carbon::now();
+            $dmqr->save();
+
+            DirectMaterialQuantityRequestItem::where('direct_material_quantity_request_id', $id)
+                ->update(['status' => 'APRV']);
+
+            DB::commit();
+
+            return view('review/direct_material_quantity_request/qr/approve', [
+                'id'        => $id,
+                'hash_code' => $hash_code
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return view('review/direct_material_quantity_request/qr/error', [
+                'message' => 'Record update failed',
+                'data'    => [$e->getMessage()],
+                'id'      => $id
+            ]);
+        }
     }
 }

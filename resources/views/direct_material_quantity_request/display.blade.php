@@ -92,8 +92,11 @@
             <i class="bi bi-printer"></i> Print
         </a>
 
-        @if($request->status == 'DRFT' && $canEdit)
+        @if(($request->status == 'DRFT' || $request->status == 'PEND') && ($canDelete ?? $canEdit))
             <button type="button" class="btn btn-danger me-2" id="deleteBtn">Delete</button>
+        @endif
+
+        @if($request->status == 'DRFT' && $canEdit)
             <button type="button" class="btn btn-success" id="submitBtn">Submit For Review</button>
         @endif
 
@@ -128,7 +131,7 @@
 
     if (deleteBtn) {
         deleteBtn.onclick = async () => {
-            if (!confirm('Are you sure you want to delete this draft request?')) return;
+            if (!confirm('Are you sure you want to delete this request?')) return;
             window.util.blockUI();
             let res = await window.util.$post('/api/direct_material_quantity_request/delete', { id: reqId });
             window.util.unblockUI();

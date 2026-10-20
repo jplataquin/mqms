@@ -145,6 +145,8 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     // Direct Material Quantity Requests Review
     Route::get('/review/direct_material_quantity_requests', [App\Http\Controllers\Review\DirectMaterialQuantityRequestReviewController::class, 'list']);
     Route::get('/review/direct_material_quantity_request/{id}', [App\Http\Controllers\Review\DirectMaterialQuantityRequestReviewController::class, 'display']);
+    Route::get('/review/direct_material_quantity_requests/qr/approve/{id}/{hash_code}', [App\Http\Controllers\Review\DirectMaterialQuantityRequestReviewController::class, 'qr_approve']);
+    Route::get('/review/direct_material_quantity_request/qr/approve/{id}/{hash_code}', [App\Http\Controllers\Review\DirectMaterialQuantityRequestReviewController::class, 'qr_approve']);
 
     // Direct Material Canvass Review
     Route::get('/review/direct_material_canvass', [App\Http\Controllers\Review\DirectMaterialCanvassReviewController::class, 'list']);

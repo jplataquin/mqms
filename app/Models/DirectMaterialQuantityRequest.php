@@ -58,4 +58,48 @@ class DirectMaterialQuantityRequest extends Model
     {
         return str_pad($this->id, 6, '0', STR_PAD_LEFT);
     }
+
+    public function getHashCode(): string
+    {
+        $item_arr = [];
+
+        foreach ($this->Items as $item) {
+            $material_item = $item->MaterialItem;
+            $mat_name = $material_item ? $material_item->formattedName : '';
+
+            $item_arr[] = implode('-', [
+                $item->id,
+                $item->material_item_id,
+                $mat_name,
+                $item->quantity,
+                $item->remarks ?? ''
+            ]);
+        }
+
+        $project = $this->Project;
+        $section = $this->Section;
+
+        $header_arr = [
+            $this->id,
+            $project ? $project->name : '',
+            $project ? $project->status : '',
+            $section ? $section->name : '',
+            $this->created_by,
+            $this->created_at,
+            $this->status,
+            $this->description ?? ''
+        ];
+
+        $item_str   = implode(':', $item_arr);
+        $header_str = implode('|', $header_arr);
+
+        $app_key = config('app.key') ?: env('APP_KEY', '');
+        $secret_text = $header_str . '=' . $item_str . '=' . $app_key;
+
+        $raw_hash = hash('sha256', $secret_text);
+
+        $hash = substr($raw_hash, 0, 3) . substr($raw_hash, 61, 3);
+
+        return strtoupper($hash);
+    }
 }

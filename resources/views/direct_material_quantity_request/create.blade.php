@@ -94,7 +94,7 @@
 
     <div class="text-end mb-5">
         <a href="/direct_material_quantity_requests" class="btn btn-secondary me-2">Cancel</a>
-        <button type="button" class="btn btn-primary" id="saveBtn">Save Draft</button>
+        <button type="button" class="btn btn-primary" id="saveBtn">Submit Request</button>
     </div>
 </div>
 

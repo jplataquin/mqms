@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('project_id')->nullable();
             $table->bigInteger('section_id')->nullable();
-            $table->char('status', 4)->default('DRFT');
+            $table->char('status', 4)->default('PEND');
             $table->text('description')->nullable();
 
             $table->bigInteger('created_by');

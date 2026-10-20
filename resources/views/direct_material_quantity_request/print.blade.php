@@ -15,8 +15,10 @@
         .text-center { text-align: center; }
         .footer { margin-top: 40px; }
         .signature-box { display: inline-block; width: 45%; }
+        .qr_code { width: 90px; height: 90px; }
         @media print {
             .no-print { display: none; }
+            .qr_code { width: 90px; height: 90px; }
         }
     </style>
 </head>
@@ -25,10 +27,18 @@
         <button onclick="window.print()" style="padding: 8px 16px; cursor: pointer;">Print</button>
     </div>
 
-    <div class="header">
-        <h2>Direct Material Request</h2>
-        <p style="margin: 5px 0;">Request #: <strong>{{ $request->formatted_id }}</strong> | Status: <strong>{{ $request->status }}</strong></p>
-    </div>
+    <table style="width: 100%; margin-bottom: 20px; border-collapse: collapse;">
+        <tr>
+            <td style="vertical-align: middle;">
+                <h2 style="margin: 0;">Direct Material Request</h2>
+                <p style="margin: 5px 0;">Request #: <strong>{{ $request->formatted_id }}</strong> | Status: <strong>{{ $request->status }}</strong></p>
+            </td>
+            <td style="width: 120px; text-align: center; vertical-align: middle;">
+                <img class="qr_code" src="/qrcode?d={{ url('/review/direct_material_quantity_requests/qr/approve/'.$request->id.'/'.$hash_code) }}"/>
+                <div style="font-weight: bold; font-size: 11px; margin-top: 2px;">{{ $hash_code }}</div>
+            </td>
+        </tr>
+    </table>
 
     <table class="meta-table">
         <tr>
