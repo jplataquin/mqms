@@ -73,6 +73,7 @@ class QrCodeController extends Controller
             }
         } catch (\Throwable $e) {
             // Fallback to SVG if GD or Imagick failed at runtime
+            $exceptionMessage = 'E1: ' . $e->getMessage();
             try {
                 if (class_exists(ImageRenderer::class) && class_exists(SvgImageBackEnd::class)) {
                     $renderer = new ImageRenderer(
@@ -81,19 +82,27 @@ class QrCodeController extends Controller
                     );
                     $writer = new Writer($renderer);
                     return response($writer->writeString($data))->header('Content-Type', 'image/svg+xml');
+                } else {
+                    $exceptionMessage .= ' | E2: SvgImageBackEnd or ImageRenderer class missing';
                 }
             } catch (\Throwable $e2) {
-                // Ignore and proceed to fallback SVG
+                $exceptionMessage .= ' | E3: ' . $e2->getMessage();
             }
         }
 
         // Absolute fallback SVG placeholder if no renderer could be instantiated
+        if (!isset($exceptionMessage)) {
+            $exceptionMessage = 'No compatible renderers available (Imagick, GD, and SVG conditions returned false)';
+        }
+
         $escapedData = htmlspecialchars($data, ENT_QUOTES | ENT_XML1, 'UTF-8');
+        $escapedError = htmlspecialchars($exceptionMessage, ENT_QUOTES | ENT_XML1, 'UTF-8');
         $fallbackSvg = <<<SVG
 <svg xmlns="http://www.w3.org/2000/svg" width="{$size}" height="{$size}" viewBox="0 0 {$size} {$size}">
     <rect width="100%" height="100%" fill="#ffffff" stroke="#cccccc" stroke-width="2"/>
-    <text x="50%" y="45%" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#333333">QR Code</text>
-    <text x="50%" y="55%" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#666666">{$escapedData}</text>
+    <text x="50%" y="40%" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#333333">QR Code Fallback</text>
+    <text x="50%" y="50%" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#666666">{$escapedData}</text>
+    <text x="50%" y="60%" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#d9534f" font-weight="bold">{$escapedError}</text>
 </svg>
 SVG;
         return response($fallbackSvg)->header('Content-Type', 'image/svg+xml');
