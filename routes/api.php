@@ -147,6 +147,16 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::post('/review/direct_purchase_order/reject', [App\Http\Controllers\Review\DirectPurchaseOrderReviewController::class, '_reject']);
     Route::post('/review/direct_purchase_order/reject_void', [App\Http\Controllers\Review\DirectPurchaseOrderReviewController::class, '_reject_void']);
     Route::post('/review/direct_purchase_order/void', [App\Http\Controllers\Review\DirectPurchaseOrderReviewController::class, '_void']);
+
+    // Direct Material Quantity Request Review
+    Route::get('/review/direct_material_quantity_request/list', [App\Http\Controllers\Review\DirectMaterialQuantityRequestReviewController::class, '_list']);
+    Route::post('/review/direct_material_quantity_request/approve', [App\Http\Controllers\Review\DirectMaterialQuantityRequestReviewController::class, '_approve']);
+    Route::post('/review/direct_material_quantity_request/reject', [App\Http\Controllers\Review\DirectMaterialQuantityRequestReviewController::class, '_reject']);
+
+    // Direct Material Canvass Review
+    Route::get('/review/direct_material_canvass/list', [App\Http\Controllers\Review\DirectMaterialCanvassReviewController::class, '_list']);
+    Route::post('/review/direct_material_canvass/approve', [App\Http\Controllers\Review\DirectMaterialCanvassReviewController::class, '_approve']);
+    Route::post('/review/direct_material_canvass/reject', [App\Http\Controllers\Review\DirectMaterialCanvassReviewController::class, '_reject']);
  
 
     Route::get('/review/material_canvass/list', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, '_list']);
@@ -186,6 +196,19 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::post('/direct_purchase_order/request_void', [App\Http\Controllers\DirectPurchaseOrderController::class, '_request_void']);
     Route::post('/direct_purchase_order/void', [App\Http\Controllers\DirectPurchaseOrderController::class, '_void']);
     Route::post('/direct_purchase_order/reject_void', [App\Http\Controllers\Review\DirectPurchaseOrderReviewController::class, '_reject_void']);
+
+    // Direct Material Quantity Request
+    Route::get('/direct_material_quantity_request/list', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_list']);
+    Route::get('/direct_material_quantity_request/available_for_direct_po', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_available_for_direct_po']);
+    Route::get('/direct_material_quantity_request/for_direct_po/{id}', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_for_direct_po']);
+    Route::post('/direct_material_quantity_request/create', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_create']);
+    Route::post('/direct_material_quantity_request/submit_for_review', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_submit_for_review']);
+    Route::post('/direct_material_quantity_request/delete', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_delete']);
+
+    // Direct Material Canvass
+    Route::get('/direct_material_canvass/list', [App\Http\Controllers\DirectMaterialCanvassController::class, '_list']);
+    Route::post('/direct_material_canvass/create', [App\Http\Controllers\DirectMaterialCanvassController::class, '_create']);
+    Route::post('/direct_material_canvass/delete', [App\Http\Controllers\DirectMaterialCanvassController::class, '_delete']);
    
     
     Route::get('/contract_item/list', [App\Http\Controllers\ContractItemController::class, '_list']);

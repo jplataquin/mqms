@@ -10,6 +10,9 @@ use App\Models\Supplier;
 use App\Models\PaymentTerm;
 use App\Models\DirectPurchaseOrder;
 use App\Models\DirectPurchaseOrderItem;
+use App\Models\DirectMaterialQuantityRequest;
+use App\Models\DirectMaterialQuantityRequestItem;
+use App\Models\DirectMaterialCanvass;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -104,11 +107,36 @@ class DirectPurchaseOrderController extends Controller
         $payment_terms  = PaymentTerm::orderBy('text', 'ASC')->get();
         $material_items = MaterialItem::orderBy('name', 'ASC')->get();
 
+        $available_dmqrs = DirectMaterialQuantityRequest::with(['Project', 'Section'])
+            ->where('status', '=', 'APRV')
+            ->orderBy('id', 'DESC')
+            ->get()
+            ->filter(function ($dmqr) {
+                foreach ($dmqr->Items as $item) {
+                    $hasApprovedCanvass = DirectMaterialCanvass::where('direct_material_quantity_request_item_id', $item->id)
+                        ->where('status', '=', 'APRV')
+                        ->exists();
+                    if (!$hasApprovedCanvass) continue;
+
+                    $ordered = DirectPurchaseOrderItem::where('direct_material_quantity_request_item_id', $item->id)
+                        ->whereHas('DirectPurchaseOrder', function ($q) {
+                            $q->where('status', '!=', 'VOID');
+                        })
+                        ->sum('quantity');
+
+                    if (($item->quantity - $ordered) > 0) {
+                        return true;
+                    }
+                }
+                return false;
+            })->values();
+
         return view('direct_purchase_order/create', [
-            'projects'       => $projects,
-            'suppliers'      => $suppliers,
-            'payment_terms'  => $payment_terms,
-            'material_items' => $material_items
+            'projects'        => $projects,
+            'suppliers'       => $suppliers,
+            'payment_terms'   => $payment_terms,
+            'material_items'  => $material_items,
+            'available_dmqrs' => $available_dmqrs
         ]);
     }
 
@@ -134,6 +162,22 @@ class DirectPurchaseOrderController extends Controller
         $section_id      = (!empty($raw_section_id) && $raw_section_id !== 'null' && $raw_section_id !== 'undefined' && is_numeric($raw_section_id) && (int) $raw_section_id > 0)
             ? (int) $raw_section_id
             : null;
+
+        $raw_dmqr_id     = $request->input('direct_material_quantity_request_id');
+        $dmqr_id         = (!empty($raw_dmqr_id) && $raw_dmqr_id !== 'null' && $raw_dmqr_id !== 'undefined' && is_numeric($raw_dmqr_id) && (int) $raw_dmqr_id > 0)
+            ? (int) $raw_dmqr_id
+            : null;
+
+        if ($dmqr_id) {
+            $dmqr = DirectMaterialQuantityRequest::find($dmqr_id);
+            if (!$dmqr || $dmqr->status != 'APRV') {
+                return response()->json([
+                    'status'  => -2,
+                    'message' => 'The selected Direct Material Request is not approved or not found.',
+                    'data'    => []
+                ]);
+            }
+        }
 
         try {
             $po_items = json_decode($request->input('items'), true);
@@ -167,6 +211,40 @@ class DirectPurchaseOrderController extends Controller
                 'message' => 'Failed Validation',
                 'data'    => $itemsValidation->messages()
             ]);
+        }
+
+        if ($dmqr_id) {
+            foreach ($po_items as $item) {
+                $dmqr_item_id = $item['direct_material_quantity_request_item_id'] ?? null;
+                if ($dmqr_item_id) {
+                    $dmqrItem = DirectMaterialQuantityRequestItem::where('id', $dmqr_item_id)
+                        ->where('direct_material_quantity_request_id', $dmqr_id)
+                        ->first();
+
+                    if (!$dmqrItem) {
+                        return response()->json([
+                            'status'  => -2,
+                            'message' => 'Line item does not belong to the selected Direct Material Request.',
+                            'data'    => []
+                        ]);
+                    }
+
+                    $ordered = DirectPurchaseOrderItem::where('direct_material_quantity_request_item_id', $dmqr_item_id)
+                        ->whereHas('DirectPurchaseOrder', function ($q) {
+                            $q->where('status', '!=', 'VOID');
+                        })
+                        ->sum('quantity');
+
+                    $remainingBalance = (float) $dmqrItem->quantity - (float) $ordered;
+                    if ((float) $item['order_quantity'] > $remainingBalance + 0.0001) {
+                        return response()->json([
+                            'status'  => -2,
+                            'message' => "Order quantity ({$item['order_quantity']}) exceeds remaining balance ({$remainingBalance}) for requested item #{$dmqr_item_id}.",
+                            'data'    => []
+                        ]);
+                    }
+                }
+            }
         }
 
         $validation = Validator::make([
@@ -217,26 +295,29 @@ class DirectPurchaseOrderController extends Controller
 
         try {
             $dpo = new DirectPurchaseOrder();
-            $dpo->status          = 'DRFT';
-            $dpo->supplier_id     = $supplier_id;
-            $dpo->payment_term_id = $payment_term_id;
-            $dpo->project_id      = $project_id;
-            $dpo->section_id      = $section_id;
-            $dpo->extras          = json_encode($extras);
-            $dpo->created_by      = $user_id;
+            $dpo->status                              = 'DRFT';
+            $dpo->supplier_id                         = $supplier_id;
+            $dpo->payment_term_id                     = $payment_term_id;
+            $dpo->project_id                          = $project_id;
+            $dpo->section_id                          = $section_id;
+            $dpo->direct_material_quantity_request_id = $dmqr_id;
+            $dpo->extras                              = json_encode($extras);
+            $dpo->created_by                          = $user_id;
             $dpo->save();
 
             $bulk = [];
             foreach ($po_items as $item) {
                 $bulk[] = [
-                    'direct_purchase_order_id' => $dpo->id,
-                    'material_item_id'         => $item['material_item_id'],
-                    'status'                   => 'PEND',
-                    'quantity'                 => $item['order_quantity'],
-                    'price'                    => $item['price'],
-                    'remarks'                  => $item['remarks'] ?? null,
-                    'created_at'               => Carbon::now(),
-                    'updated_at'               => Carbon::now(),
+                    'direct_purchase_order_id'                 => $dpo->id,
+                    'direct_material_quantity_request_item_id' => $item['direct_material_quantity_request_item_id'] ?? null,
+                    'direct_material_canvass_id'               => $item['direct_material_canvass_id'] ?? null,
+                    'material_item_id'                         => $item['material_item_id'],
+                    'status'                                   => 'PEND',
+                    'quantity'                                 => $item['order_quantity'],
+                    'price'                                    => $item['price'],
+                    'remarks'                                  => $item['remarks'] ?? null,
+                    'created_at'                               => Carbon::now(),
+                    'updated_at'                               => Carbon::now(),
                 ];
             }
 

@@ -14,6 +14,9 @@ use App\Models\PaymentTerm;
 use App\Models\MaterialItem;
 use App\Models\DirectPurchaseOrder;
 use App\Models\DirectPurchaseOrderItem;
+use App\Models\DirectMaterialQuantityRequest;
+use App\Models\DirectMaterialQuantityRequestItem;
+use App\Models\DirectMaterialCanvass;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class DirectPurchaseOrderTest extends TestCase
@@ -844,5 +847,205 @@ class DirectPurchaseOrderTest extends TestCase
         $this->assertStringNotContainsString('<th>Remarks</th>', $purchaserHtml);
         $this->assertStringContainsString('class="indent-left"', $purchaserHtml);
         $this->assertStringContainsString('<strong>Remarks:</strong> Grade 60 Standard', $purchaserHtml);
+    }
+
+    /** @test */
+    public function it_renders_dmqr_field_on_direct_purchase_order_create_page()
+    {
+        $response = $this->actingAs($this->user)->get('/direct_purchase_order/create');
+        $response->assertStatus(200);
+
+        $response->assertSee('id="dmqrInput"', false);
+        $response->assertSee('list="dmqrList"', false);
+    }
+
+    /** @test */
+    public function it_can_create_direct_purchase_order_linked_to_direct_material_quantity_request()
+    {
+        $project = $this->createProject('Expressway Link');
+        $material = $this->createMaterialItem('Steel Girder');
+        $supplier = $this->createSupplier('Steel Fabricators Co');
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = '45 Days';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $item = new DirectMaterialQuantityRequestItem();
+        $item->direct_material_quantity_request_id = $dmqr->id;
+        $item->material_item_id = $material->id;
+        $item->quantity = 20;
+        $item->save();
+
+        $canvass = new DirectMaterialCanvass();
+        $canvass->direct_material_quantity_request_id = $dmqr->id;
+        $canvass->direct_material_quantity_request_item_id = $item->id;
+        $canvass->supplier_id = $supplier->id;
+        $canvass->payment_term_id = $paymentTerm->id;
+        $canvass->price = 1500.00;
+        $canvass->status = 'APRV';
+        $canvass->created_by = $this->user->id;
+        $canvass->save();
+
+        $items = [
+            [
+                'direct_material_quantity_request_item_id' => $item->id,
+                'direct_material_canvass_id'               => $canvass->id,
+                'material_item_id'                         => $material->id,
+                'order_quantity'                           => 10,
+                'price'                                    => 1500.00,
+                'remarks'                                  => 'First delivery'
+            ]
+        ];
+
+        $response = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/create', [
+            'direct_material_quantity_request_id' => $dmqr->id,
+            'supplier_id'                         => $supplier->id,
+            'payment_term_id'                     => $paymentTerm->id,
+            'project_id'                          => $project->id,
+            'items'                               => json_encode($items)
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 1]);
+
+        $dpoId = $response->json('data.id');
+        $dpo = DirectPurchaseOrder::find($dpoId);
+        $this->assertEquals($dmqr->id, $dpo->direct_material_quantity_request_id);
+
+        $dpoItem = DirectPurchaseOrderItem::where('direct_purchase_order_id', $dpoId)->first();
+        $this->assertEquals($item->id, $dpoItem->direct_material_quantity_request_item_id);
+        $this->assertEquals($canvass->id, $dpoItem->direct_material_canvass_id);
+        $this->assertEquals(10, $dpoItem->quantity);
+    }
+
+    /** @test */
+    public function it_can_create_multiple_direct_purchase_orders_for_dmqr_as_long_as_there_is_item_balance()
+    {
+        $project = $this->createProject('Bridge Renovation');
+        $material = $this->createMaterialItem('Concrete Piles');
+        $supplier = $this->createSupplier('Piling Specialist Corp');
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = '30 Days';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $item = new DirectMaterialQuantityRequestItem();
+        $item->direct_material_quantity_request_id = $dmqr->id;
+        $item->material_item_id = $material->id;
+        $item->quantity = 100;
+        $item->save();
+
+        $canvass = new DirectMaterialCanvass();
+        $canvass->direct_material_quantity_request_id = $dmqr->id;
+        $canvass->direct_material_quantity_request_item_id = $item->id;
+        $canvass->supplier_id = $supplier->id;
+        $canvass->payment_term_id = $paymentTerm->id;
+        $canvass->price = 800.00;
+        $canvass->status = 'APRV';
+        $canvass->created_by = $this->user->id;
+        $canvass->save();
+
+        // First Direct PO: 60 items
+        $po1 = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/create', [
+            'direct_material_quantity_request_id' => $dmqr->id,
+            'supplier_id'                         => $supplier->id,
+            'payment_term_id'                     => $paymentTerm->id,
+            'project_id'                          => $project->id,
+            'items'                               => json_encode([[
+                'direct_material_quantity_request_item_id' => $item->id,
+                'direct_material_canvass_id'               => $canvass->id,
+                'material_item_id'                         => $material->id,
+                'order_quantity'                           => 60,
+                'price'                                    => 800.00
+            ]])
+        ]);
+        $po1->assertStatus(200);
+        $po1->assertJson(['status' => 1]);
+
+        // Second Direct PO: 40 items (remaining balance)
+        $po2 = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/create', [
+            'direct_material_quantity_request_id' => $dmqr->id,
+            'supplier_id'                         => $supplier->id,
+            'payment_term_id'                     => $paymentTerm->id,
+            'project_id'                          => $project->id,
+            'items'                               => json_encode([[
+                'direct_material_quantity_request_item_id' => $item->id,
+                'direct_material_canvass_id'               => $canvass->id,
+                'material_item_id'                         => $material->id,
+                'order_quantity'                           => 40,
+                'price'                                    => 800.00
+            ]])
+        ]);
+        $po2->assertStatus(200);
+        $po2->assertJson(['status' => 1]);
+
+        // Total ordered across both DPOs should equal requested 100
+        $totalOrdered = DirectPurchaseOrderItem::where('direct_material_quantity_request_item_id', $item->id)->sum('quantity');
+        $this->assertEquals(100, $totalOrdered);
+    }
+
+    /** @test */
+    public function it_rejects_direct_purchase_order_when_order_quantity_exceeds_dmqr_item_balance()
+    {
+        $project = $this->createProject('Flyover Project');
+        $material = $this->createMaterialItem('Cable Wire');
+        $supplier = $this->createSupplier('Cables Inc');
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Immediate';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $item = new DirectMaterialQuantityRequestItem();
+        $item->direct_material_quantity_request_id = $dmqr->id;
+        $item->material_item_id = $material->id;
+        $item->quantity = 30;
+        $item->save();
+
+        $canvass = new DirectMaterialCanvass();
+        $canvass->direct_material_quantity_request_id = $dmqr->id;
+        $canvass->direct_material_quantity_request_item_id = $item->id;
+        $canvass->supplier_id = $supplier->id;
+        $canvass->payment_term_id = $paymentTerm->id;
+        $canvass->price = 200.00;
+        $canvass->status = 'APRV';
+        $canvass->created_by = $this->user->id;
+        $canvass->save();
+
+        // Attempting to order 50 when only 30 requested
+        $response = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/create', [
+            'direct_material_quantity_request_id' => $dmqr->id,
+            'supplier_id'                         => $supplier->id,
+            'payment_term_id'                     => $paymentTerm->id,
+            'project_id'                          => $project->id,
+            'items'                               => json_encode([[
+                'direct_material_quantity_request_item_id' => $item->id,
+                'direct_material_canvass_id'               => $canvass->id,
+                'material_item_id'                         => $material->id,
+                'order_quantity'                           => 50,
+                'price'                                    => 200.00
+            ]])
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => -2]);
+        $this->assertStringContainsString('exceeds remaining balance', $response->json('message'));
     }
 }

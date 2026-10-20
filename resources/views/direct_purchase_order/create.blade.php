@@ -27,6 +27,29 @@
             </div>
             <div class="card-body">
                 <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="form-group mb-2">
+                            <label class="form-label fw-bold">Direct Material Request # (Optional)</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-file-earmark-text"></i></span>
+                                <input type="text" class="form-control" id="dmqrInput" list="dmqrList" placeholder="Type or select Direct Material Request # to auto-populate items..." autocomplete="off">
+                                <button class="btn btn-outline-secondary" type="button" id="clearDmqrBtn" title="Clear Direct Material Request"><i class="bi bi-x-lg"></i></button>
+                            </div>
+                            <datalist id="dmqrList">
+                                @if(!empty($available_dmqrs))
+                                    @foreach($available_dmqrs as $d)
+                                        <option value="#{{ $d->formatted_id }} - {{ $d->Project ? $d->Project->name : 'N/A' }}" data-id="{{ $d->id }}"></option>
+                                    @endforeach
+                                @endif
+                            </datalist>
+                            <input type="hidden" id="dmqrSelect" value="">
+                            <small class="form-text text-muted">Selecting an approved Direct Material Request will automatically populate the project, section, material items, and locked canvass prices.</small>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+
+                <div class="row mb-3">
                     <div class="col-lg-6">
                         <div class="form-group mb-3">
                             <label class="form-label">Supplier <span class="text-danger">*</span></label>
@@ -162,6 +185,11 @@
     <script type="module">
         import {$q, Template, $el} from '/adarna.js';
 
+        const dmqrInput         = $q('#dmqrInput').first();
+        const dmqrList          = $q('#dmqrList').first();
+        const dmqrSelect        = $q('#dmqrSelect').first();
+        const clearDmqrBtn      = $q('#clearDmqrBtn').first();
+
         const supplierInput     = $q('#supplierInput').first();
         const supplierList      = $q('#supplierList').first();
         const supplierSelect    = $q('#supplierSelect').first();
@@ -199,6 +227,162 @@
                 }
             }
             return '';
+        }
+
+        dmqrInput.oninput = async () => {
+            const matchedDmqrId = findOptionId(dmqrInput, dmqrList);
+            if (matchedDmqrId && matchedDmqrId !== dmqrSelect.value) {
+                dmqrSelect.value = matchedDmqrId;
+                await loadDmqr(matchedDmqrId);
+            }
+        };
+
+        clearDmqrBtn.onclick = () => {
+            dmqrInput.value = '';
+            dmqrSelect.value = '';
+            unlockForm();
+        };
+
+        async function loadDmqr(id) {
+            window.util.blockUI();
+            let res = await window.util.$get('/api/direct_material_quantity_request/for_direct_po/' + id);
+            window.util.unblockUI();
+
+            if (res.status === 1 && res.data) {
+                const data = res.data;
+                if (!data.items || data.items.length === 0) {
+                    alert('No items with remaining balance and approved canvass prices found for this request.');
+                    dmqrInput.value = '';
+                    dmqrSelect.value = '';
+                    return;
+                }
+
+                // Lock project
+                projectInput.value = data.project_name;
+                projectSelect.value = data.project_id;
+                projectInput.disabled = true;
+                clearProjectBtn.disabled = true;
+
+                // Lock section
+                sectionInput.value = data.section_name || '';
+                sectionSelect.value = data.section_id || '';
+                sectionInput.disabled = true;
+                clearSectionBtn.disabled = true;
+
+                // Set supplier & payment term if available from canvass
+                if (data.items[0].supplier_id) {
+                    supplierInput.value = data.items[0].supplier_name;
+                    supplierSelect.value = data.items[0].supplier_id;
+                    supplierInput.disabled = true;
+                    clearSupplierBtn.disabled = true;
+                }
+                if (data.items[0].payment_term_id) {
+                    paymentTermSelect.value = data.items[0].payment_term_id;
+                    paymentTermSelect.disabled = true;
+                }
+
+                // Populate items
+                itemsTableBody.innerHTML = '';
+                data.items.forEach(item => {
+                    createDmqrItemRow(item);
+                });
+
+                addItemBtn.style.display = 'none';
+                recalculate();
+                updateItemRemoveButtons();
+            } else {
+                alert(res.message || 'Error fetching Direct Material Request');
+            }
+        }
+
+        function unlockForm() {
+            projectInput.disabled = false;
+            clearProjectBtn.disabled = false;
+            projectInput.value = '';
+            projectSelect.value = '';
+
+            sectionInput.disabled = true;
+            sectionInput.placeholder = 'Select a Project first';
+            clearSectionBtn.disabled = false;
+            sectionInput.value = '';
+            sectionSelect.value = '';
+            $el.clear(sectionList);
+
+            supplierInput.disabled = false;
+            clearSupplierBtn.disabled = false;
+            supplierInput.value = '';
+            supplierSelect.value = '';
+
+            paymentTermSelect.disabled = false;
+            paymentTermSelect.value = '';
+
+            addItemBtn.style.display = '';
+            itemsTableBody.innerHTML = '';
+            createItemRow();
+            recalculate();
+            updateItemRemoveButtons();
+        }
+
+        function createDmqrItemRow(item) {
+            const trMain = document.createElement('tr');
+            trMain.className = 'item-main-row';
+            trMain.innerHTML = `
+                <td>
+                    <input type="text" class="form-control item-material-input bg-light" value="${item.material_item_name}" readonly disabled />
+                    <input type="hidden" class="item-material" value="${item.material_item_id}">
+                    <input type="hidden" class="item-dmqr-item-id" value="${item.direct_material_quantity_request_item_id}">
+                    <input type="hidden" class="item-dmqr-canvass-id" value="${item.direct_material_canvass_id}">
+                </td>
+                <td>
+                    <input type="number" step="any" min="0.01" max="${item.balance_quantity}" class="form-control item-qty" value="${item.balance_quantity}" required />
+                    <small class="text-muted d-block">Remaining Balance: ${item.balance_quantity}</small>
+                </td>
+                <td>
+                    <input type="number" step="0.01" class="form-control item-price bg-light font-monospace" value="${item.price.toFixed(2)}" readonly />
+                </td>
+                <td class="align-middle text-end font-monospace">
+                    <span class="item-total">0.00</span>
+                </td>
+                <td class="text-center align-middle">
+                    <button type="button" class="btn btn-sm btn-danger remove-row-btn" title="At least one item is required">&times;</button>
+                </td>
+            `;
+
+            const trRemarks = document.createElement('tr');
+            trRemarks.className = 'item-remarks-row';
+            trRemarks.innerHTML = `
+                <td colspan="5" class="pt-1 pb-2">
+                    <div class="d-flex align-items-center mb-1">
+                        <span class="small text-muted fw-semibold"><i class="bi bi-card-text me-1"></i> Remarks</span>
+                    </div>
+                    <textarea class="form-control item-remarks" rows="2" placeholder="Optional remarks...">${item.remarks || ''}</textarea>
+                </td>
+            `;
+
+            trMain._remarksRow = trRemarks;
+            trMain.querySelector('.item-qty').oninput = () => {
+                const qtyVal = parseFloat(trMain.querySelector('.item-qty').value);
+                if (qtyVal > item.balance_quantity) {
+                    alert(`Quantity cannot exceed remaining balance of ${item.balance_quantity}`);
+                    trMain.querySelector('.item-qty').value = item.balance_quantity;
+                }
+                recalculate();
+            };
+
+            trMain.querySelector('.remove-row-btn').onclick = () => {
+                const currentRows = itemsTableBody.querySelectorAll('tr.item-main-row');
+                if (currentRows.length <= 1) {
+                    alert('At least one item is required to make a direct PO.');
+                    return;
+                }
+                trMain.remove();
+                trRemarks.remove();
+                updateItemRemoveButtons();
+                recalculate();
+            };
+
+            itemsTableBody.appendChild(trMain);
+            itemsTableBody.appendChild(trRemarks);
         }
 
         supplierInput.oninput = () => {
@@ -452,15 +636,20 @@
                 const matInput = row.querySelector('.item-material-input');
                 const matHidden = row.querySelector('.item-material');
                 const matchedMatId = findOptionId(matInput, materialList);
-                matHidden.value = matchedMatId;
+                if (matchedMatId) {
+                    matHidden.value = matchedMatId;
+                }
 
-                const material_item_id = matchedMatId;
+                const material_item_id = matHidden.value;
                 const order_quantity = parseFloat(row.querySelector('.item-qty').value);
                 const price = parseFloat(row.querySelector('.item-price').value);
                 
                 const remarksRow = row._remarksRow || row.nextElementSibling;
                 const remarksTextarea = remarksRow ? remarksRow.querySelector('.item-remarks') : null;
                 const remarks = remarksTextarea ? remarksTextarea.value.trim() : '';
+
+                const dmqrItemIdEl = row.querySelector('.item-dmqr-item-id');
+                const dmqrCanvassIdEl = row.querySelector('.item-dmqr-canvass-id');
 
                 if (!material_item_id) {
                     alert('Please select a valid Material Item from the list.');
@@ -473,12 +662,21 @@
                     return;
                 }
 
-                items.push({
+                const itemData = {
                     material_item_id: parseInt(material_item_id),
                     order_quantity: order_quantity,
                     price: price,
                     remarks: remarks
-                });
+                };
+
+                if (dmqrItemIdEl && dmqrItemIdEl.value) {
+                    itemData.direct_material_quantity_request_item_id = parseInt(dmqrItemIdEl.value);
+                }
+                if (dmqrCanvassIdEl && dmqrCanvassIdEl.value) {
+                    itemData.direct_material_canvass_id = parseInt(dmqrCanvassIdEl.value);
+                }
+
+                items.push(itemData);
             }
 
             if (items.length === 0) {
@@ -515,6 +713,9 @@
             };
             if (sectionSelect.value && parseInt(sectionSelect.value) > 0) {
                 payload.section_id = sectionSelect.value;
+            }
+            if (dmqrSelect.value && parseInt(dmqrSelect.value) > 0) {
+                payload.direct_material_quantity_request_id = dmqrSelect.value;
             }
 
             let res = await window.util.$post('/api/direct_purchase_order/create', payload);

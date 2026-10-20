@@ -1085,7 +1085,7 @@ class AccomplishmentTest extends TestCase
         $accTarget = new Accomplishment();
         $accTarget->contract_item_id = $this->contractItem->id;
         $accTarget->type = 'TARGET';
-        $accTarget->entry_data = '2026-10-20';
+        $accTarget->entry_data = \Carbon\Carbon::now()->addDays(10)->format('Y-m-d');
         $accTarget->quantity = 80.0;
         $accTarget->remarks = 'Target test entry';
         $accTarget->created_by = $this->user->id;

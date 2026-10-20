@@ -142,6 +142,14 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/review/direct_purchase_order/{id}', [App\Http\Controllers\Review\DirectPurchaseOrderReviewController::class, 'display']);
     Route::get('/review/direct_purchase_orders', [App\Http\Controllers\Review\DirectPurchaseOrderReviewController::class, 'list']);
 
+    // Direct Material Quantity Requests Review
+    Route::get('/review/direct_material_quantity_requests', [App\Http\Controllers\Review\DirectMaterialQuantityRequestReviewController::class, 'list']);
+    Route::get('/review/direct_material_quantity_request/{id}', [App\Http\Controllers\Review\DirectMaterialQuantityRequestReviewController::class, 'display']);
+
+    // Direct Material Canvass Review
+    Route::get('/review/direct_material_canvass', [App\Http\Controllers\Review\DirectMaterialCanvassReviewController::class, 'list']);
+    Route::get('/review/direct_material_canvass/{id}', [App\Http\Controllers\Review\DirectMaterialCanvassReviewController::class, 'display']);
+
     Route::get('/review/budget', [App\Http\Controllers\Review\BudgetReviewController::class, 'list']);
     Route::get('/review/budget/{section_id}', [App\Http\Controllers\Review\BudgetReviewController::class, 'display']);
     Route::get('/review/budget/sheet/{section_id}', [App\Http\Controllers\Review\BudgetReviewController::class, 'sheet']);
@@ -166,6 +174,17 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/direct_purchase_order/create', [App\Http\Controllers\DirectPurchaseOrderController::class, 'create']);
     Route::get('/direct_purchase_order/{id}', [App\Http\Controllers\DirectPurchaseOrderController::class, 'display']);
     Route::get('/direct_purchase_order/print/{id}', [App\Http\Controllers\DirectPurchaseOrderController::class, 'print']);
+
+    // Direct Material Quantity Requests
+    Route::get('/direct_material_quantity_requests', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, 'list']);
+    Route::get('/direct_material_quantity_request', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, 'list']);
+    Route::get('/direct_material_quantity_request/create', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, 'create']);
+    Route::get('/direct_material_quantity_request/{id}', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, 'display']);
+    Route::get('/direct_material_quantity_request/print/{id}', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, 'print']);
+
+    // Direct Material Canvass
+    Route::get('/direct_material_canvass', [App\Http\Controllers\DirectMaterialCanvassController::class, 'list']);
+    Route::get('/direct_material_canvass/{id}', [App\Http\Controllers\DirectMaterialCanvassController::class, 'display']);
 
    // Route::get('/report/a/select', [App\Http\Controllers\Report\ReportAController::class, 'select']);
     //Route::get('/report/a/generate/{project_id}/{section_id}/{component_id}', [App\Http\Controllers\Report\ReportAController::class, 'generate']);

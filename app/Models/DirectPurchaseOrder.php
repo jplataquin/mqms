@@ -27,6 +27,7 @@ class DirectPurchaseOrder extends Model
         'payment_term_id',
         'project_id',
         'section_id',
+        'direct_material_quantity_request_id',
         'status',
         'extras',
         'created_by',
@@ -42,6 +43,11 @@ class DirectPurchaseOrder extends Model
     public function Items(): HasMany
     {
         return $this->hasMany(DirectPurchaseOrderItem::class);
+    }
+
+    public function DirectMaterialQuantityRequest(): BelongsTo
+    {
+        return $this->belongsTo(DirectMaterialQuantityRequest::class, 'direct_material_quantity_request_id');
     }
 
     public function User(): BelongsTo

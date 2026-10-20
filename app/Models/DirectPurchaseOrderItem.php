@@ -16,9 +16,12 @@ class DirectPurchaseOrderItem extends Model
 
     protected $fillable = [
         'direct_purchase_order_id',
+        'direct_material_quantity_request_item_id',
+        'direct_material_canvass_id',
         'material_item_id',
         'status',
         'quantity',
+        'order_quantity',
         'price',
         'remarks',
     ];
@@ -31,5 +34,15 @@ class DirectPurchaseOrderItem extends Model
     public function MaterialItem(): BelongsTo
     {
         return $this->belongsTo(MaterialItem::class, 'material_item_id');
+    }
+
+    public function DirectMaterialQuantityRequestItem(): BelongsTo
+    {
+        return $this->belongsTo(DirectMaterialQuantityRequestItem::class, 'direct_material_quantity_request_item_id');
+    }
+
+    public function DirectMaterialCanvass(): BelongsTo
+    {
+        return $this->belongsTo(DirectMaterialCanvass::class, 'direct_material_canvass_id');
     }
 }
