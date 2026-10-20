@@ -630,4 +630,46 @@ class DirectMaterialQuantityRequestTest extends TestCase
         $resPo->assertJson(['status' => 0]);
         $this->assertStringContainsString('purchase order', strtolower($resPo->json('message')));
     }
+
+    /** @test */
+    public function it_renders_review_link_button_only_when_status_is_pending()
+    {
+        $project = $this->createProject('Review Link Project');
+        $material = $this->createMaterialItem('Review Link Item');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'PEND';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $item = new DirectMaterialQuantityRequestItem();
+        $item->direct_material_quantity_request_id = $dmqr->id;
+        $item->material_item_id = $material->id;
+        $item->quantity = 20;
+        $item->save();
+
+        // 1. Pending status: Review Link button MUST be visible
+        $resPending = $this->actingAs($this->user)->get('/direct_material_quantity_request/' . $dmqr->id);
+        $resPending->assertStatus(200);
+        $resPending->assertSee('id="reviewLinkBtn"', false);
+        $resPending->assertSee('Review Link');
+        $resPending->assertSee('/review/direct_material_quantity_request/' . $dmqr->id, false);
+
+        // 2. Draft status: Review Link button must NOT be visible
+        $dmqr->status = 'DRFT';
+        $dmqr->save();
+
+        $resDraft = $this->actingAs($this->user)->get('/direct_material_quantity_request/' . $dmqr->id);
+        $resDraft->assertStatus(200);
+        $resDraft->assertDontSee('id="reviewLinkBtn"', false);
+
+        // 3. Approved status: Review Link button must NOT be visible
+        $dmqr->status = 'APRV';
+        $dmqr->save();
+
+        $resApproved = $this->actingAs($this->user)->get('/direct_material_quantity_request/' . $dmqr->id);
+        $resApproved->assertStatus(200);
+        $resApproved->assertDontSee('id="reviewLinkBtn"', false);
+    }
 }

@@ -5,18 +5,25 @@
 
 <div class="container">
     <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
-        <ul>
-            <li>
-                <a href="/direct_material_quantity_requests">
-                    <span>Direct Material Request</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="active">
-                    <span>#{{ $request->formatted_id }}</span>
-                </a>
-            </li>
-        </ul>
+        <div class="d-flex justify-content-between align-items-center">
+            <ul>
+                <li>
+                    <a href="/direct_material_quantity_requests">
+                        <span>Direct Material Request</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="active">
+                        <span>#{{ $request->formatted_id }}</span>
+                    </a>
+                </li>
+            </ul>
+            @if($request->status == 'PEND')
+                <button class="btn btn-outline-primary" id="reviewLinkBtn">
+                    <i class="bi bi-link-45deg"></i> Review Link
+                </button>
+            @endif
+        </div>
     </div>
     <hr>
 
@@ -92,6 +99,12 @@
             <i class="bi bi-printer"></i> Print
         </a>
 
+        @if($request->status == 'PEND')
+            <button type="button" class="btn btn-outline-primary me-2 review-link-btn">
+                <i class="bi bi-link-45deg"></i> Review Link
+            </button>
+        @endif
+
         @if(($request->status == 'DRFT' || $request->status == 'PEND') && ($canDelete ?? $canEdit))
             <button type="button" class="btn btn-danger me-2" id="deleteBtn">Delete</button>
         @endif
@@ -114,6 +127,13 @@
     const reqId = {{ $request->id }};
     const submitBtn = $q('#submitBtn').first();
     const deleteBtn = $q('#deleteBtn').first();
+
+    document.querySelectorAll('#reviewLinkBtn, .review-link-btn').forEach(btn => {
+        btn.onclick = async () => {
+            await window.util.copyToClipboard('{{ url("/review/direct_material_quantity_request/".$request->id) }}');
+            alert('Review Link for Direct Material Request #{{ $request->formatted_id }} copied!');
+        };
+    });
 
     if (submitBtn) {
         submitBtn.onclick = async () => {
