@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<div id="content">
+
 <div class="container">
     <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
@@ -159,4 +161,5 @@
 
     loadData();
 </script>
+</div>
 @endsection

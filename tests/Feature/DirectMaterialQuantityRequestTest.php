@@ -271,4 +271,93 @@ class DirectMaterialQuantityRequestTest extends TestCase
         $this->assertEquals('APRV', DirectMaterialCanvass::find($quote2Id)->status);
         $this->assertEquals('DPRV', DirectMaterialCanvass::find($quote1Id)->status);
     }
+
+    /** @test */
+    public function it_renders_direct_material_quantity_request_views_with_content_container_for_htmx()
+    {
+        $project = $this->createProject('HTMX Test Project');
+        $material = $this->createMaterialItem('HTMX Test Item');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'DRFT';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $item = new DirectMaterialQuantityRequestItem();
+        $item->direct_material_quantity_request_id = $dmqr->id;
+        $item->material_item_id = $material->id;
+        $item->quantity = 10;
+        $item->save();
+
+        // 1. List view
+        $resList = $this->actingAs($this->user)->get('/direct_material_quantity_requests');
+        $resList->assertStatus(200);
+        $resList->assertSee('<div id="content">', false);
+
+        // 2. Create view
+        $resCreate = $this->actingAs($this->user)->get('/direct_material_quantity_request/create');
+        $resCreate->assertStatus(200);
+        $resCreate->assertSee('<div id="content">', false);
+
+        // 3. Display view
+        $resDisplay = $this->actingAs($this->user)->get('/direct_material_quantity_request/' . $dmqr->id);
+        $resDisplay->assertStatus(200);
+        $resDisplay->assertSee('<div id="content">', false);
+
+        // Submit for review to test review views
+        $dmqr->status = 'PEND';
+        $dmqr->save();
+
+        // 4. Review List view
+        $resReviewList = $this->actingAs($this->user)->get('/review/direct_material_quantity_requests');
+        $resReviewList->assertStatus(200);
+        $resReviewList->assertSee('<div id="content">', false);
+
+        // 5. Review Display view
+        $resReviewDisplay = $this->actingAs($this->user)->get('/review/direct_material_quantity_request/' . $dmqr->id);
+        $resReviewDisplay->assertStatus(200);
+        $resReviewDisplay->assertSee('<div id="content">', false);
+
+        // Approve to test canvass views
+        $dmqr->status = 'APRV';
+        $dmqr->save();
+
+        // 6. Direct Material Canvass List view
+        $resCanvassList = $this->actingAs($this->user)->get('/direct_material_canvass');
+        $resCanvassList->assertStatus(200);
+        $resCanvassList->assertSee('<div id="content">', false);
+
+        // 7. Direct Material Canvass Display view
+        $resCanvassDisplay = $this->actingAs($this->user)->get('/direct_material_canvass/' . $dmqr->id);
+        $resCanvassDisplay->assertStatus(200);
+        $resCanvassDisplay->assertSee('<div id="content">', false);
+
+        // Add a canvass quote to test review canvass views
+        $supplier = $this->createSupplier('Canvass Supplier');
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Cash';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $canvass = new DirectMaterialCanvass();
+        $canvass->direct_material_quantity_request_id = $dmqr->id;
+        $canvass->direct_material_quantity_request_item_id = $item->id;
+        $canvass->supplier_id = $supplier->id;
+        $canvass->payment_term_id = $paymentTerm->id;
+        $canvass->price = 100.00;
+        $canvass->status = 'PEND';
+        $canvass->created_by = $this->user->id;
+        $canvass->save();
+
+        // 8. Review Direct Material Canvass List view
+        $resReviewCanvassList = $this->actingAs($this->user)->get('/review/direct_material_canvass');
+        $resReviewCanvassList->assertStatus(200);
+        $resReviewCanvassList->assertSee('<div id="content">', false);
+
+        // 9. Review Direct Material Canvass Display view
+        $resReviewCanvassDisplay = $this->actingAs($this->user)->get('/review/direct_material_canvass/' . $dmqr->id);
+        $resReviewCanvassDisplay->assertStatus(200);
+        $resReviewCanvassDisplay->assertSee('<div id="content">', false);
+    }
 }
