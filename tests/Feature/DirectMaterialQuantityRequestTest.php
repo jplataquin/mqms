@@ -672,4 +672,13 @@ class DirectMaterialQuantityRequestTest extends TestCase
         $resApproved->assertStatus(200);
         $resApproved->assertDontSee('id="reviewLinkBtn"', false);
     }
+
+    /** @test */
+    public function it_can_generate_qr_code_image_via_qrcode_endpoint()
+    {
+        $res = $this->actingAs($this->user)->get('/qrcode?d=' . urlencode('https://example.com/test'));
+        $res->assertStatus(200);
+        $this->assertContains($res->headers->get('content-type'), ['image/png', 'image/svg+xml']);
+        $this->assertGreaterThan(0, strlen($res->getContent()));
+    }
 }
