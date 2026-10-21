@@ -45,55 +45,97 @@
 
     <!-- Items with Quotes for Approval -->
     @foreach($items as $item)
-    <div class="card mb-4 shadow-sm">
-        <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-3 py-3">
-            <div class="d-flex flex-column">
-                <span class="fw-bold fs-6 text-dark">
-                    {{ $item->MaterialItem ? $item->MaterialItem->formattedName : 'Unknown Item' }}
-                </span>
-                @if($item->remarks)
-                    <span class="text-muted small mt-1">
-                        <i class="bi bi-chat-left-text me-1"></i>{{ $item->remarks }}
-                    </span>
-                @endif
-            </div>
+    <div class="card mb-4 border-0 shadow-sm overflow-hidden">
+        <!-- Prominent Item & Quantity Hero Banner -->
+        <div class="card-header bg-white border-bottom p-4">
+            <div class="row align-items-center g-3">
+                <!-- Left: Item Identification -->
+                <div class="col-lg-7 col-md-6">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <span class="badge bg-dark text-white px-2 py-1 text-uppercase font-monospace" style="letter-spacing: 0.05em; font-size: 0.75rem;">
+                            Item #{{ $loop->iteration }}
+                        </span>
+                        @if($item->MaterialItem && $item->MaterialItem->brand)
+                            <span class="badge bg-secondary-subtle text-dark border px-2 py-1 text-uppercase" style="font-size: 0.75rem;">
+                                {{ $item->MaterialItem->brand }}
+                            </span>
+                        @endif
+                    </div>
+                    <h4 class="fw-bolder text-dark mb-1 lh-sm">
+                        {{ $item->MaterialItem ? $item->MaterialItem->name : 'Unknown Material' }}
+                    </h4>
+                    <div class="d-flex flex-wrap align-items-center gap-3 text-muted small mt-2">
+                        @if($item->MaterialItem && $item->MaterialItem->specification_unit_packaging)
+                            <span>
+                                <i class="bi bi-box-seam me-1 text-primary"></i>Packaging: <strong class="text-dark">{{ $item->MaterialItem->specification_unit_packaging }}</strong>
+                            </span>
+                        @endif
+                        @if($item->remarks)
+                            <span>
+                                <i class="bi bi-chat-left-text me-1 text-primary"></i>Remarks: <strong class="text-dark">{{ $item->remarks }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
 
-            <div class="d-flex align-items-baseline px-3 py-1 bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 rounded-2 ms-auto">
-                <span class="small text-uppercase fw-semibold me-2" style="font-size: 0.75rem; letter-spacing: 0.05em;">Requested Qty:</span>
-                <span class="fs-5 fw-bold font-monospace">{{ number_format($item->quantity, 2) }}</span>
-                @if($item->MaterialItem && $item->MaterialItem->specification_unit_packaging)
-                    <span class="small ms-1 fw-semibold text-secondary">{{ $item->MaterialItem->specification_unit_packaging }}</span>
-                @endif
+                <!-- Right: Quantity Callout -->
+                <div class="col-lg-5 col-md-6">
+                    <div class="d-flex align-items-center justify-content-md-end gap-3 flex-wrap">
+                        <!-- Hero Quantity Display Box -->
+                        <div class="px-4 py-2 rounded-3 text-center border border-2 border-primary bg-primary bg-opacity-10 shadow-sm" style="min-width: 170px;">
+                            <div class="text-uppercase fw-bold text-primary" style="font-size: 0.7rem; letter-spacing: 0.08em;">
+                                Required Quantity
+                            </div>
+                            <div class="d-flex align-items-baseline justify-content-center gap-1 mt-0">
+                                <span class="fs-2 fw-bolder font-monospace text-primary lh-1">
+                                    {{ number_format($item->quantity, 2) }}
+                                </span>
+                                @if($item->MaterialItem && $item->MaterialItem->specification_unit_packaging)
+                                    <span class="fw-semibold text-primary small">
+                                        {{ $item->MaterialItem->specification_unit_packaging }}
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <!-- Table of Quotes for Approval -->
         <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead>
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light text-uppercase small text-muted" style="letter-spacing: 0.04em;">
                         <tr>
-                            <th style="width: 30%">Supplier</th>
-                            <th style="width: 25%">Payment Term</th>
-                            <th style="width: 15%" class="text-end">Price</th>
-                            <th style="width: 15%" class="text-center">Status</th>
-                            <th style="width: 15%" class="text-end">Action</th>
+                            <th style="width: 26%; padding-left: 1.5rem;">Supplier</th>
+                            <th style="width: 20%">Payment Term</th>
+                            <th style="width: 16%" class="text-end">Unit Price</th>
+                            <th style="width: 16%" class="text-end">Total Amount</th>
+                            <th style="width: 10%" class="text-center">Status</th>
+                            <th style="width: 12%; padding-right: 1.5rem;" class="text-end">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($item->Canvasses as $canvass)
                             <tr>
-                                <td>{{ $canvass->Supplier ? $canvass->Supplier->name : '-' }}</td>
+                                <td style="padding-left: 1.5rem;" class="fw-semibold text-dark">
+                                    <i class="bi bi-building me-1 text-muted"></i>
+                                    {{ $canvass->Supplier ? $canvass->Supplier->name : '-' }}
+                                </td>
                                 <td>{{ $canvass->PaymentTerm ? $canvass->PaymentTerm->text : '-' }}</td>
-                                <td class="text-end font-monospace">{{ number_format($canvass->price, 2) }}</td>
+                                <td class="text-end font-monospace fw-semibold">{{ number_format($canvass->price, 2) }}</td>
+                                <td class="text-end font-monospace fw-bold text-dark">{{ number_format($canvass->price * $item->quantity, 2) }}</td>
                                 <td class="text-center">
                                     @if($canvass->status == 'APRV')
-                                        <span class="badge bg-success">Approved</span>
+                                        <span class="badge bg-success px-2 py-1"><i class="bi bi-check-circle me-1"></i>Approved</span>
                                     @elseif($canvass->status == 'DPRV')
-                                        <span class="badge bg-danger">Disapproved</span>
+                                        <span class="badge bg-danger px-2 py-1"><i class="bi bi-x-circle me-1"></i>Disapproved</span>
                                     @else
-                                        <span class="badge bg-warning text-dark">Pending</span>
+                                        <span class="badge bg-warning text-dark px-2 py-1"><i class="bi bi-clock me-1"></i>Pending</span>
                                     @endif
                                 </td>
-                                <td class="text-end">
+                                <td style="padding-right: 1.5rem;" class="text-end">
                                     @if($canvass->status == 'PEND')
                                         @if($canReject)
                                             <button type="button" class="btn btn-sm btn-outline-danger reject-btn me-1" data-id="{{ $canvass->id }}">
@@ -112,7 +154,10 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center text-muted py-3">No quotes submitted for this item.</td>
+                                <td colspan="6" class="text-center text-muted py-4">
+                                    <i class="bi bi-inbox fs-3 d-block mb-1 text-secondary opacity-50"></i>
+                                    <span>No quotes submitted for this item.</span>
+                                </td>
                             </tr>
                         @endforelse
                     </tbody>
