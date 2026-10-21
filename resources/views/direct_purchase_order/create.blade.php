@@ -215,6 +215,9 @@
         const grandTotalText    = $q('#grandTotalText').first();
         const materialList      = $q('#materialList').first();
 
+        const initialSupplierOptionsHtml = supplierList.innerHTML;
+        let currentDmqrItems = [];
+
         const t = new Template();
 
         function findOptionId(input, datalist) {
@@ -243,6 +246,25 @@
             unlockForm();
         };
 
+        function renderDmqrItemsForSupplier(supplierId) {
+            itemsTableBody.innerHTML = '';
+            const matchingItems = currentDmqrItems.filter(item => item.supplier_id == supplierId);
+            matchingItems.forEach(item => {
+                createDmqrItemRow(item);
+            });
+
+            if (matchingItems.length > 0 && matchingItems[0].payment_term_id) {
+                paymentTermSelect.value = matchingItems[0].payment_term_id;
+                paymentTermSelect.disabled = true;
+            } else {
+                paymentTermSelect.value = '';
+                paymentTermSelect.disabled = false;
+            }
+
+            recalculate();
+            updateItemRemoveButtons();
+        }
+
         async function loadDmqr(id) {
             window.util.blockUI();
             let res = await window.util.$get('/api/direct_material_quantity_request/for_direct_po/' + id);
@@ -254,8 +276,11 @@
                     alert('No items with remaining balance and approved canvass prices found for this request.');
                     dmqrInput.value = '';
                     dmqrSelect.value = '';
+                    currentDmqrItems = [];
                     return;
                 }
+
+                currentDmqrItems = data.items;
 
                 // Lock project
                 projectInput.value = data.project_name;
@@ -269,33 +294,64 @@
                 sectionInput.disabled = true;
                 clearSectionBtn.disabled = true;
 
-                // Set supplier & payment term if available from canvass
-                if (data.items[0].supplier_id) {
-                    supplierInput.value = data.items[0].supplier_name;
-                    supplierSelect.value = data.items[0].supplier_id;
-                    supplierInput.disabled = true;
-                    clearSupplierBtn.disabled = true;
-                }
-                if (data.items[0].payment_term_id) {
-                    paymentTermSelect.value = data.items[0].payment_term_id;
-                    paymentTermSelect.disabled = true;
-                }
-
-                // Populate items
-                itemsTableBody.innerHTML = '';
+                // Extract unique suppliers from items
+                const uniqueSuppliersMap = new Map();
                 data.items.forEach(item => {
-                    createDmqrItemRow(item);
+                    if (item.supplier_id && !uniqueSuppliersMap.has(item.supplier_id)) {
+                        uniqueSuppliersMap.set(item.supplier_id, {
+                            id: item.supplier_id,
+                            name: item.supplier_name
+                        });
+                    }
                 });
 
+                const uniqueSuppliers = Array.from(uniqueSuppliersMap.values());
+
                 addItemBtn.style.display = 'none';
-                recalculate();
-                updateItemRemoveButtons();
+
+                if (uniqueSuppliers.length === 1) {
+                    // Only 1 supplier: auto-select and lock
+                    const singleSupplier = uniqueSuppliers[0];
+                    supplierInput.value = singleSupplier.name;
+                    supplierSelect.value = singleSupplier.id;
+                    supplierInput.disabled = true;
+                    clearSupplierBtn.disabled = true;
+
+                    renderDmqrItemsForSupplier(singleSupplier.id);
+                } else if (uniqueSuppliers.length > 1) {
+                    // Multiple suppliers: unlock supplier selection and populate list with only these suppliers
+                    supplierInput.disabled = false;
+                    clearSupplierBtn.disabled = false;
+                    supplierInput.value = '';
+                    supplierSelect.value = '';
+                    paymentTermSelect.value = '';
+                    paymentTermSelect.disabled = false;
+
+                    supplierList.innerHTML = '';
+                    uniqueSuppliers.forEach(s => {
+                        const opt = document.createElement('option');
+                        opt.value = s.name;
+                        opt.setAttribute('data-id', s.id);
+                        supplierList.appendChild(opt);
+                    });
+
+                    itemsTableBody.innerHTML = '';
+                    recalculate();
+                    updateItemRemoveButtons();
+
+                    supplierInput.focus();
+                } else {
+                    itemsTableBody.innerHTML = '';
+                    recalculate();
+                }
             } else {
                 alert(res.message || 'Error fetching Direct Material Request');
             }
         }
 
         function unlockForm() {
+            currentDmqrItems = [];
+
             projectInput.disabled = false;
             clearProjectBtn.disabled = false;
             projectInput.value = '';
@@ -308,6 +364,7 @@
             sectionSelect.value = '';
             $el.clear(sectionList);
 
+            supplierList.innerHTML = initialSupplierOptionsHtml;
             supplierInput.disabled = false;
             clearSupplierBtn.disabled = false;
             supplierInput.value = '';
@@ -386,12 +443,32 @@
         }
 
         supplierInput.oninput = () => {
-            supplierSelect.value = findOptionId(supplierInput, supplierList);
+            const matchedSupplierId = findOptionId(supplierInput, supplierList);
+            supplierSelect.value = matchedSupplierId;
+
+            if (currentDmqrItems.length > 0) {
+                if (matchedSupplierId) {
+                    renderDmqrItemsForSupplier(matchedSupplierId);
+                } else {
+                    itemsTableBody.innerHTML = '';
+                    paymentTermSelect.value = '';
+                    paymentTermSelect.disabled = false;
+                    recalculate();
+                    updateItemRemoveButtons();
+                }
+            }
         };
 
         clearSupplierBtn.onclick = () => {
             supplierInput.value = '';
             supplierSelect.value = '';
+            if (currentDmqrItems.length > 0) {
+                itemsTableBody.innerHTML = '';
+                paymentTermSelect.value = '';
+                paymentTermSelect.disabled = false;
+                recalculate();
+                updateItemRemoveButtons();
+            }
             supplierInput.focus();
         };
 

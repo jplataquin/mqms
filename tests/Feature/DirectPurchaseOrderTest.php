@@ -1048,4 +1048,79 @@ class DirectPurchaseOrderTest extends TestCase
         $response->assertJson(['status' => -2]);
         $this->assertStringContainsString('exceeds remaining balance', $response->json('message'));
     }
+
+    /** @test */
+    public function it_returns_items_with_multiple_approved_suppliers_for_direct_po_endpoint()
+    {
+        $project = $this->createProject('Multi-Supplier Project');
+        $mat1 = $this->createMaterialItem('Cement Bag');
+        $mat2 = $this->createMaterialItem('Steel Bar');
+        $supA = $this->createSupplier('Supplier Alpha');
+        $supB = $this->createSupplier('Supplier Beta');
+
+        $termA = new PaymentTerm();
+        $termA->text = '30 Days Net';
+        $termA->created_by = $this->user->id;
+        $termA->save();
+
+        $termB = new PaymentTerm();
+        $termB->text = 'Cash on Delivery';
+        $termB->created_by = $this->user->id;
+        $termB->save();
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $item1 = new DirectMaterialQuantityRequestItem();
+        $item1->direct_material_quantity_request_id = $dmqr->id;
+        $item1->material_item_id = $mat1->id;
+        $item1->quantity = 100;
+        $item1->save();
+
+        $item2 = new DirectMaterialQuantityRequestItem();
+        $item2->direct_material_quantity_request_id = $dmqr->id;
+        $item2->material_item_id = $mat2->id;
+        $item2->quantity = 50;
+        $item2->save();
+
+        $canvass1 = new DirectMaterialCanvass();
+        $canvass1->direct_material_quantity_request_id = $dmqr->id;
+        $canvass1->direct_material_quantity_request_item_id = $item1->id;
+        $canvass1->supplier_id = $supA->id;
+        $canvass1->payment_term_id = $termA->id;
+        $canvass1->price = 250.00;
+        $canvass1->status = 'APRV';
+        $canvass1->created_by = $this->user->id;
+        $canvass1->save();
+
+        $canvass2 = new DirectMaterialCanvass();
+        $canvass2->direct_material_quantity_request_id = $dmqr->id;
+        $canvass2->direct_material_quantity_request_item_id = $item2->id;
+        $canvass2->supplier_id = $supB->id;
+        $canvass2->payment_term_id = $termB->id;
+        $canvass2->price = 1500.00;
+        $canvass2->status = 'APRV';
+        $canvass2->created_by = $this->user->id;
+        $canvass2->save();
+
+        $res = $this->actingAs($this->user)->getJson('/api/direct_material_quantity_request/for_direct_po/' . $dmqr->id);
+        $res->assertStatus(200);
+        $res->assertJson(['status' => 1]);
+
+        $items = $res->json('data.items');
+        $this->assertCount(2, $items);
+
+        $suppliers = array_unique(array_column($items, 'supplier_id'));
+        $this->assertCount(2, $suppliers);
+        $this->assertContains($supA->id, $suppliers);
+        $this->assertContains($supB->id, $suppliers);
+
+        // Also verify the create page renders the multi-supplier handler script logic
+        $createPage = $this->actingAs($this->user)->get('/direct_purchase_order/create');
+        $createPage->assertStatus(200);
+        $createPage->assertSee('renderDmqrItemsForSupplier', false);
+    }
 }
