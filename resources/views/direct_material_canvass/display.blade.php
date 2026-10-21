@@ -5,30 +5,30 @@
 
 <div class="container">
     <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
-        <div class="d-flex justify-content-between align-items-center">
-            <ul>
-                <li>
-                    <a href="/direct_material_canvass">
-                        <span>Direct Material Canvass</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="active">
-                        <span>#{{ $request->formatted_id }}</span>
-                    </a>
-                </li>
-            </ul>
-            <button class="btn btn-outline-primary" id="reviewLinkBtn">
-                <i class="bi bi-link-45deg"></i> Review Link
-            </button>
-        </div>
+        <ul>
+            <li>
+                <a href="/direct_material_canvass">
+                    <span>Direct Material Canvass</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <span>#{{ $request->formatted_id }}</span>
+                </a>
+            </li>
+        </ul>
     </div>
     <hr>
 
     <div class="card mb-4">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Canvassing for Direct Material Request #{{ $request->formatted_id }}</h5>
-            <span class="badge bg-secondary fs-6">{{ $request->status }}</span>
+            <div class="d-flex align-items-center gap-2">
+                <button type="button" class="btn btn-sm btn-outline-light" id="reviewLinkBtn">
+                    <i class="bi bi-link-45deg"></i> Review Link
+                </button>
+                <span class="badge bg-secondary fs-6">{{ $request->status }}</span>
+            </div>
         </div>
         <div class="card-body">
             <div class="row">
@@ -49,6 +49,13 @@
                     <strong>Purpose:</strong> {{ $request->description }}
                 </div>
                 @endif
+            </div>
+            <div class="row mt-3 pt-3 border-top">
+                <div class="col-12 text-end">
+                    <button type="button" class="btn btn-outline-primary review-link-btn" id="detailsReviewLinkBtn">
+                        <i class="bi bi-link-45deg"></i> Review Link
+                    </button>
+                </div>
             </div>
         </div>
     </div>

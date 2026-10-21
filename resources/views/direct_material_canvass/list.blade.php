@@ -119,10 +119,7 @@
                     <td><span class="badge bg-success">${item.status}</span></td>
                     <td>${item.creator ? item.creator.name : '-'}</td>
                     <td>${item.created_at ? item.created_at.substring(0, 10) : '-'}</td>
-                    <td class="text-end text-nowrap">
-                        <button type="button" class="btn btn-sm btn-outline-primary copy-review-link-btn me-1" data-id="${item.id}" data-formatted-id="${formattedId}" title="Copy Review Link">
-                            <i class="bi bi-link-45deg"></i> Review Link
-                        </button>
+                    <td class="text-end">
                         <a href="/direct_material_canvass/${item.id}" class="btn btn-sm btn-primary">Canvass</a>
                     </td>
                 `;
@@ -163,16 +160,6 @@
         page++;
         loadData();
     };
-
-    document.addEventListener('click', async (e) => {
-        const btn = e.target.closest('.copy-review-link-btn');
-        if (btn) {
-            const id = btn.getAttribute('data-id');
-            const formattedId = btn.getAttribute('data-formatted-id');
-            await window.util.copyToClipboard('{{ url("/review/direct_material_canvass") }}/' + id);
-            alert(`Review Link for Direct Material Canvass #${formattedId} copied!`);
-        }
-    });
 
     loadData();
 </script>

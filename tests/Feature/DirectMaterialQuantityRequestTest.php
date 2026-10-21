@@ -701,7 +701,7 @@ class DirectMaterialQuantityRequestTest extends TestCase
         $item->status = 'APRV';
         $item->save();
 
-        // 1. Direct Material Canvass Display view should contain the review link button and URL
+        // 1. Direct Material Canvass Display view should contain the review link button in the details area and URL
         $resDisplay = $this->actingAs($this->user)->get('/direct_material_canvass/' . $dmqr->id);
         $resDisplay->assertStatus(200);
         $resDisplay->assertSee('id="reviewLinkBtn"', false);
@@ -709,10 +709,9 @@ class DirectMaterialQuantityRequestTest extends TestCase
         $resDisplay->assertSee('Review Link');
         $resDisplay->assertSee('/review/direct_material_canvass/' . $dmqr->id, false);
 
-        // 2. Direct Material Canvass List view should contain copy review link script logic
+        // 2. Direct Material Canvass List view should not place review link per item row
         $resList = $this->actingAs($this->user)->get('/direct_material_canvass');
         $resList->assertStatus(200);
-        $resList->assertSee('copy-review-link-btn', false);
-        $resList->assertSee('/review/direct_material_canvass', false);
+        $resList->assertDontSee('copy-review-link-btn', false);
     }
 }
