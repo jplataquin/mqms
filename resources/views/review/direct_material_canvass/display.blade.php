@@ -160,7 +160,7 @@
 
     document.querySelectorAll('.approve-btn').forEach(btn => {
         btn.onclick = async () => {
-            if (!confirm('Are you sure you want to approve this canvass price?')) return;
+            if (!await window.util.confirm('Are you sure you want to approve this canvass price?')) return;
             const canvassId = btn.getAttribute('data-id');
             window.util.blockUI();
             let res = await window.util.$post('/api/review/direct_material_canvass/approve', { id: canvassId });
@@ -168,14 +168,14 @@
             if (res.status === 1) {
                 window.location.reload();
             } else {
-                alert(res.message || 'Error approving canvass');
+                window.util.showMsg(res);
             }
         };
     });
 
     document.querySelectorAll('.reject-btn').forEach(btn => {
         btn.onclick = async () => {
-            if (!confirm('Are you sure you want to reject this canvass price?')) return;
+            if (!await window.util.confirm('Are you sure you want to reject this canvass price?')) return;
             const canvassId = btn.getAttribute('data-id');
             window.util.blockUI();
             let res = await window.util.$post('/api/review/direct_material_canvass/reject', { id: canvassId });
@@ -183,7 +183,7 @@
             if (res.status === 1) {
                 window.location.reload();
             } else {
-                alert(res.message || 'Error rejecting canvass');
+                window.util.showMsg(res);
             }
         };
     });
