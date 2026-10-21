@@ -114,6 +114,8 @@
                                         <span class="badge bg-success px-2 py-1"><i class="bi bi-check-circle me-1"></i>Approved</span>
                                     @elseif($canvass->status == 'DPRV')
                                         <span class="badge bg-danger px-2 py-1"><i class="bi bi-x-circle me-1"></i>Disapproved</span>
+                                    @elseif($canvass->status == 'VOID')
+                                        <span class="badge bg-secondary px-2 py-1"><i class="bi bi-slash-circle me-1"></i>Void</span>
                                     @else
                                         <span class="badge bg-warning text-dark px-2 py-1"><i class="bi bi-clock me-1"></i>Pending</span>
                                     @endif
@@ -129,6 +131,14 @@
                                             <button type="button" class="btn btn-sm btn-success approve-btn" data-id="{{ $canvass->id }}" title="Approve">
                                                 <i class="bi bi-check-lg"></i>
                                             </button>
+                                        @endif
+                                    @elseif($canvass->status == 'APRV')
+                                        @if($canVoid)
+                                            <button type="button" class="btn btn-sm btn-outline-danger void-btn" data-id="{{ $canvass->id }}" title="Void">
+                                                Void
+                                            </button>
+                                        @else
+                                            <span class="text-white">-</span>
                                         @endif
                                     @else
                                         <span class="text-white">-</span>
@@ -179,6 +189,21 @@
             const canvassId = btn.getAttribute('data-id');
             window.util.blockUI();
             let res = await window.util.$post('/api/review/direct_material_canvass/reject', { id: canvassId });
+            window.util.unblockUI();
+            if (res.status === 1) {
+                window.location.reload();
+            } else {
+                window.util.showMsg(res);
+            }
+        };
+    });
+
+    document.querySelectorAll('.void-btn').forEach(btn => {
+        btn.onclick = async () => {
+            if (!await window.util.confirm('Are you sure you want to void this approved canvass price?')) return;
+            const canvassId = btn.getAttribute('data-id');
+            window.util.blockUI();
+            let res = await window.util.$post('/api/review/direct_material_canvass/void', { id: canvassId });
             window.util.unblockUI();
             if (res.status === 1) {
                 window.location.reload();

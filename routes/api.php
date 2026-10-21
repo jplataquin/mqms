@@ -157,6 +157,7 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::get('/review/direct_material_canvass/list', [App\Http\Controllers\Review\DirectMaterialCanvassReviewController::class, '_list']);
     Route::post('/review/direct_material_canvass/approve', [App\Http\Controllers\Review\DirectMaterialCanvassReviewController::class, '_approve']);
     Route::post('/review/direct_material_canvass/reject', [App\Http\Controllers\Review\DirectMaterialCanvassReviewController::class, '_reject']);
+    Route::post('/review/direct_material_canvass/void', [App\Http\Controllers\Review\DirectMaterialCanvassReviewController::class, '_void']);
  
 
     Route::get('/review/material_canvass/list', [App\Http\Controllers\Review\MaterialCanvassReviewController::class, '_list']);
@@ -210,6 +211,7 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::get('/direct_material_canvass/list', [App\Http\Controllers\DirectMaterialCanvassController::class, '_list']);
     Route::post('/direct_material_canvass/create', [App\Http\Controllers\DirectMaterialCanvassController::class, '_create']);
     Route::post('/direct_material_canvass/delete', [App\Http\Controllers\DirectMaterialCanvassController::class, '_delete']);
+    Route::post('/direct_material_canvass/void', [App\Http\Controllers\DirectMaterialCanvassController::class, '_void']);
    
     
     Route::get('/contract_item/list', [App\Http\Controllers\ContractItemController::class, '_list']);

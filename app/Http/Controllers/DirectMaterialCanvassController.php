@@ -8,6 +8,7 @@ use App\Models\Section;
 use App\Models\DirectMaterialQuantityRequest;
 use App\Models\DirectMaterialQuantityRequestItem;
 use App\Models\DirectMaterialCanvass;
+use App\Models\DirectPurchaseOrderItem;
 use App\Models\Supplier;
 use App\Models\PaymentTerm;
 use Illuminate\Support\Facades\DB;
@@ -99,12 +100,14 @@ class DirectMaterialCanvassController extends Controller
 
         $suppliers     = Supplier::orderBy('name', 'ASC')->whereNull('deleted_at')->get();
         $payment_terms = PaymentTerm::orderBy('text', 'ASC')->get();
+        $canVoid       = $this->hasAccess(['material_canvass:all:void', 'direct_material_canvass:all:void', 'material_canvass:all:approve', 'direct_material_canvass:all:approve', 'material_canvass:own:void', 'direct_material_canvass:own:void']);
 
         return view('direct_material_canvass/display', [
             'request'       => $dmqr,
             'items'         => $dmqr->Items,
             'suppliers'     => $suppliers,
-            'payment_terms' => $payment_terms
+            'payment_terms' => $payment_terms,
+            'canVoid'       => $canVoid
         ]);
     }
 
@@ -220,6 +223,68 @@ class DirectMaterialCanvassController extends Controller
         return response()->json([
             'status'  => 1,
             'message' => 'Canvass deleted successfully.',
+            'data'    => []
+        ]);
+    }
+
+    public function _void(Request $request)
+    {
+        $id = (int) $request->input('id');
+        $canvass = DirectMaterialCanvass::find($id);
+
+        if (!$canvass) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Record not found',
+                'data'    => []
+            ]);
+        }
+
+        $user = auth()->user();
+        $canVoidAll = $this->hasAccess(['material_canvass:all:void', 'direct_material_canvass:all:void', 'material_canvass:all:approve', 'direct_material_canvass:all:approve']);
+        $canVoidOwn = $this->hasAccess(['material_canvass:own:void', 'direct_material_canvass:own:void']);
+
+        if (!$canVoidAll) {
+            if (!$canVoidOwn || $canvass->created_by != $user->id) {
+                return response()->json([
+                    'status'  => 0,
+                    'message' => 'Access Denied',
+                    'data'    => []
+                ]);
+            }
+        }
+
+        if ($canvass->status != 'APRV') {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Canvass cannot be voided unless in approved status.',
+                'data'    => []
+            ]);
+        }
+
+        $hasPo = DirectPurchaseOrderItem::where('direct_material_canvass_id', $canvass->id)
+            ->whereHas('DirectPurchaseOrder', function ($q) {
+                $q->where('status', '!=', 'VOID');
+            })
+            ->whereNull('deleted_at')
+            ->exists();
+
+        if ($hasPo) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Record dependency issue, this canvass has active Direct Purchase Order(s) that are dependent.',
+                'data'    => []
+            ]);
+        }
+
+        $canvass->status  = 'VOID';
+        $canvass->void_by = $user->id;
+        $canvass->void_at = Carbon::now();
+        $canvass->save();
+
+        return response()->json([
+            'status'  => 1,
+            'message' => 'Canvass voided successfully.',
             'data'    => []
         ]);
     }

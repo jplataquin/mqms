@@ -137,15 +137,25 @@
                                         <span class="badge bg-success px-2 py-1"><i class="bi bi-check-circle me-1"></i>Approved</span>
                                     @elseif($canvass->status == 'DPRV')
                                         <span class="badge bg-danger px-2 py-1"><i class="bi bi-x-circle me-1"></i>Disapproved</span>
+                                    @elseif($canvass->status == 'VOID')
+                                        <span class="badge bg-secondary px-2 py-1"><i class="bi bi-slash-circle me-1"></i>Void</span>
                                     @else
                                         <span class="badge bg-warning text-dark px-2 py-1"><i class="bi bi-clock me-1"></i>Pending</span>
                                     @endif
                                 </td>
-                                <td style="padding-right: 1.5rem;" class="text-end text-white">
+                                <td style="padding-right: 1.5rem;" class="text-end text-white text-nowrap">
                                     @if($canvass->status == 'PEND')
                                         <button type="button" class="btn btn-sm btn-outline-danger delete-canvass-btn" data-canvass-id="{{ $canvass->id }}" title="Delete quote">
                                             <i class="bi bi-trash"></i>
                                         </button>
+                                    @elseif($canvass->status == 'APRV')
+                                        @if($canVoid)
+                                            <button type="button" class="btn btn-sm btn-outline-danger void-canvass-btn" data-canvass-id="{{ $canvass->id }}" title="Void quote">
+                                                Void
+                                            </button>
+                                        @else
+                                            <span class="text-white">-</span>
+                                        @endif
                                     @else
                                         <span class="text-white">-</span>
                                     @endif
@@ -413,7 +423,7 @@
 
     document.querySelectorAll('.delete-canvass-btn').forEach(btn => {
         btn.onclick = async () => {
-            if (!confirm('Are you sure you want to delete this quote?')) return;
+            if (!await window.util.confirm('Are you sure you want to delete this quote?')) return;
             const canvassId = btn.getAttribute('data-canvass-id');
             window.util.blockUI();
             let res = await window.util.$post('/api/direct_material_canvass/delete', { id: canvassId });
@@ -421,7 +431,22 @@
             if (res.status === 1) {
                 window.location.reload();
             } else {
-                alert(res.message || 'Error deleting quote');
+                window.util.showMsg(res);
+            }
+        };
+    });
+
+    document.querySelectorAll('.void-canvass-btn').forEach(btn => {
+        btn.onclick = async () => {
+            if (!await window.util.confirm('Are you sure you want to void this approved canvass quote?')) return;
+            const canvassId = btn.getAttribute('data-canvass-id');
+            window.util.blockUI();
+            let res = await window.util.$post('/api/direct_material_canvass/void', { id: canvassId });
+            window.util.unblockUI();
+            if (res.status === 1) {
+                window.location.reload();
+            } else {
+                window.util.showMsg(res);
             }
         };
     });

@@ -716,4 +716,73 @@ class DirectMaterialQuantityRequestTest extends TestCase
         $resList->assertStatus(200);
         $resList->assertDontSee('copy-review-link-btn', false);
     }
+
+    /** @test */
+    public function it_renders_single_void_button_when_direct_material_canvass_is_approved_and_can_void_it()
+    {
+        $project = $this->createProject('Void Canvass Project');
+        $material = $this->createMaterialItem('Void Canvass Material');
+        $supplier = $this->createSupplier('Void Canvass Supplier');
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Cash';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $item = new DirectMaterialQuantityRequestItem();
+        $item->direct_material_quantity_request_id = $dmqr->id;
+        $item->material_item_id = $material->id;
+        $item->quantity = 25;
+        $item->status = 'APRV';
+        $item->save();
+
+        $canvass = new DirectMaterialCanvass();
+        $canvass->direct_material_quantity_request_id = $dmqr->id;
+        $canvass->direct_material_quantity_request_item_id = $item->id;
+        $canvass->supplier_id = $supplier->id;
+        $canvass->payment_term_id = $paymentTerm->id;
+        $canvass->price = 100.00;
+        $canvass->status = 'APRV';
+        $canvass->created_by = $this->user->id;
+        $canvass->approved_by = $this->user->id;
+        $canvass->approved_at = now();
+        $canvass->save();
+
+        // 1. In Review display view: should see the single void button in action column
+        $resReview = $this->actingAs($this->user)->get('/review/direct_material_canvass/' . $dmqr->id);
+        $resReview->assertStatus(200);
+        $resReview->assertSee('void-btn', false);
+        $resReview->assertSee('Void');
+        // Should not see approve or reject buttons for an approved quote
+        $resReview->assertDontSee('approve-btn', false);
+        $resReview->assertDontSee('reject-btn', false);
+
+        // 2. In Direct Material Canvass display view: should also see single void button
+        $resCanvass = $this->actingAs($this->user)->get('/direct_material_canvass/' . $dmqr->id);
+        $resCanvass->assertStatus(200);
+        $resCanvass->assertSee('void-canvass-btn', false);
+        $resCanvass->assertDontSee('delete-canvass-btn', false);
+
+        // 3. Void the canvass via API
+        $voidRes = $this->actingAs($this->user)->postJson('/api/review/direct_material_canvass/void', [
+            'id' => $canvass->id
+        ]);
+        $voidRes->assertStatus(200);
+        $voidRes->assertJson(['status' => 1]);
+
+        $canvass->refresh();
+        $this->assertEquals('VOID', $canvass->status);
+        $this->assertEquals($this->user->id, $canvass->void_by);
+        $this->assertNotNull($canvass->void_at);
+
+        // 4. After voiding, the void button is no longer shown
+        $resReviewAfter = $this->actingAs($this->user)->get('/review/direct_material_canvass/' . $dmqr->id);
+        $resReviewAfter->assertStatus(200);
+        $resReviewAfter->assertDontSee('void-btn', false);
+    }
 }
