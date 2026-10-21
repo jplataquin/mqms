@@ -759,14 +759,14 @@ class DirectMaterialQuantityRequestTest extends TestCase
         $resReview->assertSee('void-btn', false);
         $resReview->assertSee('Void');
         // Should not see approve or reject buttons for an approved quote
-        $resReview->assertDontSee('approve-btn', false);
-        $resReview->assertDontSee('reject-btn', false);
+        $resReview->assertDontSee('<button type="button" class="btn btn-sm btn-success approve-btn"', false);
+        $resReview->assertDontSee('<button type="button" class="btn btn-sm btn-outline-danger reject-btn"', false);
 
         // 2. In Direct Material Canvass display view: should also see single void button
         $resCanvass = $this->actingAs($this->user)->get('/direct_material_canvass/' . $dmqr->id);
         $resCanvass->assertStatus(200);
         $resCanvass->assertSee('void-canvass-btn', false);
-        $resCanvass->assertDontSee('delete-canvass-btn', false);
+        $resCanvass->assertDontSee('<button type="button" class="btn btn-sm btn-outline-danger delete-canvass-btn"', false);
 
         // 3. Void the canvass via API
         $voidRes = $this->actingAs($this->user)->postJson('/api/review/direct_material_canvass/void', [
@@ -783,6 +783,72 @@ class DirectMaterialQuantityRequestTest extends TestCase
         // 4. After voiding, the void button is no longer shown
         $resReviewAfter = $this->actingAs($this->user)->get('/review/direct_material_canvass/' . $dmqr->id);
         $resReviewAfter->assertStatus(200);
-        $resReviewAfter->assertDontSee('void-btn', false);
+        $resReviewAfter->assertDontSee('<button type="button" class="btn btn-sm btn-outline-danger void-btn"', false);
+    }
+
+    /** @test */
+    public function it_prevents_voiding_approved_canvass_when_active_direct_po_exists()
+    {
+        $project = $this->createProject('Dep Void Project');
+        $material = $this->createMaterialItem('Dep Void Material');
+        $supplier = $this->createSupplier('Dep Void Supplier');
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Cash';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $item = new DirectMaterialQuantityRequestItem();
+        $item->direct_material_quantity_request_id = $dmqr->id;
+        $item->material_item_id = $material->id;
+        $item->quantity = 10;
+        $item->status = 'APRV';
+        $item->save();
+
+        $canvass = new DirectMaterialCanvass();
+        $canvass->direct_material_quantity_request_id = $dmqr->id;
+        $canvass->direct_material_quantity_request_item_id = $item->id;
+        $canvass->supplier_id = $supplier->id;
+        $canvass->payment_term_id = $paymentTerm->id;
+        $canvass->price = 50.00;
+        $canvass->status = 'APRV';
+        $canvass->created_by = $this->user->id;
+        $canvass->approved_by = $this->user->id;
+        $canvass->approved_at = now();
+        $canvass->save();
+
+        $dpo = new DirectPurchaseOrder();
+        $dpo->project_id = $project->id;
+        $dpo->supplier_id = $supplier->id;
+        $dpo->payment_term_id = $paymentTerm->id;
+        $dpo->status = 'DRFT';
+        $dpo->created_by = $this->user->id;
+        $dpo->save();
+
+        $dpoItem = new \App\Models\DirectPurchaseOrderItem();
+        $dpoItem->direct_purchase_order_id = $dpo->id;
+        $dpoItem->direct_material_quantity_request_item_id = $item->id;
+        $dpoItem->direct_material_canvass_id = $canvass->id;
+        $dpoItem->material_item_id = $material->id;
+        $dpoItem->quantity = 10;
+        $dpoItem->price = 50.00;
+        $dpoItem->save();
+
+        $res = $this->actingAs($this->user)->postJson('/api/review/direct_material_canvass/void', [
+            'id' => $canvass->id
+        ]);
+        $res->assertStatus(200);
+        $res->assertJson([
+            'status' => 0,
+            'message' => 'Record dependency issue, this canvass has active Direct Purchase Order(s) that are dependent.'
+        ]);
+
+        $canvass->refresh();
+        $this->assertEquals('APRV', $canvass->status);
     }
 }

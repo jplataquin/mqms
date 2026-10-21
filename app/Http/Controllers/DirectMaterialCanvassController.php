@@ -266,7 +266,6 @@ class DirectMaterialCanvassController extends Controller
             ->whereHas('DirectPurchaseOrder', function ($q) {
                 $q->where('status', '!=', 'VOID');
             })
-            ->whereNull('deleted_at')
             ->exists();
 
         if ($hasPo) {
