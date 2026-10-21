@@ -50,15 +50,32 @@
 
     <!-- Items with Canvass Cards -->
     @foreach($items as $item)
-    <div class="card mb-4">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h6 class="mb-0 fw-bold">
-                {{ $item->MaterialItem ? $item->MaterialItem->formattedName : 'Unknown Item' }}
-                <span class="badge bg-secondary ms-2">Qty: {{ number_format($item->quantity, 2) }}</span>
-            </h6>
-            <button type="button" class="btn btn-sm btn-primary add-canvass-btn" data-item-id="{{ $item->id }}" data-item-name="{{ $item->MaterialItem ? $item->MaterialItem->formattedName : 'Item' }}">
-                <i class="bi bi-plus-circle"></i> Add Quote
-            </button>
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-3 py-3">
+            <div class="d-flex flex-column">
+                <span class="fw-bold fs-6 text-dark">
+                    {{ $item->MaterialItem ? $item->MaterialItem->formattedName : 'Unknown Item' }}
+                </span>
+                @if($item->remarks)
+                    <span class="text-muted small mt-1">
+                        <i class="bi bi-chat-left-text me-1"></i>{{ $item->remarks }}
+                    </span>
+                @endif
+            </div>
+
+            <div class="d-flex align-items-center gap-3 ms-auto">
+                <div class="d-flex align-items-baseline px-3 py-1 bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 rounded-2">
+                    <span class="small text-uppercase fw-semibold me-2" style="font-size: 0.75rem; letter-spacing: 0.05em;">Requested Qty:</span>
+                    <span class="fs-5 fw-bold font-monospace">{{ number_format($item->quantity, 2) }}</span>
+                    @if($item->MaterialItem && $item->MaterialItem->specification_unit_packaging)
+                        <span class="small ms-1 fw-semibold text-secondary">{{ $item->MaterialItem->specification_unit_packaging }}</span>
+                    @endif
+                </div>
+
+                <button type="button" class="btn btn-sm btn-primary add-canvass-btn" data-item-id="{{ $item->id }}" data-item-name="{{ $item->MaterialItem ? $item->MaterialItem->formattedName : 'Item' }}" data-item-qty="{{ number_format($item->quantity, 2) }} {{ $item->MaterialItem ? $item->MaterialItem->specification_unit_packaging : '' }}">
+                    <i class="bi bi-plus-circle me-1"></i> Add Quote
+                </button>
+            </div>
         </div>
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -124,6 +141,16 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" id="modalItemId">
+                <div class="p-3 mb-3 bg-light rounded-2 border d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-muted small d-block">Item</span>
+                        <strong id="modalItemName" class="text-dark"></strong>
+                    </div>
+                    <div class="text-end">
+                        <span class="text-muted small d-block">Target Quantity</span>
+                        <strong id="modalItemQty" class="text-primary font-monospace fs-6"></strong>
+                    </div>
+                </div>
                 <div class="form-group mb-3">
                     <label class="form-label">Supplier <span class="text-danger">*</span></label>
                     <select class="form-select" id="modalSupplierSelect" required>
@@ -210,10 +237,17 @@
     const modalRemarksInput = document.getElementById('modalRemarksInput');
     const modalSaveQuoteBtn = document.getElementById('modalSaveQuoteBtn');
 
+    const modalItemName = document.getElementById('modalItemName');
+    const modalItemQty  = document.getElementById('modalItemQty');
+
     document.querySelectorAll('.add-canvass-btn').forEach(btn => {
         btn.onclick = () => {
             modalItemId.value = btn.getAttribute('data-item-id');
-            document.getElementById('modalTitle').textContent = 'Add Quote for ' + btn.getAttribute('data-item-name');
+            const itemName = btn.getAttribute('data-item-name');
+            const itemQty  = btn.getAttribute('data-item-qty');
+            document.getElementById('modalTitle').textContent = 'Add Quote';
+            if (modalItemName) modalItemName.textContent = itemName;
+            if (modalItemQty) modalItemQty.textContent = itemQty;
             modalSupplierSelect.value = '';
             modalPaymentTermSelect.value = '';
             modalPriceInput.value = '';

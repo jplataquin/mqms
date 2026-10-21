@@ -45,12 +45,26 @@
 
     <!-- Items with Quotes for Approval -->
     @foreach($items as $item)
-    <div class="card mb-4">
-        <div class="card-header">
-            <h6 class="mb-0 fw-bold">
-                {{ $item->MaterialItem ? $item->MaterialItem->formattedName : 'Unknown Item' }}
-                <span class="badge bg-secondary ms-2">Qty: {{ number_format($item->quantity, 2) }}</span>
-            </h6>
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-3 py-3">
+            <div class="d-flex flex-column">
+                <span class="fw-bold fs-6 text-dark">
+                    {{ $item->MaterialItem ? $item->MaterialItem->formattedName : 'Unknown Item' }}
+                </span>
+                @if($item->remarks)
+                    <span class="text-muted small mt-1">
+                        <i class="bi bi-chat-left-text me-1"></i>{{ $item->remarks }}
+                    </span>
+                @endif
+            </div>
+
+            <div class="d-flex align-items-baseline px-3 py-1 bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 rounded-2 ms-auto">
+                <span class="small text-uppercase fw-semibold me-2" style="font-size: 0.75rem; letter-spacing: 0.05em;">Requested Qty:</span>
+                <span class="fs-5 fw-bold font-monospace">{{ number_format($item->quantity, 2) }}</span>
+                @if($item->MaterialItem && $item->MaterialItem->specification_unit_packaging)
+                    <span class="small ms-1 fw-semibold text-secondary">{{ $item->MaterialItem->specification_unit_packaging }}</span>
+                @endif
+            </div>
         </div>
         <div class="card-body p-0">
             <div class="table-responsive">
