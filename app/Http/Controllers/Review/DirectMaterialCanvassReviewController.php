@@ -136,42 +136,18 @@ class DirectMaterialCanvassReviewController extends Controller
             ]);
         }
 
-        DB::beginTransaction();
+        $user = auth()->user();
 
-        try {
-            $user = auth()->user();
+        $canvass->status      = 'APRV';
+        $canvass->approved_by = $user->id;
+        $canvass->approved_at = Carbon::now();
+        $canvass->save();
 
-            // When an item's canvass is approved, other pending canvasses for the same item are rejected
-            DirectMaterialCanvass::where('direct_material_quantity_request_item_id', $canvass->direct_material_quantity_request_item_id)
-                ->where('id', '!=', $canvass->id)
-                ->where('status', '=', 'PEND')
-                ->update([
-                    'status'      => 'DPRV',
-                    'rejected_by' => $user->id,
-                    'rejected_at' => Carbon::now()
-                ]);
-
-            $canvass->status      = 'APRV';
-            $canvass->approved_by = $user->id;
-            $canvass->approved_at = Carbon::now();
-            $canvass->save();
-
-            DB::commit();
-
-            return response()->json([
-                'status'  => 1,
-                'message' => 'Canvass approved successfully.',
-                'data'    => []
-            ]);
-        } catch (\Exception $e) {
-            DB::rollback();
-
-            return response()->json([
-                'status'  => 0,
-                'message' => $e->getMessage(),
-                'data'    => []
-            ]);
-        }
+        return response()->json([
+            'status'  => 1,
+            'message' => 'Canvass approved successfully.',
+            'data'    => []
+        ]);
     }
 
     public function _reject(Request $request)

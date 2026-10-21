@@ -288,9 +288,16 @@ class DirectMaterialQuantityRequestTest extends TestCase
         $approveRes->assertStatus(200);
         $approveRes->assertJson(['status' => 1]);
 
-        // Quote 2 should be APRV, Quote 1 should be DPRV (automatically disapproved)
+        // Quote 2 should be APRV, Quote 1 should remain PEND (approving is per canvass line item, not auto-rejecting others)
         $this->assertEquals('APRV', DirectMaterialCanvass::find($quote2Id)->status);
-        $this->assertEquals('DPRV', DirectMaterialCanvass::find($quote1Id)->status);
+        $this->assertEquals('PEND', DirectMaterialCanvass::find($quote1Id)->status);
+
+        // Quote 1 can also be approved independently for the same item
+        $approveQuote1 = $this->actingAs($this->user)->postJson('/api/review/direct_material_canvass/approve', [
+            'id' => $quote1Id
+        ]);
+        $approveQuote1->assertStatus(200);
+        $this->assertEquals('APRV', DirectMaterialCanvass::find($quote1Id)->status);
     }
 
     /** @test */

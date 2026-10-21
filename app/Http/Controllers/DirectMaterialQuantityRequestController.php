@@ -468,12 +468,12 @@ class DirectMaterialQuantityRequestController extends Controller
         $availableItems = [];
 
         foreach ($dmqr->Items as $item) {
-            $approvedCanvass = DirectMaterialCanvass::with(['Supplier', 'PaymentTerm'])
+            $approvedCanvasses = DirectMaterialCanvass::with(['Supplier', 'PaymentTerm'])
                 ->where('direct_material_quantity_request_item_id', $item->id)
                 ->where('status', '=', 'APRV')
-                ->first();
+                ->get();
 
-            if (!$approvedCanvass) {
+            if ($approvedCanvasses->isEmpty()) {
                 continue;
             }
 
@@ -486,21 +486,23 @@ class DirectMaterialQuantityRequestController extends Controller
             $balance = $item->quantity - $ordered;
 
             if ($balance > 0) {
-                $availableItems[] = [
-                    'direct_material_quantity_request_item_id' => $item->id,
-                    'direct_material_canvass_id'               => $approvedCanvass->id,
-                    'material_item_id'                         => $item->material_item_id,
-                    'material_item_name'                       => $item->MaterialItem ? $item->MaterialItem->formattedName : 'Unknown Item',
-                    'supplier_id'                              => $approvedCanvass->supplier_id,
-                    'supplier_name'                            => $approvedCanvass->Supplier ? $approvedCanvass->Supplier->name : '',
-                    'payment_term_id'                          => $approvedCanvass->payment_term_id,
-                    'payment_term_name'                        => $approvedCanvass->PaymentTerm ? $approvedCanvass->PaymentTerm->text : '',
-                    'price'                                    => (float) $approvedCanvass->price,
-                    'requested_quantity'                       => (float) $item->quantity,
-                    'ordered_quantity'                         => (float) $ordered,
-                    'balance_quantity'                         => (float) $balance,
-                    'remarks'                                  => $item->remarks ?? ''
-                ];
+                foreach ($approvedCanvasses as $approvedCanvass) {
+                    $availableItems[] = [
+                        'direct_material_quantity_request_item_id' => $item->id,
+                        'direct_material_canvass_id'               => $approvedCanvass->id,
+                        'material_item_id'                         => $item->material_item_id,
+                        'material_item_name'                       => $item->MaterialItem ? $item->MaterialItem->formattedName : 'Unknown Item',
+                        'supplier_id'                              => $approvedCanvass->supplier_id,
+                        'supplier_name'                            => $approvedCanvass->Supplier ? $approvedCanvass->Supplier->name : '',
+                        'payment_term_id'                          => $approvedCanvass->payment_term_id,
+                        'payment_term_name'                        => $approvedCanvass->PaymentTerm ? $approvedCanvass->PaymentTerm->text : '',
+                        'price'                                    => (float) $approvedCanvass->price,
+                        'requested_quantity'                       => (float) $item->quantity,
+                        'ordered_quantity'                         => (float) $ordered,
+                        'balance_quantity'                         => (float) $balance,
+                        'remarks'                                  => $item->remarks ?? ''
+                    ];
+                }
             }
         }
 
