@@ -118,16 +118,16 @@
                                         <span class="badge bg-warning text-dark px-2 py-1"><i class="bi bi-clock me-1"></i>Pending</span>
                                     @endif
                                 </td>
-                                <td style="padding-right: 1.5rem;" class="text-end text-white">
+                                <td style="padding-right: 1.5rem;" class="text-end text-white text-nowrap">
                                     @if($canvass->status == 'PEND')
                                         @if($canReject)
-                                            <button type="button" class="btn btn-sm btn-outline-danger reject-btn me-1" data-id="{{ $canvass->id }}">
-                                                Reject
+                                            <button type="button" class="btn btn-sm btn-outline-danger reject-btn me-1" data-id="{{ $canvass->id }}" title="Reject">
+                                                <i class="bi bi-x-lg"></i>
                                             </button>
                                         @endif
                                         @if($canApprove)
-                                            <button type="button" class="btn btn-sm btn-success approve-btn" data-id="{{ $canvass->id }}">
-                                                Approve
+                                            <button type="button" class="btn btn-sm btn-success approve-btn" data-id="{{ $canvass->id }}" title="Approve">
+                                                <i class="bi bi-check-lg"></i>
                                             </button>
                                         @endif
                                     @else

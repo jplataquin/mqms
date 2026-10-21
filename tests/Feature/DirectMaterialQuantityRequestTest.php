@@ -380,6 +380,8 @@ class DirectMaterialQuantityRequestTest extends TestCase
         $resReviewCanvassDisplay = $this->actingAs($this->user)->get('/review/direct_material_canvass/' . $dmqr->id);
         $resReviewCanvassDisplay->assertStatus(200);
         $resReviewCanvassDisplay->assertSee('<div id="content">', false);
+        $resReviewCanvassDisplay->assertSee('bi-x-lg', false);
+        $resReviewCanvassDisplay->assertSee('bi-check-lg', false);
     }
 
     /** @test */
