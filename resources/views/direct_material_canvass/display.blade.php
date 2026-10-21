@@ -100,7 +100,7 @@
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
-                    <thead class="table-light text-uppercase small text-muted" style="letter-spacing: 0.04em;">
+                    <thead class="border-bottom text-uppercase small text-muted" style="letter-spacing: 0.04em;">
                         <tr>
                             <th style="width: 28%; padding-left: 1.5rem;">Supplier</th>
                             <th style="width: 22%">Payment Term</th>
