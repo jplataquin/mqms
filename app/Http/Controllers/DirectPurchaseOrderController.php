@@ -644,7 +644,7 @@ class DirectPurchaseOrderController extends Controller
             }
         }
 
-        if ($dpo->status != 'APRV' && $dpo->status != 'DRFT') {
+        if ($dpo->status != 'APRV') {
             return abort(404);
         }
 

@@ -119,9 +119,6 @@
             @if($direct_purchase_order->status == 'DRFT')
                 <button type="button" class="btn btn-danger me-2" id="deleteBtn">Delete</button>
                 <button type="button" class="btn btn-success me-2" id="submitBtn">Submit for Review</button>
-                <a href="/direct_purchase_order/print/{{$direct_purchase_order->id}}" target="_blank" class="btn btn-info me-2 text-white">
-                    <i class="bi bi-printer"></i> Print
-                </a>
             @endif
 
             @if($direct_purchase_order->status == 'APRV')
