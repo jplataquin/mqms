@@ -23,7 +23,7 @@
     <div class="card mb-4">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Review Canvass for Request #{{ $request->formatted_id }}</h5>
-            <span class="badge bg-light text-dark fs-6">{{ $request->status }}</span>
+            <span class="badge bg-white text-primary fs-6">{{ $request->status }}</span>
         </div>
         <div class="card-body">
             <div class="row">
@@ -51,50 +51,33 @@
             <div class="row align-items-center g-3">
                 <!-- Left: Item Identification -->
                 <div class="col-lg-7 col-md-6">
-                    <div class="d-flex align-items-center gap-2 mb-2">
+                    <div class="d-flex align-items-center flex-wrap gap-2">
                         <span class="badge bg-dark text-white px-2 py-1 text-uppercase font-monospace" style="letter-spacing: 0.05em; font-size: 0.75rem;">
                             Item #{{ $loop->iteration }}
                         </span>
-                        @if($item->MaterialItem && $item->MaterialItem->brand)
-                            <span class="badge bg-secondary-subtle text-dark border px-2 py-1 text-uppercase" style="font-size: 0.75rem;">
-                                {{ $item->MaterialItem->brand }}
-                            </span>
-                        @endif
+                        <h4 class="fw-bolder text-dark mb-0 lh-sm">
+                            {{ $item->MaterialItem ? $item->MaterialItem->formattedName : 'Unknown Material' }}
+                        </h4>
                     </div>
-                    <h4 class="fw-bolder text-dark mb-1 lh-sm">
-                        {{ $item->MaterialItem ? $item->MaterialItem->name : 'Unknown Material' }}
-                    </h4>
-                    <div class="d-flex flex-wrap align-items-center gap-3 text-muted small mt-2">
-                        @if($item->MaterialItem && $item->MaterialItem->specification_unit_packaging)
-                            <span>
-                                <i class="bi bi-box-seam me-1 text-primary"></i>Packaging: <strong class="text-dark">{{ $item->MaterialItem->specification_unit_packaging }}</strong>
-                            </span>
-                        @endif
-                        @if($item->remarks)
-                            <span>
-                                <i class="bi bi-chat-left-text me-1 text-primary"></i>Remarks: <strong class="text-dark">{{ $item->remarks }}</strong>
-                            </span>
-                        @endif
-                    </div>
+                    @if($item->remarks)
+                        <div class="text-muted small mt-2">
+                            <i class="bi bi-chat-left-text me-1 text-primary"></i>Remarks: <strong class="text-dark">{{ $item->remarks }}</strong>
+                        </div>
+                    @endif
                 </div>
 
                 <!-- Right: Quantity Callout -->
                 <div class="col-lg-5 col-md-6">
                     <div class="d-flex align-items-center justify-content-md-end gap-3 flex-wrap">
                         <!-- Hero Quantity Display Box -->
-                        <div class="px-4 py-2 rounded-3 text-center border border-2 border-primary bg-primary bg-opacity-10 shadow-sm" style="min-width: 170px;">
+                        <div class="px-4 py-2 rounded-3 text-center border border-2 border-primary bg-primary bg-opacity-10 shadow-sm" style="min-width: 140px;">
                             <div class="text-uppercase fw-bold text-primary" style="font-size: 0.7rem; letter-spacing: 0.08em;">
                                 Required Quantity
                             </div>
-                            <div class="d-flex align-items-baseline justify-content-center gap-1 mt-0">
+                            <div class="mt-1">
                                 <span class="fs-2 fw-bolder font-monospace text-primary lh-1">
                                     {{ number_format($item->quantity, 2) }}
                                 </span>
-                                @if($item->MaterialItem && $item->MaterialItem->specification_unit_packaging)
-                                    <span class="fw-semibold text-primary small">
-                                        {{ $item->MaterialItem->specification_unit_packaging }}
-                                    </span>
-                                @endif
                             </div>
                         </div>
                     </div>

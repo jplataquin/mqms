@@ -40,3 +40,6 @@ MQMS is a specialized ERP-style application designed for construction, engineeri
 - **Security**: Laravel Passport & Sanctum, plus custom 3rd-party API Key/Secret middleware.
 - **Frontend/UI**: Laravel UI/Vite integration, Adarna JS framework for dynamic UI.
 - **Utilities**: `spipu/html2pdf` for PDF generation (POs, MQRs)
+
+## UI & Styling Standards
+- **Backgrounds:** Do NOT use the `bg-light` class unless explicitly specified by the user. Prefer clean backgrounds (`bg-white`), explicit structural borders, or subtle theme-tinted backgrounds (e.g. `bg-primary bg-opacity-10`) to preserve contrast, crisp visual hierarchy, and theme consistency.
