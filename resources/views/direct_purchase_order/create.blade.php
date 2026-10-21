@@ -216,6 +216,7 @@
         const materialList      = $q('#materialList').first();
 
         const initialSupplierOptionsHtml = supplierList.innerHTML;
+        const initialPaymentTermOptionsHtml = paymentTermSelect.innerHTML;
         let currentDmqrItems = [];
 
         const t = new Template();
@@ -246,23 +247,67 @@
             unlockForm();
         };
 
-        function renderDmqrItemsForSupplier(supplierId) {
+        function renderDmqrItems(supplierId, paymentTermId) {
             itemsTableBody.innerHTML = '';
-            const matchingItems = currentDmqrItems.filter(item => item.supplier_id == supplierId);
+            if (!supplierId || !paymentTermId) {
+                recalculate();
+                updateItemRemoveButtons();
+                return;
+            }
+
+            const matchingItems = currentDmqrItems.filter(item => 
+                item.supplier_id == supplierId && item.payment_term_id == paymentTermId
+            );
+
             matchingItems.forEach(item => {
                 createDmqrItemRow(item);
             });
 
-            if (matchingItems.length > 0 && matchingItems[0].payment_term_id) {
-                paymentTermSelect.value = matchingItems[0].payment_term_id;
-                paymentTermSelect.disabled = true;
-            } else {
-                paymentTermSelect.value = '';
-                paymentTermSelect.disabled = false;
-            }
-
             recalculate();
             updateItemRemoveButtons();
+        }
+
+        function updatePaymentTermsAndItemsForSupplier(supplierId) {
+            const supplierItems = currentDmqrItems.filter(item => item.supplier_id == supplierId);
+
+            const uniquePaymentTermsMap = new Map();
+            supplierItems.forEach(item => {
+                if (item.payment_term_id && !uniquePaymentTermsMap.has(item.payment_term_id)) {
+                    uniquePaymentTermsMap.set(item.payment_term_id, {
+                        id: item.payment_term_id,
+                        name: item.payment_term_name
+                    });
+                }
+            });
+
+            const uniquePaymentTerms = Array.from(uniquePaymentTermsMap.values());
+
+            paymentTermSelect.innerHTML = '<option value="">Select Payment Term</option>';
+            uniquePaymentTerms.forEach(pt => {
+                const opt = document.createElement('option');
+                opt.value = pt.id;
+                opt.textContent = pt.name;
+                paymentTermSelect.appendChild(opt);
+            });
+
+            if (uniquePaymentTerms.length === 1) {
+                paymentTermSelect.value = uniquePaymentTerms[0].id;
+                paymentTermSelect.disabled = true;
+                renderDmqrItems(supplierId, uniquePaymentTerms[0].id);
+            } else if (uniquePaymentTerms.length > 1) {
+                paymentTermSelect.disabled = false;
+                paymentTermSelect.value = '';
+                itemsTableBody.innerHTML = '';
+                recalculate();
+                updateItemRemoveButtons();
+                paymentTermSelect.focus();
+            } else {
+                paymentTermSelect.disabled = false;
+                paymentTermSelect.value = '';
+                itemsTableBody.innerHTML = '';
+                recalculate();
+                updateItemRemoveButtons();
+            }
         }
 
         async function loadDmqr(id) {
@@ -317,15 +362,13 @@
                     supplierInput.disabled = true;
                     clearSupplierBtn.disabled = true;
 
-                    renderDmqrItemsForSupplier(singleSupplier.id);
+                    updatePaymentTermsAndItemsForSupplier(singleSupplier.id);
                 } else if (uniqueSuppliers.length > 1) {
                     // Multiple suppliers: unlock supplier selection and populate list with only these suppliers
                     supplierInput.disabled = false;
                     clearSupplierBtn.disabled = false;
                     supplierInput.value = '';
                     supplierSelect.value = '';
-                    paymentTermSelect.value = '';
-                    paymentTermSelect.disabled = false;
 
                     supplierList.innerHTML = '';
                     uniqueSuppliers.forEach(s => {
@@ -334,6 +377,10 @@
                         opt.setAttribute('data-id', s.id);
                         supplierList.appendChild(opt);
                     });
+
+                    paymentTermSelect.innerHTML = '<option value="">Select Payment Term</option>';
+                    paymentTermSelect.value = '';
+                    paymentTermSelect.disabled = false;
 
                     itemsTableBody.innerHTML = '';
                     recalculate();
@@ -370,6 +417,7 @@
             supplierInput.value = '';
             supplierSelect.value = '';
 
+            paymentTermSelect.innerHTML = initialPaymentTermOptionsHtml;
             paymentTermSelect.disabled = false;
             paymentTermSelect.value = '';
 
@@ -448,14 +496,21 @@
 
             if (currentDmqrItems.length > 0) {
                 if (matchedSupplierId) {
-                    renderDmqrItemsForSupplier(matchedSupplierId);
+                    updatePaymentTermsAndItemsForSupplier(matchedSupplierId);
                 } else {
-                    itemsTableBody.innerHTML = '';
-                    paymentTermSelect.value = '';
+                    paymentTermSelect.innerHTML = '<option value="">Select Payment Term</option>';
                     paymentTermSelect.disabled = false;
+                    paymentTermSelect.value = '';
+                    itemsTableBody.innerHTML = '';
                     recalculate();
                     updateItemRemoveButtons();
                 }
+            }
+        };
+
+        paymentTermSelect.onchange = () => {
+            if (currentDmqrItems.length > 0 && supplierSelect.value) {
+                renderDmqrItems(supplierSelect.value, paymentTermSelect.value);
             }
         };
 
@@ -463,9 +518,10 @@
             supplierInput.value = '';
             supplierSelect.value = '';
             if (currentDmqrItems.length > 0) {
-                itemsTableBody.innerHTML = '';
-                paymentTermSelect.value = '';
+                paymentTermSelect.innerHTML = '<option value="">Select Payment Term</option>';
                 paymentTermSelect.disabled = false;
+                paymentTermSelect.value = '';
+                itemsTableBody.innerHTML = '';
                 recalculate();
                 updateItemRemoveButtons();
             }

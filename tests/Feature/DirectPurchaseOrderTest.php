@@ -1121,6 +1121,78 @@ class DirectPurchaseOrderTest extends TestCase
         // Also verify the create page renders the multi-supplier handler script logic
         $createPage = $this->actingAs($this->user)->get('/direct_purchase_order/create');
         $createPage->assertStatus(200);
-        $createPage->assertSee('renderDmqrItemsForSupplier', false);
+        $createPage->assertSee('renderDmqrItems', false);
+    }
+
+    /** @test */
+    public function it_supports_same_supplier_with_different_payment_terms_in_direct_po()
+    {
+        $project = $this->createProject('Terms Project');
+        $mat = $this->createMaterialItem('Cement 40kg');
+        $sup = $this->createSupplier('Omni Supplier');
+
+        $term1 = new PaymentTerm();
+        $term1->text = 'Cash Term';
+        $term1->created_by = $this->user->id;
+        $term1->save();
+
+        $term2 = new PaymentTerm();
+        $term2->text = 'Credit 30 Days';
+        $term2->created_by = $this->user->id;
+        $term2->save();
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $item = new DirectMaterialQuantityRequestItem();
+        $item->direct_material_quantity_request_id = $dmqr->id;
+        $item->material_item_id = $mat->id;
+        $item->quantity = 100;
+        $item->save();
+
+        // Same supplier, Cash term: $200
+        $canvass1 = new DirectMaterialCanvass();
+        $canvass1->direct_material_quantity_request_id = $dmqr->id;
+        $canvass1->direct_material_quantity_request_item_id = $item->id;
+        $canvass1->supplier_id = $sup->id;
+        $canvass1->payment_term_id = $term1->id;
+        $canvass1->price = 200.00;
+        $canvass1->status = 'APRV';
+        $canvass1->created_by = $this->user->id;
+        $canvass1->save();
+
+        // Same supplier, Credit 30 Days: $210
+        $canvass2 = new DirectMaterialCanvass();
+        $canvass2->direct_material_quantity_request_id = $dmqr->id;
+        $canvass2->direct_material_quantity_request_item_id = $item->id;
+        $canvass2->supplier_id = $sup->id;
+        $canvass2->payment_term_id = $term2->id;
+        $canvass2->price = 210.00;
+        $canvass2->status = 'APRV';
+        $canvass2->created_by = $this->user->id;
+        $canvass2->save();
+
+        $res = $this->actingAs($this->user)->getJson('/api/direct_material_quantity_request/for_direct_po/' . $dmqr->id);
+        $res->assertStatus(200);
+        $res->assertJson(['status' => 1]);
+
+        $items = $res->json('data.items');
+        $this->assertCount(2, $items);
+
+        // Both items have the same supplier but different payment terms
+        $this->assertEquals($sup->id, $items[0]['supplier_id']);
+        $this->assertEquals($sup->id, $items[1]['supplier_id']);
+        $this->assertNotEquals($items[0]['payment_term_id'], $items[1]['payment_term_id']);
+        $this->assertEquals(200.00, $items[0]['price']);
+        $this->assertEquals(210.00, $items[1]['price']);
+
+        // Verify create view contains payment term filtering logic
+        $createPage = $this->actingAs($this->user)->get('/direct_purchase_order/create');
+        $createPage->assertStatus(200);
+        $createPage->assertSee('updatePaymentTermsAndItemsForSupplier', false);
+        $createPage->assertSee('renderDmqrItems', false);
     }
 }
