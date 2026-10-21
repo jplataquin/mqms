@@ -128,7 +128,7 @@
                             <th style="width: 50%">Material Item</th>
                             <th style="width: 15%">Quantity</th>
                             <th style="width: 15%">Price</th>
-                            <th style="width: 15%">Total</th>
+                            <th style="width: 15%" class="text-end">Total</th>
                             <th style="width: 5%"></th>
                         </tr>
                     </thead>
@@ -328,7 +328,7 @@
             trMain.className = 'item-main-row';
             trMain.innerHTML = `
                 <td>
-                    <input type="text" class="form-control item-material-input bg-light" value="${item.material_item_name}" readonly disabled />
+                    <input type="text" class="form-control item-material-input" value="${item.material_item_name}" readonly disabled />
                     <input type="hidden" class="item-material" value="${item.material_item_id}">
                     <input type="hidden" class="item-dmqr-item-id" value="${item.direct_material_quantity_request_item_id}">
                     <input type="hidden" class="item-dmqr-canvass-id" value="${item.direct_material_canvass_id}">
@@ -338,7 +338,7 @@
                     <small class="text-muted d-block">Remaining Balance: ${item.balance_quantity}</small>
                 </td>
                 <td>
-                    <input type="number" step="0.01" class="form-control item-price bg-light font-monospace" value="${item.price.toFixed(2)}" readonly />
+                    <input type="number" step="0.01" class="form-control item-price font-monospace" value="${item.price.toFixed(2)}" readonly />
                 </td>
                 <td class="align-middle text-end font-monospace">
                     <span class="item-total">0.00</span>
@@ -462,7 +462,7 @@
                 const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
                 const price = parseFloat(row.querySelector('.item-price').value) || 0;
                 const rowTotal = qty * price;
-                row.querySelector('.item-total').textContent = rowTotal.toFixed(2);
+                row.querySelector('.item-total').textContent = rowTotal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
                 total += rowTotal;
             });
 
