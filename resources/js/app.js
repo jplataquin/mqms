@@ -7,6 +7,10 @@ import en_ca from '/node_modules/vanillajs-datepicker/js/i18n/locales/en-CA.js';
 
 Object.assign(Datepicker.locales, en_ca);
 
+window.bootstrap = window.bootstrap || {};
+window.bootstrap.Modal = Modal;
+window.Modal = Modal;
+
 
 window.util = {};
 window.ui   = {};

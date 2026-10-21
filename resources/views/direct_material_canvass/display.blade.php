@@ -164,7 +164,44 @@
 
     const dmqrId = {{ $request->id }};
     const modalEl = document.getElementById('addQuoteModal');
-    const bsModal = new bootstrap.Modal(modalEl);
+
+    function showModal() {
+        if (window.bootstrap && window.bootstrap.Modal) {
+            bootstrap.Modal.getOrCreateInstance(modalEl).show();
+            return;
+        }
+        modalEl.style.display = 'block';
+        modalEl.classList.add('show');
+        modalEl.removeAttribute('aria-hidden');
+        modalEl.setAttribute('aria-modal', 'true');
+        modalEl.setAttribute('role', 'dialog');
+        let backdrop = document.querySelector('.modal-backdrop');
+        if (!backdrop) {
+            backdrop = document.createElement('div');
+            backdrop.className = 'modal-backdrop fade show';
+            document.body.appendChild(backdrop);
+        }
+        document.body.classList.add('modal-open');
+    }
+
+    function hideModal() {
+        if (window.bootstrap && window.bootstrap.Modal) {
+            const instance = bootstrap.Modal.getInstance(modalEl);
+            if (instance) instance.hide();
+        }
+        modalEl.style.display = 'none';
+        modalEl.classList.remove('show');
+        modalEl.setAttribute('aria-hidden', 'true');
+        modalEl.removeAttribute('aria-modal');
+        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+        document.body.classList.remove('modal-open');
+        document.body.style.removeProperty('overflow');
+        document.body.style.removeProperty('padding-right');
+    }
+
+    modalEl.querySelectorAll('[data-bs-dismiss="modal"]').forEach(btn => {
+        btn.onclick = () => hideModal();
+    });
 
     const modalItemId = document.getElementById('modalItemId');
     const modalSupplierSelect = document.getElementById('modalSupplierSelect');
@@ -181,7 +218,7 @@
             modalPaymentTermSelect.value = '';
             modalPriceInput.value = '';
             modalRemarksInput.value = '';
-            bsModal.show();
+            showModal();
         };
     });
 
@@ -211,7 +248,7 @@
         modalSaveQuoteBtn.disabled = false;
 
         if (res.status === 1) {
-            bsModal.hide();
+            hideModal();
             window.location.reload();
         } else {
             alert(res.message || 'Error saving quote');
