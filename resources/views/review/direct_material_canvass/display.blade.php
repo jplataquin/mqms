@@ -23,7 +23,7 @@
     <div class="card mb-4">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Review Canvass for Request #{{ $request->formatted_id }}</h5>
-            <span class="badge bg-white text-primary fs-6">{{ $request->status }}</span>
+            <span class="badge bg-secondary fs-6">{{ $request->status }}</span>
         </div>
         <div class="card-body">
             <div class="row">
@@ -47,7 +47,7 @@
     @foreach($items as $item)
     <div class="card mb-4 border-0 shadow-sm overflow-hidden">
         <!-- Prominent Item & Quantity Hero Banner -->
-        <div class="card-header bg-white border-bottom p-4">
+        <div class="card-header border-bottom p-4">
             <div class="row align-items-center g-3">
                 <!-- Left: Item Identification -->
                 <div class="col-lg-7 col-md-6">
@@ -55,13 +55,13 @@
                         <span class="badge bg-dark text-white px-2 py-1 text-uppercase font-monospace" style="letter-spacing: 0.05em; font-size: 0.75rem;">
                             Item #{{ $loop->iteration }}
                         </span>
-                        <h4 class="fw-bolder text-dark mb-0 lh-sm">
+                        <h4 class="fw-bolder text-white mb-0 lh-sm">
                             {{ $item->MaterialItem ? $item->MaterialItem->formattedName : 'Unknown Material' }}
                         </h4>
                     </div>
                     @if($item->remarks)
-                        <div class="text-muted small mt-2">
-                            <i class="bi bi-chat-left-text me-1 text-primary"></i>Remarks: <strong class="text-dark">{{ $item->remarks }}</strong>
+                        <div class="text-white small mt-2">
+                            <i class="bi bi-chat-left-text me-1"></i>Remarks: <strong class="text-white">{{ $item->remarks }}</strong>
                         </div>
                     @endif
                 </div>

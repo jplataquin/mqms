@@ -42,4 +42,4 @@ MQMS is a specialized ERP-style application designed for construction, engineeri
 - **Utilities**: `spipu/html2pdf` for PDF generation (POs, MQRs)
 
 ## UI & Styling Standards
-- **Backgrounds:** Do NOT use the `bg-light` class unless explicitly specified by the user. Prefer clean backgrounds (`bg-white`), explicit structural borders, or subtle theme-tinted backgrounds (e.g. `bg-primary bg-opacity-10`) to preserve contrast, crisp visual hierarchy, and theme consistency.
+- **Backgrounds:** Do NOT use the `bg-light` or `bg-white` classes unless explicitly specified by the user. Allow components, cards, tables, and dialogs to inherit their natural theme styles, borders, or subtle theme-tinted backgrounds (e.g. `bg-primary bg-opacity-10`) to preserve contrast, dark mode compatibility, crisp visual hierarchy, and theme consistency.
