@@ -5,18 +5,23 @@
 
 <div class="container">
     <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
-        <ul>
-            <li>
-                <a href="/direct_material_canvass">
-                    <span>Direct Material Canvass</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="active">
-                    <span>#{{ $request->formatted_id }}</span>
-                </a>
-            </li>
-        </ul>
+        <div class="d-flex justify-content-between align-items-center">
+            <ul>
+                <li>
+                    <a href="/direct_material_canvass">
+                        <span>Direct Material Canvass</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="active">
+                        <span>#{{ $request->formatted_id }}</span>
+                    </a>
+                </li>
+            </ul>
+            <button class="btn btn-outline-primary" id="reviewLinkBtn">
+                <i class="bi bi-link-45deg"></i> Review Link
+            </button>
+        </div>
     </div>
     <hr>
 
@@ -155,6 +160,9 @@
     @endforeach
 
     <div class="text-end mb-5">
+        <button type="button" class="btn btn-outline-primary me-2 review-link-btn">
+            <i class="bi bi-link-45deg"></i> Review Link
+        </button>
         <a href="/direct_material_canvass" class="btn btn-secondary">Back to List</a>
     </div>
 </div>
@@ -229,6 +237,13 @@
 
     const dmqrId = {{ $request->id }};
     const modalEl = document.getElementById('addQuoteModal');
+
+    document.querySelectorAll('#reviewLinkBtn, .review-link-btn').forEach(btn => {
+        btn.onclick = async () => {
+            await window.util.copyToClipboard('{{ url("/review/direct_material_canvass/".$request->id) }}');
+            alert('Review Link for Direct Material Canvass #{{ $request->formatted_id }} copied!');
+        };
+    });
 
     function showModal() {
         if (window.bootstrap && window.bootstrap.Modal) {

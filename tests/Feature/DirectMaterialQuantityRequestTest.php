@@ -681,4 +681,38 @@ class DirectMaterialQuantityRequestTest extends TestCase
         $this->assertContains($res->headers->get('content-type'), ['image/png', 'image/svg+xml']);
         $this->assertGreaterThan(0, strlen($res->getContent()));
     }
+
+    /** @test */
+    public function it_renders_review_link_in_direct_material_canvass_views()
+    {
+        $project = $this->createProject('Canvass Review Link Project');
+        $material = $this->createMaterialItem('Canvass Review Link Item');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $item = new DirectMaterialQuantityRequestItem();
+        $item->direct_material_quantity_request_id = $dmqr->id;
+        $item->material_item_id = $material->id;
+        $item->quantity = 15;
+        $item->status = 'APRV';
+        $item->save();
+
+        // 1. Direct Material Canvass Display view should contain the review link button and URL
+        $resDisplay = $this->actingAs($this->user)->get('/direct_material_canvass/' . $dmqr->id);
+        $resDisplay->assertStatus(200);
+        $resDisplay->assertSee('id="reviewLinkBtn"', false);
+        $resDisplay->assertSee('review-link-btn', false);
+        $resDisplay->assertSee('Review Link');
+        $resDisplay->assertSee('/review/direct_material_canvass/' . $dmqr->id, false);
+
+        // 2. Direct Material Canvass List view should contain copy review link script logic
+        $resList = $this->actingAs($this->user)->get('/direct_material_canvass');
+        $resList->assertStatus(200);
+        $resList->assertSee('copy-review-link-btn', false);
+        $resList->assertSee('/review/direct_material_canvass', false);
+    }
 }
