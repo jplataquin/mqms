@@ -88,27 +88,27 @@
         <!-- Table of Quotes for Approval -->
         <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="border-bottom text-uppercase small text-muted" style="letter-spacing: 0.04em;">
+                <table class="table table-hover align-middle mb-0 text-white">
+                    <thead class="border-bottom text-uppercase small text-white" style="letter-spacing: 0.04em;">
                         <tr>
-                            <th style="width: 26%; padding-left: 1.5rem;">Supplier</th>
-                            <th style="width: 20%">Payment Term</th>
-                            <th style="width: 16%" class="text-end">Unit Price</th>
-                            <th style="width: 16%" class="text-end">Total Amount</th>
-                            <th style="width: 10%" class="text-center">Status</th>
-                            <th style="width: 12%; padding-right: 1.5rem;" class="text-end">Action</th>
+                            <th style="width: 26%; padding-left: 1.5rem;" class="text-white">Supplier</th>
+                            <th style="width: 20%" class="text-white">Payment Term</th>
+                            <th style="width: 16%" class="text-end text-white">Unit Price</th>
+                            <th style="width: 16%" class="text-end text-white">Total Amount</th>
+                            <th style="width: 10%" class="text-center text-white">Status</th>
+                            <th style="width: 12%; padding-right: 1.5rem;" class="text-end text-white">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($item->Canvasses as $canvass)
                             <tr>
-                                <td style="padding-left: 1.5rem;" class="fw-semibold text-dark">
-                                    <i class="bi bi-building me-1 text-muted"></i>
+                                <td style="padding-left: 1.5rem;" class="fw-semibold text-white">
+                                    <i class="bi bi-building me-1 text-white"></i>
                                     {{ $canvass->Supplier ? $canvass->Supplier->name : '-' }}
                                 </td>
-                                <td>{{ $canvass->PaymentTerm ? $canvass->PaymentTerm->text : '-' }}</td>
-                                <td class="text-end font-monospace fw-semibold">{{ number_format($canvass->price, 2) }}</td>
-                                <td class="text-end font-monospace fw-bold text-dark">{{ number_format($canvass->price * $item->quantity, 2) }}</td>
+                                <td class="text-white">{{ $canvass->PaymentTerm ? $canvass->PaymentTerm->text : '-' }}</td>
+                                <td class="text-end font-monospace fw-semibold text-white">{{ number_format($canvass->price, 2) }}</td>
+                                <td class="text-end font-monospace fw-bold text-white">{{ number_format($canvass->price * $item->quantity, 2) }}</td>
                                 <td class="text-center">
                                     @if($canvass->status == 'APRV')
                                         <span class="badge bg-success px-2 py-1"><i class="bi bi-check-circle me-1"></i>Approved</span>
@@ -118,7 +118,7 @@
                                         <span class="badge bg-warning text-dark px-2 py-1"><i class="bi bi-clock me-1"></i>Pending</span>
                                     @endif
                                 </td>
-                                <td style="padding-right: 1.5rem;" class="text-end">
+                                <td style="padding-right: 1.5rem;" class="text-end text-white">
                                     @if($canvass->status == 'PEND')
                                         @if($canReject)
                                             <button type="button" class="btn btn-sm btn-outline-danger reject-btn me-1" data-id="{{ $canvass->id }}">
@@ -131,14 +131,14 @@
                                             </button>
                                         @endif
                                     @else
-                                        -
+                                        <span class="text-white">-</span>
                                     @endif
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center text-muted py-4">
-                                    <i class="bi bi-inbox fs-3 d-block mb-1 text-secondary opacity-50"></i>
+                                <td colspan="6" class="text-center text-white py-4">
+                                    <i class="bi bi-inbox fs-3 d-block mb-1 text-white opacity-75"></i>
                                     <span>No quotes submitted for this item.</span>
                                 </td>
                             </tr>

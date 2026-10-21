@@ -99,27 +99,27 @@
         <!-- Table of Supplier Quotes -->
         <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="border-bottom text-uppercase small text-muted" style="letter-spacing: 0.04em;">
+                <table class="table table-hover align-middle mb-0 text-white">
+                    <thead class="border-bottom text-uppercase small text-white" style="letter-spacing: 0.04em;">
                         <tr>
-                            <th style="width: 28%; padding-left: 1.5rem;">Supplier</th>
-                            <th style="width: 22%">Payment Term</th>
-                            <th style="width: 16%" class="text-end">Unit Price</th>
-                            <th style="width: 16%" class="text-end">Total Amount</th>
-                            <th style="width: 10%" class="text-center">Status</th>
-                            <th style="width: 8%; padding-right: 1.5rem;" class="text-end">Action</th>
+                            <th style="width: 28%; padding-left: 1.5rem;" class="text-white">Supplier</th>
+                            <th style="width: 22%" class="text-white">Payment Term</th>
+                            <th style="width: 16%" class="text-end text-white">Unit Price</th>
+                            <th style="width: 16%" class="text-end text-white">Total Amount</th>
+                            <th style="width: 10%" class="text-center text-white">Status</th>
+                            <th style="width: 8%; padding-right: 1.5rem;" class="text-end text-white">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($item->Canvasses as $canvass)
                             <tr>
-                                <td style="padding-left: 1.5rem;" class="fw-semibold text-dark">
-                                    <i class="bi bi-building me-1 text-muted"></i>
+                                <td style="padding-left: 1.5rem;" class="fw-semibold text-white">
+                                    <i class="bi bi-building me-1 text-white"></i>
                                     {{ $canvass->Supplier ? $canvass->Supplier->name : '-' }}
                                 </td>
-                                <td>{{ $canvass->PaymentTerm ? $canvass->PaymentTerm->text : '-' }}</td>
-                                <td class="text-end font-monospace fw-semibold">{{ number_format($canvass->price, 2) }}</td>
-                                <td class="text-end font-monospace fw-bold text-dark">{{ number_format($canvass->price * $item->quantity, 2) }}</td>
+                                <td class="text-white">{{ $canvass->PaymentTerm ? $canvass->PaymentTerm->text : '-' }}</td>
+                                <td class="text-end font-monospace fw-semibold text-white">{{ number_format($canvass->price, 2) }}</td>
+                                <td class="text-end font-monospace fw-bold text-white">{{ number_format($canvass->price * $item->quantity, 2) }}</td>
                                 <td class="text-center">
                                     @if($canvass->status == 'APRV')
                                         <span class="badge bg-success px-2 py-1"><i class="bi bi-check-circle me-1"></i>Approved</span>
@@ -129,20 +129,20 @@
                                         <span class="badge bg-warning text-dark px-2 py-1"><i class="bi bi-clock me-1"></i>Pending</span>
                                     @endif
                                 </td>
-                                <td style="padding-right: 1.5rem;" class="text-end">
+                                <td style="padding-right: 1.5rem;" class="text-end text-white">
                                     @if($canvass->status == 'PEND')
                                         <button type="button" class="btn btn-sm btn-outline-danger delete-canvass-btn" data-canvass-id="{{ $canvass->id }}" title="Delete quote">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     @else
-                                        -
+                                        <span class="text-white">-</span>
                                     @endif
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center text-muted py-4">
-                                    <i class="bi bi-inbox fs-3 d-block mb-1 text-secondary opacity-50"></i>
+                                <td colspan="6" class="text-center text-white py-4">
+                                    <i class="bi bi-inbox fs-3 d-block mb-1 text-white opacity-75"></i>
                                     <span>No supplier quotes recorded yet. Click <strong>"Add Quote"</strong> to record one.</span>
                                 </td>
                             </tr>
@@ -171,31 +171,41 @@
                 <input type="hidden" id="modalItemId">
                 <div class="p-3 mb-3 rounded-2 border d-flex justify-content-between align-items-center shadow-sm">
                     <div>
-                        <span class="text-muted small d-block">Item</span>
-                        <strong id="modalItemName" class="text-dark"></strong>
+                        <span class="text-white-50 small d-block">Item</span>
+                        <strong id="modalItemName" class="text-white fs-5"></strong>
                     </div>
                     <div class="text-end">
-                        <span class="text-muted small d-block">Target Quantity</span>
-                        <strong id="modalItemQty" class="text-primary font-monospace fs-6"></strong>
+                        <span class="text-white-50 small d-block">Target Quantity</span>
+                        <strong id="modalItemQty" class="text-primary font-monospace fs-5"></strong>
                     </div>
                 </div>
                 <div class="form-group mb-3">
                     <label class="form-label">Supplier <span class="text-danger">*</span></label>
-                    <select class="form-select" id="modalSupplierSelect" required>
-                        <option value="">Select Supplier</option>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                        <input type="text" class="form-control" id="modalSupplierInput" list="modalSupplierList" placeholder="Type to search supplier..." autocomplete="off" required>
+                        <button class="btn btn-outline-secondary" type="button" id="clearModalSupplierBtn" title="Clear"><i class="bi bi-x-lg"></i></button>
+                    </div>
+                    <datalist id="modalSupplierList">
                         @foreach($suppliers as $supplier)
-                            <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                            <option value="{{ $supplier->name }}" data-id="{{ $supplier->id }}"></option>
                         @endforeach
-                    </select>
+                    </datalist>
+                    <input type="hidden" id="modalSupplierSelect" value="">
                 </div>
                 <div class="form-group mb-3">
                     <label class="form-label">Payment Term <span class="text-danger">*</span></label>
-                    <select class="form-select" id="modalPaymentTermSelect" required>
-                        <option value="">Select Payment Term</option>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                        <input type="text" class="form-control" id="modalPaymentTermInput" list="modalPaymentTermList" placeholder="Type to search payment term..." autocomplete="off" required>
+                        <button class="btn btn-outline-secondary" type="button" id="clearModalPaymentTermBtn" title="Clear"><i class="bi bi-x-lg"></i></button>
+                    </div>
+                    <datalist id="modalPaymentTermList">
                         @foreach($payment_terms as $pt)
-                            <option value="{{ $pt->id }}">{{ $pt->text }}</option>
+                            <option value="{{ $pt->text }}" data-id="{{ $pt->id }}"></option>
                         @endforeach
-                    </select>
+                    </datalist>
+                    <input type="hidden" id="modalPaymentTermSelect" value="">
                 </div>
                 <div class="form-group mb-3">
                     <label class="form-label">Price per Unit <span class="text-danger">*</span></label>
@@ -258,15 +268,62 @@
         btn.onclick = () => hideModal();
     });
 
+    function findOptionId(input, datalist) {
+        if (!input || !datalist) return '';
+        const val = input.value.trim().toLowerCase();
+        if (!val) return '';
+        const options = datalist.options;
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].value.trim().toLowerCase() === val) {
+                return options[i].getAttribute('data-id') || '';
+            }
+        }
+        return '';
+    }
+
     const modalItemId = document.getElementById('modalItemId');
+    const modalSupplierInput = document.getElementById('modalSupplierInput');
+    const modalSupplierList = document.getElementById('modalSupplierList');
     const modalSupplierSelect = document.getElementById('modalSupplierSelect');
+    const clearModalSupplierBtn = document.getElementById('clearModalSupplierBtn');
+
+    const modalPaymentTermInput = document.getElementById('modalPaymentTermInput');
+    const modalPaymentTermList = document.getElementById('modalPaymentTermList');
     const modalPaymentTermSelect = document.getElementById('modalPaymentTermSelect');
+    const clearModalPaymentTermBtn = document.getElementById('clearModalPaymentTermBtn');
+
     const modalPriceInput = document.getElementById('modalPriceInput');
     const modalRemarksInput = document.getElementById('modalRemarksInput');
     const modalSaveQuoteBtn = document.getElementById('modalSaveQuoteBtn');
 
     const modalItemName = document.getElementById('modalItemName');
     const modalItemQty  = document.getElementById('modalItemQty');
+
+    if (modalSupplierInput) {
+        modalSupplierInput.oninput = () => {
+            modalSupplierSelect.value = findOptionId(modalSupplierInput, modalSupplierList);
+        };
+    }
+    if (clearModalSupplierBtn) {
+        clearModalSupplierBtn.onclick = () => {
+            modalSupplierInput.value = '';
+            modalSupplierSelect.value = '';
+            modalSupplierInput.focus();
+        };
+    }
+
+    if (modalPaymentTermInput) {
+        modalPaymentTermInput.oninput = () => {
+            modalPaymentTermSelect.value = findOptionId(modalPaymentTermInput, modalPaymentTermList);
+        };
+    }
+    if (clearModalPaymentTermBtn) {
+        clearModalPaymentTermBtn.onclick = () => {
+            modalPaymentTermInput.value = '';
+            modalPaymentTermSelect.value = '';
+            modalPaymentTermInput.focus();
+        };
+    }
 
     document.querySelectorAll('.add-canvass-btn').forEach(btn => {
         btn.onclick = () => {
@@ -276,7 +333,9 @@
             document.getElementById('modalTitle').textContent = 'Add Quote';
             if (modalItemName) modalItemName.textContent = itemName;
             if (modalItemQty) modalItemQty.textContent = itemQty;
+            if (modalSupplierInput) modalSupplierInput.value = '';
             modalSupplierSelect.value = '';
+            if (modalPaymentTermInput) modalPaymentTermInput.value = '';
             modalPaymentTermSelect.value = '';
             modalPriceInput.value = '';
             modalRemarksInput.value = '';
@@ -285,12 +344,25 @@
     });
 
     modalSaveQuoteBtn.onclick = async () => {
-        const supplierId = modalSupplierSelect.value;
-        const paymentTermId = modalPaymentTermSelect.value;
+        const supplierId = modalSupplierSelect.value || findOptionId(modalSupplierInput, modalSupplierList);
+        const paymentTermId = modalPaymentTermSelect.value || findOptionId(modalPaymentTermInput, modalPaymentTermList);
         const price = parseFloat(modalPriceInput.value);
 
-        if (!supplierId || !paymentTermId || isNaN(price) || price < 0) {
-            alert('Please complete all required fields.');
+        if (!supplierId) {
+            alert('Please select a valid supplier from the search list.');
+            if (modalSupplierInput) modalSupplierInput.focus();
+            return;
+        }
+
+        if (!paymentTermId) {
+            alert('Please select a valid payment term from the search list.');
+            if (modalPaymentTermInput) modalPaymentTermInput.focus();
+            return;
+        }
+
+        if (isNaN(price) || price < 0) {
+            alert('Please enter a valid price per unit.');
+            modalPriceInput.focus();
             return;
         }
 
