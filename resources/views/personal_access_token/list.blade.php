@@ -6,8 +6,13 @@
     <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
+                <a href="#">
+                    <span>AI / MCP</span>
+                </a>
+            </li>
+            <li>
                 <a href="/personal_access_tokens">
-                    <span>Personal Access Tokens</span>
+                    <span>Tokens</span>
                 </a>
             </li>
             <li>
@@ -29,9 +34,12 @@
             Personal Access Tokens
         </div>
         <div class="folder-form-body">
-            <p class="text-muted">
+            <p class="text-muted mb-2">
                 Personal Access Tokens can be used to authenticate with the MCP Server, Gemini, Claude Desktop, and other external AI agents using standard Bearer Token authentication.
             </p>
+            <div class="alert alert-info py-2 px-3 mb-3">
+                <small><strong>MCP Server Endpoint:</strong> <code>{{ url('/api/mcp') }}</code></small>
+            </div>
 
             <div class="row mt-3">
                 <div class="col-lg-12 text-end">

@@ -131,8 +131,13 @@
 
                         <li class="menu-item">
                             <div class="nav-item">
-                                <a href="/personal_access_tokens" hx-select="#content" hx-target="#main">Access Tokens</a>
-                            </div>          
+                                <a href="#" class="inactive-nav-item">AI / MCP</a>
+                            </div>
+                            <ul class="list-unstyled menu-sub-items">
+                                <li class="nav-sub-item">
+                                    <a href="/personal_access_tokens" hx-select="#content" hx-target="#main">Tokens</a>
+                                </li>
+                            </ul>
                         </li>
 
 
@@ -185,7 +190,7 @@
                                 </li>
                             </ul>
                             
-                        <li>
+                        </li>
 
                         <li class="menu-item">
                             <div class="nav-item">
