@@ -702,10 +702,13 @@ class AccomplishmentTest extends TestCase
     /** @test */
     public function it_can_render_the_accomplishment_studio_mode_page()
     {
+        $this->assertEquals(150000.0, $this->project->getTotalContractAmount());
+
         $response = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/studio');
         $response->assertStatus(200);
         $response->assertSee('Accomplishment Studio');
         $response->assertSee($this->project->name);
+        $response->assertSee($this->project->name . ' — P150,000.00');
     }
 
     /** @test */

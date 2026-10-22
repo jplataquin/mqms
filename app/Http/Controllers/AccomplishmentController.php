@@ -570,10 +570,20 @@ class AccomplishmentController extends Controller
     }
 
     public function studio($id){
-        $project = Project::findOrFail($id);
+        $project = Project::with([
+            'Sections' => function($q){
+                $q->whereNull('deleted_at');
+            },
+            'Sections.ContractItems' => function($q){
+                $q->whereNull('deleted_at');
+            }
+        ])->findOrFail($id);
+
+        $totalProjectAmount = $project->getTotalContractAmount();
 
         return view('accomplishment/studio',[
-            'project' => $project
+            'project'            => $project,
+            'totalProjectAmount' => $totalProjectAmount
         ]);
     }
 

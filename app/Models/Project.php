@@ -56,6 +56,24 @@ class Project extends Model
         return $user;
     }
 
+    /**
+     * Get the total contract amount (sum of all contract items) for the project.
+     *
+     * @return float
+     */
+    public function getTotalContractAmount(): float
+    {
+        $total = 0;
+        $sections = $this->relationLoaded('Sections') ? $this->Sections : $this->Sections()->with('ContractItems')->get();
+        foreach ($sections as $section) {
+            $items = $section->relationLoaded('ContractItems') ? $section->ContractItems : $section->ContractItems()->get();
+            foreach ($items as $ci) {
+                $total += ((float) $ci->contract_quantity * (float) $ci->contract_unit_price);
+            }
+        }
+        return (float) $total;
+    }
+
 
 
     public function delete(){

@@ -65,7 +65,7 @@
             color: #ffffff;
             line-height: 1.2;
             letter-spacing: -0.01em;
-            max-width: min(650px, 45vw);
+            max-width: min(850px, 60vw);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -76,7 +76,7 @@
         @media (max-width: 768px) {
             .studio-project-name {
                 font-size: 1.1rem;
-                max-width: 240px;
+                max-width: 300px;
             }
         }
 
@@ -575,6 +575,12 @@
 </head>
 <body>
 
+@php
+    $totalAmount = $totalProjectAmount ?? (method_exists($project, 'getTotalContractAmount') ? $project->getTotalContractAmount() : 0);
+    $formattedTotalAmount = 'P' . number_format($totalAmount, 2);
+    $projectTitleWithAmount = "{$project->name} — {$formattedTotalAmount}";
+@endphp
+
     <!-- Studio Topbar -->
     <div class="studio-topbar">
         <div class="studio-brand">
@@ -584,7 +590,7 @@
             <i class="bi bi-kanban text-primary fs-5"></i>
             <span class="text-muted fw-semibold d-none d-sm-inline" style="font-size: 13px;">Accomplishment Studio</span>
             <span class="text-muted opacity-50 d-none d-sm-inline">|</span>
-            <span class="studio-project-name" title="{{ $project->name }}">{{ $project->name }}</span>
+            <span class="studio-project-name" title="{{ $projectTitleWithAmount }}">{{ $projectTitleWithAmount }}</span>
         </div>
 
         <div class="d-flex align-items-center gap-2">
@@ -1674,6 +1680,27 @@
             renderGantt();
         };
 
+        function updateProjectHeader() {
+            if (!projectData || !projectData.sections) return;
+            let totalContractAmount = 0;
+            projectData.sections.forEach(section => {
+                if (section.contract_items) {
+                    section.contract_items.forEach(ci => {
+                        const totalScope = parseFloat(ci.contract_quantity) || 0;
+                        const unitPrice = parseFloat(ci.contract_unit_price) || 0;
+                        totalContractAmount += (totalScope * unitPrice);
+                    });
+                }
+            });
+            const projNameEl = document.querySelector('.studio-project-name');
+            if (projNameEl) {
+                const formattedAmount = 'P' + new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(totalContractAmount);
+                const titleStr = `${projectData.name} — ${formattedAmount}`;
+                projNameEl.textContent = titleStr;
+                projNameEl.title = titleStr;
+            }
+        }
+
         /* ================= Data Loading ================= */
         function loadProjectData() {
             loadingOverlay.style.display = 'flex';
@@ -1688,6 +1715,7 @@
                 loadingOverlay.style.display = 'none';
                 if (data.status === 1) {
                     projectData = data.data;
+                    updateProjectHeader();
                     renderGantt();
                 } else {
                     alert(data.message || 'Error loading project data');
