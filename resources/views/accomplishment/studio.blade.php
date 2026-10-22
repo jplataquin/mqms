@@ -40,7 +40,7 @@
 
         /* Topbar */
         .studio-topbar {
-            height: 48px;
+            height: 52px;
             background-color: var(--bg-dark);
             border-bottom: 1px solid var(--border-color);
             display: flex;
@@ -55,7 +55,29 @@
         .studio-brand {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .studio-project-name {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+            max-width: min(650px, 45vw);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 768px) {
+            .studio-project-name {
+                font-size: 1.1rem;
+                max-width: 240px;
+            }
         }
 
         /* Main Workspace Layout (Full Width) */
@@ -560,9 +582,9 @@
                 <i class="bi bi-arrow-left"></i>
             </a>
             <i class="bi bi-kanban text-primary fs-5"></i>
-            <span class="fw-bold">Accomplishment Studio</span>
-            <span class="text-muted">|</span>
-            <span class="badge bg-secondary text-truncate" style="max-width: 240px;">{{ $project->name }}</span>
+            <span class="text-muted fw-semibold d-none d-sm-inline" style="font-size: 13px;">Accomplishment Studio</span>
+            <span class="text-muted opacity-50 d-none d-sm-inline">|</span>
+            <span class="studio-project-name" title="{{ $project->name }}">{{ $project->name }}</span>
         </div>
 
         <div class="d-flex align-items-center gap-2">
