@@ -80,6 +80,20 @@
             border: 1px solid #000000;
         }
 
+        .group-header-row td {
+            background-color: #e2e8f0;
+            font-weight: bold;
+            padding: 7px 8px;
+            font-size: 11px;
+        }
+
+        .group-count {
+            font-weight: normal;
+            font-size: 10px;
+            color: #475569;
+            margin-left: 6px;
+        }
+
         @media print {
             body {
                 margin: 10px;
@@ -96,6 +110,12 @@
             tr {
                 page-break-inside: avoid;
             }
+
+            .group-header-row td {
+                background-color: #e2e8f0 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
         }
     </style>
 </head>
@@ -107,10 +127,14 @@
     <div class="header-container">
         <div class="header-title">Master Data: Material Items</div>
         <div class="meta-info">Date Generated: {{ $current_datetime }}</div>
+        @if(!empty($materialGroup ?? $selectedGroup))
+            <div class="meta-info">Material Group: {{ ($materialGroup ?? $selectedGroup)->name }}</div>
+        @endif
         @if(!empty($query))
             <div class="meta-info">Search Filter: "{{ $query }}"</div>
         @endif
         <div class="meta-info">Total Items: {{ count($materialItems) }}</div>
+        <div class="meta-info">Total Groups: {{ count($groupedMaterialItems ?? []) }}</div>
     </div>
 
     <table>
@@ -118,25 +142,31 @@
             <tr>
                 <th style="width: 5%;" class="text-center">#</th>
                 <th style="width: 8%;" class="text-center">ID</th>
-                <th style="width: 22%;" class="text-start">Material Group</th>
-                <th style="width: 30%;" class="text-start">Material Name</th>
-                <th style="width: 23%;" class="text-start">Specification / Unit Packaging</th>
-                <th style="width: 12%;" class="text-start">Brand</th>
+                <th style="width: 42%;" class="text-start">Material Name</th>
+                <th style="width: 30%;" class="text-start">Specification / Unit Packaging</th>
+                <th style="width: 15%;" class="text-start">Brand</th>
             </tr>
         </thead>
         <tbody>
-            @forelse($materialItems as $index => $item)
-                <tr>
-                    <td class="text-center">{{ $index + 1 }}</td>
-                    <td class="text-center">{{ str_pad($item->id, 5, '0', STR_PAD_LEFT) }}</td>
-                    <td>{{ $item->Group ? $item->Group->name : 'N/A' }}</td>
-                    <td>{{ $item->name }}</td>
-                    <td>{{ $item->specification_unit_packaging }}</td>
-                    <td>{{ $item->brand ?: '-' }}</td>
+            @forelse($groupedMaterialItems ?? [] as $group)
+                <tr class="group-header-row">
+                    <td colspan="5">
+                        <strong>Group: {{ $group['group_name'] }}</strong>
+                        <span class="group-count">({{ count($group['items']) }} {{ count($group['items']) == 1 ? 'item' : 'items' }})</span>
+                    </td>
                 </tr>
+                @foreach($group['items'] as $index => $item)
+                    <tr>
+                        <td class="text-center">{{ $index + 1 }}</td>
+                        <td class="text-center">{{ str_pad($item->id, 5, '0', STR_PAD_LEFT) }}</td>
+                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->specification_unit_packaging }}</td>
+                        <td>{{ $item->brand ?: '-' }}</td>
+                    </tr>
+                @endforeach
             @empty
                 <tr>
-                    <td colspan="6" class="text-center" style="padding: 15px;">No material items found.</td>
+                    <td colspan="5" class="text-center" style="padding: 15px;">No material items found.</td>
                 </tr>
             @endforelse
         </tbody>

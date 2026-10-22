@@ -30,7 +30,18 @@
         </div>
         <div class="folder-form-body">
             <div class="row mb-3">
-                <div class="col-lg-6">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Material Group</label>
+                        <select class="form-control" id="materialGroupSelect">
+                            <option value="">-- All Material Groups --</option>
+                            @foreach($materialGroups as $group)
+                                <option value="{{$group->id}}"{{ (!empty($selectedGroupId) && $selectedGroupId == $group->id) ? ' selected' : '' }}>{{$group->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label>Sort By</label>
                         <select class="form-control" id="sortSelect">
@@ -41,15 +52,16 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label>Query</label>
-                        <input type="text" id="query" class="form-control"/>
+                        <input type="text" id="query" class="form-control" placeholder="Search name, brand, or packaging..."/>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12 text-end">
+                        <button id="resetBtn" class="btn btn-secondary">Reset</button>
                         <button id="searchBtn" class="btn btn-primary">Search</button>
                         <button id="createBtn" class="btn btn-warning">Create</button>
                         <button id="printBtn" class="btn btn-secondary">Print</button>
@@ -71,13 +83,15 @@
 <script type="module">
     import {$q,Template,$el} from '/adarna.js';
 
-    const list            = $q('#list').first();
-    const query           = $q('#query').first();
-    const searchBtn       = $q('#searchBtn').first();
-    const showMoreBtn     = $q('#showMoreBtn').first();
-    const sortSelect      = $q('#sortSelect').first();
-    const createBtn       = $q('#createBtn').first();
-    const printBtn        = $q('#printBtn').first();
+    const list                = $q('#list').first();
+    const materialGroupSelect = $q('#materialGroupSelect').first();
+    const query               = $q('#query').first();
+    const searchBtn           = $q('#searchBtn').first();
+    const resetBtn            = $q('#resetBtn').first();
+    const showMoreBtn         = $q('#showMoreBtn').first();
+    const sortSelect          = $q('#sortSelect').first();
+    const createBtn           = $q('#createBtn').first();
+    const printBtn            = $q('#printBtn').first();
     
     let page            = 1;
     let order           = 'DESC';
@@ -95,7 +109,13 @@
         data.map(item=>{
 
             let row = t.div({class:'item-container fade-in'},()=>{
-                t.div({class:'item-header'},item.brand+' '+item.name +' '+item.specification_unit_packaging+''.trim());
+                let title = (item.formatted_name ? item.formatted_name : (item.brand + ' ' + item.name + ' ' + (item.specification_unit_packaging || ''))).trim();
+                t.div({class:'item-header'}, title);
+                if(item.group && item.group.name){
+                    t.div({class:'item-body mt-1'}, ()=>{
+                        t.span({class:'badge bg-secondary'}, item.group.name);
+                    });
+                }
             });
 
             row.onclick = ()=>{
@@ -112,19 +132,23 @@
 
         window.util.blockUI();
 
-        window.util.$get('/api/material/item/list',{
+        let params = {
             query: query.value,
             page: page,
             order: order,
             order_by: orderBy,
             limit: 10
-        }).then(reply=>{
+        };
 
-            
+        if(materialGroupSelect.value){
+            params.material_group_id = materialGroupSelect.value;
+        }
+
+        window.util.$get('/api/material/item/list', params).then(reply=>{
+
             window.util.unblockUI();
 
             if(reply.status <= 0 ){
-                
                 window.util.showMsg(reply);
                 return false;
             };
@@ -133,8 +157,15 @@
 
             if(reply.data.length){
                 renderRows(reply.data); 
+                if(reply.data.length < 10){
+                    showMoreBtn.style.display = 'none';
+                }
             }else{
                 showMoreBtn.style.display = 'none';
+                if(!list.children.length){
+                    let emptyMsg = t.div({class:'text-center text-muted py-4 fst-italic'}, 'No material items found.');
+                    $el.append(emptyMsg).to(list);
+                }
             }
             
         });
@@ -144,11 +175,36 @@
         showMoreBtn.style.display = 'block';
         reinitalize();
         showData();
-    }
+    };
+
+    resetBtn.onclick = ()=>{
+        materialGroupSelect.value = '';
+        query.value = '';
+        sortSelect.value = '3';
+        order = 'DESC';
+        orderBy = 'id';
+        showMoreBtn.style.display = 'block';
+        reinitalize();
+        showData();
+    };
+
+    materialGroupSelect.onchange = ()=>{
+        showMoreBtn.style.display = 'block';
+        reinitalize();
+        showData();
+    };
+
+    query.onkeyup = (e)=>{
+        if(e.key === 'Enter' || e.keyCode === 13){
+            showMoreBtn.style.display = 'block';
+            reinitalize();
+            showData();
+        }
+    };
 
     showMoreBtn.onclick = ()=>{
         showData();
-    }
+    };
 
     sortSelect.onchange = ()=>{
         reinitalize();
@@ -175,14 +231,21 @@
         }
 
         showData();
-    }
+    };
 
     createBtn.onclick = ()=>{
-         window.util.navTo('/master_data/material/item/create') ;
-    }
+        let url = '/master_data/material/item/create';
+        if (materialGroupSelect.value) {
+            url += '?material_group_id=' + materialGroupSelect.value;
+        }
+        window.util.navTo(url);
+    };
 
     printBtn.onclick = ()=>{
         let params = new URLSearchParams();
+        if (materialGroupSelect.value) {
+            params.append('material_group_id', materialGroupSelect.value);
+        }
         if (query.value.trim()) {
             params.append('query', query.value.trim());
         }

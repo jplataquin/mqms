@@ -81,9 +81,15 @@ class MaterialItemController extends Controller
     //     return view('material_item/edit');
     // }
 
-    public function list(){
+    public function list(Request $request){
 
-        return view('material_item/list');
+        $materialGroups = MaterialGroup::orderBy('name', 'ASC')->get();
+        $selectedGroupId = $request->input('material_group_id');
+
+        return view('material_item/list', [
+            'materialGroups'  => $materialGroups,
+            'selectedGroupId' => $selectedGroupId,
+        ]);
     }
 
     public function print(Request $request){
@@ -110,18 +116,46 @@ class MaterialItemController extends Controller
             });
         }
 
+        $selectedGroup = null;
         if($material_group_id){
+            $selectedGroup = MaterialGroup::find($material_group_id);
             $materialItem = $materialItem->where('material_group_id', $material_group_id);
         }
+        $materialGroup = $selectedGroup;
 
         $materialItems = $materialItem->orderBy($orderBy, $order)->get();
 
+        $grouped = [];
+        foreach ($materialItems as $item) {
+            $group = $item->Group;
+            $groupKey = $group ? 'group_' . $group->id : 'ungrouped';
+            $groupName = $group ? $group->name : 'Ungrouped';
+
+            if (!isset($grouped[$groupKey])) {
+                $grouped[$groupKey] = [
+                    'group_id'   => $group ? $group->id : null,
+                    'group_name' => $groupName,
+                    'items'      => [],
+                ];
+            }
+            $grouped[$groupKey]['items'][] = $item;
+        }
+
+        uasort($grouped, function($a, $b) {
+            if ($a['group_name'] === 'Ungrouped') return 1;
+            if ($b['group_name'] === 'Ungrouped') return -1;
+            return strcasecmp($a['group_name'], $b['group_name']);
+        });
+
         return view('material_item/print', [
-            'materialItems'    => $materialItems,
-            'query'            => $query,
-            'order'            => $order,
-            'orderBy'          => $orderBy,
-            'current_datetime' => date('Y-m-d H:i:s'),
+            'materialItems'        => $materialItems,
+            'groupedMaterialItems' => $grouped,
+            'materialGroup'        => $materialGroup,
+            'selectedGroup'        => $selectedGroup,
+            'query'                => $query,
+            'order'                => $order,
+            'orderBy'              => $orderBy,
+            'current_datetime'     => date('Y-m-d H:i:s'),
         ]);
     }
 
@@ -285,29 +319,40 @@ class MaterialItemController extends Controller
 
          //todo check role
 
-         $page              = (int) $request->input('page')     ?? 1;
-         $limit             = (int) $request->input('limit')    ?? 10;
+         $page              = max(1, (int) ($request->input('page') ?? 1));
+         $limit             = (int) ($request->input('limit') ?? 10);
          $orderBy           = $request->input('order_by')       ?? 'id';
          $order             = $request->input('order')          ?? 'DESC';
          $query             = $request->input('query')          ?? '';
          $material_group_id = $request->input('material_group_id');
 
+         if(!in_array(strtolower($order), ['asc', 'desc'])){
+             $order = 'DESC';
+         }
+         if(!in_array(strtolower($orderBy), ['id', 'name', 'brand', 'created_at'])){
+             $orderBy = 'id';
+         }
+
          $result = [];
  
-         $materialItem = new MaterialItem();
+         $materialItem = MaterialItem::with('Group');
  
          if($query != ''){
-             $materialItem = $materialItem->where('name','LIKE','%'.$query.'%');
+             $materialItem = $materialItem->where(function($q) use ($query){
+                 $q->where('name','LIKE','%'.$query.'%')
+                   ->orWhere('brand','LIKE','%'.$query.'%')
+                   ->orWhere('specification_unit_packaging','LIKE','%'.$query.'%');
+             });
          }
 
          if($material_group_id){
-            $materialItem = $materialItem->where('material_group_id',$material_group_id);
+            $materialItem = $materialItem->where('material_group_id', $material_group_id);
          }
  
          if($limit > 0){
-             $page   = ($page-1) * $limit;
+             $offset = ($page - 1) * $limit;
              
-             $result = $materialItem->orderBy($orderBy,$order)->skip($page)->take($limit)->get();
+             $result = $materialItem->orderBy($orderBy,$order)->skip($offset)->take($limit)->get();
              
          }else{
  

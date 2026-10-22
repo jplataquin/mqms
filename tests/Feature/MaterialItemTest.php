@@ -83,10 +83,62 @@ class MaterialItemTest extends TestCase
         $response = $this->actingAs($this->user)->get('/master_data/material/items');
         $response->assertStatus(200);
         $response->assertSee('Material Items');
+        $response->assertSee('id="materialGroupSelect"', false);
+        $response->assertSee('Cementitious Materials');
+        $response->assertSee('Aggregates');
         $response->assertSee('id="printBtn"', false);
         $response->assertSee('id="searchBtn"', false);
+        $response->assertSee('id="resetBtn"', false);
         $response->assertSee('id="createBtn"', false);
         $response->assertSee('master_data/material/items/print', false);
+    }
+
+    /** @test */
+    public function it_preselects_material_group_filter_if_provided_in_query()
+    {
+        $response = $this->actingAs($this->user)->get('/master_data/material/items?material_group_id=' . $this->group2->id);
+        $response->assertStatus(200);
+        $response->assertSee('value="' . $this->group2->id . '" selected', false);
+    }
+
+    /** @test */
+    public function it_can_filter_material_items_by_material_group_via_api()
+    {
+        $response = $this->actingAs($this->user)->getJson('/api/material/item/list?material_group_id=' . $this->group1->id);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+        ]);
+        
+        $data = $response->json('data');
+        $this->assertCount(2, $data);
+        $names = array_column($data, 'name');
+        $this->assertContains('Portland Cement Type 1', $names);
+        $this->assertContains('Pozzolan Cement', $names);
+        $this->assertNotContains('Crushed Gravel G1', $names);
+
+        // Verify group relation is present in JSON
+        $this->assertEquals('Cementitious Materials', $data[0]['group']['name']);
+
+        // Check group 2
+        $response2 = $this->actingAs($this->user)->getJson('/api/material/item/list?material_group_id=' . $this->group2->id);
+        $response2->assertStatus(200);
+        $data2 = $response2->json('data');
+        $this->assertCount(1, $data2);
+        $this->assertEquals('Crushed Gravel G1', $data2[0]['name']);
+        $this->assertEquals('Aggregates', $data2[0]['group']['name']);
+    }
+
+    /** @test */
+    public function it_can_filter_material_items_by_group_in_print_view()
+    {
+        $response = $this->actingAs($this->user)->get('/master_data/material/items/print?material_group_id=' . $this->group1->id);
+        $response->assertStatus(200);
+        $response->assertSee('Master Data: Material Items');
+        $response->assertSee('Material Group: Cementitious Materials');
+        $response->assertSee('Portland Cement Type 1');
+        $response->assertSee('Pozzolan Cement');
+        $response->assertDontSee('Crushed Gravel G1');
     }
 
     /** @test */
@@ -144,5 +196,94 @@ class MaterialItemTest extends TestCase
         $item = MaterialItem::with('Group')->find($this->item1->id);
         $this->assertNotNull($item->Group);
         $this->assertEquals('Cementitious Materials', $item->Group->name);
+    }
+
+    /** @test */
+    public function it_groups_material_items_by_material_group_in_print_view()
+    {
+        $response = $this->actingAs($this->user)->get('/master_data/material/items/print');
+        $response->assertStatus(200);
+
+        $groupedItems = $response->viewData('groupedMaterialItems');
+        $this->assertNotNull($groupedItems);
+        $this->assertCount(2, $groupedItems);
+
+        $content = $response->getContent();
+
+        // Check group headers with item counts
+        $this->assertStringContainsString('Group: Aggregates', $content);
+        $this->assertStringContainsString('(1 item)', $content);
+        $this->assertStringContainsString('Group: Cementitious Materials', $content);
+        $this->assertStringContainsString('(2 items)', $content);
+        $this->assertStringContainsString('Total Groups: 2', $content);
+        $this->assertStringContainsString('Total Items: 3', $content);
+
+        // Verify group order: Aggregates precedes Cementitious Materials
+        $posAggregates = strpos($content, 'Group: Aggregates');
+        $posCementitious = strpos($content, 'Group: Cementitious Materials');
+        $this->assertTrue($posAggregates < $posCementitious);
+
+        // Verify items appear under their respective group sections
+        $posGravel = strpos($content, 'Crushed Gravel G1');
+        $posPortland = strpos($content, 'Portland Cement Type 1');
+        $posPozzolan = strpos($content, 'Pozzolan Cement');
+
+        $this->assertTrue($posAggregates < $posGravel);
+        $this->assertTrue($posGravel < $posCementitious);
+        $this->assertTrue($posCementitious < $posPortland);
+        $this->assertTrue($posCementitious < $posPozzolan);
+    }
+
+    /** @test */
+    public function it_handles_ungrouped_material_items_in_print_view()
+    {
+        $ungroupedItem = new MaterialItem();
+        $ungroupedItem->material_group_id = 0;
+        $ungroupedItem->name = 'Loose Rebar Tie Wire';
+        $ungroupedItem->specification_unit_packaging = 'kg';
+        $ungroupedItem->brand = 'Generic';
+        $ungroupedItem->created_by = $this->user->id;
+        $ungroupedItem->save();
+
+        $response = $this->actingAs($this->user)->get('/master_data/material/items/print');
+        $response->assertStatus(200);
+
+        $content = $response->getContent();
+        $this->assertStringContainsString('Group: Ungrouped', $content);
+        $this->assertStringContainsString('Loose Rebar Tie Wire', $content);
+
+        // Ungrouped section should be at the end
+        $posCementitious = strpos($content, 'Group: Cementitious Materials');
+        $posUngrouped = strpos($content, 'Group: Ungrouped');
+        $this->assertTrue($posCementitious < $posUngrouped);
+    }
+
+    /** @test */
+    public function it_can_filter_by_material_group_in_print_view()
+    {
+        $response = $this->actingAs($this->user)->get('/master_data/material/items/print?material_group_id=' . $this->group1->id);
+        $response->assertStatus(200);
+
+        $content = $response->getContent();
+        $this->assertStringContainsString('Group: Cementitious Materials', $content);
+        $this->assertStringContainsString('Material Group: Cementitious Materials', $content);
+        $this->assertStringContainsString('Portland Cement Type 1', $content);
+        $this->assertStringContainsString('Pozzolan Cement', $content);
+        $this->assertStringNotContainsString('Group: Aggregates', $content);
+        $this->assertStringNotContainsString('Crushed Gravel G1', $content);
+        $this->assertStringContainsString('Total Groups: 1', $content);
+        $this->assertStringContainsString('Total Items: 2', $content);
+    }
+
+    /** @test */
+    public function it_renders_empty_state_when_no_material_items_found()
+    {
+        $response = $this->actingAs($this->user)->get('/master_data/material/items/print?query=NonExistentQuery');
+        $response->assertStatus(200);
+
+        $content = $response->getContent();
+        $this->assertStringContainsString('No material items found.', $content);
+        $this->assertStringContainsString('Total Items: 0', $content);
+        $this->assertStringContainsString('Total Groups: 0', $content);
     }
 }
