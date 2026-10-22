@@ -271,3 +271,6 @@ Route::middleware(['third_party_api'])->group(function () {
     Route::get('/call/suppliers', [App\Http\Controllers\Api\SupplierAPIController::class, 'list']);
     Route::get('/call/accomplishments', [App\Http\Controllers\Api\AccomplishmentAPIController::class, 'list']);
 });
+
+\Laravel\Mcp\Server\Facades\Mcp::web('/mcp', \App\Mcp\Servers\MqmsServer::class);
+

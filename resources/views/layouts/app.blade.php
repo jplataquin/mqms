@@ -156,17 +156,20 @@
                                 <li class="nav-sub-item">
                                     <a href="/material_quantity_requests" hx-select="#content" hx-target="#main">Material Request</a>
                                 </li>
+                            
+                                <li class="nav-sub-item">
+                                    <a href="/material_canvass" hx-select="#content" hx-target="#main">Material Canvass</a>
+                                </li>
+                             
+                                <li class="nav-sub-item">
+                                    <a href="/purchase_orders" hx-select="#content" hx-target="#main">Purchase Order</a>
+                                </li>
+
                                 <li class="nav-sub-item">
                                     <a href="/direct_material_quantity_requests" hx-select="#content" hx-target="#main">Direct Material Request</a>
                                 </li>
                                 <li class="nav-sub-item">
-                                    <a href="/material_canvass" hx-select="#content" hx-target="#main">Material Canvass</a>
-                                </li>
-                                <li class="nav-sub-item">
                                     <a href="/direct_material_canvass" hx-select="#content" hx-target="#main">Direct Material Canvass</a>
-                                </li>
-                                <li class="nav-sub-item">
-                                    <a href="/purchase_orders" hx-select="#content" hx-target="#main">Purchase Order</a>
                                 </li>
                                 <li class="nav-sub-item">
                                     <a href="/direct_purchase_orders" hx-select="#content" hx-target="#main">Direct Purchase Order</a>
@@ -216,17 +219,20 @@
                                 <li class="nav-sub-item">
                                     <a href="/review/material_quantity_requests" hx-select="#content" hx-target="#main">Material Request</a>
                                 </li>
-                                <li class="nav-sub-item">
-                                    <a href="/review/direct_material_quantity_requests" hx-select="#content" hx-target="#main">Direct Material Request</a>
-                                </li>
+                             
                                 <li class="nav-sub-item">
                                     <a href="/review/material_canvass" hx-select="#content" hx-target="#main">Material Canvass</a>
                                 </li>
-                                <li class="nav-sub-item">
-                                    <a href="/review/direct_material_canvass" hx-select="#content" hx-target="#main">Direct Material Canvass</a>
-                                </li>
+                              
                                 <li class="nav-sub-item">
                                     <a href="/review/purchase_orders" hx-select="#content" hx-target="#main">Purchase Orders</a>
+                                </li>
+
+                                <li class="nav-sub-item">
+                                    <a href="/review/direct_material_quantity_requests" hx-select="#content" hx-target="#main">Direct Material Request</a>
+                                </li>
+                                  <li class="nav-sub-item">
+                                    <a href="/review/direct_material_canvass" hx-select="#content" hx-target="#main">Direct Material Canvass</a>
                                 </li>
                                 <li class="nav-sub-item">
                                     <a href="/review/direct_purchase_orders" hx-select="#content" hx-target="#main">Direct Purchase Orders</a>

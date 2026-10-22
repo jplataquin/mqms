@@ -321,3 +321,5 @@ Route::get('/pop', function(){
 
     return view('usb');
 });
+
+\Laravel\Mcp\Server\Facades\Mcp::web('/mcp', \App\Mcp\Servers\MqmsServer::class);
