@@ -272,5 +272,7 @@ Route::middleware(['third_party_api'])->group(function () {
     Route::get('/call/accomplishments', [App\Http\Controllers\Api\AccomplishmentAPIController::class, 'list']);
 });
 
-\Laravel\Mcp\Server\Facades\Mcp::web('/mcp', \App\Mcp\Servers\MqmsServer::class);
+if (class_exists(\Laravel\Mcp\Server\Facades\Mcp::class)) {
+    \Laravel\Mcp\Server\Facades\Mcp::web('/mcp', \App\Mcp\Servers\MqmsServer::class);
+}
 
