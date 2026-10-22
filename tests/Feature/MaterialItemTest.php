@@ -416,11 +416,31 @@ class MaterialItemTest extends TestCase
     /** @test */
     public function it_paginates_material_items_maintenance_view()
     {
+        // Create 60 items to exceed the 50 per page limit
+        for ($i = 4; $i <= 65; $i++) {
+            $item = new MaterialItem();
+            $item->material_group_id = $this->group1->id;
+            $item->name = 'Bulk Cement Item ' . str_pad($i, 3, '0', STR_PAD_LEFT);
+            $item->specification_unit_packaging = '40kg bag';
+            $item->brand = 'Test Brand';
+            $item->created_by = $this->user->id;
+            $item->save();
+        }
+
         $response = $this->actingAs($this->user)->get('/master_data/material/items/maintenance');
         $response->assertStatus(200);
 
         $paginator = $response->viewData('paginator');
         $this->assertNotNull($paginator);
         $this->assertInstanceOf(\Illuminate\Pagination\LengthAwarePaginator::class, $paginator);
+        $this->assertTrue($paginator->hasPages());
+
+        $content = $response->getContent();
+        // Assert Bootstrap 5 pagination is used
+        $this->assertStringContainsString('pagination', $content);
+        $this->assertStringContainsString('page-item', $content);
+        $this->assertStringContainsString('page-link', $content);
+        // Assert Tailwind SVG w-5 h-5 is NOT present
+        $this->assertStringNotContainsString('w-5 h-5', $content);
     }
 }

@@ -133,16 +133,26 @@
     @endif
 
     @if(isset($paginator) && $paginator->hasPages())
-        <div class="d-flex justify-content-between align-items-center mt-3 mb-4">
-            <div class="text-muted small">
-                Showing {{ $paginator->firstItem() }} to {{ $paginator->lastItem() }} of {{ $paginator->total() }} items
-            </div>
-            <div>
-                {{ $paginator->links() }}
+        <div class="card mb-4 border-0 shadow-sm">
+            <div class="card-body py-2 px-3">
+                {{ $paginator->links('pagination::bootstrap-5') }}
             </div>
         </div>
     @endif
 </div>
+
+<style>
+    .pagination {
+        margin-bottom: 0 !important;
+    }
+    .pagination .page-item .page-link {
+        font-size: 0.875rem;
+        padding: 0.375rem 0.75rem;
+    }
+    .pagination .page-item.active .page-link {
+        font-weight: bold;
+    }
+</style>
 
 <script type="module">
     document.addEventListener('DOMContentLoaded', () => {
