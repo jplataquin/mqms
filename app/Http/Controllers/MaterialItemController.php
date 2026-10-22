@@ -116,21 +116,46 @@ class MaterialItemController extends Controller
             });
         }
 
-        $materialGroup = null;
+        $selectedGroup = null;
         if($material_group_id){
+            $selectedGroup = MaterialGroup::find($material_group_id);
             $materialItem = $materialItem->where('material_group_id', $material_group_id);
-            $materialGroup = MaterialGroup::find($material_group_id);
         }
+        $materialGroup = $selectedGroup;
 
         $materialItems = $materialItem->orderBy($orderBy, $order)->get();
 
+        $grouped = [];
+        foreach ($materialItems as $item) {
+            $group = $item->Group;
+            $groupKey = $group ? 'group_' . $group->id : 'ungrouped';
+            $groupName = $group ? $group->name : 'Ungrouped';
+
+            if (!isset($grouped[$groupKey])) {
+                $grouped[$groupKey] = [
+                    'group_id'   => $group ? $group->id : null,
+                    'group_name' => $groupName,
+                    'items'      => [],
+                ];
+            }
+            $grouped[$groupKey]['items'][] = $item;
+        }
+
+        uasort($grouped, function($a, $b) {
+            if ($a['group_name'] === 'Ungrouped') return 1;
+            if ($b['group_name'] === 'Ungrouped') return -1;
+            return strcasecmp($a['group_name'], $b['group_name']);
+        });
+
         return view('material_item/print', [
-            'materialItems'    => $materialItems,
-            'materialGroup'    => $materialGroup,
-            'query'            => $query,
-            'order'            => $order,
-            'orderBy'          => $orderBy,
-            'current_datetime' => date('Y-m-d H:i:s'),
+            'materialItems'        => $materialItems,
+            'groupedMaterialItems' => $grouped,
+            'materialGroup'        => $materialGroup,
+            'selectedGroup'        => $selectedGroup,
+            'query'                => $query,
+            'order'                => $order,
+            'orderBy'              => $orderBy,
+            'current_datetime'     => date('Y-m-d H:i:s'),
         ]);
     }
 
