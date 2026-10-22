@@ -6,7 +6,7 @@
     <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
-                <a href="/master_data/material_items">
+                <a href="/master_data/material/items">
                     <span>
                        Material Items
                     </span>
@@ -77,6 +77,7 @@
     const showMoreBtn     = $q('#showMoreBtn').first();
     const sortSelect      = $q('#sortSelect').first();
     const createBtn       = $q('#createBtn').first();
+    const printBtn        = $q('#printBtn').first();
     
     let page            = 1;
     let order           = 'DESC';
@@ -179,6 +180,21 @@
     createBtn.onclick = ()=>{
          window.util.navTo('/master_data/material/item/create') ;
     }
+
+    printBtn.onclick = ()=>{
+        let params = new URLSearchParams();
+        if (query.value.trim()) {
+            params.append('query', query.value.trim());
+        }
+        if (order) {
+            params.append('order', order);
+        }
+        if (orderBy) {
+            params.append('order_by', orderBy);
+        }
+
+        window.open('/master_data/material/items/print?' + params.toString(), '_blank');
+    };
 
     reinitalize();
     showData();

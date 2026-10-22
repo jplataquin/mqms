@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\MaterialGroup;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,9 +18,9 @@ class MaterialItem extends Model
         'formatted_name'
     ];
 
-    public function Group(): HasOne
+    public function Group(): BelongsTo
     {
-        return $this->hasOne(MaterialGroup::class);
+        return $this->belongsTo(MaterialGroup::class, 'material_group_id')->withTrashed();
     }
 
 

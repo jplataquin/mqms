@@ -86,6 +86,45 @@ class MaterialItemController extends Controller
         return view('material_item/list');
     }
 
+    public function print(Request $request){
+
+        $orderBy           = $request->input('order_by')       ?? 'id';
+        $order             = $request->input('order')          ?? 'DESC';
+        $query             = $request->input('query')          ?? '';
+        $material_group_id = $request->input('material_group_id');
+
+        if(!in_array(strtolower($order), ['asc', 'desc'])){
+            $order = 'DESC';
+        }
+        if(!in_array(strtolower($orderBy), ['id', 'name', 'brand', 'created_at'])){
+            $orderBy = 'id';
+        }
+
+        $materialItem = MaterialItem::with('Group');
+
+        if($query != ''){
+            $materialItem = $materialItem->where(function($q) use ($query){
+                $q->where('name','LIKE','%'.$query.'%')
+                  ->orWhere('brand','LIKE','%'.$query.'%')
+                  ->orWhere('specification_unit_packaging','LIKE','%'.$query.'%');
+            });
+        }
+
+        if($material_group_id){
+            $materialItem = $materialItem->where('material_group_id', $material_group_id);
+        }
+
+        $materialItems = $materialItem->orderBy($orderBy, $order)->get();
+
+        return view('material_item/print', [
+            'materialItems'    => $materialItems,
+            'query'            => $query,
+            'order'            => $order,
+            'orderBy'          => $orderBy,
+            'current_datetime' => date('Y-m-d H:i:s'),
+        ]);
+    }
+
     public function _create(Request $request){
 
         if(!$this->hasAccess('material_item:own:create')){
