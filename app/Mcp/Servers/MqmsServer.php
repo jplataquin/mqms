@@ -20,6 +20,10 @@ class MqmsServer extends Server
 
     public string $instructions = 'Provides HTTP MCP access to MQMS models (excluding roles, access codes, credentials, and user passwords). Allows reading records as resources and querying via get_record, list_records, and search_records tools.';
 
+    public int $defaultPaginationLength = 50;
+
+    public int $maxPaginationLength = 100;
+
     public array $tools = [
         GetRecordTool::class,
         ListRecordsTool::class,
