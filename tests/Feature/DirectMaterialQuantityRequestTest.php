@@ -74,20 +74,23 @@ class DirectMaterialQuantityRequestTest extends TestCase
             $accessCode->save();
         }
 
-        $role = new Role();
-        $role->name = 'Role ' . $codeString;
-        $role->description = 'Test role';
-        $role->save();
+        $role = Role::where('name', 'Role ' . $codeString)->first();
+        if (!$role) {
+            $role = new Role();
+            $role->name = 'Role ' . $codeString;
+            $role->description = 'Test role';
+            $role->save();
+
+            $roleAccessCode = new RoleAccessCode();
+            $roleAccessCode->role_id = $role->id;
+            $roleAccessCode->access_code_id = $accessCode->id;
+            $roleAccessCode->save();
+        }
 
         $userRole = new UserRole();
         $userRole->user_id = $user->id;
         $userRole->role_id = $role->id;
         $userRole->save();
-
-        $roleAccessCode = new RoleAccessCode();
-        $roleAccessCode->role_id = $role->id;
-        $roleAccessCode->access_code_id = $accessCode->id;
-        $roleAccessCode->save();
     }
 
     protected function createProject($name = 'Test Project')
@@ -857,5 +860,67 @@ class DirectMaterialQuantityRequestTest extends TestCase
 
         $canvass->refresh();
         $this->assertEquals('APRV', $canvass->status);
+    }
+
+    /** @test */
+    public function it_allows_non_reviewer_user_to_void_approved_direct_material_canvass()
+    {
+        $project = $this->createProject('Non Reviewer Void Project');
+        $material = $this->createMaterialItem('Non Reviewer Void Material');
+        $supplier = $this->createSupplier('Non Reviewer Void Supplier');
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Cash';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $item = new DirectMaterialQuantityRequestItem();
+        $item->direct_material_quantity_request_id = $dmqr->id;
+        $item->material_item_id = $material->id;
+        $item->quantity = 10;
+        $item->status = 'APRV';
+        $item->save();
+
+        $canvass = new DirectMaterialCanvass();
+        $canvass->direct_material_quantity_request_id = $dmqr->id;
+        $canvass->direct_material_quantity_request_item_id = $item->id;
+        $canvass->supplier_id = $supplier->id;
+        $canvass->payment_term_id = $paymentTerm->id;
+        $canvass->price = 150.00;
+        $canvass->status = 'APRV';
+        $canvass->created_by = $this->user->id;
+        $canvass->approved_by = $this->user->id;
+        $canvass->approved_at = now();
+        $canvass->save();
+
+        // Create a non-reviewer user who only has create/list access, NOT reviewer (approve) access
+        $nonReviewer = User::factory()->create(['status' => 'ACTV']);
+        $this->grantAccessCode($nonReviewer, 'material_canvass:own:create');
+        $this->grantAccessCode($nonReviewer, 'material_canvass:all:list');
+
+        // Check display page shows void button for the non-reviewer
+        $displayRes = $this->actingAs($nonReviewer)->get('/direct_material_canvass/' . $dmqr->id);
+        $displayRes->assertStatus(200);
+        $displayRes->assertSee('void-canvass-btn', false);
+
+        // Non-reviewer voids the approved canvass
+        $voidRes = $this->actingAs($nonReviewer)->postJson('/api/direct_material_canvass/void', [
+            'id' => $canvass->id
+        ]);
+        $voidRes->assertStatus(200);
+        $voidRes->assertJson([
+            'status' => 1,
+            'message' => 'Canvass voided successfully.'
+        ]);
+
+        $canvass->refresh();
+        $this->assertEquals('VOID', $canvass->status);
+        $this->assertEquals($nonReviewer->id, $canvass->void_by);
+        $this->assertNotNull($canvass->void_at);
     }
 }

@@ -65,12 +65,12 @@
 
         <!-- Material Items Table -->
         <div class="card mb-4 shadow-sm">
-            <div class="card-header bg-light">
+            <div class="card-header">
                 <h6 class="mb-0">Ordered Items</h6>
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered mb-0 align-middle">
-                    <thead class="table-light">
+                    <thead>
                         <tr>
                             <th style="min-width: 250px;">Material Item</th>
                             <th class="text-center" style="width: 140px;">Packaging</th>
@@ -105,7 +105,7 @@
         @if(count($extras) > 0)
         <!-- Additional Costs / Extras -->
         <div class="card mb-4 shadow-sm">
-            <div class="card-header bg-light">
+            <div class="card-header">
                 <h6 class="mb-0">Additional Charges / Discounts</h6>
             </div>
             <div class="card-body">
@@ -131,7 +131,6 @@
         <!-- Action Controls -->
         <div class="text-end mb-5">
             <a href="/review/direct_purchase_orders" class="btn btn-secondary me-2">Back to Review List</a>
-            <a href="/direct_purchase_order/{{$direct_purchase_order->id}}" class="btn btn-outline-info me-2">View Original DPO</a>
 
             @if($direct_purchase_order->status == 'APRV')
                 <a href="/direct_purchase_order/print/{{$direct_purchase_order->id}}" target="_blank" class="btn btn-info me-2 text-white">

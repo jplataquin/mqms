@@ -96,7 +96,16 @@ class DirectMaterialCanvassReviewController extends Controller
 
         $canApprove = $this->hasAccess(['material_canvass:all:approve', 'direct_material_canvass:all:approve']);
         $canReject  = $this->hasAccess(['material_canvass:all:reject', 'direct_material_canvass:all:reject']);
-        $canVoid    = $this->hasAccess(['material_canvass:all:void', 'direct_material_canvass:all:void', 'material_canvass:all:approve', 'direct_material_canvass:all:approve', 'material_canvass:own:void', 'direct_material_canvass:own:void']);
+        $canVoid    = $this->hasAccess([
+            'material_canvass:all:void', 'direct_material_canvass:all:void',
+            'material_canvass:all:approve', 'direct_material_canvass:all:approve',
+            'material_canvass:own:void', 'direct_material_canvass:own:void',
+            'material_canvass:own:create', 'direct_material_canvass:own:create',
+            'material_canvass:all:create', 'direct_material_canvass:all:create',
+            'material_canvass:all:list', 'direct_material_canvass:all:list',
+            'material_canvass:own:list', 'direct_material_canvass:own:list',
+            'material_canvass:all:view', 'direct_material_canvass:all:view',
+        ]) || $dmqr->created_by == auth()->user()->id;
 
         return view('review/direct_material_canvass/display', [
             'request'    => $dmqr,
@@ -194,9 +203,6 @@ class DirectMaterialCanvassReviewController extends Controller
 
     public function _void(Request $request)
     {
-        $canVoidAll = $this->hasAccess(['material_canvass:all:void', 'direct_material_canvass:all:void', 'material_canvass:all:approve', 'direct_material_canvass:all:approve']);
-        $canVoidOwn = $this->hasAccess(['material_canvass:own:void', 'direct_material_canvass:own:void']);
-
         $id = (int) $request->input('id');
         $canvass = DirectMaterialCanvass::find($id);
 
@@ -209,15 +215,23 @@ class DirectMaterialCanvassReviewController extends Controller
         }
 
         $user = auth()->user();
+        $canVoid = $this->hasAccess([
+            'material_canvass:all:void', 'direct_material_canvass:all:void',
+            'material_canvass:all:approve', 'direct_material_canvass:all:approve',
+            'material_canvass:own:void', 'direct_material_canvass:own:void',
+            'material_canvass:own:create', 'direct_material_canvass:own:create',
+            'material_canvass:all:create', 'direct_material_canvass:all:create',
+            'material_canvass:all:list', 'direct_material_canvass:all:list',
+            'material_canvass:own:list', 'direct_material_canvass:own:list',
+            'material_canvass:all:view', 'direct_material_canvass:all:view',
+        ]) || $canvass->created_by == $user->id || ($canvass->Request && $canvass->Request->created_by == $user->id);
 
-        if (!$canVoidAll) {
-            if (!$canVoidOwn || $canvass->created_by != $user->id) {
-                return response()->json([
-                    'status'  => 0,
-                    'message' => 'Access Denied',
-                    'data'    => []
-                ]);
-            }
+        if (!$canVoid) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Access Denied',
+                'data'    => []
+            ]);
         }
 
         if ($canvass->status != 'APRV') {

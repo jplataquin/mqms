@@ -401,47 +401,107 @@ class DirectPurchaseOrderController extends Controller
     public function _submit_for_review(Request $request)
     {
         $id = (int) $request->input('id');
-        $dpo = DirectPurchaseOrder::find($id);
 
-        if (!$dpo) {
-            return response()->json([
-                'status'  => 0,
-                'message' => 'Record not found',
-                'data'    => []
-            ]);
-        }
+        DB::beginTransaction();
 
-        $user = auth()->user();
-        $canUpdateAll = $this->hasAccess(['purchase_order:all:update', 'direct_purchase_order:all:update']);
-        $canUpdateOwn = $this->hasAccess(['purchase_order:own:update', 'direct_purchase_order:own:update']);
+        try {
+            $dpo = DirectPurchaseOrder::lockForUpdate()->find($id);
 
-        if (!$canUpdateAll) {
-            if (!$canUpdateOwn || $dpo->created_by != $user->id) {
+            if (!$dpo) {
+                DB::rollback();
                 return response()->json([
                     'status'  => 0,
-                    'message' => 'Access Denied',
+                    'message' => 'Record not found',
                     'data'    => []
                 ]);
             }
-        }
 
-        if ($dpo->status != 'DRFT') {
+            $user = auth()->user();
+            $canUpdateAll = $this->hasAccess(['purchase_order:all:update', 'direct_purchase_order:all:update']);
+            $canUpdateOwn = $this->hasAccess(['purchase_order:own:update', 'direct_purchase_order:own:update']);
+
+            if (!$canUpdateAll) {
+                if (!$canUpdateOwn || $dpo->created_by != $user->id) {
+                    DB::rollback();
+                    return response()->json([
+                        'status'  => 0,
+                        'message' => 'Access Denied',
+                        'data'    => []
+                    ]);
+                }
+            }
+
+            if ($dpo->status != 'DRFT') {
+                DB::rollback();
+                return response()->json([
+                    'status'  => 0,
+                    'message' => 'Record is not in status: DRFT',
+                    'data'    => []
+                ]);
+            }
+
+            if ($dpo->direct_material_quantity_request_id) {
+                $dpoItems = DirectPurchaseOrderItem::where('direct_purchase_order_id', $dpo->id)->get();
+                $groupedDpoItems = [];
+                foreach ($dpoItems as $item) {
+                    if ($item->direct_material_quantity_request_item_id) {
+                        if (!isset($groupedDpoItems[$item->direct_material_quantity_request_item_id])) {
+                            $groupedDpoItems[$item->direct_material_quantity_request_item_id] = 0;
+                        }
+                        $groupedDpoItems[$item->direct_material_quantity_request_item_id] += (float) $item->quantity;
+                    }
+                }
+
+                if (!empty($groupedDpoItems)) {
+                    $dmqrItemIds = array_keys($groupedDpoItems);
+                    $dmqrItems = DirectMaterialQuantityRequestItem::whereIn('id', $dmqrItemIds)
+                        ->lockForUpdate()
+                        ->get()
+                        ->keyBy('id');
+
+                    foreach ($groupedDpoItems as $dmqr_item_id => $dpoItemQuantity) {
+                        if (isset($dmqrItems[$dmqr_item_id])) {
+                            $dmqrItem = $dmqrItems[$dmqr_item_id];
+
+                            $ordered = DirectPurchaseOrderItem::where('direct_material_quantity_request_item_id', $dmqr_item_id)
+                                ->whereHas('DirectPurchaseOrder', function ($q) {
+                                    $q->whereNotIn('status', ['VOID', 'DRFT']);
+                                })
+                                ->sum('quantity');
+
+                            if (((float) $ordered + $dpoItemQuantity) > (float) $dmqrItem->quantity + 0.0001) {
+                                DB::rollback();
+                                return response()->json([
+                                    'status'  => -2,
+                                    'message' => "Order quantity exceeds remaining balance for requested item #{$dmqr_item_id}. Please review quantities.",
+                                    'data'    => []
+                                ]);
+                            }
+                        }
+                    }
+                }
+            }
+
+            $dpo->status     = 'PEND';
+            $dpo->updated_by = $user->id;
+            $dpo->save();
+
+            DB::commit();
+
+            return response()->json([
+                'status'  => 1,
+                'message' => '',
+                'data'    => []
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+
             return response()->json([
                 'status'  => 0,
-                'message' => 'Record is not in status: DRFT',
+                'message' => 'An error occurred: ' . $e->getMessage(),
                 'data'    => []
             ]);
         }
-
-        $dpo->status     = 'PEND';
-        $dpo->updated_by = $user->id;
-        $dpo->save();
-
-        return response()->json([
-            'status'  => 1,
-            'message' => '',
-            'data'    => []
-        ]);
     }
 
     public function _delete(Request $request)

@@ -5,7 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\DirectPurchaseOrder;
+use App\Models\DirectPurchaseOrderReceivedItem;
 use App\Models\MaterialItem;
 
 class DirectPurchaseOrderItem extends Model
@@ -25,6 +27,21 @@ class DirectPurchaseOrderItem extends Model
         'price',
         'remarks',
     ];
+
+    public function ReceivedItems(): HasMany
+    {
+        return $this->hasMany(DirectPurchaseOrderReceivedItem::class, 'direct_purchase_order_item_id');
+    }
+
+    public function getReceivedQuantityAttribute()
+    {
+        return (float) $this->ReceivedItems()->sum('quantity_received');
+    }
+
+    public function getRemainingQuantityAttribute()
+    {
+        return max(0, (float) $this->quantity - $this->received_quantity);
+    }
 
     public function DirectPurchaseOrder(): BelongsTo
     {

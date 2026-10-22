@@ -187,6 +187,9 @@ class DirectPurchaseOrderReviewTest extends TestCase
         $response->assertSee('Portland Cement');
         $response->assertSee('Special packaging requested');
         $response->assertSee('Remarks');
+        $response->assertDontSee('View Original DPO');
+        $response->assertDontSee('bg-light');
+        $response->assertDontSee('bg-white');
     }
 
     /** @test */

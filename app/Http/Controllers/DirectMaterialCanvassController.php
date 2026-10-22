@@ -100,7 +100,16 @@ class DirectMaterialCanvassController extends Controller
 
         $suppliers     = Supplier::orderBy('name', 'ASC')->whereNull('deleted_at')->get();
         $payment_terms = PaymentTerm::orderBy('text', 'ASC')->get();
-        $canVoid       = $this->hasAccess(['material_canvass:all:void', 'direct_material_canvass:all:void', 'material_canvass:all:approve', 'direct_material_canvass:all:approve', 'material_canvass:own:void', 'direct_material_canvass:own:void']);
+        $canVoid       = $this->hasAccess([
+            'material_canvass:all:void', 'direct_material_canvass:all:void',
+            'material_canvass:all:approve', 'direct_material_canvass:all:approve',
+            'material_canvass:own:void', 'direct_material_canvass:own:void',
+            'material_canvass:own:create', 'direct_material_canvass:own:create',
+            'material_canvass:all:create', 'direct_material_canvass:all:create',
+            'material_canvass:all:list', 'direct_material_canvass:all:list',
+            'material_canvass:own:list', 'direct_material_canvass:own:list',
+            'material_canvass:all:view', 'direct_material_canvass:all:view',
+        ]) || $dmqr->created_by == auth()->user()->id;
 
         return view('direct_material_canvass/display', [
             'request'       => $dmqr,
@@ -241,17 +250,23 @@ class DirectMaterialCanvassController extends Controller
         }
 
         $user = auth()->user();
-        $canVoidAll = $this->hasAccess(['material_canvass:all:void', 'direct_material_canvass:all:void', 'material_canvass:all:approve', 'direct_material_canvass:all:approve']);
-        $canVoidOwn = $this->hasAccess(['material_canvass:own:void', 'direct_material_canvass:own:void']);
+        $canVoid = $this->hasAccess([
+            'material_canvass:all:void', 'direct_material_canvass:all:void',
+            'material_canvass:all:approve', 'direct_material_canvass:all:approve',
+            'material_canvass:own:void', 'direct_material_canvass:own:void',
+            'material_canvass:own:create', 'direct_material_canvass:own:create',
+            'material_canvass:all:create', 'direct_material_canvass:all:create',
+            'material_canvass:all:list', 'direct_material_canvass:all:list',
+            'material_canvass:own:list', 'direct_material_canvass:own:list',
+            'material_canvass:all:view', 'direct_material_canvass:all:view',
+        ]) || $canvass->created_by == $user->id || ($canvass->Request && $canvass->Request->created_by == $user->id);
 
-        if (!$canVoidAll) {
-            if (!$canVoidOwn || $canvass->created_by != $user->id) {
-                return response()->json([
-                    'status'  => 0,
-                    'message' => 'Access Denied',
-                    'data'    => []
-                ]);
-            }
+        if (!$canVoid) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Access Denied',
+                'data'    => []
+            ]);
         }
 
         if ($canvass->status != 'APRV') {

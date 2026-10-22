@@ -133,7 +133,7 @@
                                             </button>
                                         @endif
                                     @elseif($canvass->status == 'APRV')
-                                        @if($canVoid)
+                                        @if($canVoid || $canvass->created_by == auth()->user()->id)
                                             <button type="button" class="btn btn-sm btn-outline-danger void-btn" data-id="{{ $canvass->id }}" title="Void">
                                                 Void
                                             </button>

@@ -197,6 +197,8 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::post('/direct_purchase_order/request_void', [App\Http\Controllers\DirectPurchaseOrderController::class, '_request_void']);
     Route::post('/direct_purchase_order/void', [App\Http\Controllers\DirectPurchaseOrderController::class, '_void']);
     Route::post('/direct_purchase_order/reject_void', [App\Http\Controllers\Review\DirectPurchaseOrderReviewController::class, '_reject_void']);
+    Route::get('/direct_purchase_order/received/list', [App\Http\Controllers\DirectPurchaseOrderReceivedController::class, '_list']);
+    Route::post('/direct_purchase_order/received/create', [App\Http\Controllers\DirectPurchaseOrderReceivedController::class, '_create']);
 
     // Direct Material Quantity Request
     Route::get('/direct_material_quantity_request/list', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_list']);

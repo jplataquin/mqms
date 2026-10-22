@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\DirectPurchaseOrderItem;
+use App\Models\DirectPurchaseOrderReceived;
+use App\Models\DirectPurchaseOrderReceivedItem;
 use App\Models\PaymentTerm;
 use App\Models\Supplier;
 use App\Models\Project;
@@ -29,6 +31,7 @@ class DirectPurchaseOrder extends Model
         'section_id',
         'direct_material_quantity_request_id',
         'status',
+        'received_status',
         'extras',
         'created_by',
         'updated_by',
@@ -39,6 +42,11 @@ class DirectPurchaseOrder extends Model
         'rejected_at',
         'void_at',
     ];
+
+    public function Received(): HasMany
+    {
+        return $this->hasMany(DirectPurchaseOrderReceived::class, 'direct_purchase_order_id');
+    }
 
     public function Items(): HasMany
     {
@@ -122,5 +130,25 @@ class DirectPurchaseOrder extends Model
         }
 
         return $grand_total;
+    }
+
+    public function updateReceivedStatus()
+    {
+        $totalOrdered = $this->Items()->sum('quantity');
+        
+        $itemIds = $this->Items()->pluck('id');
+        $totalReceived = DirectPurchaseOrderReceivedItem::whereIn('direct_purchase_order_item_id', $itemIds)
+            ->sum('quantity_received');
+
+        if ($totalReceived <= 0) {
+            $this->received_status = 'PEND';
+        } elseif ($totalReceived >= $totalOrdered) {
+            $this->received_status = 'COMP';
+        } else {
+            $this->received_status = 'PART';
+        }
+
+        $this->save();
+        return $this->received_status;
     }
 }

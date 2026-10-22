@@ -42,9 +42,7 @@
     </div>
 
     @php
-        $copies = ($direct_purchase_order->status == 'DRFT') 
-            ? ['Purchaser'] 
-            : ['Supplier', 'Accounting', 'Purchaser'];
+        $copies = ['Supplier', 'Accounting', 'Purchaser'];
     @endphp
 
     @foreach($copies as $copy)
@@ -192,8 +190,6 @@
     </div>
     <hr style="border: 1px dashed #ccc; margin: 20px 0;">
     @endforeach
-
-    @if($direct_purchase_order->status != 'DRFT')
 
     <!-- Site Copy -->
     <div class="whole mb-10" style="margin-bottom: 30px;">
@@ -382,7 +378,6 @@
     </div>
     <hr style="border: 1px dashed #ccc; margin: 20px 0;">
     <!-- Warehouse Copy -->
-    @endif
 
 </body>
 </html>
