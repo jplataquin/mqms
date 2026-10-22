@@ -211,16 +211,23 @@ class MaterialItemTest extends TestCase
         $content = $response->getContent();
 
         // Check group headers with item counts
-        $this->assertStringContainsString('Group: Aggregates', $content);
+        $this->assertStringContainsString('Aggregates', $content);
         $this->assertStringContainsString('(1 item)', $content);
-        $this->assertStringContainsString('Group: Cementitious Materials', $content);
+        $this->assertStringContainsString('Cementitious Materials', $content);
         $this->assertStringContainsString('(2 items)', $content);
         $this->assertStringContainsString('Total Groups: 2', $content);
         $this->assertStringContainsString('Total Items: 3', $content);
 
+        // Verify group header container and dedicated tables
+        $this->assertStringContainsString('class="group-header"', $content);
+        $this->assertStringContainsString('class="group-table"', $content);
+
+        // Verify Material Group column is removed from table headers
+        $this->assertStringNotContainsString('Material Group</th>', $content);
+
         // Verify group order: Aggregates precedes Cementitious Materials
-        $posAggregates = strpos($content, 'Group: Aggregates');
-        $posCementitious = strpos($content, 'Group: Cementitious Materials');
+        $posAggregates = strpos($content, 'Aggregates');
+        $posCementitious = strpos($content, 'Cementitious Materials');
         $this->assertTrue($posAggregates < $posCementitious);
 
         // Verify items appear under their respective group sections
@@ -232,6 +239,46 @@ class MaterialItemTest extends TestCase
         $this->assertTrue($posGravel < $posCementitious);
         $this->assertTrue($posCementitious < $posPortland);
         $this->assertTrue($posCementitious < $posPozzolan);
+    }
+
+    /** @test */
+    public function it_renders_items_in_alphabetical_order_under_each_material_group_header()
+    {
+        // Add more items with out-of-order names to group 1
+        $itemZ = new MaterialItem();
+        $itemZ->material_group_id = $this->group1->id;
+        $itemZ->name = 'White Portland Cement';
+        $itemZ->specification_unit_packaging = '40kg bag';
+        $itemZ->brand = 'Federal';
+        $itemZ->created_by = $this->user->id;
+        $itemZ->save();
+
+        $itemA = new MaterialItem();
+        $itemA->material_group_id = $this->group1->id;
+        $itemA->name = 'Aluminous Cement';
+        $itemA->specification_unit_packaging = '40kg bag';
+        $itemA->brand = 'Kerneos';
+        $itemA->created_by = $this->user->id;
+        $itemA->save();
+
+        $response = $this->actingAs($this->user)->get('/master_data/material/items/print');
+        $response->assertStatus(200);
+
+        $content = $response->getContent();
+
+        // Under Cementitious Materials, items must appear in alphabetical order:
+        // 1. Aluminous Cement
+        // 2. Portland Cement Type 1
+        // 3. Pozzolan Cement
+        // 4. White Portland Cement
+        $posAluminous = strpos($content, 'Aluminous Cement');
+        $posPortland = strpos($content, 'Portland Cement Type 1');
+        $posPozzolan = strpos($content, 'Pozzolan Cement');
+        $posWhite = strpos($content, 'White Portland Cement');
+
+        $this->assertTrue($posAluminous < $posPortland, 'Aluminous should precede Portland');
+        $this->assertTrue($posPortland < $posPozzolan, 'Portland should precede Pozzolan');
+        $this->assertTrue($posPozzolan < $posWhite, 'Pozzolan should precede White Portland');
     }
 
     /** @test */
@@ -249,12 +296,12 @@ class MaterialItemTest extends TestCase
         $response->assertStatus(200);
 
         $content = $response->getContent();
-        $this->assertStringContainsString('Group: Ungrouped', $content);
+        $this->assertStringContainsString('Ungrouped', $content);
         $this->assertStringContainsString('Loose Rebar Tie Wire', $content);
 
         // Ungrouped section should be at the end
-        $posCementitious = strpos($content, 'Group: Cementitious Materials');
-        $posUngrouped = strpos($content, 'Group: Ungrouped');
+        $posCementitious = strpos($content, 'Cementitious Materials');
+        $posUngrouped = strpos($content, 'Ungrouped');
         $this->assertTrue($posCementitious < $posUngrouped);
     }
 
@@ -265,11 +312,11 @@ class MaterialItemTest extends TestCase
         $response->assertStatus(200);
 
         $content = $response->getContent();
-        $this->assertStringContainsString('Group: Cementitious Materials', $content);
+        $this->assertStringContainsString('Cementitious Materials', $content);
         $this->assertStringContainsString('Material Group: Cementitious Materials', $content);
         $this->assertStringContainsString('Portland Cement Type 1', $content);
         $this->assertStringContainsString('Pozzolan Cement', $content);
-        $this->assertStringNotContainsString('Group: Aggregates', $content);
+        $this->assertStringNotContainsString('Aggregates', $content);
         $this->assertStringNotContainsString('Crushed Gravel G1', $content);
         $this->assertStringContainsString('Total Groups: 1', $content);
         $this->assertStringContainsString('Total Items: 2', $content);

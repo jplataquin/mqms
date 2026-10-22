@@ -147,6 +147,14 @@ class MaterialItemController extends Controller
             return strcasecmp($a['group_name'], $b['group_name']);
         });
 
+        // Under each group, sort all items in alphabetical order by name
+        foreach ($grouped as &$group) {
+            usort($group['items'], function($a, $b) {
+                return strcasecmp($a->name, $b->name);
+            });
+        }
+        unset($group);
+
         return view('material_item/print', [
             'materialItems'        => $materialItems,
             'groupedMaterialItems' => $grouped,
