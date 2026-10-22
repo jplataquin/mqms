@@ -64,6 +64,7 @@
                         <button id="resetBtn" class="btn btn-secondary">Reset</button>
                         <button id="searchBtn" class="btn btn-primary">Search</button>
                         <button id="createBtn" class="btn btn-warning">Create</button>
+                        <a href="/master_data/material/items/maintenance" class="btn btn-outline-info">Maintenance</a>
                         <button id="printBtn" class="btn btn-secondary">Print</button>
                 </div>
             </div>

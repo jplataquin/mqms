@@ -107,6 +107,7 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/master_data/material/group/{id}', [App\Http\Controllers\MaterialGroupController::class, 'display']);
     Route::get('/master_data/material/groups', [App\Http\Controllers\MaterialGroupController::class, 'list']);
     
+    Route::get('/master_data/material/items/maintenance', [App\Http\Controllers\MaterialItemController::class, 'maintenance']);
     Route::get('/master_data/material/items/print', [App\Http\Controllers\MaterialItemController::class, 'print']);
     Route::get('/master_data/material/item/print', [App\Http\Controllers\MaterialItemController::class, 'print']);
     Route::get('/master_data/material/item/create', [App\Http\Controllers\MaterialItemController::class, 'create']);

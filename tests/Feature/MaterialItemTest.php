@@ -6,6 +6,10 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\MaterialGroup;
 use App\Models\MaterialItem;
+use App\Models\AccessCode;
+use App\Models\Role;
+use App\Models\RoleAccessCode;
+use App\Models\UserRole;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class MaterialItemTest extends TestCase
@@ -332,5 +336,73 @@ class MaterialItemTest extends TestCase
         $this->assertStringContainsString('No material items found.', $content);
         $this->assertStringContainsString('Total Items: 0', $content);
         $this->assertStringContainsString('Total Groups: 0', $content);
+    }
+
+    /** @test */
+    public function it_can_render_the_material_items_maintenance_page()
+    {
+        $response = $this->actingAs($this->user)->get('/master_data/material/items/maintenance');
+        $response->assertStatus(200);
+
+        $content = $response->getContent();
+        $this->assertStringContainsString('Material Items Maintenance', $content);
+        $this->assertStringContainsString('Aggregates', $content);
+        $this->assertStringContainsString('Cementitious Materials', $content);
+        $this->assertStringContainsString('btn-edit', $content);
+        $this->assertStringContainsString('edit-name', $content);
+        $this->assertStringContainsString('Portland Cement Type 1', $content);
+        $this->assertStringContainsString('Crushed Gravel G1', $content);
+    }
+
+    protected function grantAccessCode($user, $codeString)
+    {
+        $accessCode = AccessCode::where('code', $codeString)->first();
+        if (!$accessCode) {
+            $accessCode = new AccessCode();
+            $accessCode->code = $codeString;
+            $accessCode->description = 'Test code ' . $codeString;
+            $accessCode->save();
+        }
+
+        $role = $user->Roles->first();
+        if (!$role) {
+            $role = new Role();
+            $role->name = 'Test Role ' . uniqid();
+            $role->save();
+
+            $userRole = new UserRole();
+            $userRole->user_id = $user->id;
+            $userRole->role_id = $role->id;
+            $userRole->save();
+        }
+
+        $roleAccessCode = new RoleAccessCode();
+        $roleAccessCode->role_id = $role->id;
+        $roleAccessCode->access_code_id = $accessCode->id;
+        $roleAccessCode->save();
+    }
+
+    /** @test */
+    public function it_can_update_material_item_via_api()
+    {
+        $this->grantAccessCode($this->user, 'material_item:own:update');
+
+        $response = $this->actingAs($this->user->fresh())->postJson('/api/material/item/update', [
+            'id' => $this->item1->id,
+            'material_group_id' => $this->group1->id,
+            'name' => 'Updated Portland Cement',
+            'specification_unit_packaging' => '50kg bag',
+            'brand' => 'Holcim Premium',
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 1]);
+
+        $this->assertDatabaseHas('material_items', [
+            'id' => $this->item1->id,
+            'name' => 'Updated Portland Cement',
+            'specification_unit_packaging' => '50kg bag',
+            'brand' => 'Holcim Premium',
+        ]);
     }
 }

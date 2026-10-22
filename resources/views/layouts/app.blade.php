@@ -279,6 +279,9 @@
                                     <a href="/master_data/material/items" hx-select="#content" hx-target="#main">Material Items</a>
                                 </li>
                                 <li class="nav-sub-item">
+                                    <a href="/master_data/material/items/maintenance" hx-select="#content" hx-target="#main">Material Items Maintenance</a>
+                                </li>
+                                <li class="nav-sub-item">
                                     <a href="/master_data/payment_terms" hx-select="#content" hx-target="#main">Payment Terms</a>
                                 </li>
                                 <li class="nav-sub-item">

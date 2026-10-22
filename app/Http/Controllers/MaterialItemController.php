@@ -92,6 +92,66 @@ class MaterialItemController extends Controller
         ]);
     }
 
+    public function maintenance(Request $request){
+        $query             = $request->input('query') ?? '';
+        $material_group_id = $request->input('material_group_id');
+
+        $materialItem = MaterialItem::with('Group');
+
+        if($query != ''){
+            $materialItem = $materialItem->where(function($q) use ($query){
+                $q->where('name','LIKE','%'.$query.'%')
+                  ->orWhere('brand','LIKE','%'.$query.'%')
+                  ->orWhere('specification_unit_packaging','LIKE','%'.$query.'%');
+            });
+        }
+
+        $selectedGroup = null;
+        if($material_group_id){
+            $selectedGroup = MaterialGroup::find($material_group_id);
+            $materialItem = $materialItem->where('material_group_id', $material_group_id);
+        }
+
+        $materialItems = $materialItem->get();
+
+        $grouped = [];
+        foreach ($materialItems as $item) {
+            $group = $item->Group;
+            $groupKey = $group ? 'group_' . $group->id : 'ungrouped';
+            $groupName = $group ? $group->name : 'Ungrouped';
+
+            if (!isset($grouped[$groupKey])) {
+                $grouped[$groupKey] = [
+                    'group_id'   => $group ? $group->id : null,
+                    'group_name' => $groupName,
+                    'items'      => [],
+                ];
+            }
+            $grouped[$groupKey]['items'][] = $item;
+        }
+
+        uasort($grouped, function($a, $b) {
+            if ($a['group_name'] === 'Ungrouped') return 1;
+            if ($b['group_name'] === 'Ungrouped') return -1;
+            return strcasecmp($a['group_name'], $b['group_name']);
+        });
+
+        foreach ($grouped as &$group) {
+            usort($group['items'], function($a, $b) {
+                return strcasecmp($a->name, $b->name);
+            });
+        }
+        unset($group);
+
+        return view('material_item/maintenance', [
+            'materialItems'        => $materialItems,
+            'groupedMaterialItems' => $grouped,
+            'materialGroup'        => $selectedGroup,
+            'selectedGroup'        => $selectedGroup,
+            'query'                => $query,
+        ]);
+    }
+
     public function print(Request $request){
 
         $orderBy           = $request->input('order_by')       ?? 'id';
