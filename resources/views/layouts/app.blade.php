@@ -129,6 +129,12 @@
                             </div>          
                         </li>
 
+                        <li class="menu-item">
+                            <div class="nav-item">
+                                <a href="/personal_access_tokens" hx-select="#content" hx-target="#main">Access Tokens</a>
+                            </div>          
+                        </li>
+
 
                         <li class="menu-item">
                             <div class="nav-item">

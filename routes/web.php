@@ -245,6 +245,9 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/api_credentials', [App\Http\Controllers\Api\ApiCredentialController::class, 'list']);
     Route::get('/api_credentials/create', [App\Http\Controllers\Api\ApiCredentialController::class, 'create']);
     Route::get('/api_credential/{id}', [App\Http\Controllers\Api\ApiCredentialController::class, 'display']);
+
+    Route::get('/personal_access_tokens', [App\Http\Controllers\PersonalAccessTokenController::class, 'list']);
+    Route::get('/personal_access_tokens/create', [App\Http\Controllers\PersonalAccessTokenController::class, 'create']);
     
 });
 

@@ -259,6 +259,10 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::get('/api_credentials/list', [App\Http\Controllers\Api\ApiCredentialController::class, '_list']);
     Route::post('/api_credentials/create', [App\Http\Controllers\Api\ApiCredentialController::class, '_create']);
     Route::post('/api_credentials/delete', [App\Http\Controllers\Api\ApiCredentialController::class, '_delete']);
+
+    Route::get('/personal_access_tokens/list', [App\Http\Controllers\PersonalAccessTokenController::class, '_list']);
+    Route::post('/personal_access_tokens/create', [App\Http\Controllers\PersonalAccessTokenController::class, '_create']);
+    Route::post('/personal_access_tokens/delete', [App\Http\Controllers\PersonalAccessTokenController::class, '_delete']);
     
 });
 
@@ -273,6 +277,8 @@ Route::middleware(['third_party_api'])->group(function () {
 });
 
 if (class_exists(\Laravel\Mcp\Server\Facades\Mcp::class)) {
-    \Laravel\Mcp\Server\Facades\Mcp::web('/mcp', \App\Mcp\Servers\MqmsServer::class);
+    Route::middleware('auth:sanctum')->group(function () {
+        \Laravel\Mcp\Server\Facades\Mcp::web('/mcp', \App\Mcp\Servers\MqmsServer::class);
+    });
 }
 
