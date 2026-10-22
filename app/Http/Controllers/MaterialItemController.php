@@ -143,11 +143,14 @@ class MaterialItemController extends Controller
         }
         unset($group);
 
+        $allMaterialGroups = MaterialGroup::orderBy('name', 'ASC')->get();
+
         return view('material_item/maintenance', [
             'materialItems'        => $materialItems,
             'groupedMaterialItems' => $grouped,
             'materialGroup'        => $selectedGroup,
             'selectedGroup'        => $selectedGroup,
+            'allMaterialGroups'    => $allMaterialGroups,
             'query'                => $query,
         ]);
     }

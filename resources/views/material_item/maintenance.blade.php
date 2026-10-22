@@ -21,7 +21,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h2 class="h4 mb-1">Material Items Maintenance</h2>
-            <div class="text-muted small">Manage and inline-edit all material items grouped by category.</div>
+            <div class="text-muted small">Manage and inline-edit all material items and their material groups.</div>
         </div>
         <div>
             <a href="/master_data/material/items/print" target="_blank" class="btn btn-outline-secondary btn-sm me-2">
@@ -69,12 +69,13 @@
                     <table class="table table-hover table-striped mb-0 align-middle group-table">
                         <thead class="table-light">
                             <tr>
-                                <th style="width: 5%;" class="text-center">#</th>
-                                <th style="width: 8%;" class="text-center">ID</th>
-                                <th style="width: 35%;">Material Name</th>
-                                <th style="width: 25%;">Specification / Packaging</th>
-                                <th style="width: 15%;">Brand</th>
-                                <th style="width: 12%;" class="text-end">Actions</th>
+                                <th style="width: 4%;" class="text-center">#</th>
+                                <th style="width: 6%;" class="text-center">ID</th>
+                                <th style="width: 18%;">Material Group</th>
+                                <th style="width: 28%;">Material Name</th>
+                                <th style="width: 22%;">Specification / Packaging</th>
+                                <th style="width: 12%;">Brand</th>
+                                <th style="width: 10%;" class="text-end">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -82,6 +83,15 @@
                                 <tr id="row-{{ $item->id }}" data-id="{{ $item->id }}" data-group-id="{{ $item->material_group_id ?? 0 }}">
                                     <td class="text-center text-muted">{{ $index + 1 }}</td>
                                     <td class="text-center font-monospace">{{ str_pad($item->id, 5, '0', STR_PAD_LEFT) }}</td>
+                                    <td>
+                                        <span class="view-mode view-group">{{ $item->Group ? $item->Group->name : 'Ungrouped' }}</span>
+                                        <select class="form-select form-select-sm edit-mode edit-group d-none" required>
+                                            <option value="0" {{ empty($item->material_group_id) ? 'selected' : '' }}>Ungrouped</option>
+                                            @foreach($allMaterialGroups ?? [] as $mg)
+                                                <option value="{{ $mg->id }}" {{ ($item->material_group_id == $mg->id) ? 'selected' : '' }}>{{ $mg->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
                                     <td>
                                         <span class="view-mode view-name">{{ $item->name }}</span>
                                         <input type="text" class="form-control form-control-sm edit-mode edit-name d-none" value="{{ $item->name }}" required>
@@ -161,9 +171,9 @@
                 saveBtn.classList.remove('d-none');
                 cancelBtn.classList.remove('d-none');
                 
-                // Focus first input
-                const firstInput = row.querySelector('.edit-name');
-                if (firstInput) firstInput.focus();
+                // Focus first input (group select or name)
+                const groupSelect = row.querySelector('.edit-group');
+                if (groupSelect) groupSelect.focus();
             } else {
                 viewEls.forEach(el => el.classList.remove('d-none'));
                 editEls.forEach(el => el.classList.add('d-none'));
@@ -174,9 +184,13 @@
         }
 
         function resetRowValues(row) {
+            const groupSelect = row.querySelector('.edit-group');
             const nameInput = row.querySelector('.edit-name');
             const specInput = row.querySelector('.edit-spec');
             const brandInput = row.querySelector('.edit-brand');
+
+            const currentGroupId = row.getAttribute('data-group-id') || '0';
+            if (groupSelect) groupSelect.value = currentGroupId;
 
             nameInput.value = row.querySelector('.view-name').innerText.trim();
             specInput.value = row.querySelector('.view-spec').innerText.trim();
@@ -186,11 +200,13 @@
 
         function saveRow(row) {
             const id = row.getAttribute('data-id');
-            const groupId = row.getAttribute('data-group-id');
+            const originalGroupId = row.getAttribute('data-group-id') || '0';
+            const groupSelect = row.querySelector('.edit-group');
             const nameInput = row.querySelector('.edit-name');
             const specInput = row.querySelector('.edit-spec');
             const brandInput = row.querySelector('.edit-brand');
 
+            const selectedGroupId = groupSelect ? groupSelect.value : originalGroupId;
             const name = nameInput.value.trim();
             const spec = specInput.value.trim();
             const brand = brandInput.value.trim();
@@ -213,7 +229,7 @@
 
             window.util.$post('/api/material/item/update', {
                 id: id,
-                material_group_id: groupId,
+                material_group_id: selectedGroupId,
                 name: name,
                 specification_unit_packaging: spec,
                 brand: brand
@@ -231,7 +247,19 @@
                     return;
                 }
 
-                // Update text view elements
+                // If material group changed, reload so item moves to its new group section
+                if (String(selectedGroupId) !== String(originalGroupId)) {
+                    if (window.util && window.util.navReload) {
+                        window.util.navReload();
+                    } else {
+                        window.location.reload();
+                    }
+                    return;
+                }
+
+                // If group is the same, update text view elements in place
+                const groupText = groupSelect.options[groupSelect.selectedIndex].text;
+                row.querySelector('.view-group').innerText = groupText;
                 row.querySelector('.view-name').innerText = name;
                 row.querySelector('.view-spec').innerText = spec;
                 row.querySelector('.view-brand').innerText = brand ? brand : '-';

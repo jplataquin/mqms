@@ -348,10 +348,16 @@ class MaterialItemTest extends TestCase
         $this->assertStringContainsString('Material Items Maintenance', $content);
         $this->assertStringContainsString('Aggregates', $content);
         $this->assertStringContainsString('Cementitious Materials', $content);
+        $this->assertStringContainsString('Material Group</th>', $content);
         $this->assertStringContainsString('btn-edit', $content);
+        $this->assertStringContainsString('edit-group', $content);
         $this->assertStringContainsString('edit-name', $content);
         $this->assertStringContainsString('Portland Cement Type 1', $content);
         $this->assertStringContainsString('Crushed Gravel G1', $content);
+
+        $allGroups = $response->viewData('allMaterialGroups');
+        $this->assertNotNull($allGroups);
+        $this->assertCount(2, $allGroups);
     }
 
     protected function grantAccessCode($user, $codeString)
@@ -389,7 +395,7 @@ class MaterialItemTest extends TestCase
 
         $response = $this->actingAs($this->user->fresh())->postJson('/api/material/item/update', [
             'id' => $this->item1->id,
-            'material_group_id' => $this->group1->id,
+            'material_group_id' => $this->group2->id,
             'name' => 'Updated Portland Cement',
             'specification_unit_packaging' => '50kg bag',
             'brand' => 'Holcim Premium',
@@ -400,6 +406,7 @@ class MaterialItemTest extends TestCase
 
         $this->assertDatabaseHas('material_items', [
             'id' => $this->item1->id,
+            'material_group_id' => $this->group2->id,
             'name' => 'Updated Portland Cement',
             'specification_unit_packaging' => '50kg bag',
             'brand' => 'Holcim Premium',
