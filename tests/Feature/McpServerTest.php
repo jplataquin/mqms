@@ -75,6 +75,8 @@ class McpServerTest extends TestCase
     /** @test */
     public function it_lists_allowed_tools()
     {
+        $user = User::factory()->create();
+
         $payload = [
             'jsonrpc' => '2.0',
             'id' => 2,
@@ -82,7 +84,7 @@ class McpServerTest extends TestCase
             'params' => (object) [],
         ];
 
-        $response = $this->postJson('/api/mcp', $payload);
+        $response = $this->actingAs($user, 'sanctum')->postJson('/api/mcp', $payload);
 
         $response->assertStatus(200);
         $tools = $response->json('result.tools');

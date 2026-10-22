@@ -6,8 +6,13 @@
     <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
         <ul>
             <li>
+                <a href="#">
+                    <span>AI / MCP</span>
+                </a>
+            </li>
+            <li>
                 <a href="/personal_access_tokens">
-                    <span>Personal Access Tokens</span>
+                    <span>Tokens</span>
                 </a>
             </li>
             <li>
@@ -70,6 +75,10 @@
                 <strong>How to use:</strong> In your AI / MCP client, pass this value in the standard <code>Authorization</code> header:
                 <br>
                 <code>Authorization: Bearer &lt;token&gt;</code>
+                <br>
+                <div class="mt-2">
+                    <strong>MCP Server Endpoint:</strong> <code>{{ url('/api/mcp') }}</code>
+                </div>
             </div>
 
             <div class="row mt-5">
