@@ -49,6 +49,11 @@
                     <strong>Created At:</strong> {{ $request->created_at }}
                 </div>
             </div>
+            <div class="row mb-3">
+                <div class="col-lg-6">
+                    <strong>Date Needed:</strong> {{ $request->date_needed ?: 'None' }}
+                </div>
+            </div>
             @if($request->description)
             <div class="row mb-3">
                 <div class="col-12">

@@ -53,6 +53,12 @@
             <td><strong>Date Created:</strong></td>
             <td>{{ $request->created_at }}</td>
         </tr>
+        @if($request->date_needed)
+        <tr>
+            <td><strong>Date Needed:</strong></td>
+            <td colspan="3">{{ $request->date_needed }}</td>
+        </tr>
+        @endif
         @if($request->description)
         <tr>
             <td><strong>Purpose:</strong></td>

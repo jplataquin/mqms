@@ -1356,4 +1356,142 @@ class DirectPurchaseOrderTest extends TestCase
         $res->assertJson(['status' => -2]);
         $this->assertEquals('DRFT', $dpo->fresh()->status);
     }
+
+    /** @test */
+    public function it_renders_date_needed_field_on_direct_purchase_order_create_page()
+    {
+        $response = $this->actingAs($this->user)->get('/direct_purchase_order/create');
+        $response->assertStatus(200);
+        $response->assertSee('id="dateNeededInput"', false);
+    }
+
+    /** @test */
+    public function it_can_create_direct_purchase_order_with_date_needed()
+    {
+        $this->grantAccessCode($this->user, 'direct_purchase_order:all:view');
+        $this->grantAccessCode($this->user, 'direct_purchase_order:all:print');
+
+        $project = $this->createProject('Harbor Port Project');
+        $material = $this->createMaterialItem('Dock Cleat 12in');
+        $supplier = $this->createSupplier('Maritime Hardware');
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Net 30';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $items = [
+            [
+                'material_item_id' => $material->id,
+                'order_quantity'   => 5,
+                'price'            => 450.00,
+                'remarks'          => 'Marine grade stainless steel'
+            ]
+        ];
+
+        $response = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/create', [
+            'supplier_id'     => $supplier->id,
+            'payment_term_id' => $paymentTerm->id,
+            'project_id'      => $project->id,
+            'date_needed'     => '2026-12-01',
+            'items'           => json_encode($items)
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 1]);
+
+        $dpoId = $response->json('data.id');
+        $this->assertDatabaseHas('direct_purchase_orders', [
+            'id'          => $dpoId,
+            'date_needed' => '2026-12-01'
+        ]);
+
+        // Check display page
+        $displayRes = $this->actingAs($this->user)->get('/direct_purchase_order/' . $dpoId);
+        $displayRes->assertStatus(200);
+        $displayRes->assertSee('Date Needed');
+        $displayRes->assertSee('2026-12-01');
+
+        // Approve and check print page
+        $dpo = DirectPurchaseOrder::find($dpoId);
+        $dpo->status = 'APRV';
+        $dpo->approved_by = $this->user->id;
+        $dpo->approved_at = now();
+        $dpo->save();
+
+        $printRes = $this->actingAs($this->user)->get('/direct_purchase_order/print/' . $dpoId);
+        $printRes->assertStatus(200);
+        $printRes->assertSee('Date Needed');
+        $printRes->assertSee('2026-12-01');
+    }
+
+    /** @test */
+    public function it_auto_fills_date_needed_from_dmqr_in_dpo()
+    {
+        $this->grantAccessCode($this->user, 'direct_purchase_order:all:view');
+
+        $project = $this->createProject('Tunnel Extension');
+        $material = $this->createMaterialItem('Ventilation Fan');
+        $supplier = $this->createSupplier('Industrial Fan Co');
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Cash on Delivery';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id  = $project->id;
+        $dmqr->date_needed = '2026-11-20';
+        $dmqr->status      = 'APRV';
+        $dmqr->created_by  = $this->user->id;
+        $dmqr->save();
+
+        $dmqrItem = new DirectMaterialQuantityRequestItem();
+        $dmqrItem->direct_material_quantity_request_id = $dmqr->id;
+        $dmqrItem->material_item_id = $material->id;
+        $dmqrItem->quantity = 10;
+        $dmqrItem->save();
+
+        $canvass = new DirectMaterialCanvass();
+        $canvass->direct_material_quantity_request_id = $dmqr->id;
+        $canvass->direct_material_quantity_request_item_id = $dmqrItem->id;
+        $canvass->supplier_id = $supplier->id;
+        $canvass->payment_term_id = $paymentTerm->id;
+        $canvass->price = 3000.00;
+        $canvass->status = 'APRV';
+        $canvass->created_by = $this->user->id;
+        $canvass->save();
+
+        // Create DPO linked to DMQR WITHOUT specifying date_needed
+        $response = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/create', [
+            'direct_material_quantity_request_id' => $dmqr->id,
+            'supplier_id'                         => $supplier->id,
+            'payment_term_id'                     => $paymentTerm->id,
+            'project_id'                          => $project->id,
+            'items'                               => json_encode([[
+                'direct_material_quantity_request_item_id' => $dmqrItem->id,
+                'direct_material_canvass_id'               => $canvass->id,
+                'material_item_id'                         => $material->id,
+                'order_quantity'                           => 5,
+                'price'                                    => 3000.00
+            ]])
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 1]);
+
+        $dpoId = $response->json('data.id');
+        $dpo = DirectPurchaseOrder::find($dpoId);
+
+        // Assert date_needed was auto-filled from DMQR
+        $this->assertEquals('2026-11-20', $dpo->date_needed);
+        $this->assertDatabaseHas('direct_purchase_orders', [
+            'id'          => $dpoId,
+            'date_needed' => '2026-11-20'
+        ]);
+
+        // Check review display page also shows the auto-filled date needed
+        $reviewRes = $this->actingAs($this->user)->get('/review/direct_purchase_order/' . $dpoId);
+        $reviewRes->assertStatus(200);
+        $reviewRes->assertSee('Date Needed');
+        $reviewRes->assertSee('2026-11-20');
+    }
 }

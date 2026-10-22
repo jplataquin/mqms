@@ -120,6 +120,7 @@
                         <th>Project</th>
                         <th>Section</th>
                         <th>Status</th>
+                        <th>Date Needed</th>
                         <th>Date Created</th>
                     </tr>
                 </thead>
@@ -279,6 +280,7 @@
                     t.td({}, () => {
                         t.span({class: 'badge ' + badgeClass}, item.status);
                     });
+                    t.td({}, item.date_needed || '-');
                     t.td({}, item.created_at);
                 });
 

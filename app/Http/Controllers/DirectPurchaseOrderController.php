@@ -168,6 +168,20 @@ class DirectPurchaseOrderController extends Controller
             ? (int) $raw_dmqr_id
             : null;
 
+        $raw_date_needed = $request->input('date_needed');
+        $date_needed     = null;
+        if (!empty($raw_date_needed) && $raw_date_needed !== 'null' && $raw_date_needed !== 'undefined') {
+            $dt = \DateTime::createFromFormat('M d, Y', $raw_date_needed);
+            if ($dt) {
+                $date_needed = $dt->format('Y-m-d');
+            } else {
+                $ts = strtotime($raw_date_needed);
+                if ($ts !== false) {
+                    $date_needed = date('Y-m-d', $ts);
+                }
+            }
+        }
+
         if ($dmqr_id) {
             $dmqr = DirectMaterialQuantityRequest::find($dmqr_id);
             if (!$dmqr || $dmqr->status != 'APRV') {
@@ -176,6 +190,10 @@ class DirectPurchaseOrderController extends Controller
                     'message' => 'The selected Direct Material Request is not approved or not found.',
                     'data'    => []
                 ]);
+            }
+
+            if (empty($date_needed) && $dmqr->date_needed) {
+                $date_needed = $dmqr->date_needed;
             }
         }
 
@@ -301,6 +319,7 @@ class DirectPurchaseOrderController extends Controller
             $dpo->project_id                          = $project_id;
             $dpo->section_id                          = $section_id;
             $dpo->direct_material_quantity_request_id = $dmqr_id;
+            $dpo->date_needed                         = $date_needed;
             $dpo->extras                              = json_encode($extras);
             $dpo->created_by                          = $user_id;
             $dpo->save();
@@ -363,6 +382,7 @@ class DirectPurchaseOrderController extends Controller
             "Payment Term"    => $dpo->PaymentTerm ? $dpo->PaymentTerm->text : 'N/A',
             "Project"         => $dpo->Project ? $dpo->Project->name : 'None',
             "Section"         => $dpo->Section ? $dpo->Section->name : 'None',
+            "Date Needed"     => $dpo->date_needed ?: 'None',
             "Status"          => $dpo->status,
             "Created By"      => $dpo->CreatedByUser()->name . ' ' . $dpo->created_at,
         ];

@@ -923,4 +923,60 @@ class DirectMaterialQuantityRequestTest extends TestCase
         $this->assertEquals($nonReviewer->id, $canvass->void_by);
         $this->assertNotNull($canvass->void_at);
     }
+
+    /** @test */
+    public function it_can_create_dmqr_with_date_needed_and_display_it()
+    {
+        $project = $this->createProject('Flyover Expressway');
+        $material = $this->createMaterialItem('Reinforced Rebar 16mm');
+
+        // Verify create page has date needed field
+        $createRes = $this->actingAs($this->user)->get('/direct_material_quantity_request/create');
+        $createRes->assertStatus(200);
+        $createRes->assertSee('id="dateNeededInput"', false);
+
+        $items = [
+            [
+                'material_item_id' => $material->id,
+                'quantity'         => 50,
+                'remarks'          => 'Needed for foundation'
+            ]
+        ];
+
+        $response = $this->actingAs($this->user)->postJson('/api/direct_material_quantity_request/create', [
+            'project_id'  => $project->id,
+            'description' => 'Rebar for foundation',
+            'date_needed' => '2026-11-15',
+            'items'       => json_encode($items)
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 1]);
+
+        $dmqrId = $response->json('data.id');
+
+        $this->assertDatabaseHas('direct_material_quantity_requests', [
+            'id'          => $dmqrId,
+            'project_id'  => $project->id,
+            'date_needed' => '2026-11-15',
+        ]);
+
+        // Check display page
+        $displayRes = $this->actingAs($this->user)->get('/direct_material_quantity_request/' . $dmqrId);
+        $displayRes->assertStatus(200);
+        $displayRes->assertSee('Date Needed:');
+        $displayRes->assertSee('2026-11-15');
+
+        // Check print page
+        $printRes = $this->actingAs($this->user)->get('/direct_material_quantity_request/print/' . $dmqrId);
+        $printRes->assertStatus(200);
+        $printRes->assertSee('Date Needed:');
+        $printRes->assertSee('2026-11-15');
+
+        // Check review display page
+        $reviewRes = $this->actingAs($this->user)->get('/review/direct_material_quantity_request/' . $dmqrId);
+        $reviewRes->assertStatus(200);
+        $reviewRes->assertSee('Date Needed:');
+        $reviewRes->assertSee('2026-11-15');
+    }
 }

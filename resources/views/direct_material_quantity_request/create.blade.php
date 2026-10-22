@@ -59,6 +59,15 @@
             </div>
 
             <div class="row mb-3">
+                <div class="col-lg-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label">Date Needed</label>
+                        <input type="date" class="form-control" id="dateNeededInput">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
                 <div class="col-12">
                     <div class="form-group">
                         <label class="form-label">Purpose / Description (Optional)</label>
@@ -119,6 +128,7 @@
     const clearSectionBtn = $q('#clearSectionBtn').first();
 
     const descriptionInput = $q('#descriptionInput').first();
+    const dateNeededInput = $q('#dateNeededInput').first();
     const itemsTableBody  = $q('#itemsTableBody').first();
     const addItemBtn      = $q('#addItemBtn').first();
     const saveBtn         = $q('#saveBtn').first();
@@ -347,6 +357,7 @@
         const payload = {
             project_id: projectSelect.value,
             description: descriptionInput.value.trim(),
+            date_needed: dateNeededInput && dateNeededInput.value ? dateNeededInput.value : '',
             items: JSON.stringify(items)
         };
         if (sectionSelect.value && parseInt(sectionSelect.value) > 0) {

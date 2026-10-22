@@ -109,6 +109,7 @@ class DirectPurchaseOrderReviewController extends Controller
             "Payment Term"    => $dpo->PaymentTerm ? $dpo->PaymentTerm->text : 'N/A',
             "Project"         => $dpo->Project ? $dpo->Project->name : 'None',
             "Section"         => $dpo->Section ? $dpo->Section->name : 'None',
+            "Date Needed"     => $dpo->date_needed ?: 'None',
             "Status"          => $dpo->status,
             "Created By"      => $dpo->CreatedByUser()->name . ' ' . $dpo->created_at,
         ];

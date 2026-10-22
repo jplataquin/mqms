@@ -110,6 +110,15 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Date Needed</label>
+                            <input type="date" class="form-control" id="dateNeededInput">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -207,6 +216,8 @@
         const sectionSelect     = $q('#sectionSelect').first();
         const clearSectionBtn   = $q('#clearSectionBtn').first();
 
+        const dateNeededInput   = $q('#dateNeededInput').first();
+
         const itemsTableBody    = $q('#itemsTableBody').first();
         const extrasTableBody   = $q('#extrasTableBody').first();
         const addItemBtn        = $q('#addItemBtn').first();
@@ -244,6 +255,7 @@
         clearDmqrBtn.onclick = () => {
             dmqrInput.value = '';
             dmqrSelect.value = '';
+            if (dateNeededInput) dateNeededInput.value = '';
             unlockForm();
         };
 
@@ -339,6 +351,11 @@
                 sectionInput.disabled = true;
                 clearSectionBtn.disabled = true;
 
+                // Auto-fill date needed if present in DMQR
+                if (data.date_needed && dateNeededInput) {
+                    dateNeededInput.value = data.date_needed;
+                }
+
                 // Extract unique suppliers from items
                 const uniqueSuppliersMap = new Map();
                 data.items.forEach(item => {
@@ -420,6 +437,8 @@
             paymentTermSelect.innerHTML = initialPaymentTermOptionsHtml;
             paymentTermSelect.disabled = false;
             paymentTermSelect.value = '';
+
+            if (dateNeededInput) dateNeededInput.value = '';
 
             addItemBtn.style.display = '';
             itemsTableBody.innerHTML = '';
@@ -849,6 +868,9 @@
             }
             if (dmqrSelect.value && parseInt(dmqrSelect.value) > 0) {
                 payload.direct_material_quantity_request_id = dmqrSelect.value;
+            }
+            if (dateNeededInput && dateNeededInput.value) {
+                payload.date_needed = dateNeededInput.value;
             }
 
             let res = await window.util.$post('/api/direct_purchase_order/create', payload);

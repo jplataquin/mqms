@@ -128,6 +128,7 @@
                         <th>Project</th>
                         <th>Section</th>
                         <th>Status</th>
+                        <th>Date Needed</th>
                         <th>Date Created</th>
                     </tr>
                 </thead>
@@ -272,6 +273,7 @@
                     t.td({}, item.project ? item.project.name : '-');
                     t.td({}, item.section ? item.section.name : '-');
                     t.td({}, item.status);
+                    t.td({}, item.date_needed || '-');
                     t.td({}, item.created_at);
                 });
 

@@ -30,6 +30,7 @@ class DirectPurchaseOrder extends Model
         'project_id',
         'section_id',
         'direct_material_quantity_request_id',
+        'date_needed',
         'status',
         'received_status',
         'extras',

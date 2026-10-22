@@ -128,6 +128,20 @@ class DirectMaterialQuantityRequestController extends Controller
 
         $description     = $request->input('description') ?? '';
 
+        $raw_date_needed = $request->input('date_needed');
+        $date_needed     = null;
+        if (!empty($raw_date_needed) && $raw_date_needed !== 'null' && $raw_date_needed !== 'undefined') {
+            $dt = \DateTime::createFromFormat('M d, Y', $raw_date_needed);
+            if ($dt) {
+                $date_needed = $dt->format('Y-m-d');
+            } else {
+                $ts = strtotime($raw_date_needed);
+                if ($ts !== false) {
+                    $date_needed = date('Y-m-d', $ts);
+                }
+            }
+        }
+
         try {
             $items = json_decode($request->input('items'), true);
 
@@ -173,6 +187,7 @@ class DirectMaterialQuantityRequestController extends Controller
             $dmqr->project_id   = $project_id;
             $dmqr->section_id   = $section_id;
             $dmqr->description  = $description;
+            $dmqr->date_needed  = $date_needed;
             $dmqr->status       = 'PEND';
             $dmqr->created_by   = $user->id;
             $dmqr->save();
@@ -516,6 +531,7 @@ class DirectMaterialQuantityRequestController extends Controller
                 'project_name' => $dmqr->Project ? $dmqr->Project->name : '',
                 'section_id'   => $dmqr->section_id,
                 'section_name' => $dmqr->Section ? $dmqr->Section->name : '',
+                'date_needed'  => $dmqr->date_needed,
                 'items'        => $availableItems
             ]
         ]);
@@ -557,7 +573,8 @@ class DirectMaterialQuantityRequestController extends Controller
                     'project_id'   => $dmqr->project_id,
                     'project_name' => $dmqr->Project ? $dmqr->Project->name : '',
                     'section_id'   => $dmqr->section_id,
-                    'section_name' => $dmqr->Section ? $dmqr->Section->name : ''
+                    'section_name' => $dmqr->Section ? $dmqr->Section->name : '',
+                    'date_needed'  => $dmqr->date_needed
                 ];
             }
         }

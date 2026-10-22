@@ -76,6 +76,12 @@
                 <td class="bold">Section</td>
                 <td>{{ $section ? $section->name : 'None' }}</td>
             </tr>
+            @if($direct_purchase_order->date_needed)
+            <tr>
+                <td class="bold">Date Needed</td>
+                <td colspan="3">{{ $direct_purchase_order->date_needed }}</td>
+            </tr>
+            @endif
             <tr>
                 <td class="bold">Datetime</td>
                 <td colspan="3" style="font-size: 11px;">
@@ -222,6 +228,12 @@
                 <td class="bold">Section</td>
                 <td>{{ $section ? $section->name : 'None' }}</td>
             </tr>
+            @if($direct_purchase_order->date_needed)
+            <tr>
+                <td class="bold">Date Needed</td>
+                <td colspan="3">{{ $direct_purchase_order->date_needed }}</td>
+            </tr>
+            @endif
             <tr>
                 <td class="bold">Datetime</td>
                 <td colspan="3" style="font-size: 11px;">
@@ -304,6 +316,12 @@
                 <td class="bold">Section</td>
                 <td>{{ $section ? $section->name : 'None' }}</td>
             </tr>
+            @if($direct_purchase_order->date_needed)
+            <tr>
+                <td class="bold">Date Needed</td>
+                <td colspan="3">{{ $direct_purchase_order->date_needed }}</td>
+            </tr>
+            @endif
             <tr>
                 <td class="bold">Datetime</td>
                 <td colspan="3" style="font-size: 11px;">

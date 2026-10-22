@@ -71,6 +71,7 @@
                             <th>Project</th>
                             <th>Section</th>
                             <th>Status</th>
+                            <th>Date Needed</th>
                             <th>Created By</th>
                             <th>Date</th>
                             <th class="text-end">Action</th>
@@ -134,6 +135,7 @@
                     <td>${item.project ? item.project.name : '-'}</td>
                     <td>${item.section ? item.section.name : '-'}</td>
                     <td><span class="badge bg-${badgeColor}">${item.status}</span></td>
+                    <td>${item.date_needed ? item.date_needed : '-'}</td>
                     <td>${item.creator ? item.creator.name : '-'}</td>
                     <td>${item.created_at ? item.created_at.substring(0, 10) : '-'}</td>
                     <td class="text-end">
@@ -147,7 +149,7 @@
             nextBtn.disabled = (res.data.length < limit);
             pageInfo.textContent = `Page ${page}`;
         } else {
-            tableBody.innerHTML = `<tr><td colspan="7" class="text-center text-muted py-4">No records found</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="8" class="text-center text-muted py-4">No records found</td></tr>`;
             prevBtn.disabled = (page <= 1);
             nextBtn.disabled = true;
             pageInfo.textContent = `Page ${page}`;
