@@ -107,6 +107,9 @@
     <div class="header-container">
         <div class="header-title">Master Data: Material Items</div>
         <div class="meta-info">Date Generated: {{ $current_datetime }}</div>
+        @if(!empty($materialGroup))
+            <div class="meta-info">Material Group: {{ $materialGroup->name }}</div>
+        @endif
         @if(!empty($query))
             <div class="meta-info">Search Filter: "{{ $query }}"</div>
         @endif

@@ -83,10 +83,62 @@ class MaterialItemTest extends TestCase
         $response = $this->actingAs($this->user)->get('/master_data/material/items');
         $response->assertStatus(200);
         $response->assertSee('Material Items');
+        $response->assertSee('id="materialGroupSelect"', false);
+        $response->assertSee('Cementitious Materials');
+        $response->assertSee('Aggregates');
         $response->assertSee('id="printBtn"', false);
         $response->assertSee('id="searchBtn"', false);
+        $response->assertSee('id="resetBtn"', false);
         $response->assertSee('id="createBtn"', false);
         $response->assertSee('master_data/material/items/print', false);
+    }
+
+    /** @test */
+    public function it_preselects_material_group_filter_if_provided_in_query()
+    {
+        $response = $this->actingAs($this->user)->get('/master_data/material/items?material_group_id=' . $this->group2->id);
+        $response->assertStatus(200);
+        $response->assertSee('value="' . $this->group2->id . '" selected', false);
+    }
+
+    /** @test */
+    public function it_can_filter_material_items_by_material_group_via_api()
+    {
+        $response = $this->actingAs($this->user)->getJson('/api/material/item/list?material_group_id=' . $this->group1->id);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+        ]);
+        
+        $data = $response->json('data');
+        $this->assertCount(2, $data);
+        $names = array_column($data, 'name');
+        $this->assertContains('Portland Cement Type 1', $names);
+        $this->assertContains('Pozzolan Cement', $names);
+        $this->assertNotContains('Crushed Gravel G1', $names);
+
+        // Verify group relation is present in JSON
+        $this->assertEquals('Cementitious Materials', $data[0]['group']['name']);
+
+        // Check group 2
+        $response2 = $this->actingAs($this->user)->getJson('/api/material/item/list?material_group_id=' . $this->group2->id);
+        $response2->assertStatus(200);
+        $data2 = $response2->json('data');
+        $this->assertCount(1, $data2);
+        $this->assertEquals('Crushed Gravel G1', $data2[0]['name']);
+        $this->assertEquals('Aggregates', $data2[0]['group']['name']);
+    }
+
+    /** @test */
+    public function it_can_filter_material_items_by_group_in_print_view()
+    {
+        $response = $this->actingAs($this->user)->get('/master_data/material/items/print?material_group_id=' . $this->group1->id);
+        $response->assertStatus(200);
+        $response->assertSee('Master Data: Material Items');
+        $response->assertSee('Material Group: Cementitious Materials');
+        $response->assertSee('Portland Cement Type 1');
+        $response->assertSee('Pozzolan Cement');
+        $response->assertDontSee('Crushed Gravel G1');
     }
 
     /** @test */

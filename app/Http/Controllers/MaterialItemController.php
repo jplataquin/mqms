@@ -81,9 +81,15 @@ class MaterialItemController extends Controller
     //     return view('material_item/edit');
     // }
 
-    public function list(){
+    public function list(Request $request){
 
-        return view('material_item/list');
+        $materialGroups = MaterialGroup::orderBy('name', 'ASC')->get();
+        $selectedGroupId = $request->input('material_group_id');
+
+        return view('material_item/list', [
+            'materialGroups'  => $materialGroups,
+            'selectedGroupId' => $selectedGroupId,
+        ]);
     }
 
     public function print(Request $request){
@@ -110,14 +116,17 @@ class MaterialItemController extends Controller
             });
         }
 
+        $materialGroup = null;
         if($material_group_id){
             $materialItem = $materialItem->where('material_group_id', $material_group_id);
+            $materialGroup = MaterialGroup::find($material_group_id);
         }
 
         $materialItems = $materialItem->orderBy($orderBy, $order)->get();
 
         return view('material_item/print', [
             'materialItems'    => $materialItems,
+            'materialGroup'    => $materialGroup,
             'query'            => $query,
             'order'            => $order,
             'orderBy'          => $orderBy,
@@ -285,29 +294,40 @@ class MaterialItemController extends Controller
 
          //todo check role
 
-         $page              = (int) $request->input('page')     ?? 1;
-         $limit             = (int) $request->input('limit')    ?? 10;
+         $page              = max(1, (int) ($request->input('page') ?? 1));
+         $limit             = (int) ($request->input('limit') ?? 10);
          $orderBy           = $request->input('order_by')       ?? 'id';
          $order             = $request->input('order')          ?? 'DESC';
          $query             = $request->input('query')          ?? '';
          $material_group_id = $request->input('material_group_id');
 
+         if(!in_array(strtolower($order), ['asc', 'desc'])){
+             $order = 'DESC';
+         }
+         if(!in_array(strtolower($orderBy), ['id', 'name', 'brand', 'created_at'])){
+             $orderBy = 'id';
+         }
+
          $result = [];
  
-         $materialItem = new MaterialItem();
+         $materialItem = MaterialItem::with('Group');
  
          if($query != ''){
-             $materialItem = $materialItem->where('name','LIKE','%'.$query.'%');
+             $materialItem = $materialItem->where(function($q) use ($query){
+                 $q->where('name','LIKE','%'.$query.'%')
+                   ->orWhere('brand','LIKE','%'.$query.'%')
+                   ->orWhere('specification_unit_packaging','LIKE','%'.$query.'%');
+             });
          }
 
          if($material_group_id){
-            $materialItem = $materialItem->where('material_group_id',$material_group_id);
+            $materialItem = $materialItem->where('material_group_id', $material_group_id);
          }
  
          if($limit > 0){
-             $page   = ($page-1) * $limit;
+             $offset = ($page - 1) * $limit;
              
-             $result = $materialItem->orderBy($orderBy,$order)->skip($page)->take($limit)->get();
+             $result = $materialItem->orderBy($orderBy,$order)->skip($offset)->take($limit)->get();
              
          }else{
  
