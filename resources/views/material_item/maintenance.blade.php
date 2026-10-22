@@ -131,6 +131,17 @@
             <p class="small mb-0">Try adjusting your search criteria.</p>
         </div>
     @endif
+
+    @if(isset($paginator) && $paginator->hasPages())
+        <div class="d-flex justify-content-between align-items-center mt-3 mb-4">
+            <div class="text-muted small">
+                Showing {{ $paginator->firstItem() }} to {{ $paginator->lastItem() }} of {{ $paginator->total() }} items
+            </div>
+            <div>
+                {{ $paginator->links() }}
+            </div>
+        </div>
+    @endif
 </div>
 
 <script type="module">

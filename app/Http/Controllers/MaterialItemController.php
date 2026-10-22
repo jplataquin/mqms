@@ -96,26 +96,31 @@ class MaterialItemController extends Controller
         $query             = $request->input('query') ?? '';
         $material_group_id = $request->input('material_group_id');
 
-        $materialItem = MaterialItem::with('Group');
+        $materialItemQuery = MaterialItem::with('Group')
+            ->select('material_items.*')
+            ->leftJoin('material_groups', 'material_items.material_group_id', '=', 'material_groups.id')
+            ->orderByRaw("COALESCE(material_groups.name, 'ZZZZZZZZ') ASC")
+            ->orderBy('material_items.name', 'ASC');
 
         if($query != ''){
-            $materialItem = $materialItem->where(function($q) use ($query){
-                $q->where('name','LIKE','%'.$query.'%')
-                  ->orWhere('brand','LIKE','%'.$query.'%')
-                  ->orWhere('specification_unit_packaging','LIKE','%'.$query.'%');
+            $materialItemQuery = $materialItemQuery->where(function($q) use ($query){
+                $q->where('material_items.name','LIKE','%'.$query.'%')
+                  ->orWhere('material_items.brand','LIKE','%'.$query.'%')
+                  ->orWhere('material_items.specification_unit_packaging','LIKE','%'.$query.'%');
             });
         }
 
         $selectedGroup = null;
         if($material_group_id){
             $selectedGroup = MaterialGroup::find($material_group_id);
-            $materialItem = $materialItem->where('material_group_id', $material_group_id);
+            $materialItemQuery = $materialItemQuery->where('material_items.material_group_id', $material_group_id);
         }
 
-        $materialItems = $materialItem->get();
+        $paginator = $materialItemQuery->paginate(50);
+        $paginator->appends($request->all());
 
         $grouped = [];
-        foreach ($materialItems as $item) {
+        foreach ($paginator as $item) {
             $group = $item->Group;
             $groupKey = $group ? 'group_' . $group->id : 'ungrouped';
             $groupName = $group ? $group->name : 'Ungrouped';
@@ -130,23 +135,10 @@ class MaterialItemController extends Controller
             $grouped[$groupKey]['items'][] = $item;
         }
 
-        uasort($grouped, function($a, $b) {
-            if ($a['group_name'] === 'Ungrouped') return 1;
-            if ($b['group_name'] === 'Ungrouped') return -1;
-            return strcasecmp($a['group_name'], $b['group_name']);
-        });
-
-        foreach ($grouped as &$group) {
-            usort($group['items'], function($a, $b) {
-                return strcasecmp($a->name, $b->name);
-            });
-        }
-        unset($group);
-
         $allMaterialGroups = MaterialGroup::orderBy('name', 'ASC')->get();
 
         return view('material_item/maintenance', [
-            'materialItems'        => $materialItems,
+            'paginator'            => $paginator,
             'groupedMaterialItems' => $grouped,
             'materialGroup'        => $selectedGroup,
             'selectedGroup'        => $selectedGroup,

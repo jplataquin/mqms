@@ -412,4 +412,15 @@ class MaterialItemTest extends TestCase
             'brand' => 'Holcim Premium',
         ]);
     }
+
+    /** @test */
+    public function it_paginates_material_items_maintenance_view()
+    {
+        $response = $this->actingAs($this->user)->get('/master_data/material/items/maintenance');
+        $response->assertStatus(200);
+
+        $paginator = $response->viewData('paginator');
+        $this->assertNotNull($paginator);
+        $this->assertInstanceOf(\Illuminate\Pagination\LengthAwarePaginator::class, $paginator);
+    }
 }
