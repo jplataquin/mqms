@@ -7,6 +7,7 @@ namespace App\Mcp\Servers;
 use App\Mcp\McpModelRegistry;
 use App\Mcp\Methods\CustomReadResource;
 use App\Mcp\Resources\DynamicModelResource;
+use App\Mcp\Tools\GetMaterialPriceStatsTool;
 use App\Mcp\Tools\GetRecordTool;
 use App\Mcp\Tools\ListRecordsTool;
 use App\Mcp\Tools\SearchRecordsTool;
@@ -18,7 +19,7 @@ class MqmsServer extends Server
 
     public string $serverVersion = '1.0.0';
 
-    public string $instructions = 'Provides HTTP MCP access to MQMS models (excluding roles, access codes, credentials, and user passwords). Allows reading records as resources and querying via get_record, list_records, and search_records tools.';
+    public string $instructions = 'Provides HTTP MCP access to MQMS models (excluding roles, access codes, credentials, and user passwords). Allows reading records as resources and querying via get_record, list_records, search_records, and get_material_price_stats tools.';
 
     public int $defaultPaginationLength = 50;
 
@@ -28,6 +29,7 @@ class MqmsServer extends Server
         GetRecordTool::class,
         ListRecordsTool::class,
         SearchRecordsTool::class,
+        GetMaterialPriceStatsTool::class,
     ];
 
     public array $resources = [];
