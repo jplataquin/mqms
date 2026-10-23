@@ -68,8 +68,8 @@
 
         <!-- Violations Container -->
         <div id="violationsContainer" style="display: none;">
-            <div class="card mb-3 border-danger shadow-sm">
-                <div class="card-header bg-danger bg-opacity-10 border-danger d-flex align-items-center justify-content-between flex-wrap gap-2 py-2">
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-danger bg-opacity-10 d-flex align-items-center justify-content-between flex-wrap gap-2 py-2">
                     <div class="d-flex align-items-center gap-2">
                         <span class="badge bg-danger fs-6 px-3 py-2">
                             <i class="bi bi-exclamation-octagon-fill me-1"></i> Non-Conforming Items (<span id="violationsCountBadge">0</span>)
@@ -241,7 +241,7 @@
             conformingContainer.style.display = 'block';
             conformingSummaryText.textContent = data.summary;
         } else {
-            statusAlert.className = 'p-3 rounded border border-danger bg-danger bg-opacity-10 text-danger';
+            statusAlert.className = 'p-3 rounded border border-danger border-opacity-25 bg-danger bg-opacity-10 text-danger';
             let content = t.div({}, () => {
                 t.div({ class: 'd-flex align-items-center mb-1' }, () => {
                     t.i({ class: 'bi bi-exclamation-octagon-fill me-2 fs-5' });
@@ -323,9 +323,9 @@
             const overrunPct = v.allowed_budget > 0 ? Math.round((v.over_budget_quantity / v.allowed_budget) * 100) : 100;
             const unitText = v.unit_text ? ` ${v.unit_text}` : '';
 
-            let card = t.div({ class: 'card border-danger bg-dark violation-card', 'data-item-id': v.component_item_id }, () => {
+            let card = t.div({ class: 'card bg-dark violation-card mb-2', 'data-item-id': v.component_item_id }, () => {
                 // Card Header
-                t.div({ class: 'card-header bg-danger bg-opacity-10 border-danger d-flex align-items-center justify-content-between flex-wrap gap-2 py-2' }, () => {
+                t.div({ class: 'card-header bg-danger bg-opacity-10 d-flex align-items-center justify-content-between flex-wrap gap-2 py-2' }, () => {
                     t.div({ class: 'd-flex align-items-center flex-wrap gap-2' }, () => {
                         t.span({ class: 'badge bg-danger' }, 'NON-CONFORMING');
                         t.strong({ class: 'text-light fs-6' }, `#${v.component_item_id} - ${v.component_item_name}`);
@@ -345,7 +345,7 @@
                     });
 
                     t.div({ class: 'd-flex align-items-center gap-2' }, () => {
-                        t.span({ class: 'badge bg-danger bg-opacity-25 text-danger border border-danger' }, () => {
+                        t.span({ class: 'badge bg-danger bg-opacity-25 text-danger' }, () => {
                             t.i({ class: 'bi bi-receipt me-1' });
                             t.span({}, `${breakdown.length} MQR Request(s) Traced`);
                         });
@@ -396,31 +396,22 @@
                                 t.table({ class: 'table table-sm table-bordered align-middle mb-0' }, () => {
                                     t.thead({ class: 'table-dark text-uppercase small' }, () => {
                                         t.tr({}, () => {
-                                            t.th({ style: 'width: 140px;' }, 'MQR Ref');
+                                            t.th({ style: 'width: 90px;' }, 'MQR ID');
                                             t.th({}, 'Requested Material Item');
                                             t.th({ class: 'text-end', style: 'width: 110px;' }, 'Req. Qty');
                                             t.th({ class: 'text-center', style: 'width: 90px;' }, 'Factor');
                                             t.th({ class: 'text-end', style: 'width: 130px;' }, 'Charged Qty');
                                             t.th({ class: 'text-center', style: 'width: 80px;' }, 'Status');
                                             t.th({ style: 'width: 120px;' }, 'Date Needed');
-                                            t.th({ class: 'text-center', style: 'width: 110px;' }, 'Trace');
+                                            t.th({ class: 'text-center', style: 'width: 90px;' }, 'Trace');
                                         });
                                     });
 
                                     t.tbody({}, () => {
                                         breakdown.forEach(item => {
                                             t.tr({}, () => {
-                                                // MQR Reference Link
-                                                t.td({}, () => {
-                                                    t.a({
-                                                        href: item.material_quantity_request_url || `/material_quantity_request/${item.material_quantity_request_id}`,
-                                                        target: '_blank',
-                                                        class: 'btn btn-xs btn-outline-primary fw-bold text-nowrap py-0 px-2'
-                                                    }, () => {
-                                                        t.i({ class: 'bi bi-box-arrow-up-right me-1' });
-                                                        t.span({}, `#MQR-${item.material_quantity_request_id}`);
-                                                    });
-                                                });
+                                                // MQR ID
+                                                t.td({ class: 'font-monospace' }, String(item.material_quantity_request_id));
 
                                                 // Material item
                                                 t.td({}, () => {
@@ -454,7 +445,7 @@
                                                         title: 'View Material Quantity Request Record'
                                                     }, () => {
                                                         t.i({ class: 'bi bi-eye-fill me-1' });
-                                                        t.span({}, 'View MQR');
+                                                        t.span({}, 'View');
                                                     });
                                                     btn.onclick = (e) => {
                                                         window.util.navTo(mqrUrl, e);
