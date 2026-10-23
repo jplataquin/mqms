@@ -75,11 +75,14 @@
                             <thead>
                                 <tr class="text-uppercase small">
                                     <th>Item ID</th>
-                                    <th>Component Item Name</th>
+                                    <th>Contract Item</th>
+                                    <th>Record Type</th>
+                                    <th>Component Item</th>
                                     <th>Component</th>
                                     <th>Allowed Budget</th>
-                                    <th>Total Requested (Actual)</th>
-                                    <th>Over Budget Variance</th>
+                                    <th>Total Requested</th>
+                                    <th>Over Budget</th>
+                                    <th class="text-center">Problematic Record</th>
                                 </tr>
                             </thead>
                             <tbody id="violationsTableBody"></tbody>
@@ -225,12 +228,75 @@
             // Populate violations table
             data.violations.forEach(v => {
                 let tr = t.tr({}, () => {
-                    t.td({ class: 'fw-bold' }, '#' + v.component_item_id);
-                    t.td({}, v.component_item_name);
-                    t.td({}, v.component_name || '-');
+                    t.td({ class: 'fw-bold font-monospace' }, '#' + v.component_item_id);
+
+                    // Contract Item
+                    t.td({}, () => {
+                        if (v.contract_item_id) {
+                            t.a({
+                                href: v.contract_item_url || ('/project/section/contract_item/' + v.contract_item_id),
+                                target: '_blank',
+                                class: 'text-decoration-none'
+                            }, () => {
+                                if (v.contract_item_code) {
+                                    t.span({ class: 'badge bg-secondary bg-opacity-25 text-body me-1' }, v.contract_item_code);
+                                }
+                                t.span({}, v.contract_item_description || v.contract_item_name || ('Contract Item #' + v.contract_item_id));
+                            });
+                        } else {
+                            t.span({ class: 'text-muted' }, '-');
+                        }
+                    });
+
+                    // Record Type Indicator
+                    t.td({}, () => {
+                        let badgeClass = 'bg-secondary';
+                        let typeLabel = v.contract_item_type_name || v.contract_item_type || 'Component Item';
+                        if (v.contract_item_type === 'MATR') {
+                            badgeClass = 'bg-primary';
+                        } else if (v.contract_item_type === 'NMAT') {
+                            badgeClass = 'bg-info text-dark';
+                        } else if (v.contract_item_type === 'OPEX') {
+                            badgeClass = 'bg-warning text-dark';
+                        }
+                        t.span({ class: 'badge ' + badgeClass }, typeLabel);
+                        t.div({ class: 'small text-muted mt-1' }, v.record_type || 'Component Item');
+                    });
+
+                    t.td({ class: 'fw-semibold' }, v.component_item_name);
+
+                    // Component
+                    t.td({}, () => {
+                        if (v.component_id) {
+                            t.a({
+                                href: v.component_url || ('/project/section/contract_item/component/' + v.component_id),
+                                target: '_blank',
+                                class: 'text-decoration-none'
+                            }, v.component_name || ('Component #' + v.component_id));
+                        } else {
+                            t.span({}, v.component_name || '-');
+                        }
+                    });
+
                     t.td({}, v.allowed_budget + ' ' + (v.unit_text || ''));
                     t.td({ class: 'fw-bold text-danger' }, v.total_requested + ' ' + (v.unit_text || ''));
                     t.td({ class: 'fw-bold text-danger' }, '+' + v.over_budget_quantity + ' ' + (v.unit_text || ''));
+
+                    // Link to Problematic Record
+                    t.td({ class: 'text-center' }, () => {
+                        if (v.component_url) {
+                            t.a({
+                                href: v.component_url,
+                                target: '_blank',
+                                class: 'btn btn-sm btn-outline-danger d-inline-flex align-items-center'
+                            }, () => {
+                                t.i({ class: 'bi bi-box-arrow-up-right me-1' });
+                                t.span({}, 'View Record');
+                            });
+                        } else {
+                            t.span({ class: 'text-muted' }, '-');
+                        }
+                    });
                 });
                 $el.append(tr).to(violationsTableBody);
             });

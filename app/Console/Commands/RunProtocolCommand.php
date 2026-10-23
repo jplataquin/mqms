@@ -76,18 +76,22 @@ class RunProtocolCommand extends Command
 
             $tableRows = [];
             foreach ($result['violations'] as $v) {
+                $contractItemDisplay = trim(($v['contract_item_code'] ?? '') . ' ' . ($v['contract_item_description'] ?? ''));
                 $tableRows[] = [
                     $v['component_item_id'],
+                    $contractItemDisplay ?: ($v['contract_item_id'] ? '#' . $v['contract_item_id'] : '-'),
+                    $v['contract_item_type_name'] ?? ($v['contract_item_type'] ?? '-'),
                     $v['component_item_name'],
                     $v['component_name'] ?? '-',
-                    $v['allowed_budget'] . ' ' . $v['unit_text'],
-                    $v['total_requested'] . ' ' . $v['unit_text'],
-                    '+' . $v['over_budget_quantity'] . ' ' . $v['unit_text'],
+                    $v['allowed_budget'] . ' ' . ($v['unit_text'] ?? ''),
+                    $v['total_requested'] . ' ' . ($v['unit_text'] ?? ''),
+                    '+' . $v['over_budget_quantity'] . ' ' . ($v['unit_text'] ?? ''),
+                    $v['component_url'] ?? '-',
                 ];
             }
 
             $this->table(
-                ['Item ID', 'Item Name', 'Component', 'Allowed Budget', 'Requested (Actual)', 'Over Budget'],
+                ['Item ID', 'Contract Item', 'Type', 'Component Item', 'Component', 'Allowed Budget', 'Requested (Actual)', 'Over Budget', 'Link'],
                 $tableRows
             );
         }
