@@ -255,32 +255,6 @@ class MaterialItemController extends Controller
             'brand'                         => ['max:255']
         ]);
 
-        $validator->after(function ($validator) use ($material_group_id, $specification_unit_packaging) {
-            if (!$material_group_id) {
-                return;
-            }
-            $group = MaterialGroup::find($material_group_id);
-            if (!$group) {
-                $validator->errors()->add('material_group_id', 'The selected material group does not exist.');
-                return;
-            }
-
-            if (!$group->hasSpecificationTemplate()) {
-                $validator->errors()->add(
-                    'specification_unit_packaging',
-                    'The selected Material Group does not have a specification template configured. Material item cannot be created.'
-                );
-                return;
-            }
-
-            if (!$group->validateSpecification($specification_unit_packaging)) {
-                $validator->errors()->add(
-                    'specification_unit_packaging',
-                    'The specification does not match the required template: ' . $group->specification_template
-                );
-            }
-        });
-
         if ($validator->fails()) {
             
             return response()->json([
@@ -375,32 +349,6 @@ class MaterialItemController extends Controller
             'specification_unit_packaging'  => ['required','max:255'],
             'brand'                         => ['max:255']
         ]);
-
-        $validator->after(function ($validator) use ($material_group_id, $specification_unit_packaging) {
-            if (!$material_group_id) {
-                return;
-            }
-            $group = MaterialGroup::find($material_group_id);
-            if (!$group) {
-                $validator->errors()->add('material_group_id', 'The selected material group does not exist.');
-                return;
-            }
-
-            if (!$group->hasSpecificationTemplate()) {
-                $validator->errors()->add(
-                    'specification_unit_packaging',
-                    'The selected Material Group does not have a specification template configured. Material item cannot be updated.'
-                );
-                return;
-            }
-
-            if (!$group->validateSpecification($specification_unit_packaging)) {
-                $validator->errors()->add(
-                    'specification_unit_packaging',
-                    'The specification does not match the required template: ' . $group->specification_template
-                );
-            }
-        });
 
         if ($validator->fails()) {
             
