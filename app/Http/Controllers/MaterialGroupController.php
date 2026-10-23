@@ -75,13 +75,19 @@ class MaterialGroupController extends Controller
             ]);
         }
 
-        $name = $request->input('name') ?? '';
+        $name                   = $request->input('name') ?? '';
+        $specification_template = $request->input('specification_template');
         
         $validator = Validator::make($request->all(),[
             'name'                          => [
                 'required',
                 'max:255',
                 'unique:material_groups,name'
+            ],
+            'specification_template'        => [
+                'nullable',
+                'string',
+                'max:65535'
             ]
         ]);
 
@@ -101,8 +107,9 @@ class MaterialGroupController extends Controller
 
         $materialGroup = new MaterialGroup();
 
-        $materialGroup->name        = $name;
-        $materialGroup->created_by  = $user_id;
+        $materialGroup->name                    = $name;
+        $materialGroup->specification_template  = $specification_template !== null && trim($specification_template) !== '' ? trim($specification_template) : null;
+        $materialGroup->created_by              = $user_id;
 
         $materialGroup->save();
 
@@ -117,15 +124,21 @@ class MaterialGroupController extends Controller
 
     public function _update(Request $request){
 
-        $id       = $request->input('id') ?? 0;
-        $name     = $request->input('name') ?? '';
+        $id                     = $request->input('id') ?? 0;
+        $name                   = $request->input('name') ?? '';
+        $specification_template = $request->input('specification_template');
         
         $validator = Validator::make($request->all(),[
-            'id'   => ['required','integer'],
-            'name' => [
+            'id'                            => ['required','integer'],
+            'name'                          => [
                 'required',
                 'max:255',
                 'unique:material_groups,name,'.$id
+            ],
+            'specification_template'        => [
+                'nullable',
+                'string',
+                'max:65535'
             ]
         ]);
 
@@ -179,8 +192,11 @@ class MaterialGroupController extends Controller
 
 
 
-        $materialGroup->name         = $name;
-        $materialGroup->updated_by   = $user->id;
+        $materialGroup->name                    = $name;
+        if ($request->has('specification_template')) {
+            $materialGroup->specification_template  = $specification_template !== null && trim($specification_template) !== '' ? trim($specification_template) : null;
+        }
+        $materialGroup->updated_by              = $user->id;
 
         $materialGroup->save();
 
@@ -190,6 +206,31 @@ class MaterialGroupController extends Controller
             'message'   => '',
             'data'      => [
                 'id' => $id
+            ]
+        ]);
+    }
+
+    public function _get(Request $request, $id = null){
+        $id = (int) ($id ?? $request->input('id'));
+        $materialGroup = MaterialGroup::find($id);
+
+        if(!$materialGroup){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Record not found',
+                'data'      => []
+            ], 404);
+        }
+
+        return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data'      => [
+                'id'                     => $materialGroup->id,
+                'name'                   => $materialGroup->name,
+                'specification_template' => $materialGroup->specification_template,
+                'parsed_template'        => $materialGroup->parseSpecificationTemplate(),
+                'has_template'           => $materialGroup->hasSpecificationTemplate(),
             ]
         ]);
     }

@@ -264,7 +264,41 @@ class MaterialItemController extends Controller
             ]);
         }
 
-        
+        $materialGroup = MaterialGroup::find($material_group_id);
+
+        if (!$materialGroup) {
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => [
+                    'material_group_id' => ['Selected material group does not exist.']
+                ]
+            ]);
+        }
+
+        if (!$materialGroup->hasSpecificationTemplate()) {
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => [
+                    'specification_unit_packaging' => [
+                        'The selected material group does not have a specification template configured. Material items cannot be created or edited without a specification template.'
+                    ]
+                ]
+            ]);
+        }
+
+        if (!$materialGroup->validateSpecification($specification_unit_packaging)) {
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => [
+                    'specification_unit_packaging' => [
+                        'Specification / Unit Packaging must strictly match the template: ' . $materialGroup->specification_template
+                    ]
+                ]
+            ]);
+        }
 
         $user_id = Auth::user()->id;
 
@@ -358,6 +392,42 @@ class MaterialItemController extends Controller
                 ]);
 
             }
+        }
+
+        $materialGroup = MaterialGroup::find($material_group_id);
+
+        if (!$materialGroup) {
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => [
+                    'material_group_id' => ['Selected material group does not exist.']
+                ]
+            ]);
+        }
+
+        if (!$materialGroup->hasSpecificationTemplate()) {
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => [
+                    'specification_unit_packaging' => [
+                        'The selected material group does not have a specification template configured. Material items cannot be created or edited without a specification template.'
+                    ]
+                ]
+            ]);
+        }
+
+        if (!$materialGroup->validateSpecification($specification_unit_packaging)) {
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => [
+                    'specification_unit_packaging' => [
+                        'Specification / Unit Packaging must strictly match the template: ' . $materialGroup->specification_template
+                    ]
+                ]
+            ]);
         }
 
         $materialItem->material_group_id            = $material_group_id;
