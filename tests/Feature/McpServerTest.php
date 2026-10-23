@@ -18,6 +18,9 @@ use App\Models\Section;
 use App\Models\ContractItem;
 use App\Models\Component;
 use App\Models\ComponentItem;
+use App\Models\MaterialQuantity;
+use App\Models\MaterialGroup;
+use App\Models\Unit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class McpServerTest extends TestCase
@@ -108,6 +111,10 @@ class McpServerTest extends TestCase
         $this->assertContains('list_contract_items', $toolNames);
         $this->assertContains('list_components', $toolNames);
         $this->assertContains('list_component_items', $toolNames);
+        $this->assertContains('list_material_quantities', $toolNames);
+        $this->assertContains('list_material_items', $toolNames);
+        $this->assertContains('list_material_groups', $toolNames);
+        $this->assertContains('list_units', $toolNames);
     }
 
     /** @test */
@@ -726,5 +733,161 @@ class McpServerTest extends TestCase
         $result = json_decode($response->json('result.content.0.text'), true);
         $this->assertEquals(1, $result['total']);
         $this->assertEquals('Deformed Reinforcing Bars 16mm', $result['records'][0]['name']);
+    }
+
+    /** @test */
+    public function it_can_call_list_material_quantities_tool_with_filters()
+    {
+        $mq1 = new MaterialQuantity();
+        $mq1->component_item_id = 10;
+        $mq1->material_item_id = 1;
+        $mq1->quantity = 50.0;
+        $mq1->equivalent = 1.0;
+        $mq1->created_by = 1;
+        $mq1->save();
+
+        $mq2 = new MaterialQuantity();
+        $mq2->component_item_id = 20;
+        $mq2->material_item_id = 2;
+        $mq2->quantity = 100.0;
+        $mq2->equivalent = 1.0;
+        $mq2->created_by = 1;
+        $mq2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 22,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_material_quantities',
+                'arguments' => [
+                    'component_item_id' => 10,
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals(50.0, $result['records'][0]['quantity']);
+        $this->assertEquals(1, $result['records'][0]['material_item_id']);
+    }
+
+    /** @test */
+    public function it_can_call_list_material_items_tool_with_filters()
+    {
+        $item1 = new MaterialItem();
+        $item1->material_group_id = 1;
+        $item1->name = 'Portland Cement Type 1';
+        $item1->brand = 'Holcim';
+        $item1->specification_unit_packaging = '40kg bag';
+        $item1->created_by = 1;
+        $item1->save();
+
+        $item2 = new MaterialItem();
+        $item2->material_group_id = 2;
+        $item2->name = 'Deformed Bar 12mm';
+        $item2->brand = 'SteelAsia';
+        $item2->specification_unit_packaging = '6m length';
+        $item2->created_by = 1;
+        $item2->save();
+
+        // Filter by brand
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 23,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_material_items',
+                'arguments' => [
+                    'brand' => 'Steel',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Deformed Bar 12mm', $result['records'][0]['name']);
+
+        // Filter by specification packaging
+        $payloadSpec = [
+            'jsonrpc' => '2.0',
+            'id' => 24,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_material_items',
+                'arguments' => [
+                    'specification_unit_packaging' => 'bag',
+                ],
+            ],
+        ];
+        $responseSpec = $this->postJson('/mcp', $payloadSpec);
+        $responseSpec->assertStatus(200);
+        $resultSpec = json_decode($responseSpec->json('result.content.0.text'), true);
+        $this->assertEquals(1, $resultSpec['total']);
+        $this->assertEquals('Portland Cement Type 1', $resultSpec['records'][0]['name']);
+    }
+
+    /** @test */
+    public function it_can_call_list_material_groups_tool_with_filters()
+    {
+        $g1 = new MaterialGroup();
+        $g1->name = 'Cement and Aggregates';
+        $g1->created_by = 1;
+        $g1->save();
+
+        $g2 = new MaterialGroup();
+        $g2->name = 'Metals and Structural Steel';
+        $g2->created_by = 1;
+        $g2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 25,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_material_groups',
+                'arguments' => [
+                    'name' => 'Steel',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Metals and Structural Steel', $result['records'][0]['name']);
+    }
+
+    /** @test */
+    public function it_can_call_list_units_tool_with_filters()
+    {
+        $u1 = new Unit();
+        $u1->text = 'Bags';
+        $u1->created_by = 1;
+        $u1->save();
+
+        $u2 = new Unit();
+        $u2->text = 'Kilograms';
+        $u2->created_by = 1;
+        $u2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 26,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_units',
+                'arguments' => [
+                    'text' => 'Kilo',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Kilograms', $result['records'][0]['text']);
     }
 }

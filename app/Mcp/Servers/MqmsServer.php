@@ -12,9 +12,13 @@ use App\Mcp\Tools\GetRecordTool;
 use App\Mcp\Tools\ListComponentItemsTool;
 use App\Mcp\Tools\ListComponentsTool;
 use App\Mcp\Tools\ListContractItemsTool;
+use App\Mcp\Tools\ListMaterialGroupsTool;
+use App\Mcp\Tools\ListMaterialItemsTool;
+use App\Mcp\Tools\ListMaterialQuantitiesTool;
 use App\Mcp\Tools\ListProjectsTool;
 use App\Mcp\Tools\ListRecordsTool;
 use App\Mcp\Tools\ListSectionsTool;
+use App\Mcp\Tools\ListUnitsTool;
 use App\Mcp\Tools\SearchRecordsTool;
 use Laravel\Mcp\Server;
 
@@ -24,7 +28,7 @@ class MqmsServer extends Server
 
     public string $serverVersion = '1.0.0';
 
-    public string $instructions = 'Provides HTTP MCP access to MQMS models (excluding roles, access codes, credentials, and user passwords). Allows reading records as resources and querying via specialized WBS tools (list_projects, list_sections, list_contract_items, list_components, list_component_items), get_record, list_records, search_records, and get_material_price_stats tools.';
+    public string $instructions = 'Provides HTTP MCP access to MQMS models (excluding roles, access codes, credentials, and user passwords). Allows reading records as resources and querying via specialized WBS and Budget/Materials tools, get_record, list_records, search_records, and get_material_price_stats tools.';
 
     public int $defaultPaginationLength = 50;
 
@@ -40,6 +44,10 @@ class MqmsServer extends Server
         ListContractItemsTool::class,
         ListComponentsTool::class,
         ListComponentItemsTool::class,
+        ListMaterialQuantitiesTool::class,
+        ListMaterialItemsTool::class,
+        ListMaterialGroupsTool::class,
+        ListUnitsTool::class,
     ];
 
     public array $resources = [];
