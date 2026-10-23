@@ -86,7 +86,8 @@ class MaterialGroupController extends Controller
             ],
             'specification_template'        => [
                 'nullable',
-                'string'
+                'string',
+                'max:65535'
             ]
         ]);
 
@@ -136,7 +137,8 @@ class MaterialGroupController extends Controller
             ],
             'specification_template'        => [
                 'nullable',
-                'string'
+                'string',
+                'max:65535'
             ]
         ]);
 
@@ -191,7 +193,9 @@ class MaterialGroupController extends Controller
 
 
         $materialGroup->name                    = $name;
-        $materialGroup->specification_template  = $specification_template !== null && trim($specification_template) !== '' ? trim($specification_template) : null;
+        if ($request->has('specification_template')) {
+            $materialGroup->specification_template  = $specification_template !== null && trim($specification_template) !== '' ? trim($specification_template) : null;
+        }
         $materialGroup->updated_by              = $user->id;
 
         $materialGroup->save();
@@ -202,6 +206,31 @@ class MaterialGroupController extends Controller
             'message'   => '',
             'data'      => [
                 'id' => $id
+            ]
+        ]);
+    }
+
+    public function _get(Request $request, $id = null){
+        $id = (int) ($id ?? $request->input('id'));
+        $materialGroup = MaterialGroup::find($id);
+
+        if(!$materialGroup){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Record not found',
+                'data'      => []
+            ], 404);
+        }
+
+        return response()->json([
+            'status'    => 1,
+            'message'   => '',
+            'data'      => [
+                'id'                     => $materialGroup->id,
+                'name'                   => $materialGroup->name,
+                'specification_template' => $materialGroup->specification_template,
+                'parsed_template'        => $materialGroup->parseSpecificationTemplate(),
+                'has_template'           => $materialGroup->hasSpecificationTemplate(),
             ]
         ]);
     }

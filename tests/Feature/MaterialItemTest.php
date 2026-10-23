@@ -54,7 +54,7 @@ class MaterialItemTest extends TestCase
 
         $this->group2 = new MaterialGroup();
         $this->group2->name = 'Aggregates';
-        $this->group2->specification_template = '[Unit:text]';
+        $this->group2->specification_template = '[Spec:text]';
         $this->group2->created_by = $this->user->id;
         $this->group2->save();
 

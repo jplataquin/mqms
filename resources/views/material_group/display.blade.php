@@ -40,7 +40,7 @@
 
                 <div class="col-12 mt-3">
                     <div class="form-group">
-                        <label>Specification Template</label>
+                        <label>Specification Template <span class="text-muted small">(Required for Material Item creation)</span></label>
                         <input type="text" id="specificationTemplate" disabled="true" value="{{$specification_template ?? ''}}" class="form-control" placeholder="e.g. [Width:number] mm x [Length:number] mm - [Color:text]"/>
                         <small class="form-text text-muted">
                             Define the prototype format for material specifications. Use brackets for dynamic variables: <code>[Label:number]</code> for numeric values, <code>[Label:text]</code> or <code>[Label]</code> for text values. Static text outside brackets will be fixed.
