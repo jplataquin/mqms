@@ -34,6 +34,11 @@ MQMS is a specialized ERP-style application designed for construction, engineeri
 - **Secure Authentication**: 3rd-party requests are authenticated via a dedicated middleware checking `X-API-KEY` and `X-SECRET-KEY` headers.
 - **Integration Guide**: Detailed technical instructions can be found in [API_DOCUMENTATION.md](API_DOCUMENTATION.md).
 
+### 7. AI & Model Context Protocol (MCP) Integration
+- **MCP Server**: Implements the Model Context Protocol (via `laravel/mcp`) exposing authenticated endpoints (`/api/mcp`) and local endpoints (`/mcp`) for AI clients (Gemini CLI, Claude Desktop, Cursor).
+- **Personal Access Tokens**: Managed in the web UI under `/personal_access_tokens` via Laravel Sanctum Bearer token authentication.
+- **MCP Documentation**: Detailed technical specifications, tool schemas, and client setup guides can be found in [MCP_DOCUMENTATION.md](MCP_DOCUMENTATION.md).
+
 ## Technical Foundation
 - **Framework**: Laravel 10 (PHP)
 - **ORM**: Eloquent (Heavy use of SoftDeletes and complex relationships)
