@@ -81,6 +81,7 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::post('/section/delete', [App\Http\Controllers\SectionController::class, '_delete']);
     
     Route::get('/material/group/list', [App\Http\Controllers\MaterialGroupController::class, '_list']);
+    Route::get('/material/group/get/{id?}', [App\Http\Controllers\MaterialGroupController::class, '_get']);
     Route::post('/material/group/create', [App\Http\Controllers\MaterialGroupController::class, '_create']);
     Route::post('/material/group/update', [App\Http\Controllers\MaterialGroupController::class, '_update']);
     Route::post('/material/group/delete', [App\Http\Controllers\MaterialGroupController::class, '_delete']);

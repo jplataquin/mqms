@@ -1,0 +1,69 @@
+<?php
+
+namespace Tests\Unit;
+
+use Tests\TestCase;
+use App\Models\MaterialGroup;
+
+class MaterialGroupTemplateTest extends TestCase
+{
+    public function test_it_identifies_empty_and_null_template()
+    {
+        $group = new MaterialGroup();
+        $this->assertFalse($group->hasSpecificationTemplate());
+        $this->assertFalse($group->validateSpecification('any specification'));
+
+        $group->specification_template = '   ';
+        $this->assertFalse($group->hasSpecificationTemplate());
+        $this->assertFalse($group->validateSpecification('any specification'));
+    }
+
+    public function test_it_parses_template_with_mixed_types_and_statics()
+    {
+        $group = new MaterialGroup();
+        $group->specification_template = '[Width:number] mm x [Length:number] mm - [Color:text]';
+
+        $segments = $group->parseSpecificationTemplate();
+        $this->assertCount(5, $segments);
+
+        $this->assertEquals(['type' => 'variable', 'label' => 'Width', 'datatype' => 'number'], $segments[0]);
+        $this->assertEquals(['type' => 'static', 'value' => ' mm x '], $segments[1]);
+        $this->assertEquals(['type' => 'variable', 'label' => 'Length', 'datatype' => 'number'], $segments[2]);
+        $this->assertEquals(['type' => 'static', 'value' => ' mm - '], $segments[3]);
+        $this->assertEquals(['type' => 'variable', 'label' => 'Color', 'datatype' => 'text'], $segments[4]);
+
+        $this->assertTrue($group->validateSpecification('10 mm x 20 mm - Red'));
+        $this->assertTrue($group->validateSpecification('10.5 mm x 20.25 mm - Matte Black'));
+
+        // Invalid: number contains non-numeric
+        $this->assertFalse($group->validateSpecification('ten mm x 20 mm - Red'));
+
+        // Invalid: missing static delimiter
+        $this->assertFalse($group->validateSpecification('10mm x 20 mm - Red'));
+    }
+
+    public function test_it_handles_default_text_type_when_unspecified()
+    {
+        $group = new MaterialGroup();
+        $group->specification_template = '[Packaging] of [Count:number] pcs';
+
+        $segments = $group->parseSpecificationTemplate();
+        $this->assertEquals(['type' => 'variable', 'label' => 'Packaging', 'datatype' => 'text'], $segments[0]);
+        $this->assertEquals(['type' => 'static', 'value' => ' of '], $segments[1]);
+        $this->assertEquals(['type' => 'variable', 'label' => 'Count', 'datatype' => 'number'], $segments[2]);
+        $this->assertEquals(['type' => 'static', 'value' => ' pcs'], $segments[3]);
+
+        $this->assertTrue($group->validateSpecification('Box of 100 pcs'));
+        $this->assertFalse($group->validateSpecification('Box of abc pcs'));
+        $this->assertFalse($group->validateSpecification('Box of 100 pcs extra'));
+    }
+
+    public function test_it_handles_special_regex_characters_in_static_parts()
+    {
+        $group = new MaterialGroup();
+        $group->specification_template = '[Diameter:number]mm (Grade: [Grade:text]) [Note:text]';
+
+        $this->assertTrue($group->validateSpecification('16mm (Grade: 60) High Tensile'));
+        $this->assertFalse($group->validateSpecification('16mm Grade: 60 High Tensile'));
+    }
+}
