@@ -26,6 +26,10 @@ use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderItem;
 use App\Models\PurchaseOrderReceived;
 use App\Models\PurchaseOrderReceivedItem;
+use App\Models\PaymentTerm;
+use App\Models\ManpowerRegistry;
+use App\Models\Coupon;
+use App\Models\Accomplishment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class McpServerTest extends TestCase
@@ -127,6 +131,11 @@ class McpServerTest extends TestCase
         $this->assertContains('list_purchase_order_items', $toolNames);
         $this->assertContains('list_purchase_order_received', $toolNames);
         $this->assertContains('list_purchase_order_received_items', $toolNames);
+        $this->assertContains('list_suppliers', $toolNames);
+        $this->assertContains('list_payment_terms', $toolNames);
+        $this->assertContains('list_manpower_registry', $toolNames);
+        $this->assertContains('list_coupons', $toolNames);
+        $this->assertContains('list_accomplishments', $toolNames);
     }
 
     /** @test */
@@ -1182,5 +1191,217 @@ class McpServerTest extends TestCase
         $result = json_decode($response->json('result.content.0.text'), true);
         $this->assertEquals(1, $result['total']);
         $this->assertEquals(15.0, $result['records'][0]['quantity_received']);
+    }
+
+    /** @test */
+    public function it_can_call_list_suppliers_tool_with_filters()
+    {
+        $sup1 = new Supplier();
+        $sup1->name = 'Apex Hardware Supply';
+        $sup1->address = 'Iloilo City Central';
+        $sup1->primary_contact_person = 'Juan Dela Cruz';
+        $sup1->primary_contact_no = '09171234567';
+        $sup1->primary_email = 'juan@apex.com';
+        $sup1->created_by = 1;
+        $sup1->save();
+
+        $sup2 = new Supplier();
+        $sup2->name = 'Beacon Heavy Metals';
+        $sup2->address = 'Bacolod City';
+        $sup2->primary_contact_person = 'Maria Santos';
+        $sup2->primary_contact_no = '09187654321';
+        $sup2->primary_email = 'maria@beacon.com';
+        $sup2->created_by = 2;
+        $sup2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 34,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_suppliers',
+                'arguments' => [
+                    'name' => 'Apex',
+                    'contact_person' => 'Juan',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Apex Hardware Supply', $result['records'][0]['name']);
+    }
+
+    /** @test */
+    public function it_can_call_list_payment_terms_tool_with_filters()
+    {
+        $term1 = new PaymentTerm();
+        $term1->text = '30 Days Net Credit';
+        $term1->created_by = 1;
+        $term1->save();
+
+        $term2 = new PaymentTerm();
+        $term2->text = 'Cash on Delivery (COD)';
+        $term2->created_by = 2;
+        $term2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 35,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_payment_terms',
+                'arguments' => [
+                    'text' => '30 Days',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('30 Days Net Credit', $result['records'][0]['text']);
+    }
+
+    /** @test */
+    public function it_can_call_list_manpower_registry_tool_with_filters()
+    {
+        $worker1 = new ManpowerRegistry();
+        $worker1->firstname = 'Pedro';
+        $worker1->lastname = 'Penduko';
+        $worker1->gender = 'M';
+        $worker1->birthdate = '1990-05-15';
+        $worker1->mobile_no = '09191112233';
+        $worker1->type = 'Skilled';
+        $worker1->status = 'ACTV';
+        $worker1->structure_category = 'VERT';
+        $worker1->region = 'VI____';
+        $worker1->province = 'ILOILO';
+        $worker1->city_municipality = 'ILOILO';
+        $worker1->welder = 1;
+        $worker1->mason = 0;
+        $worker1->created_by = 1;
+        $worker1->save();
+
+        $worker2 = new ManpowerRegistry();
+        $worker2->firstname = 'Ana';
+        $worker2->lastname = 'Reyes';
+        $worker2->gender = 'F';
+        $worker2->birthdate = '1995-08-20';
+        $worker2->mobile_no = '09192223344';
+        $worker2->type = 'Labor';
+        $worker2->status = 'PEND';
+        $worker2->structure_category = 'HORI';
+        $worker2->region = 'VI____';
+        $worker2->province = 'CAPIZ_';
+        $worker2->city_municipality = 'ROXAS_';
+        $worker2->welder = 0;
+        $worker2->mason = 1;
+        $worker2->created_by = 1;
+        $worker2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 36,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_manpower_registry',
+                'arguments' => [
+                    'type' => 'Skilled',
+                    'welder' => true,
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Pedro', $result['records'][0]['firstname']);
+        $this->assertEquals('Penduko', $result['records'][0]['lastname']);
+    }
+
+    /** @test */
+    public function it_can_call_list_coupons_tool_with_filters()
+    {
+        $coupon1 = new Coupon();
+        $coupon1->status = 'UNCL';
+        $coupon1->salt = 'randomsalt123456';
+        $coupon1->code = 'hashcode_diesel_voucher_01';
+        $coupon1->amount = 1500.00;
+        $coupon1->plate_no = 'ABC-1234';
+        $coupon1->remarks = 'Fuel for Dump Truck 1';
+        $coupon1->created_by = 1;
+        $coupon1->save();
+
+        $coupon2 = new Coupon();
+        $coupon2->status = 'CLMD';
+        $coupon2->salt = 'randomsalt654321';
+        $coupon2->code = 'hashcode_diesel_voucher_02';
+        $coupon2->amount = 2500.00;
+        $coupon2->plate_no = 'XYZ-7890';
+        $coupon2->claimed_by_name = 'Roberto Cruz';
+        $coupon2->remarks = 'Fuel for Excavator 2';
+        $coupon2->created_by = 1;
+        $coupon2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 37,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_coupons',
+                'arguments' => [
+                    'status' => 'UNCL',
+                    'plate_no' => 'ABC',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('ABC-1234', $result['records'][0]['plate_no']);
+    }
+
+    /** @test */
+    public function it_can_call_list_accomplishments_tool_with_filters()
+    {
+        $acc1 = new Accomplishment();
+        $acc1->contract_item_id = 45;
+        $acc1->type = 'ACTUAL';
+        $acc1->entry_data = '2026-10-15';
+        $acc1->quantity = 75.5;
+        $acc1->remarks = 'Completed southern embankment pour';
+        $acc1->created_by = 1;
+        $acc1->save();
+
+        $acc2 = new Accomplishment();
+        $acc2->contract_item_id = 45;
+        $acc2->type = 'TARGET';
+        $acc2->entry_data = '2026-10-20';
+        $acc2->quantity = 100.0;
+        $acc2->remarks = 'Planned northern foundation pour';
+        $acc2->created_by = 1;
+        $acc2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 38,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_accomplishments',
+                'arguments' => [
+                    'contract_item_id' => 45,
+                    'type' => 'ACTUAL',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals(75.5, $result['records'][0]['quantity']);
+        $this->assertEquals('Completed southern embankment pour', $result['records'][0]['remarks']);
     }
 }

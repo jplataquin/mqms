@@ -9,7 +9,7 @@ class ManpowerRegistry extends Model
 {
     use HasFactory;
 
-    protected $table = 'coupons';
+    protected $table = 'manpower_registry';
 
     public function getName(){
 
