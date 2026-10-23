@@ -16,9 +16,11 @@ MQMS is a specialized ERP-style application designed for construction, engineeri
 - **Material Quantity Requests (MQR)**: Formal workflow for requesting materials from the warehouse, including approval/rejection stages.
 
 ### 3. Procurement & Supply Chain
+- **Lifecycle Flow**: `Material Quantity Request (MQR) -> Purchase Order (PO) (1-to-many: multiple POs per MQR) -> Purchase Order Received (1-to-many: multiple delivery receipts per PO)`.
 - **Supplier Management**: Database of vendors and payment terms.
 - **Material Canvassing**: Price comparison and quote management.
 - **Purchase Orders (PO)**: Generation and tracking of orders tied to specific projects or material requests.
+- **Receiving & Delivery**: Tracking actual physical deliveries against purchase orders.
 
 ### 4. Specialized Resource Tracking
 - **Manpower Registry**: Labor resource and personnel tracking.

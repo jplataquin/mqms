@@ -29,6 +29,19 @@ Project
 ```
 External AI agents and clients should follow this hierarchy when traversing relational data or verifying budgets and quantities.
 
+### Procurement & Fulfillment Flow
+The procurement and material consumption lifecycle follows a structured sequence from requisition to physical job site delivery:
+```text
+Material Quantity Request (MQR)
+ └── Purchase Order (PO) [1-to-many: an approved MQR may generate multiple POs for split suppliers or batches]
+      └── Purchase Order Received [1-to-many: a PO may have multiple partial delivery receipts]
+```
+- **Relational Item Linkage:**
+  `MaterialQuantityRequestItem` $\rightarrow$ `PurchaseOrderItem` $\rightarrow$ `PurchaseOrderReceivedItem`.
+- **Direct Procurement Pipeline:**
+  The direct procurement module mirrors this exact lifecycle:
+  `DirectMaterialQuantityRequest` (DMQR) $\rightarrow$ `DirectPurchaseOrder` (DPO) $\rightarrow$ `DirectPurchaseOrderReceived` (DPOR).
+
 ### Key Capabilities
 1. **Dynamic Resource Overview:** Inspect database schema metadata, record counts, and access templates via `mqms://models/{model}`.
 2. **Direct Record Retrieval via URI:** Direct resource reading via `mqms://models/{model}/{id}` through a custom MCP method handler.
