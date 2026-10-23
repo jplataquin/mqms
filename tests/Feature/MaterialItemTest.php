@@ -48,11 +48,13 @@ class MaterialItemTest extends TestCase
 
         $this->group1 = new MaterialGroup();
         $this->group1->name = 'Cementitious Materials';
+        $this->group1->specification_template = '[Weight:number]kg bag';
         $this->group1->created_by = $this->user->id;
         $this->group1->save();
 
         $this->group2 = new MaterialGroup();
         $this->group2->name = 'Aggregates';
+        $this->group2->specification_template = '[Unit:text]';
         $this->group2->created_by = $this->user->id;
         $this->group2->save();
 
