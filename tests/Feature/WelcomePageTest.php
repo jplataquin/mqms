@@ -30,24 +30,25 @@ class WelcomePageTest extends TestCase
     }
 
     /** @test */
-    public function guest_can_view_corporate_technological_welcome_page()
+    public function guest_can_view_minimalist_technological_welcome_page()
     {
         $response = $this->get('/');
 
         $response->assertStatus(200);
         $response->assertSee('MQMS');
+        $response->assertSee('Material &amp; Quantity Management System', false);
+        $response->assertSee('id="tech-canvas"', false);
+        $response->assertSee('Sign In');
         $response->assertSee('data-bs-theme="dark"', false);
-        $response->assertSee('SYSTEM ONLINE');
-        $response->assertSee('Engineering &amp; Quantity Control Platform', false);
-        $response->assertSee('Operator Sign In');
-        $response->assertSee('Work Breakdown Structure');
-        $response->assertSee('Procurement &amp; Canvassing', false);
-        $response->assertSee('AI &amp; MCP Integration', false);
-        $response->assertSee('Registered Schema Entities');
+
+        // Verify all cards and text blocks have been removed
+        $response->assertDontSee('Core System Modules');
+        $response->assertDontSee('module-card');
+        $response->assertDontSee('Engineering &amp; Quantity Control Platform', false);
     }
 
     /** @test */
-    public function authenticated_user_sees_dashboard_and_token_actions()
+    public function authenticated_user_sees_enter_dashboard_action()
     {
         $user = User::factory()->create([
             'name' => 'Commander J. Vance',
@@ -58,9 +59,7 @@ class WelcomePageTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('MQMS');
-        $response->assertSee('Dashboard');
-        $response->assertSee('Access Dashboard');
-        $response->assertSee('API &amp; MCP Tokens', false);
-        $response->assertDontSee('Operator Sign In');
+        $response->assertSee('Enter Dashboard');
+        $response->assertDontSee('Sign In');
     }
 }
