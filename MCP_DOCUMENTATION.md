@@ -25,7 +25,7 @@ MQMS implements the [Model Context Protocol](https://modelcontextprotocol.io/) u
    - `list_records`: Paginated, ordered queries with column validation.
    - `search_records`: Multi-field fuzzy search across common text columns and primary keys.
    - `get_material_price_stats`: Domain analytics aggregating approved canvass pricing from both standard and direct procurement pipelines.
-   - **Dedicated Domain & Entity Listing Tools**: High-level tools with rich relational, status, and attribute filters across WBS, Materials/Budget, Procurement/Workflow, and Partners/Execution (`list_projects`, `list_sections`, `list_contract_items`, `list_components`, `list_component_items`, `list_material_groups`, `list_material_items`, `list_material_quantities`, `list_units`, `list_material_quantity_requests`, `list_material_quantity_request_items`, `list_material_canvasses`, `list_purchase_orders`, `list_purchase_order_items`, `list_purchase_order_received`, `list_purchase_order_received_items`, `list_suppliers`, `list_payment_terms`, `list_manpower_registry`, `list_coupons`, `list_accomplishments`).
+   - **Dedicated Domain & Entity Listing Tools**: High-level tools with rich relational, status, and attribute filters across WBS, Materials/Budget, Procurement/Workflow, Partners/Execution, and System/Misc (`list_projects`, `list_sections`, `list_contract_items`, `list_components`, `list_component_items`, `list_material_groups`, `list_material_items`, `list_material_quantities`, `list_units`, `list_material_quantity_requests`, `list_material_quantity_request_items`, `list_material_canvasses`, `list_purchase_orders`, `list_purchase_order_items`, `list_purchase_order_received`, `list_purchase_order_received_items`, `list_suppliers`, `list_payment_terms`, `list_manpower_registry`, `list_coupons`, `list_accomplishments`, `list_users`, `list_comments`).
 4. **Strict Security Boundaries:** Whitelist of allowed entities, explicit denial of RBAC and API credential tables, and automatic scrubbing of passwords and security tokens.
 
 ---
@@ -440,6 +440,38 @@ Tracks physical site accomplishment records and progress monitoring tied to cont
   - `entry_date_from` / `entry_date_to` (string, optional): Accomplishment log date range (`YYYY-MM-DD`).
   - `remarks` (string, optional): Site remarks or activity notes (partial match).
   - `created_by` (integer, optional): Submitting user ID.
+  - `date_from` / `date_to` (string, optional): Creation date range (`YYYY-MM-DD`).
+  - `page`, `limit`, `order_by`, `order`: Standard pagination and sorting.
+
+---
+
+### Tool 6: Dedicated Listing Tools (System & Miscellaneous)
+
+MQMS provides dedicated administrative tools to query application users and entity comments with strict security boundaries.
+
+#### 1. `list_users`
+Lists and filters system users with automated credential sanitization.
+- **Parameters:**
+  - `id` (integer, optional): Exact user ID.
+  - `name` (string, optional): User name keyword (partial match via `LIKE`).
+  - `email` (string, optional): Email address keyword (partial match via `LIKE`).
+  - `status` (string, optional): User account status (e.g., `ACTV`, `DCTV`).
+  - `created_by` (integer, optional): Creator user ID.
+  - `date_from` / `date_to` (string, optional): Account creation date range (`YYYY-MM-DD`).
+  - `page`, `limit`, `order_by`, `order`: Standard pagination and sorting.
+- **Security Boundary:**
+  - `password`, `remember_token`, and API secrets are never returned in records.
+  - Sorting by sensitive columns is automatically prevented.
+
+#### 2. `list_comments`
+Lists and filters entity comments, remarks, and audit trail logs.
+- **Parameters:**
+  - `id` (integer, optional): Exact comment ID.
+  - `comment_type` (string, optional): Comment category code.
+  - `record_type` (string, optional): Associated entity code (e.g., `PROJEC`, `PRORDR`).
+  - `record_id` (integer, optional): Target record ID to which the comment is attached.
+  - `content` (string, optional): Comment content keyword (partial match via `LIKE`).
+  - `created_by` (integer, optional): Author user ID.
   - `date_from` / `date_to` (string, optional): Creation date range (`YYYY-MM-DD`).
   - `page`, `limit`, `order_by`, `order`: Standard pagination and sorting.
 

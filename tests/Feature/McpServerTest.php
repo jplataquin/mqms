@@ -30,6 +30,7 @@ use App\Models\PaymentTerm;
 use App\Models\ManpowerRegistry;
 use App\Models\Coupon;
 use App\Models\Accomplishment;
+use App\Models\Comment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class McpServerTest extends TestCase
@@ -136,6 +137,8 @@ class McpServerTest extends TestCase
         $this->assertContains('list_manpower_registry', $toolNames);
         $this->assertContains('list_coupons', $toolNames);
         $this->assertContains('list_accomplishments', $toolNames);
+        $this->assertContains('list_users', $toolNames);
+        $this->assertContains('list_comments', $toolNames);
     }
 
     /** @test */
@@ -1403,5 +1406,89 @@ class McpServerTest extends TestCase
         $this->assertEquals(1, $result['total']);
         $this->assertEquals(75.5, $result['records'][0]['quantity']);
         $this->assertEquals('Completed southern embankment pour', $result['records'][0]['remarks']);
+    }
+
+    /** @test */
+    public function it_can_call_list_users_tool_with_filters_and_scrubs_passwords()
+    {
+        $u1 = new User();
+        $u1->name = 'Engineer Roberto Santos';
+        $u1->email = 'roberto.santos@mqms.local';
+        $u1->password = bcrypt('secret123');
+        $u1->status = 'ACTV';
+        $u1->created_by = 1;
+        $u1->save();
+
+        $u2 = new User();
+        $u2->name = 'Auditor Teresa Reyes';
+        $u2->email = 'teresa.reyes@mqms.local';
+        $u2->password = bcrypt('secret456');
+        $u2->status = 'DCTV';
+        $u2->created_by = 1;
+        $u2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 39,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_users',
+                'arguments' => [
+                    'name' => 'Roberto',
+                    'status' => 'ACTV',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Engineer Roberto Santos', $result['records'][0]['name']);
+        $this->assertEquals('roberto.santos@mqms.local', $result['records'][0]['email']);
+
+        // Rigorous security check: ensure password and remember_token are not exposed
+        $this->assertArrayNotHasKey('password', $result['records'][0]);
+        $this->assertArrayNotHasKey('remember_token', $result['records'][0]);
+    }
+
+    /** @test */
+    public function it_can_call_list_comments_tool_with_filters()
+    {
+        $c1 = new Comment();
+        $c1->comment_type = 'NOTE';
+        $c1->record_type = 'PROJEC';
+        $c1->record_id = 99;
+        $c1->content = 'Site inspection approved by quality officer';
+        $c1->created_by = 1;
+        $c1->save();
+
+        $c2 = new Comment();
+        $c2->comment_type = 'WARN';
+        $c2->record_type = 'PRORDR';
+        $c2->record_id = 50;
+        $c2->content = 'Delivery delayed due to heavy rainfall';
+        $c2->created_by = 2;
+        $c2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 40,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_comments',
+                'arguments' => [
+                    'record_type' => 'PROJEC',
+                    'record_id' => 99,
+                    'content' => 'inspection',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Site inspection approved by quality officer', $result['records'][0]['content']);
+        $this->assertEquals('PROJEC', $result['records'][0]['record_type']);
+        $this->assertEquals(99, $result['records'][0]['record_id']);
     }
 }
