@@ -385,4 +385,26 @@ class LevelOneBudgetDiagnosticTest extends TestCase
         $this->assertTrue($result['passed']);
         $this->assertEquals(0, $result['violations_count']);
     }
+
+    /** @test */
+    public function it_seeds_project_data_and_verifies_level_one_budget_diagnostic()
+    {
+        $this->seed(\Database\Seeders\LevelOneBudgetDiagnosticSeeder::class);
+
+        $project = Project::latest('id')->first();
+        $this->assertNotNull($project);
+
+        $result = LevelOneBudgetDiagnostic::check($project->id);
+
+        $this->assertEquals('success', $result['status']);
+        $this->assertFalse($result['passed']);
+        $this->assertEquals(1, $result['violations_count']);
+        $this->assertEquals(2, $result['total_items']);
+
+        $violation = $result['violations'][0];
+        $this->assertEquals('16mm Deformed Bar Budget Limit', $violation['component_item_name']);
+        $this->assertEquals(100.0, $violation['allowed_budget']);
+        $this->assertEquals(120.0, $violation['total_requested']); // 60 * 2.0 = 120
+        $this->assertEquals(20.0, $violation['over_budget_quantity']);
+    }
 }
