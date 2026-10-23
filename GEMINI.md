@@ -89,7 +89,7 @@ You are operating in a multi-agent environment where multiple Gemini sessions ru
       - Perform syntax checks on touched files (e.g., `php -l <file>`).
       - Stage and commit the merge: `git commit -m "chore: merge origin/main and resolve conflicts"`
    d. **Direct Push to Main**:
-      - Push your branch directly to the remote main branch: `git push origin HEAD:main`
+      - Push your branch directly to the remote main branch: `git -c credential.helper=store push origin HEAD:main`
    e. **Clean State**:
       - Mark your state file `.agent-states/<your_agent_id>.md` as `Status: Idle` or remove it.
       - Announce: `🚀 Task successfully verified and shipped directly to main!`
