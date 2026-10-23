@@ -14,6 +14,18 @@ use App\Models\MaterialCanvass;
 use App\Models\MaterialQuantityRequestItem;
 use App\Models\DirectMaterialCanvass;
 use App\Models\DirectMaterialQuantityRequestItem;
+use App\Models\Section;
+use App\Models\ContractItem;
+use App\Models\Component;
+use App\Models\ComponentItem;
+use App\Models\MaterialQuantity;
+use App\Models\MaterialGroup;
+use App\Models\Unit;
+use App\Models\MaterialQuantityRequest;
+use App\Models\PurchaseOrder;
+use App\Models\PurchaseOrderItem;
+use App\Models\PurchaseOrderReceived;
+use App\Models\PurchaseOrderReceivedItem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class McpServerTest extends TestCase
@@ -99,6 +111,22 @@ class McpServerTest extends TestCase
         $this->assertContains('list_records', $toolNames);
         $this->assertContains('search_records', $toolNames);
         $this->assertContains('get_material_price_stats', $toolNames);
+        $this->assertContains('list_projects', $toolNames);
+        $this->assertContains('list_sections', $toolNames);
+        $this->assertContains('list_contract_items', $toolNames);
+        $this->assertContains('list_components', $toolNames);
+        $this->assertContains('list_component_items', $toolNames);
+        $this->assertContains('list_material_quantities', $toolNames);
+        $this->assertContains('list_material_items', $toolNames);
+        $this->assertContains('list_material_groups', $toolNames);
+        $this->assertContains('list_units', $toolNames);
+        $this->assertContains('list_material_quantity_requests', $toolNames);
+        $this->assertContains('list_material_quantity_request_items', $toolNames);
+        $this->assertContains('list_material_canvasses', $toolNames);
+        $this->assertContains('list_purchase_orders', $toolNames);
+        $this->assertContains('list_purchase_order_items', $toolNames);
+        $this->assertContains('list_purchase_order_received', $toolNames);
+        $this->assertContains('list_purchase_order_received_items', $toolNames);
     }
 
     /** @test */
@@ -486,5 +514,673 @@ class McpServerTest extends TestCase
         $resultEmpty = json_decode($responseEmpty->json('result.content.0.text'), true);
         $this->assertEquals(0, $resultEmpty['total_approved_canvasses']);
         $this->assertNull($resultEmpty['stats']);
+    }
+
+    /** @test */
+    public function it_can_call_list_projects_tool_with_filters()
+    {
+        $p1 = new Project();
+        $p1->name = 'Highway 101 Expansion';
+        $p1->status = 'ACTV';
+        $p1->created_by = 1;
+        $p1->created_at = '2026-01-10 10:00:00';
+        $p1->save();
+
+        $p2 = new Project();
+        $p2->name = 'Metro Subway Tunnel';
+        $p2->status = 'ARCH';
+        $p2->created_by = 2;
+        $p2->created_at = '2026-06-15 12:00:00';
+        $p2->save();
+
+        // Filter by name
+        $payloadName = [
+            'jsonrpc' => '2.0',
+            'id' => 15,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_projects',
+                'arguments' => ['name' => 'Tunnel'],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payloadName);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Metro Subway Tunnel', $result['records'][0]['name']);
+
+        // Filter by status
+        $payloadStatus = [
+            'jsonrpc' => '2.0',
+            'id' => 16,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_projects',
+                'arguments' => ['status' => 'ACTV'],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payloadStatus);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Highway 101 Expansion', $result['records'][0]['name']);
+
+        // Filter by date_from
+        $payloadDate = [
+            'jsonrpc' => '2.0',
+            'id' => 17,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_projects',
+                'arguments' => ['date_from' => '2026-06-01'],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payloadDate);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Metro Subway Tunnel', $result['records'][0]['name']);
+    }
+
+    /** @test */
+    public function it_can_call_list_sections_tool_with_filters()
+    {
+        $project = $this->createProject('Bridge Project');
+
+        $s1 = new Section();
+        $s1->project_id = $project->id;
+        $s1->name = 'North Span';
+        $s1->created_by = 1;
+        $s1->save();
+
+        $s2 = new Section();
+        $s2->project_id = 999;
+        $s2->name = 'South Span';
+        $s2->created_by = 1;
+        $s2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 18,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_sections',
+                'arguments' => [
+                    'project_id' => $project->id,
+                    'name' => 'North',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('North Span', $result['records'][0]['name']);
+        $this->assertEquals($project->id, $result['records'][0]['project_id']);
+    }
+
+    /** @test */
+    public function it_can_call_list_contract_items_tool_with_filters()
+    {
+        $ci1 = new ContractItem();
+        $ci1->section_id = 10;
+        $ci1->item_code = 'CI-101';
+        $ci1->description = 'Reinforced Concrete Piles';
+        $ci1->contract_quantity = 50;
+        $ci1->contract_unit_price = 1200.50;
+        $ci1->unit_id = 1;
+        $ci1->created_by = 1;
+        $ci1->save();
+
+        $ci2 = new ContractItem();
+        $ci2->section_id = 20;
+        $ci2->item_code = 'CI-202';
+        $ci2->description = 'Steel Decking';
+        $ci2->contract_quantity = 30;
+        $ci2->contract_unit_price = 5000.00;
+        $ci2->unit_id = 1;
+        $ci2->created_by = 1;
+        $ci2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 19,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_contract_items',
+                'arguments' => [
+                    'section_id' => 10,
+                    'item_code' => '101',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('CI-101', $result['records'][0]['item_code']);
+    }
+
+    /** @test */
+    public function it_can_call_list_components_tool_with_filters()
+    {
+        $comp1 = new Component();
+        $comp1->contract_item_id = 100;
+        $comp1->section_id = 10;
+        $comp1->unit_id = 1;
+        $comp1->quantity = 10.0;
+        $comp1->name = 'Pier Footing';
+        $comp1->status = 'ACTV';
+        $comp1->created_by = 1;
+        $comp1->save();
+
+        $comp2 = new Component();
+        $comp2->contract_item_id = 200;
+        $comp2->section_id = 20;
+        $comp2->unit_id = 1;
+        $comp2->quantity = 5.0;
+        $comp2->name = 'Abutment Wall';
+        $comp2->status = 'PEND';
+        $comp2->created_by = 1;
+        $comp2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 20,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_components',
+                'arguments' => [
+                    'contract_item_id' => 100,
+                    'status' => 'ACTV',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Pier Footing', $result['records'][0]['name']);
+    }
+
+    /** @test */
+    public function it_can_call_list_component_items_tool_with_filters()
+    {
+        $item1 = new ComponentItem();
+        $item1->component_id = 50;
+        $item1->unit_id = 1;
+        $item1->function_type_id = 1;
+        $item1->function_variable = 1.0;
+        $item1->name = 'Deformed Reinforcing Bars 16mm';
+        $item1->quantity = 100;
+        $item1->budget_price = 350.00;
+        $item1->created_by = 1;
+        $item1->save();
+
+        $item2 = new ComponentItem();
+        $item2->component_id = 60;
+        $item2->unit_id = 1;
+        $item2->function_type_id = 1;
+        $item2->function_variable = 1.0;
+        $item2->name = 'Ready Mix Concrete 3000 PSI';
+        $item2->quantity = 25;
+        $item2->budget_price = 4200.00;
+        $item2->created_by = 1;
+        $item2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 21,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_component_items',
+                'arguments' => [
+                    'component_id' => 50,
+                    'name' => 'Bars',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Deformed Reinforcing Bars 16mm', $result['records'][0]['name']);
+    }
+
+    /** @test */
+    public function it_can_call_list_material_quantities_tool_with_filters()
+    {
+        $mq1 = new MaterialQuantity();
+        $mq1->component_item_id = 10;
+        $mq1->material_item_id = 1;
+        $mq1->quantity = 50.0;
+        $mq1->equivalent = 1.0;
+        $mq1->created_by = 1;
+        $mq1->save();
+
+        $mq2 = new MaterialQuantity();
+        $mq2->component_item_id = 20;
+        $mq2->material_item_id = 2;
+        $mq2->quantity = 100.0;
+        $mq2->equivalent = 1.0;
+        $mq2->created_by = 1;
+        $mq2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 22,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_material_quantities',
+                'arguments' => [
+                    'component_item_id' => 10,
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals(50.0, $result['records'][0]['quantity']);
+        $this->assertEquals(1, $result['records'][0]['material_item_id']);
+    }
+
+    /** @test */
+    public function it_can_call_list_material_items_tool_with_filters()
+    {
+        $item1 = new MaterialItem();
+        $item1->material_group_id = 1;
+        $item1->name = 'Portland Cement Type 1';
+        $item1->brand = 'Holcim';
+        $item1->specification_unit_packaging = '40kg bag';
+        $item1->created_by = 1;
+        $item1->save();
+
+        $item2 = new MaterialItem();
+        $item2->material_group_id = 2;
+        $item2->name = 'Deformed Bar 12mm';
+        $item2->brand = 'SteelAsia';
+        $item2->specification_unit_packaging = '6m length';
+        $item2->created_by = 1;
+        $item2->save();
+
+        // Filter by brand
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 23,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_material_items',
+                'arguments' => [
+                    'brand' => 'Steel',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Deformed Bar 12mm', $result['records'][0]['name']);
+
+        // Filter by specification packaging
+        $payloadSpec = [
+            'jsonrpc' => '2.0',
+            'id' => 24,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_material_items',
+                'arguments' => [
+                    'specification_unit_packaging' => 'bag',
+                ],
+            ],
+        ];
+        $responseSpec = $this->postJson('/mcp', $payloadSpec);
+        $responseSpec->assertStatus(200);
+        $resultSpec = json_decode($responseSpec->json('result.content.0.text'), true);
+        $this->assertEquals(1, $resultSpec['total']);
+        $this->assertEquals('Portland Cement Type 1', $resultSpec['records'][0]['name']);
+    }
+
+    /** @test */
+    public function it_can_call_list_material_groups_tool_with_filters()
+    {
+        $g1 = new MaterialGroup();
+        $g1->name = 'Cement and Aggregates';
+        $g1->created_by = 1;
+        $g1->save();
+
+        $g2 = new MaterialGroup();
+        $g2->name = 'Metals and Structural Steel';
+        $g2->created_by = 1;
+        $g2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 25,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_material_groups',
+                'arguments' => [
+                    'name' => 'Steel',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Metals and Structural Steel', $result['records'][0]['name']);
+    }
+
+    /** @test */
+    public function it_can_call_list_units_tool_with_filters()
+    {
+        $u1 = new Unit();
+        $u1->text = 'Bags';
+        $u1->created_by = 1;
+        $u1->save();
+
+        $u2 = new Unit();
+        $u2->text = 'Kilograms';
+        $u2->created_by = 1;
+        $u2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 26,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_units',
+                'arguments' => [
+                    'text' => 'Kilo',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Kilograms', $result['records'][0]['text']);
+    }
+
+    /** @test */
+    public function it_can_call_list_material_quantity_requests_tool_with_filters()
+    {
+        $mqr1 = new MaterialQuantityRequest();
+        $mqr1->project_id = 1;
+        $mqr1->section_id = 10;
+        $mqr1->component_id = 100;
+        $mqr1->status = 'APRV';
+        $mqr1->description = 'Batch 1 materials';
+        $mqr1->created_by = 1;
+        $mqr1->save();
+
+        $mqr2 = new MaterialQuantityRequest();
+        $mqr2->project_id = 2;
+        $mqr2->section_id = 20;
+        $mqr2->component_id = 200;
+        $mqr2->status = 'PEND';
+        $mqr2->description = 'Batch 2 materials';
+        $mqr2->created_by = 1;
+        $mqr2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 27,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_material_quantity_requests',
+                'arguments' => [
+                    'project_id' => 1,
+                    'status' => 'APRV',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Batch 1 materials', $result['records'][0]['description']);
+    }
+
+    /** @test */
+    public function it_can_call_list_material_quantity_request_items_tool_with_filters()
+    {
+        $item1 = new MaterialQuantityRequestItem();
+        $item1->material_quantity_request_id = 10;
+        $item1->component_item_id = 100;
+        $item1->material_item_id = 5;
+        $item1->requested_quantity = 25.5;
+        $item1->status = 'APRV';
+        $item1->save();
+
+        $item2 = new MaterialQuantityRequestItem();
+        $item2->material_quantity_request_id = 20;
+        $item2->component_item_id = 200;
+        $item2->material_item_id = 6;
+        $item2->requested_quantity = 50.0;
+        $item2->status = 'PEND';
+        $item2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 28,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_material_quantity_request_items',
+                'arguments' => [
+                    'material_quantity_request_id' => 10,
+                    'material_item_id' => 5,
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals(25.5, $result['records'][0]['requested_quantity']);
+    }
+
+    /** @test */
+    public function it_can_call_list_material_canvasses_tool_with_filters()
+    {
+        $mc1 = new MaterialCanvass();
+        $mc1->material_quantity_request_id = 10;
+        $mc1->material_quantity_request_item_id = 1;
+        $mc1->supplier_id = 100;
+        $mc1->payment_term_id = 1;
+        $mc1->status = 'APRV';
+        $mc1->price = 150.00;
+        $mc1->created_by = 1;
+        $mc1->save();
+
+        $mc2 = new MaterialCanvass();
+        $mc2->material_quantity_request_id = 20;
+        $mc2->material_quantity_request_item_id = 2;
+        $mc2->supplier_id = 200;
+        $mc2->payment_term_id = 2;
+        $mc2->status = 'PEND';
+        $mc2->price = 180.00;
+        $mc2->created_by = 1;
+        $mc2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 29,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_material_canvasses',
+                'arguments' => [
+                    'supplier_id' => 100,
+                    'status' => 'APRV',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals(150.00, $result['records'][0]['price']);
+    }
+
+    /** @test */
+    public function it_can_call_list_purchase_orders_tool_with_filters()
+    {
+        $po1 = new PurchaseOrder();
+        $po1->project_id = 1;
+        $po1->section_id = 10;
+        $po1->contract_item_id = 50;
+        $po1->component_id = 100;
+        $po1->material_quantity_request_id = 5;
+        $po1->supplier_id = 15;
+        $po1->payment_term_id = 1;
+        $po1->status = 'APRV';
+        $po1->created_by = 1;
+        $po1->save();
+
+        $po2 = new PurchaseOrder();
+        $po2->project_id = 2;
+        $po2->section_id = 20;
+        $po2->contract_item_id = 60;
+        $po2->component_id = 200;
+        $po2->material_quantity_request_id = 6;
+        $po2->supplier_id = 25;
+        $po2->payment_term_id = 2;
+        $po2->status = 'PEND';
+        $po2->created_by = 1;
+        $po2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 30,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_purchase_orders',
+                'arguments' => [
+                    'supplier_id' => 15,
+                    'status' => 'APRV',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals(15, $result['records'][0]['supplier_id']);
+    }
+
+    /** @test */
+    public function it_can_call_list_purchase_order_items_tool_with_filters()
+    {
+        $item1 = new PurchaseOrderItem();
+        $item1->purchase_order_id = 10;
+        $item1->component_item_id = 100;
+        $item1->material_quantity_request_item_id = 1;
+        $item1->material_canvass_id = 5;
+        $item1->material_item_id = 20;
+        $item1->status = 'APRV';
+        $item1->quantity = 30.0;
+        $item1->price = 250.00;
+        $item1->save();
+
+        $item2 = new PurchaseOrderItem();
+        $item2->purchase_order_id = 20;
+        $item2->component_item_id = 200;
+        $item2->material_quantity_request_item_id = 2;
+        $item2->material_canvass_id = 6;
+        $item2->material_item_id = 30;
+        $item2->status = 'PEND';
+        $item2->quantity = 60.0;
+        $item2->price = 300.00;
+        $item2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 31,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_purchase_order_items',
+                'arguments' => [
+                    'purchase_order_id' => 10,
+                    'material_item_id' => 20,
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals(30.0, $result['records'][0]['quantity']);
+    }
+
+    /** @test */
+    public function it_can_call_list_purchase_order_received_tool_with_filters()
+    {
+        $rec1 = new PurchaseOrderReceived();
+        $rec1->purchase_order_id = 10;
+        $rec1->receipt_no = 'DR-9901';
+        $rec1->received_date = '2026-10-15 10:00:00';
+        $rec1->remarks = 'Partial delivery';
+        $rec1->created_by = 1;
+        $rec1->save();
+
+        $rec2 = new PurchaseOrderReceived();
+        $rec2->purchase_order_id = 20;
+        $rec2->receipt_no = 'DR-8802';
+        $rec2->received_date = '2026-10-20 14:00:00';
+        $rec2->remarks = 'Final delivery';
+        $rec2->created_by = 1;
+        $rec2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 32,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_purchase_order_received',
+                'arguments' => [
+                    'purchase_order_id' => 10,
+                    'receipt_no' => '9901',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('DR-9901', $result['records'][0]['receipt_no']);
+    }
+
+    /** @test */
+    public function it_can_call_list_purchase_order_received_items_tool_with_filters()
+    {
+        $item1 = new PurchaseOrderReceivedItem();
+        $item1->purchase_order_received_id = 10;
+        $item1->purchase_order_item_id = 50;
+        $item1->quantity_received = 15.0;
+        $item1->save();
+
+        $item2 = new PurchaseOrderReceivedItem();
+        $item2->purchase_order_received_id = 20;
+        $item2->purchase_order_item_id = 60;
+        $item2->quantity_received = 30.0;
+        $item2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 33,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_purchase_order_received_items',
+                'arguments' => [
+                    'purchase_order_received_id' => 10,
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals(15.0, $result['records'][0]['quantity_received']);
     }
 }
