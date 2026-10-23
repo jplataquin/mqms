@@ -5,7 +5,9 @@ namespace App\Protocols;
 use App\Models\Project;
 use App\Models\ComponentItem;
 use App\Models\MaterialQuantityRequestItem;
+use App\Models\MaterialQuantityRequest;
 use App\Models\MaterialQuantity;
+use App\Models\MaterialItem;
 use Illuminate\Support\Facades\DB;
 
 class LevelOneBudgetDiagnostic implements ProtocolInterface
@@ -138,6 +140,13 @@ class LevelOneBudgetDiagnostic implements ProtocolInterface
                 ->get()
                 ->keyBy('material_item_id');
 
+            // Pre-load parent MaterialQuantityRequests and MaterialItems for traceability
+            $requestIds = $mqrItems->pluck('material_quantity_request_id')->unique()->filter();
+            $requests = MaterialQuantityRequest::whereIn('id', $requestIds)->get()->keyBy('id');
+
+            $materialItemIds = $mqrItems->pluck('material_item_id')->unique()->filter();
+            $materialItems = MaterialItem::whereIn('id', $materialItemIds)->get()->keyBy('id');
+
             foreach ($mqrItems as $mqri) {
                 $materialQuantity = $materialQuantities->get($mqri->material_item_id);
                 $equivalent = $materialQuantity ? (float) $materialQuantity->equivalent : 1.0;
@@ -145,10 +154,17 @@ class LevelOneBudgetDiagnostic implements ProtocolInterface
 
                 $totalActualQuantity += $actualQty;
 
+                $parentReq = $requests->get($mqri->material_quantity_request_id);
+                $matItem = $materialItems->get($mqri->material_item_id);
+
                 $breakdown[] = [
                     'material_quantity_request_item_id' => $mqri->id,
                     'material_quantity_request_id'      => $mqri->material_quantity_request_id,
+                    'material_quantity_request_url'     => "/material_quantity_request/{$mqri->material_quantity_request_id}",
+                    'request_date_needed'               => $parentReq ? $parentReq->date_needed : null,
+                    'request_status'                    => $parentReq ? $parentReq->status : $mqri->status,
                     'material_item_id'                  => $mqri->material_item_id,
+                    'material_item_name'                => $matItem ? $matItem->formatted_name : "Material Item #{$mqri->material_item_id}",
                     'requested_quantity'                => (float) $mqri->requested_quantity,
                     'equivalent'                        => $equivalent,
                     'actual_quantity'                   => round($actualQty, 4),
@@ -166,6 +182,7 @@ class LevelOneBudgetDiagnostic implements ProtocolInterface
                     'component_id'         => $componentItem->component_id,
                     'component_name'       => $componentItem->Component ? $componentItem->Component->name : null,
                     'component_status'     => $componentItem->Component ? $componentItem->Component->status : null,
+                    'component_url'        => "/project/section/contract_item/component/{$componentItem->component_id}",
                     'contract_item_id'     => $componentItem->Component ? $componentItem->Component->contract_item_id : null,
                     'section_id'           => $componentItem->Component ? $componentItem->Component->section_id : null,
                     'allowed_budget'       => $allowedBudget,

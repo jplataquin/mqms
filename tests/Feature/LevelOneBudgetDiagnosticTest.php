@@ -470,4 +470,35 @@ class LevelOneBudgetDiagnosticTest extends TestCase
             ],
         ]);
     }
+
+    /** @test */
+    public function it_provides_traceability_to_material_quantity_requests_in_non_conforming_results()
+    {
+        $this->seed(\Database\Seeders\LevelOneBudgetDiagnosticSeeder::class);
+        $project = Project::latest('id')->first();
+        $user = User::first();
+
+        $response = $this->actingAs($user)->postJson('/api/protocol/run', [
+            'protocol'   => 'level-1-budget-diagnostic',
+            'project_id' => $project->id,
+        ]);
+
+        $response->assertStatus(200);
+        $data = $response->json('data');
+
+        $this->assertFalse($data['passed']);
+        $this->assertNotEmpty($data['violations']);
+
+        $firstViolation = $data['violations'][0];
+        $this->assertArrayHasKey('component_url', $firstViolation);
+        $this->assertStringContainsString('/project/section/contract_item/component/', $firstViolation['component_url']);
+        $this->assertNotEmpty($firstViolation['breakdown']);
+
+        $firstBreakdown = $firstViolation['breakdown'][0];
+        $this->assertArrayHasKey('material_quantity_request_id', $firstBreakdown);
+        $this->assertArrayHasKey('material_quantity_request_url', $firstBreakdown);
+        $this->assertStringContainsString('/material_quantity_request/', $firstBreakdown['material_quantity_request_url']);
+        $this->assertArrayHasKey('material_item_name', $firstBreakdown);
+        $this->assertNotEmpty($firstBreakdown['material_item_name']);
+    }
 }
