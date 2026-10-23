@@ -17,6 +17,18 @@ MQMS implements the [Model Context Protocol](https://modelcontextprotocol.io/) u
 - **Primary Class:** `\App\Mcp\Servers\MqmsServer`
 - **Model Registry:** `\App\Mcp\McpModelRegistry`
 
+### Core Data Hierarchy (Work Breakdown Structure)
+The system strictly arranges core WBS and estimation models in the following top-down hierarchy:
+```text
+Project
+ └── Section
+      └── Contract Item
+           └── Component
+                └── Component Item
+                     └── Material Quantity
+```
+External AI agents and clients should follow this hierarchy when traversing relational data or verifying budgets and quantities.
+
 ### Key Capabilities
 1. **Dynamic Resource Overview:** Inspect database schema metadata, record counts, and access templates via `mqms://models/{model}`.
 2. **Direct Record Retrieval via URI:** Direct resource reading via `mqms://models/{model}/{id}` through a custom MCP method handler.

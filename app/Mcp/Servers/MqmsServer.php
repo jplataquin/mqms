@@ -42,7 +42,11 @@ class MqmsServer extends Server
 
     public string $serverVersion = '1.0.0';
 
-    public string $instructions = 'Provides HTTP MCP access to MQMS models (excluding roles, access codes, credentials, and user passwords). Allows reading records as resources and querying via specialized WBS, Budget/Materials, Procurement/Workflow, Partners/Execution, and System/Misc tools, get_record, list_records, search_records, and get_material_price_stats tools.';
+    public string $instructions = 'Provides HTTP MCP access to MQMS models (excluding roles, access codes, credentials, and user passwords). Allows reading records as resources and querying via specialized WBS, Budget/Materials, Procurement/Workflow, Partners/Execution, and System/Misc tools, get_record, list_records, search_records, and get_material_price_stats tools.
+
+Important: The Work Breakdown Structure (WBS) hierarchically arranges data as follows:
+Project -> Section -> Contract Item -> Component -> Component Item -> Material Quantity.
+Traverse data following this parent-child hierarchy to ensure accurate relationships.';
 
     public int $defaultPaginationLength = 50;
 
