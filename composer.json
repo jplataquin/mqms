@@ -42,6 +42,7 @@
         }
     },
     "scripts": {
+        "agents:clean": "git worktree list --porcelain | grep '^worktree ' | tail -n +2 | cut -d' ' -f2- | xargs -r -I {} git worktree remove --force \"{}\" && git worktree prune && rm -rf .agent-states/*",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
