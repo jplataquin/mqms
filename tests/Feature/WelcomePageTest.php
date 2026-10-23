@@ -30,24 +30,24 @@ class WelcomePageTest extends TestCase
     }
 
     /** @test */
-    public function guest_can_view_futuristic_welcome_page()
+    public function guest_can_view_corporate_technological_welcome_page()
     {
         $response = $this->get('/');
 
         $response->assertStatus(200);
-        $response->assertSee('MQMS // AEON');
+        $response->assertSee('MQMS');
         $response->assertSee('data-bs-theme="dark"', false);
-        $response->assertSee('GATEWAY ACTIVE &bull; MCP READY', false);
-        $response->assertSee('Precision Resource');
-        $response->assertSee('Initialize Operator Session');
-        $response->assertSee('Sign In');
+        $response->assertSee('SYSTEM ONLINE');
+        $response->assertSee('Engineering &amp; Quantity Control Platform', false);
+        $response->assertSee('Operator Sign In');
         $response->assertSee('Work Breakdown Structure');
-        $response->assertSee('Autonomous AI & MCP Protocol', false);
-        $response->assertSee('Model Context Protocol Enabled');
+        $response->assertSee('Procurement &amp; Canvassing', false);
+        $response->assertSee('AI &amp; MCP Integration', false);
+        $response->assertSee('Registered Schema Entities');
     }
 
     /** @test */
-    public function authenticated_user_sees_mission_control_and_dashboard_actions()
+    public function authenticated_user_sees_dashboard_and_token_actions()
     {
         $user = User::factory()->create([
             'name' => 'Commander J. Vance',
@@ -57,10 +57,10 @@ class WelcomePageTest extends TestCase
         $response = $this->actingAs($user)->get('/');
 
         $response->assertStatus(200);
-        $response->assertSee('MQMS // AEON');
-        $response->assertSee('Mission Control');
-        $response->assertSee('Launch Mission Dashboard');
-        $response->assertSee('Manage MCP Tokens');
-        $response->assertDontSee('Initialize Operator Session');
+        $response->assertSee('MQMS');
+        $response->assertSee('Dashboard');
+        $response->assertSee('Access Dashboard');
+        $response->assertSee('API &amp; MCP Tokens', false);
+        $response->assertDontSee('Operator Sign In');
     }
 }
