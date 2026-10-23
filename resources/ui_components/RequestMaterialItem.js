@@ -484,13 +484,21 @@ class RequestMaterialItem extends Component{
 
     onStateChange_requestedQuantity(newVal){
 
+        let requested_quantity      = window.util.pureNumber(this.el.requestedQuantity.value);
+        let equivalent              = window.util.pureNumber(this.el.equivalentQuantity.value);
+
+        this.el.requestEquivalent.value = window.util.numberFormat((requested_quantity * equivalent),2)+' '+this._state.unit_text;
+
+        // In view / non-editable mode, display the saved values as-is without interactive validation resets
+        if(!this._state.editable){
+            return;
+        }
+
         let prevApprovedQuantity = this.el.prevApprovedQuantity.value;
 
         if(prevApprovedQuantity != 'Calculating...'){
 
             let remaining               = window.util.pureNumber(this.el.materialBudgetQuantity.value) - window.util.pureNumber(this.el.prevApprovedQuantity.value);
-            let requested_quantity      = window.util.pureNumber(this.el.requestedQuantity.value);
-            let equivalent              = window.util.pureNumber(this.el.equivalentQuantity.value);
             let requested_equivalent    = window.util.numberFormat((requested_quantity * equivalent),2);
             
             if( requested_equivalent > remaining ){
@@ -499,9 +507,8 @@ class RequestMaterialItem extends Component{
             
                 this.el.requestedQuantity.value = 0; 
                 this.el.requestedQuantity.blur();
+                this.el.requestEquivalent.value = '0.00 ' + this._state.unit_text;
             }
-
-            this.el.requestEquivalent.value = window.util.numberFormat((requested_quantity * equivalent),2)+' '+this._state.unit_text;
 
         }else{
 
@@ -509,10 +516,9 @@ class RequestMaterialItem extends Component{
             
             this.el.requestedQuantity.value = 0; 
             this.el.requestedQuantity.blur();
+            this.el.requestEquivalent.value = '0.00 ' + this._state.unit_text;
         }
 
-        
-        
     }
 
     onStateChange_materialItemId(material_id){
