@@ -14,6 +14,10 @@ use App\Models\MaterialCanvass;
 use App\Models\MaterialQuantityRequestItem;
 use App\Models\DirectMaterialCanvass;
 use App\Models\DirectMaterialQuantityRequestItem;
+use App\Models\Section;
+use App\Models\ContractItem;
+use App\Models\Component;
+use App\Models\ComponentItem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class McpServerTest extends TestCase
@@ -99,6 +103,11 @@ class McpServerTest extends TestCase
         $this->assertContains('list_records', $toolNames);
         $this->assertContains('search_records', $toolNames);
         $this->assertContains('get_material_price_stats', $toolNames);
+        $this->assertContains('list_projects', $toolNames);
+        $this->assertContains('list_sections', $toolNames);
+        $this->assertContains('list_contract_items', $toolNames);
+        $this->assertContains('list_components', $toolNames);
+        $this->assertContains('list_component_items', $toolNames);
     }
 
     /** @test */
@@ -486,5 +495,236 @@ class McpServerTest extends TestCase
         $resultEmpty = json_decode($responseEmpty->json('result.content.0.text'), true);
         $this->assertEquals(0, $resultEmpty['total_approved_canvasses']);
         $this->assertNull($resultEmpty['stats']);
+    }
+
+    /** @test */
+    public function it_can_call_list_projects_tool_with_filters()
+    {
+        $p1 = new Project();
+        $p1->name = 'Highway 101 Expansion';
+        $p1->status = 'ACTV';
+        $p1->created_by = 1;
+        $p1->created_at = '2026-01-10 10:00:00';
+        $p1->save();
+
+        $p2 = new Project();
+        $p2->name = 'Metro Subway Tunnel';
+        $p2->status = 'ARCH';
+        $p2->created_by = 2;
+        $p2->created_at = '2026-06-15 12:00:00';
+        $p2->save();
+
+        // Filter by name
+        $payloadName = [
+            'jsonrpc' => '2.0',
+            'id' => 15,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_projects',
+                'arguments' => ['name' => 'Tunnel'],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payloadName);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Metro Subway Tunnel', $result['records'][0]['name']);
+
+        // Filter by status
+        $payloadStatus = [
+            'jsonrpc' => '2.0',
+            'id' => 16,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_projects',
+                'arguments' => ['status' => 'ACTV'],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payloadStatus);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Highway 101 Expansion', $result['records'][0]['name']);
+
+        // Filter by date_from
+        $payloadDate = [
+            'jsonrpc' => '2.0',
+            'id' => 17,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_projects',
+                'arguments' => ['date_from' => '2026-06-01'],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payloadDate);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Metro Subway Tunnel', $result['records'][0]['name']);
+    }
+
+    /** @test */
+    public function it_can_call_list_sections_tool_with_filters()
+    {
+        $project = $this->createProject('Bridge Project');
+
+        $s1 = new Section();
+        $s1->project_id = $project->id;
+        $s1->name = 'North Span';
+        $s1->created_by = 1;
+        $s1->save();
+
+        $s2 = new Section();
+        $s2->project_id = 999;
+        $s2->name = 'South Span';
+        $s2->created_by = 1;
+        $s2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 18,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_sections',
+                'arguments' => [
+                    'project_id' => $project->id,
+                    'name' => 'North',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('North Span', $result['records'][0]['name']);
+        $this->assertEquals($project->id, $result['records'][0]['project_id']);
+    }
+
+    /** @test */
+    public function it_can_call_list_contract_items_tool_with_filters()
+    {
+        $ci1 = new ContractItem();
+        $ci1->section_id = 10;
+        $ci1->item_code = 'CI-101';
+        $ci1->description = 'Reinforced Concrete Piles';
+        $ci1->contract_quantity = 50;
+        $ci1->contract_unit_price = 1200.50;
+        $ci1->unit_id = 1;
+        $ci1->created_by = 1;
+        $ci1->save();
+
+        $ci2 = new ContractItem();
+        $ci2->section_id = 20;
+        $ci2->item_code = 'CI-202';
+        $ci2->description = 'Steel Decking';
+        $ci2->contract_quantity = 30;
+        $ci2->contract_unit_price = 5000.00;
+        $ci2->unit_id = 1;
+        $ci2->created_by = 1;
+        $ci2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 19,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_contract_items',
+                'arguments' => [
+                    'section_id' => 10,
+                    'item_code' => '101',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('CI-101', $result['records'][0]['item_code']);
+    }
+
+    /** @test */
+    public function it_can_call_list_components_tool_with_filters()
+    {
+        $comp1 = new Component();
+        $comp1->contract_item_id = 100;
+        $comp1->section_id = 10;
+        $comp1->unit_id = 1;
+        $comp1->quantity = 10.0;
+        $comp1->name = 'Pier Footing';
+        $comp1->status = 'ACTV';
+        $comp1->created_by = 1;
+        $comp1->save();
+
+        $comp2 = new Component();
+        $comp2->contract_item_id = 200;
+        $comp2->section_id = 20;
+        $comp2->unit_id = 1;
+        $comp2->quantity = 5.0;
+        $comp2->name = 'Abutment Wall';
+        $comp2->status = 'PEND';
+        $comp2->created_by = 1;
+        $comp2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 20,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_components',
+                'arguments' => [
+                    'contract_item_id' => 100,
+                    'status' => 'ACTV',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Pier Footing', $result['records'][0]['name']);
+    }
+
+    /** @test */
+    public function it_can_call_list_component_items_tool_with_filters()
+    {
+        $item1 = new ComponentItem();
+        $item1->component_id = 50;
+        $item1->unit_id = 1;
+        $item1->function_type_id = 1;
+        $item1->function_variable = 1.0;
+        $item1->name = 'Deformed Reinforcing Bars 16mm';
+        $item1->quantity = 100;
+        $item1->budget_price = 350.00;
+        $item1->created_by = 1;
+        $item1->save();
+
+        $item2 = new ComponentItem();
+        $item2->component_id = 60;
+        $item2->unit_id = 1;
+        $item2->function_type_id = 1;
+        $item2->function_variable = 1.0;
+        $item2->name = 'Ready Mix Concrete 3000 PSI';
+        $item2->quantity = 25;
+        $item2->budget_price = 4200.00;
+        $item2->created_by = 1;
+        $item2->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 21,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'list_component_items',
+                'arguments' => [
+                    'component_id' => 50,
+                    'name' => 'Bars',
+                ],
+            ],
+        ];
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+        $this->assertEquals(1, $result['total']);
+        $this->assertEquals('Deformed Reinforcing Bars 16mm', $result['records'][0]['name']);
     }
 }
