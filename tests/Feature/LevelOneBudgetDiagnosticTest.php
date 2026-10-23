@@ -274,6 +274,11 @@ class LevelOneBudgetDiagnosticTest extends TestCase
         $this->assertEquals(50.0, $violation['allowed_budget']);
         $this->assertEquals(60.0, $violation['total_requested']);
         $this->assertEquals(10.0, $violation['over_budget_quantity']);
+        $this->assertEquals($contractItem->id, $violation['contract_item_id']);
+        $this->assertEquals('102', $violation['contract_item_code']);
+        $this->assertEquals('Component Item', $violation['record_type']);
+        $this->assertEquals('/project/section/contract_item/component/' . $component->id, $violation['component_url']);
+        $this->assertEquals('/project/section/contract_item/' . $contractItem->id, $violation['contract_item_url']);
 
         // 3. Test Artisan Command execution
         $this->artisan('protocol:run', [
@@ -421,6 +426,9 @@ class LevelOneBudgetDiagnosticTest extends TestCase
         $response = $this->actingAs($user)->get('/protocols');
         $response->assertStatus(200);
         $response->assertSee('Protocols Diagnostic Dashboard');
+        $response->assertSee('Contract Item');
+        $response->assertSee('Record Type');
+        $response->assertSee('Problematic Record');
         $response->assertSee('id="protocolSelect"', false);
         $response->assertSee('id="projectSelect"', false);
         $response->assertSee('id="runBtn"', false);

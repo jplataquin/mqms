@@ -176,22 +176,43 @@ class LevelOneBudgetDiagnostic implements ProtocolInterface
 
             // Flag as violation if total actual requested exceeds allowed budget
             if ($variance > 0.00001) {
+                $component = $componentItem->Component;
+                $contractItem = $component ? $component->ContractItem : null;
+                $contractItemCode = $contractItem ? $contractItem->item_code : null;
+                $contractItemDesc = $contractItem ? $contractItem->description : null;
+                $contractItemType = $contractItem ? $contractItem->item_type : null;
+                $contractItemId   = $contractItem ? $contractItem->id : ($component ? $component->contract_item_id : null);
+
+                $contractItemTypeName = match($contractItemType) {
+                    'MATR' => 'Material',
+                    'NMAT' => 'Non-Material',
+                    'OPEX' => 'Operating Expense',
+                    default => $contractItemType ?? 'N/A',
+                };
+
                 $violations[] = [
-                    'component_item_id'    => $componentItem->id,
-                    'component_item_name'  => $componentItem->name,
-                    'component_id'         => $componentItem->component_id,
-                    'component_name'       => $componentItem->Component ? $componentItem->Component->name : null,
-                    'component_status'     => $componentItem->Component ? $componentItem->Component->status : null,
-                    'component_url'        => "/project/section/contract_item/component/{$componentItem->component_id}",
-                    'contract_item_id'     => $componentItem->Component ? $componentItem->Component->contract_item_id : null,
-                    'section_id'           => $componentItem->Component ? $componentItem->Component->section_id : null,
-                    'allowed_budget'       => $allowedBudget,
-                    'total_requested'      => round($totalActualQuantity, 4),
-                    'over_budget_quantity' => round($variance, 4),
-                    'unit_id'              => $componentItem->unit_id,
-                    'unit_text'            => $componentItem->unit_text,
-                    'items_count'          => $mqrItems->count(),
-                    'breakdown'            => $breakdown,
+                    'component_item_id'         => $componentItem->id,
+                    'component_item_name'       => $componentItem->name,
+                    'component_id'              => $componentItem->component_id,
+                    'component_name'            => $component ? $component->name : null,
+                    'component_status'          => $component ? $component->status : null,
+                    'component_url'             => $componentItem->component_id ? "/project/section/contract_item/component/{$componentItem->component_id}" : null,
+                    'contract_item_id'          => $contractItemId,
+                    'contract_item_code'        => $contractItemCode,
+                    'contract_item_description' => $contractItemDesc,
+                    'contract_item_name'        => $contractItem ? $contractItem->name : null,
+                    'contract_item_type'        => $contractItemType,
+                    'contract_item_type_name'   => $contractItemTypeName,
+                    'contract_item_url'         => $contractItemId ? "/project/section/contract_item/{$contractItemId}" : null,
+                    'record_type'               => 'Component Item',
+                    'section_id'                => $component ? $component->section_id : null,
+                    'allowed_budget'            => $allowedBudget,
+                    'total_requested'           => round($totalActualQuantity, 4),
+                    'over_budget_quantity'      => round($variance, 4),
+                    'unit_id'                   => $componentItem->unit_id,
+                    'unit_text'                 => $componentItem->unit_text,
+                    'items_count'               => $mqrItems->count(),
+                    'breakdown'                 => $breakdown,
                 ];
             }
         }

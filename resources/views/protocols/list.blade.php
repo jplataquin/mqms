@@ -330,6 +330,34 @@
                         t.span({ class: 'badge bg-danger' }, 'NON-CONFORMING');
                         t.strong({ class: 'text-light fs-6' }, `#${v.component_item_id} - ${v.component_item_name}`);
 
+                        // Record Type Indicator
+                        let typeBadgeClass = 'bg-secondary';
+                        let typeLabel = v.contract_item_type_name || v.contract_item_type || 'Component Item';
+                        if (v.contract_item_type === 'MATR') {
+                            typeBadgeClass = 'bg-primary';
+                        } else if (v.contract_item_type === 'NMAT') {
+                            typeBadgeClass = 'bg-info text-dark';
+                        } else if (v.contract_item_type === 'OPEX') {
+                            typeBadgeClass = 'bg-warning text-dark';
+                        }
+                        t.span({ class: `badge ${typeBadgeClass}`, title: 'Record Type' }, `Type: ${typeLabel}`);
+
+                        // Contract Item Link
+                        if (v.contract_item_id) {
+                            t.a({
+                                href: v.contract_item_url || (`/project/section/contract_item/${v.contract_item_id}`),
+                                target: '_blank',
+                                class: 'badge bg-secondary bg-opacity-25 text-body border border-secondary text-decoration-none',
+                                title: 'Open Contract Item in new tab'
+                            }, () => {
+                                t.i({ class: 'bi bi-file-earmark-text me-1' });
+                                let cItemText = (v.contract_item_code ? `${v.contract_item_code} ` : '') + (v.contract_item_description || v.contract_item_name || `Contract Item #${v.contract_item_id}`);
+                                t.span({}, `Contract Item: ${cItemText}`);
+                                t.i({ class: 'bi bi-box-arrow-up-right ms-1 small' });
+                            });
+                        }
+
+                        // Component (Problematic Record)
                         if (v.component_name) {
                             t.a({
                                 href: v.component_url || '#',
@@ -345,6 +373,19 @@
                     });
 
                     t.div({ class: 'd-flex align-items-center gap-2' }, () => {
+                        // Direct Link Button to Problematic Record
+                        if (v.component_url) {
+                            t.a({
+                                href: v.component_url,
+                                target: '_blank',
+                                class: 'btn btn-sm btn-outline-danger py-0 px-2 text-nowrap d-inline-flex align-items-center',
+                                title: 'Open Problematic Component Record in new tab'
+                            }, () => {
+                                t.i({ class: 'bi bi-box-arrow-up-right me-1' });
+                                t.span({}, 'View Problematic Record');
+                            });
+                        }
+
                         t.span({ class: 'badge bg-danger bg-opacity-25 text-danger' }, () => {
                             t.i({ class: 'bi bi-receipt me-1' });
                             t.span({}, `${breakdown.length} MQR Request(s) Traced`);
@@ -362,6 +403,27 @@
 
                 // Card Body
                 t.div({ class: 'card-body p-3' }, () => {
+                    // Context summary: Contract Item & Record Type
+                    t.div({ class: 'd-flex align-items-center justify-content-between flex-wrap gap-2 mb-2 p-2 rounded bg-secondary bg-opacity-10 border border-secondary small' }, () => {
+                        t.div({}, () => {
+                            t.span({ class: 'text-muted me-1' }, 'Contract Item:');
+                            if (v.contract_item_id) {
+                                t.a({
+                                    href: v.contract_item_url || (`/project/section/contract_item/${v.contract_item_id}`),
+                                    target: '_blank',
+                                    class: 'text-light fw-bold text-decoration-none'
+                                }, `${v.contract_item_code ? v.contract_item_code + ' ' : ''}${v.contract_item_description || v.contract_item_name || ('#' + v.contract_item_id)}`);
+                            } else {
+                                t.span({ class: 'text-muted' }, 'None');
+                            }
+                        });
+                        t.div({}, () => {
+                            t.span({ class: 'text-muted me-1' }, 'Record Type:');
+                            t.span({ class: 'badge bg-secondary me-1' }, v.contract_item_type_name || v.contract_item_type || 'Component Item');
+                            t.span({ class: 'badge bg-dark border border-secondary text-light' }, v.record_type || 'Component Item');
+                        });
+                    });
+
                     // Budget comparison row
                     t.div({ class: 'row g-2 mb-3 bg-secondary bg-opacity-10 p-2 rounded border border-secondary' }, () => {
                         t.div({ class: 'col-md-3 col-6' }, () => {
