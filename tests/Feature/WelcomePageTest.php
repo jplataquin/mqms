@@ -30,24 +30,25 @@ class WelcomePageTest extends TestCase
     }
 
     /** @test */
-    public function guest_can_view_futuristic_welcome_page()
+    public function guest_can_view_minimalist_technological_welcome_page()
     {
         $response = $this->get('/');
 
         $response->assertStatus(200);
-        $response->assertSee('MQMS // AEON');
-        $response->assertSee('data-bs-theme="dark"', false);
-        $response->assertSee('GATEWAY ACTIVE &bull; MCP READY', false);
-        $response->assertSee('Precision Resource');
-        $response->assertSee('Initialize Operator Session');
+        $response->assertSee('MQMS');
+        $response->assertSee('Material &amp; Quantity Management System', false);
+        $response->assertSee('id="tech-canvas"', false);
         $response->assertSee('Sign In');
-        $response->assertSee('Work Breakdown Structure');
-        $response->assertSee('Autonomous AI & MCP Protocol', false);
-        $response->assertSee('Model Context Protocol Enabled');
+        $response->assertSee('data-bs-theme="dark"', false);
+
+        // Verify all cards and text blocks have been removed
+        $response->assertDontSee('Core System Modules');
+        $response->assertDontSee('module-card');
+        $response->assertDontSee('Engineering &amp; Quantity Control Platform', false);
     }
 
     /** @test */
-    public function authenticated_user_sees_mission_control_and_dashboard_actions()
+    public function authenticated_user_sees_enter_dashboard_action()
     {
         $user = User::factory()->create([
             'name' => 'Commander J. Vance',
@@ -57,10 +58,8 @@ class WelcomePageTest extends TestCase
         $response = $this->actingAs($user)->get('/');
 
         $response->assertStatus(200);
-        $response->assertSee('MQMS // AEON');
-        $response->assertSee('Mission Control');
-        $response->assertSee('Launch Mission Dashboard');
-        $response->assertSee('Manage MCP Tokens');
-        $response->assertDontSee('Initialize Operator Session');
+        $response->assertSee('MQMS');
+        $response->assertSee('Enter Dashboard');
+        $response->assertDontSee('Sign In');
     }
 }

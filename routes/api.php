@@ -32,6 +32,10 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::get('/budget/contract_item/list', [App\Http\Controllers\BudgetController::class, '_contract_item_list']);
     Route::get('/budget/component/list', [App\Http\Controllers\BudgetController::class, '_component_list']);
 
+    // Protocols
+    Route::get('/protocol/list', [App\Http\Controllers\ProtocolController::class, '_list']);
+    Route::post('/protocol/run', [App\Http\Controllers\ProtocolController::class, '_run']);
+
     Route::get('/accomplishment/project/list', [App\Http\Controllers\AccomplishmentController::class, '_list']);
     Route::get('/accomplishment/section/list', [App\Http\Controllers\AccomplishmentController::class, '_section_list']);
     Route::get('/accomplishment/contract_item/list', [App\Http\Controllers\AccomplishmentController::class, '_contract_item_list']);

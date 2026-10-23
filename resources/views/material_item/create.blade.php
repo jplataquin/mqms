@@ -37,11 +37,12 @@
                         <select class="form-control" id="materialGroup">
                             <option value="">-- Select Material Group --</option>
                             @foreach($materialGroups as $group)
-                                <option value="{{$group->id}}" @if($group->id == $material_group_id) selected @endif>{{$group->name}}</option>
+                                <option value="{{$group->id}}" data-template="{{$group->specification_template ?? ''}}" @if($group->id == $material_group_id) selected @endif>{{$group->name}}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
+
 
                 <div class="col-lg-3">
                     <div class="form-group">
@@ -52,40 +53,28 @@
 
                 <div class="col-lg-3">
                     <div class="form-group">
-                        <label>Brand Name</label>
-                        <input type="text" id="brandName" class="form-control"/>
+                        <label>Specification / Unit Packaging</label>
+                        <input type="text" id="specificationUnitPackaging" readonly class="form-control" placeholder="Auto-generated from template"/>
                     </div>
                 </div>
 
                 <div class="col-lg-3">
                     <div class="form-group">
-                        <label>Specification / Unit Packaging</label>
-                        <input type="text" id="specificationUnitPackaging" readonly class="form-control"/>
+                        <label>Brand Name</label>
+                        <input type="text" id="brandName" class="form-control"/>
                     </div>
                 </div>
 
-            </div>
-
-            <!-- Warning if Material Group has no template -->
-            <div id="noTemplateAlert" class="alert alert-warning border border-warning bg-warning bg-opacity-10 d-none mt-3">
-                <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                <strong>Specification Template Missing:</strong>
-                <span>The selected Material Group does not have a specification template configured. Items cannot be created until a template is defined on the Material Group.</span>
-            </div>
-
-            <!-- Dynamic Template Builder -->
-            <div id="templateBuilderBox" class="border rounded p-3 mt-3 d-none">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <h6 class="mb-0">
-                        <i class="bi bi-ui-checks-grid me-2 text-primary"></i>Specification Builder
-                    </h6>
-                    <span class="badge bg-secondary" id="templateBadge"></span>
+                <div class="col-12 mt-3">
+                    <div id="noTemplateAlert" class="alert alert-warning d-none mb-0">
+                        <strong><i class="fa fa-exclamation-triangle me-1"></i> Notice:</strong> The selected Material Group does not have a specification template configured. Material items cannot be created for this group until a template is set in Material Groups.
+                    </div>
+                    <div id="templateCard" class="border rounded p-3 d-none">
+                        <div class="fw-bold mb-2">Specification Format: <span id="templateTextDisplay" class="text-primary font-monospace"></span></div>
+                        <div id="dynamicInputsArea"></div>
+                    </div>
                 </div>
-                <p class="text-muted small mb-3">
-                    Fill in the required template fields below. The final specification will be formatted automatically.
-                </p>
-                <div id="dynamicInputsRow" class="row g-2 align-items-end"></div>
-                <div id="templateValidationMsg" class="small mt-2"></div>
+
             </div>
 
             <div class="row mt-5">
@@ -99,39 +88,24 @@
 
 </div>
 
-<script>
-    window.MATERIAL_GROUPS = @json($materialGroups);
-</script>
-
 <script type="module">
     import {$q} from '/adarna.js';
 
-    const createBtn                  = $q('#createBtn').first();
-    const cancelBtn                  = $q('#cancelBtn').first();
-    const materialName               = $q('#materialName').first();
-    const materialGroup              = $q('#materialGroup').first();
-    const specificationUnitPackaging = $q('#specificationUnitPackaging').first();
-    const brandName                  = $q('#brandName').first();
-    const noTemplateAlert            = $q('#noTemplateAlert').first();
-    const templateBuilderBox         = $q('#templateBuilderBox').first();
-    const templateBadge              = $q('#templateBadge').first();
-    const dynamicInputsRow           = $q('#dynamicInputsRow').first();
-    const templateValidationMsg      = $q('#templateValidationMsg').first();
-
-    const groupsMap = {};
-    (window.MATERIAL_GROUPS || []).forEach(g => {
-        groupsMap[g.id] = g;
-    });
-
-    let activeSegments = [];
-    let activeRegex = null;
+    let createBtn                   = $q('#createBtn').first();
+    let cancelBtn                   = $q('#cancelBtn').first();
+    let materialName                = $q('#materialName').first();
+    let materialGroup               = $q('#materialGroup').first();
+    let specificationUnitPackaging  = $q('#specificationUnitPackaging').first();
+    let brandName                   = $q('#brandName').first();
+    let noTemplateAlert             = $q('#noTemplateAlert').first();
+    let templateCard                = $q('#templateCard').first();
+    let templateTextDisplay         = $q('#templateTextDisplay').first();
+    let dynamicInputsArea           = $q('#dynamicInputsArea').first();
 
     function parseTemplate(template) {
-        if (!template || !template.trim()) {
-            return [];
-        }
+        if (!template || !template.trim()) return [];
         const regex = /\[([^:\]\r\n]+)(?::(number|text))?\]/g;
-        let segments = [];
+        const segments = [];
         let lastIndex = 0;
         let match;
 
@@ -160,155 +134,85 @@
         return segments;
     }
 
-    function buildRegex(segments) {
-        if (!segments || segments.length === 0) return null;
-        let pattern = '^';
-        const total = segments.length;
-        for (let i = 0; i < total; i++) {
-            const seg = segments[i];
-            if (seg.type === 'static') {
-                pattern += seg.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            } else if (seg.type === 'variable') {
-                if (seg.datatype === 'number') {
-                    pattern += '(\\d+(?:\\.\\d+)?)';
-                } else {
-                    pattern += (i === total - 1) ? '([^\\r\\n]+)' : '([^\\r\\n]+?)';
-                }
-            }
-        }
-        pattern += '$';
-        try {
-            return new RegExp(pattern, 'u');
-        } catch (e) {
-            return new RegExp(pattern);
-        }
-    }
+    function syncTemplateInputs() {
+        const selectedOption = materialGroup.options[materialGroup.selectedIndex];
+        const template = selectedOption ? (selectedOption.dataset.template || '').trim() : '';
 
-    function assembleAndValidate() {
-        if (!activeSegments.length) {
-            specificationUnitPackaging.value = '';
-            return;
-        }
-
-        let assembled = '';
-        let varIdx = 0;
-        let allVarsFilled = true;
-
-        activeSegments.forEach(seg => {
-            if (seg.type === 'static') {
-                assembled += seg.value;
-            } else if (seg.type === 'variable') {
-                const input = dynamicInputsRow.querySelector(`[data-var-index="${varIdx}"]`);
-                const val = input ? input.value : '';
-                if (!val || !val.trim()) {
-                    allVarsFilled = false;
-                }
-                assembled += val;
-                varIdx++;
-            }
-        });
-
-        specificationUnitPackaging.value = assembled;
-
-        if (!allVarsFilled) {
-            templateValidationMsg.className = 'small mt-2 text-warning';
-            templateValidationMsg.textContent = 'Please fill in all template fields.';
-            return;
-        }
-
-        if (activeRegex && activeRegex.test(assembled.trim())) {
-            templateValidationMsg.className = 'small mt-2 text-success';
-            templateValidationMsg.textContent = '✓ Specification matches the required group template.';
-        } else {
-            templateValidationMsg.className = 'small mt-2 text-danger';
-            templateValidationMsg.textContent = '⚠ Specification does not match the required format.';
-        }
-    }
-
-    function renderDynamicBuilder(template) {
-        dynamicInputsRow.innerHTML = '';
-        activeSegments = parseTemplate(template);
-        activeRegex = buildRegex(activeSegments);
-
-        let varIdx = 0;
-        activeSegments.forEach((seg, idx) => {
-            if (seg.type === 'static') {
-                const col = document.createElement('div');
-                col.className = 'col-auto d-flex align-items-center pb-2 text-muted fw-bold';
-                col.style.whiteSpace = 'pre';
-                col.textContent = seg.value;
-                dynamicInputsRow.appendChild(col);
-            } else if (seg.type === 'variable') {
-                const col = document.createElement('div');
-                col.className = 'col-sm-3 col-6';
-
-                const group = document.createElement('div');
-                group.className = 'form-group mb-0';
-
-                const label = document.createElement('label');
-                label.className = 'small fw-bold text-truncate w-100 mb-1';
-                label.textContent = seg.label + (seg.datatype === 'number' ? ' (#)' : '');
-
-                const input = document.createElement('input');
-                input.className = 'form-control form-control-sm';
-                input.type = seg.datatype === 'number' ? 'number' : 'text';
-                if (seg.datatype === 'number') {
-                    input.step = 'any';
-                }
-                input.placeholder = seg.label;
-                input.setAttribute('data-var-index', String(varIdx));
-                input.addEventListener('input', assembleAndValidate);
-
-                group.appendChild(label);
-                group.appendChild(input);
-                col.appendChild(group);
-                dynamicInputsRow.appendChild(col);
-
-                varIdx++;
-            }
-        });
-
-        assembleAndValidate();
-    }
-
-    function onGroupChanged() {
-        const groupId = materialGroup.value;
-        const group = groupsMap[groupId];
-
-        if (!groupId || !group) {
-            noTemplateAlert.classList.add('d-none');
-            templateBuilderBox.classList.add('d-none');
-            specificationUnitPackaging.value = '';
-            createBtn.disabled = true;
-            return;
-        }
-
-        const template = group.specification_template ? group.specification_template.trim() : '';
+        dynamicInputsArea.innerHTML = '';
 
         if (!template) {
             noTemplateAlert.classList.remove('d-none');
-            templateBuilderBox.classList.add('d-none');
+            templateCard.classList.add('d-none');
             specificationUnitPackaging.value = '';
             createBtn.disabled = true;
-        } else {
-            noTemplateAlert.classList.add('d-none');
-            templateBuilderBox.classList.remove('d-none');
-            templateBadge.textContent = 'Template: ' + template;
-            createBtn.disabled = false;
-            renderDynamicBuilder(template);
-        }
-    }
-
-    materialGroup.onchange = onGroupChanged;
-
-    // Trigger initial check
-    onGroupChanged();
-
-    createBtn.onclick = (e) => {
-        if (!materialGroup.value) {
-            window.util.showMsg({ status: -2, message: 'Please select a Material Group.' });
             return;
         }
+
+        noTemplateAlert.classList.add('d-none');
+        templateCard.classList.remove('d-none');
+        templateTextDisplay.textContent = template;
+        createBtn.disabled = false;
+
+        const segments = parseTemplate(template);
+        const inputs = [];
+
+        function updateCombined() {
+            let combined = '';
+            let vIdx = 0;
+            for (const seg of segments) {
+                if (seg.type === 'static') {
+                    combined += seg.value;
+                } else {
+                    const inp = inputs[vIdx++];
+                    combined += (inp ? inp.value.trim() : '');
+                }
+            }
+            specificationUnitPackaging.value = combined;
+        }
+
+        const row = document.createElement('div');
+        row.className = 'row g-3 align-items-end';
+
+        for (const seg of segments) {
+            if (seg.type === 'static') {
+                const col = document.createElement('div');
+                col.className = 'col-auto';
+                const span = document.createElement('span');
+                span.className = 'badge bg-secondary bg-opacity-25 text-body px-2 py-2 fs-6';
+                span.textContent = seg.value;
+                col.appendChild(span);
+                row.appendChild(col);
+            } else {
+                const col = document.createElement('div');
+                col.className = 'col-auto';
+
+                const label = document.createElement('label');
+                label.className = 'form-label small text-muted mb-1 d-block';
+                label.textContent = seg.label + (seg.datatype === 'number' ? ' (number)' : '');
+
+                const input = document.createElement('input');
+                input.type = seg.datatype === 'number' ? 'number' : 'text';
+                if (seg.datatype === 'number') input.step = 'any';
+                input.className = 'form-control';
+                input.placeholder = seg.label;
+
+                input.addEventListener('input', updateCombined);
+                inputs.push(input);
+
+                col.appendChild(label);
+                col.appendChild(input);
+                row.appendChild(col);
+            }
+        }
+
+        dynamicInputsArea.appendChild(row);
+        updateCombined();
+    }
+
+    materialGroup.addEventListener('change', syncTemplateInputs);
+    syncTemplateInputs();
+
+    createBtn.onclick = (e) => {
 
         window.util.blockUI();
 
@@ -326,11 +230,14 @@
                 return false;
             };
       
-            window.util.navTo('/master_data/material/item/'+reply.data.id);
+             window.util.navTo('/master_data/material/item/'+reply.data.id);
+
+        
         });
     }
 
     cancelBtn.onclick = (e) => {
+
         @if($back)
             window.util.navTo('/{{$back}}');
         @else

@@ -13,6 +13,7 @@ use App\Models\MaterialQuantityRequestItem;
 use App\Models\Project;
 use App\Models\Section;
 use App\Models\Unit;
+use App\Models\User;
 use App\Protocols\LevelOneBudgetDiagnostic;
 use App\Protocols\ProtocolRegistry;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -406,5 +407,67 @@ class LevelOneBudgetDiagnosticTest extends TestCase
         $this->assertEquals(100.0, $violation['allowed_budget']);
         $this->assertEquals(120.0, $violation['total_requested']); // 60 * 2.0 = 120
         $this->assertEquals(20.0, $violation['over_budget_quantity']);
+    }
+
+    /** @test */
+    public function it_can_render_the_protocols_dashboard_page()
+    {
+        $user = User::create([
+            'name'     => 'Tester',
+            'email'    => 'tester@mqms.local',
+            'password' => bcrypt('password'),
+        ]);
+
+        $response = $this->actingAs($user)->get('/protocols');
+        $response->assertStatus(200);
+        $response->assertSee('Protocols Diagnostic Dashboard');
+        $response->assertSee('id="protocolSelect"', false);
+        $response->assertSee('id="projectSelect"', false);
+        $response->assertSee('id="runBtn"', false);
+    }
+
+    /** @test */
+    public function it_can_list_protocols_via_api()
+    {
+        $user = User::create([
+            'name'     => 'Tester 2',
+            'email'    => 'tester2@mqms.local',
+            'password' => bcrypt('password'),
+        ]);
+
+        $response = $this->actingAs($user)->getJson('/api/protocol/list');
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+            'data'   => [
+                [
+                    'slug' => 'level-1-budget-diagnostic',
+                    'name' => 'Level 1 Budget Diagnostic',
+                ],
+            ],
+        ]);
+    }
+
+    /** @test */
+    public function it_can_run_protocol_via_api()
+    {
+        $this->seed(\Database\Seeders\LevelOneBudgetDiagnosticSeeder::class);
+        $project = Project::latest('id')->first();
+
+        $user = User::first();
+
+        $response = $this->actingAs($user)->postJson('/api/protocol/run', [
+            'protocol'   => 'level-1-budget-diagnostic',
+            'project_id' => $project->id,
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+            'data'   => [
+                'passed'           => false,
+                'violations_count' => 1,
+            ],
+        ]);
     }
 }
