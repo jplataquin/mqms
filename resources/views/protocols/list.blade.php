@@ -60,6 +60,17 @@
 
     <!-- Diagnostic Results Section -->
     <div id="resultsArea" class="mt-4" style="display: none;">
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+            <div>
+                <h5 class="mb-0 fw-bold"><i class="bi bi-clipboard2-data me-1"></i> Diagnostic Execution Results</h5>
+            </div>
+            <div>
+                <button id="printBtn" class="btn btn-outline-dark btn-sm">
+                    <i class="bi bi-printer me-1"></i> Print Results
+                </button>
+            </div>
+        </div>
+
         <!-- Status summary banner -->
         <div id="statusAlert" class="mb-3"></div>
 
@@ -108,6 +119,7 @@
     const projectSelect         = $q('#projectSelect').first();
     const manualProjectId       = $q('#manualProjectIdInput').first();
     const runBtn                = $q('#runBtn').first();
+    const printBtn              = $q('#printBtn').first();
     const resultsArea           = $q('#resultsArea').first();
     const statusAlert           = $q('#statusAlert').first();
     const metricsRow            = $q('#metricsRow').first();
@@ -587,6 +599,25 @@
 
         renderViolationCards(filtered);
     };
+
+    if (printBtn) {
+        printBtn.onclick = () => {
+            let protoSlug = protocolSelect.value;
+            let projId = manualProjectId.value ? parseInt(manualProjectId.value) : parseInt(projectSelect.value);
+
+            if (!protoSlug) {
+                alert('Please select a protocol.');
+                return;
+            }
+
+            if (!projId || isNaN(projId)) {
+                alert('Please select a project or enter a valid Project ID.');
+                return;
+            }
+
+            window.open(`/protocols/print?protocol=${encodeURIComponent(protoSlug)}&project_id=${projId}`, '_blank');
+        };
+    }
 
     runBtn.onclick = executeProtocol;
 

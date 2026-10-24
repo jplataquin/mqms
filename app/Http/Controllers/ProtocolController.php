@@ -16,6 +16,37 @@ class ProtocolController extends Controller
     }
 
     /**
+     * Display the dedicated print view for a protocol diagnostic.
+     */
+    public function print(Request $request)
+    {
+        $protocolSlug = $request->input('protocol');
+        $projectId = (int) $request->input('project_id');
+
+        if (!$protocolSlug || !$projectId) {
+            abort(400, 'Protocol and Project ID are required.');
+        }
+
+        $project = \App\Models\Project::findOrFail($projectId);
+
+        $params = [
+            'project_id'        => $projectId,
+            'component_id'      => $request->input('component_id') ? (int) $request->input('component_id') : null,
+            'component_item_id' => $request->input('component_item_id') ? (int) $request->input('component_item_id') : null,
+            'contract_item_id'  => $request->input('contract_item_id') ? (int) $request->input('contract_item_id') : null,
+        ];
+
+        $result = ProtocolRegistry::run($protocolSlug, $params);
+
+        return view('protocols/print', [
+            'protocol'  => $protocolSlug,
+            'project'   => $project,
+            'result'    => $result,
+            'printedAt' => now()->format('Y-m-d H:i:s'),
+        ]);
+    }
+
+    /**
      * API: List registered protocols.
      */
     public function _list(Request $request)

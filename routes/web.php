@@ -68,8 +68,9 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/budget/contract_item/{id}', [App\Http\Controllers\BudgetController::class, 'component_list']);
     Route::get('/budget/component/{id}', [App\Http\Controllers\BudgetController::class, 'component_display']);
     
-    // Protocols Dashboard
+    // Protocols Dashboard & Dedicated Print View
     Route::get('/protocols', [App\Http\Controllers\ProtocolController::class, 'list']);
+    Route::get('/protocols/print', [App\Http\Controllers\ProtocolController::class, 'print']);
     
     Route::get('/accomplishment', [App\Http\Controllers\AccomplishmentController::class, 'list']);
     Route::get('/accomplishment/project/{id}', [App\Http\Controllers\AccomplishmentController::class, 'section_list']);

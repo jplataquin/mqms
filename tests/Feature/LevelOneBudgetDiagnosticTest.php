@@ -432,6 +432,37 @@ class LevelOneBudgetDiagnosticTest extends TestCase
         $response->assertSee('id="protocolSelect"', false);
         $response->assertSee('id="projectSelect"', false);
         $response->assertSee('id="runBtn"', false);
+        $response->assertSee('id="printBtn"', false);
+    }
+
+    /** @test */
+    public function it_can_render_the_dedicated_protocol_print_page()
+    {
+        $user = User::create([
+            'name'     => 'Print Tester',
+            'email'    => 'print_tester@mqms.local',
+            'password' => bcrypt('password'),
+        ]);
+
+        $this->seed(\Database\Seeders\LevelOneBudgetDiagnosticSeeder::class);
+        $project = Project::latest('id')->first();
+
+        // 1. Level 1 Diagnostic Print Page
+        $response = $this->actingAs($user)->get("/protocols/print?protocol=level-1-budget-diagnostic&project_id={$project->id}");
+        $response->assertStatus(200);
+        $response->assertSee('PROTOCOL');
+        $response->assertSee('Level 1 Budget Diagnostic');
+        $response->assertSee('NON-CONFORMING');
+        $response->assertSee('Print Report');
+        $response->assertSee('Non-Conforming Items (Exceeding Budget)');
+
+        // 2. Level 2 Diagnostic Print Page
+        $responseL2 = $this->actingAs($user)->get("/protocols/print?protocol=level-2-budget-diagnostic&project_id={$project->id}");
+        $responseL2->assertStatus(200);
+        $responseL2->assertSee('PROTOCOL');
+        $responseL2->assertSee('Level 2 Budget Diagnostic');
+        $responseL2->assertSee('Part 1: Purchase Order Quantities vs MQR Requisitions');
+        $responseL2->assertSee('Part 2: Contract Item Financial Utilization');
     }
 
     /** @test */
