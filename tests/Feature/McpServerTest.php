@@ -221,9 +221,7 @@ class McpServerTest extends TestCase
         $this->assertContains('search_records', $toolNames);
         $this->assertContains('get_material_price_stats', $toolNames);
         $this->assertContains('run_level_one_budget_diagnostic', $toolNames);
-        $this->assertContains('level_one_budget_diagnostic', $toolNames);
         $this->assertContains('run_level_two_budget_diagnostic', $toolNames);
-        $this->assertContains('level_two_budget_diagnostic', $toolNames);
         $this->assertContains('list_projects', $toolNames);
         $this->assertContains('list_sections', $toolNames);
         $this->assertContains('list_contract_items', $toolNames);
@@ -1664,24 +1662,7 @@ class McpServerTest extends TestCase
         $this->assertEquals(2, $resultRun['total_items']);
         $this->assertEquals(20.0, $resultRun['violations'][0]['over_budget_quantity']);
 
-        // 5. Call via alias level_one_budget_diagnostic
-        $payloadAlias = [
-            'jsonrpc' => '2.0',
-            'id' => 44,
-            'method' => 'tools/call',
-            'params' => [
-                'name' => 'level_one_budget_diagnostic',
-                'arguments' => [
-                    'project_id' => $project->id,
-                ],
-            ],
-        ];
-        $responseAlias = $this->postJson('/mcp', $payloadAlias);
-        $responseAlias->assertStatus(200);
-        $resultAlias = json_decode($responseAlias->json('result.content.0.text'), true);
-        $this->assertEquals(1, $resultAlias['violations_count']);
-
-        // 6. Call with component item filter that has no violation
+        // 5. Call with component item filter that has no violation
         $compliantComponentItem = ComponentItem::where('name', '20mm Deformed Bar Budget Limit')->first();
         if ($compliantComponentItem) {
             $payloadFiltered = [
@@ -1865,24 +1846,7 @@ class McpServerTest extends TestCase
         $this->assertEquals(1, count($resultRun['contract_items_summary']));
         $this->assertEquals(20.0, $resultRun['contract_items_summary'][0]['percentage_used']);
 
-        // 4. Call via alias level_two_budget_diagnostic
-        $payloadAlias = [
-            'jsonrpc' => '2.0',
-            'id' => 53,
-            'method' => 'tools/call',
-            'params' => [
-                'name' => 'level_two_budget_diagnostic',
-                'arguments' => [
-                    'project_id' => $project->id,
-                ],
-            ],
-        ];
-        $responseAlias = $this->postJson('/mcp', $payloadAlias);
-        $responseAlias->assertStatus(200);
-        $resultAlias = json_decode($responseAlias->json('result.content.0.text'), true);
-        $this->assertTrue($resultAlias['passed']);
-
-        // 5. Read via resource URI mqms://protocols/level-2-budget-diagnostic/{project_id}
+        // 4. Read via resource URI mqms://protocols/level-2-budget-diagnostic/{project_id}
         $payloadResource = [
             'jsonrpc' => '2.0',
             'id' => 54,

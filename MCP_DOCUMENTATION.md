@@ -50,8 +50,8 @@ Material Quantity Request (MQR)
    - `list_records`: Paginated, ordered queries with column validation.
    - `search_records`: Multi-field fuzzy search across common text columns and primary keys.
    - `get_material_price_stats`: Domain analytics aggregating approved canvass pricing from both standard and direct procurement pipelines.
-   - `run_level_one_budget_diagnostic` (alias: `level_one_budget_diagnostic`): Verifies that total requested quantity (scaled by equivalent) in approved material quantity requests does not exceed component item budget.
-   - `run_level_two_budget_diagnostic` (alias: `level_two_budget_diagnostic`): Verifies that material quantities in approved purchase orders do not exceed approved material quantity requests, and verifies that total approved purchase order amounts per contract item do not exceed the contract item amount (calculating percentage used).
+   - `run_level_one_budget_diagnostic`: Verifies that total requested quantity (scaled by equivalent) in approved material quantity requests does not exceed component item budget.
+   - `run_level_two_budget_diagnostic`: Verifies that material quantities in approved purchase orders do not exceed approved material quantity requests, and verifies that total approved purchase order amounts per contract item do not exceed the contract item amount (calculating percentage used).
    - **Dedicated Domain & Entity Listing Tools**: High-level tools with rich relational, status, and attribute filters across WBS, Materials/Budget, Procurement/Workflow, Partners/Execution, and System/Misc (`list_projects`, `list_sections`, `list_contract_items`, `list_components`, `list_component_items`, `list_material_groups`, `list_material_items`, `list_material_quantities`, `list_units`, `list_material_quantity_requests`, `list_material_quantity_request_items`, `list_material_canvasses`, `list_purchase_orders`, `list_purchase_order_items`, `list_purchase_order_received`, `list_purchase_order_received_items`, `list_suppliers`, `list_payment_terms`, `list_manpower_registry`, `list_coupons`, `list_accomplishments`, `list_users`, `list_comments`).
 4. **Strict Security Boundaries:** Whitelist of allowed entities, explicit denial of RBAC and API credential tables, and automatic scrubbing of passwords and security tokens.
 
@@ -203,8 +203,8 @@ The server provides four core tools registered in `MqmsServer`:
 2. list_records
 3. search_records
 4. get_material_price_stats
-5. run_level_one_budget_diagnostic (alias: level_one_budget_diagnostic)
-6. run_level_two_budget_diagnostic (alias: level_two_budget_diagnostic)
+5. run_level_one_budget_diagnostic
+6. run_level_two_budget_diagnostic
 ```
 
 ---
@@ -407,7 +407,7 @@ Calculates comprehensive price statistics for a specific material item across bo
 
 ---
 
-### Tool 5: `run_level_one_budget_diagnostic` (alias: `level_one_budget_diagnostic`)
+### Tool 5: `run_level_one_budget_diagnostic`
 Executes the Level 1 Budget Diagnostic protocol for a project. Verifies that the total requested material quantity (scaled by equivalent factor) in approved material quantity requests does not exceed the component item budget.
 
 #### Parameters
@@ -453,7 +453,7 @@ Executes the Level 1 Budget Diagnostic protocol for a project. Verifies that the
 
 ---
 
-### Tool 6: `run_level_two_budget_diagnostic` (alias: `level_two_budget_diagnostic`)
+### Tool 6: `run_level_two_budget_diagnostic`
 Executes the Level 2 Budget Diagnostic protocol for a project. Verifies that all material quantities across approved purchase orders do not exceed their approved Material Quantity Request (MQR) quantities, and verifies that the total amount of approved purchase orders per contract item is within the official contract amount, calculating the percentage used.
 
 #### Parameters

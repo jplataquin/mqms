@@ -10,7 +10,6 @@ use App\Mcp\Methods\ServerDiscover;
 use App\Mcp\Resources\DynamicModelResource;
 use App\Mcp\Tools\GetMaterialPriceStatsTool;
 use App\Mcp\Tools\GetRecordTool;
-use App\Mcp\Tools\LevelOneBudgetDiagnosticTool;
 use App\Mcp\Tools\ListAccomplishmentsTool;
 use App\Mcp\Tools\ListCommentsTool;
 use App\Mcp\Tools\ListComponentItemsTool;
@@ -37,7 +36,6 @@ use App\Mcp\Tools\ListUnitsTool;
 use App\Mcp\Tools\ListUsersTool;
 use App\Mcp\Tools\RunLevelOneBudgetDiagnosticTool;
 use App\Mcp\Tools\RunLevelTwoBudgetDiagnosticTool;
-use App\Mcp\Tools\LevelTwoBudgetDiagnosticTool;
 use App\Mcp\Tools\SearchRecordsTool;
 use Laravel\Mcp\Server;
 
@@ -79,9 +77,7 @@ Important Core Hierarchies & Lifecycle Flows:
         SearchRecordsTool::class,
         GetMaterialPriceStatsTool::class,
         RunLevelOneBudgetDiagnosticTool::class,
-        LevelOneBudgetDiagnosticTool::class,
         RunLevelTwoBudgetDiagnosticTool::class,
-        LevelTwoBudgetDiagnosticTool::class,
         ListProjectsTool::class,
         ListSectionsTool::class,
         ListContractItemsTool::class,
