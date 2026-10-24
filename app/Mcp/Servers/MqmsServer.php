@@ -35,6 +35,8 @@ use App\Mcp\Tools\ListSuppliersTool;
 use App\Mcp\Tools\ListUnitsTool;
 use App\Mcp\Tools\ListUsersTool;
 use App\Mcp\Tools\RunLevelOneBudgetDiagnosticTool;
+use App\Mcp\Tools\RunLevelTwoBudgetDiagnosticTool;
+use App\Mcp\Tools\LevelTwoBudgetDiagnosticTool;
 use App\Mcp\Tools\SearchRecordsTool;
 use Laravel\Mcp\Server;
 
@@ -44,7 +46,7 @@ class MqmsServer extends Server
 
     public string $serverVersion = '1.0.0';
 
-    public string $instructions = 'Provides HTTP MCP access to MQMS models (excluding roles, access codes, credentials, and user passwords). Allows reading records and protocol diagnostics as resources and querying via specialized WBS, Budget/Materials, Procurement/Workflow, Partners/Execution, and System/Misc tools, get_record, list_records, search_records, get_material_price_stats, and run_level_one_budget_diagnostic tools.
+    public string $instructions = 'Provides HTTP MCP access to MQMS models (excluding roles, access codes, credentials, and user passwords). Allows reading records and protocol diagnostics as resources and querying via specialized WBS, Budget/Materials, Procurement/Workflow, Partners/Execution, and System/Misc tools, get_record, list_records, search_records, get_material_price_stats, run_level_one_budget_diagnostic, and run_level_two_budget_diagnostic tools.
 
 Important Core Hierarchies & Lifecycle Flows:
 1. Work Breakdown Structure (WBS):
@@ -68,6 +70,8 @@ Important Core Hierarchies & Lifecycle Flows:
         GetMaterialPriceStatsTool::class,
         RunLevelOneBudgetDiagnosticTool::class,
         LevelOneBudgetDiagnosticTool::class,
+        RunLevelTwoBudgetDiagnosticTool::class,
+        LevelTwoBudgetDiagnosticTool::class,
         ListProjectsTool::class,
         ListSectionsTool::class,
         ListContractItemsTool::class,

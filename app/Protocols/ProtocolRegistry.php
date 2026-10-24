@@ -11,6 +11,7 @@ class ProtocolRegistry
      */
     protected static array $protocols = [
         LevelOneBudgetDiagnostic::SLUG => LevelOneBudgetDiagnostic::class,
+        LevelTwoBudgetDiagnostic::SLUG => LevelTwoBudgetDiagnostic::class,
     ];
 
     /**

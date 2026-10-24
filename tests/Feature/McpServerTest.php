@@ -118,6 +118,8 @@ class McpServerTest extends TestCase
         $this->assertContains('get_material_price_stats', $toolNames);
         $this->assertContains('run_level_one_budget_diagnostic', $toolNames);
         $this->assertContains('level_one_budget_diagnostic', $toolNames);
+        $this->assertContains('run_level_two_budget_diagnostic', $toolNames);
+        $this->assertContains('level_two_budget_diagnostic', $toolNames);
         $this->assertContains('list_projects', $toolNames);
         $this->assertContains('list_sections', $toolNames);
         $this->assertContains('list_contract_items', $toolNames);
@@ -1626,5 +1628,169 @@ class McpServerTest extends TestCase
         $data = json_decode($response->json('result.contents.0.text'), true);
         $this->assertEquals('Level 1 Budget Diagnostic', $data['protocol']);
         $this->assertEquals(1, $data['violations_count']);
+    }
+
+    /** @test */
+    public function it_can_run_level_two_budget_diagnostic_via_mcp_tool()
+    {
+        \Illuminate\Database\Eloquent\Model::unguard();
+
+        // 1. Validation: missing project_id
+        $payloadMissing = [
+            'jsonrpc' => '2.0',
+            'id' => 51,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'run_level_two_budget_diagnostic',
+                'arguments' => [],
+            ],
+        ];
+        $responseMissing = $this->postJson('/mcp', $payloadMissing);
+        $responseMissing->assertStatus(200);
+        $this->assertTrue($responseMissing->json('result.isError'));
+        $this->assertStringContainsString('project_id is required', $responseMissing->json('result.content.0.text'));
+
+        // 2. Setup project with a compliant PO
+        $unit = Unit::create(['text' => 'Pcs', 'created_by' => 1]);
+        $project = Project::create(['name' => 'MCP Level 2 Project', 'status' => 'ACTV', 'created_by' => 1]);
+        $section = Section::create(['project_id' => $project->id, 'name' => 'Sec 1', 'created_by' => 1]);
+
+        $contractItem = ContractItem::create([
+            'section_id'          => $section->id,
+            'item_code'           => '201',
+            'description'         => 'Drainage Works',
+            'unit_id'             => $unit->id,
+            'contract_quantity'   => 50,
+            'contract_unit_price' => 200,
+            'created_by'          => 1,
+        ]);
+
+        $component = Component::create([
+            'section_id'       => $section->id,
+            'contract_item_id' => $contractItem->id,
+            'name'             => 'Pipe Installation',
+            'unit_id'          => $unit->id,
+            'quantity'         => 1,
+            'status'           => 'APRV',
+            'created_by'       => 1,
+        ]);
+
+        $componentItem = ComponentItem::create([
+            'component_id'      => $component->id,
+            'name'              => 'RC Pipe 600mm',
+            'unit_id'           => $unit->id,
+            'quantity'          => 50,
+            'budget_price'      => 150,
+            'function_type_id'  => 3,
+            'function_variable' => 1,
+            'created_by'        => 1,
+        ]);
+
+        $group = MaterialGroup::create(['name' => 'Pipes', 'created_by' => 1]);
+        $materialItem = MaterialItem::create([
+            'material_group_id'             => $group->id,
+            'name'                          => 'RC Pipe',
+            'brand'                         => 'Generic',
+            'specification_unit_packaging'  => 'standard',
+            'created_by'                    => 1,
+        ]);
+
+        $mqr = MaterialQuantityRequest::create([
+            'project_id'       => $project->id,
+            'section_id'       => $section->id,
+            'contract_item_id' => $contractItem->id,
+            'component_id'     => $component->id,
+            'status'           => 'APRV',
+            'description'      => 'Pipe MQR',
+            'created_by'       => 1,
+        ]);
+
+        $mqrItem = MaterialQuantityRequestItem::create([
+            'material_quantity_request_id' => $mqr->id,
+            'component_item_id'            => $componentItem->id,
+            'material_item_id'             => $materialItem->id,
+            'requested_quantity'           => 30,
+            'status'                       => 'APRV',
+        ]);
+
+        // PO for 20 units @ 100 = 2,000 (Within MQR of 30 and Contract Amount of 10,000)
+        $po = PurchaseOrder::create([
+            'project_id'                   => $project->id,
+            'section_id'                   => $section->id,
+            'contract_item_id'             => $contractItem->id,
+            'component_id'                 => $component->id,
+            'material_quantity_request_id' => $mqr->id,
+            'supplier_id'                  => 1,
+            'payment_term_id'              => 1,
+            'status'                       => 'APRV',
+            'created_by'                   => 1,
+        ]);
+
+        PurchaseOrderItem::create([
+            'purchase_order_id'                 => $po->id,
+            'component_item_id'                 => $componentItem->id,
+            'material_quantity_request_item_id' => $mqrItem->id,
+            'material_canvass_id'               => 1,
+            'material_item_id'                  => $materialItem->id,
+            'quantity'                          => 20,
+            'price'                             => 100,
+            'status'                            => 'APRV',
+        ]);
+
+        // 3. Call run_level_two_budget_diagnostic via /mcp
+        $payloadRun = [
+            'jsonrpc' => '2.0',
+            'id' => 52,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'run_level_two_budget_diagnostic',
+                'arguments' => [
+                    'project_id' => $project->id,
+                ],
+            ],
+        ];
+        $responseRun = $this->postJson('/mcp', $payloadRun);
+        $responseRun->assertStatus(200);
+        $resultRun = json_decode($responseRun->json('result.content.0.text'), true);
+
+        $this->assertEquals('Level 2 Budget Diagnostic', $resultRun['protocol']);
+        $this->assertEquals('level-2-budget-diagnostic', $resultRun['slug']);
+        $this->assertEquals('success', $resultRun['status']);
+        $this->assertTrue($resultRun['passed']);
+        $this->assertEquals(0, $resultRun['violations_count']);
+        $this->assertEquals(1, count($resultRun['contract_items_summary']));
+        $this->assertEquals(20.0, $resultRun['contract_items_summary'][0]['percentage_used']);
+
+        // 4. Call via alias level_two_budget_diagnostic
+        $payloadAlias = [
+            'jsonrpc' => '2.0',
+            'id' => 53,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'level_two_budget_diagnostic',
+                'arguments' => [
+                    'project_id' => $project->id,
+                ],
+            ],
+        ];
+        $responseAlias = $this->postJson('/mcp', $payloadAlias);
+        $responseAlias->assertStatus(200);
+        $resultAlias = json_decode($responseAlias->json('result.content.0.text'), true);
+        $this->assertTrue($resultAlias['passed']);
+
+        // 5. Read via resource URI mqms://protocols/level-2-budget-diagnostic/{project_id}
+        $payloadResource = [
+            'jsonrpc' => '2.0',
+            'id' => 54,
+            'method' => 'resources/read',
+            'params' => [
+                'uri' => "mqms://protocols/level-2-budget-diagnostic/{$project->id}",
+            ],
+        ];
+        $responseResource = $this->postJson('/mcp', $payloadResource);
+        $responseResource->assertStatus(200);
+        $resourceData = json_decode($responseResource->json('result.contents.0.text'), true);
+        $this->assertEquals('Level 2 Budget Diagnostic', $resourceData['protocol']);
+        $this->assertTrue($resourceData['passed']);
     }
 }

@@ -51,6 +51,7 @@ Material Quantity Request (MQR)
    - `search_records`: Multi-field fuzzy search across common text columns and primary keys.
    - `get_material_price_stats`: Domain analytics aggregating approved canvass pricing from both standard and direct procurement pipelines.
    - `run_level_one_budget_diagnostic` (alias: `level_one_budget_diagnostic`): Verifies that total requested quantity (scaled by equivalent) in approved material quantity requests does not exceed component item budget.
+   - `run_level_two_budget_diagnostic` (alias: `level_two_budget_diagnostic`): Verifies that material quantities in approved purchase orders do not exceed approved material quantity requests, and verifies that total approved purchase order amounts per contract item do not exceed the contract item amount (calculating percentage used).
    - **Dedicated Domain & Entity Listing Tools**: High-level tools with rich relational, status, and attribute filters across WBS, Materials/Budget, Procurement/Workflow, Partners/Execution, and System/Misc (`list_projects`, `list_sections`, `list_contract_items`, `list_components`, `list_component_items`, `list_material_groups`, `list_material_items`, `list_material_quantities`, `list_units`, `list_material_quantity_requests`, `list_material_quantity_request_items`, `list_material_canvasses`, `list_purchase_orders`, `list_purchase_order_items`, `list_purchase_order_received`, `list_purchase_order_received_items`, `list_suppliers`, `list_payment_terms`, `list_manpower_registry`, `list_coupons`, `list_accomplishments`, `list_users`, `list_comments`).
 4. **Strict Security Boundaries:** Whitelist of allowed entities, explicit denial of RBAC and API credential tables, and automatic scrubbing of passwords and security tokens.
 
@@ -203,6 +204,7 @@ The server provides four core tools registered in `MqmsServer`:
 3. search_records
 4. get_material_price_stats
 5. run_level_one_budget_diagnostic (alias: level_one_budget_diagnostic)
+6. run_level_two_budget_diagnostic (alias: level_two_budget_diagnostic)
 ```
 
 ---
@@ -451,7 +453,50 @@ Executes the Level 1 Budget Diagnostic protocol for a project. Verifies that the
 
 ---
 
-### Tool 6: Dedicated Listing Tools (Partners & Execution)
+### Tool 6: `run_level_two_budget_diagnostic` (alias: `level_two_budget_diagnostic`)
+Executes the Level 2 Budget Diagnostic protocol for a project. Verifies that all material quantities across approved purchase orders do not exceed their approved Material Quantity Request (MQR) quantities, and verifies that the total amount of approved purchase orders per contract item is within the official contract amount, calculating the percentage used.
+
+#### Parameters
+| Field | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `project_id` | `integer` | **Yes** | The primary key ID of the `project` to run diagnostics against. |
+| `contract_item_id` | `integer` | No | Optional contract item ID to restrict diagnostics to a single contract item. |
+
+#### Example Request
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 6,
+  "method": "tools/call",
+  "params": {
+    "name": "run_level_two_budget_diagnostic",
+    "arguments": {
+      "project_id": 1
+    }
+  }
+}
+```
+
+#### Example Response
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 6,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n    \"protocol\": \"Level 2 Budget Diagnostic\",\n    \"slug\": \"level-2-budget-diagnostic\",\n    \"status\": \"success\",\n    \"passed\": false,\n    \"project_id\": 1,\n    \"project_name\": \"Bridge Construction Project\",\n    \"total_mqr_items_checked\": 10,\n    \"total_contract_items\": 4,\n    \"violations_count\": 1,\n    \"quantity_violations_count\": 1,\n    \"amount_violations_count\": 0,\n    \"quantity_violations\": [\n        {\n            \"type\": \"mqr_quantity_exceeded\",\n            \"material_quantity_request_item_id\": 25,\n            \"material_quantity_request_id\": 12,\n            \"material_quantity_request_url\": \"/material_quantity_request/12\",\n            \"material_item_id\": 104,\n            \"material_name\": \"16mm Deformed Bar Grade 40\",\n            \"allowed_mqr_quantity\": 50.0,\n            \"total_po_quantity\": 55.0,\n            \"over_ordered_quantity\": 5.0,\n            \"purchase_orders_count\": 2,\n            \"po_breakdown\": [...]\n        }\n    ],\n    \"amount_violations\": [],\n    \"contract_items_summary\": [\n        {\n            \"contract_item_id\": 1,\n            \"contract_item_code\": \"101\",\n            \"contract_item_name\": \"Concrete Works\",\n            \"contract_amount\": 100000.0,\n            \"total_po_amount\": 25000.0,\n            \"percentage_used\": 25.0,\n            \"over_budget_amount\": 0.0,\n            \"purchase_orders_count\": 2,\n            \"is_over_budget\": false,\n            \"purchase_orders\": [...]\n        }\n    ],\n    \"summary\": \"1 MQR item(s) exceeded by PO quantities.\"\n}"
+      }
+    ],
+    "isError": false
+  }
+}
+```
+
+---
+
+### Tool 7: Dedicated Listing Tools (Partners & Execution)
 
 MQMS provides specialized listing tools tailored for external partners, human resources, fleet/voucher monitoring, and site accomplishments.
 
@@ -518,7 +563,7 @@ Tracks physical site accomplishment records and progress monitoring tied to cont
 
 ---
 
-### Tool 7: Dedicated Listing Tools (System & Miscellaneous)
+### Tool 8: Dedicated Listing Tools (System & Miscellaneous)
 
 MQMS provides dedicated administrative tools to query application users and entity comments with strict security boundaries.
 
@@ -625,7 +670,7 @@ Handled via `\App\Mcp\Methods\CustomReadResource`, this allows any client to dir
 ```
 
 ### 3. Protocol Diagnostic Resources (`mqms://protocols/{slug}/{project_id}`)
-Direct resource reading for automated diagnostic protocols (such as `level-1-budget-diagnostic`).
+Direct resource reading for automated diagnostic protocols (such as `level-1-budget-diagnostic` and `level-2-budget-diagnostic`).
 
 #### Reading a Protocol Diagnostic Resource
 **Request:**

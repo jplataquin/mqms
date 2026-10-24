@@ -21,12 +21,22 @@ class MaterialQuantityRequestItem extends Model
 
     public function Request(): BelongsTo
     {
-        return $this->belongsTo(Section::class);
+        return $this->belongsTo(MaterialQuantityRequest::class, 'material_quantity_request_id');
+    }
+
+    public function MaterialQuantityRequest(): BelongsTo
+    {
+        return $this->belongsTo(MaterialQuantityRequest::class, 'material_quantity_request_id');
     }
 
     public function ComponentItem(): BelongsTo
     {
         return $this->belongsTo(ComponentItem::class);
+    }
+
+    public function MaterialItem(): BelongsTo
+    {
+        return $this->belongsTo(MaterialItem::class);
     }
 
     public function MaterialCanvass(): HasMany
