@@ -285,5 +285,20 @@ if (class_exists(\Laravel\Mcp\Server\Facades\Mcp::class)) {
     Route::middleware('auth:sanctum')->group(function () {
         \Laravel\Mcp\Server\Facades\Mcp::web('/mcp', \App\Mcp\Servers\MqmsServer::class);
     });
+
+    Route::get('/mcp', function () {
+        return response()->json([
+            'status'                   => 'active',
+            'server'                   => 'MQMS MCP Server',
+            'version'                  => '1.0.0',
+            'transport'                => 'HTTP (JSON-RPC 2.0)',
+            'endpoint'                 => url('/api/mcp'),
+            'required_method'          => 'POST',
+            'authentication'           => 'Bearer <PersonalAccessToken>',
+            'tokens_url'               => url('/personal_access_tokens'),
+            'unauthenticated_endpoint' => url('/mcp'),
+            'message'                  => 'The MQMS MCP server is active. To interact with it, send HTTP POST requests with a JSON-RPC 2.0 payload and an Authorization header.'
+        ]);
+    });
 }
 

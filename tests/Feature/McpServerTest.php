@@ -95,6 +95,64 @@ class McpServerTest extends TestCase
     }
 
     /** @test */
+    public function it_gracefully_negotiates_any_client_protocol_version()
+    {
+        // 1. Client requesting 2024-10-07 (older spec)
+        $payload1007 = [
+            'jsonrpc' => '2.0',
+            'id' => 991,
+            'method' => 'initialize',
+            'params' => [
+                'protocolVersion' => '2024-10-07',
+                'capabilities' => (object) [],
+                'clientInfo' => ['name' => 'legacy-client', 'version' => '1.0.0'],
+            ],
+        ];
+
+        $response1007 = $this->postJson('/mcp', $payload1007);
+        $response1007->assertStatus(200);
+        $this->assertEquals('2024-10-07', $response1007->json('result.protocolVersion'));
+
+        // 2. Client requesting future or custom spec version
+        $payloadCustom = [
+            'jsonrpc' => '2.0',
+            'id' => 992,
+            'method' => 'initialize',
+            'params' => [
+                'protocolVersion' => '2025-11-25',
+                'capabilities' => (object) [],
+                'clientInfo' => ['name' => 'future-client', 'version' => '2.0.0'],
+            ],
+        ];
+
+        $responseCustom = $this->postJson('/mcp', $payloadCustom);
+        $responseCustom->assertStatus(200);
+        $this->assertEquals('2025-11-25', $responseCustom->json('result.protocolVersion'));
+    }
+
+    /** @test */
+    public function it_provides_helpful_get_response_for_mcp_endpoints()
+    {
+        // 1. GET /api/mcp
+        $responseApi = $this->getJson('/api/mcp');
+        $responseApi->assertStatus(200);
+        $responseApi->assertJson([
+            'status' => 'active',
+            'server' => 'MQMS MCP Server',
+            'required_method' => 'POST',
+        ]);
+
+        // 2. GET /mcp
+        $responseWeb = $this->getJson('/mcp');
+        $responseWeb->assertStatus(200);
+        $responseWeb->assertJson([
+            'status' => 'active',
+            'server' => 'MQMS MCP Server',
+            'required_method' => 'POST',
+        ]);
+    }
+
+    /** @test */
     public function it_lists_allowed_tools()
     {
         $user = User::factory()->create();

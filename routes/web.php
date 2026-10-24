@@ -44,6 +44,22 @@ Route::get('/gitpull',function(){
     return $result->output();
 });
 
+// MCP Public Health & Discovery GET Handler
+Route::get('/mcp', function () {
+    return response()->json([
+        'status'                   => 'active',
+        'server'                   => 'MQMS MCP Server',
+        'version'                  => '1.0.0',
+        'transport'                => 'HTTP (JSON-RPC 2.0)',
+        'endpoint'                 => url('/mcp'),
+        'required_method'          => 'POST',
+        'authentication'           => 'none',
+        'authenticated_endpoint'   => url('/api/mcp'),
+        'documentation'            => 'https://github.com/jplataquin/mqms/blob/main/MCP_DOCUMENTATION.md',
+        'message'                  => 'The MQMS MCP server is active. To interact with it, send HTTP POST requests with a JSON-RPC 2.0 payload.'
+    ]);
+});
+
 Route::middleware(['auth'])->group(function(){
 
     Route::get('/reset_password',[App\Http\Controllers\UserController::class, 'reset_password']);

@@ -63,6 +63,14 @@ Important Core Hierarchies & Lifecycle Flows:
 
     public int $maxPaginationLength = 100;
 
+    public array $supportedProtocolVersion = [
+        '2025-06-18',
+        '2025-03-26',
+        '2024-11-25',
+        '2024-11-05',
+        '2024-10-07',
+    ];
+
     public array $tools = [
         GetRecordTool::class,
         ListRecordsTool::class,
@@ -110,5 +118,23 @@ Important Core Hierarchies & Lifecycle Flows:
         foreach (McpModelRegistry::getAllowedModelKeys() as $modelKey) {
             $this->addResource(new DynamicModelResource($modelKey));
         }
+    }
+
+    /**
+     * Handle incoming JSON-RPC messages with graceful protocol version negotiation.
+     */
+    public function handle(string $rawMessage)
+    {
+        try {
+            $req = \Laravel\Mcp\Server\Transport\JsonRpcRequest::fromJson($rawMessage);
+            $requested = $req->params['protocolVersion'] ?? null;
+            if ($requested && ! in_array($requested, $this->supportedProtocolVersion, true)) {
+                $this->supportedProtocolVersion[] = (string) $requested;
+            }
+        } catch (\Throwable $e) {
+            // Let parent handle any JSON parse or format errors
+        }
+
+        return parent::handle($rawMessage);
     }
 }
