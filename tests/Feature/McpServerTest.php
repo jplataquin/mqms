@@ -116,6 +116,8 @@ class McpServerTest extends TestCase
         $this->assertContains('list_records', $toolNames);
         $this->assertContains('search_records', $toolNames);
         $this->assertContains('get_material_price_stats', $toolNames);
+        $this->assertContains('run_level_one_budget_diagnostic', $toolNames);
+        $this->assertContains('level_one_budget_diagnostic', $toolNames);
         $this->assertContains('list_projects', $toolNames);
         $this->assertContains('list_sections', $toolNames);
         $this->assertContains('list_contract_items', $toolNames);
@@ -1490,5 +1492,139 @@ class McpServerTest extends TestCase
         $this->assertEquals('Site inspection approved by quality officer', $result['records'][0]['content']);
         $this->assertEquals('PROJEC', $result['records'][0]['record_type']);
         $this->assertEquals(99, $result['records'][0]['record_id']);
+    }
+
+    /** @test */
+    public function it_can_run_level_one_budget_diagnostic_via_mcp_tool()
+    {
+        // 1. Validation: missing project_id
+        $payloadMissing = [
+            'jsonrpc' => '2.0',
+            'id' => 41,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'run_level_one_budget_diagnostic',
+                'arguments' => [],
+            ],
+        ];
+        $responseMissing = $this->postJson('/mcp', $payloadMissing);
+        $responseMissing->assertStatus(200);
+        $this->assertTrue($responseMissing->json('result.isError'));
+        $this->assertStringContainsString('project_id is required', $responseMissing->json('result.content.0.text'));
+
+        // 2. Validation: project not found
+        $payloadNotFound = [
+            'jsonrpc' => '2.0',
+            'id' => 42,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'run_level_one_budget_diagnostic',
+                'arguments' => [
+                    'project_id' => 999999,
+                ],
+            ],
+        ];
+        $responseNotFound = $this->postJson('/mcp', $payloadNotFound);
+        $responseNotFound->assertStatus(200);
+        $this->assertTrue($responseNotFound->json('result.isError'));
+        $this->assertStringContainsString('Project with ID 999999 not found', $responseNotFound->json('result.content.0.text'));
+
+        // 3. Seed diagnostic scenario
+        $this->seed(\Database\Seeders\LevelOneBudgetDiagnosticSeeder::class);
+        $project = Project::latest('id')->first();
+        $this->assertNotNull($project);
+
+        // 4. Call run_level_one_budget_diagnostic via /mcp
+        $payloadRun = [
+            'jsonrpc' => '2.0',
+            'id' => 43,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'run_level_one_budget_diagnostic',
+                'arguments' => [
+                    'project_id' => $project->id,
+                ],
+            ],
+        ];
+        $responseRun = $this->postJson('/mcp', $payloadRun);
+        $responseRun->assertStatus(200);
+        $resultRun = json_decode($responseRun->json('result.content.0.text'), true);
+
+        $this->assertEquals('Level 1 Budget Diagnostic', $resultRun['protocol']);
+        $this->assertEquals('level-1-budget-diagnostic', $resultRun['slug']);
+        $this->assertEquals('success', $resultRun['status']);
+        $this->assertFalse($resultRun['passed']);
+        $this->assertEquals(1, $resultRun['violations_count']);
+        $this->assertEquals(2, $resultRun['total_items']);
+        $this->assertEquals(20.0, $resultRun['violations'][0]['over_budget_quantity']);
+
+        // 5. Call via alias level_one_budget_diagnostic
+        $payloadAlias = [
+            'jsonrpc' => '2.0',
+            'id' => 44,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'level_one_budget_diagnostic',
+                'arguments' => [
+                    'project_id' => $project->id,
+                ],
+            ],
+        ];
+        $responseAlias = $this->postJson('/mcp', $payloadAlias);
+        $responseAlias->assertStatus(200);
+        $resultAlias = json_decode($responseAlias->json('result.content.0.text'), true);
+        $this->assertEquals(1, $resultAlias['violations_count']);
+
+        // 6. Call with component item filter that has no violation
+        $compliantComponentItem = ComponentItem::where('name', '20mm Deformed Bar Budget Limit')->first();
+        if ($compliantComponentItem) {
+            $payloadFiltered = [
+                'jsonrpc' => '2.0',
+                'id' => 45,
+                'method' => 'tools/call',
+                'params' => [
+                    'name' => 'run_level_one_budget_diagnostic',
+                    'arguments' => [
+                        'project_id' => $project->id,
+                        'component_item_id' => $compliantComponentItem->id,
+                    ],
+                ],
+            ];
+            $responseFiltered = $this->postJson('/mcp', $payloadFiltered);
+            $responseFiltered->assertStatus(200);
+            $resultFiltered = json_decode($responseFiltered->json('result.content.0.text'), true);
+            $this->assertTrue($resultFiltered['passed']);
+            $this->assertEquals(0, $resultFiltered['violations_count']);
+        }
+
+        // 7. Call authenticated via /api/mcp with Sanctum token
+        $user = User::first();
+        $responseApi = $this->actingAs($user, 'sanctum')->postJson('/api/mcp', $payloadRun);
+        $responseApi->assertStatus(200);
+        $resultApi = json_decode($responseApi->json('result.content.0.text'), true);
+        $this->assertEquals(1, $resultApi['violations_count']);
+    }
+
+    /** @test */
+    public function it_can_read_protocol_resource_via_mcp()
+    {
+        $this->seed(\Database\Seeders\LevelOneBudgetDiagnosticSeeder::class);
+        $project = Project::latest('id')->first();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 46,
+            'method' => 'resources/read',
+            'params' => [
+                'uri' => "mqms://protocols/level-1-budget-diagnostic/{$project->id}",
+            ],
+        ];
+
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $this->assertEquals("mqms://protocols/level-1-budget-diagnostic/{$project->id}", $response->json('result.contents.0.uri'));
+        $data = json_decode($response->json('result.contents.0.text'), true);
+        $this->assertEquals('Level 1 Budget Diagnostic', $data['protocol']);
+        $this->assertEquals(1, $data['violations_count']);
     }
 }

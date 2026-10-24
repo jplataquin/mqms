@@ -44,12 +44,13 @@ Material Quantity Request (MQR)
 
 ### Key Capabilities
 1. **Dynamic Resource Overview:** Inspect database schema metadata, record counts, and access templates via `mqms://models/{model}`.
-2. **Direct Record Retrieval via URI:** Direct resource reading via `mqms://models/{model}/{id}` through a custom MCP method handler.
-3. **Structured Query Tools:**
+2. **Direct Record & Protocol Retrieval via URI:** Direct resource reading via `mqms://models/{model}/{id}` and protocol diagnostic execution via `mqms://protocols/{slug}/{project_id}` through a custom MCP method handler.
+3. **Structured Query & Diagnostic Tools:**
    - `get_record`: Look up any permitted model by ID.
    - `list_records`: Paginated, ordered queries with column validation.
    - `search_records`: Multi-field fuzzy search across common text columns and primary keys.
    - `get_material_price_stats`: Domain analytics aggregating approved canvass pricing from both standard and direct procurement pipelines.
+   - `run_level_one_budget_diagnostic` (alias: `level_one_budget_diagnostic`): Verifies that total requested quantity (scaled by equivalent) in approved material quantity requests does not exceed component item budget.
    - **Dedicated Domain & Entity Listing Tools**: High-level tools with rich relational, status, and attribute filters across WBS, Materials/Budget, Procurement/Workflow, Partners/Execution, and System/Misc (`list_projects`, `list_sections`, `list_contract_items`, `list_components`, `list_component_items`, `list_material_groups`, `list_material_items`, `list_material_quantities`, `list_units`, `list_material_quantity_requests`, `list_material_quantity_request_items`, `list_material_canvasses`, `list_purchase_orders`, `list_purchase_order_items`, `list_purchase_order_received`, `list_purchase_order_received_items`, `list_suppliers`, `list_payment_terms`, `list_manpower_registry`, `list_coupons`, `list_accomplishments`, `list_users`, `list_comments`).
 4. **Strict Security Boundaries:** Whitelist of allowed entities, explicit denial of RBAC and API credential tables, and automatic scrubbing of passwords and security tokens.
 
@@ -201,6 +202,7 @@ The server provides four core tools registered in `MqmsServer`:
 2. list_records
 3. search_records
 4. get_material_price_stats
+5. run_level_one_budget_diagnostic (alias: level_one_budget_diagnostic)
 ```
 
 ---
@@ -403,7 +405,53 @@ Calculates comprehensive price statistics for a specific material item across bo
 
 ---
 
-### Tool 5: Dedicated Listing Tools (Partners & Execution)
+### Tool 5: `run_level_one_budget_diagnostic` (alias: `level_one_budget_diagnostic`)
+Executes the Level 1 Budget Diagnostic protocol for a project. Verifies that the total requested material quantity (scaled by equivalent factor) in approved material quantity requests does not exceed the component item budget.
+
+#### Parameters
+| Field | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `project_id` | `integer` | **Yes** | The primary key ID of the `project` to run diagnostics against. |
+| `component_id` | `integer` | No | Optional component ID to restrict diagnostics to a single component. |
+| `component_item_id` | `integer` | No | Optional component item ID to restrict diagnostics to a single component item. |
+| `include_closed` | `boolean` | No | Include closed requests (`CLSD`) alongside approved requests (`APRV`). Defaults to `true`. |
+| `only_approved_components` | `boolean` | No | Restrict checks only to components with status `'APRV'`. Defaults to `false`. |
+
+#### Example Request
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 5,
+  "method": "tools/call",
+  "params": {
+    "name": "run_level_one_budget_diagnostic",
+    "arguments": {
+      "project_id": 1
+    }
+  }
+}
+```
+
+#### Example Response
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 5,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n    \"protocol\": \"Level 1 Budget Diagnostic\",\n    \"slug\": \"level-1-budget-diagnostic\",\n    \"status\": \"success\",\n    \"passed\": false,\n    \"project_id\": 1,\n    \"project_name\": \"Bridge Construction Project\",\n    \"total_items\": 2,\n    \"violations_count\": 1,\n    \"violations\": [\n        {\n            \"component_item_id\": 10,\n            \"component_item_name\": \"16mm Deformed Bar\",\n            \"component_id\": 5,\n            \"component_name\": \"Abutment Reinforcement\",\n            \"allowed_budget\": 100.0,\n            \"total_requested\": 120.0,\n            \"over_budget_quantity\": 20.0,\n            \"items_count\": 1,\n            \"breakdown\": [...]\n        }\n    ],\n    \"summary\": \"Found 1 component item(s) exceeding budget in Project 'Bridge Construction Project'.\"\n}"
+      }
+    ],
+    "isError": false
+  }
+}
+```
+
+---
+
+### Tool 6: Dedicated Listing Tools (Partners & Execution)
 
 MQMS provides specialized listing tools tailored for external partners, human resources, fleet/voucher monitoring, and site accomplishments.
 
@@ -470,7 +518,7 @@ Tracks physical site accomplishment records and progress monitoring tied to cont
 
 ---
 
-### Tool 6: Dedicated Listing Tools (System & Miscellaneous)
+### Tool 7: Dedicated Listing Tools (System & Miscellaneous)
 
 MQMS provides dedicated administrative tools to query application users and entity comments with strict security boundaries.
 
@@ -570,6 +618,39 @@ Handled via `\App\Mcp\Methods\CustomReadResource`, this allows any client to dir
         "uri": "mqms://models/supplier/1",
         "mimeType": "application/json",
         "text": "{\n    \"id\": 1,\n    \"name\": \"Apex Building Supplies\",\n    \"address\": \"Iloilo City\",\n    \"primary_contact_no\": \"09111111111\",\n    \"created_by\": 1,\n    \"created_at\": \"2026-02-01T10:00:00.000000Z\",\n    \"updated_at\": \"2026-02-01T10:00:00.000000Z\"\n}"
+      }
+    ]
+  }
+}
+```
+
+### 3. Protocol Diagnostic Resources (`mqms://protocols/{slug}/{project_id}`)
+Direct resource reading for automated diagnostic protocols (such as `level-1-budget-diagnostic`).
+
+#### Reading a Protocol Diagnostic Resource
+**Request:**
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 7,
+  "method": "resources/read",
+  "params": {
+    "uri": "mqms://protocols/level-1-budget-diagnostic/1"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 7,
+  "result": {
+    "contents": [
+      {
+        "uri": "mqms://protocols/level-1-budget-diagnostic/1",
+        "mimeType": "application/json",
+        "text": "{\n    \"protocol\": \"Level 1 Budget Diagnostic\",\n    \"slug\": \"level-1-budget-diagnostic\",\n    \"status\": \"success\",\n    \"passed\": false,\n    \"project_id\": 1,\n    \"project_name\": \"Bridge Construction Project\",\n    \"total_items\": 2,\n    \"violations_count\": 1,\n    \"violations\": [...],\n    \"summary\": \"Found 1 component item(s) exceeding budget in Project 'Bridge Construction Project'.\"\n}"
       }
     ]
   }

@@ -54,6 +54,35 @@ class CustomReadResource implements Method
             ]);
         }
 
+        // Check if URI matches pattern: mqms://protocols/{slug}/{project_id}
+        if (preg_match('#^mqms://protocols/([a-z0-9_-]+)/([0-9]+)$#i', $uri, $matches)) {
+            $protocolSlug = $matches[1];
+            $projectId = (int) $matches[2];
+
+            $protocolClass = \App\Protocols\ProtocolRegistry::get($protocolSlug);
+            if (! $protocolClass) {
+                throw new ItemNotFoundException("Protocol '{$protocolSlug}' is not registered or found.");
+            }
+
+            $project = \App\Models\Project::find($projectId);
+            if (! $project) {
+                throw new ItemNotFoundException("Project not found with ID {$projectId}.");
+            }
+
+            $result = \App\Protocols\ProtocolRegistry::run($protocolSlug, ['project_id' => $projectId]);
+            $json = json_encode($result, JSON_PRETTY_PRINT);
+
+            return new JsonRpcResponse($request->id, [
+                'contents' => [
+                    [
+                        'uri' => $uri,
+                        'mimeType' => 'application/json',
+                        'text' => $json,
+                    ],
+                ],
+            ]);
+        }
+
         // Fall back to registered static resources
         $resource = $context->resources()->first(fn ($r) => $r->uri() === $uri);
         if (is_null($resource)) {
