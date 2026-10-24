@@ -6,6 +6,7 @@ namespace App\Mcp\Servers;
 
 use App\Mcp\McpModelRegistry;
 use App\Mcp\Methods\CustomReadResource;
+use App\Mcp\Methods\ServerDiscover;
 use App\Mcp\Resources\DynamicModelResource;
 use App\Mcp\Tools\GetMaterialPriceStatsTool;
 use App\Mcp\Tools\GetRecordTool;
@@ -64,6 +65,7 @@ Important Core Hierarchies & Lifecycle Flows:
     public int $maxPaginationLength = 100;
 
     public array $supportedProtocolVersion = [
+        '2026-07-28',
         '2025-06-18',
         '2025-03-26',
         '2024-11-25',
@@ -111,6 +113,9 @@ Important Core Hierarchies & Lifecycle Flows:
 
     public function boot(): void
     {
+        // Server discovery method for MCP 2026-07-28 stateless spec (used by Hermes and modern clients)
+        $this->addMethod('server/discover', ServerDiscover::class);
+
         // Custom resource reader to support dynamic URI patterns like mqms://models/{model}/{id}
         $this->addMethod('resources/read', CustomReadResource::class);
 

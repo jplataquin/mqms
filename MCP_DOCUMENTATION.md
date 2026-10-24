@@ -708,7 +708,7 @@ Direct resource reading for automated diagnostic protocols (such as `level-1-bud
 
 The server implements standard MCP JSON-RPC 2.0 lifecycle methods:
 
-### Handshake: `initialize`
+### Handshake: `initialize` (Legacy / Session Handshake)
 ```json
 {
   "jsonrpc": "2.0",
@@ -721,6 +721,54 @@ The server implements standard MCP JSON-RPC 2.0 lifecycle methods:
       "name": "my-client",
       "version": "1.0.0"
     }
+  }
+}
+```
+
+### Stateless Discovery: `server/discover` (MCP 2026-07-28 Spec / Hermes)
+Modern stateless MCP clients (such as Nous Research's Hermes Agent) probe the server via `server/discover`.
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "server/discover",
+  "params": {
+    "_meta": {
+      "io.modelcontextprotocol/protocolVersion": "2026-07-28",
+      "io.modelcontextprotocol/clientInfo": {
+        "name": "Hermes-Agent",
+        "version": "1.0.0"
+      }
+    }
+  }
+}
+```
+**Response:**
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "resultType": "complete",
+    "supportedVersions": ["2026-07-28", "2025-06-18", "2025-03-26", "2024-11-25", "2024-11-05", "2024-10-07"],
+    "capabilities": {
+      "tools": { "listChanged": false },
+      "resources": { "listChanged": false },
+      "prompts": { "listChanged": false }
+    },
+    "serverInfo": {
+      "name": "MQMS MCP Server",
+      "version": "1.0.0"
+    },
+    "_meta": {
+      "io.modelcontextprotocol/serverInfo": {
+        "name": "MQMS MCP Server",
+        "version": "1.0.0"
+      }
+    },
+    "instructions": "Provides HTTP MCP access to MQMS models...",
+    "ttlMs": 3600000,
+    "cacheScope": "public"
   }
 }
 ```

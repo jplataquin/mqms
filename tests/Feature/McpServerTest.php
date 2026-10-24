@@ -131,6 +131,52 @@ class McpServerTest extends TestCase
     }
 
     /** @test */
+    public function it_supports_server_discover_method_for_hermes_and_mcp_stateless_clients()
+    {
+        $payloadDiscover = [
+            'jsonrpc' => '2.0',
+            'id' => 881,
+            'method' => 'server/discover',
+            'params' => [
+                '_meta' => [
+                    'io.modelcontextprotocol/protocolVersion' => '2026-07-28',
+                    'io.modelcontextprotocol/clientInfo' => [
+                        'name' => 'Hermes-Agent',
+                        'version' => '1.0.0',
+                    ],
+                ],
+            ],
+        ];
+
+        // 1. Unauthenticated /mcp
+        $responseWeb = $this->postJson('/mcp', $payloadDiscover);
+        $responseWeb->assertStatus(200);
+        $responseWeb->assertJson([
+            'jsonrpc' => '2.0',
+            'id' => 881,
+            'result' => [
+                'resultType' => 'complete',
+                'serverInfo' => [
+                    'name' => 'MQMS MCP Server',
+                ],
+            ],
+        ]);
+        $this->assertContains('2026-07-28', $responseWeb->json('result.supportedVersions'));
+
+        // 2. Authenticated /api/mcp with Sanctum token
+        $user = User::factory()->create();
+        $responseApi = $this->actingAs($user, 'sanctum')->postJson('/api/mcp', $payloadDiscover);
+        $responseApi->assertStatus(200);
+        $responseApi->assertJson([
+            'jsonrpc' => '2.0',
+            'id' => 881,
+            'result' => [
+                'resultType' => 'complete',
+            ],
+        ]);
+    }
+
+    /** @test */
     public function it_provides_helpful_get_response_for_mcp_endpoints()
     {
         // 1. GET /api/mcp
