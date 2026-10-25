@@ -848,6 +848,20 @@ class AccomplishmentTest extends TestCase
     }
 
     /** @test */
+    public function it_renders_overall_progress_contract_items_without_vertical_overflow_scroll()
+    {
+        $response = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/studio');
+        $response->assertStatus(200);
+
+        $content = $response->getContent();
+        $this->assertStringContainsString('Weighted Accomplishment Breakdown', $content);
+        // Ensure table-responsive container has no vertical overflow or max-height restrictions
+        $this->assertStringNotContainsString('max-height: 220px', $content);
+        $this->assertStringNotContainsString('overflow-y: auto', $content);
+        $this->assertStringContainsString('<div class="table-responsive">', $content);
+    }
+
+    /** @test */
     public function it_can_fetch_accomplishments_via_third_party_api()
     {
         // 1. Create API Credential
