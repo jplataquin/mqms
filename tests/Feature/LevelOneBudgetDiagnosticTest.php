@@ -436,6 +436,34 @@ class LevelOneBudgetDiagnosticTest extends TestCase
     }
 
     /** @test */
+    public function it_renders_text_searchable_project_field_with_datalist_options_on_protocols_page()
+    {
+        $user = User::create([
+            'name'     => 'Search Tester',
+            'email'    => 'search_tester@mqms.local',
+            'password' => bcrypt('password'),
+        ]);
+
+        $project = Project::create([
+            'name'       => 'Searchable Coastal Highway Project',
+            'status'     => 'ACTV',
+            'created_by' => $user->id,
+        ]);
+
+        $response = $this->actingAs($user)->get('/protocols');
+        $response->assertStatus(200);
+
+        // Searchable Project field components
+        $response->assertSee('id="projectInput"', false);
+        $response->assertSee('list="projectList"', false);
+        $response->assertSee('id="projectList"', false);
+        $response->assertSee('id="clearProjectBtn"', false);
+        $response->assertSee('id="projectSelect"', false);
+        $response->assertSee('Searchable Coastal Highway Project');
+        $response->assertSee("#{$project->id} - {$project->name}");
+    }
+
+    /** @test */
     public function it_can_render_the_dedicated_protocol_print_page()
     {
         $user = User::create([

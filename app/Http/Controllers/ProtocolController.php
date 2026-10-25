@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Project;
 use App\Protocols\ProtocolRegistry;
 
 class ProtocolController extends Controller
@@ -12,7 +13,11 @@ class ProtocolController extends Controller
      */
     public function list()
     {
-        return view('protocols/list');
+        $projects = Project::where('status', 'ACTV')->orderBy('name', 'ASC')->get();
+
+        return view('protocols/list', [
+            'projects' => $projects,
+        ]);
     }
 
     /**

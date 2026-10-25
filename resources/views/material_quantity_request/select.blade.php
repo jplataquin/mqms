@@ -31,32 +31,55 @@
             <div class="folder-form-body">
                 <div class="row">
                     <div class="col-lg-3">
-                        <div class="form-group">
-                            <label>Project</label>
-                            <select id="projectSelect" class="form-control">
-                                <option value=""> - </option>
+                        <div class="form-group mb-3">
+                            <label class="form-label fw-bold">Project <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control" id="projectInput" list="projectList" placeholder="Type to search project..." autocomplete="off">
+                                <button class="btn btn-outline-secondary" type="button" id="clearProjectBtn" title="Clear Project"><i class="bi bi-x-lg"></i></button>
+                            </div>
+                            <datalist id="projectList">
                                 @foreach($projects as $project)
-                                    <option value="{{$project->id}}">{{$project->name}}</option>
+                                    <option value="{{$project->name}}" data-id="{{$project->id}}"></option>
                                 @endforeach
-                            </select>
+                            </datalist>
+                            <input type="hidden" id="projectSelect" value="">
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="form-group">
-                            <label>Section</label>
-                            <select id="sectionSelect" class="form-control"></select>
+                        <div class="form-group mb-3">
+                            <label class="form-label fw-bold">Section <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control" id="sectionInput" list="sectionList" placeholder="Select Project first" autocomplete="off" disabled>
+                                <button class="btn btn-outline-secondary" type="button" id="clearSectionBtn" title="Clear Section"><i class="bi bi-x-lg"></i></button>
+                            </div>
+                            <datalist id="sectionList"></datalist>
+                            <input type="hidden" id="sectionSelect" value="">
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="form-group">
-                            <label>Contract Item</label>
-                            <select id="contractItemSelect" class="form-control"></select>
+                        <div class="form-group mb-3">
+                            <label class="form-label fw-bold">Contract Item <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control" id="contractItemInput" list="contractItemList" placeholder="Select Section first" autocomplete="off" disabled>
+                                <button class="btn btn-outline-secondary" type="button" id="clearContractItemBtn" title="Clear Contract Item"><i class="bi bi-x-lg"></i></button>
+                            </div>
+                            <datalist id="contractItemList"></datalist>
+                            <input type="hidden" id="contractItemSelect" value="">
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="form-group">
-                            <label>Component</label>
-                            <select id="componentSelect" class="form-control"></select>
+                        <div class="form-group mb-3">
+                            <label class="form-label fw-bold">Component <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control" id="componentInput" list="componentList" placeholder="Select Contract Item first" autocomplete="off" disabled>
+                                <button class="btn btn-outline-secondary" type="button" id="clearComponentBtn" title="Clear Component"><i class="bi bi-x-lg"></i></button>
+                            </div>
+                            <datalist id="componentList"></datalist>
+                            <input type="hidden" id="componentSelect" value="">
                         </div>
                     </div>
                 </div>
@@ -71,150 +94,266 @@
         </div>
     </div>
     <script type="module">
-        import {$q,Template} from '/adarna.js';
+        import {$q, Template, $el} from '/adarna.js';
         
+        const projectInput          = $q('#projectInput').first();
+        const projectList           = $q('#projectList').first();
         const projectSelect         = $q('#projectSelect').first();
+        const clearProjectBtn       = $q('#clearProjectBtn').first();
+
+        const sectionInput          = $q('#sectionInput').first();
+        const sectionList           = $q('#sectionList').first();
         const sectionSelect         = $q('#sectionSelect').first();
+        const clearSectionBtn       = $q('#clearSectionBtn').first();
+
+        const contractItemInput     = $q('#contractItemInput').first();
+        const contractItemList      = $q('#contractItemList').first();
         const contractItemSelect    = $q('#contractItemSelect').first();
+        const clearContractItemBtn  = $q('#clearContractItemBtn').first();
+
+        const componentInput        = $q('#componentInput').first();
+        const componentList         = $q('#componentList').first();
         const componentSelect       = $q('#componentSelect').first();
+        const clearComponentBtn     = $q('#clearComponentBtn').first();
+
         const createBtn             = $q('#createBtn').first();
         const cancelBtn             = $q('#cancelBtn').first();
-        
-        const t = new Template();
 
-        cancelBtn.onclick = (e)=>{
+        cancelBtn.onclick = (e) => {
             e.preventDefault();
             window.util.navTo('/material_quantity_requests');
+        };
+
+        function findOptionId(input, datalist) {
+            const val = input.value.trim().toLowerCase();
+            if (!val || !datalist) return '';
+            const options = datalist.options;
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].value.trim().toLowerCase() === val) {
+                    return options[i].getAttribute('data-id') || '';
+                }
+            }
+            return '';
         }
 
-        projectSelect.onchange = (e)=>{
+        async function handleProjectChange() {
+            const newProjId = findOptionId(projectInput, projectList);
+            const currProjId = projectSelect.value;
 
-            e.preventDefault();
+            if (newProjId !== currProjId) {
+                projectSelect.value = newProjId;
 
-            sectionSelect.innerHTML = '';
-            componentSelect.innerHTML = '';
+                // Reset Section
+                sectionInput.value = '';
+                sectionSelect.value = '';
+                $el.clear(sectionList);
 
-            window.util.blockUI();
+                // Reset Contract Item
+                contractItemInput.value = '';
+                contractItemSelect.value = '';
+                $el.clear(contractItemList);
+                contractItemInput.disabled = true;
+                contractItemInput.placeholder = 'Select Section first';
 
-            window.util.$get('/api/section/list',{
-                project_id: projectSelect.value,
-                orderBy:'name',
-                status:'ACTV',
-                order:'ASC'
-            }).then(reply=>{
+                // Reset Component
+                componentInput.value = '';
+                componentSelect.value = '';
+                $el.clear(componentList);
+                componentInput.disabled = true;
+                componentInput.placeholder = 'Select Contract Item first';
 
-                window.util.unblockUI();
-                    
-
-                if(reply.status <= 0){
-
-                    window.util.showMsg(reply);
-                    return false;
+                if (!newProjId) {
+                    sectionInput.disabled = true;
+                    sectionInput.placeholder = 'Select Project first';
+                    return;
                 }
 
-                sectionSelect.append(
-                    t.option({value:''},' - ')
-                );
+                sectionInput.disabled = false;
+                sectionInput.placeholder = 'Type to search section...';
 
-                reply.data.forEach((item)=>{
+                window.util.blockUI();
+                try {
+                    const reply = await window.util.$get('/api/section/list', {
+                        project_id: newProjId,
+                        orderBy: 'name',
+                        status: 'ACTV',
+                        order: 'ASC'
+                    });
 
-                    sectionSelect.append(
-                        t.option({value:item.id},item.name)
-                    );
+                    if (reply.status <= 0) {
+                        window.util.showMsg(reply);
+                        return false;
+                    }
 
-                });
-
-            });
+                    if (reply.data) {
+                        reply.data.forEach((item) => {
+                            const opt = document.createElement('option');
+                            opt.value = item.name;
+                            opt.setAttribute('data-id', item.id);
+                            sectionList.appendChild(opt);
+                        });
+                    }
+                } finally {
+                    window.util.unblockUI();
+                }
+            }
         }
 
-        sectionSelect.onchange = (e)=>{
+        async function handleSectionChange() {
+            const newSectionId = findOptionId(sectionInput, sectionList);
+            const currSectionId = sectionSelect.value;
 
-            e.preventDefault();
+            if (newSectionId !== currSectionId) {
+                sectionSelect.value = newSectionId;
 
-            contractItemSelect.innerHTML = '';
+                // Reset Contract Item
+                contractItemInput.value = '';
+                contractItemSelect.value = '';
+                $el.clear(contractItemList);
 
-            window.util.blockUI();
+                // Reset Component
+                componentInput.value = '';
+                componentSelect.value = '';
+                $el.clear(componentList);
+                componentInput.disabled = true;
+                componentInput.placeholder = 'Select Contract Item first';
 
-            window.util.$get('/api/contract_item/list',{
-                section_id: sectionSelect.value,
-                orderBy:'name',
-                status:'APRV',
-                order:'ASC'
-            }).then(reply=>{
-
-                window.util.unblockUI();
-
-                if(reply.status <= 0){
-
-                    window.util.showMsg(reply);
-                    return false;
+                if (!newSectionId) {
+                    contractItemInput.disabled = true;
+                    contractItemInput.placeholder = 'Select Section first';
+                    return;
                 }
 
-                contractItemSelect.append(
-                    t.option({value:''},' - ')
-                );
+                contractItemInput.disabled = false;
+                contractItemInput.placeholder = 'Type to search contract item...';
 
-                reply.data.forEach((item)=>{
+                window.util.blockUI();
+                try {
+                    const reply = await window.util.$get('/api/contract_item/list', {
+                        section_id: newSectionId,
+                        orderBy: 'name',
+                        status: 'APRV',
+                        order: 'ASC'
+                    });
 
-                    contractItemSelect.append(
-                        t.option({value:item.id},'[ '+item.item_code+' ] '+item.description)
-                    );
+                    if (reply.status <= 0) {
+                        window.util.showMsg(reply);
+                        return false;
+                    }
 
-                });
-
-            });
+                    if (reply.data) {
+                        reply.data.forEach((item) => {
+                            const opt = document.createElement('option');
+                            opt.value = '[ ' + item.item_code + ' ] ' + item.description;
+                            opt.setAttribute('data-id', item.id);
+                            contractItemList.appendChild(opt);
+                        });
+                    }
+                } finally {
+                    window.util.unblockUI();
+                }
+            }
         }
 
+        async function handleContractItemChange() {
+            const newContractItemId = findOptionId(contractItemInput, contractItemList);
+            const currContractItemId = contractItemSelect.value;
 
-        contractItemSelect.onchange = (e)=>{
+            if (newContractItemId !== currContractItemId) {
+                contractItemSelect.value = newContractItemId;
 
-            e.preventDefault();
+                // Reset Component
+                componentInput.value = '';
+                componentSelect.value = '';
+                $el.clear(componentList);
 
-            componentSelect.innerHTML = '';
-
-            window.util.blockUI();
-
-            window.util.$get('/api/component/list',{
-                contract_item_id: contractItemSelect.value,
-                orderBy:'name',
-                status:'APRV',
-                order:'ASC'
-            }).then(reply=>{
-
-                window.util.unblockUI();
-
-                if(reply.status <= 0){
-
-                    window.util.showMsg(reply);
-                    return false;
+                if (!newContractItemId) {
+                    componentInput.disabled = true;
+                    componentInput.placeholder = 'Select Contract Item first';
+                    return;
                 }
 
-                componentSelect.append(
-                    t.option({value:''},' - ')
-                );
+                componentInput.disabled = false;
+                componentInput.placeholder = 'Type to search component...';
 
-                reply.data.forEach((item)=>{
+                window.util.blockUI();
+                try {
+                    const reply = await window.util.$get('/api/component/list', {
+                        contract_item_id: newContractItemId,
+                        orderBy: 'name',
+                        status: 'APRV',
+                        order: 'ASC'
+                    });
 
-                    componentSelect.append(
-                        t.option({value:item.id},item.name)
-                    );
+                    if (reply.status <= 0) {
+                        window.util.showMsg(reply);
+                        return false;
+                    }
 
-                });
-
-            });
+                    if (reply.data) {
+                        reply.data.forEach((item) => {
+                            const opt = document.createElement('option');
+                            opt.value = item.name;
+                            opt.setAttribute('data-id', item.id);
+                            componentList.appendChild(opt);
+                        });
+                    }
+                } finally {
+                    window.util.unblockUI();
+                }
+            }
         }
 
+        function handleComponentChange() {
+            componentSelect.value = findOptionId(componentInput, componentList);
+        }
 
-        createBtn.onclick = (e)=>{
+        projectInput.oninput = handleProjectChange;
+        projectInput.onchange = handleProjectChange;
+
+        clearProjectBtn.onclick = () => {
+            projectInput.value = '';
+            handleProjectChange();
+            projectInput.focus();
+        };
+
+        sectionInput.oninput = handleSectionChange;
+        sectionInput.onchange = handleSectionChange;
+
+        clearSectionBtn.onclick = () => {
+            sectionInput.value = '';
+            handleSectionChange();
+            sectionInput.focus();
+        };
+
+        contractItemInput.oninput = handleContractItemChange;
+        contractItemInput.onchange = handleContractItemChange;
+
+        clearContractItemBtn.onclick = () => {
+            contractItemInput.value = '';
+            handleContractItemChange();
+            contractItemInput.focus();
+        };
+
+        componentInput.oninput = handleComponentChange;
+        componentInput.onchange = handleComponentChange;
+
+        clearComponentBtn.onclick = () => {
+            componentInput.value = '';
+            handleComponentChange();
+            componentInput.focus();
+        };
+
+        createBtn.onclick = (e) => {
             e.preventDefault();
 
-            if(projectSelect.value == '' || sectionSelect.value == '' || contractItemSelect.value == '' || componentSelect.value == ''){
-                window.util.alert('Error','All fields are required to create a request');
+            if (!projectSelect.value || !sectionSelect.value || !contractItemSelect.value || !componentSelect.value) {
+                window.util.alert('Error', 'All fields are required to create a request');
                 return false;
             }
             
-            window.util.navTo('/material_quantity_request/create/'+projectSelect.value+'/'+sectionSelect.value+'/'+contractItemSelect.value+'/'+componentSelect.value);
-        }
+            window.util.navTo('/material_quantity_request/create/' + projectSelect.value + '/' + sectionSelect.value + '/' + contractItemSelect.value + '/' + componentSelect.value);
+        };
     </script>
 </div>
 @endsection
