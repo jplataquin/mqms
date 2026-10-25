@@ -35,7 +35,7 @@
                         <small class="form-text text-muted" id="protocolDesc"></small>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-5">
                     <div class="form-group">
                         <label class="form-label fw-bold">Select Project</label>
                         <div class="input-group">
@@ -54,15 +54,10 @@
                         <small class="form-text text-muted">Type project name or ID to select</small>
                     </div>
                 </div>
-                <div class="col-lg-3 d-flex align-items-end">
-                    <div class="d-flex gap-2 w-100">
-                        <button id="runBtn" class="btn btn-primary flex-fill py-2 fw-semibold">
-                            <i class="bi bi-play-fill me-1"></i> Run
-                        </button>
-                        <button id="topPrintBtn" class="btn btn-outline-light py-2 px-3 fw-semibold text-nowrap" type="button" title="Print Diagnostic Report (opens in new tab)">
-                            <i class="bi bi-printer-fill me-1"></i> Print Report
-                        </button>
-                    </div>
+                <div class="col-lg-2 d-flex align-items-end">
+                    <button id="runBtn" class="btn btn-primary w-100 py-2 fw-semibold">
+                        <i class="bi bi-play-fill me-1"></i> Run
+                    </button>
                 </div>
             </div>
         </div>
@@ -677,11 +672,6 @@
 
     if (printBtn) {
         printBtn.onclick = openPrintPage;
-    }
-
-    const topPrintBtn = $q('#topPrintBtn').first();
-    if (topPrintBtn) {
-        topPrintBtn.onclick = openPrintPage;
     }
 
     // Handle deep-linked project_id query parameter

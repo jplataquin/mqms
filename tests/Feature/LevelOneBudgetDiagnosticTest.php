@@ -433,8 +433,8 @@ class LevelOneBudgetDiagnosticTest extends TestCase
         $response->assertSee('id="protocolSelect"', false);
         $response->assertSee('id="projectSelect"', false);
         $response->assertSee('id="runBtn"', false);
-        $response->assertSee('id="topPrintBtn"', false);
         $response->assertSee('id="printBtn"', false);
+        $response->assertDontSee('id="topPrintBtn"', false);
         $response->assertDontSee('id="manualProjectIdInput"', false);
     }
 
