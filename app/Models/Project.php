@@ -59,15 +59,25 @@ class Project extends Model
     /**
      * Get the total contract amount (sum of all contract items) for the project.
      *
+     * @param bool $onlyMonitored Whether to include only active, non-excluded contract items
      * @return float
      */
-    public function getTotalContractAmount(): float
+    public function getTotalContractAmount(bool $onlyMonitored = false): float
     {
         $total = 0;
         $sections = $this->relationLoaded('Sections') ? $this->Sections : $this->Sections()->with('ContractItems')->get();
         foreach ($sections as $section) {
+            if (method_exists($section, 'trashed') && $section->trashed()) {
+                continue;
+            }
             $items = $section->relationLoaded('ContractItems') ? $section->ContractItems : $section->ContractItems()->get();
             foreach ($items as $ci) {
+                if (method_exists($ci, 'trashed') && $ci->trashed()) {
+                    continue;
+                }
+                if ($onlyMonitored && (int)$ci->exclude_from_monitoring === 1) {
+                    continue;
+                }
                 $total += ((float) $ci->contract_quantity * (float) $ci->contract_unit_price);
             }
         }
