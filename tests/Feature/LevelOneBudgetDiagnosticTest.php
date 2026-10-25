@@ -428,11 +428,58 @@ class LevelOneBudgetDiagnosticTest extends TestCase
         $response->assertSee('Protocols Diagnostic Dashboard');
         $response->assertSee('Contract Item');
         $response->assertSee('Record Type');
-        $response->assertSee('Problematic Record');
         $response->assertSee('id="protocolSelect"', false);
         $response->assertSee('id="projectSelect"', false);
         $response->assertSee('id="runBtn"', false);
         $response->assertSee('id="printBtn"', false);
+    }
+
+    /** @test */
+    public function it_does_not_render_card_header_at_top_of_each_violation_result_card()
+    {
+        $user = User::create([
+            'name'     => 'Card Header Tester',
+            'email'    => 'header_tester@mqms.local',
+            'password' => bcrypt('password'),
+        ]);
+
+        $response = $this->actingAs($user)->get('/protocols');
+        $response->assertStatus(200);
+
+        // Result cards in violationsList should directly render the card body without card header
+        $content = $response->getContent();
+        $this->assertStringNotContainsString(
+            "let card = t.div({ class: 'card bg-dark violation-card mb-2', 'data-item-id': v.component_item_id }, () => {\n                // Card Header",
+            $content
+        );
+    }
+
+    /** @test */
+    public function it_renders_text_searchable_project_field_with_datalist_options_on_protocols_page()
+    {
+        $user = User::create([
+            'name'     => 'Search Tester',
+            'email'    => 'search_tester@mqms.local',
+            'password' => bcrypt('password'),
+        ]);
+
+        $project = Project::create([
+            'name'       => 'Searchable Coastal Highway Project',
+            'status'     => 'ACTV',
+            'created_by' => $user->id,
+        ]);
+
+        $response = $this->actingAs($user)->get('/protocols');
+        $response->assertStatus(200);
+
+        // Searchable Project field components
+        $response->assertSee('id="projectInput"', false);
+        $response->assertSee('list="projectList"', false);
+        $response->assertSee('id="projectList"', false);
+        $response->assertSee('id="clearProjectBtn"', false);
+        $response->assertSee('id="projectSelect"', false);
+        $response->assertSee('Searchable Coastal Highway Project');
+        $response->assertSee("#{$project->id} - {$project->name}");
     }
 
     /** @test */

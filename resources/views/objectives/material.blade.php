@@ -6,9 +6,9 @@
         <div class="breadcrumbs" hx-boost="true" hx-select="#content" hx-target="#main">
             <ul>
                 <li>
-                    <a href="/objectives/material">
+                    <a href="/material_need_schedule">
                         <span>
-                        Objectives
+                        Mat. Need Schedule
                         </span>
                     </a>
                 </li>
@@ -206,7 +206,7 @@
     function showData(){
         window.util.blockUI();
 
-        window.util.$get('/api/objectives/material',{
+        window.util.$get('/api/material_need_schedule',{
             project_id: projectSelect.value,
             from: from.value,
             to: to.value

@@ -579,7 +579,7 @@ class AccomplishmentController extends Controller
             }
         ])->findOrFail($id);
 
-        $totalProjectAmount = $project->getTotalContractAmount();
+        $totalProjectAmount = $project->getTotalContractAmount(true);
 
         return view('accomplishment/studio',[
             'project'            => $project,

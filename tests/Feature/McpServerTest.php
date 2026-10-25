@@ -1861,4 +1861,63 @@ class McpServerTest extends TestCase
         $this->assertEquals('Level 2 Budget Diagnostic', $resourceData['protocol']);
         $this->assertTrue($resourceData['passed']);
     }
+
+    /** @test */
+    public function it_can_get_material_need_schedule_via_mcp_tool()
+    {
+        $project = $this->createProject('Scheduled Project');
+
+        $matItem = new MaterialItem();
+        $matItem->material_group_id = 1;
+        $matItem->name = 'Portland Cement';
+        $matItem->brand = 'Holcim';
+        $matItem->specification_unit_packaging = '40kg bag';
+        $matItem->created_by = 1;
+        $matItem->save();
+
+        $mqr = new MaterialQuantityRequest();
+        $mqr->project_id = $project->id;
+        $mqr->section_id = 1;
+        $mqr->component_id = 1;
+        $mqr->status = 'APRV';
+        $mqr->description = 'Batch materials';
+        $mqr->date_needed = now()->addDays(2)->format('Y-m-d');
+        $mqr->created_by = 1;
+        $mqr->save();
+
+        $item = new MaterialQuantityRequestItem();
+        $item->material_quantity_request_id = $mqr->id;
+        $item->material_item_id = $matItem->id;
+        $item->component_item_id = 1;
+        $item->requested_quantity = 50;
+        $item->status = 'APRV';
+        $item->save();
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id' => 60,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'get_material_need_schedule',
+                'arguments' => [
+                    'project_id' => $project->id,
+                ],
+            ],
+        ];
+
+        $response = $this->postJson('/mcp', $payload);
+        $response->assertStatus(200);
+        $result = json_decode($response->json('result.content.0.text'), true);
+
+        $this->assertEquals(1, $result['total_projects']);
+        $this->assertEquals($project->id, $result['projects'][0]['project_id']);
+        $this->assertEquals('Scheduled Project', $result['projects'][0]['project_name']);
+        $this->assertCount(1, $result['projects'][0]['schedule']);
+        $this->assertEquals(now()->addDays(2)->format('Y-m-d'), $result['projects'][0]['schedule'][0]['date_needed']);
+        $this->assertCount(1, $result['projects'][0]['schedule'][0]['requests']);
+        $this->assertEquals($mqr->id, $result['projects'][0]['schedule'][0]['requests'][0]['material_quantity_request_id']);
+        $this->assertCount(1, $result['projects'][0]['schedule'][0]['requests'][0]['items']);
+        $this->assertEquals(50.0, $result['projects'][0]['schedule'][0]['requests'][0]['items'][0]['requested_quantity']);
+    }
 }
+

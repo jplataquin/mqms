@@ -149,7 +149,7 @@
 
                         <li class="menu-item">
                             <div class="nav-item">
-                                <a href="/objectives/material" hx-select="#content" hx-target="#main">Material Objectives</a>
+                                <a href="/material_need_schedule" hx-select="#content" hx-target="#main">Mat. Need Schedule</a>
                             </div>          
                         </li>
 

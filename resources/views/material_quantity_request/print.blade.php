@@ -113,6 +113,10 @@
                 <th>Component</th>
                 <td>{{$component->name}}</td>
             </tr>
+            <tr>
+                <th>Actual Accomplishment</th>
+                <td colspan="3">{{$contract_item ? $contract_item->latest_actual_accomplishment_text : 'N/A'}}</td>
+            </tr>
         </table>
 
         <table>

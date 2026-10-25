@@ -995,6 +995,15 @@ class AccomplishmentTest extends TestCase
         $printResponse->assertStatus(200);
         $printResponse->assertSee($this->contractItem->description);
         $printResponse->assertDontSee('Excluded Special Contract Item');
+
+        // Verify studio top header contract amount includes only active and non-excluded items
+        $this->assertEquals(160000.0, $this->project->getTotalContractAmount(false));
+        $this->assertEquals(150000.0, $this->project->getTotalContractAmount(true));
+
+        $studioView = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/studio');
+        $studioView->assertStatus(200);
+        $studioView->assertSee($this->project->name . ' — P150,000.00');
+        $studioView->assertDontSee($this->project->name . ' — P160,000.00');
     }
 
     /** @test */
@@ -1034,6 +1043,11 @@ class AccomplishmentTest extends TestCase
         $studioView->assertSee('btnToggleExcluded', false);
         $studioView->assertSee('includeComponentInMonitoring', false);
         $studioView->assertSee('row-component-excluded', false);
+        $studioView->assertSee('rgba(255, 255, 255, 0.08)', false);
+        $studioView->assertSee('badge bg-white text-dark', false);
+        // Excluded item amount (7,500) must not be in top header (should remain 150,000, not 157,500)
+        $studioView->assertSee($this->project->name . ' — P150,000.00');
+        $studioView->assertDontSee($this->project->name . ' — P157,500.00');
     }
 
     /** @test */
@@ -1065,6 +1079,11 @@ class AccomplishmentTest extends TestCase
 
         $ciToInclude->refresh();
         $this->assertEquals(0, $ciToInclude->exclude_from_monitoring);
+
+        // After re-inclusion, studio top header must include the item (150,000 + 7,500 = 157,500)
+        $studioView = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/studio');
+        $studioView->assertStatus(200);
+        $studioView->assertSee($this->project->name . ' — P157,500.00');
     }
 
     /** @test */

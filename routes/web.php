@@ -233,8 +233,9 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/report/fulfilment/parameters', [App\Http\Controllers\Report\FulfilmentReportController::class, 'parameters']);
     Route::get('/report/fulfilment/generate', [App\Http\Controllers\Report\FulfilmentReportController::class, 'generate']);
     
-    //Objectives
-    Route::get('/objectives/material', [App\Http\Controllers\ObjectivesController::class, 'material']);
+    //Mat. Need Schedule
+    Route::get('/material_need_schedule', [App\Http\Controllers\ObjectivesController::class, 'material']);
+    Route::redirect('/objectives/material', '/material_need_schedule');
     
     Route::get('/users', [App\Http\Controllers\UserController::class, 'list']);
     Route::get('/user/create', [App\Http\Controllers\UserController::class, 'create']);
