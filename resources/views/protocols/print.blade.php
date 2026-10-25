@@ -134,6 +134,16 @@
         <button class="btn-close" onclick="window.close()">Close</button>
     </div>
 
+    <!-- Document Header -->
+    <div style="margin-bottom: 14px;">
+        <h2 style="font-size: 15pt; font-weight: bold; text-transform: uppercase; margin-bottom: 2px;">
+            {{ $result['protocol'] ?? 'Protocol Diagnostic Report' }}
+        </h2>
+        <div style="font-size: 9pt; color: #333;">
+            Material &amp; Quantity Management System &bull; Dedicated Diagnostic Audit Report
+        </div>
+    </div>
+
     <!-- Header Table -->
     <table>
         <tbody>
@@ -210,20 +220,20 @@
                                     <table style="margin-bottom: 0; background: #fff;">
                                         <thead>
                                             <tr>
-                                                <th style="width: 12%;">MQR #</th>
-                                                <th style="width: 16%;">Date Needed</th>
-                                                <th style="width: 40%;">Material Item</th>
-                                                <th style="width: 16%;" class="text-end">MQR Qty</th>
-                                                <th style="width: 16%;" class="text-end">Actual Scaled</th>
+                                                <th style="width: 14%;">MQR ID</th>
+                                                <th style="width: 38%;">Requested Material Item</th>
+                                                <th style="width: 16%;" class="text-end">Req. Qty</th>
+                                                <th style="width: 16%;" class="text-center">Equivalent</th>
+                                                <th style="width: 16%;" class="text-end">Charged Qty</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($v['breakdown'] as $b)
                                                 <tr>
                                                     <td>#{{ $b['material_quantity_request_id'] }}</td>
-                                                    <td>{{ $b['request_date_needed'] ?? 'N/A' }}</td>
                                                     <td>{{ $b['material_item_name'] ?? 'N/A' }}</td>
                                                     <td class="text-end">{{ number_format($b['requested_quantity'] ?? 0, 2) }}</td>
+                                                    <td class="text-center">&times; {{ $b['equivalent'] ?? 1 }}</td>
                                                     <td class="text-end fw-bold">{{ number_format($b['actual_quantity'] ?? 0, 2) }}</td>
                                                 </tr>
                                             @endforeach

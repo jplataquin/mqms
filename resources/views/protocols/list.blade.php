@@ -55,9 +55,14 @@
                     </div>
                 </div>
                 <div class="col-lg-2 d-flex align-items-end">
-                    <button id="runBtn" class="btn btn-primary w-100 py-2">
-                        <i class="bi bi-play-fill me-1"></i> Run
-                    </button>
+                    <div class="d-flex gap-2 w-100">
+                        <button id="runBtn" class="btn btn-primary flex-fill py-2">
+                            <i class="bi bi-play-fill me-1"></i> Run
+                        </button>
+                        <button id="topPrintBtn" class="btn btn-outline-secondary py-2 px-3" type="button" title="Print Diagnostic Report (opens in new tab)">
+                            <i class="bi bi-printer"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="row mt-2">
@@ -670,31 +675,38 @@
         renderViolationCards(filtered);
     };
 
+    function openPrintPage() {
+        let protoSlug = protocolSelect.value;
+        let projId = manualProjectId.value ? parseInt(manualProjectId.value) : parseInt(projectSelect.value);
+
+        if ((!projId || isNaN(projId)) && projectInput && projectInput.value.trim()) {
+            const detectedId = findOptionId(projectInput, projectList);
+            if (detectedId) {
+                projId = parseInt(detectedId);
+                projectSelect.value = detectedId;
+            }
+        }
+
+        if (!protoSlug) {
+            alert('Please select a protocol.');
+            return;
+        }
+
+        if (!projId || isNaN(projId)) {
+            alert('Please select a project or enter a valid Project ID.');
+            return;
+        }
+
+        window.open(`/protocols/print?protocol=${encodeURIComponent(protoSlug)}&project_id=${projId}`, '_blank');
+    }
+
     if (printBtn) {
-        printBtn.onclick = () => {
-            let protoSlug = protocolSelect.value;
-            let projId = manualProjectId.value ? parseInt(manualProjectId.value) : parseInt(projectSelect.value);
+        printBtn.onclick = openPrintPage;
+    }
 
-            if ((!projId || isNaN(projId)) && projectInput && projectInput.value.trim()) {
-                const detectedId = findOptionId(projectInput, projectList);
-                if (detectedId) {
-                    projId = parseInt(detectedId);
-                    projectSelect.value = detectedId;
-                }
-            }
-
-            if (!protoSlug) {
-                alert('Please select a protocol.');
-                return;
-            }
-
-            if (!projId || isNaN(projId)) {
-                alert('Please select a project or enter a valid Project ID.');
-                return;
-            }
-
-            window.open(`/protocols/print?protocol=${encodeURIComponent(protoSlug)}&project_id=${projId}`, '_blank');
-        };
+    const topPrintBtn = $q('#topPrintBtn').first();
+    if (topPrintBtn) {
+        topPrintBtn.onclick = openPrintPage;
     }
 
     // Handle deep-linked project_id query parameter

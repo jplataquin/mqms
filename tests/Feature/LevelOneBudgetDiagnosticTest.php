@@ -430,6 +430,7 @@ class LevelOneBudgetDiagnosticTest extends TestCase
         $response->assertSee('id="protocolSelect"', false);
         $response->assertSee('id="projectSelect"', false);
         $response->assertSee('id="runBtn"', false);
+        $response->assertSee('id="topPrintBtn"', false);
         $response->assertSee('id="printBtn"', false);
     }
 
@@ -534,6 +535,9 @@ class LevelOneBudgetDiagnosticTest extends TestCase
         $response->assertSee('NON-CONFORMING');
         $response->assertSee('Print Report');
         $response->assertSee('Non-Conforming Items (Exceeding Budget)');
+        $response->assertSee('MQR ID');
+        $response->assertSee('Equivalent');
+        $response->assertSee('Charged Qty');
 
         // 2. Level 2 Diagnostic Print Page
         $responseL2 = $this->actingAs($user)->get("/protocols/print?protocol=level-2-budget-diagnostic&project_id={$project->id}");
