@@ -385,26 +385,38 @@
             font-weight: 600;
         }
 
-        /* Excluded component styling */
+        /* Excluded component styling (highlighted white) */
         .row-component-excluded td {
-            background-color: rgba(220, 53, 69, 0.08) !important;
+            background-color: rgba(255, 255, 255, 0.08) !important;
         }
         .row-component-excluded td.sticky-col-tree,
         .row-component-excluded td.sticky-col-metric,
         .row-component-excluded td.sticky-col-progress {
-            background-color: #26191e !important;
+            background-color: #2e3238 !important;
         }
         .row-component-excluded:hover td {
-            background-color: rgba(220, 53, 69, 0.16) !important;
+            background-color: rgba(255, 255, 255, 0.16) !important;
         }
         .row-component-excluded:hover td.sticky-col-tree,
         .row-component-excluded:hover td.sticky-col-metric,
         .row-component-excluded:hover td.sticky-col-progress {
-            background-color: #341f27 !important;
+            background-color: #3d434a !important;
         }
         .row-component-excluded td.sticky-col-tree span.comp-name-text {
-            color: #d68f9a !important;
+            color: #ffffff !important;
             text-decoration: line-through;
+        }
+        .row-component-excluded.active td {
+            background-color: rgba(255, 255, 255, 0.20) !important;
+            border-top: 1px solid #ffffff !important;
+            border-bottom: 1px solid #ffffff !important;
+        }
+        .row-component-excluded.active td.sticky-col-tree,
+        .row-component-excluded.active td.sticky-col-metric,
+        .row-component-excluded.active td.sticky-col-progress {
+            background-color: #454b54 !important;
+            border-top: 1px solid #ffffff !important;
+            border-bottom: 1px solid #ffffff !important;
         }
 
         /* Behind target contract item styling (highlighted red) */
@@ -937,7 +949,7 @@
 
                     const isCiExcluded = (ci.exclude_from_monitoring == 1);
                     const excludedClass = isCiExcluded ? 'row-component-excluded' : '';
-                    const excludedBadge = isCiExcluded ? `<span class="badge bg-danger ms-1" style="font-size: 8.5px; vertical-align: middle;">Excluded</span>` : '';
+                    const excludedBadge = isCiExcluded ? `<span class="badge bg-white text-dark ms-1" style="font-size: 8.5px; vertical-align: middle;">Excluded</span>` : '';
 
                     // Scope and Accomplishment metrics
                     const totalScope = parseFloat(ci.contract_quantity) || 0;
@@ -1132,7 +1144,7 @@
                     bodyHtml += `
                     <tr class="row-component ${excludedClass} ${behindClass} ${isActive}" id="comp-row-${ci.id}" style="${displayCi}" data-section-parent="${section.id}" data-ci-parent="${ci.id}" data-comp-id="${ci.id}" data-comp-name="${escapeHtml(ciName)}" data-comp-qty="${ci.contract_quantity || ''}" data-comp-unit="${escapeHtml(unitText)}" data-comp-excluded="${isCiExcluded ? '1' : '0'}" onclick="selectComponent(${ci.id}, '${escapeHtml(ciName)}')">
                         <td class="sticky-col-tree" style="padding-left: 28px; cursor: pointer;" title="Double-click to view progress & performance">
-                            <i class="bi bi-diagram-3 ${isCiExcluded ? 'text-danger' : (isBehindTarget ? 'text-danger' : 'text-info')} me-1"></i>
+                            <i class="bi bi-diagram-3 ${isCiExcluded ? 'text-white' : (isBehindTarget ? 'text-danger' : 'text-info')} me-1"></i>
                             <span class="comp-name-text" title="${escapeHtml(ciName)}">${escapeHtml(ciName)}</span>
                             ${behindBadge}
                             ${excludedBadge}

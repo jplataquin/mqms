@@ -1034,6 +1034,8 @@ class AccomplishmentTest extends TestCase
         $studioView->assertSee('btnToggleExcluded', false);
         $studioView->assertSee('includeComponentInMonitoring', false);
         $studioView->assertSee('row-component-excluded', false);
+        $studioView->assertSee('rgba(255, 255, 255, 0.08)', false);
+        $studioView->assertSee('badge bg-white text-dark', false);
     }
 
     /** @test */
