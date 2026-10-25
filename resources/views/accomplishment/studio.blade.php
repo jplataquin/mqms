@@ -2027,9 +2027,9 @@
                         <small class="text-muted">${totalComponents} Contract Items</small>
                     </div>
                     <div class="card-body p-0">
-                        <div class="table-responsive" style="max-height: 220px; overflow-y: auto;">
+                        <div class="table-responsive">
                             <table class="table table-dark table-sm table-hover mb-0" style="font-size: 11px;">
-                                <thead class="table-secondary text-dark sticky-top" style="position: sticky; top: 0; z-index: 2;">
+                                <thead class="table-secondary text-dark">
                                     <tr>
                                         <th>Contract Item</th>
                                         <th class="text-end">Contract Amount</th>
