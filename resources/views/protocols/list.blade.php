@@ -461,7 +461,7 @@
             let card = t.div({ class: 'card bg-dark border-secondary violation-card mb-2', 'data-item-id': v.component_item_id }, () => {
                 // Combined Card Header
                 t.div({ class: 'card-header border-secondary p-3' }, () => {
-                    // Contract Item, Component & Record Type row
+                    // Contract Item & Component row
                     t.div({ class: 'd-flex align-items-center justify-content-between flex-wrap gap-2 pb-2 mb-2 border-bottom border-secondary border-opacity-25 small' }, () => {
                         t.div({ class: 'd-flex flex-column gap-1' }, () => {
                             t.div({}, () => {
@@ -496,12 +496,9 @@
                             });
                         });
                         t.div({ class: 'd-flex align-items-center' }, () => {
-                            t.span({ class: 'text-muted me-1' }, 'Record Type:');
-                            t.span({ class: 'badge bg-secondary me-1' }, v.contract_item_type_name || v.contract_item_type || 'Component Item');
-                            t.span({ class: 'badge bg-dark border border-secondary text-light' }, v.record_type || 'Component Item');
                             t.button({
                                 type: 'button',
-                                class: 'btn btn-sm btn-outline-secondary toggle-collapse-btn py-0 px-2 ms-2',
+                                class: 'btn btn-sm btn-outline-secondary toggle-collapse-btn py-0 px-2',
                                 title: 'Toggle MQR Breakdown'
                             }, () => {
                                 t.i({ class: 'bi bi-chevron-down' });

@@ -427,7 +427,6 @@ class LevelOneBudgetDiagnosticTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Protocols Diagnostic Dashboard');
         $response->assertSee('Contract Item');
-        $response->assertSee('Record Type');
         $response->assertSee('id="protocolSelect"', false);
         $response->assertSee('id="projectSelect"', false);
         $response->assertSee('id="runBtn"', false);
@@ -435,7 +434,7 @@ class LevelOneBudgetDiagnosticTest extends TestCase
     }
 
     /** @test */
-    public function it_renders_combined_card_header_with_contract_item_record_type_and_budget_metrics_in_result_card()
+    public function it_renders_combined_card_header_with_contract_item_and_budget_metrics_without_record_type_in_result_card()
     {
         $user = User::create([
             'name'     => 'Card Header Tester',
@@ -446,10 +445,12 @@ class LevelOneBudgetDiagnosticTest extends TestCase
         $response = $this->actingAs($user)->get('/protocols');
         $response->assertStatus(200);
 
-        // Result cards in violationsList should render the combined card header
+        // Result cards in violationsList should render the combined card header without Record Type
         $content = $response->getContent();
         $this->assertStringContainsString('// Combined Card Header', $content);
         $this->assertStringContainsString("t.div({ class: 'card-header border-secondary p-3' }", $content);
+        $this->assertStringContainsString('Contract Item:', $content);
+        $this->assertStringNotContainsString('Record Type:', $content);
         $this->assertStringContainsString('Allowed Budget', $content);
         $this->assertStringContainsString('Total Requested (Actual)', $content);
         $this->assertStringContainsString('Over Budget Variance', $content);
