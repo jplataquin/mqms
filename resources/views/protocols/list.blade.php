@@ -461,19 +461,39 @@
             let card = t.div({ class: 'card bg-dark border-secondary violation-card mb-2', 'data-item-id': v.component_item_id }, () => {
                 // Combined Card Header
                 t.div({ class: 'card-header border-secondary p-3' }, () => {
-                    // Contract Item & Record Type row
+                    // Contract Item, Component & Record Type row
                     t.div({ class: 'd-flex align-items-center justify-content-between flex-wrap gap-2 pb-2 mb-2 border-bottom border-secondary border-opacity-25 small' }, () => {
-                        t.div({}, () => {
-                            t.span({ class: 'text-muted me-1' }, 'Contract Item:');
-                            if (v.contract_item_id) {
-                                t.a({
-                                    href: v.contract_item_url || (`/project/section/contract_item/${v.contract_item_id}`),
-                                    target: '_blank',
-                                    class: 'text-light fw-bold text-decoration-none'
-                                }, `${v.contract_item_code ? v.contract_item_code + ' ' : ''}${v.contract_item_description || v.contract_item_name || ('#' + v.contract_item_id)}`);
-                            } else {
-                                t.span({ class: 'text-muted' }, 'None');
-                            }
+                        t.div({ class: 'd-flex flex-column gap-1' }, () => {
+                            t.div({}, () => {
+                                t.span({ class: 'text-muted me-1' }, 'Contract Item:');
+                                if (v.contract_item_id) {
+                                    t.a({
+                                        href: v.contract_item_url || (`/project/section/contract_item/${v.contract_item_id}`),
+                                        target: '_blank',
+                                        class: 'text-light fw-bold text-decoration-none'
+                                    }, `${v.contract_item_code ? v.contract_item_code + ' ' : ''}${v.contract_item_description || v.contract_item_name || ('#' + v.contract_item_id)}`);
+                                } else {
+                                    t.span({ class: 'text-muted' }, 'None');
+                                }
+                            });
+                            t.div({}, () => {
+                                t.span({ class: 'text-muted me-1' }, 'Component:');
+                                if (v.component_id || v.component_name) {
+                                    const compUrl = v.component_url || (v.component_id ? `/project/section/contract_item/component/${v.component_id}` : null);
+                                    const compText = v.component_name || (`#${v.component_id}`);
+                                    if (compUrl) {
+                                        t.a({
+                                            href: compUrl,
+                                            target: '_blank',
+                                            class: 'text-light fw-bold text-decoration-none'
+                                        }, compText);
+                                    } else {
+                                        t.span({ class: 'text-light fw-bold' }, compText);
+                                    }
+                                } else {
+                                    t.span({ class: 'text-muted' }, 'None');
+                                }
+                            });
                         });
                         t.div({ class: 'd-flex align-items-center' }, () => {
                             t.span({ class: 'text-muted me-1' }, 'Record Type:');
@@ -530,10 +550,9 @@
                                             t.th({ style: 'width: 90px;' }, 'MQR ID');
                                             t.th({}, 'Requested Material Item');
                                             t.th({ class: 'text-end', style: 'width: 110px;' }, 'Req. Qty');
-                                            t.th({ class: 'text-center', style: 'width: 90px;' }, 'Factor');
+                                            t.th({ class: 'text-center', style: 'width: 100px;' }, 'Equivalent');
                                             t.th({ class: 'text-end', style: 'width: 130px;' }, 'Charged Qty');
                                             t.th({ class: 'text-center', style: 'width: 80px;' }, 'Status');
-                                            t.th({ style: 'width: 120px;' }, 'Date Needed');
                                             t.th({ class: 'text-center', style: 'width: 90px;' }, 'Trace');
                                         });
                                     });
@@ -552,7 +571,7 @@
                                                 // Requested quantity
                                                 t.td({ class: 'text-end font-monospace' }, String(item.requested_quantity));
 
-                                                // Equivalent conversion factor
+                                                // Equivalent conversion
                                                 t.td({ class: 'text-center font-monospace text-muted' }, `× ${item.equivalent}`);
 
                                                 // Charged actual quantity
@@ -563,9 +582,6 @@
                                                     let statusClass = item.request_status === 'APRV' ? 'bg-success' : 'bg-info';
                                                     t.span({ class: `badge ${statusClass}` }, item.request_status || item.status);
                                                 });
-
-                                                // Date needed
-                                                t.td({ class: 'small text-muted text-nowrap' }, item.request_date_needed || '-');
 
                                                 // Action to navigate directly
                                                 t.td({ class: 'text-center' }, () => {

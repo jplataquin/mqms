@@ -454,6 +454,35 @@ class LevelOneBudgetDiagnosticTest extends TestCase
         $this->assertStringContainsString('Total Requested (Actual)', $content);
         $this->assertStringContainsString('Over Budget Variance', $content);
         $this->assertStringContainsString('Variance Status', $content);
+        $this->assertStringContainsString("'Contract Item:'", $content);
+        $this->assertStringContainsString("'Component:'", $content);
+    }
+
+    /** @test */
+    public function it_renders_equivalent_column_and_omits_date_needed_and_factor_in_protocols_view()
+    {
+        $user = User::create([
+            'name'     => 'Table Header Tester',
+            'email'    => 'table_tester@mqms.local',
+            'password' => bcrypt('password'),
+        ]);
+
+        $response = $this->actingAs($user)->get('/protocols');
+        $response->assertStatus(200);
+
+        $content = $response->getContent();
+        // Equivalent column is present
+        $this->assertStringContainsString("'Equivalent'", $content);
+        // Factor column is removed
+        $this->assertStringNotContainsString("'Factor'", $content);
+        // Date needed column is removed
+        $this->assertStringNotContainsString("'Date Needed'", $content);
+        // Component field is present below contract item in card header
+        $contractItemPos = strpos($content, "'Contract Item:'");
+        $componentPos = strpos($content, "'Component:'");
+        $this->assertNotFalse($contractItemPos);
+        $this->assertNotFalse($componentPos);
+        $this->assertTrue($componentPos > $contractItemPos, 'Component field should appear after Contract Item field in header');
     }
 
     /** @test */
