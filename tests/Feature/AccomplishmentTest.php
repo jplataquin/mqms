@@ -848,6 +848,20 @@ class AccomplishmentTest extends TestCase
     }
 
     /** @test */
+    public function it_renders_overall_progress_contract_items_without_vertical_overflow_scroll()
+    {
+        $response = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/studio');
+        $response->assertStatus(200);
+
+        $content = $response->getContent();
+        $this->assertStringContainsString('Weighted Accomplishment Breakdown', $content);
+        // Ensure table-responsive container has no vertical overflow or max-height restrictions
+        $this->assertStringNotContainsString('max-height: 220px', $content);
+        $this->assertStringNotContainsString('overflow-y: auto', $content);
+        $this->assertStringContainsString('<div class="table-responsive">', $content);
+    }
+
+    /** @test */
     public function it_can_fetch_accomplishments_via_third_party_api()
     {
         // 1. Create API Credential
@@ -981,6 +995,15 @@ class AccomplishmentTest extends TestCase
         $printResponse->assertStatus(200);
         $printResponse->assertSee($this->contractItem->description);
         $printResponse->assertDontSee('Excluded Special Contract Item');
+
+        // Verify studio top header contract amount includes only active and non-excluded items
+        $this->assertEquals(160000.0, $this->project->getTotalContractAmount(false));
+        $this->assertEquals(150000.0, $this->project->getTotalContractAmount(true));
+
+        $studioView = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/studio');
+        $studioView->assertStatus(200);
+        $studioView->assertSee($this->project->name . ' — P150,000.00');
+        $studioView->assertDontSee($this->project->name . ' — P160,000.00');
     }
 
     /** @test */
@@ -1020,6 +1043,11 @@ class AccomplishmentTest extends TestCase
         $studioView->assertSee('btnToggleExcluded', false);
         $studioView->assertSee('includeComponentInMonitoring', false);
         $studioView->assertSee('row-component-excluded', false);
+        $studioView->assertSee('rgba(255, 255, 255, 0.08)', false);
+        $studioView->assertSee('badge bg-white text-dark', false);
+        // Excluded item amount (7,500) must not be in top header (should remain 150,000, not 157,500)
+        $studioView->assertSee($this->project->name . ' — P150,000.00');
+        $studioView->assertDontSee($this->project->name . ' — P157,500.00');
     }
 
     /** @test */
@@ -1051,6 +1079,11 @@ class AccomplishmentTest extends TestCase
 
         $ciToInclude->refresh();
         $this->assertEquals(0, $ciToInclude->exclude_from_monitoring);
+
+        // After re-inclusion, studio top header must include the item (150,000 + 7,500 = 157,500)
+        $studioView = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/studio');
+        $studioView->assertStatus(200);
+        $studioView->assertSee($this->project->name . ' — P157,500.00');
     }
 
     /** @test */
