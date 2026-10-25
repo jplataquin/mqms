@@ -428,11 +428,30 @@ class LevelOneBudgetDiagnosticTest extends TestCase
         $response->assertSee('Protocols Diagnostic Dashboard');
         $response->assertSee('Contract Item');
         $response->assertSee('Record Type');
-        $response->assertSee('Problematic Record');
         $response->assertSee('id="protocolSelect"', false);
         $response->assertSee('id="projectSelect"', false);
         $response->assertSee('id="runBtn"', false);
         $response->assertSee('id="printBtn"', false);
+    }
+
+    /** @test */
+    public function it_does_not_render_card_header_at_top_of_each_violation_result_card()
+    {
+        $user = User::create([
+            'name'     => 'Card Header Tester',
+            'email'    => 'header_tester@mqms.local',
+            'password' => bcrypt('password'),
+        ]);
+
+        $response = $this->actingAs($user)->get('/protocols');
+        $response->assertStatus(200);
+
+        // Result cards in violationsList should directly render the card body without card header
+        $content = $response->getContent();
+        $this->assertStringNotContainsString(
+            "let card = t.div({ class: 'card bg-dark violation-card mb-2', 'data-item-id': v.component_item_id }, () => {\n                // Card Header",
+            $content
+        );
     }
 
     /** @test */
