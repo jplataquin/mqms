@@ -235,7 +235,8 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::get('/project/studio/node/children',[App\Http\Controllers\ProjectStudio\NodeController::class, 'children']);
     Route::post('/project/studio/node/rename',[App\Http\Controllers\ProjectStudio\NodeController::class, 'rename']);
 
-    //Objectives
+    //Mat. Need Schedule
+    Route::get('/material_need_schedule', [App\Http\Controllers\ObjectivesController::class, '_material']);
     Route::get('/objectives/material', [App\Http\Controllers\ObjectivesController::class, '_material']);
 
     //Coupons
