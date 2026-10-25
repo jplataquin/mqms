@@ -35,7 +35,7 @@
                         <small class="form-text text-muted" id="protocolDesc"></small>
                     </div>
                 </div>
-                <div class="col-lg-5">
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label class="form-label fw-bold">Select Project</label>
                         <div class="input-group">
@@ -51,23 +51,18 @@
                             @endif
                         </datalist>
                         <input type="hidden" id="projectSelect" value="">
-                        <small class="form-text text-muted">Type project name/ID or enter manual ID below</small>
+                        <small class="form-text text-muted">Type project name or ID to select</small>
                     </div>
                 </div>
-                <div class="col-lg-2 d-flex align-items-end">
+                <div class="col-lg-3 d-flex align-items-end">
                     <div class="d-flex gap-2 w-100">
-                        <button id="runBtn" class="btn btn-primary flex-fill py-2">
+                        <button id="runBtn" class="btn btn-primary flex-fill py-2 fw-semibold">
                             <i class="bi bi-play-fill me-1"></i> Run
                         </button>
-                        <button id="topPrintBtn" class="btn btn-outline-secondary py-2 px-3" type="button" title="Print Diagnostic Report (opens in new tab)">
-                            <i class="bi bi-printer"></i>
+                        <button id="topPrintBtn" class="btn btn-outline-light py-2 px-3 fw-semibold text-nowrap" type="button" title="Print Diagnostic Report (opens in new tab)">
+                            <i class="bi bi-printer-fill me-1"></i> Print Report
                         </button>
                     </div>
-                </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col-lg-5 offset-lg-5">
-                    <input type="number" id="manualProjectIdInput" class="form-control form-control-sm" placeholder="Manual Project ID (optional)" min="1"/>
                 </div>
             </div>
         </div>
@@ -80,8 +75,8 @@
                 <h5 class="mb-0 fw-bold"><i class="bi bi-clipboard2-data me-1"></i> Diagnostic Execution Results</h5>
             </div>
             <div>
-                <button id="printBtn" class="btn btn-outline-dark btn-sm">
-                    <i class="bi bi-printer me-1"></i> Print Results
+                <button id="printBtn" class="btn btn-outline-light btn-sm fw-semibold px-3 shadow-sm">
+                    <i class="bi bi-printer-fill me-1"></i> Print Results
                 </button>
             </div>
         </div>
@@ -135,7 +130,6 @@
     const projectList           = $q('#projectList').first();
     const projectSelect         = $q('#projectSelect').first();
     const clearProjectBtn       = $q('#clearProjectBtn').first();
-    const manualProjectId       = $q('#manualProjectIdInput').first();
     const runBtn                = $q('#runBtn').first();
     const printBtn              = $q('#printBtn').first();
     const resultsArea           = $q('#resultsArea').first();
@@ -211,9 +205,6 @@
         if (!projectInput) return;
         const matchedId = findOptionId(projectInput, projectList);
         if (projectSelect) projectSelect.value = matchedId;
-        if (matchedId && manualProjectId) {
-            manualProjectId.value = matchedId;
-        }
     }
 
     if (projectInput) {
@@ -225,24 +216,8 @@
         clearProjectBtn.onclick = () => {
             if (projectInput) projectInput.value = '';
             if (projectSelect) projectSelect.value = '';
-            if (manualProjectId) manualProjectId.value = '';
             if (projectInput) projectInput.focus();
         };
-    }
-
-    if (manualProjectId) {
-        manualProjectId.addEventListener('input', () => {
-            const id = manualProjectId.value.trim();
-            if (projectSelect) projectSelect.value = id;
-            if (id && projectList && projectList.options) {
-                const opt = Array.from(projectList.options).find(o => o.getAttribute('data-id') === id);
-                if (opt && projectInput) {
-                    projectInput.value = opt.value;
-                }
-            } else if (!id && projectInput) {
-                projectInput.value = '';
-            }
-        });
     }
 
     // Load available protocols
@@ -290,7 +265,7 @@
                 });
 
                 // Sync initial selection if an ID is present
-                const currentId = (manualProjectId && manualProjectId.value) || (projectSelect && projectSelect.value);
+                const currentId = projectSelect && projectSelect.value;
                 if (currentId && projectList && projectList.options) {
                     const opt = Array.from(projectList.options).find(o => o.getAttribute('data-id') == currentId);
                     if (opt && projectInput && !projectInput.value) {
@@ -306,7 +281,7 @@
     // Run Protocol Diagnostic
     async function executeProtocol() {
         let protoSlug = protocolSelect.value;
-        let projId = manualProjectId.value ? parseInt(manualProjectId.value) : parseInt(projectSelect.value);
+        let projId = projectSelect ? parseInt(projectSelect.value) : 0;
 
         if ((!projId || isNaN(projId)) && projectInput && projectInput.value.trim()) {
             const detectedId = findOptionId(projectInput, projectList);
@@ -677,7 +652,7 @@
 
     function openPrintPage() {
         let protoSlug = protocolSelect.value;
-        let projId = manualProjectId.value ? parseInt(manualProjectId.value) : parseInt(projectSelect.value);
+        let projId = projectSelect ? parseInt(projectSelect.value) : 0;
 
         if ((!projId || isNaN(projId)) && projectInput && projectInput.value.trim()) {
             const detectedId = findOptionId(projectInput, projectList);
@@ -713,7 +688,6 @@
     const urlParams = new URLSearchParams(window.location.search);
     const initialProjectId = urlParams.get('project_id');
     if (initialProjectId) {
-        if (manualProjectId) manualProjectId.value = initialProjectId;
         if (projectSelect) projectSelect.value = initialProjectId;
         if (projectList && projectList.options) {
             const opt = Array.from(projectList.options).find(o => o.getAttribute('data-id') == initialProjectId);
