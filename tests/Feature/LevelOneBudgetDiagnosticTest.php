@@ -435,7 +435,7 @@ class LevelOneBudgetDiagnosticTest extends TestCase
     }
 
     /** @test */
-    public function it_does_not_render_card_header_at_top_of_each_violation_result_card()
+    public function it_renders_combined_card_header_with_contract_item_record_type_and_budget_metrics_in_result_card()
     {
         $user = User::create([
             'name'     => 'Card Header Tester',
@@ -446,12 +446,14 @@ class LevelOneBudgetDiagnosticTest extends TestCase
         $response = $this->actingAs($user)->get('/protocols');
         $response->assertStatus(200);
 
-        // Result cards in violationsList should directly render the card body without card header
+        // Result cards in violationsList should render the combined card header
         $content = $response->getContent();
-        $this->assertStringNotContainsString(
-            "let card = t.div({ class: 'card bg-dark violation-card mb-2', 'data-item-id': v.component_item_id }, () => {\n                // Card Header",
-            $content
-        );
+        $this->assertStringContainsString('// Combined Card Header', $content);
+        $this->assertStringContainsString("t.div({ class: 'card-header border-secondary p-3' }", $content);
+        $this->assertStringContainsString('Allowed Budget', $content);
+        $this->assertStringContainsString('Total Requested (Actual)', $content);
+        $this->assertStringContainsString('Over Budget Variance', $content);
+        $this->assertStringContainsString('Variance Status', $content);
     }
 
     /** @test */
