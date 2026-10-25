@@ -30,7 +30,8 @@ class ContractItem extends Model
         'accomplished_amount',
         'budget_quantity_overwrite',
         'budget_total_amount_overwrite',
-        'name'
+        'name',
+        'latest_actual_accomplishment_text'
     ];
 
     public $deleteException = null;
@@ -120,13 +121,40 @@ class ContractItem extends Model
         return $val;
     }
 
-    public function getAccomplishedAmountAttribute(){
-
-        $latest = $this->Accomplishments()
+    public function latestActualAccomplishment()
+    {
+        return $this->Accomplishments()
             ->where('type', 'ACTUAL')
             ->orderBy('entry_data', 'desc')
             ->orderBy('created_at', 'desc')
             ->first();
+    }
+
+    public function getLatestActualAccomplishmentQuantityAttribute()
+    {
+        $latest = $this->latestActualAccomplishment();
+        return $latest ? (float) $latest->quantity : 0.0;
+    }
+
+    public function getLatestActualAccomplishmentPercentageAttribute()
+    {
+        $qty = $this->latest_actual_accomplishment_quantity;
+        $total = (float) $this->contract_quantity;
+        return $total > 0 ? ($qty / $total) * 100 : 0.0;
+    }
+
+    public function getLatestActualAccomplishmentTextAttribute()
+    {
+        $qty = $this->latest_actual_accomplishment_quantity;
+        $unit = $this->contract_unit_text;
+        $percentage = $this->latest_actual_accomplishment_percentage;
+
+        return trim(number_format($qty, 2) . ' ' . $unit) . ' (' . number_format($percentage, 2) . '%)';
+    }
+
+    public function getAccomplishedAmountAttribute(){
+
+        $latest = $this->latestActualAccomplishment();
 
         if ($latest) {
             return (float) $latest->quantity * (float) $this->contract_unit_price;

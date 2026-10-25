@@ -618,13 +618,14 @@ class MaterialQuantityRequestController extends Controller
         $unit_options = Unit::toOptions();
 
         $mr_details = [
-            "ID"                => str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT),
-            "Project"           => $project->name,
-            "Section"           => $section->name,
-            "Contract Item"     => $contract_item->name,
-            "Component"         => $component->name,
-            "Status"            => $material_quantity_request->status,
-            "Requested By"      => $material_quantity_request->CreatedByUser()->name.'  '.$material_quantity_request->created_at
+            "ID"                    => str_pad($material_quantity_request->id,6,0,STR_PAD_LEFT),
+            "Project"               => $project->name,
+            "Section"               => $section->name,
+            "Contract Item"         => $contract_item ? $contract_item->name : 'N/A',
+            "Actual Accomplishment" => $contract_item ? $contract_item->latest_actual_accomplishment_text : 'N/A',
+            "Component"             => $component->name,
+            "Status"                => $material_quantity_request->status,
+            "Requested By"          => $material_quantity_request->CreatedByUser()->name.'  '.$material_quantity_request->created_at
         ];
 
         if($material_quantity_request->status == 'APRV'){

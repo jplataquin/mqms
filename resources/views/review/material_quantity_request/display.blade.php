@@ -43,6 +43,20 @@
                         <th>Section</th>
                         <td>{{$section->name}}</td>
                     </tr>
+                    @if($contract_item)
+                    <tr>
+                        <th>Contract Item</th>
+                        <td>
+                            <a href="/project/section/contract_item/{{$contract_item->id}}">
+                                {{$contract_item->item_code}} {{$contract_item->description}}
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Actual Accomplishment</th>
+                        <td>{{$contract_item->latest_actual_accomplishment_text}}</td>
+                    </tr>
+                    @endif
                     <tr>
                         <th>Component</th>
                         <td>
