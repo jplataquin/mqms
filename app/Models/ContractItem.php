@@ -31,7 +31,8 @@ class ContractItem extends Model
         'budget_quantity_overwrite',
         'budget_total_amount_overwrite',
         'name',
-        'latest_actual_accomplishment_text'
+        'latest_actual_accomplishment_text',
+        'latest_actual_accomplishment_date'
     ];
 
     public $deleteException = null;
@@ -143,13 +144,42 @@ class ContractItem extends Model
         return $total > 0 ? ($qty / $total) * 100 : 0.0;
     }
 
+    public function getLatestActualAccomplishmentDateAttribute()
+    {
+        $latest = $this->latestActualAccomplishment();
+        if (!$latest) {
+            return null;
+        }
+
+        if ($latest->entry_data instanceof \DateTimeInterface) {
+            return $latest->entry_data->format('Y-m-d');
+        }
+
+        if ($latest->entry_data) {
+            return substr((string) $latest->entry_data, 0, 10);
+        }
+
+        if ($latest->created_at instanceof \DateTimeInterface) {
+            return $latest->created_at->format('Y-m-d');
+        }
+
+        return null;
+    }
+
     public function getLatestActualAccomplishmentTextAttribute()
     {
         $qty = $this->latest_actual_accomplishment_quantity;
         $unit = $this->contract_unit_text;
         $percentage = $this->latest_actual_accomplishment_percentage;
+        $date = $this->latest_actual_accomplishment_date;
 
-        return trim(number_format($qty, 2) . ' ' . $unit) . ' (' . number_format($percentage, 2) . '%)';
+        $text = trim(number_format($qty, 2) . ' ' . $unit) . ' (' . number_format($percentage, 2) . '%)';
+
+        if ($date) {
+            $text .= ' as of ' . $date;
+        }
+
+        return $text;
     }
 
     public function getAccomplishedAmountAttribute(){

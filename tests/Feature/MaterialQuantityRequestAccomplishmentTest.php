@@ -191,6 +191,7 @@ class MaterialQuantityRequestAccomplishmentTest extends TestCase
         // Initially no accomplishments
         $this->assertEquals(0.0, $this->contractItem->latest_actual_accomplishment_quantity);
         $this->assertEquals(0.0, $this->contractItem->latest_actual_accomplishment_percentage);
+        $this->assertNull($this->contractItem->latest_actual_accomplishment_date);
         $this->assertEquals('0.00 SQM (0.00%)', $this->contractItem->latest_actual_accomplishment_text);
 
         // Add an actual accomplishment of 50 SQM out of 200 SQM (25%)
@@ -206,7 +207,8 @@ class MaterialQuantityRequestAccomplishmentTest extends TestCase
         $this->contractItem->refresh();
         $this->assertEquals(50.0, $this->contractItem->latest_actual_accomplishment_quantity);
         $this->assertEquals(25.0, $this->contractItem->latest_actual_accomplishment_percentage);
-        $this->assertEquals('50.00 SQM (25.00%)', $this->contractItem->latest_actual_accomplishment_text);
+        $this->assertEquals('2026-10-15', $this->contractItem->latest_actual_accomplishment_date);
+        $this->assertEquals('50.00 SQM (25.00%) as of 2026-10-15', $this->contractItem->latest_actual_accomplishment_text);
 
         // Add a later actual accomplishment of 150 SQM out of 200 SQM (75%)
         $acc2 = new Accomplishment();
@@ -221,7 +223,8 @@ class MaterialQuantityRequestAccomplishmentTest extends TestCase
         $this->contractItem->refresh();
         $this->assertEquals(150.0, $this->contractItem->latest_actual_accomplishment_quantity);
         $this->assertEquals(75.0, $this->contractItem->latest_actual_accomplishment_percentage);
-        $this->assertEquals('150.00 SQM (75.00%)', $this->contractItem->latest_actual_accomplishment_text);
+        $this->assertEquals('2026-10-20', $this->contractItem->latest_actual_accomplishment_date);
+        $this->assertEquals('150.00 SQM (75.00%) as of 2026-10-20', $this->contractItem->latest_actual_accomplishment_text);
     }
 
     /** @test */
@@ -240,7 +243,7 @@ class MaterialQuantityRequestAccomplishmentTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Actual Accomplishment');
-        $response->assertSee('60.00 SQM (30.00%)');
+        $response->assertSee('60.00 SQM (30.00%) as of 2026-10-22');
     }
 
     /** @test */
@@ -259,7 +262,7 @@ class MaterialQuantityRequestAccomplishmentTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Actual Accomplishment');
-        $response->assertSee('80.00 SQM (40.00%)');
+        $response->assertSee('80.00 SQM (40.00%) as of 2026-10-22');
     }
 
     /** @test */
@@ -281,6 +284,6 @@ class MaterialQuantityRequestAccomplishmentTest extends TestCase
         $response->assertSee('CI-401');
         $response->assertSee('Reinforced Concrete Slab');
         $response->assertSee('Actual Accomplishment');
-        $response->assertSee('100.00 SQM (50.00%)');
+        $response->assertSee('100.00 SQM (50.00%) as of 2026-10-22');
     }
 }
