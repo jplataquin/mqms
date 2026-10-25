@@ -38,10 +38,20 @@
                 <div class="col-lg-5">
                     <div class="form-group">
                         <label class="form-label fw-bold">Select Project</label>
-                        <select class="form-control" id="projectSelect">
-                            <option value="">-- Choose Project --</option>
-                        </select>
-                        <small class="form-text text-muted">Or enter specific ID below</small>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-search"></i></span>
+                            <input type="text" class="form-control" id="projectInput" list="projectList" placeholder="Search project by name or ID..." autocomplete="off">
+                            <button class="btn btn-outline-secondary" type="button" id="clearProjectBtn" title="Clear Project"><i class="bi bi-x-lg"></i></button>
+                        </div>
+                        <datalist id="projectList">
+                            @if(!empty($projects))
+                                @foreach($projects as $project)
+                                    <option value="#{{$project->id}} - {{$project->name}}" data-id="{{$project->id}}" data-name="{{$project->name}}"></option>
+                                @endforeach
+                            @endif
+                        </datalist>
+                        <input type="hidden" id="projectSelect" value="">
+                        <small class="form-text text-muted">Type project name/ID or enter manual ID below</small>
                     </div>
                 </div>
                 <div class="col-lg-2 d-flex align-items-end">
@@ -116,7 +126,10 @@
 
     const protocolSelect        = $q('#protocolSelect').first();
     const protocolDesc          = $q('#protocolDesc').first();
+    const projectInput          = $q('#projectInput').first();
+    const projectList           = $q('#projectList').first();
     const projectSelect         = $q('#projectSelect').first();
+    const clearProjectBtn       = $q('#clearProjectBtn').first();
     const manualProjectId       = $q('#manualProjectIdInput').first();
     const runBtn                = $q('#runBtn').first();
     const printBtn              = $q('#printBtn').first();
@@ -135,6 +148,97 @@
     let protocolList = [];
     let currentViolations = [];
     let allExpanded = false;
+
+    function findOptionId(input, datalist) {
+        if (!input) return '';
+        const rawVal = input.value.trim();
+        if (!rawVal) return '';
+        const val = rawVal.toLowerCase();
+
+        if (datalist && datalist.options) {
+            const options = Array.from(datalist.options);
+
+            // 1. Exact match on option value (e.g., "#1 - Project Name")
+            let match = options.find(opt => opt.value && opt.value.trim().toLowerCase() === val);
+            if (match) return match.getAttribute('data-id') || '';
+
+            // 2. Exact match on project name
+            match = options.find(opt => {
+                const name = (opt.getAttribute('data-name') || '').trim().toLowerCase();
+                return name && name === val;
+            });
+            if (match) return match.getAttribute('data-id') || '';
+
+            // 3. Exact match on ID or #ID
+            match = options.find(opt => {
+                const id = opt.getAttribute('data-id') || '';
+                return id && (val === id || val === `#${id}`);
+            });
+            if (match) return match.getAttribute('data-id') || '';
+
+            // 4. Starts with #ID or ID -
+            const prefixMatch = val.match(/^#?(\d+)\b/);
+            if (prefixMatch) {
+                const matchedOpt = options.find(opt => (opt.getAttribute('data-id') || '') === prefixMatch[1]);
+                if (matchedOpt) return prefixMatch[1];
+            }
+
+            // 5. Unique partial match on name or value
+            const partialMatches = options.filter(opt => {
+                const optVal = (opt.value || '').toLowerCase();
+                const name = (opt.getAttribute('data-name') || '').toLowerCase();
+                return optVal.includes(val) || name.includes(val);
+            });
+            if (partialMatches.length === 1) {
+                return partialMatches[0].getAttribute('data-id') || '';
+            }
+        }
+
+        // Direct numeric ID fallback
+        if (/^\d+$/.test(rawVal)) {
+            return rawVal;
+        }
+
+        return '';
+    }
+
+    function syncProjectSelection() {
+        if (!projectInput) return;
+        const matchedId = findOptionId(projectInput, projectList);
+        if (projectSelect) projectSelect.value = matchedId;
+        if (matchedId && manualProjectId) {
+            manualProjectId.value = matchedId;
+        }
+    }
+
+    if (projectInput) {
+        projectInput.addEventListener('input', syncProjectSelection);
+        projectInput.addEventListener('change', syncProjectSelection);
+    }
+
+    if (clearProjectBtn) {
+        clearProjectBtn.onclick = () => {
+            if (projectInput) projectInput.value = '';
+            if (projectSelect) projectSelect.value = '';
+            if (manualProjectId) manualProjectId.value = '';
+            if (projectInput) projectInput.focus();
+        };
+    }
+
+    if (manualProjectId) {
+        manualProjectId.addEventListener('input', () => {
+            const id = manualProjectId.value.trim();
+            if (projectSelect) projectSelect.value = id;
+            if (id && projectList && projectList.options) {
+                const opt = Array.from(projectList.options).find(o => o.getAttribute('data-id') === id);
+                if (opt && projectInput) {
+                    projectInput.value = opt.value;
+                }
+            } else if (!id && projectInput) {
+                projectInput.value = '';
+            }
+        });
+    }
 
     // Load available protocols
     async function loadProtocols() {
@@ -169,14 +273,25 @@
     // Load active projects for selection
     async function loadProjects() {
         try {
-            let res = await window.util.$get('/api/project/list', { limit: 100, status: 'ACTV' });
-            if (res.status === 1 && res.data) {
+            let res = await window.util.$get('/api/project/list', { limit: 500, status: 'ACTV', order_by: 'name', order: 'ASC' });
+            if (res.status === 1 && res.data && res.data.length > 0) {
+                $el.clear(projectList);
                 res.data.forEach(p => {
                     let opt = document.createElement('option');
-                    opt.value = p.id;
-                    opt.textContent = `#${p.id} - ${p.name}`;
-                    projectSelect.appendChild(opt);
+                    opt.value = `#${p.id} - ${p.name}`;
+                    opt.setAttribute('data-id', p.id);
+                    opt.setAttribute('data-name', p.name);
+                    projectList.appendChild(opt);
                 });
+
+                // Sync initial selection if an ID is present
+                const currentId = (manualProjectId && manualProjectId.value) || (projectSelect && projectSelect.value);
+                if (currentId && projectList && projectList.options) {
+                    const opt = Array.from(projectList.options).find(o => o.getAttribute('data-id') == currentId);
+                    if (opt && projectInput && !projectInput.value) {
+                        projectInput.value = opt.value;
+                    }
+                }
             }
         } catch (err) {
             console.error('Failed to load projects', err);
@@ -187,6 +302,14 @@
     async function executeProtocol() {
         let protoSlug = protocolSelect.value;
         let projId = manualProjectId.value ? parseInt(manualProjectId.value) : parseInt(projectSelect.value);
+
+        if ((!projId || isNaN(projId)) && projectInput && projectInput.value.trim()) {
+            const detectedId = findOptionId(projectInput, projectList);
+            if (detectedId) {
+                projId = parseInt(detectedId);
+                projectSelect.value = detectedId;
+            }
+        }
 
         if (!protoSlug) {
             alert('Please select a protocol.');
@@ -605,6 +728,14 @@
             let protoSlug = protocolSelect.value;
             let projId = manualProjectId.value ? parseInt(manualProjectId.value) : parseInt(projectSelect.value);
 
+            if ((!projId || isNaN(projId)) && projectInput && projectInput.value.trim()) {
+                const detectedId = findOptionId(projectInput, projectList);
+                if (detectedId) {
+                    projId = parseInt(detectedId);
+                    projectSelect.value = detectedId;
+                }
+            }
+
             if (!protoSlug) {
                 alert('Please select a protocol.');
                 return;
@@ -617,6 +748,18 @@
 
             window.open(`/protocols/print?protocol=${encodeURIComponent(protoSlug)}&project_id=${projId}`, '_blank');
         };
+    }
+
+    // Handle deep-linked project_id query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialProjectId = urlParams.get('project_id');
+    if (initialProjectId) {
+        if (manualProjectId) manualProjectId.value = initialProjectId;
+        if (projectSelect) projectSelect.value = initialProjectId;
+        if (projectList && projectList.options) {
+            const opt = Array.from(projectList.options).find(o => o.getAttribute('data-id') == initialProjectId);
+            if (opt && projectInput) projectInput.value = opt.value;
+        }
     }
 
     runBtn.onclick = executeProtocol;
