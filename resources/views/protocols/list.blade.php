@@ -458,11 +458,11 @@
             const overrunPct = v.allowed_budget > 0 ? Math.round((v.over_budget_quantity / v.allowed_budget) * 100) : 100;
             const unitText = v.unit_text ? ` ${v.unit_text}` : '';
 
-            let card = t.div({ class: 'card bg-dark violation-card mb-2', 'data-item-id': v.component_item_id }, () => {
-                // Card Body
-                t.div({ class: 'card-body p-3' }, () => {
-                    // Context summary: Contract Item & Record Type
-                    t.div({ class: 'd-flex align-items-center justify-content-between flex-wrap gap-2 mb-2 p-2 rounded bg-secondary bg-opacity-10 border border-secondary small' }, () => {
+            let card = t.div({ class: 'card bg-dark border-secondary violation-card mb-2', 'data-item-id': v.component_item_id }, () => {
+                // Combined Card Header
+                t.div({ class: 'card-header border-secondary p-3' }, () => {
+                    // Contract Item & Record Type row
+                    t.div({ class: 'd-flex align-items-center justify-content-between flex-wrap gap-2 pb-2 mb-2 border-bottom border-secondary border-opacity-25 small' }, () => {
                         t.div({}, () => {
                             t.span({ class: 'text-muted me-1' }, 'Contract Item:');
                             if (v.contract_item_id) {
@@ -475,15 +475,22 @@
                                 t.span({ class: 'text-muted' }, 'None');
                             }
                         });
-                        t.div({}, () => {
+                        t.div({ class: 'd-flex align-items-center' }, () => {
                             t.span({ class: 'text-muted me-1' }, 'Record Type:');
                             t.span({ class: 'badge bg-secondary me-1' }, v.contract_item_type_name || v.contract_item_type || 'Component Item');
                             t.span({ class: 'badge bg-dark border border-secondary text-light' }, v.record_type || 'Component Item');
+                            t.button({
+                                type: 'button',
+                                class: 'btn btn-sm btn-outline-secondary toggle-collapse-btn py-0 px-2 ms-2',
+                                title: 'Toggle MQR Breakdown'
+                            }, () => {
+                                t.i({ class: 'bi bi-chevron-down' });
+                            });
                         });
                     });
 
                     // Budget comparison row
-                    t.div({ class: 'row g-2 mb-3 bg-secondary bg-opacity-10 p-2 rounded border border-secondary' }, () => {
+                    t.div({ class: 'row g-2 align-items-center' }, () => {
                         t.div({ class: 'col-md-3 col-6' }, () => {
                             t.small({ class: 'text-muted d-block' }, 'Allowed Budget');
                             t.strong({ class: 'text-light' }, `${v.allowed_budget}${unitText}`);
@@ -501,6 +508,10 @@
                             t.span({ class: 'badge bg-danger' }, `+${overrunPct}% Over Budget`);
                         });
                     });
+                });
+
+                // Card Body
+                t.div({ class: 'card-body p-3' }, () => {
 
                     // Traceability breakdown table
                     t.div({ class: 'traceability-section' }, () => {
