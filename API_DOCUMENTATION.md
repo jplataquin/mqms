@@ -298,6 +298,60 @@ Retrieves a list of accomplishment records (both TARGET and ACTUAL).
 }
 ```
 
+### List Purchase Orders
+Retrieves a list of standard purchase orders and their line items.
+
+*   **URL**: `/api/call/purchase_orders`
+*   **Method**: `GET`
+*   **Query Parameters**:
+    *   `page` (int, default: 1): The page number for pagination.
+    *   `limit` (int, default: 10): Number of records per page. Use `0` for no limit.
+    *   `query` (string, optional): General search matching PO ID, Supplier Name, or Project Name.
+    *   `id` (int, optional): Filter by exact purchase order ID.
+    *   `project_id` / `project` (int, optional): Filter by project ID.
+    *   `section_id` / `section` (int, optional): Filter by section ID.
+    *   `contract_item_id` / `contract_item` (int, optional): Filter by contract item ID.
+    *   `component_id` / `component` (int, optional): Filter by component ID.
+    *   `supplier_id` / `supplier` (int, optional): Filter by supplier ID.
+    *   `payment_term_id` / `payment_terms` (int, optional): Filter by payment term ID.
+    *   `status` (string, optional): Filter by status (e.g., `PEND`, `APRV`, `VOID`, `RJCT`).
+    *   `received_status` / `receive_status` (string, optional): Filter by delivery status (e.g., `PEND`, `PART`, `COMP`).
+    *   `created_by` (int, optional): Filter by creator user ID.
+    *   `material_quantity_request_id` / `mqr_id` (int, optional): Filter by parent Material Quantity Request ID.
+    *   `material_item_id` / `material_item` (int, optional): Filter for purchase orders that contain a specific material item.
+    *   `date_created` / `created_at` (string, optional): Filter by exact creation date (`YYYY-MM-DD`).
+    *   `date_from` (string, optional): Filter created on or after date (`YYYY-MM-DD`).
+    *   `date_to` (string, optional): Filter created on or before date (`YYYY-MM-DD`).
+    *   `date_needed` (string, optional): Filter by requested date needed (`YYYY-MM-DD`).
+    *   `order_by` (string, default: `id`): Field to sort by.
+    *   `order` (string, default: `DESC`): Sort direction (`ASC` or `DESC`).
+
+### List Direct Purchase Orders
+Retrieves a list of direct purchase orders (direct project/section procurement) and their line items.
+
+*   **URL**: `/api/call/direct_purchase_orders`
+*   **Method**: `GET`
+*   **Query Parameters**:
+    *   `page` (int, default: 1): The page number for pagination.
+    *   `limit` (int, default: 10): Number of records per page. Use `0` for no limit.
+    *   `query` (string, optional): General search matching PO ID, Supplier Name, or Project Name.
+    *   `id` (int, optional): Filter by exact direct purchase order ID.
+    *   `project_id` / `project` (int, optional): Filter by project ID.
+    *   `section_id` / `section` (int, optional): Filter by section ID.
+    *   `supplier_id` / `supplier` (int, optional): Filter by supplier ID.
+    *   `payment_term_id` / `payment_terms` (int, optional): Filter by payment term ID.
+    *   `status` (string, optional): Filter by status (e.g., `DRFT`, `PEND`, `APRV`, `VOID`, `RJCT`).
+    *   `received_status` / `receive_status` (string, optional): Filter by delivery status (e.g., `PEND`, `PART`, `COMP`).
+    *   `created_by` (int, optional): Filter by creator user ID.
+    *   `direct_material_quantity_request_id` / `dmqr_id` (int, optional): Filter by parent Direct Material Quantity Request ID.
+    *   `material_item_id` / `material_item` (int, optional): Filter for direct purchase orders that contain a specific material item.
+    *   `date_created` / `created_at` (string, optional): Filter by exact creation date (`YYYY-MM-DD`).
+    *   `date_from` (string, optional): Filter created on or after date (`YYYY-MM-DD`).
+    *   `date_to` (string, optional): Filter created on or before date (`YYYY-MM-DD`).
+    *   `date_needed` (string, optional): Filter by date needed (`YYYY-MM-DD`).
+    *   `order_by` (string, default: `id`): Field to sort by.
+    *   `order` (string, default: `DESC`): Sort direction (`ASC` or `DESC`).
+
 #### Example Request (PHP)
 ```php
 $apiKey = 'your_api_key';

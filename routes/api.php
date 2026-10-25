@@ -280,6 +280,8 @@ Route::middleware(['third_party_api'])->group(function () {
     Route::get('/call/materials', [App\Http\Controllers\Api\MaterialAPIController::class, 'list']);
     Route::get('/call/suppliers', [App\Http\Controllers\Api\SupplierAPIController::class, 'list']);
     Route::get('/call/accomplishments', [App\Http\Controllers\Api\AccomplishmentAPIController::class, 'list']);
+    Route::get('/call/purchase_orders', [App\Http\Controllers\Api\PurchaseOrderAPIController::class, 'list']);
+    Route::get('/call/direct_purchase_orders', [App\Http\Controllers\Api\DirectPurchaseOrderAPIController::class, 'list']);
 });
 
 if (class_exists(\Laravel\Mcp\Server\Facades\Mcp::class)) {
