@@ -284,7 +284,10 @@ class LevelOneBudgetDiagnosticTest extends TestCase
         $this->artisan('protocol:run', [
             'protocol'  => 'level-1-budget-diagnostic',
             '--project' => $project->id,
-        ])->assertExitCode(2);
+        ])
+            ->expectsOutputToContain('Contract Item')
+            ->doesntExpectOutputToContain('Component Item')
+            ->assertExitCode(2);
 
         // 4. Test Artisan Command with --json option
         $this->artisan('protocol:run', [
@@ -539,6 +542,14 @@ class LevelOneBudgetDiagnosticTest extends TestCase
         $response->assertSee('MQR ID');
         $response->assertSee('Equivalent');
         $response->assertSee('Charged Qty');
+
+        $content = $response->getContent();
+        $this->assertStringNotContainsString('Component Item</th>', $content);
+        $this->assertStringContainsString('Contract Item</th>', $content);
+        $this->assertStringContainsString('Component</th>', $content);
+        $contractItemPos = strpos($content, 'Contract Item</th>');
+        $componentPos = strpos($content, 'Component</th>');
+        $this->assertTrue($contractItemPos !== false && $componentPos !== false && $contractItemPos < $componentPos);
 
         // 2. Level 2 Diagnostic Print Page
         $responseL2 = $this->actingAs($user)->get("/protocols/print?protocol=level-2-budget-diagnostic&project_id={$project->id}");

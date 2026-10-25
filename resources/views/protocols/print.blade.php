@@ -194,9 +194,8 @@
                 <thead>
                     <tr>
                         <th style="width: 4%;">#</th>
-                        <th style="width: 24%;">Component Item</th>
-                        <th style="width: 22%;">Component</th>
-                        <th style="width: 20%;">Contract Item</th>
+                        <th style="width: 33%;">Contract Item</th>
+                        <th style="width: 33%;">Component</th>
                         <th style="width: 10%;" class="text-end">Budget</th>
                         <th style="width: 10%;" class="text-end">Requested</th>
                         <th style="width: 10%;" class="text-end">Excess</th>
@@ -206,9 +205,8 @@
                     @foreach ($result['violations'] as $idx => $v)
                         <tr>
                             <td class="text-center">{{ $idx + 1 }}</td>
-                            <td>{{ $v['component_item_name'] ?? 'N/A' }}</td>
-                            <td>{{ $v['component_name'] ?? 'N/A' }}</td>
                             <td>{{ $v['contract_item_name'] ?? ($v['contract_item_code'] ?? 'N/A') }}</td>
+                            <td>{{ $v['component_name'] ?? 'N/A' }}</td>
                             <td class="text-end">{{ number_format($v['allowed_budget'] ?? 0, 2) }} {{ $v['unit_text'] ?? '' }}</td>
                             <td class="text-end">{{ number_format($v['total_requested'] ?? 0, 2) }} {{ $v['unit_text'] ?? '' }}</td>
                             <td class="text-end fw-bold">+{{ number_format($v['over_budget_quantity'] ?? 0, 2) }} {{ $v['unit_text'] ?? '' }}</td>
@@ -216,7 +214,7 @@
                         @if (!empty($v['breakdown']) && count($v['breakdown']) > 0)
                             <tr>
                                 <td></td>
-                                <td colspan="6" style="padding: 4px 6px;">
+                                <td colspan="5" style="padding: 4px 6px;">
                                     <table style="margin-bottom: 0; background: #fff;">
                                         <thead>
                                             <tr>
