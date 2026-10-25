@@ -576,7 +576,7 @@
 <body>
 
 @php
-    $totalAmount = $totalProjectAmount ?? (method_exists($project, 'getTotalContractAmount') ? $project->getTotalContractAmount() : 0);
+    $totalAmount = $totalProjectAmount ?? (method_exists($project, 'getTotalContractAmount') ? $project->getTotalContractAmount(true) : 0);
     $formattedTotalAmount = 'P' . number_format($totalAmount, 2);
     $projectTitleWithAmount = "{$project->name} — {$formattedTotalAmount}";
 @endphp
@@ -1686,6 +1686,7 @@
             projectData.sections.forEach(section => {
                 if (section.contract_items) {
                     section.contract_items.forEach(ci => {
+                        if (ci.exclude_from_monitoring == 1) return;
                         const totalScope = parseFloat(ci.contract_quantity) || 0;
                         const unitPrice = parseFloat(ci.contract_unit_price) || 0;
                         totalContractAmount += (totalScope * unitPrice);
@@ -2180,6 +2181,7 @@
                 projectData.sections.forEach(section => {
                     if (section.contract_items) {
                         section.contract_items.forEach(ci => {
+                            if (ci.exclude_from_monitoring == 1) return;
                             const ciQty = parseFloat(ci.contract_quantity) || 0;
                             const ciPrice = parseFloat(ci.contract_unit_price) || 0;
                             projectTotalContractAmount += (ciQty * ciPrice);
