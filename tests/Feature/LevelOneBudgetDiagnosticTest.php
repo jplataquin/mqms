@@ -544,12 +544,10 @@ class LevelOneBudgetDiagnosticTest extends TestCase
         $response->assertSee('Charged Qty');
 
         $content = $response->getContent();
-        $this->assertStringNotContainsString('Component Item</th>', $content);
-        $this->assertStringContainsString('Contract Item</th>', $content);
-        $this->assertStringContainsString('Component</th>', $content);
-        $contractItemPos = strpos($content, 'Contract Item</th>');
-        $componentPos = strpos($content, 'Component</th>');
-        $this->assertTrue($contractItemPos !== false && $componentPos !== false && $contractItemPos < $componentPos);
+        $this->assertStringContainsString('class="group-section"', $content);
+        $this->assertStringContainsString('Contract Item:</strong>', $content);
+        $this->assertStringContainsString('Component:</strong>', $content);
+        $this->assertStringContainsString('Component Item</th>', $content);
 
         // 2. Level 2 Diagnostic Print Page
         $responseL2 = $this->actingAs($user)->get("/protocols/print?protocol=level-2-budget-diagnostic&project_id={$project->id}");

@@ -190,59 +190,82 @@
 
         @if (!empty($result['violations']) && count($result['violations']) > 0)
             <div class="section-title">Non-Conforming Items (Exceeding Budget)</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width: 4%;">#</th>
-                        <th style="width: 33%;">Contract Item</th>
-                        <th style="width: 33%;">Component</th>
-                        <th style="width: 10%;" class="text-end">Budget</th>
-                        <th style="width: 10%;" class="text-end">Requested</th>
-                        <th style="width: 10%;" class="text-end">Excess</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($result['violations'] as $idx => $v)
-                        <tr>
-                            <td class="text-center">{{ $idx + 1 }}</td>
-                            <td>{{ $v['contract_item_name'] ?? ($v['contract_item_code'] ?? 'N/A') }}</td>
-                            <td>{{ $v['component_name'] ?? 'N/A' }}</td>
-                            <td class="text-end">{{ number_format($v['allowed_budget'] ?? 0, 2) }} {{ $v['unit_text'] ?? '' }}</td>
-                            <td class="text-end">{{ number_format($v['total_requested'] ?? 0, 2) }} {{ $v['unit_text'] ?? '' }}</td>
-                            <td class="text-end fw-bold">+{{ number_format($v['over_budget_quantity'] ?? 0, 2) }} {{ $v['unit_text'] ?? '' }}</td>
-                        </tr>
-                        @if (!empty($v['breakdown']) && count($v['breakdown']) > 0)
+
+            @php
+                $groupedViolations = collect($result['violations'])->groupBy(function ($v) {
+                    $cItemId = $v['contract_item_id'] ?? ($v['contract_item_name'] ?? 'none');
+                    $compId = $v['component_id'] ?? ($v['component_name'] ?? 'none');
+                    return "{$cItemId}_{$compId}";
+                });
+            @endphp
+
+            @foreach ($groupedViolations as $groupKey => $items)
+                @php
+                    $firstItem = $items->first();
+                    $cItemCode = $firstItem['contract_item_code'] ?? '';
+                    $cItemDesc = $firstItem['contract_item_description'] ?? ($firstItem['contract_item_name'] ?? ('#' . ($firstItem['contract_item_id'] ?? 'N/A')));
+                    $cItemText = trim(($cItemCode ? $cItemCode . ' ' : '') . $cItemDesc);
+                    $compName  = $firstItem['component_name'] ?? ('#' . ($firstItem['component_id'] ?? 'N/A'));
+                @endphp
+
+                <div class="group-section" style="margin-bottom: 20px; page-break-inside: avoid;">
+                    <div style="background: #f0f0f0; border: 1px solid #000; border-bottom: none; padding: 6px 10px; font-size: 11px;">
+                        <div><strong>Contract Item:</strong> {{ $cItemText }}</div>
+                        <div style="margin-top: 2px;"><strong>Component:</strong> {{ $compName }}</div>
+                    </div>
+                    <table style="margin-bottom: 0;">
+                        <thead>
                             <tr>
-                                <td></td>
-                                <td colspan="5" style="padding: 4px 6px;">
-                                    <table style="margin-bottom: 0; background: #fff;">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 14%;">MQR ID</th>
-                                                <th style="width: 38%;">Requested Material Item</th>
-                                                <th style="width: 16%;" class="text-end">Req. Qty</th>
-                                                <th style="width: 16%;" class="text-center">Equivalent</th>
-                                                <th style="width: 16%;" class="text-end">Charged Qty</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($v['breakdown'] as $b)
-                                                <tr>
-                                                    <td>#{{ $b['material_quantity_request_id'] }}</td>
-                                                    <td>{{ $b['material_item_name'] ?? 'N/A' }}</td>
-                                                    <td class="text-end">{{ number_format($b['requested_quantity'] ?? 0, 2) }}</td>
-                                                    <td class="text-center">&times; {{ $b['equivalent'] ?? 1 }}</td>
-                                                    <td class="text-end fw-bold">{{ number_format($b['actual_quantity'] ?? 0, 2) }}</td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </td>
+                                <th style="width: 5%;">#</th>
+                                <th style="width: 45%;">Component Item</th>
+                                <th style="width: 16%;" class="text-end">Budget</th>
+                                <th style="width: 17%;" class="text-end">Requested</th>
+                                <th style="width: 17%;" class="text-end">Excess</th>
                             </tr>
-                        @endif
-                    @endforeach
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($items as $idx => $v)
+                                <tr>
+                                    <td class="text-center">{{ $idx + 1 }}</td>
+                                    <td class="fw-bold">{{ $v['component_item_name'] ?? ('Component Item #' . ($v['component_item_id'] ?? 'N/A')) }}</td>
+                                    <td class="text-end">{{ number_format($v['allowed_budget'] ?? 0, 2) }} {{ $v['unit_text'] ?? '' }}</td>
+                                    <td class="text-end">{{ number_format($v['total_requested'] ?? 0, 2) }} {{ $v['unit_text'] ?? '' }}</td>
+                                    <td class="text-end fw-bold">+{{ number_format($v['over_budget_quantity'] ?? 0, 2) }} {{ $v['unit_text'] ?? '' }}</td>
+                                </tr>
+                                @if (!empty($v['breakdown']) && count($v['breakdown']) > 0)
+                                    <tr>
+                                        <td></td>
+                                        <td colspan="4" style="padding: 4px 6px;">
+                                            <table style="margin-bottom: 0; background: #fff;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 14%;">MQR ID</th>
+                                                        <th style="width: 38%;">Requested Material Item</th>
+                                                        <th style="width: 16%;" class="text-end">Req. Qty</th>
+                                                        <th style="width: 16%;" class="text-center">Equivalent</th>
+                                                        <th style="width: 16%;" class="text-end">Charged Qty</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($v['breakdown'] as $b)
+                                                        <tr>
+                                                            <td class="fw-bold">#{{ $b['material_quantity_request_id'] }}</td>
+                                                            <td>{{ $b['material_item_name'] ?? 'N/A' }}</td>
+                                                            <td class="text-end">{{ number_format($b['requested_quantity'] ?? 0, 2) }}</td>
+                                                            <td class="text-center">&times; {{ $b['equivalent'] ?? 1 }}</td>
+                                                            <td class="text-end fw-bold">{{ number_format($b['actual_quantity'] ?? 0, 2) }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endforeach
         @else
             <div class="status-box status-pass text-center">
                 ALL EVALUATED COMPONENT ITEMS CONFORM STRICTLY TO AUTHORIZED BUDGETS.
