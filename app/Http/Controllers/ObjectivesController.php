@@ -34,7 +34,7 @@ class ObjectivesController extends Controller
         $to         = $request->input('to');
 
 
-        $material_requests = MaterialQuantityRequest::where('status','APRV');
+        $material_requests = MaterialQuantityRequest::whereIn('status',['APRV', 'CLSD']);
 
         if($project_id){
 

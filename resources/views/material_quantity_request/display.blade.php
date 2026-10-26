@@ -84,6 +84,7 @@
                 
                 @if($material_quantity_request->status == 'APRV')
                     <button class="btn btn-danger" id="revertPendBtn">Revert to Pending</button>
+                    <button class="btn btn-dark" id="closeRequestBtn">Close Request</button>
                 @endif
 
                 <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
@@ -108,6 +109,7 @@
         const date_needed   = $q('#date_needed').first();
         const printBtn      = $q('#printBtn').first();
         const revertPendBtn = $q('#revertPendBtn').first();
+        const closeRequestBtn = $q('#closeRequestBtn').first();
         const reviewLinkBtn = $q('#reviewLinkBtn').first();
         const showPoListBtn = $q('#showPoListBtn').first();
         const comment_box   = $q('#comment_box').first();
@@ -159,6 +161,33 @@
                     id:'{{$material_quantity_request->id}}'
                 }).then(reply=>{
                     
+                    window.util.unblockUI();
+
+                    if(reply.status <= 0){
+                        window.util.showMsg(reply);
+                        return false;
+                    }
+
+                    window.util.navReload();
+                });
+            }
+
+        }//if
+
+        if(closeRequestBtn){
+
+            closeRequestBtn.onclick = async (e)=>{
+
+                if(! await window.util.confirm('Are you sure you want to CLOSE this Material Request? This will calculate item quantities from Purchase Orders and finalize the request.')){
+                    return false;
+                }
+
+                window.util.blockUI();
+
+                window.util.$post('/api/material_quantity_request/close',{
+                    id:'{{$material_quantity_request->id}}'
+                }).then(reply=>{
+
                     window.util.unblockUI();
 
                     if(reply.status <= 0){

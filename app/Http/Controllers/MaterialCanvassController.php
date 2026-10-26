@@ -329,7 +329,7 @@ class MaterialCanvassController extends Controller
             $data = json_decode($request->input('canvassItems'),true);
 
             if(is_null($data)){
-                throw('Error');
+                throw new \Exception('Invalid canvass items');
             }
 
         } catch (\Exception $e) {

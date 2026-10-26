@@ -284,7 +284,7 @@ class BudgetController extends Controller
     private function getMaterialRequestApproveQuantity($component_item_id){
 
          $mqr_items = MaterialQuantityRequestItem::where('component_item_id',$component_item_id)
-        ->where('status','APRV')
+        ->whereIn('status', ['APRV', 'CLSD'])
         ->get();
 
         $total = 0;

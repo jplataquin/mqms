@@ -520,7 +520,7 @@ class PurchaseOrderController extends PurchaseOrderSuperController
             $extras     = json_decode($request->input('extras'),true);
 
             if(is_null($po_items) || is_null($extras)){
-                throw('Error');
+                throw new \Exception('Invalid items or extras');
             }
 
         } catch (\Exception $e) {
@@ -528,6 +528,15 @@ class PurchaseOrderController extends PurchaseOrderSuperController
             return response()->json([
                 'status'    => 0,
                 'message'   => $e->getMessage(),
+                'data'      => []
+            ]);
+        }
+
+        $mqr = MaterialQuantityRequest::find($material_quantity_request_id);
+        if (!$mqr || $mqr->status != 'APRV') {
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Material Quantity Request is not approved or is closed',
                 'data'      => []
             ]);
         }

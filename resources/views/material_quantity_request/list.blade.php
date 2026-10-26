@@ -54,6 +54,7 @@
                                 <option value=""> - </option>
                                 <option value="PEND">Pending</option>
                                 <option value="APRV">Approved</option>
+                                <option value="CLSD">Closed</option>
                                 <option value="DPRV">Disapproved</option>
                             </select>
                         </div>

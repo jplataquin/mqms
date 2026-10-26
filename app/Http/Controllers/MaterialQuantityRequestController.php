@@ -628,7 +628,7 @@ class MaterialQuantityRequestController extends Controller
             "Requested By"          => $material_quantity_request->CreatedByUser()->name.'  '.$material_quantity_request->created_at
         ];
 
-        if($material_quantity_request->status == 'APRV'){
+        if($material_quantity_request->status == 'APRV' || $material_quantity_request->status == 'CLSD'){
             $mr_details['Approved By'] = $material_quantity_request->approvedByUser()->name.' '.$material_quantity_request->approved_at;
         }
 
@@ -1419,6 +1419,89 @@ class MaterialQuantityRequestController extends Controller
             
          }
 
+    }
+
+    public function _close(Request $request){
+        $id = (int) $request->input('id') ?? 0;
+
+        $material_quantity_request = MaterialQuantityRequest::find($id);
+
+        if(!$material_quantity_request){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Record not found',
+                'data'      => []
+            ]);
+        }
+
+        if($material_quantity_request->status != 'APRV'){
+            return response()->json([
+                'status'    => 0,
+                'message'   => 'Material Request is not in Approved status',
+                'data'      => []
+            ]);
+        }
+
+        $user = auth()->user();
+
+        if(!$this->hasAccess(['material_request:all:close', 'material_request:all:update', 'material_request:all:approve'])){
+            if(!$this->hasAccess(['material_request:own:close', 'material_request:own:update'])){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+
+            if($material_quantity_request->created_by != $user->id){
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Access Denied',
+                    'data'      => []
+                ]);
+            }
+        }
+
+        $user_id = Auth::user()->id;
+
+        DB::beginTransaction();
+
+        try {
+            $items = $material_quantity_request->Items;
+
+            foreach($items as $item){
+                // Sum up quantities for PurchaseOrderItems belonging to this request item with status APRV or PEND
+                $total_po_quantity = PurchaseOrderItem::where('material_quantity_request_item_id', $item->id)
+                    ->whereIn('status', ['APRV', 'PEND'])
+                    ->sum('quantity');
+
+                $item->original_quantity = $item->requested_quantity;
+                $item->requested_quantity = $total_po_quantity;
+                $item->status = 'CLSD';
+                $item->save();
+            }
+
+            $material_quantity_request->status = 'CLSD';
+            $material_quantity_request->updated_by = $user_id;
+            $material_quantity_request->save();
+
+            DB::commit();
+
+            return response()->json([
+                'status'    => 1,
+                'message'   => 'Material Request closed successfully',
+                'data'      => []
+            ]);
+
+        } catch(\Exception $e){
+            DB::rollback();
+
+            return response()->json([
+                'status'    => 0,
+                'message'   => $e->getMessage(),
+                'data'      => []
+            ]);
+        }
     }
 
 

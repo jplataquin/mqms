@@ -23,7 +23,7 @@ class FulfilmentReportController extends Controller
     private function process($from,$to){
 
     
-        $material_quantity_request = MaterialQuantityRequest::where('status','APRV')->where('approved_at','>=',$from)->where('approved_at','<=',$to)->get();
+        $material_quantity_request = MaterialQuantityRequest::whereIn('status',['APRV', 'CLSD'])->where('approved_at','>=',$from)->where('approved_at','<=',$to)->get();
 
         $request_count  = 0;
         $target_hit     = 0;

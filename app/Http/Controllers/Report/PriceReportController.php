@@ -113,7 +113,7 @@ class PriceReportController extends Controller
         }/*****/
   
   
-        $material_request = $material_request->where('status','APRV');
+        $material_request = $material_request->whereIn('status',['APRV', 'CLSD']);
 
         $material_request_result = $material_request->get();
 
@@ -124,7 +124,7 @@ class PriceReportController extends Controller
         }
 
 
-        $material_request_items = MaterialQuantityRequestItem::where('status','APRV')
+        $material_request_items = MaterialQuantityRequestItem::whereIn('status',['APRV', 'CLSD'])
         ->orderBy('created_at','DESC');
         
         if($material_request_id_arr){
@@ -287,7 +287,7 @@ class PriceReportController extends Controller
         }/*****/
   
   
-        $material_request = $material_request->where('status','APRV');
+        $material_request = $material_request->whereIn('status',['APRV', 'CLSD']);
 
         $material_request_result = $material_request->get();
 
@@ -298,7 +298,7 @@ class PriceReportController extends Controller
         }
 
 
-        $material_request_items = MaterialQuantityRequestItem::where('status','APRV')
+        $material_request_items = MaterialQuantityRequestItem::whereIn('status',['APRV', 'CLSD'])
         ->orderBy('created_at','DESC');
         
         if($material_request_id_arr){

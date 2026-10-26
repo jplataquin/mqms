@@ -178,7 +178,7 @@ class MaterialQuantityController extends Controller
 
         $result = DB::table('material_quantity_request_items')
         ->join('material_quantity_requests', 'material_quantity_requests.id','=','material_quantity_request_items.material_quantity_request_id')
-        ->where('material_quantity_requests.status','APRV')
+        ->whereIn('material_quantity_requests.status',['APRV', 'CLSD'])
         ->where('material_quantity_requests.deleted_at',null)
         ->where('material_quantity_request_items.material_item_id',$material_item_id)
         ->where('material_quantity_request_items.component_item_id',$component_item_id)
@@ -439,7 +439,7 @@ class MaterialQuantityController extends Controller
 
         $mqr_approved = DB::table('material_quantity_request_items')
         ->join('material_quantity_requests', 'material_quantity_requests.id','=','material_quantity_request_items.material_quantity_request_id')
-        ->where('material_quantity_requests.status','APRV')
+        ->whereIn('material_quantity_requests.status',['APRV', 'CLSD'])
         ->where('material_quantity_requests.deleted_at',null)
         ->where('material_quantity_request_items.material_item_id',$material_item_id)
         ->where('material_quantity_request_items.component_item_id',$component_item_id)

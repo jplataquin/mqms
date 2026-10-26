@@ -133,6 +133,7 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::get('/material_quantity_request/total_approved_quantity', [App\Http\Controllers\MaterialQuantityRequestController::class, '_total_approved_quantity']);
     Route::get('/material_quantity_request/total_po_quantity', [App\Http\Controllers\MaterialQuantityRequestController::class, 'get_total_po_quantity']);
     Route::post('/material_quantity_request/revert_to_pending', [App\Http\Controllers\MaterialQuantityRequestController::class, '_revert_to_pending']);
+    Route::post('/material_quantity_request/close', [App\Http\Controllers\MaterialQuantityRequestController::class, '_close']);
     
 
     Route::get('/review/material_quantity_request/list', [App\Http\Controllers\Review\MaterialQuantityRequestReviewController::class, '_list']);

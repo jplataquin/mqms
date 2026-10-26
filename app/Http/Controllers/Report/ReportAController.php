@@ -55,7 +55,7 @@ class ReportAController extends Controller
 
         foreach($component_items as $component_item){
             $material_quantity_request_item[$component_item->id] = MaterialQuantityRequestItem::where('component_item_id',$component_item->id)
-                                    ->where('status','APRV')
+                                    ->whereIn('status', ['APRV', 'CLSD'])
                                     ->select(DB::raw('SUM(requested_quantity) AS total, material_item_id'))
                                     ->groupBy('material_item_id')
                                     ->get();

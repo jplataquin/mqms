@@ -234,7 +234,7 @@ class ProjectReportController extends Controller {
                 $total_po_overhead_arr[ $component->id ] = $total_po_overhead;
 
                 $material_quantity_requests = MaterialQuantityRequest::where('component_id',$component->id)
-                ->where('status','APRV')
+                ->whereIn('status',['APRV', 'CLSD'])
                 ->where('deleted_at',null)
                 ->where('project_id', $project_id)
                 ->where('section_id',$section_id);
@@ -282,7 +282,7 @@ class ProjectReportController extends Controller {
                         //Get total request quantity
                         $total_requested_quantity = MaterialQuantityRequestItem::where('component_item_id',$component_item->id)
                         ->where('material_item_id', $mat_item_id)
-                        ->where('status','APRV')
+                        ->whereIn('status',['APRV', 'CLSD'])
                         ->whereIn('material_quantity_request_id',$valid_material_quantity_request_ids)
                         ->sum('requested_quantity');
 
