@@ -406,4 +406,70 @@ class MaterialGroupSpecificationTemplateTest extends TestCase
         $response->assertSee('id="dynamicInputsArea"', false);
         $response->assertSee('4L Can - Semi-Gloss');
     }
+
+    public function test_can_create_and_validate_item_with_escaped_brackets_in_group_template()
+    {
+        $group = new MaterialGroup();
+        $group->name = 'Rebars with Bracket';
+        $group->specification_template = '\[Grade\] [Size:number]mm';
+        $group->created_by = $this->user->id;
+        $group->save();
+
+        // Valid specification with literal brackets
+        $responseValid = $this->authenticatedRequest('POST', '/api/material/item/create', [
+            'name' => 'Deformed Bar',
+            'material_group_id' => $group->id,
+            'specification_unit_packaging' => '[Grade] 16mm',
+            'brand' => 'SteelCorp',
+        ]);
+
+        $responseValid->assertStatus(200);
+        $responseValid->assertJson([
+            'status' => 1,
+            'message' => '',
+        ]);
+
+        $itemId = $responseValid->json('data.id');
+
+        // Invalid specification missing literal brackets
+        $responseInvalid = $this->authenticatedRequest('POST', '/api/material/item/create', [
+            'name' => 'Deformed Bar Invalid',
+            'material_group_id' => $group->id,
+            'specification_unit_packaging' => 'Grade 16mm',
+            'brand' => 'SteelCorp',
+        ]);
+
+        $responseInvalid->assertStatus(200);
+        $responseInvalid->assertJson([
+            'status' => -2,
+        ]);
+
+        // Valid update
+        $responseUpdateValid = $this->authenticatedRequest('POST', '/api/material/item/update', [
+            'id' => $itemId,
+            'name' => 'Deformed Bar Updated',
+            'material_group_id' => $group->id,
+            'specification_unit_packaging' => '[Grade] 20mm',
+            'brand' => 'SteelCorp',
+        ]);
+
+        $responseUpdateValid->assertStatus(200);
+        $responseUpdateValid->assertJson([
+            'status' => 1,
+        ]);
+
+        // Invalid update
+        $responseUpdateInvalid = $this->authenticatedRequest('POST', '/api/material/item/update', [
+            'id' => $itemId,
+            'name' => 'Deformed Bar Updated',
+            'material_group_id' => $group->id,
+            'specification_unit_packaging' => '20mm',
+            'brand' => 'SteelCorp',
+        ]);
+
+        $responseUpdateInvalid->assertStatus(200);
+        $responseUpdateInvalid->assertJson([
+            'status' => -2,
+        ]);
+    }
 }

@@ -40,6 +40,7 @@ class MaterialGroup extends Model
 
     /**
      * Parse the specification_template into an array of segments.
+     * Supports escaping square brackets (\[ and \]) and backslashes (\\).
      *
      * @return array
      */
@@ -50,43 +51,135 @@ class MaterialGroup extends Model
             return [];
         }
 
+        $template = (string) $template;
+        $len = strlen($template);
+        $i = 0;
         $segments = [];
-        $pattern = '/\[([^:\]\r\n]+)(?::(number|text))?\]/';
-        $lastOffset = 0;
+        $currentStatic = '';
 
-        if (preg_match_all($pattern, $template, $matches, PREG_SET_ORDER | PREG_OFFSET_CAPTURE)) {
-            foreach ($matches as $match) {
-                $fullMatchText = $match[0][0];
-                $fullMatchOffset = $match[0][1];
+        $unescapeTemplate = function (string $str): string {
+            return preg_replace_callback('/\\\\(.)/s', function ($m) {
+                if ($m[1] === '[' || $m[1] === ']' || $m[1] === '\\' || $m[1] === ':') {
+                    return $m[1];
+                }
+                return $m[0];
+            }, $str);
+        };
 
-                // Static text before this token
-                if ($fullMatchOffset > $lastOffset) {
-                    $staticText = substr($template, $lastOffset, $fullMatchOffset - $lastOffset);
-                    $segments[] = [
-                        'type' => 'static',
-                        'value' => $staticText,
-                    ];
+        $pushStatic = function (string $text) use (&$segments): void {
+            if ($text === '') {
+                return;
+            }
+            $count = count($segments);
+            if ($count > 0 && $segments[$count - 1]['type'] === 'static') {
+                $segments[$count - 1]['value'] .= $text;
+            } else {
+                $segments[] = [
+                    'type' => 'static',
+                    'value' => $text,
+                ];
+            }
+        };
+
+        while ($i < $len) {
+            $char = $template[$i];
+
+            if ($char === '\\' && $i + 1 < $len) {
+                $next = $template[$i + 1];
+                if ($next === '[' || $next === ']' || $next === '\\' || $next === ':') {
+                    $currentStatic .= $next;
+                } else {
+                    $currentStatic .= '\\' . $next;
+                }
+                $i += 2;
+                continue;
+            }
+
+            if ($char === '[') {
+                $j = $i + 1;
+                $foundClose = false;
+                $hasNestedOpen = false;
+
+                while ($j < $len) {
+                    $c = $template[$j];
+                    if ($c === "\r" || $c === "\n") {
+                        break;
+                    }
+                    if ($c === '\\' && $j + 1 < $len) {
+                        $j += 2;
+                        continue;
+                    }
+                    if ($c === '[') {
+                        $hasNestedOpen = true;
+                        break;
+                    }
+                    if ($c === ']') {
+                        $foundClose = true;
+                        break;
+                    }
+                    $j++;
                 }
 
-                $label = trim($match[1][0]);
-                $datatype = isset($match[2][0]) && strtolower($match[2][0]) === 'number' ? 'number' : 'text';
+                if ($foundClose && !$hasNestedOpen) {
+                    $content = substr($template, $i + 1, $j - ($i + 1));
 
-                $segments[] = [
-                    'type' => 'variable',
-                    'label' => $label,
-                    'datatype' => $datatype,
-                ];
+                    // Find last unescaped colon
+                    $colonPos = false;
+                    $cLen = strlen($content);
+                    $k = 0;
+                    while ($k < $cLen) {
+                        if ($content[$k] === '\\' && $k + 1 < $cLen) {
+                            $k += 2;
+                            continue;
+                        }
+                        if ($content[$k] === ':') {
+                            $colonPos = $k;
+                        }
+                        $k++;
+                    }
 
-                $lastOffset = $fullMatchOffset + strlen($fullMatchText);
+                    $isValid = true;
+                    $label = '';
+                    $datatype = 'text';
+
+                    if ($colonPos !== false) {
+                        $typePart = strtolower(trim(substr($content, $colonPos + 1)));
+                        if ($typePart === 'number' || $typePart === 'text') {
+                            $datatype = $typePart;
+                            $label = $unescapeTemplate(trim(substr($content, 0, $colonPos)));
+                        } else {
+                            $isValid = false;
+                        }
+                    } else {
+                        $label = $unescapeTemplate(trim($content));
+                    }
+
+                    if ($isValid && strlen($label) > 0) {
+                        if (strlen($currentStatic) > 0) {
+                            $pushStatic($currentStatic);
+                            $currentStatic = '';
+                        }
+                        $segments[] = [
+                            'type' => 'variable',
+                            'label' => $label,
+                            'datatype' => $datatype,
+                        ];
+                        $i = $j + 1;
+                        continue;
+                    }
+                }
+
+                $currentStatic .= '[';
+                $i++;
+                continue;
             }
+
+            $currentStatic .= $char;
+            $i++;
         }
 
-        // Remaining static text
-        if ($lastOffset < strlen($template)) {
-            $segments[] = [
-                'type' => 'static',
-                'value' => substr($template, $lastOffset),
-            ];
+        if (strlen($currentStatic) > 0) {
+            $pushStatic($currentStatic);
         }
 
         return $segments;
