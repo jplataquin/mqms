@@ -52,6 +52,7 @@ Material Quantity Request (MQR)
    - `get_material_price_stats`: Domain analytics aggregating approved canvass pricing from both standard and direct procurement pipelines.
    - `run_level_one_budget_diagnostic`: Verifies that total requested quantity (scaled by equivalent) in approved material quantity requests does not exceed component item budget.
    - `run_level_two_budget_diagnostic`: Verifies that material quantities in approved purchase orders do not exceed approved material quantity requests, and verifies that total approved purchase order amounts per contract item do not exceed the contract item amount (calculating percentage used).
+   - `overall_project_accomplishment`: Calculates overall project progress, slippage (ahead/behind schedule), contract value, accomplished & target amounts, running speed, required speed, estimated completion date, and contract item breakdown matching the accomplishment studio view.
    - **Dedicated Domain & Entity Listing Tools**: High-level tools with rich relational, status, and attribute filters across WBS, Materials/Budget, Procurement/Workflow, Partners/Execution, and System/Misc (`list_projects`, `list_sections`, `list_contract_items`, `list_components`, `list_component_items`, `list_material_groups`, `list_material_items`, `list_material_quantities`, `list_units`, `list_material_quantity_requests`, `list_material_quantity_request_items`, `list_material_canvasses`, `list_purchase_orders`, `list_purchase_order_items`, `list_purchase_order_received`, `list_purchase_order_received_items`, `list_suppliers`, `list_payment_terms`, `list_manpower_registry`, `list_coupons`, `list_accomplishments`, `list_users`, `list_comments`).
 4. **Strict Security Boundaries:** Whitelist of allowed entities, explicit denial of RBAC and API credential tables, and automatic scrubbing of passwords and security tokens.
 
@@ -205,6 +206,7 @@ The server provides four core tools registered in `MqmsServer`:
 4. get_material_price_stats
 5. run_level_one_budget_diagnostic
 6. run_level_two_budget_diagnostic
+7. overall_project_accomplishment
 ```
 
 ---
@@ -496,7 +498,52 @@ Executes the Level 2 Budget Diagnostic protocol for a project. Verifies that all
 
 ---
 
-### Tool 7: Dedicated Listing Tools (Partners & Execution)
+### Tool 7: `overall_project_accomplishment`
+Calculates comprehensive project progress metrics matching the Project Accomplishment Studio Overall Progress view. Computes total contract value, weighted actual & target completion percentages, slippage (ahead/behind schedule), financial amounts, running speed (velocity), required speed, estimated completion date, and contract item breakdown.
+
+#### Parameters
+| Field | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `id` | `integer` | No* | The primary key ID of the project (*either `id` or `project_id` required). |
+| `project_id` | `integer` | No* | Alias for `id`. The primary key ID of the project. |
+| `as_of_date` | `string` | No | Optional cutoff date (`YYYY-MM-DD`). If omitted, assumes the current most updated accomplishment progress report date. |
+
+#### Example Request
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 7,
+  "method": "tools/call",
+  "params": {
+    "name": "overall_project_accomplishment",
+    "arguments": {
+      "id": 1,
+      "as_of_date": "2026-10-25"
+    }
+  }
+}
+```
+
+#### Example Response
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 7,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n    \"project_id\": 1,\n    \"project_name\": \"Metro Subway Phase 1\",\n    \"as_of_date\": \"2026-10-25\",\n    \"is_as_of_date_inferred\": false,\n    \"total_contract_value\": 25000000.00,\n    \"overall_actual\": 67.50,\n    \"overall_target\": 45.00,\n    \"slippage\": 22.50,\n    \"slippage_text\": \"+22.50% Ahead\",\n    \"accomplished_amount\": 16875000.00,\n    \"target_amount\": 11250000.00,\n    \"financial_progress_percent\": 67.50,\n    \"running_speed\": 0.6750,\n    \"running_speed_text\": \"0.68%/day\",\n    \"running_days_elapsed\": 101,\n    \"est_completion_date\": \"2026-12-12\",\n    \"est_completion_text\": \"Dec 12, 2026 (~48 days)\",\n    \"next_target_date\": \"2026-11-15\",\n    \"required_speed\": 1.5476,\n    \"required_speed_text\": \"1.55%/day for 21 days\",\n    \"project_days_left\": 21,\n    \"monitored_items_count\": 12,\n    \"items_breakdown\": [...]\n}"
+      }
+    ],
+    "isError": false
+  }
+}
+```
+
+---
+
+### Tool 8: Dedicated Listing Tools (Partners & Execution)
 
 MQMS provides specialized listing tools tailored for external partners, human resources, fleet/voucher monitoring, and site accomplishments.
 
@@ -563,7 +610,7 @@ Tracks physical site accomplishment records and progress monitoring tied to cont
 
 ---
 
-### Tool 8: Dedicated Listing Tools (System & Miscellaneous)
+### Tool 9: Dedicated Listing Tools (System & Miscellaneous)
 
 MQMS provides dedicated administrative tools to query application users and entity comments with strict security boundaries.
 
