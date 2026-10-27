@@ -1919,5 +1919,224 @@ class McpServerTest extends TestCase
         $this->assertCount(1, $result['projects'][0]['schedule'][0]['requests'][0]['items']);
         $this->assertEquals(50.0, $result['projects'][0]['schedule'][0]['requests'][0]['items'][0]['requested_quantity']);
     }
+
+    /** @test */
+    public function it_can_get_contract_items_accomplishment_status()
+    {
+        $project1 = $this->createProject('Project Bridge');
+        $project2 = $this->createProject('Project Road');
+
+        $section1 = new Section();
+        $section1->project_id = $project1->id;
+        $section1->name = 'Phase 1';
+        $section1->created_by = 1;
+        $section1->save();
+
+        $section2 = new Section();
+        $section2->project_id = $project2->id;
+        $section2->name = 'Phase 2';
+        $section2->created_by = 1;
+        $section2->save();
+
+        $unit = new Unit();
+        $unit->text = 'cu.m';
+        $unit->created_by = 1;
+        $unit->save();
+
+        // Item 1: Delayed (Target 50, Actual 30)
+        $ci1 = new ContractItem();
+        $ci1->section_id = $section1->id;
+        $ci1->item_code = '101';
+        $ci1->description = 'Excavation';
+        $ci1->contract_quantity = 100;
+        $ci1->contract_unit_price = 500;
+        $ci1->unit_id = $unit->id;
+        $ci1->created_by = 1;
+        $ci1->save();
+
+        $accTarget1 = new Accomplishment();
+        $accTarget1->contract_item_id = $ci1->id;
+        $accTarget1->type = 'TARGET';
+        $accTarget1->entry_data = '2026-10-15';
+        $accTarget1->quantity = 50.0;
+        $accTarget1->created_by = 1;
+        $accTarget1->save();
+
+        $accActual1 = new Accomplishment();
+        $accActual1->contract_item_id = $ci1->id;
+        $accActual1->type = 'ACTUAL';
+        $accActual1->entry_data = '2026-10-15';
+        $accActual1->quantity = 30.0;
+        $accActual1->created_by = 1;
+        $accActual1->save();
+
+        // Item 2: On-Track (Target 40, Actual 40)
+        $ci2 = new ContractItem();
+        $ci2->section_id = $section1->id;
+        $ci2->item_code = '102';
+        $ci2->description = 'Embankment';
+        $ci2->contract_quantity = 100;
+        $ci2->contract_unit_price = 300;
+        $ci2->unit_id = $unit->id;
+        $ci2->created_by = 1;
+        $ci2->save();
+
+        $accTarget2 = new Accomplishment();
+        $accTarget2->contract_item_id = $ci2->id;
+        $accTarget2->type = 'TARGET';
+        $accTarget2->entry_data = '2026-10-15';
+        $accTarget2->quantity = 40.0;
+        $accTarget2->created_by = 1;
+        $accTarget2->save();
+
+        $accActual2 = new Accomplishment();
+        $accActual2->contract_item_id = $ci2->id;
+        $accActual2->type = 'ACTUAL';
+        $accActual2->entry_data = '2026-10-15';
+        $accActual2->quantity = 40.0;
+        $accActual2->created_by = 1;
+        $accActual2->save();
+
+        // Item 3: Ahead (Target 20, Actual 35) in Project 2
+        $ci3 = new ContractItem();
+        $ci3->section_id = $section2->id;
+        $ci3->item_code = '201';
+        $ci3->description = 'Subbase Course';
+        $ci3->contract_quantity = 100;
+        $ci3->contract_unit_price = 450;
+        $ci3->unit_id = $unit->id;
+        $ci3->created_by = 1;
+        $ci3->save();
+
+        $accTarget3 = new Accomplishment();
+        $accTarget3->contract_item_id = $ci3->id;
+        $accTarget3->type = 'TARGET';
+        $accTarget3->entry_data = '2026-10-15';
+        $accTarget3->quantity = 20.0;
+        $accTarget3->created_by = 1;
+        $accTarget3->save();
+
+        $accActual3 = new Accomplishment();
+        $accActual3->contract_item_id = $ci3->id;
+        $accActual3->type = 'ACTUAL';
+        $accActual3->entry_data = '2026-10-15';
+        $accActual3->quantity = 35.0;
+        $accActual3->created_by = 1;
+        $accActual3->save();
+
+        // Future accomplishment after 2026-10-20 to test as_of_date
+        $accActualFuture = new Accomplishment();
+        $accActualFuture->contract_item_id = $ci1->id;
+        $accActualFuture->type = 'ACTUAL';
+        $accActualFuture->entry_data = '2026-10-25';
+        $accActualFuture->quantity = 60.0; // would have made it ahead
+        $accActualFuture->created_by = 1;
+        $accActualFuture->save();
+
+        // Excluded item
+        $ciExcluded = new ContractItem();
+        $ciExcluded->section_id = $section1->id;
+        $ciExcluded->item_code = '999';
+        $ciExcluded->description = 'Excluded Item';
+        $ciExcluded->contract_quantity = 50;
+        $ciExcluded->contract_unit_price = 100;
+        $ciExcluded->unit_id = $unit->id;
+        $ciExcluded->exclude_from_monitoring = 1;
+        $ciExcluded->created_by = 1;
+        $ciExcluded->save();
+
+        // 1. Query all with as_of_date = 2026-10-20 (excludes future actual on ci1, excludes ciExcluded)
+        $payloadAll = [
+            'jsonrpc' => '2.0',
+            'id' => 70,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'get_contract_items_accomplishment_status',
+                'arguments' => [
+                    'as_of_date' => '2026-10-20',
+                ],
+            ],
+        ];
+
+        $responseAll = $this->postJson('/mcp', $payloadAll);
+        $responseAll->assertStatus(200);
+        $resultAll = json_decode($responseAll->json('result.content.0.text'), true);
+
+        $this->assertEquals(3, $resultAll['summary']['total_contract_items']);
+        $this->assertEquals(1, $resultAll['summary']['delayed']);
+        $this->assertEquals(1, $resultAll['summary']['on_track']);
+        $this->assertEquals(1, $resultAll['summary']['ahead']);
+
+        $records = collect($resultAll['records'])->keyBy('contract_item_id');
+        $this->assertEquals('delayed', $records[$ci1->id]['status']);
+        $this->assertEquals(30.0, $records[$ci1->id]['actual_accomplishment']['quantity']);
+        $this->assertEquals(50.0, $records[$ci1->id]['target_accomplishment']['quantity']);
+        $this->assertEquals(60.0, $records[$ci1->id]['percent_actual_vs_target']); // 30 / 50 * 100 = 60%
+
+        $this->assertEquals('on-track', $records[$ci2->id]['status']);
+        $this->assertEquals(40.0, $records[$ci2->id]['actual_accomplishment']['quantity']);
+        $this->assertEquals(40.0, $records[$ci2->id]['target_accomplishment']['quantity']);
+        $this->assertEquals(100.0, $records[$ci2->id]['percent_actual_vs_target']);
+
+        $this->assertEquals('ahead', $records[$ci3->id]['status']);
+        $this->assertEquals(35.0, $records[$ci3->id]['actual_accomplishment']['quantity']);
+        $this->assertEquals(20.0, $records[$ci3->id]['target_accomplishment']['quantity']);
+        $this->assertEquals(175.0, $records[$ci3->id]['percent_actual_vs_target']);
+
+        // 2. Filter by project_id = project1
+        $payloadProject = [
+            'jsonrpc' => '2.0',
+            'id' => 71,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'get_contract_items_accomplishment_status',
+                'arguments' => [
+                    'project_id' => $project1->id,
+                    'as_of_date' => '2026-10-20',
+                ],
+            ],
+        ];
+        $responseProject = $this->postJson('/mcp', $payloadProject);
+        $resultProject = json_decode($responseProject->json('result.content.0.text'), true);
+        $this->assertEquals(2, $resultProject['summary']['total_contract_items']);
+
+        // 3. Filter by status = 'delayed'
+        $payloadStatus = [
+            'jsonrpc' => '2.0',
+            'id' => 72,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'get_contract_items_accomplishment_status',
+                'arguments' => [
+                    'status' => 'delayed',
+                    'as_of_date' => '2026-10-20',
+                ],
+            ],
+        ];
+        $responseStatus = $this->postJson('/mcp', $payloadStatus);
+        $resultStatus = json_decode($responseStatus->json('result.content.0.text'), true);
+        $this->assertEquals(1, $resultStatus['summary']['filtered_contract_items']);
+        $this->assertEquals($ci1->id, $resultStatus['records'][0]['contract_item_id']);
+
+        // 4. as_of_date = 2026-10-30 includes the future actual for ci1 (making ci1 ahead with 60 vs 50)
+        $payloadLater = [
+            'jsonrpc' => '2.0',
+            'id' => 73,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'get_contract_items_accomplishment_status',
+                'arguments' => [
+                    'project_id' => $project1->id,
+                    'as_of_date' => '2026-10-30',
+                ],
+            ],
+        ];
+        $responseLater = $this->postJson('/mcp', $payloadLater);
+        $resultLater = json_decode($responseLater->json('result.content.0.text'), true);
+        $recordsLater = collect($resultLater['records'])->keyBy('contract_item_id');
+        $this->assertEquals('ahead', $recordsLater[$ci1->id]['status']);
+        $this->assertEquals(60.0, $recordsLater[$ci1->id]['actual_accomplishment']['quantity']);
+    }
 }
+
 
