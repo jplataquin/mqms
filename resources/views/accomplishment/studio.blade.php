@@ -1538,7 +1538,7 @@
                                     <div class="fw-semibold ${speedStatusClass}">${velocityStr}</div>
                                 </div>
                                 <div class="col-3">
-                                    <div class="text-muted small" style="font-size: 11px;">Est. Completion</div>
+                                    <div class="text-muted small" style="font-size: 11px;">Est. Completion Date</div>
                                     <div class="fw-semibold text-warning">${escapeHtml(etaStr)}</div>
                                 </div>
                                 <div class="col-3">
@@ -1812,7 +1812,7 @@
                 }
             }
 
-            const targetDateToUse = nextNearestProjectTargetDate || projectLatestTargetDate;
+            const targetDateToUse = projectLatestTargetDate;
 
             let sumTargetMoneyAmount = 0;
             let sumActualMoneyAmount = 0;
@@ -1821,6 +1821,7 @@
             let sumAllTimeActualMoneyAmount = 0;
             let sumWeightedTarget = 0;
             let sumWeightedActual = 0;
+            let sumNextWeightedTarget = 0;
             const itemBreakdownRows = [];
 
             // Second pass: compute target amounts and percentages based on the next nearest target date
@@ -1832,10 +1833,12 @@
                         const unitPrice = parseFloat(ci.contract_unit_price) || 0;
 
                         let targetQty = 0;
+                        let nextTargetQty = 0;
                         let allTimeLatestActual = null;
 
                         if (ci.accomplishments && ci.accomplishments.length > 0) {
                             let latestTarget = null;
+                            let latestNextTarget = null;
                             ci.accomplishments.forEach(acc => {
                                 const accDateStr = acc.entry_data ? acc.entry_data.substring(0, 10) : '';
                                 if (acc.type === 'TARGET' && accDateStr) {
@@ -1843,6 +1846,12 @@
                                         const currentLatestTargetDateStr = latestTarget && latestTarget.entry_data ? latestTarget.entry_data.substring(0, 10) : '';
                                         if (!latestTarget || accDateStr > currentLatestTargetDateStr || (accDateStr === currentLatestTargetDateStr && acc.id > latestTarget.id)) {
                                             latestTarget = acc;
+                                        }
+                                    }
+                                    if (nextNearestProjectTargetDate && accDateStr <= nextNearestProjectTargetDate) {
+                                        const currentNextDateStr = latestNextTarget && latestNextTarget.entry_data ? latestNextTarget.entry_data.substring(0, 10) : '';
+                                        if (!latestNextTarget || accDateStr > currentNextDateStr || (accDateStr === currentNextDateStr && acc.id > latestNextTarget.id)) {
+                                            latestNextTarget = acc;
                                         }
                                     }
                                 }
@@ -1853,6 +1862,7 @@
                                 }
                             });
                             if (latestTarget) targetQty = parseFloat(latestTarget.quantity) || 0;
+                            if (latestNextTarget) nextTargetQty = parseFloat(latestNextTarget.quantity) || 0;
                         }
 
                         const actualQty = allTimeLatestActual ? (parseFloat(allTimeLatestActual.quantity) || 0) : 0;
@@ -1864,9 +1874,11 @@
 
                         let percentTarget = 0;
                         let percentActual = 0;
+                        let percentNextTarget = 0;
                         if (totalScope > 0) {
                             percentTarget = Math.min(100, (targetQty / totalScope) * 100);
                             percentActual = Math.min(100, (actualQty / totalScope) * 100);
+                            percentNextTarget = Math.min(100, (nextTargetQty / totalScope) * 100);
                         }
 
                         const targetMoneyAmount = (percentTarget / 100) * ciContractAmount;
@@ -1878,9 +1890,11 @@
 
                         const weightedTarget = percentTarget * ciWeight;
                         const weightedActual = percentActual * ciWeight;
+                        const weightedNextTarget = percentNextTarget * ciWeight;
 
                         sumWeightedTarget += weightedTarget;
                         sumWeightedActual += weightedActual;
+                        sumNextWeightedTarget += weightedNextTarget;
 
                         const ciName = (ci.item_code ? `[${ci.item_code}] ` : '') + (ci.description || ci.name || '');
                         itemBreakdownRows.push({
@@ -1993,7 +2007,7 @@
                                 <div class="fw-semibold ${projectSpeedStatusClass}">${formattedRunningVelocity}</div>
                             </div>
                             <div class="col-3">
-                                <div class="text-muted small" style="font-size: 11px;">Est. Completion</div>
+                                <div class="text-muted small" style="font-size: 11px;">Est. Completion Date</div>
                                 <div class="fw-semibold text-warning">${escapeHtml(projectEtaStr)}</div>
                             </div>
                             <div class="col-3">
@@ -2002,8 +2016,7 @@
                             </div>
                             <div class="col-3">
                                 <div class="text-muted small" style="font-size: 11px;">Next Target</div>
-                                <div class="fw-semibold text-info">${nextNearestProjectTargetDate ? nextNearestProjectTargetDate : 'N/A'}</div>
-                                ${nextNearestProjectTargetDate ? '<div class="text-muted small" style="font-size: 10px;">Target Date</div>' : ''}
+                                <div class="fw-semibold text-info">${nextNearestProjectTargetDate ? formatNum(sumNextWeightedTarget) + ' on ' + nextNearestProjectTargetDate : 'N/A'}</div>
                             </div>
                         </div>
                     </div>
@@ -2305,7 +2318,7 @@
                                 <div class="fw-semibold ${speedStatusClass}">${velocityStr}</div>
                             </div>
                             <div class="col-3">
-                                <div class="text-muted small" style="font-size: 11px;">Est. Completion</div>
+                                <div class="text-muted small" style="font-size: 11px;">Est. Completion Date</div>
                                 <div class="fw-semibold text-warning">${escapeHtml(compEtaDateStr)}</div>
                             </div>
                             <div class="col-3">

@@ -2131,8 +2131,10 @@ class McpServerTest extends TestCase
         // Target Amount: (50 * 1000) + (80 * 500) = 50,000 + 40,000 = 90,000
         $this->assertEquals(90000.00, $resultLatest['target_amount']);
 
-        // Next Target Date is 2026-11-15
+        // Next Target Date is 2026-11-15 with 70.00%
         $this->assertEquals('2026-11-15', $resultLatest['next_target_date']);
+        $this->assertEquals(70.0, $resultLatest['next_target_percent']);
+        $this->assertEquals('70.00% on 2026-11-15', $resultLatest['next_target_text']);
 
         // Test 2: Call with as_of_date = '2026-10-15'
         $payloadAsOf = [
@@ -2164,6 +2166,11 @@ class McpServerTest extends TestCase
         $this->assertEquals(10.0, $resultAsOf['slippage']);
         $this->assertEquals('+10.00% Ahead', $resultAsOf['slippage_text']);
         $this->assertEquals(110000.00, $resultAsOf['accomplished_amount']); // (60*1000) + (100*500)
+        $this->assertEquals('2026-10-15', $resultAsOf['next_target_date']);
+        $this->assertEquals(45.0, $resultAsOf['next_target_percent']);
+        $this->assertEquals('45.00% on 2026-10-15', $resultAsOf['next_target_text']);
+        // Project days left to latest target (2026-11-15): 31 days
+        $this->assertEquals(31, $resultAsOf['project_days_left']);
     }
 }
 

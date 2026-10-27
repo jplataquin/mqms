@@ -157,11 +157,12 @@ class GetOverallProjectAccomplishmentTool extends Tool
         }
 
         $nextTargetDate = $nextNearestProjectTargetDate ?? $projectLatestTargetDate;
-        $targetDateToUse = $nextTargetDate;
+        $targetDateToUse = $projectLatestTargetDate;
 
         // Second pass: compute actual and target accomplishments as of as_of_date
         $sumWeightedActual = 0.0;
         $sumWeightedTarget = 0.0;
+        $sumNextWeightedTarget = 0.0;
         $totalAccomplishedAmount = 0.0;
         $totalTargetAmount = 0.0;
         $actualLatestDateAsOf = null;
@@ -187,6 +188,7 @@ class GetOverallProjectAccomplishmentTool extends Tool
 
                 $latestActualAcc = null;
                 $latestTargetAcc = null;
+                $latestNextTargetAcc = null;
 
                 if ($ci->Accomplishments) {
                     foreach ($ci->Accomplishments as $acc) {
@@ -208,11 +210,19 @@ class GetOverallProjectAccomplishmentTool extends Tool
                                 $latestTargetAcc = $acc;
                             }
                         }
+
+                        if ($acc->type === 'TARGET' && $nextTargetDate && $accDateStr <= $nextTargetDate) {
+                            $currNextDateStr = $latestNextTargetAcc ? Carbon::parse($latestNextTargetAcc->entry_data)->format('Y-m-d') : '';
+                            if (! $latestNextTargetAcc || $accDateStr > $currNextDateStr || ($accDateStr === $currNextDateStr && $acc->id > $latestNextTargetAcc->id)) {
+                                $latestNextTargetAcc = $acc;
+                            }
+                        }
                     }
                 }
 
                 $actualQty = $latestActualAcc ? (float) $latestActualAcc->quantity : 0.0;
                 $targetQty = $latestTargetAcc ? (float) $latestTargetAcc->quantity : 0.0;
+                $nextTargetQty = $latestNextTargetAcc ? (float) $latestNextTargetAcc->quantity : 0.0;
 
                 if ($latestActualAcc) {
                     $accDateStr = Carbon::parse($latestActualAcc->entry_data)->format('Y-m-d');
@@ -223,12 +233,15 @@ class GetOverallProjectAccomplishmentTool extends Tool
 
                 $percentActual = $scope > 0 ? min(100.0, ($actualQty / $scope) * 100.0) : 0.0;
                 $percentTarget = $scope > 0 ? min(100.0, ($targetQty / $scope) * 100.0) : 0.0;
+                $percentNextTarget = $scope > 0 ? min(100.0, ($nextTargetQty / $scope) * 100.0) : 0.0;
 
                 $weightedActual = $percentActual * $ciWeight;
                 $weightedTarget = $percentTarget * $ciWeight;
+                $weightedNextTarget = $percentNextTarget * $ciWeight;
 
                 $sumWeightedActual += $weightedActual;
                 $sumWeightedTarget += $weightedTarget;
+                $sumNextWeightedTarget += $weightedNextTarget;
 
                 $totalAccomplishedAmount += ($actualQty * $price);
                 $totalTargetAmount += ($targetQty * $price);
@@ -324,6 +337,9 @@ class GetOverallProjectAccomplishmentTool extends Tool
             );
         }
 
+        $nextTargetPercent = $nextTargetDate ? round($sumNextWeightedTarget, 2) : null;
+        $nextTargetText = $nextTargetDate ? sprintf('%.2f%% on %s', $nextTargetPercent, $nextTargetDate) : 'N/A';
+
         return ToolResult::json([
             'project_id' => $project->id,
             'project_name' => $project->name,
@@ -343,6 +359,8 @@ class GetOverallProjectAccomplishmentTool extends Tool
             'est_completion_date' => $estCompletionDate,
             'est_completion_text' => $estCompletionText,
             'next_target_date' => $nextTargetDate,
+            'next_target_percent' => $nextTargetPercent,
+            'next_target_text' => $nextTargetText,
             'required_speed' => round($requiredVelocityPerDay, 4),
             'required_speed_text' => $requiredSpeedFormatted,
             'project_days_left' => $projectDaysLeft,
