@@ -518,4 +518,75 @@ class MaterialGroupSpecificationTemplateTest extends TestCase
             'status' => 1,
         ]);
     }
+
+    public function test_material_group_list_api_returns_items_count_and_supports_sorting()
+    {
+        $groupA = new MaterialGroup();
+        $groupA->name = 'Group With Items';
+        $groupA->specification_template = '[Spec:text]';
+        $groupA->created_by = $this->user->id;
+        $groupA->save();
+
+        $item1 = new MaterialItem();
+        $item1->material_group_id = $groupA->id;
+        $item1->name = 'Item One';
+        $item1->specification_unit_packaging = 'Spec 1';
+        $item1->brand = 'Brand A';
+        $item1->created_by = $this->user->id;
+        $item1->save();
+
+        $item2 = new MaterialItem();
+        $item2->material_group_id = $groupA->id;
+        $item2->name = 'Item Two';
+        $item2->specification_unit_packaging = 'Spec 2';
+        $item2->brand = 'Brand B';
+        $item2->created_by = $this->user->id;
+        $item2->save();
+
+        $groupB = new MaterialGroup();
+        $groupB->name = 'Empty Group';
+        $groupB->specification_template = '[Spec:text]';
+        $groupB->created_by = $this->user->id;
+        $groupB->save();
+
+        // Query material group list
+        $response = $this->authenticatedRequest('GET', '/api/material/group/list');
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+        ]);
+
+        $data = collect($response->json('data'));
+        $foundGroupA = $data->firstWhere('id', $groupA->id);
+        $foundGroupB = $data->firstWhere('id', $groupB->id);
+
+        $this->assertNotNull($foundGroupA);
+        $this->assertNotNull($foundGroupB);
+        $this->assertEquals(2, $foundGroupA['items_count']);
+        $this->assertEquals(0, $foundGroupB['items_count']);
+
+        // Test sorting by items_count DESC
+        $responseDesc = $this->authenticatedRequest('GET', '/api/material/group/list?order_by=items_count&order=DESC');
+        $responseDesc->assertStatus(200);
+        $descData = $responseDesc->json('data');
+        $this->assertEquals($groupA->id, $descData[0]['id']);
+
+        // Test sorting by items_count ASC
+        $responseAsc = $this->authenticatedRequest('GET', '/api/material/group/list?order_by=items_count&order=ASC');
+        $responseAsc->assertStatus(200);
+        $ascData = $responseAsc->json('data');
+        $this->assertEquals($groupB->id, $ascData[0]['id']);
+    }
+
+    public function test_renders_material_groups_list_view_with_item_count_elements()
+    {
+        $response = $this->actingAs($this->user)
+            ->withSession(['access_codes' => $this->accessCodes])
+            ->get('/master_data/material/groups');
+
+        $response->assertStatus(200);
+        $response->assertSee('Material Groups');
+        $response->assertSee('Most Items');
+        $response->assertSee('Least Items');
+    }
 }
