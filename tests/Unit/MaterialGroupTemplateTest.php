@@ -137,4 +137,33 @@ class MaterialGroupTemplateTest extends TestCase
 
         $this->assertTrue($group->validateSpecification('10 x 20'));
     }
+
+    public function test_it_handles_fractional_and_mixed_numbers_in_numeric_variables()
+    {
+        $group = new MaterialGroup();
+        $group->specification_template = '[Diameter:number]" \[ [Unit:text] \]';
+
+        $segments = $group->parseSpecificationTemplate();
+        $this->assertCount(4, $segments);
+        $this->assertEquals(['type' => 'variable', 'label' => 'Diameter', 'datatype' => 'number'], $segments[0]);
+        $this->assertEquals(['type' => 'static', 'value' => '" [ '], $segments[1]);
+        $this->assertEquals(['type' => 'variable', 'label' => 'Unit', 'datatype' => 'text'], $segments[2]);
+        $this->assertEquals(['type' => 'static', 'value' => ' ]'], $segments[3]);
+
+        // Fractions like 1/2 and 3/4
+        $this->assertTrue($group->validateSpecification('1/2" [ pc ]'));
+        $this->assertTrue($group->validateSpecification('3/4" [ pc ]'));
+
+        // Mixed numbers like 1 1/2 and 1-1/2
+        $this->assertTrue($group->validateSpecification('1 1/2" [ pc ]'));
+        $this->assertTrue($group->validateSpecification('1-1/2" [ pc ]'));
+
+        // Standard integers and decimals
+        $this->assertTrue($group->validateSpecification('10" [ pc ]'));
+        $this->assertTrue($group->validateSpecification('10.5" [ pc ]'));
+
+        // Invalid non-numeric values
+        $this->assertFalse($group->validateSpecification('abc" [ pc ]'));
+        $this->assertFalse($group->validateSpecification('ten" [ pc ]'));
+    }
 }

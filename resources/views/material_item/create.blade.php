@@ -291,8 +291,7 @@
                 label.textContent = seg.label + (seg.datatype === 'number' ? ' (number)' : '');
 
                 const input = document.createElement('input');
-                input.type = seg.datatype === 'number' ? 'number' : 'text';
-                if (seg.datatype === 'number') input.step = 'any';
+                input.type = 'text';
                 input.className = 'form-control';
                 input.placeholder = seg.label;
 

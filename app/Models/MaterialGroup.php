@@ -205,7 +205,7 @@ class MaterialGroup extends Model
                 $pattern .= preg_quote($segment['value'], '/');
             } elseif ($segment['type'] === 'variable') {
                 if ($segment['datatype'] === 'number') {
-                    $pattern .= '(\d+(?:\.\d+)?)';
+                    $pattern .= '(\d+(?:[\s-]\d+\/\d+|\/\d+|\.\d+)?|\.\d+)';
                 } else {
                     // If it's the last segment or followed by static, match appropriately
                     $pattern .= ($i === $total - 1) ? '([^\r\n]+)' : '([^\r\n]+?)';

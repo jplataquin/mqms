@@ -472,4 +472,50 @@ class MaterialGroupSpecificationTemplateTest extends TestCase
             'status' => -2,
         ]);
     }
+
+    public function test_can_create_and_render_material_item_with_fractional_diameter()
+    {
+        $group = new MaterialGroup();
+        $group->name = 'Pipes with Fractional Diameter';
+        $group->specification_template = '[Diameter:number]" \[ [Unit:text] \]';
+        $group->created_by = $this->user->id;
+        $group->save();
+
+        // Create item with fraction 1/2
+        $response = $this->authenticatedRequest('POST', '/api/material/item/create', [
+            'material_group_id' => $group->id,
+            'name' => 'PVC Pipe',
+            'specification_unit_packaging' => '1/2" [ pc ]',
+            'brand' => 'Neltex',
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+        ]);
+
+        $itemId = $response->json('data.id');
+
+        // View display page and ensure specification is rendered
+        $viewResponse = $this->actingAs($this->user)
+            ->withSession(['access_codes' => $this->accessCodes])
+            ->get('/master_data/material/item/' . $itemId);
+
+        $viewResponse->assertStatus(200);
+        $viewResponse->assertSee('1/2" [ pc ]');
+
+        // Update with another fraction 3/4
+        $updateResponse = $this->authenticatedRequest('POST', '/api/material/item/update', [
+            'id' => $itemId,
+            'material_group_id' => $group->id,
+            'name' => 'PVC Pipe 3/4',
+            'specification_unit_packaging' => '3/4" [ pc ]',
+            'brand' => 'Neltex',
+        ]);
+
+        $updateResponse->assertStatus(200);
+        $updateResponse->assertJson([
+            'status' => 1,
+        ]);
+    }
 }

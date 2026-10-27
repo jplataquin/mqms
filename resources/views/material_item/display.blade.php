@@ -247,7 +247,7 @@
             if (seg.type === 'static') {
                 pattern += seg.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             } else {
-                pattern += seg.datatype === 'number' ? '(\\d+(?:\\.\\d+)?)' : (i === total - 1 ? '([^\\r\\n]+)' : '([^\\r\\n]+?)');
+                pattern += seg.datatype === 'number' ? '(\\d+(?:[\\s-]\\d+\\/\\d+|\\/\\d+|\\.\\d+)?|\\.\\d+)' : (i === total - 1 ? '([^\\r\\n]+)' : '([^\\r\\n]+?)');
             }
         }
         pattern += '$';
@@ -320,8 +320,7 @@
                 label.textContent = seg.label + (seg.datatype === 'number' ? ' (number)' : '');
 
                 const input = document.createElement('input');
-                input.type = seg.datatype === 'number' ? 'number' : 'text';
-                if (seg.datatype === 'number') input.step = 'any';
+                input.type = 'text';
                 input.className = 'form-control';
                 input.placeholder = seg.label;
                 input.disabled = !isEditable;
