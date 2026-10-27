@@ -106,31 +106,131 @@
 
     function parseTemplate(template) {
         if (!template || !template.trim()) return [];
-        const regex = /\[([^:\]\r\n]+)(?::(number|text))?\]/g;
-        const segments = [];
-        let lastIndex = 0;
-        let match;
 
-        while ((match = regex.exec(template)) !== null) {
-            if (match.index > lastIndex) {
-                segments.push({
-                    type: 'static',
-                    value: template.substring(lastIndex, match.index)
-                });
-            }
-            segments.push({
-                type: 'variable',
-                label: match[1].trim(),
-                datatype: match[2] && match[2].toLowerCase() === 'number' ? 'number' : 'text'
+        const segments = [];
+        const len = template.length;
+        let i = 0;
+        let currentStatic = '';
+
+        function unescapeTemplate(str) {
+            if (!str) return '';
+            return str.replace(/\\([\s\S])/g, function(match, char) {
+                if (char === '[' || char === ']' || char === '\\' || char === ':') {
+                    return char;
+                }
+                return match;
             });
-            lastIndex = regex.lastIndex;
         }
 
-        if (lastIndex < template.length) {
-            segments.push({
-                type: 'static',
-                value: template.substring(lastIndex)
-            });
+        function pushStatic(text) {
+            if (!text) return;
+            if (segments.length > 0 && segments[segments.length - 1].type === 'static') {
+                segments[segments.length - 1].value += text;
+            } else {
+                segments.push({
+                    type: 'static',
+                    value: text
+                });
+            }
+        }
+
+        while (i < len) {
+            const char = template[i];
+
+            if (char === '\\' && i + 1 < len) {
+                const next = template[i + 1];
+                if (next === '[' || next === ']' || next === '\\' || next === ':') {
+                    currentStatic += next;
+                } else {
+                    currentStatic += '\\' + next;
+                }
+                i += 2;
+                continue;
+            }
+
+            if (char === '[') {
+                let j = i + 1;
+                let foundClose = false;
+                let hasNestedOpen = false;
+
+                while (j < len) {
+                    const c = template[j];
+                    if (c === '\r' || c === '\n') {
+                        break;
+                    }
+                    if (c === '\\' && j + 1 < len) {
+                        j += 2;
+                        continue;
+                    }
+                    if (c === '[') {
+                        hasNestedOpen = true;
+                        break;
+                    }
+                    if (c === ']') {
+                        foundClose = true;
+                        break;
+                    }
+                    j++;
+                }
+
+                if (foundClose && !hasNestedOpen) {
+                    const content = template.substring(i + 1, j);
+
+                    let colonPos = -1;
+                    let k = 0;
+                    while (k < content.length) {
+                        if (content[k] === '\\' && k + 1 < content.length) {
+                            k += 2;
+                            continue;
+                        }
+                        if (content[k] === ':') {
+                            colonPos = k;
+                        }
+                        k++;
+                    }
+
+                    let isValid = true;
+                    let label = '';
+                    let datatype = 'text';
+
+                    if (colonPos !== -1) {
+                        const typePart = content.substring(colonPos + 1).trim().toLowerCase();
+                        if (typePart === 'number' || typePart === 'text') {
+                            datatype = typePart;
+                            label = unescapeTemplate(content.substring(0, colonPos).trim());
+                        } else {
+                            isValid = false;
+                        }
+                    } else {
+                        label = unescapeTemplate(content.trim());
+                    }
+
+                    if (isValid && label.length > 0) {
+                        if (currentStatic.length > 0) {
+                            pushStatic(currentStatic);
+                            currentStatic = '';
+                        }
+                        segments.push({
+                            type: 'variable',
+                            label: label,
+                            datatype: datatype
+                        });
+                        i = j + 1;
+                        continue;
+                    }
+                }
+
+                currentStatic += '[';
+                i++;
+                continue;
+            }
+
+            currentStatic += char;
+            i++;
+        }
+
+        if (currentStatic.length > 0) {
+            pushStatic(currentStatic);
         }
 
         return segments;
@@ -147,7 +247,7 @@
             if (seg.type === 'static') {
                 pattern += seg.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             } else {
-                pattern += seg.datatype === 'number' ? '(\\d+(?:\\.\\d+)?)' : (i === total - 1 ? '([^\\r\\n]+)' : '([^\\r\\n]+?)');
+                pattern += seg.datatype === 'number' ? '(\\d+(?:[\\s-]\\d+\\/\\d+|\\/\\d+|\\.\\d+)?|\\.\\d+)' : (i === total - 1 ? '([^\\r\\n]+)' : '([^\\r\\n]+?)');
             }
         }
         pattern += '$';
@@ -220,8 +320,7 @@
                 label.textContent = seg.label + (seg.datatype === 'number' ? ' (number)' : '');
 
                 const input = document.createElement('input');
-                input.type = seg.datatype === 'number' ? 'number' : 'text';
-                if (seg.datatype === 'number') input.step = 'any';
+                input.type = 'text';
                 input.className = 'form-control';
                 input.placeholder = seg.label;
                 input.disabled = !isEditable;

@@ -231,6 +231,7 @@ class MaterialGroupController extends Controller
                 'specification_template' => $materialGroup->specification_template,
                 'parsed_template'        => $materialGroup->parseSpecificationTemplate(),
                 'has_template'           => $materialGroup->hasSpecificationTemplate(),
+                'items_count'            => $materialGroup->Items()->count(),
             ]
         ]);
     }
@@ -239,14 +240,14 @@ class MaterialGroupController extends Controller
 
         //todo check role
 
-        $page       = (int) $request->input('page')     ?? 1;
-        $limit      = (int) $request->input('limit')    ?? 10;
-        $orderBy    = $request->input('order_by')       ?? 'id';
-        $order      = $request->input('order')          ?? 'DESC';
-        $query      = $request->input('query')          ?? '';
+        $page       = (int) ($request->input('page') ?? 1);
+        $limit      = (int) ($request->input('limit') ?? 10);
+        $orderBy    = $request->input('order_by') ?? 'id';
+        $order      = $request->input('order') ?? 'DESC';
+        $query      = $request->input('query') ?? '';
         $result = [];
 
-        $materialGroup = new MaterialGroup();
+        $materialGroup = MaterialGroup::withCount('Items');
 
         if($query != ''){
             $materialGroup = $materialGroup->where('name','LIKE','%'.$query.'%');
