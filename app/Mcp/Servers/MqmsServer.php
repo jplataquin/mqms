@@ -11,6 +11,7 @@ use App\Mcp\Resources\DynamicModelResource;
 use App\Mcp\Tools\GetContractItemsAccomplishmentStatusTool;
 use App\Mcp\Tools\GetMaterialNeedScheduleTool;
 use App\Mcp\Tools\GetMaterialPriceStatsTool;
+use App\Mcp\Tools\GetOverallProjectAccomplishmentTool;
 use App\Mcp\Tools\GetRecordTool;
 use App\Mcp\Tools\ListAccomplishmentsTool;
 use App\Mcp\Tools\ListCommentsTool;
@@ -80,6 +81,7 @@ Important Core Hierarchies & Lifecycle Flows:
         GetMaterialNeedScheduleTool::class,
         GetContractItemsAccomplishmentStatusTool::class,
         GetMaterialPriceStatsTool::class,
+        GetOverallProjectAccomplishmentTool::class,
         RunLevelOneBudgetDiagnosticTool::class,
         RunLevelTwoBudgetDiagnosticTool::class,
         ListProjectsTool::class,

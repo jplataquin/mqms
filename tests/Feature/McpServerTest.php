@@ -243,6 +243,7 @@ class McpServerTest extends TestCase
         $this->assertContains('list_manpower_registry', $toolNames);
         $this->assertContains('list_coupons', $toolNames);
         $this->assertContains('list_accomplishments', $toolNames);
+        $this->assertContains('overall_project_accomplishment', $toolNames);
         $this->assertContains('list_users', $toolNames);
         $this->assertContains('list_comments', $toolNames);
     }
@@ -1921,6 +1922,258 @@ class McpServerTest extends TestCase
     }
 
     /** @test */
+    public function it_validates_overall_project_accomplishment_tool_arguments()
+    {
+        // 1. Missing project_id
+        $payloadMissing = [
+            'jsonrpc' => '2.0',
+            'id' => 70,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'overall_project_accomplishment',
+                'arguments' => [],
+            ],
+        ];
+
+        $responseMissing = $this->postJson('/mcp', $payloadMissing);
+        $responseMissing->assertStatus(200);
+        $this->assertTrue($responseMissing->json('result.isError'));
+        $this->assertStringContainsString('Project ID is required', $responseMissing->json('result.content.0.text'));
+
+        // 2. Project not found
+        $payloadNotFound = [
+            'jsonrpc' => '2.0',
+            'id' => 71,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'overall_project_accomplishment',
+                'arguments' => [
+                    'id' => 999999,
+                ],
+            ],
+        ];
+
+        $responseNotFound = $this->postJson('/mcp', $payloadNotFound);
+        $responseNotFound->assertStatus(200);
+        $this->assertTrue($responseNotFound->json('result.isError'));
+        $this->assertStringContainsString('Project with ID 999999 not found', $responseNotFound->json('result.content.0.text'));
+
+        // 3. Invalid as_of_date
+        $project = $this->createProject('Accomplishment Test Project');
+        $payloadInvalidDate = [
+            'jsonrpc' => '2.0',
+            'id' => 72,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'overall_project_accomplishment',
+                'arguments' => [
+                    'project_id' => $project->id,
+                    'as_of_date' => 'invalid-date-string',
+                ],
+            ],
+        ];
+
+        $responseInvalidDate = $this->postJson('/mcp', $payloadInvalidDate);
+        $responseInvalidDate->assertStatus(200);
+        $this->assertTrue($responseInvalidDate->json('result.isError'));
+        $this->assertStringContainsString('Invalid as_of_date format', $responseInvalidDate->json('result.content.0.text'));
+    }
+
+    /** @test */
+    public function it_can_calculate_overall_project_accomplishment_metrics()
+    {
+        $project = $this->createProject('Grand Highway Project');
+
+        $section = new Section();
+        $section->project_id = $project->id;
+        $section->name = 'Main Section';
+        $section->created_by = 1;
+        $section->save();
+
+        // Contract Item 1: 100 units @ 1000 = 100,000 total (Weight = 100k / 200k = 50%)
+        $ci1 = new ContractItem();
+        $ci1->section_id = $section->id;
+        $ci1->item_code = '100';
+        $ci1->description = 'Earthworks';
+        $ci1->contract_quantity = 100;
+        $ci1->contract_unit_price = 1000;
+        $ci1->unit_id = 1;
+        $ci1->created_by = 1;
+        $ci1->save();
+
+        // Contract Item 2: 200 units @ 500 = 100,000 total (Weight = 100k / 200k = 50%)
+        $ci2 = new ContractItem();
+        $ci2->section_id = $section->id;
+        $ci2->item_code = '200';
+        $ci2->description = 'Concrete Works';
+        $ci2->contract_quantity = 200;
+        $ci2->contract_unit_price = 500;
+        $ci2->unit_id = 1;
+        $ci2->created_by = 1;
+        $ci2->save();
+
+        // Contract Item 3: Excluded from monitoring
+        $ciExcluded = new ContractItem();
+        $ciExcluded->section_id = $section->id;
+        $ciExcluded->item_code = '999';
+        $ciExcluded->description = 'Provisional Sum';
+        $ciExcluded->contract_quantity = 50;
+        $ciExcluded->contract_unit_price = 2000;
+        $ciExcluded->exclude_from_monitoring = 1;
+        $ciExcluded->unit_id = 1;
+        $ciExcluded->created_by = 1;
+        $ciExcluded->save();
+
+        // Add Target accomplishments
+        // Target for CI1 on 2026-10-15: 50 units (50%)
+        $t1 = new Accomplishment();
+        $t1->contract_item_id = $ci1->id;
+        $t1->type = 'TARGET';
+        $t1->entry_data = '2026-10-15';
+        $t1->quantity = 50;
+        $t1->created_by = 1;
+        $t1->save();
+
+        // Target for CI1 on 2026-11-15: 100 units (100%)
+        $t2 = new Accomplishment();
+        $t2->contract_item_id = $ci1->id;
+        $t2->type = 'TARGET';
+        $t2->entry_data = '2026-11-15';
+        $t2->quantity = 100;
+        $t2->created_by = 1;
+        $t2->save();
+
+        // Target for CI2 on 2026-10-15: 80 units (40%)
+        $t3 = new Accomplishment();
+        $t3->contract_item_id = $ci2->id;
+        $t3->type = 'TARGET';
+        $t3->entry_data = '2026-10-15';
+        $t3->quantity = 80;
+        $t3->created_by = 1;
+        $t3->save();
+
+        // Add Actual accomplishments
+        // CI1: 20 units on 2026-10-01, then 60 units on 2026-10-15
+        $a1 = new Accomplishment();
+        $a1->contract_item_id = $ci1->id;
+        $a1->type = 'ACTUAL';
+        $a1->entry_data = '2026-10-01';
+        $a1->quantity = 20;
+        $a1->created_by = 1;
+        $a1->save();
+
+        $a2 = new Accomplishment();
+        $a2->contract_item_id = $ci1->id;
+        $a2->type = 'ACTUAL';
+        $a2->entry_data = '2026-10-15';
+        $a2->quantity = 60;
+        $a2->created_by = 1;
+        $a2->save();
+
+        // CI2: 100 units on 2026-10-15
+        $a3 = new Accomplishment();
+        $a3->contract_item_id = $ci2->id;
+        $a3->type = 'ACTUAL';
+        $a3->entry_data = '2026-10-15';
+        $a3->quantity = 100;
+        $a3->created_by = 1;
+        $a3->save();
+
+        // CI2: 150 units on 2026-10-25
+        $a4 = new Accomplishment();
+        $a4->contract_item_id = $ci2->id;
+        $a4->type = 'ACTUAL';
+        $a4->entry_data = '2026-10-25';
+        $a4->quantity = 150;
+        $a4->created_by = 1;
+        $a4->save();
+
+        // Test 1: Call without as_of_date (should assume latest accomplishment: 2026-10-25)
+        $payloadLatest = [
+            'jsonrpc' => '2.0',
+            'id' => 73,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'overall_project_accomplishment',
+                'arguments' => [
+                    'id' => $project->id,
+                ],
+            ],
+        ];
+
+        $responseLatest = $this->postJson('/mcp', $payloadLatest);
+        $responseLatest->assertStatus(200);
+        $resultLatest = json_decode($responseLatest->json('result.content.0.text'), true);
+
+        $this->assertEquals($project->id, $resultLatest['project_id']);
+        $this->assertEquals('2026-10-25', $resultLatest['as_of_date']);
+        $this->assertTrue($resultLatest['is_as_of_date_inferred']);
+        $this->assertEquals(200000.00, $resultLatest['total_contract_value']); // 100k + 100k, excluding 999
+        $this->assertEquals(2, $resultLatest['monitored_items_count']);
+
+        // CI1: 60/100 = 60%, weight = 50% => weighted actual = 30%
+        // CI2: 150/200 = 75%, weight = 50% => weighted actual = 37.5%
+        // Overall Actual = 30 + 37.5 = 67.5%
+        $this->assertEquals(67.5, $resultLatest['overall_actual']);
+
+        // As of 2026-10-25:
+        // CI1 target: 50 units (50%) => weighted target = 25%
+        // CI2 target: 80 units (40%) => weighted target = 20%
+        // Overall Target = 25 + 20 = 45%
+        $this->assertEquals(45.0, $resultLatest['overall_target']);
+
+        // Slippage = 67.5 - 45 = +22.5%
+        $this->assertEquals(22.5, $resultLatest['slippage']);
+        $this->assertEquals('+22.50% Ahead', $resultLatest['slippage_text']);
+
+        // Accomplished Amount: (60 * 1000) + (150 * 500) = 60,000 + 75,000 = 135,000
+        $this->assertEquals(135000.00, $resultLatest['accomplished_amount']);
+        // Target Amount: (50 * 1000) + (80 * 500) = 50,000 + 40,000 = 90,000
+        $this->assertEquals(90000.00, $resultLatest['target_amount']);
+
+        // Next Target Date is 2026-11-15 with 70.00%
+        $this->assertEquals('2026-11-15', $resultLatest['next_target_date']);
+        $this->assertEquals(70.0, $resultLatest['next_target_percent']);
+        $this->assertEquals('70.00% on 2026-11-15', $resultLatest['next_target_text']);
+
+        // Test 2: Call with as_of_date = '2026-10-15'
+        $payloadAsOf = [
+            'jsonrpc' => '2.0',
+            'id' => 74,
+            'method' => 'tools/call',
+            'params' => [
+                'name' => 'overall_project_accomplishment',
+                'arguments' => [
+                    'project_id' => $project->id,
+                    'as_of_date' => '2026-10-15',
+                ],
+            ],
+        ];
+
+        $responseAsOf = $this->postJson('/mcp', $payloadAsOf);
+        $responseAsOf->assertStatus(200);
+        $resultAsOf = json_decode($responseAsOf->json('result.content.0.text'), true);
+
+        $this->assertEquals('2026-10-15', $resultAsOf['as_of_date']);
+        $this->assertFalse($resultAsOf['is_as_of_date_inferred']);
+
+        // On 2026-10-15:
+        // CI1 actual = 60 (60% * 50% = 30%)
+        // CI2 actual = 100 (50% * 50% = 25%)
+        // Overall Actual = 30 + 25 = 55%
+        $this->assertEquals(55.0, $resultAsOf['overall_actual']);
+        $this->assertEquals(45.0, $resultAsOf['overall_target']);
+        $this->assertEquals(10.0, $resultAsOf['slippage']);
+        $this->assertEquals('+10.00% Ahead', $resultAsOf['slippage_text']);
+        $this->assertEquals(110000.00, $resultAsOf['accomplished_amount']); // (60*1000) + (100*500)
+        $this->assertEquals('2026-10-15', $resultAsOf['next_target_date']);
+        $this->assertEquals(45.0, $resultAsOf['next_target_percent']);
+        $this->assertEquals('45.00% on 2026-10-15', $resultAsOf['next_target_text']);
+        // Project days left to latest target (2026-11-15): 31 days
+        $this->assertEquals(31, $resultAsOf['project_days_left']);
+    }
+
+    /** @test */
     public function it_can_get_contract_items_accomplishment_status()
     {
         $project1 = $this->createProject('Project Bridge');
@@ -2048,7 +2301,7 @@ class McpServerTest extends TestCase
         // 1. Query all with as_of_date = 2026-10-20 (excludes future actual on ci1, excludes ciExcluded)
         $payloadAll = [
             'jsonrpc' => '2.0',
-            'id' => 70,
+            'id' => 80,
             'method' => 'tools/call',
             'params' => [
                 'name' => 'get_contract_items_accomplishment_status',
@@ -2086,7 +2339,7 @@ class McpServerTest extends TestCase
         // 2. Filter by project_id = project1
         $payloadProject = [
             'jsonrpc' => '2.0',
-            'id' => 71,
+            'id' => 81,
             'method' => 'tools/call',
             'params' => [
                 'name' => 'get_contract_items_accomplishment_status',
@@ -2103,7 +2356,7 @@ class McpServerTest extends TestCase
         // 3. Filter by status = 'delayed'
         $payloadStatus = [
             'jsonrpc' => '2.0',
-            'id' => 72,
+            'id' => 82,
             'method' => 'tools/call',
             'params' => [
                 'name' => 'get_contract_items_accomplishment_status',
@@ -2121,7 +2374,7 @@ class McpServerTest extends TestCase
         // 4. as_of_date = 2026-10-30 includes the future actual for ci1 (making ci1 ahead with 60 vs 50)
         $payloadLater = [
             'jsonrpc' => '2.0',
-            'id' => 73,
+            'id' => 83,
             'method' => 'tools/call',
             'params' => [
                 'name' => 'get_contract_items_accomplishment_status',
@@ -2138,5 +2391,6 @@ class McpServerTest extends TestCase
         $this->assertEquals(60.0, $recordsLater[$ci1->id]['actual_accomplishment']['quantity']);
     }
 }
+
 
 

@@ -406,4 +406,187 @@ class MaterialGroupSpecificationTemplateTest extends TestCase
         $response->assertSee('id="dynamicInputsArea"', false);
         $response->assertSee('4L Can - Semi-Gloss');
     }
+
+    public function test_can_create_and_validate_item_with_escaped_brackets_in_group_template()
+    {
+        $group = new MaterialGroup();
+        $group->name = 'Rebars with Bracket';
+        $group->specification_template = '\[Grade\] [Size:number]mm';
+        $group->created_by = $this->user->id;
+        $group->save();
+
+        // Valid specification with literal brackets
+        $responseValid = $this->authenticatedRequest('POST', '/api/material/item/create', [
+            'name' => 'Deformed Bar',
+            'material_group_id' => $group->id,
+            'specification_unit_packaging' => '[Grade] 16mm',
+            'brand' => 'SteelCorp',
+        ]);
+
+        $responseValid->assertStatus(200);
+        $responseValid->assertJson([
+            'status' => 1,
+            'message' => '',
+        ]);
+
+        $itemId = $responseValid->json('data.id');
+
+        // Invalid specification missing literal brackets
+        $responseInvalid = $this->authenticatedRequest('POST', '/api/material/item/create', [
+            'name' => 'Deformed Bar Invalid',
+            'material_group_id' => $group->id,
+            'specification_unit_packaging' => 'Grade 16mm',
+            'brand' => 'SteelCorp',
+        ]);
+
+        $responseInvalid->assertStatus(200);
+        $responseInvalid->assertJson([
+            'status' => -2,
+        ]);
+
+        // Valid update
+        $responseUpdateValid = $this->authenticatedRequest('POST', '/api/material/item/update', [
+            'id' => $itemId,
+            'name' => 'Deformed Bar Updated',
+            'material_group_id' => $group->id,
+            'specification_unit_packaging' => '[Grade] 20mm',
+            'brand' => 'SteelCorp',
+        ]);
+
+        $responseUpdateValid->assertStatus(200);
+        $responseUpdateValid->assertJson([
+            'status' => 1,
+        ]);
+
+        // Invalid update
+        $responseUpdateInvalid = $this->authenticatedRequest('POST', '/api/material/item/update', [
+            'id' => $itemId,
+            'name' => 'Deformed Bar Updated',
+            'material_group_id' => $group->id,
+            'specification_unit_packaging' => '20mm',
+            'brand' => 'SteelCorp',
+        ]);
+
+        $responseUpdateInvalid->assertStatus(200);
+        $responseUpdateInvalid->assertJson([
+            'status' => -2,
+        ]);
+    }
+
+    public function test_can_create_and_render_material_item_with_fractional_diameter()
+    {
+        $group = new MaterialGroup();
+        $group->name = 'Pipes with Fractional Diameter';
+        $group->specification_template = '[Diameter:number]" \[ [Unit:text] \]';
+        $group->created_by = $this->user->id;
+        $group->save();
+
+        // Create item with fraction 1/2
+        $response = $this->authenticatedRequest('POST', '/api/material/item/create', [
+            'material_group_id' => $group->id,
+            'name' => 'PVC Pipe',
+            'specification_unit_packaging' => '1/2" [ pc ]',
+            'brand' => 'Neltex',
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+        ]);
+
+        $itemId = $response->json('data.id');
+
+        // View display page and ensure specification is rendered
+        $viewResponse = $this->actingAs($this->user)
+            ->withSession(['access_codes' => $this->accessCodes])
+            ->get('/master_data/material/item/' . $itemId);
+
+        $viewResponse->assertStatus(200);
+        $viewResponse->assertSee('1/2" [ pc ]');
+
+        // Update with another fraction 3/4
+        $updateResponse = $this->authenticatedRequest('POST', '/api/material/item/update', [
+            'id' => $itemId,
+            'material_group_id' => $group->id,
+            'name' => 'PVC Pipe 3/4',
+            'specification_unit_packaging' => '3/4" [ pc ]',
+            'brand' => 'Neltex',
+        ]);
+
+        $updateResponse->assertStatus(200);
+        $updateResponse->assertJson([
+            'status' => 1,
+        ]);
+    }
+
+    public function test_material_group_list_api_returns_items_count_and_supports_sorting()
+    {
+        $groupA = new MaterialGroup();
+        $groupA->name = 'Group With Items';
+        $groupA->specification_template = '[Spec:text]';
+        $groupA->created_by = $this->user->id;
+        $groupA->save();
+
+        $item1 = new MaterialItem();
+        $item1->material_group_id = $groupA->id;
+        $item1->name = 'Item One';
+        $item1->specification_unit_packaging = 'Spec 1';
+        $item1->brand = 'Brand A';
+        $item1->created_by = $this->user->id;
+        $item1->save();
+
+        $item2 = new MaterialItem();
+        $item2->material_group_id = $groupA->id;
+        $item2->name = 'Item Two';
+        $item2->specification_unit_packaging = 'Spec 2';
+        $item2->brand = 'Brand B';
+        $item2->created_by = $this->user->id;
+        $item2->save();
+
+        $groupB = new MaterialGroup();
+        $groupB->name = 'Empty Group';
+        $groupB->specification_template = '[Spec:text]';
+        $groupB->created_by = $this->user->id;
+        $groupB->save();
+
+        // Query material group list
+        $response = $this->authenticatedRequest('GET', '/api/material/group/list');
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+        ]);
+
+        $data = collect($response->json('data'));
+        $foundGroupA = $data->firstWhere('id', $groupA->id);
+        $foundGroupB = $data->firstWhere('id', $groupB->id);
+
+        $this->assertNotNull($foundGroupA);
+        $this->assertNotNull($foundGroupB);
+        $this->assertEquals(2, $foundGroupA['items_count']);
+        $this->assertEquals(0, $foundGroupB['items_count']);
+
+        // Test sorting by items_count DESC
+        $responseDesc = $this->authenticatedRequest('GET', '/api/material/group/list?order_by=items_count&order=DESC');
+        $responseDesc->assertStatus(200);
+        $descData = $responseDesc->json('data');
+        $this->assertEquals($groupA->id, $descData[0]['id']);
+
+        // Test sorting by items_count ASC
+        $responseAsc = $this->authenticatedRequest('GET', '/api/material/group/list?order_by=items_count&order=ASC');
+        $responseAsc->assertStatus(200);
+        $ascData = $responseAsc->json('data');
+        $this->assertEquals($groupB->id, $ascData[0]['id']);
+    }
+
+    public function test_renders_material_groups_list_view_with_item_count_elements()
+    {
+        $response = $this->actingAs($this->user)
+            ->withSession(['access_codes' => $this->accessCodes])
+            ->get('/master_data/material/groups');
+
+        $response->assertStatus(200);
+        $response->assertSee('Material Groups');
+        $response->assertSee('Most Items');
+        $response->assertSee('Least Items');
+    }
 }

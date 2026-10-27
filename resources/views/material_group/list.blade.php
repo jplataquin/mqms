@@ -38,6 +38,8 @@
                             <option value="2">Z-A name</option>
                             <option value="3" selected>Latest Entry</option>
                             <option value="4">Oldest Entry</option>
+                            <option value="5">Most Items</option>
+                            <option value="6">Least Items</option>
                         </select>
                     </div>
                 </div>
@@ -98,8 +100,21 @@
         
         data.map(item=>{
 
-            let row = t.div({class:'item-container fade-in'},()=>{
-                t.div({class:'item-header'},item.name);
+            let count = item.items_count !== undefined ? Number(item.items_count) : 0;
+            let countLabel = count + (count === 1 ? ' item' : ' items');
+
+            let row = t.div({class:'item-container fade-in d-flex justify-content-between align-items-center'},()=>{
+                t.div({},()=>{
+                    t.div({class:'item-header'},item.name);
+                    t.div({class:'item-body text-muted small'},()=>{
+                        t.i({class:'bi bi-box-seam me-1'});
+                        t.span(countLabel);
+                    });
+                });
+
+                t.div({class:'pe-3 text-end'},()=>{
+                    t.span({class:'badge bg-secondary bg-opacity-25 text-body px-3 py-2 fs-6'}, count + (count === 1 ? ' Item' : ' Items'));
+                });
             });
 
             row.onclick = (e)=>{
@@ -174,7 +189,15 @@
             case 4:
                 order   = 'ASC';
                 orderBy = 'id';
-            break;
+                break;
+            case 5:
+                order   = 'DESC';
+                orderBy = 'items_count';
+                break;
+            case 6:
+                order   = 'ASC';
+                orderBy = 'items_count';
+                break;
         }
 
         showData();
