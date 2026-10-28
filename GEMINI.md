@@ -51,6 +51,9 @@ MQMS is a specialized ERP-style application designed for construction, engineeri
 ## UI & Styling Standards
 - **Backgrounds:** Do NOT use the `bg-light` or `bg-white` classes unless explicitly specified by the user. Allow components, cards, tables, and dialogs to inherit their natural theme styles, borders, or subtle theme-tinted backgrounds (e.g. `bg-primary bg-opacity-10`) to preserve contrast, dark mode compatibility, crisp visual hierarchy, and theme consistency.
 
+## Testing Standards
+- **Targeted Unit Testing:** Spend minimal time in unit tests. There is no need to run the entire application test suite for small changes or new features. Always run targeted tests (e.g., using `php artisan test --filter ...` or targeting specific test files). Only write new unit tests or run tests that directly concern the specific code that was touched or newly introduced.
+
 ## Parallel Agent Coordination
 You are operating in a multi-agent environment where multiple Gemini sessions run in parallel git worktrees created via `gemini -w <name>`. To prevent merge conflicts and optimize work across concurrent agents, follow this coordination and shipping protocol:
 
