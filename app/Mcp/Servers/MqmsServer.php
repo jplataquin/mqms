@@ -8,6 +8,7 @@ use App\Mcp\McpModelRegistry;
 use App\Mcp\Methods\CustomReadResource;
 use App\Mcp\Methods\ServerDiscover;
 use App\Mcp\Resources\DynamicModelResource;
+use App\Mcp\Tools\GetContractItemsAccomplishmentStatusTool;
 use App\Mcp\Tools\GetMaterialNeedScheduleTool;
 use App\Mcp\Tools\GetMaterialPriceStatsTool;
 use App\Mcp\Tools\GetOverallProjectAccomplishmentTool;
@@ -78,6 +79,7 @@ Important Core Hierarchies & Lifecycle Flows:
         ListRecordsTool::class,
         SearchRecordsTool::class,
         GetMaterialNeedScheduleTool::class,
+        GetContractItemsAccomplishmentStatusTool::class,
         GetMaterialPriceStatsTool::class,
         GetOverallProjectAccomplishmentTool::class,
         RunLevelOneBudgetDiagnosticTool::class,

@@ -50,6 +50,7 @@ Material Quantity Request (MQR)
    - `list_records`: Paginated, ordered queries with column validation.
    - `search_records`: Multi-field fuzzy search across common text columns and primary keys.
    - `get_material_price_stats`: Domain analytics aggregating approved canvass pricing from both standard and direct procurement pipelines.
+   - `get_contract_items_accomplishment_status`: Tracks whether contract items are delayed, on-track, or ahead based on actual vs target accomplishments with as-of-date and progress metrics.
    - `run_level_one_budget_diagnostic`: Verifies that total requested quantity (scaled by equivalent) in approved material quantity requests does not exceed component item budget.
    - `run_level_two_budget_diagnostic`: Verifies that material quantities in approved purchase orders do not exceed approved material quantity requests, and verifies that total approved purchase order amounts per contract item do not exceed the contract item amount (calculating percentage used).
    - `overall_project_accomplishment`: Calculates overall project progress, slippage (ahead/behind schedule), contract value, accomplished & target amounts, running speed, required speed, estimated completion date, and contract item breakdown matching the accomplishment studio view.
@@ -204,9 +205,10 @@ The server provides four core tools registered in `MqmsServer`:
 2. list_records
 3. search_records
 4. get_material_price_stats
-5. run_level_one_budget_diagnostic
-6. run_level_two_budget_diagnostic
-7. overall_project_accomplishment
+5. get_contract_items_accomplishment_status
+6. run_level_one_budget_diagnostic
+7. run_level_two_budget_diagnostic
+8. overall_project_accomplishment
 ```
 
 ---
@@ -607,6 +609,18 @@ Tracks physical site accomplishment records and progress monitoring tied to cont
   - `created_by` (integer, optional): Submitting user ID.
   - `date_from` / `date_to` (string, optional): Creation date range (`YYYY-MM-DD`).
   - `page`, `limit`, `order_by`, `order`: Standard pagination and sorting.
+
+#### 6. `get_contract_items_accomplishment_status`
+Calculates and tracks the schedule accomplishment status (`delayed`, `on-track`, or `ahead`) for contract items based on actual cumulative accomplishments compared against scheduled target accomplishments as of a specified date.
+- **Parameters:**
+  - `project_id` (integer, optional): Filter by project ID.
+  - `section_id` (integer, optional): Filter by section ID.
+  - `as_of_date` (string, optional): Evaluation cutoff date (`YYYY-MM-DD`). Defaults to current date.
+  - `status` (string, optional): Filter results by specific status (`delayed`, `on-track`, `ahead`).
+  - `include_excluded` (boolean, optional): Include contract items marked as excluded from monitoring (defaults to `false`).
+- **Response Highlights:**
+  - `summary`: Counts of `total_contract_items`, `filtered_contract_items`, `delayed`, `on_track`, and `ahead`.
+  - `records`: List of contract items with `status`, `actual_accomplishment` (quantity, % of scope, date), `target_accomplishment` (quantity, % of scope, date), `percent_actual_vs_target`, and variance metrics.
 
 ---
 
