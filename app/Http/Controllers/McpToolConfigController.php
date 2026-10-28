@@ -9,6 +9,8 @@ use App\Models\McpToolConfig;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
@@ -45,7 +47,16 @@ class McpToolConfigController extends Controller
         $defaultDescription = method_exists($toolInstance, 'defaultDescription')
             ? $toolInstance->defaultDescription()
             : $toolInstance->description();
-        $config = McpToolConfig::where('tool_name', $name)->first();
+
+        $config = null;
+        try {
+            if (Schema::hasTable('mcp_tool_configs')) {
+                $config = McpToolConfig::where('tool_name', $name)->first();
+            }
+        } catch (\Throwable $e) {
+            Log::warning("Could not query McpToolConfig for tool '{$name}': " . $e->getMessage());
+        }
+
         $customDescription = $config?->custom_description;
 
         return view('mcp_tool_config/edit', [
@@ -62,36 +73,54 @@ class McpToolConfigController extends Controller
     public function _list(Request $request): JsonResponse
     {
         $server = app(MqmsServer::class);
-        $savedConfigs = McpToolConfig::all()->keyBy('tool_name');
+        $savedConfigs = collect();
+        $tableMissing = false;
+
+        try {
+            if (Schema::hasTable('mcp_tool_configs')) {
+                $savedConfigs = McpToolConfig::with('UpdatedByUser')->get()->keyBy('tool_name');
+            } else {
+                $tableMissing = true;
+            }
+        } catch (\Throwable $e) {
+            $tableMissing = true;
+            Log::warning("Could not load mcp_tool_configs table: " . $e->getMessage());
+        }
+
         $tools = [];
 
         foreach ($server->tools as $toolClass) {
-            $instance = app($toolClass);
-            $name = $instance->name();
-            $default = method_exists($instance, 'defaultDescription')
-                ? $instance->defaultDescription()
-                : $instance->description();
-            $config = $savedConfigs->get($name);
-            $custom = $config?->custom_description;
-            $isCustomized = ($custom !== null && trim($custom) !== '');
+            try {
+                $instance = app($toolClass);
+                $name = $instance->name();
+                $default = method_exists($instance, 'defaultDescription')
+                    ? $instance->defaultDescription()
+                    : $instance->description();
+                $config = $savedConfigs->get($name);
+                $custom = $config?->custom_description;
+                $isCustomized = ($custom !== null && trim((string) $custom) !== '');
 
-            $tools[] = [
-                'tool_name'           => $name,
-                'default_description' => $default,
-                'custom_description'  => $custom,
-                'current_description' => $isCustomized ? trim($custom) : $default,
-                'is_customized'       => $isCustomized,
-                'updated_at'          => $config?->updated_at?->toIso8601String(),
-                'updated_by'          => $config?->UpdatedByUser?->name ?? 'N/A',
-            ];
+                $tools[] = [
+                    'tool_name'           => $name,
+                    'default_description' => $default,
+                    'custom_description'  => $custom,
+                    'current_description' => $isCustomized ? trim((string) $custom) : $default,
+                    'is_customized'       => $isCustomized,
+                    'updated_at'          => $config?->updated_at?->toIso8601String(),
+                    'updated_by'          => $config?->UpdatedByUser?->name ?? 'N/A',
+                ];
+            } catch (\Throwable $toolEx) {
+                Log::error("Failed to load tool '{$toolClass}': " . $toolEx->getMessage());
+            }
         }
 
         usort($tools, fn ($a, $b) => strcmp($a['tool_name'], $b['tool_name']));
 
         return response()->json([
-            'status'  => 1,
-            'message' => '',
-            'data'    => $tools,
+            'status'        => 1,
+            'message'       => '',
+            'table_missing' => $tableMissing,
+            'data'          => $tools,
         ]);
     }
 
@@ -133,16 +162,31 @@ class McpToolConfigController extends Controller
             ], 404);
         }
 
-        $config = McpToolConfig::firstOrNew(['tool_name' => $toolName]);
-        $config->custom_description = $customDescription !== null ? trim((string) $customDescription) : null;
-        $config->updated_by = Auth::id();
-        $config->save();
+        try {
+            if (! Schema::hasTable('mcp_tool_configs')) {
+                return response()->json([
+                    'status'  => 0,
+                    'message' => "Database table 'mcp_tool_configs' has not been created yet. Please run 'php artisan migrate' on your server.",
+                ]);
+            }
 
-        return response()->json([
-            'status'  => 1,
-            'message' => 'Tool description updated successfully.',
-            'data'    => $config,
-        ]);
+            $config = McpToolConfig::firstOrNew(['tool_name' => $toolName]);
+            $config->custom_description = $customDescription !== null ? trim((string) $customDescription) : null;
+            $config->updated_by = Auth::id();
+            $config->save();
+
+            return response()->json([
+                'status'  => 1,
+                'message' => 'Tool description updated successfully.',
+                'data'    => $config,
+            ]);
+        } catch (\Throwable $e) {
+            Log::error("Failed to update description for {$toolName}: " . $e->getMessage());
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Failed to save description: ' . $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**
@@ -159,16 +203,26 @@ class McpToolConfigController extends Controller
             ], 400);
         }
 
-        $config = McpToolConfig::where('tool_name', $toolName)->first();
-        if ($config) {
-            $config->custom_description = null;
-            $config->updated_by = Auth::id();
-            $config->save();
-        }
+        try {
+            if (Schema::hasTable('mcp_tool_configs')) {
+                $config = McpToolConfig::where('tool_name', $toolName)->first();
+                if ($config) {
+                    $config->custom_description = null;
+                    $config->updated_by = Auth::id();
+                    $config->save();
+                }
+            }
 
-        return response()->json([
-            'status'  => 1,
-            'message' => "Tool '{$toolName}' description reset to default successfully.",
-        ]);
+            return response()->json([
+                'status'  => 1,
+                'message' => "Tool '{$toolName}' description reset to default successfully.",
+            ]);
+        } catch (\Throwable $e) {
+            Log::error("Failed to reset description for {$toolName}: " . $e->getMessage());
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Failed to reset description: ' . $e->getMessage(),
+            ], 500);
+        }
     }
 }

@@ -53,6 +53,8 @@
     
     <hr>
 
+    <div id="migrationNotice" class="d-none"></div>
+
     <div class="container" id="list">
         <div class="text-center p-4 text-muted">
             <div class="spinner-border spinner-border-sm text-primary me-2" role="status"></div>
@@ -65,9 +67,10 @@
 <script type="module">
     import {$q,Template,$el} from '/adarna.js';
 
-    const list        = $q('#list').first();
-    const searchInput = $q('#searchInput').first();
-    const refreshBtn  = $q('#refreshBtn').first();
+    const list            = $q('#list').first();
+    const searchInput     = $q('#searchInput').first();
+    const refreshBtn      = $q('#refreshBtn').first();
+    const migrationNotice = $q('#migrationNotice').first();
     
     const t = new Template();
     let allTools = [];
@@ -152,6 +155,12 @@
             window.util.unblockUI();
             if(res.status == 1){
                 allTools = res.data;
+                if(res.table_missing && migrationNotice){
+                    migrationNotice.className = 'alert alert-warning py-2 px-3 mb-3';
+                    migrationNotice.innerHTML = '<i class="bi bi-exclamation-triangle-fill me-1"></i> <strong>Database Migration Needed:</strong> The <code>mcp_tool_configs</code> database table has not been created on this server yet. Tools are currently using their default hardcoded descriptions. Run <code>php artisan migrate</code> on the server to enable saving custom descriptions.';
+                } else if(migrationNotice) {
+                    migrationNotice.className = 'd-none';
+                }
                 filterTools();
             } else {
                 window.util.showMsg(res);

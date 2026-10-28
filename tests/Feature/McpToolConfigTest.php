@@ -89,6 +89,19 @@ class McpToolConfigTest extends TestCase
     }
 
     /** @test */
+    public function it_gracefully_handles_list_when_mcp_tool_configs_table_does_not_exist()
+    {
+        \Illuminate\Support\Facades\Schema::dropIfExists('mcp_tool_configs');
+
+        $response = $this->actingAs($this->user)->getJson('/api/mcp_tool_configs/list');
+
+        $response->assertStatus(200);
+        $response->assertJsonPath('status', 1);
+        $response->assertJsonPath('table_missing', true);
+        $this->assertGreaterThanOrEqual(30, count($response->json('data')));
+    }
+
+    /** @test */
     public function user_can_update_and_reset_mcp_tool_description_and_it_reflects_in_mcp_server()
     {
         $toolName = 'overall_project_accomplishment';
