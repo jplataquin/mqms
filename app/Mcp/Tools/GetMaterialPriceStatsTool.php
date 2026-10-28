@@ -16,12 +16,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('Get Material Price Stats')]
 class GetMaterialPriceStatsTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'get_material_price_stats';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'Calculates average, minimum, maximum, and latest price statistics for a material item based on approved canvasses (both standard and direct canvasses). Supports optional filtering by supplier_id and date range (date_from and date_to based on approval date).';
     }

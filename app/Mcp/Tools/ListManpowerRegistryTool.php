@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Manpower Registry')]
 class ListManpowerRegistryTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_manpower_registry';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List and filter manpower registry records. Supports filtering by worker ID, status (PEND/ACTV), worker type (Labor/Skilled), structure category (VERT/HORI/BOTH), name (first, middle, last), gender, geographic region, province, city/municipality, skills (mason, welder, painter, electrician, carpenter, roofer, tile_setter, metal_worker), and creation date range.';
     }

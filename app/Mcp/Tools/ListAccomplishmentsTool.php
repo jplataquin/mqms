@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Accomplishments')]
 class ListAccomplishmentsTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_accomplishments';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List and filter accomplishment records. Supports filtering by accomplishment ID, contract item ID, type (ACTUAL/TARGET), entry date range, creator, remarks (partial match), and creation date range.';
     }

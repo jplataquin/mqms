@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Components')]
 class ListComponentsTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_components';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List and filter components. Supports filtering by component ID, contract item ID, section ID, name (partial match), and status.';
     }

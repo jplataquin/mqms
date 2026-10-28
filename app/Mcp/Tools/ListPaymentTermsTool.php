@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Payment Terms')]
 class ListPaymentTermsTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_payment_terms';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List and filter payment terms. Supports filtering by ID, text/description (partial match), creator, and creation date range.';
     }

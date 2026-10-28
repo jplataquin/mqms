@@ -143,6 +143,9 @@
                                 <li class="nav-sub-item">
                                     <a href="/personal_access_tokens" hx-select="#content" hx-target="#main">Tokens</a>
                                 </li>
+                                <li class="nav-sub-item">
+                                    <a href="/mcp_tool_configs" hx-select="#content" hx-target="#main">Tool Configs</a>
+                                </li>
                             </ul>
                         </li>
 

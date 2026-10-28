@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Material Quantity Requests')]
 class ListMaterialQuantityRequestsTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_material_quantity_requests';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List and filter material quantity requests (MQRs). Supports filtering by ID, project ID, section ID, component ID, status, creator, and creation date range.';
     }

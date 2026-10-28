@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Contract Items')]
 class ListContractItemsTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_contract_items';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List and filter contract items. Supports filtering by contract item ID, section ID, item code (partial match), and description (partial match).';
     }

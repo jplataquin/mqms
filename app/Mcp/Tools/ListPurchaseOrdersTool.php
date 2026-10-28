@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Purchase Orders')]
 class ListPurchaseOrdersTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_purchase_orders';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List and filter standard purchase orders. Supports filtering by PO ID, project ID, section ID, component ID, request ID, supplier ID, payment term ID, status, received status, and creation date range.';
     }

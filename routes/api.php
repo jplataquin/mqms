@@ -270,6 +270,10 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::get('/personal_access_tokens/list', [App\Http\Controllers\PersonalAccessTokenController::class, '_list']);
     Route::post('/personal_access_tokens/create', [App\Http\Controllers\PersonalAccessTokenController::class, '_create']);
     Route::post('/personal_access_tokens/delete', [App\Http\Controllers\PersonalAccessTokenController::class, '_delete']);
+
+    Route::get('/mcp_tool_configs/list', [App\Http\Controllers\McpToolConfigController::class, '_list']);
+    Route::post('/mcp_tool_configs/update', [App\Http\Controllers\McpToolConfigController::class, '_update']);
+    Route::post('/mcp_tool_configs/reset', [App\Http\Controllers\McpToolConfigController::class, '_reset']);
     
 });
 

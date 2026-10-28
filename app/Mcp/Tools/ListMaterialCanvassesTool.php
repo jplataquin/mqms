@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Material Canvasses')]
 class ListMaterialCanvassesTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_material_canvasses';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List and filter standard material canvasses. Supports filtering by ID, request ID, request item ID, supplier ID, payment term ID, and status.';
     }

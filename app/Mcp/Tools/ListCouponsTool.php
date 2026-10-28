@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Coupons')]
 class ListCouponsTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_coupons';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List and filter coupons/vouchers. Supports filtering by coupon ID, status (UNCL, CLMD, APRV, RJCT, VOID), plate number (partial match), code, claimed by name (partial match), remarks (partial match), creator, and creation date range.';
     }

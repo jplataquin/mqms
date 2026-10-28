@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Purchase Order Items')]
 class ListPurchaseOrderItemsTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_purchase_order_items';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List and filter standard purchase order line items. Supports filtering by item ID, PO ID, component item ID, request item ID, canvass ID, material item ID, and status.';
     }

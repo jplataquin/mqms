@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Material Quantity Request Items')]
 class ListMaterialQuantityRequestItemsTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_material_quantity_request_items';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List and filter items within material quantity requests. Supports filtering by item ID, request ID, component item ID, material item ID, and item status.';
     }

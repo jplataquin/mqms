@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Units')]
 class ListUnitsTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_units';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List and filter measurement units. Supports filtering by ID and unit text (partial match).';
     }

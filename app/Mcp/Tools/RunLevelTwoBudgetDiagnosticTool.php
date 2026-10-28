@@ -16,12 +16,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('Run Level 2 Budget Diagnostic')]
 class RunLevelTwoBudgetDiagnosticTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'run_level_two_budget_diagnostic';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'Executes the Level 2 Budget Diagnostic protocol for a project. Verifies that all material quantities in approved purchase orders are within approved Material Quantity Request quantities, and verifies that the total amount of approved purchase orders per contract item does not exceed the contract item amount, calculating the percentage used.';
     }

@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Comments')]
 class ListCommentsTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_comments';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List and filter system comments and audit logs. Supports filtering by comment ID, comment type (e.g. char(4)), record type (e.g. PROJEC, PRORDR), record ID, content (partial match), author/creator, and creation date range.';
     }

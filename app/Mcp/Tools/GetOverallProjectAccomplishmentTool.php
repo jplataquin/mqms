@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('Overall Project Accomplishment')]
 class GetOverallProjectAccomplishmentTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'overall_project_accomplishment';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'Calculates overall project progress, accomplishments, slippage, and velocity metrics matching the project accomplishment studio overall progress view. Supports filtering by project id and optional as_of_date.';
     }

@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Suppliers')]
 class ListSuppliersTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_suppliers';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List and filter suppliers. Supports filtering by supplier ID, name (partial match), contact person (partial match), contact number (partial match), email (partial match), address (partial match), creator, and creation date range.';
     }

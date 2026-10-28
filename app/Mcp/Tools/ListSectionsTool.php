@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Sections')]
 class ListSectionsTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_sections';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List and filter project sections. Supports filtering by section ID, project ID, and section name (partial match).';
     }

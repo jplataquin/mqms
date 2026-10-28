@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Users')]
 class ListUsersTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_users';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List and filter system users. Supports filtering by user ID, name (partial match), email (partial match), status (e.g., ACTV, DCTV), creator, and creation date range. Passwords and security credentials are strictly scrubbed.';
     }

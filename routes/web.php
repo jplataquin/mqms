@@ -270,6 +270,9 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
 
     Route::get('/personal_access_tokens', [App\Http\Controllers\PersonalAccessTokenController::class, 'list']);
     Route::get('/personal_access_tokens/create', [App\Http\Controllers\PersonalAccessTokenController::class, 'create']);
+
+    Route::get('/mcp_tool_configs', [App\Http\Controllers\McpToolConfigController::class, 'list']);
+    Route::get('/mcp_tool_configs/{name}/edit', [App\Http\Controllers\McpToolConfigController::class, 'edit']);
     
 });
 

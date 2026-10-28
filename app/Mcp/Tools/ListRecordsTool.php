@@ -14,12 +14,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Records')]
 class ListRecordsTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_records';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List paginated records for a specified model. Available models: ' . implode(', ', McpModelRegistry::getAllowedModelKeys()) . '.';
     }

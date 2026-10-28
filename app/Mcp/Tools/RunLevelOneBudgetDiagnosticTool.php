@@ -16,12 +16,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('Run Level 1 Budget Diagnostic')]
 class RunLevelOneBudgetDiagnosticTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'run_level_one_budget_diagnostic';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'Executes the Level 1 Budget Diagnostic protocol for a project. Verifies that total requested quantity (scaled by equivalent) in approved material quantity requests does not exceed component item budget. Supports optional filtering by component_id, component_item_id, include_closed, and only_approved_components.';
     }

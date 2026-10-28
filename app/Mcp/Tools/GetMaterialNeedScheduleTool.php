@@ -18,12 +18,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('Get Material Need Schedule')]
 class GetMaterialNeedScheduleTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'get_material_need_schedule';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'Retrieves the schedule of materials needed for active projects based on approved Material Quantity Requests (Material Objectives) within a date range, grouped by project and date needed.';
     }

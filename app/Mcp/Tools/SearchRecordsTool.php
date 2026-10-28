@@ -14,12 +14,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('Search Records')]
 class SearchRecordsTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'search_records';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'Search records in a model by keyword across common text fields (e.g., name, remarks, description, text, brand). Available models: ' . implode(', ', McpModelRegistry::getAllowedModelKeys()) . '.';
     }

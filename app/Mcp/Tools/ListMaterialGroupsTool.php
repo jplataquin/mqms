@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Material Groups')]
 class ListMaterialGroupsTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_material_groups';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List and filter material groups. Supports filtering by ID and name (partial match).';
     }

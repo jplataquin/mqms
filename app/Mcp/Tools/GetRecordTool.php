@@ -14,12 +14,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('Get Record')]
 class GetRecordTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'get_record';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'Get a single record by its model name and ID. Available models: ' . implode(', ', McpModelRegistry::getAllowedModelKeys()) . '.';
     }

@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Material Items')]
 class ListMaterialItemsTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_material_items';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List and filter material items. Supports filtering by ID, material group ID, name (partial match), brand (partial match), and specification/packaging (partial match).';
     }

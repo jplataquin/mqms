@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Projects')]
 class ListProjectsTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_projects';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List and filter projects. Supports filtering by ID, name (partial match), status, creator, and creation date range.';
     }

@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('List Purchase Order Received Items')]
 class ListPurchaseOrderReceivedItemsTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'list_purchase_order_received_items';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'List and filter items within purchase order receipts / deliveries. Supports filtering by receipt item ID, receipt ID, and PO item ID.';
     }
