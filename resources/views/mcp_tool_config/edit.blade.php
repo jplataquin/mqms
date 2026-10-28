@@ -113,16 +113,17 @@
     if (resetBtn) {
         resetBtn.onclick = () => {
             if (confirm(`Are you sure you want to reset the description for '${toolName}' to default?`)) {
-                window.util.fetch('/api/mcp_tool_configs/reset', {
-                    method: 'POST',
-                    body: { tool_name: toolName }
-                }, (res) => {
+                window.util.blockUI();
+                window.util.$post('/api/mcp_tool_configs/reset', { tool_name: toolName })
+                .then(res => {
+                    window.util.unblockUI();
+                    window.util.showMsg(res);
                     if (res.status == 1) {
-                        alert(res.message);
-                        window.location.href = '/mcp_tool_configs';
-                    } else {
-                        alert(res.message || 'Failed to reset description');
+                        window.util.navTo('/mcp_tool_configs');
                     }
+                }).catch(err => {
+                    window.util.unblockUI();
+                    console.error(err);
                 });
             }
         };
@@ -130,25 +131,21 @@
 
     editForm.onsubmit = (e) => {
         e.preventDefault();
-        saveBtn.disabled = true;
-        saveBtn.innerText = 'Saving...';
+        window.util.blockUI();
 
-        window.util.fetch('/api/mcp_tool_configs/update', {
-            method: 'POST',
-            body: {
-                tool_name: toolName,
-                custom_description: customDescription.value
-            }
-        }, (res) => {
-            saveBtn.disabled = false;
-            saveBtn.innerText = 'Save Description';
-
+        window.util.$post('/api/mcp_tool_configs/update', {
+            tool_name: toolName,
+            custom_description: customDescription.value
+        })
+        .then(res => {
+            window.util.unblockUI();
+            window.util.showMsg(res);
             if (res.status == 1) {
-                alert('Tool description saved successfully!');
-                window.location.href = '/mcp_tool_configs';
-            } else {
-                alert(res.message || 'Failed to save description');
+                window.util.navTo('/mcp_tool_configs');
             }
+        }).catch(err => {
+            window.util.unblockUI();
+            console.error(err);
         });
     };
 </script>

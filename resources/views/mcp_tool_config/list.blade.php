@@ -146,26 +146,34 @@
     }
 
     function loadList(){
-        window.util.fetch('/api/mcp_tool_configs/list', (res) => {
+        window.util.blockUI();
+        window.util.$get('/api/mcp_tool_configs/list', {})
+        .then(res => {
+            window.util.unblockUI();
             if(res.status == 1){
                 allTools = res.data;
                 filterTools();
             } else {
-                alert('Failed to load tool configurations');
+                window.util.showMsg(res);
             }
+        }).catch(err => {
+            window.util.unblockUI();
+            console.error(err);
         });
     }
 
     function resetTool(toolName){
-        window.util.fetch('/api/mcp_tool_configs/reset', {
-            method: 'POST',
-            body: { tool_name: toolName }
-        }, (res) => {
+        window.util.blockUI();
+        window.util.$post('/api/mcp_tool_configs/reset', { tool_name: toolName })
+        .then(res => {
+            window.util.unblockUI();
+            window.util.showMsg(res);
             if(res.status == 1){
                 loadList();
-            } else {
-                alert(res.message || 'Failed to reset description');
             }
+        }).catch(err => {
+            window.util.unblockUI();
+            console.error(err);
         });
     }
 
