@@ -18,6 +18,11 @@ class Project extends Model
     protected $table = 'projects';
     public $deleteException = null;
 
+    protected $casts = [
+        'start_date' => 'date:Y-m-d',
+        'calendar_days' => 'integer',
+    ];
+
     public function Sections(): HasMany
     {
         return $this->hasMany(Section::class);

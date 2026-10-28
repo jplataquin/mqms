@@ -52,6 +52,22 @@
                                 </select>
                             </td>
                         </tr>
+                        <tr>
+                            <th>
+                                Start Date
+                            </th>
+                            <td>
+                                <input type="date" disabled="true" id="start_date" value="{{$project->start_date ? \Carbon\Carbon::parse($project->start_date)->format('Y-m-d') : ''}}" class="form-control"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Calendar Days
+                            </th>
+                            <td>
+                                <input type="number" disabled="true" id="calendar_days" value="{{$project->calendar_days ?? ''}}" min="0" class="form-control"/>
+                            </td>
+                        </tr>
                     </table>
                 </div>   
 
@@ -102,6 +118,8 @@
 
     const project_name                = $q('#project_name').first();
     const status                      = $q('#status').first();
+    const start_date                  = $q('#start_date').first();
+    const calendar_days               = $q('#calendar_days').first();
     const editBtn                     = $q('#editBtn').first();
     const updateBtn                   = $q('#updateBtn').first();
     const cancelBtn                   = $q('#cancelBtn').first();
@@ -128,6 +146,8 @@
 
         project_name.disabled             = false;
         status.disabled                   = false;
+        start_date.disabled               = false;
+        calendar_days.disabled            = false;
      
         updateBtn.classList.remove('d-none');
         
@@ -142,7 +162,9 @@
 
         window.util.$post('/api/project/update',{
             name                            : project_name.value,
-            status                           : status.value,
+            status                          : status.value,
+            start_date                      : start_date.value || null,
+            calendar_days                   : calendar_days.value || null,
             id: '{{$project->id}}'
         }).then(reply=>{
 

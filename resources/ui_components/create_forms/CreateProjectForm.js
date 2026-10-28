@@ -27,6 +27,22 @@ class CreateProjectForm extends Component{
             });//div row
 
             t.div({class:'row mb-3'},()=>{
+                t.div({class:'col-lg-6 mb-3'},()=>{
+                    t.div({class:'form-group'},()=>{
+                        t.label('Start Date');
+                        this.el.start_date = t.input({class:'form-control',type:'date'});
+                    });//div
+                });//div col
+
+                t.div({class:'col-lg-6'},()=>{
+                    t.div({class:'form-group'},()=>{
+                        t.label('Calendar Days');
+                        this.el.calendar_days = t.input({class:'form-control',type:'number',min:'0',placeholder:'e.g. 120'});
+                    });//div
+                });//div col
+            });//div row
+
+            t.div({class:'row mb-3'},()=>{
                 t.div({class:'col-lg-12 text-end'},()=>{
                     this.el.btn_submit = t.button({class:'btn btn-primary me-3'},'Submit');
                     this.el.btn_cancel = t.button({class:'btn btn-secondary'},'Cancel');
@@ -42,7 +58,9 @@ class CreateProjectForm extends Component{
 
             window.util.$post('/api/project/create',{
                 name: this.el.project_name.value,
-                status: this.el.project_status.value
+                status: this.el.project_status.value,
+                start_date: this.el.start_date.value || null,
+                calendar_days: this.el.calendar_days.value || null
             }).then(reply=>{
                 
                 window.util.unblockUI();

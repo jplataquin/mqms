@@ -45,6 +45,24 @@
 
     </div>
 
+    <div class="row mt-3">
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Start Date</label>
+                <input type="date" id="startDate" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Calendar Days</label>
+                <input type="number" id="calendarDays" class="form-control" min="0" placeholder="e.g. 120"/>
+            </div>
+        </div>
+
+    </div>
+
     <div class="row mt-5">
         <div class="col-12 text-end">
             <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
@@ -61,6 +79,8 @@
     const cancelBtn              = $q('#cancelBtn').first();
     const projectName            = $q('#projectName').first();
     const status                 = $q('#status').first();
+    const startDate              = $q('#startDate').first();
+    const calendarDays           = $q('#calendarDays').first();
 
     window.util.quickNav = {
         title:'Project',
@@ -74,7 +94,9 @@
 
         window.util.$post('/api/project/create',{
             name: projectName.value,
-            status: status.value
+            status: status.value,
+            start_date: startDate.value || null,
+            calendar_days: calendarDays.value || null
         }).then(reply=>{
             
             window.util.unblockUI();
