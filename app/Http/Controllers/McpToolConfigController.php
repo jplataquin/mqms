@@ -42,7 +42,9 @@ class McpToolConfigController extends Controller
             abort(404, "MCP Tool '{$name}' not found.");
         }
 
-        $defaultDescription = $toolInstance->defaultDescription();
+        $defaultDescription = method_exists($toolInstance, 'defaultDescription')
+            ? $toolInstance->defaultDescription()
+            : $toolInstance->description();
         $config = McpToolConfig::where('tool_name', $name)->first();
         $customDescription = $config?->custom_description;
 
@@ -66,7 +68,9 @@ class McpToolConfigController extends Controller
         foreach ($server->tools as $toolClass) {
             $instance = app($toolClass);
             $name = $instance->name();
-            $default = $instance->defaultDescription();
+            $default = method_exists($instance, 'defaultDescription')
+                ? $instance->defaultDescription()
+                : $instance->description();
             $config = $savedConfigs->get($name);
             $custom = $config?->custom_description;
             $isCustomized = ($custom !== null && trim($custom) !== '');

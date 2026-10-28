@@ -15,12 +15,14 @@ use Laravel\Mcp\Server\Tools\ToolResult;
 #[Title('Get Contract Items Accomplishment Status')]
 class GetContractItemsAccomplishmentStatusTool extends Tool
 {
+    use HasDynamicDescription;
+
     public function name(): string
     {
         return 'get_contract_items_accomplishment_status';
     }
 
-    public function description(): string
+    public function defaultDescription(): string
     {
         return 'Retrieves the accomplishment status of contract items (delayed, on-track, or ahead) based on actual vs target accomplishment, along with current actual quantities, target quantities, and percentage completion. Allows filtering by project_id, section_id, as_of_date, and status.';
     }
