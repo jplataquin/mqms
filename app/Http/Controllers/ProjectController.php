@@ -98,6 +98,8 @@ class ProjectController extends Controller
 
         $name   = $request->input('name') ?? '';
         $status = $request->input('status');
+        $start_date = $request->input('start_date');
+        $calendar_days = $request->input('calendar_days');
 
         $validator = Validator::make($request->all(),[
             'name' => [
@@ -113,6 +115,14 @@ class ProjectController extends Controller
             'status' => [
                 'required',
                 'max:4'
+            ],
+            'start_date' => [
+                'nullable',
+                'date'
+            ],
+            'calendar_days' => [
+                'nullable',
+                'integer'
             ]
         ]);
 
@@ -130,6 +140,8 @@ class ProjectController extends Controller
 
         $project->name          = $name;
         $project->status        = $status;
+        $project->start_date    = $start_date ?: null;
+        $project->calendar_days = ($calendar_days !== null && $calendar_days !== '') ? (int)$calendar_days : null;
         $project->created_by    = $user_id;
     
 
@@ -151,6 +163,8 @@ class ProjectController extends Controller
         $id       = (int) $request->input('id') ?? 0;
         $name     = $request->input('name') ?? '';
         $status   = $request->input('status') ?? '';
+        $start_date = $request->input('start_date');
+        $calendar_days = $request->input('calendar_days');
         
         $validator = Validator::make($request->all(),[
             'id'   => [
@@ -171,6 +185,14 @@ class ProjectController extends Controller
             'status' => [
                 'required',
                 'max:4'
+            ],
+            'start_date' => [
+                'nullable',
+                'date'
+            ],
+            'calendar_days' => [
+                'nullable',
+                'integer'
             ]
         ]);
 
@@ -218,6 +240,8 @@ class ProjectController extends Controller
 
         $project->name                         = $name;
         $project->status                       = $status;
+        $project->start_date                   = $start_date ?: null;
+        $project->calendar_days                = ($calendar_days !== null && $calendar_days !== '') ? (int)$calendar_days : null;
         $project->updated_by                   = $user_id;
 
         $project->save();
