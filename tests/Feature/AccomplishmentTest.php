@@ -865,6 +865,7 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('dragSelectionBox', false);
         $response->assertSee('bulkActionsToolbar', false);
         $response->assertSee('deleteSelectedAccomplishments', false);
+        $response->assertSee('handlePillClick', false);
     }
 
     /** @test */

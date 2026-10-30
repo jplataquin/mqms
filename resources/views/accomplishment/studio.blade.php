@@ -1226,7 +1226,7 @@
                                 const targetData = { ...entry.latestTarget, unitText: unitText, compName: ciName, compStats: compStats };
                                 const targetDataEncoded = encodeURIComponent(JSON.stringify(targetData));
                                 bodyHtml += `
-                                <div class="gantt-pill pill-target" data-id="${entry.latestTarget.id}" style="cursor: pointer;" onclick="viewAccomplishment('${targetDataEncoded}')" title="Target: ${formatNumber(targetQty)} ${escapeHtml(unitText)} as of ${escapeHtml(targetDateStr)}">
+                                <div class="gantt-pill pill-target" data-id="${entry.latestTarget.id}" style="cursor: pointer;" onclick="handlePillClick(event, '${targetDataEncoded}', this)" title="Target: ${formatNumber(targetQty)} ${escapeHtml(unitText)} as of ${escapeHtml(targetDateStr)}">
                                     <span>🎯 ${formatNumber(targetQty)}&nbsp;</span>
                                     <div class="d-flex align-items-center gap-1">
                                         <small class="ms-1">${escapeHtml(unitText)}</small>
@@ -1246,7 +1246,7 @@
                                 const actualData = { ...entry.latestActual, unitText: unitText, compName: ciName, compStats: compStats };
                                 const actualDataEncoded = encodeURIComponent(JSON.stringify(actualData));
                                 bodyHtml += `
-                                <div class="gantt-pill pill-actual" data-id="${entry.latestActual.id}" style="cursor: pointer;" onclick="viewAccomplishment('${actualDataEncoded}')" title="Actual: ${formatNumber(actualQty)} ${escapeHtml(unitText)} as of ${escapeHtml(monthActualDateStr)}">
+                                <div class="gantt-pill pill-actual" data-id="${entry.latestActual.id}" style="cursor: pointer;" onclick="handlePillClick(event, '${actualDataEncoded}', this)" title="Actual: ${formatNumber(actualQty)} ${escapeHtml(unitText)} as of ${escapeHtml(monthActualDateStr)}">
                                     <span>✅ ${formatNumber(actualQty)}&nbsp;</span>
                                     <div class="d-flex align-items-center gap-1">
                                         <small class="ms-1">${escapeHtml(unitText)}</small>
@@ -2460,6 +2460,17 @@
             }
         }
 
+        window.handlePillClick = function(event, accDataStr, pillEl) {
+            if (event && (event.ctrlKey || event.metaKey)) {
+                event.stopPropagation();
+                event.preventDefault();
+                pillEl.classList.toggle('selected');
+                updateBulkToolbar();
+                return;
+            }
+            viewAccomplishment(accDataStr);
+        };
+
         window.clearSelectedPills = function() {
             document.querySelectorAll('.gantt-pill.selected').forEach(pill => pill.classList.remove('selected'));
             updateBulkToolbar();
@@ -2509,26 +2520,40 @@
                 return;
             }
 
+            // If clicking directly on a pill with Ctrl held, let pill click handler toggle it
+            if (e.target.closest('.gantt-pill') && (e.ctrlKey || e.metaKey)) {
+                return;
+            }
+
             // If shift or ctrl is not held and not clicking a pill, clear current selection
             if (!e.ctrlKey && !e.metaKey && !e.shiftKey && !e.target.closest('.gantt-pill')) {
                 clearSelectedPills();
             }
 
-            isDragging = true;
+            // If clicking a pill without Ctrl, don't start dragging
+            if (e.target.closest('.gantt-pill')) {
+                return;
+            }
+
+            let dragInitiated = true;
+            isDragging = false;
             dragStartX = e.clientX;
             dragStartY = e.clientY;
 
-            dragBox.style.left = `${dragStartX}px`;
-            dragBox.style.top = `${dragStartY}px`;
-            dragBox.style.width = '0px';
-            dragBox.style.height = '0px';
-            dragBox.style.display = 'block';
-
             function onMouseMove(moveEvent) {
-                if (!isDragging) return;
+                if (!dragInitiated) return;
 
                 const currentX = moveEvent.clientX;
                 const currentY = moveEvent.clientY;
+
+                if (!isDragging) {
+                    if (Math.abs(currentX - dragStartX) > 5 || Math.abs(currentY - dragStartY) > 5) {
+                        isDragging = true;
+                        dragBox.style.display = 'block';
+                    } else {
+                        return;
+                    }
+                }
 
                 const left = Math.min(dragStartX, currentX);
                 const top = Math.min(dragStartY, currentY);
@@ -2568,11 +2593,14 @@
             }
 
             function onMouseUp() {
-                isDragging = false;
-                dragBox.style.display = 'none';
+                dragInitiated = false;
+                if (isDragging) {
+                    isDragging = false;
+                    dragBox.style.display = 'none';
+                    updateBulkToolbar();
+                }
                 document.removeEventListener('mousemove', onMouseMove);
                 document.removeEventListener('mouseup', onMouseUp);
-                updateBulkToolbar();
             }
 
             document.addEventListener('mousemove', onMouseMove);
