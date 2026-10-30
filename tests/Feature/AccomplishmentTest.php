@@ -866,6 +866,10 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('bulkActionsToolbar', false);
         $response->assertSee('deleteSelectedAccomplishments', false);
         $response->assertSee('handlePillClick', false);
+        $response->assertSee('col-resizer', false);
+        $response->assertSee('--col-wbs-width', false);
+        $response->assertSee('--col-scope-width', false);
+        $response->assertSee('--col-acc-width', false);
     }
 
     /** @test */

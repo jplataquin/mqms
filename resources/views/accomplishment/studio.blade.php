@@ -25,6 +25,9 @@
             --accent-target: #198754;
             --accent-actual: #0d6efd;
             --accent-highlight: #ffc107;
+            --col-wbs-width: 280px;
+            --col-scope-width: 90px;
+            --col-acc-width: 120px;
         }
 
         body {
@@ -189,8 +192,10 @@
             left: 0;
             background-color: #1e2125 !important;
             z-index: 4;
-            min-width: 280px;
-            max-width: 340px;
+            width: var(--col-wbs-width);
+            min-width: var(--col-wbs-width);
+            max-width: var(--col-wbs-width);
+            box-sizing: border-box;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -204,11 +209,16 @@
 
         .sticky-col-metric {
             position: sticky;
-            left: 280px;
+            left: var(--col-wbs-width);
             background-color: #1e2125 !important;
             z-index: 4;
-            min-width: 80px;
+            width: var(--col-scope-width);
+            min-width: var(--col-scope-width);
+            max-width: var(--col-scope-width);
+            box-sizing: border-box;
             text-align: right;
+            overflow: hidden;
+            text-overflow: ellipsis;
             white-space: nowrap;
             opacity: 1 !important;
         }
@@ -220,11 +230,17 @@
 
         .sticky-col-progress {
             position: sticky;
-            left: 360px;
+            left: calc(var(--col-wbs-width) + var(--col-scope-width));
             background-color: #1e2125 !important;
             z-index: 4;
-            min-width: 90px;
+            width: var(--col-acc-width);
+            min-width: var(--col-acc-width);
+            max-width: var(--col-acc-width);
+            box-sizing: border-box;
             border-right: 2px solid var(--border-color) !important;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             opacity: 1 !important;
         }
 
@@ -232,6 +248,24 @@
             z-index: 6 !important;
             background-color: #1a1d20 !important;
             border-right: 2px solid var(--border-color) !important;
+        }
+
+        /* Column Resizer Handles */
+        .col-resizer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 7px;
+            bottom: 0;
+            cursor: col-resize;
+            user-select: none;
+            z-index: 10;
+        }
+
+        .col-resizer:hover,
+        .col-resizer.is-resizing {
+            background-color: var(--accent-actual);
+            opacity: 0.85;
         }
 
         /* Timeline Month Column */
@@ -911,9 +945,24 @@
             if (currentViewMode === 'day') {
                 // Multi-tier header: Month banner spanning all day columns
                 headHtml += `<tr>
-                    <th rowspan="2" class="sticky-col-tree" style="vertical-align: middle;">WBS Work Item</th>
-                    <th rowspan="2" class="sticky-col-metric" style="vertical-align: middle;">Scope</th>
-                    <th rowspan="2" class="sticky-col-progress" style="vertical-align: middle;">Accomplished</th>
+                    <th rowspan="2" class="sticky-col-tree" style="vertical-align: middle;">
+                        <div class="d-flex align-items-center overflow-hidden">
+                            <span class="text-truncate flex-grow-1" title="WBS Work Item">WBS Work Item</span>
+                        </div>
+                        <div class="col-resizer" data-col="wbs" title="Drag to resize WBS Work Item column"></div>
+                    </th>
+                    <th rowspan="2" class="sticky-col-metric" style="vertical-align: middle;">
+                        <div class="d-flex align-items-center overflow-hidden justify-content-end">
+                            <span class="text-truncate" title="Scope">Scope</span>
+                        </div>
+                        <div class="col-resizer" data-col="scope" title="Drag to resize Scope column"></div>
+                    </th>
+                    <th rowspan="2" class="sticky-col-progress" style="vertical-align: middle;">
+                        <div class="d-flex align-items-center overflow-hidden">
+                            <span class="text-truncate" title="Accomplished">Accomplished</span>
+                        </div>
+                        <div class="col-resizer" data-col="acc" title="Drag to resize Accomplished column"></div>
+                    </th>
                     <th colspan="${columns.length}" class="zoomed-month-header">
                         <i class="bi bi-calendar3 me-1"></i> ${escapeHtml(currentMonthTitle)}
                     </th>
@@ -926,9 +975,24 @@
                 headHtml += `</tr>`;
             } else {
                 headHtml += `<tr>
-                    <th class="sticky-col-tree">WBS Work Item</th>
-                    <th class="sticky-col-metric">Scope</th>
-                    <th class="sticky-col-progress">Accomplished</th>`;
+                    <th class="sticky-col-tree">
+                        <div class="d-flex align-items-center overflow-hidden">
+                            <span class="text-truncate flex-grow-1" title="WBS Work Item">WBS Work Item</span>
+                        </div>
+                        <div class="col-resizer" data-col="wbs" title="Drag to resize WBS Work Item column"></div>
+                    </th>
+                    <th class="sticky-col-metric">
+                        <div class="d-flex align-items-center overflow-hidden justify-content-end">
+                            <span class="text-truncate" title="Scope">Scope</span>
+                        </div>
+                        <div class="col-resizer" data-col="scope" title="Drag to resize Scope column"></div>
+                    </th>
+                    <th class="sticky-col-progress">
+                        <div class="d-flex align-items-center overflow-hidden">
+                            <span class="text-truncate" title="Accomplished">Accomplished</span>
+                        </div>
+                        <div class="col-resizer" data-col="acc" title="Drag to resize Accomplished column"></div>
+                    </th>`;
 
                 columns.forEach(col => {
                     const currentClass = getHighlightColClass(col);
@@ -965,13 +1029,15 @@
                 // Section row
                 bodyHtml += `
                 <tr class="row-section" data-section-id="${section.id}" onclick="toggleSection(${section.id}, event)">
-                    <td class="sticky-col-tree">
-                        <i class="bi ${chevronIcon} me-1 text-muted" id="sec-chevron-${section.id}"></i>
-                        <i class="bi bi-folder2 text-warning me-1"></i>
-                        <span>${escapeHtml(section.name)}</span>
+                    <td class="sticky-col-tree" title="${escapeHtml(section.name)}">
+                        <div class="d-flex align-items-center overflow-hidden">
+                            <i class="bi ${chevronIcon} me-1 text-muted flex-shrink-0" id="sec-chevron-${section.id}"></i>
+                            <i class="bi bi-folder2 text-warning me-1 flex-shrink-0"></i>
+                            <span class="text-truncate flex-grow-1">${escapeHtml(section.name)}</span>
+                        </div>
                     </td>
-                    <td class="sticky-col-metric text-muted">-</td>
-                    <td class="sticky-col-progress text-muted">-</td>`;
+                    <td class="sticky-col-metric text-muted text-truncate">-</td>
+                    <td class="sticky-col-progress text-muted text-truncate">-</td>`;
 
                 columns.forEach(col => {
                     const currentClass = getHighlightColClass(col);
@@ -1185,28 +1251,32 @@
 
                     bodyHtml += `
                     <tr class="row-component ${excludedClass} ${behindClass} ${isActive}" id="comp-row-${ci.id}" style="${displayCi}" data-section-parent="${section.id}" data-ci-parent="${ci.id}" data-comp-id="${ci.id}" data-comp-name="${escapeHtml(ciName)}" data-comp-qty="${ci.contract_quantity || ''}" data-comp-unit="${escapeHtml(unitText)}" data-comp-excluded="${isCiExcluded ? '1' : '0'}" onclick="selectComponent(${ci.id}, '${escapeHtml(ciName)}')">
-                        <td class="sticky-col-tree" style="padding-left: 28px; cursor: pointer;" title="Double-click to view progress & performance">
-                            <i class="bi bi-diagram-3 ${isCiExcluded ? 'text-white' : (isBehindTarget ? 'text-danger' : 'text-info')} me-1"></i>
-                            <span class="comp-name-text" title="${escapeHtml(ciName)}">${escapeHtml(ciName)}</span>
-                            ${behindBadge}
-                            ${excludedBadge}
+                        <td class="sticky-col-tree" style="padding-left: 28px; cursor: pointer;" title="${escapeHtml(ciName)}">
+                            <div class="d-flex align-items-center overflow-hidden">
+                                <i class="bi bi-diagram-3 ${isCiExcluded ? 'text-white' : (isBehindTarget ? 'text-danger' : 'text-info')} me-1 flex-shrink-0"></i>
+                                <span class="comp-name-text text-truncate flex-grow-1" title="${escapeHtml(ciName)}">${escapeHtml(ciName)}</span>
+                                ${behindBadge}
+                                ${excludedBadge}
+                            </div>
                         </td>
-                        <td class="sticky-col-metric">
-                            <span class="fw-semibold">${formatNumber(totalScope)}</span>
-                            <small class="text-muted ms-1">${escapeHtml(unitText)}</small>
+                        <td class="sticky-col-metric" title="${formatNumber(totalScope)} ${escapeHtml(unitText)} @ PHP ${formatNumber(unitPrice)}">
+                            <div class="overflow-hidden text-truncate">
+                                <span class="fw-semibold">${formatNumber(totalScope)}</span>
+                                <small class="text-muted ms-1">${escapeHtml(unitText)}</small>
+                            </div>
                             <div class="text-truncate text-muted" style="font-size: 10px;" title="Unit Price: PHP ${formatNumber(unitPrice)}">@ PHP ${formatNumber(unitPrice)}</div>
                         </td>
-                        <td class="sticky-col-progress">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="small fw-semibold ${isBehindTarget ? 'text-danger' : 'text-primary'}">${formatNumber(totalActual)}</span>
-                                <span class="badge ${isBehindTarget ? 'bg-danger' : (percentActual >= 100 ? 'bg-primary' : 'bg-secondary')}" style="font-size: 10px;">${percentActual}%</span>
+                        <td class="sticky-col-progress" title="Actual: ${formatNumber(totalActual)} (${percentActual}%) - PHP ${formatNumber(accomplishedAmount)}">
+                            <div class="d-flex justify-content-between align-items-center overflow-hidden">
+                                <span class="small fw-semibold ${isBehindTarget ? 'text-danger' : 'text-primary'} text-truncate">${formatNumber(totalActual)}</span>
+                                <span class="badge ${isBehindTarget ? 'bg-danger' : (percentActual >= 100 ? 'bg-primary' : 'bg-secondary')} flex-shrink-0 ms-1" style="font-size: 10px;">${percentActual}%</span>
                             </div>
                             <div class="gantt-progress-bar">
                                 <div class="progress-actual ${isBehindTarget ? 'bg-danger' : ''}" style="width: ${percentActual}%;"></div>
                             </div>
-                            <div class="d-flex justify-content-between text-muted" style="font-size: 9.5px; margin-top: 2px;">
-                                <span class="${isBehindTarget ? 'text-danger' : 'text-primary'} fw-semibold" title="Accomplished Amount: PHP ${formatNumber(accomplishedAmount)}">PHP ${formatNumber(accomplishedAmount)}</span>
-                                ${actualDateStr ? `<span title="As of ${escapeHtml(actualDateStr)}">as of ${escapeHtml(actualDateStr)}</span>` : ''}
+                            <div class="d-flex justify-content-between text-muted overflow-hidden" style="font-size: 9.5px; margin-top: 2px;">
+                                <span class="${isBehindTarget ? 'text-danger' : 'text-primary'} fw-semibold text-truncate" title="Accomplished Amount: PHP ${formatNumber(accomplishedAmount)}">PHP ${formatNumber(accomplishedAmount)}</span>
+                                ${actualDateStr ? `<span class="text-truncate ms-1" title="As of ${escapeHtml(actualDateStr)}">as of ${escapeHtml(actualDateStr)}</span>` : ''}
                             </div>
                         </td>`;
 
@@ -2516,7 +2586,7 @@
             // Only trigger drag selection on primary click
             if (e.button !== 0) return;
             // Ignore if clicked directly on an interactive element (except the table background/cells)
-            if (e.target.closest('.delete-pill-btn') || e.target.closest('#bulkActionsToolbar') || e.target.closest('.gantt-context-menu')) {
+            if (e.target.closest('.delete-pill-btn') || e.target.closest('#bulkActionsToolbar') || e.target.closest('.gantt-context-menu') || e.target.closest('.col-resizer')) {
                 return;
             }
 
@@ -2633,6 +2703,66 @@
             if (e.key === 'Escape') {
                 clearSelectedPills();
             }
+        });
+
+        /* ================= Column Resizing ================= */
+        // Restore saved column widths from localStorage
+        ['wbs', 'scope', 'acc'].forEach(col => {
+            const saved = localStorage.getItem(`mqms_studio_${col}_width`);
+            if (saved) {
+                document.documentElement.style.setProperty(`--col-${col}-width`, saved);
+            }
+        });
+
+        ganttHead.addEventListener('mousedown', (e) => {
+            const resizer = e.target.closest('.col-resizer');
+            if (!resizer) return;
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            const colKey = resizer.dataset.col;
+            const varName = `--col-${colKey}-width`;
+            const currentComputed = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+            const startWidth = parseFloat(currentComputed) || (colKey === 'wbs' ? 280 : (colKey === 'scope' ? 90 : 120));
+            const startX = e.clientX;
+
+            resizer.classList.add('is-resizing');
+            document.body.style.cursor = 'col-resize';
+            document.body.style.userSelect = 'none';
+
+            const minWidth = colKey === 'wbs' ? 40 : (colKey === 'scope' ? 30 : 40);
+
+            function onMouseMove(moveEvent) {
+                const deltaX = moveEvent.clientX - startX;
+                const newWidth = Math.max(minWidth, Math.round(startWidth + deltaX));
+                document.documentElement.style.setProperty(varName, `${newWidth}px`);
+            }
+
+            function onMouseUp() {
+                resizer.classList.remove('is-resizing');
+                document.body.style.cursor = '';
+                document.body.style.userSelect = '';
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+
+                const finalComputed = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+                localStorage.setItem(`mqms_studio_${colKey}_width`, finalComputed);
+            }
+
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        });
+
+        ganttHead.addEventListener('dblclick', (e) => {
+            const resizer = e.target.closest('.col-resizer');
+            if (!resizer) return;
+            e.preventDefault();
+            e.stopPropagation();
+            const colKey = resizer.dataset.col;
+            const defaultWidth = colKey === 'wbs' ? '280px' : (colKey === 'scope' ? '90px' : '120px');
+            document.documentElement.style.setProperty(`--col-${colKey}-width`, defaultWidth);
+            localStorage.removeItem(`mqms_studio_${colKey}_width`);
         });
 
         // Initial Load
