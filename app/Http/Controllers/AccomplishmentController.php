@@ -298,13 +298,32 @@ class AccomplishmentController extends Controller
                 ->exists();
 
             if (!$hasTargetOnOrAfter) {
-                return response()->json([
-                    'status'    => -2,
-                    'message'   => 'Failed Validation',
-                    'data'      => [
-                        'entry_date' => ['Cannot create an actual entry. No planned target exists on or after this date.']
-                    ]
-                ]);
+                $lastTarget = $contract_item->Accomplishments()
+                    ->where('type', 'TARGET')
+                    ->orderBy('entry_data', 'desc')
+                    ->orderBy('created_at', 'desc')
+                    ->orderBy('id', 'desc')
+                    ->first();
+
+                if (!$lastTarget) {
+                    return response()->json([
+                        'status'    => -2,
+                        'message'   => 'Failed Validation',
+                        'data'      => [
+                            'entry_date' => ['Cannot create an actual entry. No planned target exists on or after this date.']
+                        ]
+                    ]);
+                }
+
+                if ((float) $request->input('quantity') > (float) $lastTarget->quantity) {
+                    return response()->json([
+                        'status'    => -2,
+                        'message'   => 'Failed Validation',
+                        'data'      => [
+                            'quantity' => ['The quantity must not be greater than the last target quantity of ' . (float) $lastTarget->quantity . '.']
+                        ]
+                    ]);
+                }
             }
         }
 
@@ -403,13 +422,32 @@ class AccomplishmentController extends Controller
                 ->exists();
 
             if (!$hasTargetOnOrAfter) {
-                return response()->json([
-                    'status'    => -2,
-                    'message'   => 'Failed Validation',
-                    'data'      => [
-                        'entry_data' => ['Cannot create an actual entry. No planned target exists on or after this date.']
-                    ]
-                ]);
+                $lastTarget = $contract_item->Accomplishments()
+                    ->where('type', 'TARGET')
+                    ->orderBy('entry_data', 'desc')
+                    ->orderBy('created_at', 'desc')
+                    ->orderBy('id', 'desc')
+                    ->first();
+
+                if (!$lastTarget) {
+                    return response()->json([
+                        'status'    => -2,
+                        'message'   => 'Failed Validation',
+                        'data'      => [
+                            'entry_data' => ['Cannot create an actual entry. No planned target exists on or after this date.']
+                        ]
+                    ]);
+                }
+
+                if ((float) $request->input('quantity') > (float) $lastTarget->quantity) {
+                    return response()->json([
+                        'status'    => -2,
+                        'message'   => 'Failed Validation',
+                        'data'      => [
+                            'quantity' => ['The quantity must not be greater than the last target quantity of ' . (float) $lastTarget->quantity . '.']
+                        ]
+                    ]);
+                }
             }
         }
 

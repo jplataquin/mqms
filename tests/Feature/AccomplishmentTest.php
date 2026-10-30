@@ -1216,11 +1216,29 @@ class AccomplishmentTest extends TestCase
     }
 
     /** @test */
-    public function it_fails_to_create_actual_accomplishment_if_no_target_exists_on_or_after_date()
+    public function it_allows_actual_accomplishment_without_future_target_as_long_as_quantity_does_not_exceed_last_target()
     {
         $this->grantAccessCode($this->user, 'accomplishment:all:create');
 
-        // Only have a target in the past (e.g. 2026-09-10)
+        // 0. If no target exists at all, creating actual fails
+        $responseNoTarget = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
+            'contract_item_id' => $this->contractItem->id,
+            'type'             => 'ACTUAL',
+            'entry_date'       => '2026-09-15',
+            'quantity'         => 20.0,
+            'remarks'          => 'Actual with no target at all'
+        ]);
+
+        $responseNoTarget->assertStatus(200);
+        $responseNoTarget->assertJson([
+            'status' => -2,
+            'message' => 'Failed Validation',
+            'data' => [
+                'entry_date' => ['Cannot create an actual entry. No planned target exists on or after this date.']
+            ]
+        ]);
+
+        // Only have a target in the past (e.g. 2026-09-10) with quantity 50.0
         $pastTarget = new Accomplishment();
         $pastTarget->contract_item_id = $this->contractItem->id;
         $pastTarget->type = 'TARGET';
@@ -1230,63 +1248,68 @@ class AccomplishmentTest extends TestCase
         $pastTarget->created_by = $this->user->id;
         $pastTarget->save();
 
-        // 1. Try to create ACTUAL on 2026-09-15 via _create
+        // 1. Try to create ACTUAL on 2026-09-15 with quantity 60.0 (> 50.0) via _create -> fails
+        $responseExceed = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
+            'contract_item_id' => $this->contractItem->id,
+            'type'             => 'ACTUAL',
+            'entry_date'       => '2026-09-15',
+            'quantity'         => 60.0,
+            'remarks'          => 'Actual exceeding last target'
+        ]);
+
+        $responseExceed->assertStatus(200);
+        $responseExceed->assertJson([
+            'status' => -2,
+            'message' => 'Failed Validation',
+            'data' => [
+                'quantity' => ['The quantity must not be greater than the last target quantity of 50.']
+            ]
+        ]);
+
+        // 2. Try to create ACTUAL on 2026-09-15 with quantity 60.0 (> 50.0) via _add -> fails
+        $responseExceedAdd = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
+            'contract_item_id' => $this->contractItem->id,
+            'entry_data'       => '2026-09-15',
+            'quantity'         => 60.0,
+            'remarks'          => 'Actual exceeding last target via add',
+            'type'             => 'ACTUAL'
+        ]);
+
+        $responseExceedAdd->assertStatus(200);
+        $responseExceedAdd->assertJson([
+            'status' => -2,
+            'message' => 'Failed Validation',
+            'data' => [
+                'quantity' => ['The quantity must not be greater than the last target quantity of 50.']
+            ]
+        ]);
+
+        // 3. Create ACTUAL on 2026-09-15 with quantity 20.0 (<= 50.0) via _create -> succeeds!
         $response1 = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
             'contract_item_id' => $this->contractItem->id,
             'type'             => 'ACTUAL',
             'entry_date'       => '2026-09-15',
             'quantity'         => 20.0,
-            'remarks'          => 'Actual after past target'
+            'remarks'          => 'Actual after past target <= last target qty'
         ]);
 
         $response1->assertStatus(200);
         $response1->assertJson([
-            'status' => -2,
-            'message' => 'Failed Validation',
-            'data' => [
-                'entry_date' => ['Cannot create an actual entry. No planned target exists on or after this date.']
-            ]
+            'status' => 1,
+            'message' => ''
         ]);
 
-        // 2. Try to create ACTUAL on 2026-09-15 via _add
+        // 4. Create ACTUAL on 2026-09-16 with quantity 50.0 (equal to last target qty) via _add -> succeeds!
         $response2 = $this->actingAs($this->user)->postJson('/api/accomplishment/add', [
             'contract_item_id' => $this->contractItem->id,
-            'entry_data'       => '2026-09-15',
-            'quantity'         => 20.0,
-            'remarks'          => 'Actual after past target via add',
+            'entry_data'       => '2026-09-16',
+            'quantity'         => 50.0,
+            'remarks'          => 'Actual after past target equal to last target qty',
             'type'             => 'ACTUAL'
         ]);
 
         $response2->assertStatus(200);
         $response2->assertJson([
-            'status' => -2,
-            'message' => 'Failed Validation',
-            'data' => [
-                'entry_data' => ['Cannot create an actual entry. No planned target exists on or after this date.']
-            ]
-        ]);
-
-        // 3. Now add a target on or after the entry date (e.g. 2026-09-20)
-        $futureTarget = new Accomplishment();
-        $futureTarget->contract_item_id = $this->contractItem->id;
-        $futureTarget->type = 'TARGET';
-        $futureTarget->entry_data = '2026-09-20';
-        $futureTarget->quantity = 80.0;
-        $futureTarget->remarks = 'Future target milestone';
-        $futureTarget->created_by = $this->user->id;
-        $futureTarget->save();
-
-        // 4. Retry creating ACTUAL on 2026-09-15 - should now succeed
-        $response3 = $this->actingAs($this->user)->postJson('/api/accomplishment/create', [
-            'contract_item_id' => $this->contractItem->id,
-            'type'             => 'ACTUAL',
-            'entry_date'       => '2026-09-15',
-            'quantity'         => 20.0,
-            'remarks'          => 'Valid actual accomplishment'
-        ]);
-
-        $response3->assertStatus(200);
-        $response3->assertJson([
             'status' => 1,
             'message' => ''
         ]);
