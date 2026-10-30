@@ -810,6 +810,45 @@ class AccomplishmentTest extends TestCase
     }
 
     /** @test */
+    public function it_can_delete_multiple_accomplishments_via_api()
+    {
+        $acc1 = new Accomplishment();
+        $acc1->contract_item_id = $this->contractItem->id;
+        $acc1->type = 'TARGET';
+        $acc1->entry_data = '2026-09-01';
+        $acc1->quantity = 10.0;
+        $acc1->created_by = $this->user->id;
+        $acc1->save();
+
+        $acc2 = new Accomplishment();
+        $acc2->contract_item_id = $this->contractItem->id;
+        $acc2->type = 'ACTUAL';
+        $acc2->entry_data = '2026-09-15';
+        $acc2->quantity = 5.0;
+        $acc2->created_by = $this->user->id;
+        $acc2->save();
+
+        $response = $this->actingAs($this->user)->postJson('/api/accomplishment/delete-multiple', [
+            'ids' => [$acc1->id, $acc2->id]
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+            'message' => 'Successfully deleted 2 accomplishment(s).'
+        ]);
+
+        $this->assertSoftDeleted('accomplishment_registry', [
+            'id' => $acc1->id,
+            'deleted_by' => $this->user->id
+        ]);
+        $this->assertSoftDeleted('accomplishment_registry', [
+            'id' => $acc2->id,
+            'deleted_by' => $this->user->id
+        ]);
+    }
+
+    /** @test */
     public function it_renders_delete_pill_button_and_confirmation_modal_in_studio_mode()
     {
         $response = $this->actingAs($this->user)->get('/accomplishment/project/' . $this->project->id . '/studio');
@@ -823,6 +862,9 @@ class AccomplishmentTest extends TestCase
         $response->assertSee('btnOverallProgress', false);
         $response->assertSee('showOverallProgress', false);
         $response->assertSee('showComponentProgress', false);
+        $response->assertSee('dragSelectionBox', false);
+        $response->assertSee('bulkActionsToolbar', false);
+        $response->assertSee('deleteSelectedAccomplishments', false);
     }
 
     /** @test */

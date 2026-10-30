@@ -498,6 +498,35 @@ class AccomplishmentController extends Controller
         ]);
     }
 
+    public function _deleteMultiple(Request $request){
+        $ids = $request->input('ids');
+
+        if (!is_array($ids) || empty($ids)) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'No accomplishment records provided.'
+            ]);
+        }
+
+        $userId = Auth::id();
+        $count = 0;
+
+        foreach ($ids as $id) {
+            $accomplishment = Accomplishment::find($id);
+            if ($accomplishment) {
+                $accomplishment->deleted_by = $userId;
+                $accomplishment->save();
+                $accomplishment->delete();
+                $count++;
+            }
+        }
+
+        return response()->json([
+            'status'  => 1,
+            'message' => "Successfully deleted {$count} accomplishment(s)."
+        ]);
+    }
+
     public function _exclude_contract_item(Request $request){
         $contract_item_id = (int) ($request->input('contract_item_id') ?? $request->input('component_id'));
         $contract_item = ContractItem::find($contract_item_id);

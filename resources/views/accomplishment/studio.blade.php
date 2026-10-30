@@ -515,6 +515,32 @@
             display: inline-block;
         }
 
+        /* Bulk Selection & Drag Box */
+        .gantt-pill.selected {
+            outline: 2px solid #0d6efd !important;
+            box-shadow: 0 0 10px rgba(13, 110, 253, 0.8) !important;
+            transform: scale(1.02);
+            z-index: 2;
+        }
+
+        .drag-selection-box {
+            position: fixed;
+            background: rgba(13, 110, 253, 0.2);
+            border: 1px solid rgba(13, 110, 253, 0.8);
+            z-index: 9999;
+            pointer-events: none;
+            display: none;
+        }
+
+        .bulk-actions-toolbar {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 1050;
+            display: none;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
         .gantt-progress-bar {
             height: 6px;
             border-radius: 3px;
@@ -672,6 +698,22 @@
         </div>
 
     </div>
+
+    <!-- Floating Bulk Actions Toolbar -->
+    <div id="bulkActionsToolbar" class="bulk-actions-toolbar card shadow border-primary bg-dark text-light p-2">
+        <div class="d-flex align-items-center gap-3">
+            <span class="small fw-bold" id="bulkSelectedCount">0 items selected</span>
+            <button class="btn btn-sm btn-danger d-flex align-items-center gap-1" onclick="deleteSelectedAccomplishments()">
+                <i class="bi bi-trash"></i> Delete Selected
+            </button>
+            <button class="btn btn-sm btn-outline-secondary" onclick="clearSelectedPills()">
+                Cancel
+            </button>
+        </div>
+    </div>
+
+    <!-- Selection Box Element -->
+    <div id="dragSelectionBox" class="drag-selection-box"></div>
 
     <!-- Floating Context Menu -->
     <div id="ganttContextMenu" class="gantt-context-menu">
@@ -1184,7 +1226,7 @@
                                 const targetData = { ...entry.latestTarget, unitText: unitText, compName: ciName, compStats: compStats };
                                 const targetDataEncoded = encodeURIComponent(JSON.stringify(targetData));
                                 bodyHtml += `
-                                <div class="gantt-pill pill-target" style="cursor: pointer;" onclick="viewAccomplishment('${targetDataEncoded}')" title="Target: ${formatNumber(targetQty)} ${escapeHtml(unitText)} as of ${escapeHtml(targetDateStr)}">
+                                <div class="gantt-pill pill-target" data-id="${entry.latestTarget.id}" style="cursor: pointer;" onclick="viewAccomplishment('${targetDataEncoded}')" title="Target: ${formatNumber(targetQty)} ${escapeHtml(unitText)} as of ${escapeHtml(targetDateStr)}">
                                     <span>🎯 ${formatNumber(targetQty)}&nbsp;</span>
                                     <div class="d-flex align-items-center gap-1">
                                         <small class="ms-1">${escapeHtml(unitText)}</small>
@@ -1204,7 +1246,7 @@
                                 const actualData = { ...entry.latestActual, unitText: unitText, compName: ciName, compStats: compStats };
                                 const actualDataEncoded = encodeURIComponent(JSON.stringify(actualData));
                                 bodyHtml += `
-                                <div class="gantt-pill pill-actual" style="cursor: pointer;" onclick="viewAccomplishment('${actualDataEncoded}')" title="Actual: ${formatNumber(actualQty)} ${escapeHtml(unitText)} as of ${escapeHtml(monthActualDateStr)}">
+                                <div class="gantt-pill pill-actual" data-id="${entry.latestActual.id}" style="cursor: pointer;" onclick="viewAccomplishment('${actualDataEncoded}')" title="Actual: ${formatNumber(actualQty)} ${escapeHtml(unitText)} as of ${escapeHtml(monthActualDateStr)}">
                                     <span>✅ ${formatNumber(actualQty)}&nbsp;</span>
                                     <div class="d-flex align-items-center gap-1">
                                         <small class="ms-1">${escapeHtml(unitText)}</small>
@@ -2399,6 +2441,171 @@
                 })[m];
             });
         }
+
+        /* ================= Bulk Selection & Actions ================= */
+        const dragBox = document.getElementById('dragSelectionBox');
+        const bulkToolbar = document.getElementById('bulkActionsToolbar');
+        const bulkCountEl = document.getElementById('bulkSelectedCount');
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+
+        function updateBulkToolbar() {
+            const selectedPills = document.querySelectorAll('.gantt-pill.selected[data-id]');
+            if (selectedPills.length > 0) {
+                bulkCountEl.innerText = `${selectedPills.length} item${selectedPills.length === 1 ? '' : 's'} selected`;
+                bulkToolbar.style.display = 'block';
+            } else {
+                bulkToolbar.style.display = 'none';
+            }
+        }
+
+        window.clearSelectedPills = function() {
+            document.querySelectorAll('.gantt-pill.selected').forEach(pill => pill.classList.remove('selected'));
+            updateBulkToolbar();
+        };
+
+        window.deleteSelectedAccomplishments = async function() {
+            const selectedPills = Array.from(document.querySelectorAll('.gantt-pill.selected[data-id]'));
+            const ids = Array.from(new Set(selectedPills.map(p => p.getAttribute('data-id')))).filter(Boolean);
+
+            if (ids.length === 0) return;
+
+            const confirmed = await window.util.confirm(`Are you sure you want to delete ${ids.length} selected accomplishment record${ids.length === 1 ? '' : 's'}?`);
+            if (confirmed) {
+                fetch('/api/accomplishment/delete-multiple', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({ ids: ids })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 1) {
+                        clearSelectedPills();
+                        loadProjectData();
+                    } else {
+                        alert(data.message || 'Error deleting accomplishments');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('A network error occurred.');
+                });
+            }
+        };
+
+        const ganttScrollEl = document.getElementById('ganttScroll');
+
+        ganttScrollEl.addEventListener('mousedown', (e) => {
+            // Only trigger drag selection on primary click
+            if (e.button !== 0) return;
+            // Ignore if clicked directly on an interactive element (except the table background/cells)
+            if (e.target.closest('.delete-pill-btn') || e.target.closest('#bulkActionsToolbar') || e.target.closest('.gantt-context-menu')) {
+                return;
+            }
+
+            // If shift or ctrl is not held and not clicking a pill, clear current selection
+            if (!e.ctrlKey && !e.metaKey && !e.shiftKey && !e.target.closest('.gantt-pill')) {
+                clearSelectedPills();
+            }
+
+            isDragging = true;
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+
+            dragBox.style.left = `${dragStartX}px`;
+            dragBox.style.top = `${dragStartY}px`;
+            dragBox.style.width = '0px';
+            dragBox.style.height = '0px';
+            dragBox.style.display = 'block';
+
+            function onMouseMove(moveEvent) {
+                if (!isDragging) return;
+
+                const currentX = moveEvent.clientX;
+                const currentY = moveEvent.clientY;
+
+                const left = Math.min(dragStartX, currentX);
+                const top = Math.min(dragStartY, currentY);
+                const width = Math.abs(currentX - dragStartX);
+                const height = Math.abs(currentY - dragStartY);
+
+                dragBox.style.left = `${left}px`;
+                dragBox.style.top = `${top}px`;
+                dragBox.style.width = `${width}px`;
+                dragBox.style.height = `${height}px`;
+
+                // Calculate bounding box collisions
+                const boxRect = {
+                    left: left,
+                    top: top,
+                    right: left + width,
+                    bottom: top + height
+                };
+
+                const pills = document.querySelectorAll('.gantt-pill[data-id]');
+                pills.forEach(pill => {
+                    const rect = pill.getBoundingClientRect();
+                    const isIntersecting = !(rect.right < boxRect.left || 
+                                             rect.left > boxRect.right || 
+                                             rect.bottom < boxRect.top || 
+                                             rect.top > boxRect.bottom);
+
+                    if (isIntersecting) {
+                        pill.classList.add('selected');
+                    } else if (!moveEvent.ctrlKey && !moveEvent.metaKey) {
+                        // If Ctrl isn't pressed, remove selection on un-intersection
+                        pill.classList.remove('selected');
+                    }
+                });
+
+                updateBulkToolbar();
+            }
+
+            function onMouseUp() {
+                isDragging = false;
+                dragBox.style.display = 'none';
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+                updateBulkToolbar();
+            }
+
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        });
+
+        // Keyboard Shortcuts: Ctrl+A to select all, Delete to remove selected
+        window.addEventListener('keydown', (e) => {
+            const isInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
+            if (isInput) return;
+
+            // Ctrl + A / Cmd + A: Select All
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'a' || e.key === 'A')) {
+                e.preventDefault();
+                const pills = document.querySelectorAll('.gantt-pill[data-id]');
+                pills.forEach(pill => pill.classList.add('selected'));
+                updateBulkToolbar();
+            }
+
+            // Delete or Backspace: Delete Selected
+            if (e.key === 'Delete' || e.key === 'Backspace') {
+                const selectedPills = document.querySelectorAll('.gantt-pill.selected[data-id]');
+                if (selectedPills.length > 0) {
+                    e.preventDefault();
+                    deleteSelectedAccomplishments();
+                }
+            }
+
+            // Escape: Clear Selection
+            if (e.key === 'Escape') {
+                clearSelectedPills();
+            }
+        });
 
         // Initial Load
         loadProjectData();

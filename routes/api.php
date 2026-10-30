@@ -43,6 +43,7 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::post('/accomplishment/add', [App\Http\Controllers\AccomplishmentController::class, '_add']);
     Route::get('/accomplishment/record/list', [App\Http\Controllers\AccomplishmentController::class, '_record_list']);
     Route::post('/accomplishment/delete', [App\Http\Controllers\AccomplishmentController::class, '_delete']);
+    Route::post('/accomplishment/delete-multiple', [App\Http\Controllers\AccomplishmentController::class, '_deleteMultiple']);
     Route::post('/accomplishment/contract_item/exclude', [App\Http\Controllers\AccomplishmentController::class, '_exclude_contract_item']);
     Route::post('/accomplishment/contract_item/include', [App\Http\Controllers\AccomplishmentController::class, '_include_contract_item']);
     Route::post('/accomplishment/component/exclude', [App\Http\Controllers\AccomplishmentController::class, '_exclude_contract_item']);
