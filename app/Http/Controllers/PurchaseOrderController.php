@@ -238,10 +238,7 @@ class PurchaseOrderController extends PurchaseOrderSuperController
         }
 
         $results_to_show = [];
-        $log = DB::getQueryLog();
-
-        $lastQuery = end($log);
-      
+ 
 
         //Filter out completed material request
         foreach($result as $mr){
@@ -267,7 +264,10 @@ class PurchaseOrderController extends PurchaseOrderSuperController
             }
         }   
 
+        $log = DB::getQueryLog();
 
+        $lastQuery = end($log);
+      
         return response()->json([
             'status'    => 1,
             'message'   => '',
