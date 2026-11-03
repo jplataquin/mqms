@@ -34,6 +34,11 @@ class DirectMaterialQuantityRequest extends Model
         return $this->hasMany(DirectMaterialCanvass::class, 'direct_material_quantity_request_id');
     }
 
+    public function PurchaseOrders(): HasMany
+    {
+        return $this->hasMany(DirectPurchaseOrder::class, 'direct_material_quantity_request_id');
+    }
+
     public function Creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');

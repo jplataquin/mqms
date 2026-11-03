@@ -126,6 +126,15 @@ class DirectMaterialQuantityRequestTest extends TestCase
         return $item;
     }
 
+    protected function createPaymentTerm($text = 'COD')
+    {
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = $text;
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+        return $paymentTerm;
+    }
+
     /** @test */
     public function it_can_render_the_direct_material_quantity_request_create_page()
     {
@@ -978,5 +987,109 @@ class DirectMaterialQuantityRequestTest extends TestCase
         $reviewRes->assertStatus(200);
         $reviewRes->assertSee('Date Needed:');
         $reviewRes->assertSee('2026-11-15');
+    }
+
+    /** @test */
+    public function it_renders_po_list_button_on_direct_material_quantity_request_display_page()
+    {
+        $project = $this->createProject('PO Button Project');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $response = $this->actingAs($this->user)->get('/direct_material_quantity_request/' . $dmqr->id);
+        $response->assertStatus(200);
+        $response->assertSee('id="showPoListBtn"', false);
+        $response->assertSee('PO List');
+        $response->assertSee('/direct_material_quantity_request/po_list/' . $dmqr->id);
+    }
+
+    /** @test */
+    public function it_renders_direct_material_quantity_request_po_list_page_and_groups_by_status()
+    {
+        $project = $this->createProject('PO Grouping Project');
+        $supplier = $this->createSupplier('Test PO Supplier');
+        $paymentTerm = $this->createPaymentTerm('COD');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->description = 'Direct Request for PO test';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        // Create Direct Purchase Orders for each primary status: DRFT, PEND, APRV, REJC, VOID
+        $statuses = ['DRFT', 'PEND', 'APRV', 'REJC', 'VOID'];
+        $pos = [];
+
+        foreach ($statuses as $st) {
+            $po = new DirectPurchaseOrder();
+            $po->project_id = $project->id;
+            $po->supplier_id = $supplier->id;
+            $po->payment_term_id = $paymentTerm->id;
+            $po->direct_material_quantity_request_id = $dmqr->id;
+            $po->status = $st;
+            $po->created_by = $this->user->id;
+            $po->save();
+            $pos[$st] = $po;
+        }
+
+        // Create a soft-deleted PO
+        $deletedPo = new DirectPurchaseOrder();
+        $deletedPo->project_id = $project->id;
+        $deletedPo->supplier_id = $supplier->id;
+        $deletedPo->payment_term_id = $paymentTerm->id;
+        $deletedPo->direct_material_quantity_request_id = $dmqr->id;
+        $deletedPo->status = 'DRFT';
+        $deletedPo->created_by = $this->user->id;
+        $deletedPo->save();
+        $deletedPo->delete();
+
+        $response = $this->actingAs($this->user)->get('/direct_material_quantity_request/po_list/' . $dmqr->id);
+        $response->assertStatus(200);
+
+        // Verify summary headers
+        $response->assertSee('Total PO Count: 6');
+        $response->assertSee('PO Grouping Project');
+        $response->assertSee(str_pad($dmqr->id, 6, '0', STR_PAD_LEFT));
+
+        // Verify status group counts
+        $response->assertSee('Draft (1)');
+        $response->assertSee('Pending (1)');
+        $response->assertSee('Approved (1)');
+        $response->assertSee('Rejected (1)');
+        $response->assertSee('Void (1)');
+        $response->assertSee('Deleted (1)');
+
+        // Verify links to each direct purchase order
+        foreach ($pos as $po) {
+            $response->assertSee('/direct_purchase_order/' . $po->id);
+            $response->assertSee('PO#' . str_pad($po->id, 6, '0', STR_PAD_LEFT));
+        }
+
+        $response->assertSee('/direct_purchase_order/' . $deletedPo->id);
+        $response->assertSee('PO#' . str_pad($deletedPo->id, 6, '0', STR_PAD_LEFT));
+    }
+
+    /** @test */
+    public function it_denies_po_list_access_when_user_lacks_permission()
+    {
+        $project = $this->createProject('Denied PO Project');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $unauthorizedUser = User::factory()->create([
+            'status' => 'ACTV',
+        ]);
+
+        $response = $this->actingAs($unauthorizedUser)->get('/direct_material_quantity_request/po_list/' . $dmqr->id);
+        $response->assertSee('Access Denied');
     }
 }

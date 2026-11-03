@@ -9,6 +9,7 @@ use App\Models\MaterialItem;
 use App\Models\DirectMaterialQuantityRequest;
 use App\Models\DirectMaterialQuantityRequestItem;
 use App\Models\DirectMaterialCanvass;
+use App\Models\DirectPurchaseOrder;
 use App\Models\DirectPurchaseOrderItem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -250,6 +251,67 @@ class DirectMaterialQuantityRequestController extends Controller
             'items'     => $dmqr->Items,
             'canEdit'   => $canEdit,
             'canDelete' => $canDelete
+        ]);
+    }
+
+    public function po_list($id)
+    {
+        $id = (int) $id;
+        $dmqr = DirectMaterialQuantityRequest::with(['Project', 'Section'])->findOrFail($id);
+
+        $user = auth()->user();
+        $canViewAll = $this->hasAccess(['material_request:all:view', 'direct_material_quantity_request:all:view']);
+        $canViewOwn = $this->hasAccess(['material_request:own:view', 'direct_material_quantity_request:own:view']);
+
+        if (!$canViewAll) {
+            if (!$canViewOwn || $dmqr->created_by != $user->id) {
+                return view('access_denied');
+            }
+        }
+
+        $project = $dmqr->Project;
+        $section = $dmqr->Section;
+
+        $po_list = DirectPurchaseOrder::withTrashed()
+            ->where('direct_material_quantity_request_id', $dmqr->id)
+            ->with(['Supplier'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $draft    = [];
+        $pending  = [];
+        $approved = [];
+        $rejected = [];
+        $void     = [];
+        $deleted  = [];
+
+        foreach ($po_list as $po) {
+            if ($po->deleted_at !== null) {
+                $deleted[] = $po;
+            } elseif ($po->status === 'DRFT') {
+                $draft[] = $po;
+            } elseif ($po->status === 'PEND') {
+                $pending[] = $po;
+            } elseif ($po->status === 'APRV') {
+                $approved[] = $po;
+            } elseif ($po->status === 'REJC') {
+                $rejected[] = $po;
+            } elseif ($po->status === 'VOID' || $po->status === 'REVO') {
+                $void[] = $po;
+            }
+        }
+
+        return view('direct_material_quantity_request/po_list', [
+            'project'     => $project,
+            'section'     => $section,
+            'request'     => $dmqr,
+            'draft'       => $draft,
+            'pending'     => $pending,
+            'approved'    => $approved,
+            'rejected'    => $rejected,
+            'void'        => $void,
+            'deleted'     => $deleted,
+            'total_count' => count($po_list),
         ]);
     }
 

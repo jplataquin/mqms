@@ -204,6 +204,7 @@ Route::middleware(['auth',CheckForResetPassword::class,'access_codes'])->group(f
     Route::get('/direct_material_quantity_requests', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, 'list']);
     Route::get('/direct_material_quantity_request', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, 'list']);
     Route::get('/direct_material_quantity_request/create', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, 'create']);
+    Route::get('/direct_material_quantity_request/po_list/{id}', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, 'po_list']);
     Route::get('/direct_material_quantity_request/{id}', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, 'display']);
     Route::get('/direct_material_quantity_request/print/{id}', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, 'print']);
 

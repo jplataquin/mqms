@@ -99,6 +99,7 @@
     </div>
 
     <div class="text-end mb-5">
+        <button class="btn btn-primary me-2" id="showPoListBtn">PO List</button>
         <a href="/direct_material_quantity_requests" class="btn btn-secondary me-2">Back to List</a>
         <a href="/direct_material_quantity_request/print/{{$request->id}}" target="_blank" class="btn btn-info me-2 text-white">
             <i class="bi bi-printer"></i> Print
@@ -130,8 +131,15 @@
     import {$q} from '/adarna.js';
 
     const reqId = {{ $request->id }};
+    const showPoListBtn = $q('#showPoListBtn').first();
     const submitBtn = $q('#submitBtn').first();
     const deleteBtn = $q('#deleteBtn').first();
+
+    if (showPoListBtn) {
+        showPoListBtn.onclick = () => {
+            window.util.navTo('/direct_material_quantity_request/po_list/{{$request->id}}');
+        };
+    }
 
     document.querySelectorAll('#reviewLinkBtn, .review-link-btn').forEach(btn => {
         btn.onclick = async () => {
