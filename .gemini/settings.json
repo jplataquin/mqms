@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "mqms_test_server": {
+      "url": "https://test-project.patrila-app.com/api/mcp",
+      "type": "http",
+      "headers": {
+        "Authorization": "Bearer 2|1cPA2D0vxk0C1gssEMdcZaJmCvue8XKPOmjYKKeu45f1aa06"
+      }
+    }
+  }
+}

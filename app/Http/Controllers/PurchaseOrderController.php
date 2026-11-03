@@ -178,6 +178,8 @@ class PurchaseOrderController extends PurchaseOrderSuperController
         $order              = $request->input('order')                  ?? 'DESC';
         $result = [];
 
+        DB::enableQueryLog();
+
         $materialQuantityRequest = new MaterialQuantityRequest();
 
         $materialQuantityRequest = $materialQuantityRequest->where('status','=','APRV');
@@ -237,7 +239,9 @@ class PurchaseOrderController extends PurchaseOrderSuperController
 
         $results_to_show = [];
 
+        $log = DB::getQueryLog();
 
+        $lastQuery = end($log);
 
         //Filter out completed material request
         foreach($result as $mr){
@@ -267,7 +271,8 @@ class PurchaseOrderController extends PurchaseOrderSuperController
         return response()->json([
             'status'    => 1,
             'message'   => '',
-            'data'      => $results_to_show
+            'data'      => $results_to_show,
+            'lastquery' =>  $lastQuery
         ]);
     }
 
