@@ -1699,4 +1699,139 @@ class DirectPurchaseOrderTest extends TestCase
         $response->assertJson(['status' => 1]);
         $this->assertEquals('APRV', DirectPurchaseOrder::find($dpo1->id)->status);
     }
+
+    /** @test */
+    public function it_allows_authorized_user_to_request_void_for_approved_dpo()
+    {
+        $this->grantAccessCode($this->user, 'direct_purchase_order:own:request_void');
+
+        $project = $this->createProject();
+        $supplier = $this->createSupplier();
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Cash on Delivery';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $dpo = new DirectPurchaseOrder();
+        $dpo->project_id = $project->id;
+        $dpo->supplier_id = $supplier->id;
+        $dpo->payment_term_id = $paymentTerm->id;
+        $dpo->status = 'APRV';
+        $dpo->created_by = $this->user->id;
+        $dpo->save();
+
+        $response = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/request_void', [
+            'id' => $dpo->id
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 1,
+            'data' => [
+                'id' => $dpo->id
+            ]
+        ]);
+
+        $this->assertEquals('REVO', $dpo->fresh()->status);
+        $this->assertEquals($this->user->id, $dpo->fresh()->approved_by);
+    }
+
+    /** @test */
+    public function it_denies_request_void_if_dpo_has_wrong_status()
+    {
+        $this->grantAccessCode($this->user, 'direct_purchase_order:own:request_void');
+
+        $project = $this->createProject();
+        $supplier = $this->createSupplier();
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Cash on Delivery';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $dpo = new DirectPurchaseOrder();
+        $dpo->project_id = $project->id;
+        $dpo->supplier_id = $supplier->id;
+        $dpo->payment_term_id = $paymentTerm->id;
+        $dpo->status = 'PEND';
+        $dpo->created_by = $this->user->id;
+        $dpo->save();
+
+        $response = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/request_void', [
+            'id' => $dpo->id
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 0,
+            'message' => 'Cannot request void, record has wrong status'
+        ]);
+
+        $this->assertEquals('PEND', $dpo->fresh()->status);
+    }
+
+    /** @test */
+    public function it_denies_request_void_if_user_lacks_permission()
+    {
+        $project = $this->createProject();
+        $supplier = $this->createSupplier();
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Cash on Delivery';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $dpo = new DirectPurchaseOrder();
+        $dpo->project_id = $project->id;
+        $dpo->supplier_id = $supplier->id;
+        $dpo->payment_term_id = $paymentTerm->id;
+        $dpo->status = 'APRV';
+        $dpo->created_by = $this->user->id;
+        $dpo->save();
+
+        $response = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/request_void', [
+            'id' => $dpo->id
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 0,
+            'message' => 'Access Denied'
+        ]);
+
+        $this->assertEquals('APRV', $dpo->fresh()->status);
+    }
+
+    /** @test */
+    public function it_denies_request_void_if_user_has_own_access_but_dpo_created_by_another()
+    {
+        $this->grantAccessCode($this->user, 'direct_purchase_order:own:request_void');
+
+        $otherUser = User::factory()->create(['status' => 'ACTV']);
+
+        $project = $this->createProject();
+        $supplier = $this->createSupplier();
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Cash on Delivery';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $dpo = new DirectPurchaseOrder();
+        $dpo->project_id = $project->id;
+        $dpo->supplier_id = $supplier->id;
+        $dpo->payment_term_id = $paymentTerm->id;
+        $dpo->status = 'APRV';
+        $dpo->created_by = $otherUser->id;
+        $dpo->save();
+
+        $response = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/request_void', [
+            'id' => $dpo->id
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 0,
+            'message' => 'Access Denied'
+        ]);
+
+        $this->assertEquals('APRV', $dpo->fresh()->status);
+    }
 }
