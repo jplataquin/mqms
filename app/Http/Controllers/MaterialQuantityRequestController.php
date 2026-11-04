@@ -636,6 +636,14 @@ class MaterialQuantityRequestController extends Controller
             $mr_details['Rejected By'] = $material_quantity_request->rejectedByUser()->name.' '.$material_quantity_request->rejected_at;
         }
 
+        if($material_quantity_request->status == 'VOID'){
+            $mr_details['Void By'] = $material_quantity_request->VoidByUser()->name.' '.$material_quantity_request->void_at;
+        }
+
+        $canVoidAll = $this->hasAccess(['material_request:all:void']);
+        $canVoidOwn = $this->hasAccess(['material_request:own:void']);
+        $canVoid    = $canVoidAll || ($canVoidOwn && $material_quantity_request->created_by == $user->id);
+
         return view('material_quantity_request/display',[
             'mr_details'                => $mr_details,
             'project'                   => $project,
@@ -646,7 +654,8 @@ class MaterialQuantityRequestController extends Controller
             'request_items'             => $request_items,
             'material_options'          => $material_options,
             'component_item_options'    => $component_item_options,
-            'unit_options'              => $unit_options
+            'unit_options'              => $unit_options,
+            'canVoid'                   => $canVoid
         ]);
     }
 
@@ -1577,5 +1586,82 @@ class MaterialQuantityRequestController extends Controller
         ]);
     }
 
-   
+    public function _void(Request $request)
+    {
+        $id = (int) $request->input('id');
+
+        $material_quantity_request = MaterialQuantityRequest::find($id);
+
+        if (!$material_quantity_request) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Record not found',
+                'data'    => []
+            ]);
+        }
+
+        $user = auth()->user();
+        $canVoidAll = $this->hasAccess(['material_request:all:void']);
+        $canVoidOwn = $this->hasAccess(['material_request:own:void']);
+
+        if (!$canVoidAll) {
+            if (!$canVoidOwn || $material_quantity_request->created_by != $user->id) {
+                return response()->json([
+                    'status'  => 0,
+                    'message' => 'Access Denied',
+                    'data'    => []
+                ]);
+            }
+        }
+
+        if (!in_array($material_quantity_request->status, ['APRV', 'CLSD'])) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Record cannot be voided, status must be approved or closed',
+                'data'    => []
+            ]);
+        }
+
+        // Check if any non-void purchase orders exist
+        $activePoCount = PurchaseOrder::where('material_quantity_request_id', $material_quantity_request->id)
+            ->where('status', '!=', 'VOID')
+            ->count();
+
+        if ($activePoCount > 0) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Cannot void request: Existing purchase orders must first be voided before the material quantity request can be set to status void.',
+                'data'    => []
+            ]);
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $material_quantity_request->void_by = $user->id;
+            $material_quantity_request->void_at = Carbon::now();
+            $material_quantity_request->status  = 'VOID';
+            $material_quantity_request->save();
+
+            DB::table('material_quantity_request_items')
+                ->where('material_quantity_request_id', $material_quantity_request->id)
+                ->update(['status' => 'VOID']);
+
+            DB::commit();
+
+            return response()->json([
+                'status'  => 1,
+                'message' => 'Material Quantity Request voided successfully',
+                'data'    => ['id' => $material_quantity_request->id]
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json([
+                'status'  => 0,
+                'message' => $e->getMessage(),
+                'data'    => []
+            ]);
+        }
+    }
 }

@@ -1289,4 +1289,97 @@ class DirectMaterialQuantityRequestTest extends TestCase
         $this->assertStringContainsString('not in Approved status', $response->json('message'));
         $this->assertEquals('PEND', $dmqr->fresh()->status);
     }
+
+    /** @test */
+    public function it_can_void_approved_dmqr_when_no_purchase_orders_exist()
+    {
+        $this->grantAccessCode($this->user, 'material_request:all:void');
+
+        $project = $this->createProject('Void DMQR Project');
+        $item1 = $this->createMaterialItem('Cement 40kg');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $dItem1 = new DirectMaterialQuantityRequestItem();
+        $dItem1->direct_material_quantity_request_id = $dmqr->id;
+        $dItem1->material_item_id = $item1->id;
+        $dItem1->quantity = 10;
+        $dItem1->status = 'APRV';
+        $dItem1->save();
+
+        $response = $this->actingAs($this->user)->postJson('/api/direct_material_quantity_request/void', [
+            'id' => $dmqr->id
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 1]);
+
+        $dmqr->refresh();
+        $this->assertEquals('VOID', $dmqr->status);
+        $this->assertEquals($this->user->id, $dmqr->void_by);
+        $this->assertNotNull($dmqr->void_at);
+
+        $dItem1->refresh();
+        $this->assertEquals('VOID', $dItem1->status);
+    }
+
+    /** @test */
+    public function it_prevents_voiding_dmqr_when_active_direct_purchase_order_exists_until_po_is_voided()
+    {
+        $this->grantAccessCode($this->user, 'material_request:all:void');
+
+        $project = $this->createProject('Void Blocked Project');
+        $supplier = $this->createSupplier('Supplier B');
+        $item1 = $this->createMaterialItem('Cement 40kg');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $dItem1 = new DirectMaterialQuantityRequestItem();
+        $dItem1->direct_material_quantity_request_id = $dmqr->id;
+        $dItem1->material_item_id = $item1->id;
+        $dItem1->quantity = 10;
+        $dItem1->status = 'APRV';
+        $dItem1->save();
+
+        // Create an active (APRV) Direct PO linked to this DMQR
+        $dpo = new DirectPurchaseOrder();
+        $dpo->project_id = $project->id;
+        $dpo->supplier_id = $supplier->id;
+        $dpo->payment_term_id = 1;
+        $dpo->direct_material_quantity_request_id = $dmqr->id;
+        $dpo->status = 'APRV';
+        $dpo->created_by = $this->user->id;
+        $dpo->save();
+
+        // Attempting to void DMQR should fail because active PO exists
+        $response = $this->actingAs($this->user)->postJson('/api/direct_material_quantity_request/void', [
+            'id' => $dmqr->id
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 0]);
+        $this->assertStringContainsString('Existing purchase orders must first be voided', $response->json('message'));
+        $this->assertEquals('APRV', $dmqr->fresh()->status);
+
+        // Now void the DPO
+        $dpo->status = 'VOID';
+        $dpo->save();
+
+        // Now voiding DMQR should succeed
+        $response2 = $this->actingAs($this->user)->postJson('/api/direct_material_quantity_request/void', [
+            'id' => $dmqr->id
+        ]);
+
+        $response2->assertStatus(200);
+        $response2->assertJson(['status' => 1]);
+        $this->assertEquals('VOID', $dmqr->fresh()->status);
+    }
 }

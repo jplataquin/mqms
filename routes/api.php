@@ -135,6 +135,7 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::get('/material_quantity_request/total_po_quantity', [App\Http\Controllers\MaterialQuantityRequestController::class, 'get_total_po_quantity']);
     Route::post('/material_quantity_request/revert_to_pending', [App\Http\Controllers\MaterialQuantityRequestController::class, '_revert_to_pending']);
     Route::post('/material_quantity_request/close', [App\Http\Controllers\MaterialQuantityRequestController::class, '_close']);
+    Route::post('/material_quantity_request/void', [App\Http\Controllers\MaterialQuantityRequestController::class, '_void']);
     
 
     Route::get('/review/material_quantity_request/list', [App\Http\Controllers\Review\MaterialQuantityRequestReviewController::class, '_list']);
@@ -217,6 +218,7 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::post('/direct_material_quantity_request/delete', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_delete']);
     Route::post('/direct_material_quantity_request/revert_to_pending', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_revert_to_pending']);
     Route::post('/direct_material_quantity_request/close', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_close']);
+    Route::post('/direct_material_quantity_request/void', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_void']);
 
     // Direct Material Canvass
     Route::get('/direct_material_canvass/list', [App\Http\Controllers\DirectMaterialCanvassController::class, '_list']);

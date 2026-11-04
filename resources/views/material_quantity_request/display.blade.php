@@ -87,6 +87,10 @@
                     <button class="btn btn-dark" id="closeRequestBtn">Close Request</button>
                 @endif
 
+                @if(($material_quantity_request->status == 'APRV' || $material_quantity_request->status == 'CLSD') && !empty($canVoid))
+                    <button class="btn btn-outline-danger" id="voidBtn">Void</button>
+                @endif
+
                 <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
 
             </div>
@@ -110,6 +114,7 @@
         const printBtn      = $q('#printBtn').first();
         const revertPendBtn = $q('#revertPendBtn').first();
         const closeRequestBtn = $q('#closeRequestBtn').first();
+        const voidBtn       = $q('#voidBtn').first();
         const reviewLinkBtn = $q('#reviewLinkBtn').first();
         const showPoListBtn = $q('#showPoListBtn').first();
         const comment_box   = $q('#comment_box').first();
@@ -185,6 +190,33 @@
                 window.util.blockUI();
 
                 window.util.$post('/api/material_quantity_request/close',{
+                    id:'{{$material_quantity_request->id}}'
+                }).then(reply=>{
+
+                    window.util.unblockUI();
+
+                    if(reply.status <= 0){
+                        window.util.showMsg(reply);
+                        return false;
+                    }
+
+                    window.util.navReload();
+                });
+            }
+
+        }//if
+
+        if(voidBtn){
+
+            voidBtn.onclick = async (e)=>{
+
+                if(! await window.util.confirm('Are you sure you want to VOID this Material Request? This action cannot be undone.')){
+                    return false;
+                }
+
+                window.util.blockUI();
+
+                window.util.$post('/api/material_quantity_request/void',{
                     id:'{{$material_quantity_request->id}}'
                 }).then(reply=>{
 

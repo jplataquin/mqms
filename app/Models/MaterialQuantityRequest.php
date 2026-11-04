@@ -235,4 +235,15 @@ class MaterialQuantityRequest extends Model
         return $user;
     }
 
+    public function VoidByUser(){   
+       
+        $user = User::find($this->void_by);
+
+        if(!$user){
+            return User::defaultAttirbutes();
+        }
+
+        return $user;
+    }
+
 }
