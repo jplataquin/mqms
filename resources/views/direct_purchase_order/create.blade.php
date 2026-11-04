@@ -550,7 +550,7 @@
         projectInput.oninput = async () => {
             const newProjId = findOptionId(projectInput, projectList);
             const currProjId = projectSelect.value;
-
+            console.log('here',newProjId,currProjId);
             if (newProjId !== currProjId) {
                 projectSelect.value = newProjId;
                 sectionInput.value = '';
@@ -574,7 +574,6 @@
                 });
                 window.util.unblockUI();
 
-                console.log(res);
                 if (res.status === 1 && res.data) {
                     res.data.forEach(s => {
                         const opt = document.createElement('option');
