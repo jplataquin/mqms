@@ -1092,4 +1092,201 @@ class DirectMaterialQuantityRequestTest extends TestCase
         $response = $this->actingAs($unauthorizedUser)->get('/direct_material_quantity_request/po_list/' . $dmqr->id);
         $response->assertSee('Access Denied');
     }
+
+    /** @test */
+    public function it_can_update_dmqr_in_place_when_in_draft_or_pending_status()
+    {
+        $project = $this->createProject('Update Test Project');
+        $item1 = $this->createMaterialItem('Cement 40kg');
+        $item2 = $this->createMaterialItem('Sand 1 cu.m');
+        $item3 = $this->createMaterialItem('Gravel 1 cu.m');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'PEND';
+        $dmqr->description = 'Initial Description';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $dItem1 = new DirectMaterialQuantityRequestItem();
+        $dItem1->direct_material_quantity_request_id = $dmqr->id;
+        $dItem1->material_item_id = $item1->id;
+        $dItem1->quantity = 10;
+        $dItem1->status = 'PEND';
+        $dItem1->save();
+
+        $dItem2 = new DirectMaterialQuantityRequestItem();
+        $dItem2->direct_material_quantity_request_id = $dmqr->id;
+        $dItem2->material_item_id = $item2->id;
+        $dItem2->quantity = 5;
+        $dItem2->status = 'PEND';
+        $dItem2->save();
+
+        $updatePayload = [
+            'id' => $dmqr->id,
+            'description' => 'Updated Description',
+            'date_needed' => '2026-12-01',
+            'items' => json_encode([
+                [
+                    'id' => $dItem1->id,
+                    'material_item_id' => $item1->id,
+                    'quantity' => 15,
+                    'remarks' => 'Increased quantity'
+                ],
+                [
+                    'id' => null, // new item
+                    'material_item_id' => $item3->id,
+                    'quantity' => 8,
+                    'remarks' => 'New gravel item'
+                ]
+            ]),
+            'delete_items' => json_encode([$dItem2->id])
+        ];
+
+        $response = $this->actingAs($this->user)->postJson('/api/direct_material_quantity_request/update', $updatePayload);
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 1]);
+
+        $dmqr->refresh();
+        $this->assertEquals('Updated Description', $dmqr->description);
+        $this->assertEquals('2026-12-01', $dmqr->date_needed);
+
+        $dItem1->refresh();
+        $this->assertEquals(15, $dItem1->quantity);
+        $this->assertEquals('Increased quantity', $dItem1->remarks);
+
+        $this->assertNull(DirectMaterialQuantityRequestItem::find($dItem2->id));
+
+        $newItem = DirectMaterialQuantityRequestItem::where('direct_material_quantity_request_id', $dmqr->id)
+            ->where('material_item_id', $item3->id)
+            ->first();
+        $this->assertNotNull($newItem);
+        $this->assertEquals(8, $newItem->quantity);
+    }
+
+    /** @test */
+    public function it_denies_updating_dmqr_when_status_is_approved_or_closed()
+    {
+        $project = $this->createProject('Approved Project');
+        $item1 = $this->createMaterialItem('Cement 40kg');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $dItem1 = new DirectMaterialQuantityRequestItem();
+        $dItem1->direct_material_quantity_request_id = $dmqr->id;
+        $dItem1->material_item_id = $item1->id;
+        $dItem1->quantity = 10;
+        $dItem1->save();
+
+        $response = $this->actingAs($this->user)->postJson('/api/direct_material_quantity_request/update', [
+            'id' => $dmqr->id,
+            'items' => json_encode([[
+                'id' => $dItem1->id,
+                'material_item_id' => $item1->id,
+                'quantity' => 20
+            ]]),
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 0]);
+        $this->assertStringContainsString('cannot be updated', $response->json('message'));
+    }
+
+    /** @test */
+    public function it_can_close_approved_dmqr_and_reconcile_item_quantities_with_purchase_orders()
+    {
+        $this->grantAccessCode($this->user, 'material_request:all:close');
+
+        $project = $this->createProject('Close Test Project');
+        $supplier = $this->createSupplier('Supplier A');
+        $item1 = $this->createMaterialItem('Cement 40kg');
+        $item2 = $this->createMaterialItem('Sand 1 cu.m');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $dItem1 = new DirectMaterialQuantityRequestItem();
+        $dItem1->direct_material_quantity_request_id = $dmqr->id;
+        $dItem1->material_item_id = $item1->id;
+        $dItem1->quantity = 50;
+        $dItem1->status = 'APRV';
+        $dItem1->save();
+
+        $dItem2 = new DirectMaterialQuantityRequestItem();
+        $dItem2->direct_material_quantity_request_id = $dmqr->id;
+        $dItem2->material_item_id = $item2->id;
+        $dItem2->quantity = 20;
+        $dItem2->status = 'APRV';
+        $dItem2->save();
+
+        // Create a direct purchase order using 30 of item1
+        $dpo = new DirectPurchaseOrder();
+        $dpo->project_id = $project->id;
+        $dpo->supplier_id = $supplier->id;
+        $dpo->payment_term_id = 1;
+        $dpo->status = 'APRV';
+        $dpo->created_by = $this->user->id;
+        $dpo->save();
+
+        $poItem = new \App\Models\DirectPurchaseOrderItem();
+        $poItem->direct_purchase_order_id = $dpo->id;
+        $poItem->direct_material_quantity_request_item_id = $dItem1->id;
+        $poItem->material_item_id = $item1->id;
+        $poItem->quantity = 30;
+        $poItem->price = 250;
+        $poItem->status = 'APRV';
+        $poItem->save();
+
+        $response = $this->actingAs($this->user)->postJson('/api/direct_material_quantity_request/close', [
+            'id' => $dmqr->id
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 1]);
+
+        $dmqr->refresh();
+        $this->assertEquals('CLSD', $dmqr->status);
+
+        $dItem1->refresh();
+        $this->assertEquals('CLSD', $dItem1->status);
+        $this->assertEquals(50, $dItem1->original_quantity);
+        $this->assertEquals(30, $dItem1->quantity);
+
+        $dItem2->refresh();
+        $this->assertEquals('CLSD', $dItem2->status);
+        $this->assertEquals(20, $dItem2->original_quantity);
+        $this->assertEquals(0, $dItem2->quantity);
+    }
+
+    /** @test */
+    public function it_denies_closing_dmqr_when_status_is_not_approved()
+    {
+        $this->grantAccessCode($this->user, 'material_request:all:close');
+
+        $project = $this->createProject('Pending Close Project');
+        $item1 = $this->createMaterialItem('Cement 40kg');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'PEND';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $response = $this->actingAs($this->user)->postJson('/api/direct_material_quantity_request/close', [
+            'id' => $dmqr->id
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 0]);
+        $this->assertStringContainsString('not in Approved status', $response->json('message'));
+        $this->assertEquals('PEND', $dmqr->fresh()->status);
+    }
 }

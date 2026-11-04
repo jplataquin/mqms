@@ -246,11 +246,19 @@ class DirectMaterialQuantityRequestController extends Controller
         $canDeleteOwn = $this->hasAccess(['material_request:own:delete', 'direct_material_quantity_request:own:delete']);
         $canDelete = $canDeleteAll || ($canDeleteOwn && $dmqr->created_by == $user->id);
 
+        $canCloseAll = $this->hasAccess(['material_request:all:close', 'material_request:all:update', 'material_request:all:approve', 'direct_material_quantity_request:all:close', 'direct_material_quantity_request:all:update']);
+        $canCloseOwn = $this->hasAccess(['material_request:own:close', 'material_request:own:update', 'direct_material_quantity_request:own:close', 'direct_material_quantity_request:own:update']);
+        $canClose = $canCloseAll || ($canCloseOwn && $dmqr->created_by == $user->id);
+
+        $material_items = MaterialItem::orderBy('name', 'ASC')->get();
+
         return view('direct_material_quantity_request/display', [
-            'request'   => $dmqr,
-            'items'     => $dmqr->Items,
-            'canEdit'   => $canEdit,
-            'canDelete' => $canDelete
+            'request'        => $dmqr,
+            'items'          => $dmqr->Items,
+            'canEdit'        => $canEdit,
+            'canDelete'      => $canDelete,
+            'canClose'       => $canClose,
+            'material_items' => $material_items
         ]);
     }
 
@@ -646,5 +654,296 @@ class DirectMaterialQuantityRequestController extends Controller
             'message' => '',
             'data'    => $result
         ]);
+    }
+
+    public function _get_total_po_quantity($item_id)
+    {
+        $item = DirectMaterialQuantityRequestItem::find($item_id);
+
+        if (!$item) {
+            return [
+                'status'  => 0,
+                'message' => 'Record not found (Direct Material Quantity Request Item)',
+                'data'    => []
+            ];
+        }
+
+        $total = DirectPurchaseOrderItem::where('direct_material_quantity_request_item_id', $item_id)
+            ->whereHas('DirectPurchaseOrder', function ($q) {
+                $q->whereIn('status', ['PEND', 'APRV']);
+            })
+            ->sum('quantity');
+
+        return [
+            'status'  => 1,
+            'message' => '',
+            'data'    => [
+                'total' => (float) $total
+            ]
+        ];
+    }
+
+    public function _update(Request $request)
+    {
+        $id          = (int) $request->input('id');
+        $description = $request->input('description') ?? '';
+        $raw_date    = $request->input('date_needed');
+        $items_raw   = $request->input('items');
+        $delete_raw  = $request->input('delete_items');
+
+        $dmqr = DirectMaterialQuantityRequest::find($id);
+
+        if (!$dmqr) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Record not found',
+                'data'    => []
+            ]);
+        }
+
+        $user = auth()->user();
+        $canUpdateAll = $this->hasAccess(['material_request:all:update', 'direct_material_quantity_request:all:update']);
+        $canUpdateOwn = $this->hasAccess(['material_request:own:update', 'direct_material_quantity_request:own:update']);
+
+        if (!$canUpdateAll) {
+            if (!$canUpdateOwn || $dmqr->created_by != $user->id) {
+                return response()->json([
+                    'status'  => 0,
+                    'message' => 'Access Denied',
+                    'data'    => []
+                ]);
+            }
+        }
+
+        if (!in_array($dmqr->status, ['PEND', 'DRFT'])) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'This record cannot be updated (Status: ' . $dmqr->status . ')',
+                'data'    => []
+            ]);
+        }
+
+        $date_needed = null;
+        if (!empty($raw_date) && $raw_date !== 'null' && $raw_date !== 'undefined') {
+            $dt = \DateTime::createFromFormat('M d, Y', $raw_date);
+            if ($dt) {
+                $date_needed = $dt->format('Y-m-d');
+            } else {
+                $ts = strtotime($raw_date);
+                if ($ts !== false) {
+                    $date_needed = date('Y-m-d', $ts);
+                }
+            }
+        }
+
+        try {
+            $items = is_array($items_raw) ? $items_raw : json_decode($items_raw, true);
+            if (is_null($items) || !is_array($items) || count($items) === 0) {
+                return response()->json([
+                    'status'  => 0,
+                    'message' => 'At least one item is required.',
+                    'data'    => []
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Invalid items JSON payload',
+                'data'    => []
+            ]);
+        }
+
+        $delete_items = [];
+        if (!empty($delete_raw)) {
+            $delete_items = is_array($delete_raw) ? $delete_raw : json_decode($delete_raw, true);
+            if (!is_array($delete_items)) {
+                $delete_items = [];
+            }
+        }
+
+        $validator = Validator::make([
+            'items' => $items
+        ], [
+            'items'                    => ['required', 'array', 'min:1'],
+            'items.*.material_item_id' => ['required', 'integer'],
+            'items.*.quantity'         => ['required', 'numeric', 'min:0.01'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'  => 0,
+                'message' => $validator->errors()->first(),
+                'data'    => []
+            ]);
+        }
+
+        // Validate PO quantities for modified items
+        foreach ($items as $item) {
+            $itemId = isset($item['id']) ? (int) $item['id'] : 0;
+            if (!$itemId) continue;
+
+            $poResult = $this->_get_total_po_quantity($itemId);
+            if ($poResult['status'] > 0) {
+                $poQty = $poResult['data']['total'];
+                if ((float) $item['quantity'] < $poQty) {
+                    return response()->json([
+                        'status'  => 0,
+                        'message' => "Requested quantity cannot be lower than the total PO'd quantity (" . $poQty . ")",
+                        'data'    => [
+                            'item_id'     => $itemId,
+                            'quantity'    => $item['quantity'],
+                            'po_quantity' => $poQty
+                        ]
+                    ]);
+                }
+            }
+        }
+
+        // Validate PO quantities for deleted items
+        foreach ($delete_items as $delItemId) {
+            $delItemId = (int) $delItemId;
+            $poResult = $this->_get_total_po_quantity($delItemId);
+            if ($poResult['status'] > 0 && $poResult['data']['total'] > 0) {
+                return response()->json([
+                    'status'  => 0,
+                    'message' => "An item cannot be deleted because it has a maintained PO quantity",
+                    'data'    => []
+                ]);
+            }
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $dmqr->description = $description;
+            if ($date_needed) {
+                $dmqr->date_needed = $date_needed;
+            }
+            $dmqr->updated_by = $user->id;
+            $dmqr->save();
+
+            foreach ($items as $item) {
+                $itemId = isset($item['id']) ? (int) $item['id'] : 0;
+                $remarks = $item['remarks'] ?? null;
+
+                if (!$itemId) {
+                    // New item
+                    $newItem = new DirectMaterialQuantityRequestItem();
+                    $newItem->direct_material_quantity_request_id = $dmqr->id;
+                    $newItem->material_item_id                     = (int) $item['material_item_id'];
+                    $newItem->quantity                             = (float) $item['quantity'];
+                    $newItem->remarks                              = $remarks;
+                    $newItem->status                               = 'PEND';
+                    $newItem->save();
+                } else {
+                    // Existing item
+                    $existingItem = DirectMaterialQuantityRequestItem::find($itemId);
+                    if ($existingItem && $existingItem->direct_material_quantity_request_id == $dmqr->id) {
+                        $existingItem->material_item_id = (int) $item['material_item_id'];
+                        $existingItem->quantity         = (float) $item['quantity'];
+                        $existingItem->remarks          = $remarks;
+                        $existingItem->save();
+                    }
+                }
+            }
+
+            if (count($delete_items) > 0) {
+                DirectMaterialQuantityRequestItem::where('direct_material_quantity_request_id', $dmqr->id)
+                    ->whereIn('id', $delete_items)
+                    ->delete();
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'status'  => 1,
+                'message' => 'Direct Material Request updated successfully',
+                'data'    => ['id' => $dmqr->id]
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json([
+                'status'  => 0,
+                'message' => $e->getMessage(),
+                'data'    => []
+            ]);
+        }
+    }
+
+    public function _close(Request $request)
+    {
+        $id = (int) $request->input('id');
+
+        $dmqr = DirectMaterialQuantityRequest::find($id);
+
+        if (!$dmqr) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Record not found',
+                'data'    => []
+            ]);
+        }
+
+        if ($dmqr->status != 'APRV') {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Direct Material Request is not in Approved status',
+                'data'    => []
+            ]);
+        }
+
+        $user = auth()->user();
+        $canCloseAll = $this->hasAccess(['material_request:all:close', 'material_request:all:update', 'material_request:all:approve', 'direct_material_quantity_request:all:close', 'direct_material_quantity_request:all:update']);
+        $canCloseOwn = $this->hasAccess(['material_request:own:close', 'material_request:own:update', 'direct_material_quantity_request:own:close', 'direct_material_quantity_request:own:update']);
+
+        if (!$canCloseAll) {
+            if (!$canCloseOwn || $dmqr->created_by != $user->id) {
+                return response()->json([
+                    'status'  => 0,
+                    'message' => 'Access Denied',
+                    'data'    => []
+                ]);
+            }
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $items = $dmqr->Items;
+
+            foreach ($items as $item) {
+                $totalPoQty = DirectPurchaseOrderItem::where('direct_material_quantity_request_item_id', $item->id)
+                    ->whereHas('DirectPurchaseOrder', function ($q) {
+                        $q->whereIn('status', ['APRV', 'PEND']);
+                    })
+                    ->sum('quantity');
+
+                $item->original_quantity = $item->quantity;
+                $item->quantity          = (float) $totalPoQty;
+                $item->status            = 'CLSD';
+                $item->save();
+            }
+
+            $dmqr->status     = 'CLSD';
+            $dmqr->updated_by = $user->id;
+            $dmqr->save();
+
+            DB::commit();
+
+            return response()->json([
+                'status'  => 1,
+                'message' => 'Direct Material Request closed successfully',
+                'data'    => ['id' => $dmqr->id]
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json([
+                'status'  => 0,
+                'message' => $e->getMessage(),
+                'data'    => []
+            ]);
+        }
     }
 }

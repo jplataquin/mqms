@@ -212,9 +212,11 @@ Route::middleware(['auth:sanctum','access_codes'])->group(function () {
     Route::get('/direct_material_quantity_request/available_for_direct_po', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_available_for_direct_po']);
     Route::get('/direct_material_quantity_request/for_direct_po/{id}', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_for_direct_po']);
     Route::post('/direct_material_quantity_request/create', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_create']);
+    Route::post('/direct_material_quantity_request/update', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_update']);
     Route::post('/direct_material_quantity_request/submit_for_review', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_submit_for_review']);
     Route::post('/direct_material_quantity_request/delete', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_delete']);
     Route::post('/direct_material_quantity_request/revert_to_pending', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_revert_to_pending']);
+    Route::post('/direct_material_quantity_request/close', [App\Http\Controllers\DirectMaterialQuantityRequestController::class, '_close']);
 
     // Direct Material Canvass
     Route::get('/direct_material_canvass/list', [App\Http\Controllers\DirectMaterialCanvassController::class, '_list']);
