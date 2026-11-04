@@ -772,7 +772,9 @@
 
             if (sectionInput.value.trim() !== '') {
                 const matchedSecId = findOptionId(sectionInput, sectionList);
-                console.log(matchedSecId,sectionInput,sectionList);
+                console.log(matchedSecId,sectionInput.value,sectionList);
+                window.x = sectionInput;
+
                 if (!matchedSecId) {
                     alert('Please select a valid Section from the list, or clear the Section field.');
                     sectionInput.focus();
