@@ -1494,4 +1494,207 @@ class DirectPurchaseOrderTest extends TestCase
         $reviewRes->assertSee('Date Needed');
         $reviewRes->assertSee('2026-11-20');
     }
+
+    public function test_cannot_create_dpo_exceeding_dmqr_quantities_and_drft_does_not_deduct()
+    {
+        $project = $this->createProject('Validation Project');
+        $supplier = $this->createSupplier('Test Supplier Val');
+
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'COD Val';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $material = $this->createMaterialItem('Gravel');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $dmqrItem = new DirectMaterialQuantityRequestItem();
+        $dmqrItem->direct_material_quantity_request_id = $dmqr->id;
+        $dmqrItem->material_item_id = $material->id;
+        $dmqrItem->quantity = 10;
+        $dmqrItem->save();
+
+        $canvass = new DirectMaterialCanvass();
+        $canvass->direct_material_quantity_request_id = $dmqr->id;
+        $canvass->direct_material_quantity_request_item_id = $dmqrItem->id;
+        $canvass->supplier_id = $supplier->id;
+        $canvass->payment_term_id = $paymentTerm->id;
+        $canvass->price = 100.00;
+        $canvass->status = 'APRV';
+        $canvass->created_by = $this->user->id;
+        $canvass->save();
+
+        // 1. Attempt to create DPO with quantity exceeding 10 (e.g. 15) -> Should be rejected and NOT reach DRFT
+        $res = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/create', [
+            'direct_material_quantity_request_id' => $dmqr->id,
+            'supplier_id'                         => $supplier->id,
+            'payment_term_id'                     => $paymentTerm->id,
+            'project_id'                          => $project->id,
+            'items'                               => json_encode([[
+                'direct_material_quantity_request_item_id' => $dmqrItem->id,
+                'direct_material_canvass_id'               => $canvass->id,
+                'material_item_id'                         => $material->id,
+                'order_quantity'                           => 15,
+                'price'                                    => 100.00
+            ]])
+        ]);
+        $res->assertStatus(200);
+        $res->assertJson(['status' => -2]);
+        $this->assertStringContainsString('exceeds remaining balance', $res->json('message'));
+        $this->assertEquals(0, DirectPurchaseOrder::count());
+
+        // 2. Create a DRFT DPO of quantity 6
+        $res = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/create', [
+            'direct_material_quantity_request_id' => $dmqr->id,
+            'supplier_id'                         => $supplier->id,
+            'payment_term_id'                     => $paymentTerm->id,
+            'project_id'                          => $project->id,
+            'items'                               => json_encode([[
+                'direct_material_quantity_request_item_id' => $dmqrItem->id,
+                'direct_material_canvass_id'               => $canvass->id,
+                'material_item_id'                         => $material->id,
+                'order_quantity'                           => 6,
+                'price'                                    => 100.00
+            ]])
+        ]);
+        $res->assertStatus(200);
+        $res->assertJson(['status' => 1]);
+        $dpo1Id = $res->json('data.id');
+        $this->assertEquals('DRFT', DirectPurchaseOrder::find($dpo1Id)->status);
+
+        // Since dpo1 is DRFT, it should NOT subtract from remaining balance.
+        // Therefore, creating another DPO with quantity 7 should still succeed!
+        $res = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/create', [
+            'direct_material_quantity_request_id' => $dmqr->id,
+            'supplier_id'                         => $supplier->id,
+            'payment_term_id'                     => $paymentTerm->id,
+            'project_id'                          => $project->id,
+            'items'                               => json_encode([[
+                'direct_material_quantity_request_item_id' => $dmqrItem->id,
+                'direct_material_canvass_id'               => $canvass->id,
+                'material_item_id'                         => $material->id,
+                'order_quantity'                           => 7,
+                'price'                                    => 100.00
+            ]])
+        ]);
+        $res->assertStatus(200);
+        $res->assertJson(['status' => 1]);
+        $dpo2Id = $res->json('data.id');
+
+        // Now move dpo1 to PEND
+        $dpo1 = DirectPurchaseOrder::find($dpo1Id);
+        $dpo1->status = 'PEND';
+        $dpo1->save();
+
+        // Now that dpo1 is PEND with quantity 6, remaining balance is 10 - 6 = 4.
+        // Attempting to create a DPO with quantity 5 should now fail!
+        $res = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/create', [
+            'direct_material_quantity_request_id' => $dmqr->id,
+            'supplier_id'                         => $supplier->id,
+            'payment_term_id'                     => $paymentTerm->id,
+            'project_id'                          => $project->id,
+            'items'                               => json_encode([[
+                'direct_material_quantity_request_item_id' => $dmqrItem->id,
+                'direct_material_canvass_id'               => $canvass->id,
+                'material_item_id'                         => $material->id,
+                'order_quantity'                           => 5,
+                'price'                                    => 100.00
+            ]])
+        ]);
+        $res->assertStatus(200);
+        $res->assertJson(['status' => -2]);
+        $this->assertStringContainsString('exceeds remaining balance', $res->json('message'));
+    }
+
+    public function test_approval_validates_quantity_against_dmqr()
+    {
+        $this->grantAccessCode($this->user, 'direct_purchase_order:all:approve');
+
+        $project = $this->createProject('Approval Val Project');
+        $supplier = $this->createSupplier('Test Supplier Appr');
+
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'COD Appr';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $material = $this->createMaterialItem('Sand');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $dmqrItem = new DirectMaterialQuantityRequestItem();
+        $dmqrItem->direct_material_quantity_request_id = $dmqr->id;
+        $dmqrItem->material_item_id = $material->id;
+        $dmqrItem->quantity = 10;
+        $dmqrItem->save();
+
+        // Create two PEND DPOs of quantity 6 each (total = 12 > 10)
+        $dpo1 = new DirectPurchaseOrder();
+        $dpo1->direct_material_quantity_request_id = $dmqr->id;
+        $dpo1->supplier_id = $supplier->id;
+        $dpo1->payment_term_id = $paymentTerm->id;
+        $dpo1->project_id = $project->id;
+        $dpo1->status = 'PEND';
+        $dpo1->created_by = $this->user->id;
+        $dpo1->save();
+
+        $item1 = new DirectPurchaseOrderItem();
+        $item1->direct_purchase_order_id = $dpo1->id;
+        $item1->direct_material_quantity_request_item_id = $dmqrItem->id;
+        $item1->material_item_id = $material->id;
+        $item1->quantity = 6;
+        $item1->price = 50.00;
+        $item1->status = 'PEND';
+        $item1->save();
+
+        $dpo2 = new DirectPurchaseOrder();
+        $dpo2->direct_material_quantity_request_id = $dmqr->id;
+        $dpo2->supplier_id = $supplier->id;
+        $dpo2->payment_term_id = $paymentTerm->id;
+        $dpo2->project_id = $project->id;
+        $dpo2->status = 'PEND';
+        $dpo2->created_by = $this->user->id;
+        $dpo2->save();
+
+        $item2 = new DirectPurchaseOrderItem();
+        $item2->direct_purchase_order_id = $dpo2->id;
+        $item2->direct_material_quantity_request_item_id = $dmqrItem->id;
+        $item2->material_item_id = $material->id;
+        $item2->quantity = 6;
+        $item2->price = 50.00;
+        $item2->status = 'PEND';
+        $item2->save();
+
+        // Total PEND is 12, which exceeds DMQR quantity 10. Attempting to approve dpo1 should fail!
+        $response = $this->actingAs($this->user)->postJson('/api/review/direct_purchase_order/approve', [
+            'id' => $dpo1->id
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => -2]);
+        $this->assertStringContainsString('total ordered quantity', $response->json('message'));
+        $this->assertEquals('PEND', DirectPurchaseOrder::find($dpo1->id)->status);
+
+        // Adjust item2 quantity down to 4 (so 6 + 4 = 10 <= 10)
+        $item2->quantity = 4;
+        $item2->save();
+
+        // Now approval should succeed
+        $response = $this->actingAs($this->user)->postJson('/api/review/direct_purchase_order/approve', [
+            'id' => $dpo1->id
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 1]);
+        $this->assertEquals('APRV', DirectPurchaseOrder::find($dpo1->id)->status);
+    }
 }

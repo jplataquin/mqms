@@ -10,6 +10,7 @@ use App\Models\Supplier;
 use App\Models\PaymentTerm;
 use App\Models\DirectPurchaseOrder;
 use App\Models\DirectPurchaseOrderItem;
+use App\Models\DirectMaterialQuantityRequestItem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -183,6 +184,43 @@ class DirectPurchaseOrderReviewController extends Controller
         DB::beginTransaction();
 
         try {
+            $dpoItems = DirectPurchaseOrderItem::where('direct_purchase_order_id', $dpo->id)->get();
+            $groupedDpoItems = [];
+            foreach ($dpoItems as $item) {
+                if ($item->direct_material_quantity_request_item_id) {
+                    $groupedDpoItems[$item->direct_material_quantity_request_item_id] = true;
+                }
+            }
+
+            if (!empty($groupedDpoItems)) {
+                $dmqrItemIds = array_keys($groupedDpoItems);
+                $dmqrItems = DirectMaterialQuantityRequestItem::whereIn('id', $dmqrItemIds)
+                    ->lockForUpdate()
+                    ->get()
+                    ->keyBy('id');
+
+                foreach ($dmqrItemIds as $dmqr_item_id) {
+                    if (isset($dmqrItems[$dmqr_item_id])) {
+                        $dmqrItem = $dmqrItems[$dmqr_item_id];
+
+                        $ordered = DirectPurchaseOrderItem::where('direct_material_quantity_request_item_id', $dmqr_item_id)
+                            ->whereHas('DirectPurchaseOrder', function ($q) {
+                                $q->whereIn('status', ['PEND', 'APRV']);
+                            })
+                            ->sum('quantity');
+
+                        if ((float) $ordered > (float) $dmqrItem->quantity + 0.0001) {
+                            DB::rollback();
+                            return response()->json([
+                                'status'  => -2,
+                                'message' => "Cannot approve: total ordered quantity ({$ordered}) exceeds the requested limit ({$dmqrItem->quantity}) for item #{$dmqr_item_id}.",
+                                'data'    => []
+                            ]);
+                        }
+                    }
+                }
+            }
+
             $dpo->approved_by = $user_id;
             $dpo->status      = 'APRV';
             $dpo->approved_at = Carbon::now();

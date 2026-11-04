@@ -556,7 +556,7 @@ class DirectMaterialQuantityRequestController extends Controller
 
             $ordered = DirectPurchaseOrderItem::where('direct_material_quantity_request_item_id', $item->id)
                 ->whereHas('DirectPurchaseOrder', function ($q) {
-                    $q->where('status', '!=', 'VOID');
+                    $q->whereIn('status', ['PEND', 'APRV']);
                 })
                 ->sum('quantity');
 
@@ -618,7 +618,7 @@ class DirectMaterialQuantityRequestController extends Controller
 
                 $ordered = DirectPurchaseOrderItem::where('direct_material_quantity_request_item_id', $item->id)
                     ->whereHas('DirectPurchaseOrder', function ($q) {
-                        $q->where('status', '!=', 'VOID');
+                        $q->whereIn('status', ['PEND', 'APRV']);
                     })
                     ->sum('quantity');
 
