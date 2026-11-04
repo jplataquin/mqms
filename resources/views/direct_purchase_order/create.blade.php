@@ -772,8 +772,9 @@
 
             if (sectionInput.value.trim() !== '') {
                 const matchedSecId = findOptionId(sectionInput, sectionList);
-                console.log(matchedSecId,sectionInput.value,sectionList);
-                window.x = sectionInput;
+                console.log(sectionInput.value);
+                console.log(matchedSecId,sectionInput,sectionList);
+                
 
                 if (!matchedSecId) {
                     alert('Please select a valid Section from the list, or clear the Section field.');
