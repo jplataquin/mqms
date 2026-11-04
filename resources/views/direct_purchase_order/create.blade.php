@@ -574,6 +574,7 @@
                 });
                 window.util.unblockUI();
 
+                console.log(res);
                 if (res.status === 1 && res.data) {
                     res.data.forEach(s => {
                         const opt = document.createElement('option');
@@ -772,7 +773,7 @@
 
             if (sectionInput.value.trim() !== '') {
                 const matchedSecId = findOptionId(sectionInput, sectionList);
-                console.log(sectionInput.value);
+             
                 console.log(matchedSecId,sectionInput,sectionList);
                 
 
