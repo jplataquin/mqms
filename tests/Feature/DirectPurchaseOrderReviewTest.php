@@ -268,8 +268,15 @@ class DirectPurchaseOrderReviewTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson([
             'status' => 0,
-            'message' => 'Access Denied',
+            'data' => [
+                'missing_codes' => [
+                    'purchase_order:all:approve',
+                    'direct_purchase_order:all:approve',
+                ],
+            ],
         ]);
+        $this->assertStringContainsString('Access Denied', $response->json('message'));
+        $this->assertStringContainsString('purchase_order:all:approve', $response->json('message'));
 
         $dpo->refresh();
         $this->assertEquals('PEND', $dpo->status);

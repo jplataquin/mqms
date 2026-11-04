@@ -99,9 +99,7 @@ class PurchaseOrderReviewController extends PurchaseOrderSuperController
         $purchaseOrder           = PurchaseOrder::findOrFail($id);
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($purchaseOrder->material_quantity_request_id);
 
-        if(!$this->hasAccess('purchase_order:all:view')){
-            return view('access_denied');
-        }
+        $this->requireAccess('purchase_order:all:view');
 
         $project                = $materialQuantityRequest->Project;
         $section                = $materialQuantityRequest->Section;
@@ -215,13 +213,7 @@ class PurchaseOrderReviewController extends PurchaseOrderSuperController
 
     public function _approve(Request $request){
 
-        if(!$this->hasAccess('purchase_order:all:approve')){
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Access Denied',
-                'data'      => []
-            ]);
-        }
+        $this->requireAccess('purchase_order:all:approve');
 
         $id = (int) $request->input('id');
 
@@ -293,13 +285,7 @@ class PurchaseOrderReviewController extends PurchaseOrderSuperController
 
     public function _reject(Request $request){
 
-         if(!$this->hasAccess('purchase_order:all:reject')){
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Access Denied',
-                'data'      => []
-            ]);
-        }
+        $this->requireAccess('purchase_order:all:reject');
 
         $id = (int) $request->input('id');
 
@@ -371,13 +357,7 @@ class PurchaseOrderReviewController extends PurchaseOrderSuperController
     
     public function _void(Request $request){
 
-        if(!$this->hasAccess('purchase_order:all:void')){
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Access Denied',
-                'data'      => []
-            ]);
-        }
+        $this->requireAccess('purchase_order:all:void');
 
         $id = (int) $request->input('id');
 
@@ -447,13 +427,7 @@ class PurchaseOrderReviewController extends PurchaseOrderSuperController
 
     public function _reject_void(Request $request){
 
-        if(!$this->hasAccess('purchase_order:all:reject_void_request')){
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Access Denied',
-                'data'      => []
-            ]);
-        }
+        $this->requireAccess('purchase_order:all:reject_void_request');
 
         $id = (int) $request->input('id');
 

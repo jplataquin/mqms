@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use App\Exceptions\MissingAccessCodeException;
 
 class Handler extends ExceptionHandler
 {
@@ -45,6 +46,23 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+
+        $this->renderable(function (MissingAccessCodeException $e, $request) {
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'status'  => 0,
+                    'message' => $e->getMessage(),
+                    'data'    => [
+                        'missing_codes' => $e->getMissingCodes(),
+                    ],
+                ]);
+            }
+
+            return response()->view('access_denied', [
+                'missing_codes' => $e->getMissingCodes(),
+                'message'       => $e->getMessage(),
+            ], 403);
         });
     }
 }

@@ -120,13 +120,7 @@ class MaterialCanvassReviewController extends Controller
         
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($id);
 
-        if(!$this->hasAccess('material_canvass:all:view')){
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Access Denied',
-                'data'      => []
-            ]);
-        }
+        $this->requireAccess('material_canvass:all:view');
 
         $project                = $materialQuantityRequest->Project;
         $section                = $materialQuantityRequest->Section;
@@ -202,13 +196,7 @@ class MaterialCanvassReviewController extends Controller
 
     public function _approve(Request $request){
 
-        if(!$this->hasAccess('material_canvass:all:approve')){
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Access Denied',
-                'data'      => []
-            ]);
-        }
+        $this->requireAccess('material_canvass:all:approve');
 
         $id = (int) $request->input('id');
 
@@ -248,13 +236,7 @@ class MaterialCanvassReviewController extends Controller
 
     public function _reject(Request $request){
         
-        if(!$this->hasAccess('material_canvass:all:reject')){
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Access Denied',
-                'data'      => []
-            ]);
-        }
+        $this->requireAccess('material_canvass:all:reject');
 
         $id = (int) $request->input('id');
 

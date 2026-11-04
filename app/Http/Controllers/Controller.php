@@ -7,6 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
+use App\Exceptions\MissingAccessCodeException;
 
 class Controller extends BaseController
 {
@@ -40,5 +41,19 @@ class Controller extends BaseController
         }
 
         return false;
+    }
+
+    /**
+     * Require that the user has at least one of the specified access codes,
+     * otherwise throw a MissingAccessCodeException.
+     *
+     * @param array|string $codes
+     * @throws MissingAccessCodeException
+     */
+    protected function requireAccess($codes)
+    {
+        if (!$this->hasAccess($codes)) {
+            throw new MissingAccessCodeException($codes);
+        }
     }
 }

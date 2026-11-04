@@ -20,9 +20,7 @@ class DirectPurchaseOrderReviewController extends Controller
 {
     public function list()
     {
-        if (!$this->hasAccess(['purchase_order:all:view', 'direct_purchase_order:all:view'])) {
-            return view('access_denied');
-        }
+        $this->requireAccess(['purchase_order:all:view', 'direct_purchase_order:all:view']);
 
         $projects  = Project::orderBy('name', 'ASC')->where('status', '=', 'ACTV')->get();
         $suppliers = Supplier::orderBy('name', 'ASC')->whereNull('deleted_at')->get();
@@ -35,13 +33,7 @@ class DirectPurchaseOrderReviewController extends Controller
 
     public function _list(Request $request)
     {
-        if (!$this->hasAccess(['purchase_order:all:view', 'direct_purchase_order:all:view'])) {
-            return response()->json([
-                'status'  => 0,
-                'message' => 'Access Denied',
-                'data'    => []
-            ]);
-        }
+        $this->requireAccess(['purchase_order:all:view', 'direct_purchase_order:all:view']);
 
         $page        = (int) ($request->input('page') ?? 1);
         $limit       = (int) ($request->input('limit') ?? 10);
@@ -96,9 +88,7 @@ class DirectPurchaseOrderReviewController extends Controller
 
     public function display($id)
     {
-        if (!$this->hasAccess(['purchase_order:all:view', 'direct_purchase_order:all:view'])) {
-            return view('access_denied');
-        }
+        $this->requireAccess(['purchase_order:all:view', 'direct_purchase_order:all:view']);
 
         $dpo = DirectPurchaseOrder::with(['Items.MaterialItem', 'Supplier', 'PaymentTerm', 'Project', 'Section'])->findOrFail($id);
 
@@ -152,13 +142,7 @@ class DirectPurchaseOrderReviewController extends Controller
 
     public function _approve(Request $request)
     {
-        if (!$this->hasAccess(['purchase_order:all:approve', 'direct_purchase_order:all:approve'])) {
-            return response()->json([
-                'status'  => 0,
-                'message' => 'Access Denied',
-                'data'    => []
-            ]);
-        }
+        $this->requireAccess(['purchase_order:all:approve', 'direct_purchase_order:all:approve']);
 
         $id = (int) $request->input('id');
         $dpo = DirectPurchaseOrder::find($id);
@@ -251,13 +235,7 @@ class DirectPurchaseOrderReviewController extends Controller
 
     public function _reject(Request $request)
     {
-        if (!$this->hasAccess(['purchase_order:all:reject', 'direct_purchase_order:all:reject'])) {
-            return response()->json([
-                'status'  => 0,
-                'message' => 'Access Denied',
-                'data'    => []
-            ]);
-        }
+        $this->requireAccess(['purchase_order:all:reject', 'direct_purchase_order:all:reject']);
 
         $id = (int) $request->input('id');
         $dpo = DirectPurchaseOrder::find($id);
@@ -313,13 +291,7 @@ class DirectPurchaseOrderReviewController extends Controller
 
     public function _void(Request $request)
     {
-        if (!$this->hasAccess(['purchase_order:all:void', 'direct_purchase_order:all:void'])) {
-            return response()->json([
-                'status'  => 0,
-                'message' => 'Access Denied',
-                'data'    => []
-            ]);
-        }
+        $this->requireAccess(['purchase_order:all:void', 'direct_purchase_order:all:void']);
 
         $id = (int) $request->input('id');
         $dpo = DirectPurchaseOrder::find($id);
@@ -375,13 +347,7 @@ class DirectPurchaseOrderReviewController extends Controller
 
     public function _reject_void(Request $request)
     {
-        if (!$this->hasAccess(['purchase_order:all:reject_void_request', 'direct_purchase_order:all:reject_void_request'])) {
-            return response()->json([
-                'status'  => 0,
-                'message' => 'Access Denied',
-                'data'    => []
-            ]);
-        }
+        $this->requireAccess(['purchase_order:all:reject_void_request', 'direct_purchase_order:all:reject_void_request']);
 
         $id = (int) $request->input('id');
         $dpo = DirectPurchaseOrder::find($id);

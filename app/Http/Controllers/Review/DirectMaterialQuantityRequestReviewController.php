@@ -15,9 +15,7 @@ class DirectMaterialQuantityRequestReviewController extends Controller
 {
     public function list()
     {
-        if (!$this->hasAccess(['material_request:all:view', 'direct_material_quantity_request:all:view'])) {
-            return view('access_denied');
-        }
+        $this->requireAccess(['material_request:all:view', 'direct_material_quantity_request:all:view']);
 
         $projects = Project::orderBy('name', 'ASC')->where('status', '=', 'ACTV')->get();
 
@@ -28,13 +26,7 @@ class DirectMaterialQuantityRequestReviewController extends Controller
 
     public function _list(Request $request)
     {
-        if (!$this->hasAccess(['material_request:all:view', 'direct_material_quantity_request:all:view'])) {
-            return response()->json([
-                'status'  => 0,
-                'message' => 'Access Denied',
-                'data'    => []
-            ]);
-        }
+        $this->requireAccess(['material_request:all:view', 'direct_material_quantity_request:all:view']);
 
         $page        = (int) ($request->input('page') ?? 1);
         $limit       = (int) ($request->input('limit') ?? 10);
@@ -78,9 +70,7 @@ class DirectMaterialQuantityRequestReviewController extends Controller
 
     public function display($id)
     {
-        if (!$this->hasAccess(['material_request:all:view', 'direct_material_quantity_request:all:view'])) {
-            return view('access_denied');
-        }
+        $this->requireAccess(['material_request:all:view', 'direct_material_quantity_request:all:view']);
 
         $id = (int) $id;
         $dmqr = DirectMaterialQuantityRequest::with(['Project', 'Section', 'Creator', 'Items.MaterialItem'])->findOrFail($id);
@@ -98,13 +88,7 @@ class DirectMaterialQuantityRequestReviewController extends Controller
 
     public function _approve(Request $request)
     {
-        if (!$this->hasAccess(['material_request:all:approve', 'direct_material_quantity_request:all:approve'])) {
-            return response()->json([
-                'status'  => 0,
-                'message' => 'Access Denied',
-                'data'    => []
-            ]);
-        }
+        $this->requireAccess(['material_request:all:approve', 'direct_material_quantity_request:all:approve']);
 
         $id = (int) $request->input('id');
         $dmqr = DirectMaterialQuantityRequest::find($id);
@@ -157,13 +141,7 @@ class DirectMaterialQuantityRequestReviewController extends Controller
 
     public function _reject(Request $request)
     {
-        if (!$this->hasAccess(['material_request:all:reject', 'direct_material_quantity_request:all:reject'])) {
-            return response()->json([
-                'status'  => 0,
-                'message' => 'Access Denied',
-                'data'    => []
-            ]);
-        }
+        $this->requireAccess(['material_request:all:reject', 'direct_material_quantity_request:all:reject']);
 
         $id = (int) $request->input('id');
         $dmqr = DirectMaterialQuantityRequest::find($id);
@@ -209,9 +187,11 @@ class DirectMaterialQuantityRequestReviewController extends Controller
             ]);
         }
 
-        if (!$this->hasAccess(['material_request:all:approve', 'direct_material_quantity_request:all:approve'])) {
+        $approveCodes = ['material_request:all:approve', 'direct_material_quantity_request:all:approve'];
+        if (!$this->hasAccess($approveCodes)) {
             return view('review/direct_material_quantity_request/qr/access_denied', [
-                'id' => $id
+                'id'            => $id,
+                'missing_codes' => $approveCodes
             ]);
         }
 

@@ -27,9 +27,7 @@ class MaterialQuantityRequestReviewController extends Controller
 
         $materialQuantityRequest = MaterialQuantityRequest::findOrFail($id);
 
-        if(!$this->hasAccess('material_request:all:view')){
-            return view('access_denied');
-        }
+        $this->requireAccess('material_request:all:view');
 
         $project         = $materialQuantityRequest->Project;
         $section         = $materialQuantityRequest->Section;
@@ -168,7 +166,8 @@ class MaterialQuantityRequestReviewController extends Controller
 
         if(!$this->hasAccess('material_request:all:approve')){
             return view('review/material_quantity_request/qr/access_denied',[
-                'id' => $id
+                'id'            => $id,
+                'missing_codes' => ['material_request:all:approve']
             ]);
         }
 
@@ -242,14 +241,7 @@ class MaterialQuantityRequestReviewController extends Controller
 
     public function _approve(Request $request){
 
-        if(!$this->hasAccess('material_request:all:approve')){
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Access Denied',
-                'data'      => []
-            ]);
-        }
-
+        $this->requireAccess('material_request:all:approve');
 
         $id = (int) $request->input('id');
 
@@ -329,13 +321,7 @@ class MaterialQuantityRequestReviewController extends Controller
 
     public function _reject(Request $request){
 
-         if(!$this->hasAccess('material_request:all:reject')){
-            return response()->json([
-                'status'    => 0,
-                'message'   => 'Access Denied',
-                'data'      => []
-            ]);
-        }
+        $this->requireAccess('material_request:all:reject');
 
         $id = (int) $request->input('id');
 

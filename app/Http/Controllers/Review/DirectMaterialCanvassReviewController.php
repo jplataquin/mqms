@@ -15,9 +15,7 @@ class DirectMaterialCanvassReviewController extends Controller
 {
     public function list()
     {
-        if (!$this->hasAccess(['material_canvass:all:view', 'direct_material_canvass:all:view'])) {
-            return view('access_denied');
-        }
+        $this->requireAccess(['material_canvass:all:view', 'direct_material_canvass:all:view']);
 
         $projects = Project::orderBy('name', 'ASC')->where('status', '=', 'ACTV')->get();
 
@@ -28,13 +26,7 @@ class DirectMaterialCanvassReviewController extends Controller
 
     public function _list(Request $request)
     {
-        if (!$this->hasAccess(['material_canvass:all:view', 'direct_material_canvass:all:view'])) {
-            return response()->json([
-                'status'  => 0,
-                'message' => 'Access Denied',
-                'data'    => []
-            ]);
-        }
+        $this->requireAccess(['material_canvass:all:view', 'direct_material_canvass:all:view']);
 
         $page        = (int) ($request->input('page') ?? 1);
         $limit       = (int) ($request->input('limit') ?? 10);
@@ -80,9 +72,7 @@ class DirectMaterialCanvassReviewController extends Controller
 
     public function display($id)
     {
-        if (!$this->hasAccess(['material_canvass:all:view', 'direct_material_canvass:all:view'])) {
-            return view('access_denied');
-        }
+        $this->requireAccess(['material_canvass:all:view', 'direct_material_canvass:all:view']);
 
         $id = (int) $id;
         $dmqr = DirectMaterialQuantityRequest::with([
@@ -118,13 +108,7 @@ class DirectMaterialCanvassReviewController extends Controller
 
     public function _approve(Request $request)
     {
-        if (!$this->hasAccess(['material_canvass:all:approve', 'direct_material_canvass:all:approve'])) {
-            return response()->json([
-                'status'  => 0,
-                'message' => 'Access Denied',
-                'data'    => []
-            ]);
-        }
+        $this->requireAccess(['material_canvass:all:approve', 'direct_material_canvass:all:approve']);
 
         $id = (int) $request->input('id');
         $canvass = DirectMaterialCanvass::find($id);
@@ -161,13 +145,7 @@ class DirectMaterialCanvassReviewController extends Controller
 
     public function _reject(Request $request)
     {
-        if (!$this->hasAccess(['material_canvass:all:reject', 'direct_material_canvass:all:reject'])) {
-            return response()->json([
-                'status'  => 0,
-                'message' => 'Access Denied',
-                'data'    => []
-            ]);
-        }
+        $this->requireAccess(['material_canvass:all:reject', 'direct_material_canvass:all:reject']);
 
         $id = (int) $request->input('id');
         $canvass = DirectMaterialCanvass::find($id);
