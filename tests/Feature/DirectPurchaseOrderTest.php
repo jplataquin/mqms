@@ -857,6 +857,8 @@ class DirectPurchaseOrderTest extends TestCase
 
         $response->assertSee('id="dmqrInput"', false);
         $response->assertSee('list="dmqrList"', false);
+        $response->assertSee('loadSections', false);
+        $response->assertSee('sectionList', false);
     }
 
     /** @test */

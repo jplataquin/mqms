@@ -251,6 +251,7 @@
                 await loadDmqr(matchedDmqrId);
             }
         };
+        dmqrInput.onchange = dmqrInput.oninput;
 
         clearDmqrBtn.onclick = () => {
             dmqrInput.value = '';
@@ -322,6 +323,30 @@
             }
         }
 
+        async function loadSections(projectId) {
+            $el.clear(sectionList);
+            if (!projectId) {
+                sectionInput.disabled = true;
+                sectionInput.placeholder = 'Select a Project first';
+                return;
+            }
+
+            let res = await window.util.$get('/api/section/list', {
+                project_id: projectId,
+                orderBy: 'name',
+                order: 'ASC'
+            });
+
+            if (res.status === 1 && res.data) {
+                res.data.forEach(s => {
+                    const opt = document.createElement('option');
+                    opt.value = s.name;
+                    opt.setAttribute('data-id', s.id);
+                    sectionList.appendChild(opt);
+                });
+            }
+        }
+
         async function loadDmqr(id) {
             window.util.blockUI();
             let res = await window.util.$get('/api/direct_material_quantity_request/for_direct_po/' + id);
@@ -345,11 +370,32 @@
                 projectInput.disabled = true;
                 clearProjectBtn.disabled = true;
 
+                // Load sections into sectionList
+                await loadSections(data.project_id);
+
                 // Lock section
                 sectionInput.value = data.section_name || '';
                 sectionSelect.value = data.section_id || '';
                 sectionInput.disabled = true;
                 clearSectionBtn.disabled = true;
+
+                // Ensure DMQR section is in sectionList if present
+                if (data.section_name && data.section_id) {
+                    let hasOption = false;
+                    for (let i = 0; i < sectionList.options.length; i++) {
+                        if (sectionList.options[i].getAttribute('data-id') == data.section_id ||
+                            sectionList.options[i].value.trim().toLowerCase() === data.section_name.trim().toLowerCase()) {
+                            hasOption = true;
+                            break;
+                        }
+                    }
+                    if (!hasOption) {
+                        const opt = document.createElement('option');
+                        opt.value = data.section_name;
+                        opt.setAttribute('data-id', data.section_id);
+                        sectionList.appendChild(opt);
+                    }
+                }
 
                 // Auto-fill date needed if present in DMQR
                 if (data.date_needed && dateNeededInput) {
@@ -550,16 +596,16 @@
         projectInput.oninput = async () => {
             const newProjId = findOptionId(projectInput, projectList);
             const currProjId = projectSelect.value;
-            console.log('here',newProjId,currProjId);
+     
             if (newProjId !== currProjId) {
                 projectSelect.value = newProjId;
                 sectionInput.value = '';
                 sectionSelect.value = '';
-                $el.clear(sectionList);
 
                 if (!newProjId) {
                     sectionInput.disabled = true;
                     sectionInput.placeholder = 'Select a Project first';
+                    $el.clear(sectionList);
                     return;
                 }
 
@@ -567,23 +613,11 @@
                 sectionInput.placeholder = 'Type to search section (Optional)...';
 
                 window.util.blockUI();
-                let res = await window.util.$get('/api/section/list', {
-                    project_id: newProjId,
-                    orderBy: 'name',
-                    order: 'ASC'
-                });
+                await loadSections(newProjId);
                 window.util.unblockUI();
-
-                if (res.status === 1 && res.data) {
-                    res.data.forEach(s => {
-                        const opt = document.createElement('option');
-                        opt.value = s.name;
-                        opt.setAttribute('data-id', s.id);
-                        sectionList.appendChild(opt);
-                    });
-                }
             }
         };
+        projectInput.onchange = projectInput.oninput;
 
         clearProjectBtn.onclick = () => {
             projectInput.value = '';
@@ -762,7 +796,10 @@
                 return;
             }
 
-            const matchedProjId = findOptionId(projectInput, projectList);
+            let matchedProjId = findOptionId(projectInput, projectList);
+            if (!matchedProjId && projectSelect.value) {
+                matchedProjId = projectSelect.value;
+            }
             if (!matchedProjId) {
                 alert('Please select a valid Project from the list.');
                 projectInput.focus();
@@ -771,10 +808,10 @@
             projectSelect.value = matchedProjId;
 
             if (sectionInput.value.trim() !== '') {
-                const matchedSecId = findOptionId(sectionInput, sectionList);
-             
-                console.log(matchedSecId,sectionInput,sectionList);
-                
+                let matchedSecId = findOptionId(sectionInput, sectionList);
+                if (!matchedSecId && sectionSelect.value) {
+                    matchedSecId = sectionSelect.value;
+                }
 
                 if (!matchedSecId) {
                     alert('Please select a valid Section from the list, or clear the Section field.');
