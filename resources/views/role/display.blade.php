@@ -61,44 +61,56 @@
     </div>
     <hr>
 
-    <div class="folder-form-container">
-        <div class="folder-form-tab">
-            Access Codes
-        </div>
-        <div class="folder-form-body">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <label>Code</label>
-                        <input list="access-code-list" id="accessCode" class="form-control" />
-
-                            <datalist id="access-code-list">
-                                @foreach($accessCodes as $code)
-                                    <option class="code-option" value="{{$code->code}}" data-id="{{$code->id}}"></option>
-                                @endforeach
-                            </datalist>
-                            
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-lg-12 text-end">
-                    <button class="btn btn-primary" id="addCode">Add</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <div class="row mt-4 mb-3 align-items-center">
-        <div class="col-md-6 col-lg-5">
+        <div class="col-md-6 col-lg-5 mb-2 mb-md-0">
             <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-search"></i></span>
                 <input type="text" id="searchAccessCode" class="form-control" placeholder="Search access codes by code or description..." autocomplete="off" />
                 <button class="btn btn-outline-secondary d-none" type="button" id="clearSearchBtn" title="Clear search"><i class="bi bi-x-lg"></i></button>
             </div>
         </div>
-        <div class="col-md-6 col-lg-7 text-md-end text-muted small mt-2 mt-md-0" id="accessCodeCount"></div>
+        <div class="col-md-6 col-lg-7 d-flex justify-content-between justify-content-md-end align-items-center gap-3">
+            <span class="text-muted small" id="accessCodeCount"></span>
+            <button class="btn btn-primary" id="openAddAccessCodeModalBtn" data-bs-toggle="modal" data-bs-target="#addAccessCodeModal">
+                <i class="bi bi-plus-lg me-1"></i> Add Access Code
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal for adding access code -->
+    <div class="modal fade" id="addAccessCodeModal" tabindex="-1" aria-labelledby="addAccessCodeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAccessCodeModalLabel">
+                        <i class="bi bi-shield-lock me-2 text-primary"></i>Add Access Code
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        <label class="form-label fw-semibold">Search Access Code <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-search"></i></span>
+                            <input list="modal-access-code-list" id="modalAccessCode" class="form-control" placeholder="Type to search access code..." autocomplete="off" />
+                            <button class="btn btn-outline-secondary d-none" type="button" id="clearModalAccessCodeBtn" title="Clear"><i class="bi bi-x-lg"></i></button>
+                        </div>
+                        <datalist id="modal-access-code-list">
+                            @foreach($accessCodes as $code)
+                                <option class="modal-code-option" value="{{$code->code}}" data-id="{{$code->id}}">{{$code->description}}</option>
+                            @endforeach
+                        </datalist>
+                        <small class="form-text text-muted mt-1 d-block" id="modalAccessCodeHelp">Select an access code from the suggestions.</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="modalAddCodeBtn">
+                        <i class="bi bi-plus-lg me-1"></i> Add
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="container" id="list"></div>
@@ -109,19 +121,22 @@
 <script type="module">
     import {$q,$el,Template} from '/adarna.js';
 
-    let cancelBtn       = $q('#cancelBtn').first();
-    let name            = $q('#name').first();
-    let description     = $q('#description').first();
-    let editBtn         = $q('#editBtn').first();
-    let updateBtn       = $q('#updateBtn').first();
-    let addCode         = $q('#addCode').first();
-    let accessCode      = $q('#accessCode').first();
-    let list            = $q('#list').first();
-    let searchAccessCode = $q('#searchAccessCode').first();
-    let clearSearchBtn  = $q('#clearSearchBtn').first();
-    let accessCodeCount = $q('#accessCodeCount').first();
-    let totalAssignedCount = null;
-    let activeSearchSeq  = 0;
+    let cancelBtn               = $q('#cancelBtn').first();
+    let name                    = $q('#name').first();
+    let description             = $q('#description').first();
+    let editBtn                 = $q('#editBtn').first();
+    let updateBtn               = $q('#updateBtn').first();
+    let modalAddCodeBtn         = $q('#modalAddCodeBtn').first();
+    let modalAccessCode         = $q('#modalAccessCode').first();
+    let clearModalAccessCodeBtn = $q('#clearModalAccessCodeBtn').first();
+    let modalAccessCodeHelp     = $q('#modalAccessCodeHelp').first();
+    let addAccessCodeModalEl    = document.getElementById('addAccessCodeModal');
+    let list                    = $q('#list').first();
+    let searchAccessCode        = $q('#searchAccessCode').first();
+    let clearSearchBtn          = $q('#clearSearchBtn').first();
+    let accessCodeCount         = $q('#accessCodeCount').first();
+    let totalAssignedCount      = null;
+    let activeSearchSeq         = 0;
 
     function debounce(fn, delay = 300) {
         let timer = null;
@@ -155,42 +170,104 @@
         }
         $el.clear(list);
     }
-    
-    addCode.onclick = (e) => {
 
-        let val = $q('.code-option[value="'+accessCode.value+'"]').first();
+    if(clearModalAccessCodeBtn){
+        clearModalAccessCodeBtn.onclick = () => {
+            modalAccessCode.value = '';
+            clearModalAccessCodeBtn.classList.add('d-none');
+            modalAccessCodeHelp.textContent = 'Select an access code from the suggestions.';
+            modalAccessCodeHelp.classList.remove('text-danger');
+            modalAccessCodeHelp.classList.add('text-muted');
+            modalAccessCode.focus();
+        };
+    }
 
-        if(!val){
-            alert('Code not found');
-            
-            accessCode.value = '';
+    if(modalAccessCode){
+        modalAccessCode.oninput = () => {
+            const val = (modalAccessCode.value || '').trim();
+            if(val){
+                clearModalAccessCodeBtn.classList.remove('d-none');
+            } else {
+                clearModalAccessCodeBtn.classList.add('d-none');
+            }
+
+            let opt = $q('.modal-code-option[value="'+modalAccessCode.value+'"]').first();
+            if(opt){
+                modalAccessCodeHelp.textContent = opt.textContent || 'Valid access code selected.';
+                modalAccessCodeHelp.classList.remove('text-danger');
+                modalAccessCodeHelp.classList.add('text-muted');
+            } else if(val){
+                modalAccessCodeHelp.textContent = 'Typing code... Please pick an existing code from suggestions.';
+                modalAccessCodeHelp.classList.remove('text-danger');
+                modalAccessCodeHelp.classList.add('text-muted');
+            } else {
+                modalAccessCodeHelp.textContent = 'Select an access code from the suggestions.';
+                modalAccessCodeHelp.classList.remove('text-danger');
+                modalAccessCodeHelp.classList.add('text-muted');
+            }
+        };
+
+        modalAccessCode.onkeydown = (e) => {
+            if(e.key === 'Enter'){
+                e.preventDefault();
+                modalAddCodeBtn.click();
+            }
+        };
+    }
+
+    if(addAccessCodeModalEl){
+        addAccessCodeModalEl.addEventListener('shown.bs.modal', () => {
+            modalAccessCode.value = '';
+            clearModalAccessCodeBtn.classList.add('d-none');
+            modalAccessCodeHelp.textContent = 'Select an access code from the suggestions.';
+            modalAccessCodeHelp.classList.remove('text-danger');
+            modalAccessCodeHelp.classList.add('text-muted');
+            modalAccessCode.focus();
+        });
+    }
+
+    modalAddCodeBtn.onclick = (e) => {
+        let opt = $q('.modal-code-option[value="'+modalAccessCode.value+'"]').first();
+
+        if(!opt){
+            modalAccessCodeHelp.textContent = 'Access code not found. Please select a valid code from the list.';
+            modalAccessCodeHelp.classList.remove('text-muted');
+            modalAccessCodeHelp.classList.add('text-danger');
+            modalAccessCode.focus();
             return false;
         }
 
-        val = val.getAttribute('data-id');
-
-        accessCode.value = '';
+        const accessCodeId = opt.getAttribute('data-id');
 
         window.util.blockUI();
 
         window.util.$post('/api/role/access_code/add',{
             role_id: '{{$role->id}}',
-            access_code_id: val
+            access_code_id: accessCodeId
         }).then(reply=>{
-
             window.util.unblockUI();
 
             if(reply.status <= 0 ){
-               
                 window.util.showMsg(reply);
                 return false;
             };
 
-            reinitalize();
-            showData();
+            // Close modal
+            if(window.bootstrap && window.bootstrap.Modal){
+                const modalInstance = bootstrap.Modal.getInstance(addAccessCodeModalEl) || bootstrap.Modal.getOrCreateInstance(addAccessCodeModalEl);
+                if(modalInstance){
+                    modalInstance.hide();
+                }
+            }
 
+            modalAccessCode.value = '';
+            reinitalize();
+            showData('', true);
+        }).catch(err => {
+            window.util.unblockUI();
+            console.error(err);
         });
-    }
+    };
 
     editBtn.onclick = (e) =>{
         e.preventDefault();

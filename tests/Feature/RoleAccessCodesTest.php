@@ -186,10 +186,15 @@ class RoleAccessCodesTest extends TestCase
         $response = $this->actingAs($this->user)->get('/role/' . $role->id);
 
         $response->assertStatus(200);
-        $response->assertSee('Access Codes');
+        $response->assertSee('Access Code');
         $response->assertSee('id="searchAccessCode"', false);
         $response->assertSee('id="clearSearchBtn"', false);
         $response->assertSee('id="accessCodeCount"', false);
+        $response->assertSee('id="openAddAccessCodeModalBtn"', false);
+        $response->assertSee('id="addAccessCodeModal"', false);
+        $response->assertSee('id="modalAccessCode"', false);
+        $response->assertSee('id="modalAddCodeBtn"', false);
+        $response->assertDontSee('id="addCode"', false);
         $response->assertSee('function debounce', false);
         $response->assertSee('debouncedSearch', false);
         $response->assertSee('access-code-group', false);
