@@ -357,7 +357,7 @@ class RoleController extends Controller
     }
 
 
-    public function _access_codes($role_id){
+    public function _access_codes($role_id, Request $request = null){
 
         // if(!$this->hasAccess(['role:all:view'])){
 
@@ -369,11 +369,34 @@ class RoleController extends Controller
 
         // }
 
-        $role_id    = (int) $role_id;
-        
+        if ($role_id instanceof Request) {
+            $temp = $role_id;
+            $role_id = $request;
+            $request = $temp;
+        }
+
+        $request = $request ?? request();
+        $role_id = (int) $role_id;
+
+        $orderBy = $request->input('order_by') ?? 'code';
+        $order   = strtoupper($request->input('order') ?? 'ASC');
+
+        if (!in_array($order, ['ASC', 'DESC'])) {
+            $order = 'ASC';
+        }
+
+        $orderColumn = match ($orderBy) {
+            'code' => 'access_codes.code',
+            'description' => 'access_codes.description',
+            'id' => 'access_codes.id',
+            default => 'access_codes.code',
+        };
+
         $result = DB::table('role_access_codes')
         ->join('access_codes', 'role_access_codes.access_code_id', '=', 'access_codes.id')
-        ->where('role_access_codes.role_id',$role_id)->get();
+        ->where('role_access_codes.role_id', $role_id)
+        ->orderBy($orderColumn, $order)
+        ->get();
 
         return response()->json([
             'status' => 1,

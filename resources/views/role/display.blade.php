@@ -305,6 +305,7 @@
 
 
             if(reply.data.length){
+                reply.data.sort((a, b) => (a.code || '').localeCompare(b.code || ''));
                 renderRows(reply.data); 
             }
             
