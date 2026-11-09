@@ -380,6 +380,7 @@ class RoleController extends Controller
 
         $orderBy = $request->input('order_by') ?? 'code';
         $order   = strtoupper($request->input('order') ?? 'ASC');
+        $query   = trim((string) ($request->input('query') ?? $request->input('search') ?? ''));
 
         if (!in_array($order, ['ASC', 'DESC'])) {
             $order = 'ASC';
@@ -392,11 +393,18 @@ class RoleController extends Controller
             default => 'access_codes.code',
         };
 
-        $result = DB::table('role_access_codes')
+        $dbQuery = DB::table('role_access_codes')
         ->join('access_codes', 'role_access_codes.access_code_id', '=', 'access_codes.id')
-        ->where('role_access_codes.role_id', $role_id)
-        ->orderBy($orderColumn, $order)
-        ->get();
+        ->where('role_access_codes.role_id', $role_id);
+
+        if ($query !== '') {
+            $dbQuery->where(function ($q) use ($query) {
+                $q->where('access_codes.code', 'LIKE', '%' . $query . '%')
+                  ->orWhere('access_codes.description', 'LIKE', '%' . $query . '%');
+            });
+        }
+
+        $result = $dbQuery->orderBy($orderColumn, $order)->get();
 
         return response()->json([
             'status' => 1,

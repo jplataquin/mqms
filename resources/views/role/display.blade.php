@@ -90,6 +90,17 @@
     </div>
 
 
+    <div class="row mt-4 mb-3 align-items-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input type="text" id="searchAccessCode" class="form-control" placeholder="Search access codes by code or description..." autocomplete="off" />
+                <button class="btn btn-outline-secondary d-none" type="button" id="clearSearchBtn" title="Clear search"><i class="bi bi-x-lg"></i></button>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-7 text-md-end text-muted small mt-2 mt-md-0" id="accessCodeCount"></div>
+    </div>
+
     <div class="container" id="list"></div>
 
 
@@ -106,10 +117,16 @@
     let addCode         = $q('#addCode').first();
     let accessCode      = $q('#accessCode').first();
     let list            = $q('#list').first();
-    
+    let searchAccessCode = $q('#searchAccessCode').first();
+    let clearSearchBtn  = $q('#clearSearchBtn').first();
+    let accessCodeCount = $q('#accessCodeCount').first();
+    let allAccessCodes   = [];
 
     function reinitalize(){
-        
+        searchAccessCode.value = '';
+        if(clearSearchBtn){
+            clearSearchBtn.classList.add('d-none');
+        }
         $el.clear(list);
     }
     
@@ -221,10 +238,49 @@
 
 
     const t = new Template();
-    
+
+    function filterAccessCodes(){
+        const query = (searchAccessCode.value || '').toLowerCase().trim();
+
+        if(query){
+            clearSearchBtn.classList.remove('d-none');
+        } else {
+            clearSearchBtn.classList.add('d-none');
+        }
+
+        let filtered = allAccessCodes;
+        if(query){
+            filtered = allAccessCodes.filter(item => {
+                const code = (item.code || '').toLowerCase();
+                const desc = (item.description || '').toLowerCase();
+                return code.includes(query) || desc.includes(query);
+            });
+        }
+
+        if(allAccessCodes.length === 0){
+            accessCodeCount.textContent = 'No access codes assigned';
+        } else if(query){
+            accessCodeCount.textContent = `Showing ${filtered.length} of ${allAccessCodes.length} access codes`;
+        } else {
+            accessCodeCount.textContent = `Total: ${allAccessCodes.length} access code${allAccessCodes.length === 1 ? '' : 's'}`;
+        }
+
+        renderRows(filtered);
+    }
 
     function renderRows(data){
-        
+        $el.clear(list);
+
+        if(!data || data.length === 0){
+            const query = (searchAccessCode.value || '').trim();
+            const msg = query 
+                ? `No access codes match "${query}".`
+                : 'No access codes assigned to this role.';
+            let emptyMsg = t.div({class:'text-center p-4 text-muted border rounded my-3'}, msg);
+            $el.append(emptyMsg).to(list);
+            return;
+        }
+
         data.map(item=>{
            
             let row = t.div({class:'item-container fade-in'},()=>{
@@ -264,7 +320,8 @@
                                             return false;
                                         }
 
-                                        row.remove();
+                                        allAccessCodes = allAccessCodes.filter(ac => ac.id !== item.id);
+                                        filterAccessCodes();
                                     });
                                 });
                             };
@@ -303,14 +360,25 @@
                 return false;
             };
 
-
-            if(reply.data.length){
+            if(reply.data && reply.data.length){
                 reply.data.sort((a, b) => (a.code || '').localeCompare(b.code || ''));
-                renderRows(reply.data); 
+                allAccessCodes = reply.data;
+            } else {
+                allAccessCodes = [];
             }
+
+            filterAccessCodes();
             
         });
     }
+
+    searchAccessCode.oninput = filterAccessCodes;
+
+    clearSearchBtn.onclick = () => {
+        searchAccessCode.value = '';
+        searchAccessCode.focus();
+        filterAccessCodes();
+    };
 
     reinitalize();
     showData();

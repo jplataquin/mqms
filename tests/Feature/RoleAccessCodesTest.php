@@ -95,6 +95,72 @@ class RoleAccessCodesTest extends TestCase
     }
 
     /** @test */
+    public function it_can_filter_role_access_codes_by_query_on_code_and_description()
+    {
+        $role = new Role();
+        $role->name = 'Security Role';
+        $role->description = 'Security role for testing search';
+        $role->save();
+
+        $codeAuth = new AccessCode();
+        $codeAuth->code = 'auth:login';
+        $codeAuth->description = 'Allow user authentication';
+        $codeAuth->save();
+
+        $codeUser = new AccessCode();
+        $codeUser->code = 'user:view';
+        $codeUser->description = 'Allow viewing users';
+        $codeUser->save();
+
+        $codeAdmin = new AccessCode();
+        $codeAdmin->code = 'system:manage';
+        $codeAdmin->description = 'System administration auth rights';
+        $codeAdmin->save();
+
+        $rac1 = new RoleAccessCode();
+        $rac1->role_id = $role->id;
+        $rac1->access_code_id = $codeAuth->id;
+        $rac1->save();
+
+        $rac2 = new RoleAccessCode();
+        $rac2->role_id = $role->id;
+        $rac2->access_code_id = $codeUser->id;
+        $rac2->save();
+
+        $rac3 = new RoleAccessCode();
+        $rac3->role_id = $role->id;
+        $rac3->access_code_id = $codeAdmin->id;
+        $rac3->save();
+
+        // 1. Search matching code (only codeUser has 'view')
+        $responseCode = $this->actingAs($this->user)->getJson('/api/role/access_codes/' . $role->id . '?query=view');
+        $responseCode->assertStatus(200);
+        $dataCode = $responseCode->json('data');
+        $this->assertCount(1, $dataCode);
+        $this->assertEquals('user:view', $dataCode[0]['code']);
+
+        // 2. Search matching description (matches codeAuth 'authentication' and codeAdmin 'auth')
+        $responseDesc = $this->actingAs($this->user)->getJson('/api/role/access_codes/' . $role->id . '?query=auth');
+        $responseDesc->assertStatus(200);
+        $dataDesc = $responseDesc->json('data');
+        $this->assertCount(2, $dataDesc);
+        $codes = array_column($dataDesc, 'code');
+        $this->assertEquals(['auth:login', 'system:manage'], $codes);
+
+        // 3. Search matching code 'manage' (only codeAdmin)
+        $responseManage = $this->actingAs($this->user)->getJson('/api/role/access_codes/' . $role->id . '?query=manage');
+        $responseManage->assertStatus(200);
+        $dataManage = $responseManage->json('data');
+        $this->assertCount(1, $dataManage);
+        $this->assertEquals('system:manage', $dataManage[0]['code']);
+
+        // 4. Search with no matches
+        $responseNone = $this->actingAs($this->user)->getJson('/api/role/access_codes/' . $role->id . '?query=nonexistent');
+        $responseNone->assertStatus(200);
+        $this->assertCount(0, $responseNone->json('data'));
+    }
+
+    /** @test */
     public function it_can_render_role_display_page_with_alphabetical_access_codes_datalist()
     {
         $role = new Role();
@@ -121,6 +187,10 @@ class RoleAccessCodesTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Access Codes');
+        $response->assertSee('id="searchAccessCode"', false);
+        $response->assertSee('id="clearSearchBtn"', false);
+        $response->assertSee('id="accessCodeCount"', false);
+        $response->assertSee('filterAccessCodes', false);
         $response->assertSee('id="list"', false);
         $response->assertSee('reply.data.sort', false);
     }
