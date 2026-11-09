@@ -27,11 +27,11 @@
         </div>
         <div class="card-body">
             <div class="row g-3">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label class="form-label">Search Request #</label>
                     <input type="number" class="form-control" id="queryInput" placeholder="Enter ID...">
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label class="form-label">Project</label>
                     <select class="form-select" id="projectSelect">
                         <option value="">All Projects</option>
@@ -40,7 +40,15 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-4 d-flex align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" id="statusSelect">
+                        <option value="">Pending & Void Requests</option>
+                        <option value="PEND">Pending Review</option>
+                        <option value="REVO">Void Request</option>
+                    </select>
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
                     <button class="btn btn-primary me-2 w-100" id="filterBtn">Filter</button>
                     <button class="btn btn-secondary w-100" id="resetBtn">Reset</button>
                 </div>
@@ -86,6 +94,7 @@
 
     const queryInput    = $q('#queryInput').first();
     const projectSelect = $q('#projectSelect').first();
+    const statusSelect  = $q('#statusSelect').first();
     const filterBtn     = $q('#filterBtn').first();
     const resetBtn      = $q('#resetBtn').first();
     const tableBody     = $q('#tableBody').first();
@@ -99,7 +108,7 @@
             page: page,
             limit: limit,
             query: queryInput.value.trim(),
-            status: 'PEND',
+            status: statusSelect.value,
             project_id: projectSelect.value
         });
         window.util.unblockUI();
@@ -110,6 +119,8 @@
             res.data.forEach(item => {
                 const tr = document.createElement('tr');
                 const formattedId = String(item.id).padStart(6, '0');
+                const badgeClass = item.status === 'REVO' ? 'bg-danger text-white' : 'bg-warning text-dark';
+                const statusLabel = item.status === 'REVO' ? 'Void Request' : item.status;
 
                 tr.innerHTML = `
                     <td class="font-monospace fw-bold">
@@ -117,7 +128,7 @@
                     </td>
                     <td>${item.project ? item.project.name : '-'}</td>
                     <td>${item.section ? item.section.name : '-'}</td>
-                    <td><span class="badge bg-warning text-dark">${item.status}</span></td>
+                    <td><span class="badge ${badgeClass}">${statusLabel}</span></td>
                     <td>${item.creator ? item.creator.name : '-'}</td>
                     <td>${item.created_at ? item.created_at.substring(0, 10) : '-'}</td>
                     <td class="text-end">
@@ -131,7 +142,7 @@
             nextBtn.disabled = (res.data.length < limit);
             pageInfo.textContent = `Page ${page}`;
         } else {
-            tableBody.innerHTML = `<tr><td colspan="7" class="text-center text-muted py-4">No pending requests for review</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="7" class="text-center text-muted py-4">No requests found for review</td></tr>`;
             prevBtn.disabled = (page <= 1);
             nextBtn.disabled = true;
             pageInfo.textContent = `Page ${page}`;
@@ -146,6 +157,7 @@
     resetBtn.onclick = () => {
         queryInput.value = '';
         projectSelect.value = '';
+        statusSelect.value = '';
         page = 1;
         loadData();
     };

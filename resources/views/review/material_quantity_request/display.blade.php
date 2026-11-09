@@ -117,6 +117,11 @@
                 <button class="btn btn-warning" id="approveBtn">Approve</button>
             @endif
 
+            @if($material_quantity_request->status == 'REVO' && !empty($canVoid))
+                <button class="btn btn-secondary me-2" id="rejectVoidBtn">Reject Void</button>
+                <button class="btn btn-danger me-2" id="voidBtn">Void</button>
+            @endif
+
             <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
             
         </div>
@@ -283,8 +288,61 @@
             return true;
         }
 
-      
+    @endif
 
+    @if($material_quantity_request->status == 'REVO' && !empty($canVoid))
+        const voidBtn       = $q('#voidBtn').first();
+        const rejectVoidBtn = $q('#rejectVoidBtn').first();
+
+        if (voidBtn) {
+            voidBtn.onclick = async (e) => {
+                e.preventDefault();
+
+                if(! await window.util.confirm('Are you sure you want to VOID this Material Request? This action cannot be undone.')){
+                    return false;
+                }
+
+                window.util.blockUI();
+
+                window.util.$post('/api/review/material_quantity_request/void', {
+                    id: '{{$material_quantity_request->id}}'
+                }).then(reply => {
+                    window.util.unblockUI();
+
+                    if(reply.status <= 0){
+                        window.util.showMsg(reply);
+                        return false;
+                    }
+
+                    window.util.navTo('/review/material_quantity_requests/');
+                });
+            };
+        }
+
+        if (rejectVoidBtn) {
+            rejectVoidBtn.onclick = async (e) => {
+                e.preventDefault();
+
+                if(! await window.util.confirm('Are you sure you want to REJECT this void request? The record will be reverted to its previous status.')){
+                    return false;
+                }
+
+                window.util.blockUI();
+
+                window.util.$post('/api/review/material_quantity_request/reject_void', {
+                    id: '{{$material_quantity_request->id}}'
+                }).then(reply => {
+                    window.util.unblockUI();
+
+                    if(reply.status <= 0){
+                        window.util.showMsg(reply);
+                        return false;
+                    }
+
+                    window.util.navTo('/review/material_quantity_requests/');
+                });
+            };
+        }
     @endif
 </script>
 </div>

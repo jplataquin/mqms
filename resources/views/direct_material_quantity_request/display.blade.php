@@ -159,9 +159,9 @@
             </a>
         @endif
 
-        @if(($request->status == 'APRV' || $request->status == 'CLSD') && !empty($canVoid))
-            <button type="button" class="btn btn-outline-danger me-2" id="voidBtn">
-                <i class="bi bi-x-circle me-1"></i> Void
+        @if(($request->status == 'APRV' || $request->status == 'CLSD') && !empty($canRequestVoid))
+            <button type="button" class="btn btn-outline-danger me-2" id="requestVoidBtn">
+                <i class="bi bi-x-circle me-1"></i> Request Void
             </button>
         @endif
     </div>
@@ -188,7 +188,7 @@
     const cancelEditBtn   = $q('#cancelEditBtn').first();
     const addItemBtn      = $q('#addItemBtn').first();
     const closeRequestBtn = $q('#closeRequestBtn').first();
-    const voidBtn         = $q('#voidBtn').first();
+    const requestVoidBtn  = $q('#requestVoidBtn').first();
     const printBtn        = $q('#printBtn').first();
     const backBtn         = $q('#backBtn').first();
 
@@ -257,18 +257,18 @@
         };
     }
 
-    if (voidBtn) {
-        voidBtn.onclick = async () => {
-            if (!confirm('Are you sure you want to VOID this Direct Material Request? This action cannot be undone.')) {
+    if (requestVoidBtn) {
+        requestVoidBtn.onclick = async () => {
+            if (!confirm('Are you sure you want to request VOID for this Direct Material Request?')) {
                 return;
             }
             window.util.blockUI();
-            let res = await window.util.$post('/api/direct_material_quantity_request/void', { id: reqId });
+            let res = await window.util.$post('/api/direct_material_quantity_request/request_void', { id: reqId });
             window.util.unblockUI();
             if (res.status === 1) {
                 window.location.reload();
             } else {
-                alert(res.message || 'Error voiding request');
+                alert(res.message || 'Error requesting void for request');
             }
         };
     }

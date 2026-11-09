@@ -644,6 +644,10 @@ class MaterialQuantityRequestController extends Controller
         $canVoidOwn = $this->hasAccess(['material_request:own:void']);
         $canVoid    = $canVoidAll || ($canVoidOwn && $material_quantity_request->created_by == $user->id);
 
+        $canRequestVoidAll = $this->hasAccess(['material_request:all:request_void']);
+        $canRequestVoidOwn = $this->hasAccess(['material_request:own:request_void']);
+        $canRequestVoid    = $canRequestVoidAll || ($canRequestVoidOwn && $material_quantity_request->created_by == $user->id);
+
         return view('material_quantity_request/display',[
             'mr_details'                => $mr_details,
             'project'                   => $project,
@@ -655,7 +659,8 @@ class MaterialQuantityRequestController extends Controller
             'material_options'          => $material_options,
             'component_item_options'    => $component_item_options,
             'unit_options'              => $unit_options,
-            'canVoid'                   => $canVoid
+            'canVoid'                   => $canVoid,
+            'canRequestVoid'            => $canRequestVoid
         ]);
     }
 
@@ -1586,6 +1591,80 @@ class MaterialQuantityRequestController extends Controller
         ]);
     }
 
+    public function _request_void(Request $request)
+    {
+        $id = (int) $request->input('id');
+
+        $material_quantity_request = MaterialQuantityRequest::find($id);
+
+        if (!$material_quantity_request) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Record not found',
+                'data'    => []
+            ]);
+        }
+
+        $user = auth()->user();
+        $canRequestVoidAll = $this->hasAccess(['material_request:all:request_void']);
+        $canRequestVoidOwn = $this->hasAccess(['material_request:own:request_void']);
+
+        if (!$canRequestVoidAll) {
+            if (!$canRequestVoidOwn || $material_quantity_request->created_by != $user->id) {
+                return response()->json([
+                    'status'  => 0,
+                    'message' => 'Access Denied',
+                    'data'    => []
+                ]);
+            }
+        }
+
+        if (!in_array($material_quantity_request->status, ['APRV', 'CLSD'])) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Record cannot be requested for void, status must be approved or closed',
+                'data'    => []
+            ]);
+        }
+
+        // Check if any non-void purchase orders exist
+        $activePoCount = PurchaseOrder::where('material_quantity_request_id', $material_quantity_request->id)
+            ->where('status', '!=', 'VOID')
+            ->count();
+
+        if ($activePoCount > 0) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Cannot request void: Existing purchase orders must first be voided before the material quantity request can be set to status request void.',
+                'data'    => []
+            ]);
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $material_quantity_request->previous_status = $material_quantity_request->status;
+            $material_quantity_request->status          = 'REVO';
+            $material_quantity_request->save();
+
+            DB::commit();
+
+            return response()->json([
+                'status'  => 1,
+                'message' => 'Material Quantity Request void requested successfully',
+                'data'    => ['id' => $material_quantity_request->id]
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json([
+                'status'  => 0,
+                'message' => $e->getMessage(),
+                'data'    => []
+            ]);
+        }
+    }
+
     public function _void(Request $request)
     {
         $id = (int) $request->input('id');
@@ -1614,10 +1693,10 @@ class MaterialQuantityRequestController extends Controller
             }
         }
 
-        if (!in_array($material_quantity_request->status, ['APRV', 'CLSD'])) {
+        if (!in_array($material_quantity_request->status, ['APRV', 'CLSD', 'REVO'])) {
             return response()->json([
                 'status'  => 0,
-                'message' => 'Record cannot be voided, status must be approved or closed',
+                'message' => 'Record cannot be voided, status must be approved, closed, or request void',
                 'data'    => []
             ]);
         }

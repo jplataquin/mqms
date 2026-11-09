@@ -102,6 +102,11 @@
                 <button type="button" class="btn btn-success" id="approveBtn">Approve</button>
             @endif
         @endif
+
+        @if($request->status == 'REVO' && !empty($canVoid))
+            <button type="button" class="btn btn-secondary me-2" id="rejectVoidBtn">Reject Void</button>
+            <button type="button" class="btn btn-danger me-2" id="voidBtn">Void</button>
+        @endif
     </div>
 </div>
 
@@ -109,8 +114,10 @@
     import {$q} from '/adarna.js';
 
     const reqId = {{ $request->id }};
-    const approveBtn = $q('#approveBtn').first();
-    const rejectBtn  = $q('#rejectBtn').first();
+    const approveBtn    = $q('#approveBtn').first();
+    const rejectBtn     = $q('#rejectBtn').first();
+    const voidBtn       = $q('#voidBtn').first();
+    const rejectVoidBtn = $q('#rejectVoidBtn').first();
 
     if (approveBtn) {
         approveBtn.onclick = async () => {
@@ -136,6 +143,34 @@
                 window.util.navTo('/review/direct_material_quantity_requests');
             } else {
                 alert(res.message || 'Error rejecting request');
+            }
+        };
+    }
+
+    if (voidBtn) {
+        voidBtn.onclick = async () => {
+            if (!confirm('Are you sure you want to VOID this Direct Material Request? This action cannot be undone.')) return;
+            window.util.blockUI();
+            let res = await window.util.$post('/api/review/direct_material_quantity_request/void', { id: reqId });
+            window.util.unblockUI();
+            if (res.status === 1) {
+                window.util.navTo('/review/direct_material_quantity_requests');
+            } else {
+                alert(res.message || 'Error voiding request');
+            }
+        };
+    }
+
+    if (rejectVoidBtn) {
+        rejectVoidBtn.onclick = async () => {
+            if (!confirm('Are you sure you want to REJECT this void request? The record will be reverted to its previous status.')) return;
+            window.util.blockUI();
+            let res = await window.util.$post('/api/review/direct_material_quantity_request/reject_void', { id: reqId });
+            window.util.unblockUI();
+            if (res.status === 1) {
+                window.util.navTo('/review/direct_material_quantity_requests');
+            } else {
+                alert(res.message || 'Error rejecting void request');
             }
         };
     }

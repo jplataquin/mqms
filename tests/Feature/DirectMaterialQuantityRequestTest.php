@@ -1382,4 +1382,56 @@ class DirectMaterialQuantityRequestTest extends TestCase
         $response2->assertJson(['status' => 1]);
         $this->assertEquals('VOID', $dmqr->fresh()->status);
     }
+
+    /** @test */
+    public function it_can_request_void_for_dmqr_and_set_status_to_revo()
+    {
+        $this->grantAccessCode($this->user, 'direct_material_request:all:request_void');
+
+        $project = $this->createProject('Request Void DMQR Project');
+        $item1 = $this->createMaterialItem('Cement 40kg');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->status = 'APRV';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $response = $this->actingAs($this->user)->postJson('/api/direct_material_quantity_request/request_void', [
+            'id' => $dmqr->id
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 1]);
+
+        $dmqr->refresh();
+        $this->assertEquals('REVO', $dmqr->status);
+        $this->assertEquals('APRV', $dmqr->previous_status);
+    }
+
+    /** @test */
+    public function it_can_reject_void_for_revo_dmqr_via_review()
+    {
+        $this->grantAccessCode($this->user, 'direct_material_quantity_request:all:void');
+
+        $project = $this->createProject('Reject Void DMQR Project');
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->previous_status = 'CLSD';
+        $dmqr->status = 'REVO';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $response = $this->actingAs($this->user)->postJson('/api/review/direct_material_quantity_request/reject_void', [
+            'id' => $dmqr->id
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 1]);
+
+        $dmqr->refresh();
+        $this->assertEquals('CLSD', $dmqr->status);
+        $this->assertNull($dmqr->previous_status);
+    }
 }

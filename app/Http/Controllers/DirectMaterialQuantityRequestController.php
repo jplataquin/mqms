@@ -250,9 +250,13 @@ class DirectMaterialQuantityRequestController extends Controller
         $canCloseOwn = $this->hasAccess(['material_request:own:close', 'material_request:own:update', 'direct_material_quantity_request:own:close', 'direct_material_quantity_request:own:update']);
         $canClose = $canCloseAll || ($canCloseOwn && $dmqr->created_by == $user->id);
 
-        $canVoidAll = $this->hasAccess(['material_request:all:void', 'direct_material_quantity_request:all:void']);
-        $canVoidOwn = $this->hasAccess(['material_request:own:void', 'direct_material_quantity_request:own:void']);
+        $canVoidAll = $this->hasAccess(['material_request:all:void', 'direct_material_quantity_request:all:void', 'direct_material_request:all:void']);
+        $canVoidOwn = $this->hasAccess(['material_request:own:void', 'direct_material_quantity_request:own:void', 'direct_material_request:own:void']);
         $canVoid = $canVoidAll || ($canVoidOwn && $dmqr->created_by == $user->id);
+
+        $canRequestVoidAll = $this->hasAccess(['material_request:all:request_void', 'direct_material_request:all:request_void', 'direct_material_quantity_request:all:request_void']);
+        $canRequestVoidOwn = $this->hasAccess(['material_request:own:request_void', 'direct_material_request:own:request_void', 'direct_material_quantity_request:own:request_void']);
+        $canRequestVoid = $canRequestVoidAll || ($canRequestVoidOwn && $dmqr->created_by == $user->id);
 
         $material_items = MaterialItem::orderBy('name', 'ASC')->get();
 
@@ -263,6 +267,7 @@ class DirectMaterialQuantityRequestController extends Controller
             'canDelete'      => $canDelete,
             'canClose'       => $canClose,
             'canVoid'        => $canVoid,
+            'canRequestVoid' => $canRequestVoid,
             'material_items' => $material_items
         ]);
     }
@@ -952,6 +957,80 @@ class DirectMaterialQuantityRequestController extends Controller
         }
     }
 
+    public function _request_void(Request $request)
+    {
+        $id = (int) $request->input('id');
+
+        $dmqr = DirectMaterialQuantityRequest::find($id);
+
+        if (!$dmqr) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Record not found',
+                'data'    => []
+            ]);
+        }
+
+        $user = auth()->user();
+        $canRequestVoidAll = $this->hasAccess(['material_request:all:request_void', 'direct_material_request:all:request_void', 'direct_material_quantity_request:all:request_void']);
+        $canRequestVoidOwn = $this->hasAccess(['material_request:own:request_void', 'direct_material_request:own:request_void', 'direct_material_quantity_request:own:request_void']);
+
+        if (!$canRequestVoidAll) {
+            if (!$canRequestVoidOwn || $dmqr->created_by != $user->id) {
+                return response()->json([
+                    'status'  => 0,
+                    'message' => 'Access Denied',
+                    'data'    => []
+                ]);
+            }
+        }
+
+        if (!in_array($dmqr->status, ['APRV', 'CLSD'])) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Record cannot be requested for void, status must be approved or closed',
+                'data'    => []
+            ]);
+        }
+
+        // Check if any non-void direct purchase orders exist
+        $activeDpoCount = DirectPurchaseOrder::where('direct_material_quantity_request_id', $dmqr->id)
+            ->where('status', '!=', 'VOID')
+            ->count();
+
+        if ($activeDpoCount > 0) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'Cannot request void: Existing purchase orders must first be voided before the material quantity request can be set to status request void.',
+                'data'    => []
+            ]);
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $dmqr->previous_status = $dmqr->status;
+            $dmqr->status          = 'REVO';
+            $dmqr->save();
+
+            DB::commit();
+
+            return response()->json([
+                'status'  => 1,
+                'message' => 'Direct Material Request void requested successfully',
+                'data'    => ['id' => $dmqr->id]
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json([
+                'status'  => 0,
+                'message' => $e->getMessage(),
+                'data'    => []
+            ]);
+        }
+    }
+
     public function _void(Request $request)
     {
         $id = (int) $request->input('id');
@@ -967,8 +1046,8 @@ class DirectMaterialQuantityRequestController extends Controller
         }
 
         $user = auth()->user();
-        $canVoidAll = $this->hasAccess(['material_request:all:void', 'direct_material_quantity_request:all:void']);
-        $canVoidOwn = $this->hasAccess(['material_request:own:void', 'direct_material_quantity_request:own:void']);
+        $canVoidAll = $this->hasAccess(['material_request:all:void', 'direct_material_quantity_request:all:void', 'direct_material_request:all:void']);
+        $canVoidOwn = $this->hasAccess(['material_request:own:void', 'direct_material_quantity_request:own:void', 'direct_material_request:own:void']);
 
         if (!$canVoidAll) {
             if (!$canVoidOwn || $dmqr->created_by != $user->id) {
@@ -980,10 +1059,10 @@ class DirectMaterialQuantityRequestController extends Controller
             }
         }
 
-        if (!in_array($dmqr->status, ['APRV', 'CLSD'])) {
+        if (!in_array($dmqr->status, ['APRV', 'CLSD', 'REVO'])) {
             return response()->json([
                 'status'  => 0,
-                'message' => 'Record cannot be voided, status must be approved or closed',
+                'message' => 'Record cannot be voided, status must be approved, closed, or request void',
                 'data'    => []
             ]);
         }

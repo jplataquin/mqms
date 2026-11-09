@@ -31,7 +31,7 @@
         </div>
         <div class="folder-form-body">
             <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="form-group">
                             <label>Sort By</label>
                             <select class="form-control" id="sortSelect">
@@ -40,7 +40,17 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select class="form-control" id="statusSelect">
+                                <option value="">Pending & Void Requests</option>
+                                <option value="PEND">Pending Review</option>
+                                <option value="REVO">Void Request</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
                         <div class="form-group">
                             <label>ID</label>
                             <input type="text" id="query" class="form-control"/>
@@ -102,6 +112,7 @@
                     <th>Project - Section</th>
                     <th>Contract Item</th>
                     <th>Component</th>
+                    <th>Status</th>
                     <th>User</th>
                     <th>Date</th>
                 </tr>
@@ -130,6 +141,7 @@
     let searchBtn       = $q('#searchBtn').first();
     let showMoreBtn     = $q('#showMoreBtn').first();
     let sortSelect      = $q('#sortSelect').first();
+    let statusSelect    = $q('#statusSelect').first();
     let cancelBtn       = $q('#cancelBtn').first();
     let page            = 1;
     let order           = 'DESC';
@@ -150,12 +162,17 @@
     function renderRows(data){
         
         data.map(item=>{
+            let badgeClass = item.status === 'REVO' ? 'badge bg-danger text-white' : 'badge bg-warning text-dark';
+            let statusLabel = item.status === 'REVO' ? 'Void Request' : item.status;
 
             let row = t.tr({class:'selectable-div'},()=>{
                 t.td(String(item.id).padStart(6,0));
                 t.td(item.project.name+' - '+item.section.name);
                 t.td('');
                 t.td(item.component.name);
+                t.td({class: 'text-center'}, () => {
+                    t.span({class: badgeClass}, statusLabel);
+                });
                 t.td(item.user.name);
                 t.td(
                     $util.dateTime(
@@ -181,6 +198,7 @@
 
         window.util.$get('/api/review/material_quantity_request/list',{
             query: query.value,
+            status: statusSelect.value,
             page: page,
             order: order,
             project_id: projectSelect.value,
@@ -242,6 +260,10 @@
             break;
         }
 
+        runFilter();
+    }
+
+    statusSelect.onchange = () => {
         runFilter();
     }
 

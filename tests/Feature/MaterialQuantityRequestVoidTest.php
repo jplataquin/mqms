@@ -269,4 +269,93 @@ class MaterialQuantityRequestVoidTest extends TestCase
         $this->assertStringContainsString('Access Denied', $response->json('message'));
         $this->assertEquals('APRV', $mqr->fresh()->status);
     }
+
+    /** @test */
+    public function it_can_request_void_for_approved_material_quantity_request_and_set_status_to_revo()
+    {
+        $this->grantAccessCode($this->user, 'material_request:all:request_void');
+
+        $mqr = $this->createMqr('APRV');
+
+        $response = $this->actingAs($this->user)->postJson('/api/material_quantity_request/request_void', [
+            'id' => $mqr->id,
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 1]);
+
+        $mqr->refresh();
+        $this->assertEquals('REVO', $mqr->status);
+        $this->assertEquals('APRV', $mqr->previous_status);
+    }
+
+    /** @test */
+    public function it_prevents_requesting_void_when_active_purchase_orders_exist()
+    {
+        $this->grantAccessCode($this->user, 'material_request:all:request_void');
+
+        $mqr = $this->createMqr('APRV');
+
+        $po = new PurchaseOrder();
+        $po->project_id = $this->project->id;
+        $po->section_id = $this->section->id;
+        $po->component_id = $this->component->id;
+        $po->contract_item_id = $this->contractItem->id;
+        $po->material_quantity_request_id = $mqr->id;
+        $po->supplier_id = $this->supplier->id;
+        $po->payment_term_id = $this->paymentTerm->id;
+        $po->status = 'APRV';
+        $po->created_by = $this->user->id;
+        $po->save();
+
+        $response = $this->actingAs($this->user)->postJson('/api/material_quantity_request/request_void', [
+            'id' => $mqr->id,
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 0]);
+        $this->assertStringContainsString('Existing purchase orders must first be voided', $response->json('message'));
+        $this->assertEquals('APRV', $mqr->fresh()->status);
+    }
+
+    /** @test */
+    public function it_can_void_revo_material_quantity_request_via_review()
+    {
+        $mqr = $this->createMqr('APRV');
+        $mqr->previous_status = 'APRV';
+        $mqr->status = 'REVO';
+        $mqr->save();
+
+        $response = $this->actingAs($this->user)->postJson('/api/review/material_quantity_request/void', [
+            'id' => $mqr->id,
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 1]);
+
+        $mqr->refresh();
+        $this->assertEquals('VOID', $mqr->status);
+        $this->assertEquals($this->user->id, $mqr->void_by);
+        $this->assertNotNull($mqr->void_at);
+    }
+
+    /** @test */
+    public function it_can_reject_void_and_revert_status_to_previous_status()
+    {
+        $mqr = $this->createMqr('CLSD');
+        $mqr->previous_status = 'CLSD';
+        $mqr->status = 'REVO';
+        $mqr->save();
+
+        $response = $this->actingAs($this->user)->postJson('/api/review/material_quantity_request/reject_void', [
+            'id' => $mqr->id,
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 1]);
+
+        $mqr->refresh();
+        $this->assertEquals('CLSD', $mqr->status);
+        $this->assertNull($mqr->previous_status);
+    }
 }
