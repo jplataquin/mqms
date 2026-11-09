@@ -120,9 +120,35 @@
     let searchAccessCode = $q('#searchAccessCode').first();
     let clearSearchBtn  = $q('#clearSearchBtn').first();
     let accessCodeCount = $q('#accessCodeCount').first();
-    let allAccessCodes   = [];
+    let totalAssignedCount = null;
+    let activeSearchSeq  = 0;
+
+    function debounce(fn, delay = 300) {
+        let timer = null;
+        const debounced = function(...args) {
+            if (timer) clearTimeout(timer);
+            timer = setTimeout(() => {
+                timer = null;
+                fn.apply(this, args);
+            }, delay);
+        };
+        debounced.cancel = () => {
+            if (timer) {
+                clearTimeout(timer);
+                timer = null;
+            }
+        };
+        return debounced;
+    }
+
+    const debouncedSearch = debounce((query) => {
+        showData(query, false);
+    }, 300);
 
     function reinitalize(){
+        if(debouncedSearch){
+            debouncedSearch.cancel();
+        }
         searchAccessCode.value = '';
         if(clearSearchBtn){
             clearSearchBtn.classList.add('d-none');
@@ -239,35 +265,6 @@
 
     const t = new Template();
 
-    function filterAccessCodes(){
-        const query = (searchAccessCode.value || '').toLowerCase().trim();
-
-        if(query){
-            clearSearchBtn.classList.remove('d-none');
-        } else {
-            clearSearchBtn.classList.add('d-none');
-        }
-
-        let filtered = allAccessCodes;
-        if(query){
-            filtered = allAccessCodes.filter(item => {
-                const code = (item.code || '').toLowerCase();
-                const desc = (item.description || '').toLowerCase();
-                return code.includes(query) || desc.includes(query);
-            });
-        }
-
-        if(allAccessCodes.length === 0){
-            accessCodeCount.textContent = 'No access codes assigned';
-        } else if(query){
-            accessCodeCount.textContent = `Showing ${filtered.length} of ${allAccessCodes.length} access codes`;
-        } else {
-            accessCodeCount.textContent = `Total: ${allAccessCodes.length} access code${allAccessCodes.length === 1 ? '' : 's'}`;
-        }
-
-        renderRows(filtered);
-    }
-
     function renderRows(data){
         $el.clear(list);
 
@@ -320,8 +317,10 @@
                                             return false;
                                         }
 
-                                        allAccessCodes = allAccessCodes.filter(ac => ac.id !== item.id);
-                                        filterAccessCodes();
+                                        if(totalAssignedCount !== null && totalAssignedCount > 0){
+                                            totalAssignedCount--;
+                                        }
+                                        showData((searchAccessCode.value || '').trim(), false);
                                     });
                                 });
                             };
@@ -342,46 +341,91 @@
 
     }
 
-    function showData(){
+    function showData(query = '', block = true){
+        const seq = ++activeSearchSeq;
 
-        window.util.blockUI();
+        if(block){
+            window.util.blockUI();
+        }
 
-        window.util.$get('/api/role/access_codes/{{$role->id}}',{
+        let params = {
             order_by:'code',
             order:'ASC'
-        }).then(reply=>{
+        };
 
-            window.util.unblockUI();
-                
+        if(query){
+            params.query = query;
+        }
+
+        window.util.$get('/api/role/access_codes/{{$role->id}}', params).then(reply=>{
+            if(block){
+                window.util.unblockUI();
+            }
+
+            if(seq !== activeSearchSeq){
+                return;
+            }
 
             if(reply.status <= 0 ){
-                
                 window.util.showMsg(reply);
                 return false;
             };
 
-            if(reply.data && reply.data.length){
-                reply.data.sort((a, b) => (a.code || '').localeCompare(b.code || ''));
-                allAccessCodes = reply.data;
-            } else {
-                allAccessCodes = [];
+            let data = reply.data || [];
+            data.sort((a, b) => (a.code || '').localeCompare(b.code || ''));
+
+            if(!query || totalAssignedCount === null){
+                if(!query){
+                    totalAssignedCount = data.length;
+                }
             }
 
-            filterAccessCodes();
-            
+            if(totalAssignedCount === 0){
+                accessCodeCount.textContent = 'No access codes assigned';
+            } else if(query){
+                const total = totalAssignedCount !== null ? totalAssignedCount : data.length;
+                accessCodeCount.textContent = `Showing ${data.length} of ${total} access codes`;
+            } else {
+                accessCodeCount.textContent = `Total: ${data.length} access code${data.length === 1 ? '' : 's'}`;
+            }
+
+            renderRows(data);
+        }).catch(err => {
+            if(block){
+                window.util.unblockUI();
+            }
+            console.error(err);
         });
     }
 
-    searchAccessCode.oninput = filterAccessCodes;
+    searchAccessCode.oninput = () => {
+        const query = (searchAccessCode.value || '').trim();
+        if(query){
+            clearSearchBtn.classList.remove('d-none');
+        } else {
+            clearSearchBtn.classList.add('d-none');
+        }
+        debouncedSearch(query);
+    };
+
+    searchAccessCode.onkeydown = (e) => {
+        if(e.key === 'Enter'){
+            e.preventDefault();
+            debouncedSearch.cancel();
+            showData((searchAccessCode.value || '').trim(), false);
+        }
+    };
 
     clearSearchBtn.onclick = () => {
+        debouncedSearch.cancel();
         searchAccessCode.value = '';
+        clearSearchBtn.classList.add('d-none');
         searchAccessCode.focus();
-        filterAccessCodes();
+        showData('', false);
     };
 
     reinitalize();
-    showData();
+    showData('', true);
 
 </script>
 </div>

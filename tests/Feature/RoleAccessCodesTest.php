@@ -190,8 +190,8 @@ class RoleAccessCodesTest extends TestCase
         $response->assertSee('id="searchAccessCode"', false);
         $response->assertSee('id="clearSearchBtn"', false);
         $response->assertSee('id="accessCodeCount"', false);
-        $response->assertSee('filterAccessCodes', false);
+        $response->assertSee('function debounce', false);
+        $response->assertSee('debouncedSearch', false);
         $response->assertSee('id="list"', false);
-        $response->assertSee('reply.data.sort', false);
     }
 }
