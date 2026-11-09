@@ -278,65 +278,74 @@
             return;
         }
 
-        data.map(item=>{
-           
-            let row = t.div({class:'item-container fade-in'},()=>{
-               
-                t.div({class:'item-header'},()=>{
-                    
-                    t.div({class:'row'},()=>{
+        const groups = {};
+        data.forEach(item => {
+            const parts = (item.code || '').split(':');
+            const groupKey = (parts[0] || 'other').trim();
+            if (!groups[groupKey]) {
+                groups[groupKey] = [];
+            }
+            groups[groupKey].push(item);
+        });
 
-                        t.div({class:'col-6'},()=>{
+        Object.keys(groups).sort().forEach(groupName => {
+            const items = groups[groupName];
 
-                            t.txt(item.code);
-                        });
+            let groupContainer = t.div({class: 'folder-form-container access-code-group mb-4', 'data-group': groupName}, () => {
+                t.div({class: 'folder-form-tab text-uppercase'}, groupName);
+                t.div({class: 'folder-form-body'}, () => {
+                    items.forEach(item => {
+                        let row = t.div({class:'item-container fade-in'},()=>{
+                            t.div({class:'item-header'},()=>{
+                                t.div({class:'row'},()=>{
+                                    t.div({class:'col-6'},()=>{
+                                        t.txt(item.code);
+                                    });
+                                    t.div({class:'col-6 text-end'},()=>{
+                                        t.button({class:'btn btn-danger'},()=>{
+                                            t.i({class:'bi bi-trash-fill'});
+                                        }).onclick = (e)=>{
+                                            e.stopPropagation();
+                                            window.util.confirm('Are you sure you want to remove this role?',(e,res)=>{
+                                                if(!res){
+                                                    return false;
+                                                }
 
-                        t.div({class:'col-6 text-end'},()=>{
-                            
-                            t.button({class:'btn btn-danger'},()=>{
-                                t.i({class:'bi bi-trash-fill'});
-                            }).onclick = (e)=>{
-                                e.stopPropagation();
-                               
-                                window.util.confirm('Are you sure you want to remove this role?',(e,res)=>{
-                                    
-                                    if(!res){
-                                        return false;
-                                    }
+                                                window.util.blockUI();
 
-                                    window.util.blockUI();
+                                                window.util.$post('/api/role/access_code/remove',{
+                                                    role_id: '{{$role->id}}',
+                                                    access_code_id: item.id
+                                                }).then(reply=>{
+                                                    window.util.unblockUI();
 
-                                    window.util.$post('/api/role/access_code/remove',{
-                                        role_id: '{{$role->id}}',
-                                        access_code_id: item.id
-                                    }).then(reply=>{
-                                        window.util.unblockUI();
+                                                    if(reply.status <= 0){
+                                                        window.util.showMsg(reply);
+                                                        return false;
+                                                    }
 
-                                        if(reply.status <= 0){
-                                            window.util.showMsg(reply);
-                                            return false;
-                                        }
-
-                                        if(totalAssignedCount !== null && totalAssignedCount > 0){
-                                            totalAssignedCount--;
-                                        }
-                                        showData((searchAccessCode.value || '').trim(), false);
+                                                    if(totalAssignedCount !== null && totalAssignedCount > 0){
+                                                        totalAssignedCount--;
+                                                    }
+                                                    showData((searchAccessCode.value || '').trim(), false);
+                                                });
+                                            });
+                                        };
                                     });
                                 });
-                            };
-                        });
-                    })
-                });
+                            });
 
-                t.div({class:'item-body'},item.description );
+                            t.div({class:'item-body'},item.description );
+                        });
+
+                        row.onclick = ()=>{
+                            window.util.navTo('/access_code/'+item.id+'?b={{url()->current()}}');
+                        };
+                    });
+                });
             });
 
-            row.onclick = ()=>{
-                window.util.navTo('/access_code/'+item.id+'?b={{url()->current()}}');
-            };
-
-            $el.append(row).to(list);
-            
+            $el.append(groupContainer).to(list);
         });
 
     }
