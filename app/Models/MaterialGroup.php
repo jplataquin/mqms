@@ -123,7 +123,7 @@ class MaterialGroup extends Model
                 if ($foundClose && !$hasNestedOpen) {
                     $content = substr($template, $i + 1, $j - ($i + 1));
 
-                    // Find last unescaped colon
+                    // Find first unescaped colon to separate label from type/options
                     $colonPos = false;
                     $cLen = strlen($content);
                     $k = 0;
@@ -134,6 +134,7 @@ class MaterialGroup extends Model
                         }
                         if ($content[$k] === ':') {
                             $colonPos = $k;
+                            break;
                         }
                         $k++;
                     }
@@ -141,12 +142,31 @@ class MaterialGroup extends Model
                     $isValid = true;
                     $label = '';
                     $datatype = 'text';
+                    $options = null;
 
                     if ($colonPos !== false) {
-                        $typePart = strtolower(trim(substr($content, $colonPos + 1)));
-                        if ($typePart === 'number' || $typePart === 'text') {
-                            $datatype = $typePart;
-                            $label = $unescapeTemplate(trim(substr($content, 0, $colonPos)));
+                        $label = $unescapeTemplate(trim(substr($content, 0, $colonPos)));
+                        $typePartRaw = trim(substr($content, $colonPos + 1));
+                        $typePartLower = strtolower($typePartRaw);
+
+                        if ($typePartLower === 'number' || $typePartLower === 'text' || $typePartLower === 'integer' || $typePartLower === 'float') {
+                            $datatype = $typePartLower;
+                        } elseif (str_starts_with($typePartLower, 'enum:')) {
+                            $datatype = 'enum';
+                            $optionsRaw = substr($typePartRaw, 5);
+                            $rawList = explode('|', $optionsRaw);
+                            $parsedOptions = [];
+                            foreach ($rawList as $opt) {
+                                $trimmed = trim($opt);
+                                if ($trimmed !== '') {
+                                    $parsedOptions[] = $unescapeTemplate($trimmed);
+                                }
+                            }
+                            if (!empty($parsedOptions)) {
+                                $options = $parsedOptions;
+                            } else {
+                                $isValid = false;
+                            }
                         } else {
                             $isValid = false;
                         }
@@ -159,11 +179,15 @@ class MaterialGroup extends Model
                             $pushStatic($currentStatic);
                             $currentStatic = '';
                         }
-                        $segments[] = [
+                        $segment = [
                             'type' => 'variable',
                             'label' => $label,
                             'datatype' => $datatype,
                         ];
+                        if ($datatype === 'enum' && !empty($options)) {
+                            $segment['options'] = $options;
+                        }
+                        $segments[] = $segment;
                         $i = $j + 1;
                         continue;
                     }
@@ -206,6 +230,15 @@ class MaterialGroup extends Model
             } elseif ($segment['type'] === 'variable') {
                 if ($segment['datatype'] === 'number') {
                     $pattern .= '(\d+(?:[\s-]\d+\/\d+|\/\d+|\.\d+)?|\.\d+)';
+                } elseif ($segment['datatype'] === 'integer') {
+                    $pattern .= '(\d+)';
+                } elseif ($segment['datatype'] === 'float') {
+                    $pattern .= '(\d*\.\d+)';
+                } elseif ($segment['datatype'] === 'enum') {
+                    $escaped = array_map(function ($opt) {
+                        return preg_quote($opt, '/');
+                    }, $segment['options'] ?? []);
+                    $pattern .= '(' . implode('|', $escaped) . ')';
                 } else {
                     // If it's the last segment or followed by static, match appropriately
                     $pattern .= ($i === $total - 1) ? '([^\r\n]+)' : '([^\r\n]+?)';

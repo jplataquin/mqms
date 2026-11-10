@@ -166,4 +166,63 @@ class MaterialGroupTemplateTest extends TestCase
         $this->assertFalse($group->validateSpecification('abc" [ pc ]'));
         $this->assertFalse($group->validateSpecification('ten" [ pc ]'));
     }
+
+    public function test_it_handles_integer_and_float_datatypes()
+    {
+        $group = new MaterialGroup();
+        $group->specification_template = '[Quantity:integer] pcs - [Thickness:float] mm';
+
+        $segments = $group->parseSpecificationTemplate();
+        $this->assertCount(4, $segments);
+        $this->assertEquals(['type' => 'variable', 'label' => 'Quantity', 'datatype' => 'integer'], $segments[0]);
+        $this->assertEquals(['type' => 'static', 'value' => ' pcs - '], $segments[1]);
+        $this->assertEquals(['type' => 'variable', 'label' => 'Thickness', 'datatype' => 'float'], $segments[2]);
+        $this->assertEquals(['type' => 'static', 'value' => ' mm'], $segments[3]);
+
+        // Valid: integer only and float with decimal
+        $this->assertTrue($group->validateSpecification('50 pcs - 1.5 mm'));
+        $this->assertTrue($group->validateSpecification('0 pcs - 0.75 mm'));
+        $this->assertTrue($group->validateSpecification('100 pcs - .5 mm'));
+
+        // Invalid: float without decimal point
+        $this->assertFalse($group->validateSpecification('50 pcs - 2 mm'));
+
+        // Invalid: integer with decimal
+        $this->assertFalse($group->validateSpecification('50.5 pcs - 1.5 mm'));
+
+        // Invalid: non-numeric
+        $this->assertFalse($group->validateSpecification('abc pcs - 1.5 mm'));
+    }
+
+    public function test_it_handles_enum_datatype_with_options()
+    {
+        $group = new MaterialGroup();
+        $group->specification_template = '[Size:enum:Small|Medium|Large] - [Color:enum:Red|Blue]';
+
+        $segments = $group->parseSpecificationTemplate();
+        $this->assertCount(3, $segments);
+        $this->assertEquals([
+            'type' => 'variable',
+            'label' => 'Size',
+            'datatype' => 'enum',
+            'options' => ['Small', 'Medium', 'Large']
+        ], $segments[0]);
+        $this->assertEquals(['type' => 'static', 'value' => ' - '], $segments[1]);
+        $this->assertEquals([
+            'type' => 'variable',
+            'label' => 'Color',
+            'datatype' => 'enum',
+            'options' => ['Red', 'Blue']
+        ], $segments[2]);
+
+        // Valid matching values
+        $this->assertTrue($group->validateSpecification('Small - Red'));
+        $this->assertTrue($group->validateSpecification('Medium - Blue'));
+        $this->assertTrue($group->validateSpecification('Large - Red'));
+
+        // Invalid: option not in enum list
+        $this->assertFalse($group->validateSpecification('Extra-Large - Red'));
+        $this->assertFalse($group->validateSpecification('Small - Green'));
+        $this->assertFalse($group->validateSpecification('small - Red')); // Case mismatch
+    }
 }

@@ -176,6 +176,7 @@
                 if (foundClose && !hasNestedOpen) {
                     const content = template.substring(i + 1, j);
 
+                    // Find first unescaped colon
                     let colonPos = -1;
                     let k = 0;
                     while (k < content.length) {
@@ -185,6 +186,7 @@
                         }
                         if (content[k] === ':') {
                             colonPos = k;
+                            break;
                         }
                         k++;
                     }
@@ -192,12 +194,31 @@
                     let isValid = true;
                     let label = '';
                     let datatype = 'text';
+                    let options = null;
 
                     if (colonPos !== -1) {
-                        const typePart = content.substring(colonPos + 1).trim().toLowerCase();
-                        if (typePart === 'number' || typePart === 'text') {
-                            datatype = typePart;
-                            label = unescapeTemplate(content.substring(0, colonPos).trim());
+                        label = unescapeTemplate(content.substring(0, colonPos).trim());
+                        const typePartRaw = content.substring(colonPos + 1).trim();
+                        const typePartLower = typePartRaw.toLowerCase();
+
+                        if (typePartLower === 'number' || typePartLower === 'text' || typePartLower === 'integer' || typePartLower === 'float') {
+                            datatype = typePartLower;
+                        } else if (typePartLower.startsWith('enum:')) {
+                            datatype = 'enum';
+                            const optionsRaw = typePartRaw.substring(5);
+                            const rawList = optionsRaw.split('|');
+                            const parsedOptions = [];
+                            for (const opt of rawList) {
+                                const trimmed = opt.trim();
+                                if (trimmed !== '') {
+                                    parsedOptions.push(unescapeTemplate(trimmed));
+                                }
+                            }
+                            if (parsedOptions.length > 0) {
+                                options = parsedOptions;
+                            } else {
+                                isValid = false;
+                            }
                         } else {
                             isValid = false;
                         }
@@ -210,11 +231,15 @@
                             pushStatic(currentStatic);
                             currentStatic = '';
                         }
-                        segments.push({
+                        const seg = {
                             type: 'variable',
                             label: label,
                             datatype: datatype
-                        });
+                        };
+                        if (datatype === 'enum' && options) {
+                            seg.options = options;
+                        }
+                        segments.push(seg);
                         i = j + 1;
                         continue;
                     }
@@ -247,7 +272,18 @@
             if (seg.type === 'static') {
                 pattern += seg.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             } else {
-                pattern += seg.datatype === 'number' ? '(\\d+(?:[\\s-]\\d+\\/\\d+|\\/\\d+|\\.\\d+)?|\\.\\d+)' : (i === total - 1 ? '([^\\r\\n]+)' : '([^\\r\\n]+?)');
+                if (seg.datatype === 'number') {
+                    pattern += '(\\d+(?:[\\s-]\\d+\\/\\d+|\\/\\d+|\\.\\d+)?|\\.\\d+)';
+                } else if (seg.datatype === 'integer') {
+                    pattern += '(\\d+)';
+                } else if (seg.datatype === 'float') {
+                    pattern += '(\\d*\\.\\d+)';
+                } else if (seg.datatype === 'enum' && Array.isArray(seg.options)) {
+                    const escaped = seg.options.map(opt => opt.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+                    pattern += '(' + escaped.join('|') + ')';
+                } else {
+                    pattern += (i === total - 1 ? '([^\\r\\n]+)' : '([^\\r\\n]+?)');
+                }
             }
         }
         pattern += '$';
@@ -317,19 +353,46 @@
 
                 const label = document.createElement('label');
                 label.className = 'form-label small text-muted mb-1 d-block';
-                label.textContent = seg.label + (seg.datatype === 'number' ? ' (number)' : '');
-
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.className = 'form-control';
-                input.placeholder = seg.label;
-                input.disabled = !isEditable;
+                let hint = '';
+                if (seg.datatype === 'number') hint = ' (number)';
+                else if (seg.datatype === 'integer') hint = ' (integer)';
+                else if (seg.datatype === 'float') hint = ' (float)';
+                label.textContent = seg.label + hint;
 
                 const val = extracted[varIndex] !== undefined ? extracted[varIndex] : '';
-                input.value = val;
                 varIndex++;
 
-                input.addEventListener('input', updateCombined);
+                let input;
+                if (seg.datatype === 'enum' && Array.isArray(seg.options)) {
+                    input = document.createElement('select');
+                    input.className = 'form-select';
+                    input.disabled = !isEditable;
+
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = '-- ' + seg.label + ' --';
+                    input.appendChild(defaultOption);
+
+                    for (const opt of seg.options) {
+                        const optElem = document.createElement('option');
+                        optElem.value = opt;
+                        optElem.textContent = opt;
+                        if (opt === val) {
+                            optElem.selected = true;
+                        }
+                        input.appendChild(optElem);
+                    }
+                    input.addEventListener('change', updateCombined);
+                } else {
+                    input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = 'form-control';
+                    input.placeholder = seg.label;
+                    input.disabled = !isEditable;
+                    input.value = val;
+                    input.addEventListener('input', updateCombined);
+                }
+
                 inputs.push(input);
 
                 col.appendChild(label);

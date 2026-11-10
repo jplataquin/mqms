@@ -174,6 +174,7 @@
                 if (foundClose && !hasNestedOpen) {
                     const content = template.substring(i + 1, j);
 
+                    // Find first unescaped colon
                     let colonPos = -1;
                     let k = 0;
                     while (k < content.length) {
@@ -183,6 +184,7 @@
                         }
                         if (content[k] === ':') {
                             colonPos = k;
+                            break;
                         }
                         k++;
                     }
@@ -190,12 +192,31 @@
                     let isValid = true;
                     let label = '';
                     let datatype = 'text';
+                    let options = null;
 
                     if (colonPos !== -1) {
-                        const typePart = content.substring(colonPos + 1).trim().toLowerCase();
-                        if (typePart === 'number' || typePart === 'text') {
-                            datatype = typePart;
-                            label = unescapeTemplate(content.substring(0, colonPos).trim());
+                        label = unescapeTemplate(content.substring(0, colonPos).trim());
+                        const typePartRaw = content.substring(colonPos + 1).trim();
+                        const typePartLower = typePartRaw.toLowerCase();
+
+                        if (typePartLower === 'number' || typePartLower === 'text' || typePartLower === 'integer' || typePartLower === 'float') {
+                            datatype = typePartLower;
+                        } else if (typePartLower.startsWith('enum:')) {
+                            datatype = 'enum';
+                            const optionsRaw = typePartRaw.substring(5);
+                            const rawList = optionsRaw.split('|');
+                            const parsedOptions = [];
+                            for (const opt of rawList) {
+                                const trimmed = opt.trim();
+                                if (trimmed !== '') {
+                                    parsedOptions.push(unescapeTemplate(trimmed));
+                                }
+                            }
+                            if (parsedOptions.length > 0) {
+                                options = parsedOptions;
+                            } else {
+                                isValid = false;
+                            }
                         } else {
                             isValid = false;
                         }
@@ -208,11 +229,15 @@
                             pushStatic(currentStatic);
                             currentStatic = '';
                         }
-                        segments.push({
+                        const seg = {
                             type: 'variable',
                             label: label,
                             datatype: datatype
-                        });
+                        };
+                        if (datatype === 'enum' && options) {
+                            seg.options = options;
+                        }
+                        segments.push(seg);
                         i = j + 1;
                         continue;
                     }
@@ -288,14 +313,36 @@
 
                 const label = document.createElement('label');
                 label.className = 'form-label small text-muted mb-1 d-block';
-                label.textContent = seg.label + (seg.datatype === 'number' ? ' (number)' : '');
+                let hint = '';
+                if (seg.datatype === 'number') hint = ' (number)';
+                else if (seg.datatype === 'integer') hint = ' (integer)';
+                else if (seg.datatype === 'float') hint = ' (float)';
+                label.textContent = seg.label + hint;
 
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.className = 'form-control';
-                input.placeholder = seg.label;
+                let input;
+                if (seg.datatype === 'enum' && Array.isArray(seg.options)) {
+                    input = document.createElement('select');
+                    input.className = 'form-select';
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = '-- ' + seg.label + ' --';
+                    input.appendChild(defaultOption);
 
-                input.addEventListener('input', updateCombined);
+                    for (const opt of seg.options) {
+                        const optElem = document.createElement('option');
+                        optElem.value = opt;
+                        optElem.textContent = opt;
+                        input.appendChild(optElem);
+                    }
+                    input.addEventListener('change', updateCombined);
+                } else {
+                    input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = 'form-control';
+                    input.placeholder = seg.label;
+                    input.addEventListener('input', updateCombined);
+                }
+
                 inputs.push(input);
 
                 col.appendChild(label);
