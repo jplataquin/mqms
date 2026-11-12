@@ -13,6 +13,13 @@ use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderItem;
 use App\Models\MaterialGroup;
 use App\Models\MaterialItem;
+use App\Models\Section;
+use App\Models\ContractItem;
+use App\Models\Component;
+use App\Models\MaterialQuantityRequest;
+use App\Models\Supplier;
+use App\Models\PaymentTerm;
+use App\Models\Unit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PurchaseOrderTest extends TestCase
@@ -301,5 +308,131 @@ class PurchaseOrderTest extends TestCase
         $responseBob = $this->actingAs($this->user)->getJson('/api/purchase_order/list?created_by=' . $this->otherUser->id);
         $responseBob->assertStatus(200);
         $this->assertEmpty($responseBob->json('data'));
+    }
+
+    /** @test */
+    public function it_can_render_the_printable_purchase_order_page_with_embedded_header_images()
+    {
+        $this->grantAccessCode($this->user, 'purchase_order:all:view');
+
+        $unit = new Unit();
+        $unit->text = 'pcs';
+        $unit->created_by = $this->user->id;
+        $unit->save();
+
+        $section = new Section();
+        $section->project_id = $this->project->id;
+        $section->name = 'Phase 1 - Ground Works';
+        $section->created_by = $this->user->id;
+        $section->save();
+
+        $contractItem = new ContractItem();
+        $contractItem->section_id = $section->id;
+        $contractItem->item_type = 'MAT';
+        $contractItem->item_code = 'CI-101';
+        $contractItem->description = 'Reinforced Concrete Columns';
+        $contractItem->contract_quantity = 100;
+        $contractItem->unit_id = $unit->id;
+        $contractItem->contract_unit_price = 500.00;
+        $contractItem->created_by = $this->user->id;
+        $contractItem->save();
+
+        $component = new Component();
+        $component->name = 'Footing Columns';
+        $component->contract_item_id = $contractItem->id;
+        $component->quantity = 20;
+        $component->unit_id = $unit->id;
+        $component->status = 'APRV';
+        $component->section_id = $section->id;
+        $component->created_by = $this->user->id;
+        $component->save();
+
+        $supplier = new Supplier();
+        $supplier->name = 'Prime Concrete & Steel Corp';
+        $supplier->primary_contact_person = 'John Doe';
+        $supplier->primary_contact_no = '09123456789';
+        $supplier->primary_email = 'supplier@example.com';
+        $supplier->address = 'City Industrial Park';
+        $supplier->created_by = $this->user->id;
+        $supplier->save();
+
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = '30 Days Net';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $mqr = new MaterialQuantityRequest();
+        $mqr->project_id = $this->project->id;
+        $mqr->section_id = $section->id;
+        $mqr->contract_item_id = $contractItem->id;
+        $mqr->component_id = $component->id;
+        $mqr->description = 'Materials for Column Pouring';
+        $mqr->status = 'APRV';
+        $mqr->date_needed = '2026-11-20';
+        $mqr->created_by = $this->user->id;
+        $mqr->save();
+
+        $po = new PurchaseOrder();
+        $po->project_id = $this->project->id;
+        $po->section_id = $section->id;
+        $po->component_id = $component->id;
+        $po->contract_item_id = $contractItem->id;
+        $po->material_quantity_request_id = $mqr->id;
+        $po->supplier_id = $supplier->id;
+        $po->payment_term_id = $paymentTerm->id;
+        $po->status = 'APRV';
+        $po->received_status = 'PEND';
+        $po->created_by = $this->user->id;
+        $po->extras = json_encode([]);
+        $po->save();
+
+        $poItem = new PurchaseOrderItem();
+        $poItem->purchase_order_id = $po->id;
+        $poItem->component_item_id = 1;
+        $poItem->material_quantity_request_item_id = 1;
+        $poItem->material_canvass_id = 1;
+        $poItem->material_item_id = $this->material1->id;
+        $poItem->quantity = 15;
+        $poItem->price = 450.00;
+        $poItem->status = 'APRV';
+        $poItem->save();
+
+        $response = $this->actingAs($this->user)->get('/purchase_order/print/' . $po->id);
+        $response->assertStatus(200);
+
+        // Header images are safely embedded as Base64 data URIs so printing never encounters broken image errors
+        $response->assertSee('data:image/png;base64,', false);
+        $response->assertDontSee('/storage/sys_images/header.png');
+        $response->assertDontSee('/storage/sys_images/header_with_address.png');
+
+        // Document sections rendered properly
+        $response->assertSee('Purchase Order ( Supplier Copy )');
+        $response->assertSee('Purchase Order ( Accounting Copy )');
+        $response->assertSee('Purchase Order ( Purchaser Copy )');
+        $response->assertSee('Purchase Order ( Site Copy )');
+        $response->assertSee('Purchase Order ( Warehouse Copy )');
+        $response->assertSee('Material Call Out Slip');
+        $response->assertSee($supplier->name);
+        $response->assertSee('PO#');
+    }
+
+    /** @test */
+    public function it_serves_public_storage_sys_images_via_fallback_route()
+    {
+        $responseWithAddress = $this->get('/storage/sys_images/header_with_address.png');
+        $responseWithAddress->assertStatus(200);
+        $responseWithAddress->assertHeader('Content-Type', 'image/png');
+
+        $responseHeader = $this->get('/storage/sys_images/header.png');
+        $responseHeader->assertStatus(200);
+        $responseHeader->assertHeader('Content-Type', 'image/png');
+    }
+
+    /** @test */
+    public function it_returns_404_for_non_existent_or_directory_traversal_storage_paths()
+    {
+        $this->get('/storage/sys_images/non_existent.png')->assertStatus(404);
+        $this->get('/storage/sys_images/')->assertStatus(404);
+        $this->get('/storage/../../routes/web.php')->assertStatus(404);
     }
 }

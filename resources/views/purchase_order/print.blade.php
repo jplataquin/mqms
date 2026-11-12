@@ -67,14 +67,44 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         
-     
+        @php
+            $headerWithAddressCandidate = null;
+            foreach ([
+                storage_path('app/public/sys_images/header_with_address.png'),
+                public_path('storage/sys_images/header_with_address.png'),
+                public_path('sys_images/header_with_address.png'),
+            ] as $candidate) {
+                if (file_exists($candidate)) {
+                    $headerWithAddressCandidate = $candidate;
+                    break;
+                }
+            }
+            $headerWithAddressSrc = $headerWithAddressCandidate
+                ? 'data:image/png;base64,' . base64_encode(file_get_contents($headerWithAddressCandidate))
+                : asset('storage/sys_images/header_with_address.png');
+
+            $headerCandidate = null;
+            foreach ([
+                storage_path('app/public/sys_images/header.png'),
+                public_path('storage/sys_images/header.png'),
+                public_path('sys_images/header.png'),
+            ] as $candidate) {
+                if (file_exists($candidate)) {
+                    $headerCandidate = $candidate;
+                    break;
+                }
+            }
+            $headerSrc = $headerCandidate
+                ? 'data:image/png;base64,' . base64_encode(file_get_contents($headerCandidate))
+                : asset('storage/sys_images/header.png');
+        @endphp
 
          @foreach(['Supplier','Accounting','Purchaser'] as $copy)
             <div class="whole mb-10">
                 <table class="table" border="1">
                     <tr>
                         <td colspan="4" class="text-center bold" style="">
-                            <img src="/storage/sys_images/header_with_address.png" style="width:500px"/>
+                            <img src="{{ $headerWithAddressSrc }}" style="width:500px"/>
                         </td>
                     </tr>
                     <tr>
@@ -208,7 +238,7 @@
             <table class="table" border="1">
                 <tr>
                     <td colspan="2" class="text-center bold" style="">
-                        <img src="/storage/sys_images/header.png" style="width:500px"/>
+                        <img src="{{ $headerSrc }}" style="width:500px"/>
                     </td>
                 </tr>
                 <tr>
@@ -334,7 +364,7 @@
             <table class="table" border="1">
                 <tr>
                     <td colspan="4" class="text-center bold" style="">
-                        <img src="/storage/sys_images/header.png" style="width:500px"/>
+                        <img src="{{ $headerSrc }}" style="width:500px"/>
                     </td>
                 </tr>
                 <tr>
@@ -486,7 +516,7 @@
             <table class="table" border="1">
                 <tr>
                     <td colspan="4" class="text-center bold" style="">
-                        <img src="/storage/sys_images/header.png" style="width:500px"/>
+                        <img src="{{ $headerSrc }}" style="width:500px"/>
                     </td>
                 </tr>
                 <tr>

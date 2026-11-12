@@ -352,3 +352,14 @@ Route::get('/pop', function(){
 
     return view('usb');
 });
+
+Route::get('/storage/{path}', function (string $path) {
+    $storagePublic = realpath(storage_path('app/public'));
+    $filePath = realpath(storage_path('app/public/' . $path));
+
+    if (!$filePath || !str_starts_with($filePath, $storagePublic) || is_dir($filePath)) {
+        abort(404);
+    }
+
+    return response()->file($filePath);
+})->where('path', '.*');

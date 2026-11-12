@@ -30,8 +30,8 @@
     <table style="width: 100%; margin-bottom: 20px; border-collapse: collapse;">
         <tr>
             <td style="vertical-align: middle;">
-                <h2 style="margin: 0;">Direct Material Request</h2>
-                <p style="margin: 5px 0;">Request #: <strong>{{ $request->formatted_id }}</strong> | Status: <strong>{{ $request->status }}</strong></p>
+                <h2 style="margin: 0;">Direct Material Request - #{{ $request->formatted_id }}</h2>
+                <p style="margin: 5px 0;"><strong>{{ $request->status }}</strong></p>
             </td>
             <td style="width: 120px; text-align: center; vertical-align: middle;">
                 <img class="qr_code" src="/qrcode?d={{ url('/review/direct_material_quantity_requests/qr/approve/'.$request->id.'/'.$hash_code) }}"/>
