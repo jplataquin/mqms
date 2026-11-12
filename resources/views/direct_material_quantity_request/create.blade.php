@@ -37,7 +37,9 @@
                         </div>
                         <datalist id="projectList">
                             @foreach($projects as $project)
-                                <option value="{{$project->name}}" data-id="{{$project->id}}"></option>
+                                @if($project->status === 'ACTV')
+                                    <option value="{{$project->name}}" data-id="{{$project->id}}"></option>
+                                @endif
                             @endforeach
                         </datalist>
                         <input type="hidden" id="projectSelect" value="">
@@ -54,6 +56,35 @@
                         <datalist id="sectionList">
                         </datalist>
                         <input type="hidden" id="sectionSelect" value="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-lg-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label">Contract Item (Optional)</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-search"></i></span>
+                            <input type="text" class="form-control" id="contractItemInput" list="contractItemList" placeholder="Select a Project first" autocomplete="off" disabled>
+                            <button class="btn btn-outline-secondary" type="button" id="clearContractItemBtn" title="Clear Contract Item"><i class="bi bi-x-lg"></i></button>
+                        </div>
+                        <datalist id="contractItemList">
+                        </datalist>
+                        <input type="hidden" id="contractItemSelect" value="">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label">Component (Optional)</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-search"></i></span>
+                            <input type="text" class="form-control" id="componentInput" list="componentList" placeholder="Select a Contract Item first" autocomplete="off" disabled>
+                            <button class="btn btn-outline-secondary" type="button" id="clearComponentBtn" title="Clear Component"><i class="bi bi-x-lg"></i></button>
+                        </div>
+                        <datalist id="componentList">
+                        </datalist>
+                        <input type="hidden" id="componentSelect" value="">
                     </div>
                 </div>
             </div>
@@ -127,6 +158,16 @@
     const sectionSelect   = $q('#sectionSelect').first();
     const clearSectionBtn = $q('#clearSectionBtn').first();
 
+    const contractItemInput    = $q('#contractItemInput').first();
+    const contractItemList     = $q('#contractItemList').first();
+    const contractItemSelect   = $q('#contractItemSelect').first();
+    const clearContractItemBtn = $q('#clearContractItemBtn').first();
+
+    const componentInput    = $q('#componentInput').first();
+    const componentList     = $q('#componentList').first();
+    const componentSelect   = $q('#componentSelect').first();
+    const clearComponentBtn = $q('#clearComponentBtn').first();
+
     const descriptionInput = $q('#descriptionInput').first();
     const dateNeededInput = $q('#dateNeededInput').first();
     const itemsTableBody  = $q('#itemsTableBody').first();
@@ -146,6 +187,94 @@
         return '';
     }
 
+    function clearComponent() {
+        componentInput.value = '';
+        componentSelect.value = '';
+        $el.clear(componentList);
+        componentInput.disabled = true;
+        componentInput.placeholder = 'Select a Contract Item first';
+    }
+
+    function clearContractItem() {
+        contractItemInput.value = '';
+        contractItemSelect.value = '';
+        $el.clear(contractItemList);
+        contractItemInput.disabled = true;
+        contractItemInput.placeholder = 'Select a Project first';
+        clearComponent();
+    }
+
+    async function loadContractItems() {
+        contractItemInput.value = '';
+        contractItemSelect.value = '';
+        $el.clear(contractItemList);
+        clearComponent();
+
+        const projId = projectSelect.value;
+        const secId = sectionSelect.value;
+
+        if (!projId && !secId) {
+            contractItemInput.disabled = true;
+            contractItemInput.placeholder = 'Select a Project first';
+            return;
+        }
+
+        contractItemInput.disabled = false;
+        contractItemInput.placeholder = 'Type to search contract item (Optional)...';
+
+        const params = {
+            orderBy: 'code',
+            order: 'ASC'
+        };
+        if (secId) {
+            params.section_id = secId;
+        } else if (projId) {
+            params.project_id = projId;
+        }
+
+        let res = await window.util.$get('/api/contract_item/list', params);
+        if (res.status === 1 && res.data) {
+            res.data.forEach(ci => {
+                const opt = document.createElement('option');
+                opt.value = ci.name;
+                opt.setAttribute('data-id', ci.id);
+                if (ci.section_id) {
+                    opt.setAttribute('data-section-id', ci.section_id);
+                }
+                contractItemList.appendChild(opt);
+            });
+        }
+    }
+
+    async function loadComponents() {
+        componentInput.value = '';
+        componentSelect.value = '';
+        $el.clear(componentList);
+
+        const ciId = contractItemSelect.value;
+        if (!ciId) {
+            clearComponent();
+            return;
+        }
+
+        componentInput.disabled = false;
+        componentInput.placeholder = 'Type to search component (Optional)...';
+
+        let res = await window.util.$get('/api/component/list', {
+            contract_item_id: ciId,
+            orderBy: 'name',
+            order: 'ASC'
+        });
+        if (res.status === 1 && res.data) {
+            res.data.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.name;
+                opt.setAttribute('data-id', c.id);
+                componentList.appendChild(opt);
+            });
+        }
+    }
+
     projectInput.oninput = async () => {
         const newProjId = findOptionId(projectInput, projectList);
         const currProjId = projectSelect.value;
@@ -155,6 +284,7 @@
             sectionInput.value = '';
             sectionSelect.value = '';
             $el.clear(sectionList);
+            clearContractItem();
 
             if (!newProjId) {
                 sectionInput.disabled = true;
@@ -181,6 +311,8 @@
                     sectionList.appendChild(opt);
                 });
             }
+
+            await loadContractItems();
         }
     };
 
@@ -192,17 +324,52 @@
         $el.clear(sectionList);
         sectionInput.disabled = true;
         sectionInput.placeholder = 'Select a Project first';
+        clearContractItem();
         projectInput.focus();
     };
 
-    sectionInput.oninput = () => {
-        sectionSelect.value = findOptionId(sectionInput, sectionList);
+    sectionInput.oninput = async () => {
+        const newSecId = findOptionId(sectionInput, sectionList);
+        if (newSecId !== sectionSelect.value) {
+            sectionSelect.value = newSecId;
+            await loadContractItems();
+        }
     };
 
-    clearSectionBtn.onclick = () => {
+    clearSectionBtn.onclick = async () => {
         sectionInput.value = '';
         sectionSelect.value = '';
+        await loadContractItems();
         sectionInput.focus();
+    };
+
+    contractItemInput.oninput = async () => {
+        const newCiId = findOptionId(contractItemInput, contractItemList);
+        if (newCiId !== contractItemSelect.value) {
+            contractItemSelect.value = newCiId;
+            if (newCiId) {
+                await loadComponents();
+            } else {
+                clearComponent();
+            }
+        }
+    };
+
+    clearContractItemBtn.onclick = () => {
+        contractItemInput.value = '';
+        contractItemSelect.value = '';
+        clearComponent();
+        contractItemInput.focus();
+    };
+
+    componentInput.oninput = () => {
+        componentSelect.value = findOptionId(componentInput, componentList);
+    };
+
+    clearComponentBtn.onclick = () => {
+        componentInput.value = '';
+        componentSelect.value = '';
+        componentInput.focus();
     };
 
     function updateItemRemoveButtons() {
@@ -295,7 +462,7 @@
     saveBtn.onclick = async () => {
         const matchedProjId = findOptionId(projectInput, projectList);
         if (!matchedProjId) {
-            alert('Please select a valid Project from the list.');
+            alert('Please select a valid active Project from the list.');
             projectInput.focus();
             return;
         }
@@ -311,6 +478,30 @@
             sectionSelect.value = matchedSecId;
         } else {
             sectionSelect.value = '';
+        }
+
+        if (contractItemInput.value.trim() !== '') {
+            const matchedCiId = findOptionId(contractItemInput, contractItemList);
+            if (!matchedCiId) {
+                alert('Please select a valid Contract Item from the list, or clear the Contract Item field.');
+                contractItemInput.focus();
+                return;
+            }
+            contractItemSelect.value = matchedCiId;
+        } else {
+            contractItemSelect.value = '';
+        }
+
+        if (componentInput.value.trim() !== '') {
+            const matchedCompId = findOptionId(componentInput, componentList);
+            if (!matchedCompId) {
+                alert('Please select a valid Component from the list, or clear the Component field.');
+                componentInput.focus();
+                return;
+            }
+            componentSelect.value = matchedCompId;
+        } else {
+            componentSelect.value = '';
         }
 
         const items = [];
@@ -362,6 +553,12 @@
         };
         if (sectionSelect.value && parseInt(sectionSelect.value) > 0) {
             payload.section_id = sectionSelect.value;
+        }
+        if (contractItemSelect.value && parseInt(contractItemSelect.value) > 0) {
+            payload.contract_item_id = contractItemSelect.value;
+        }
+        if (componentSelect.value && parseInt(componentSelect.value) > 0) {
+            payload.component_id = componentSelect.value;
         }
 
         let res = await window.util.$post('/api/direct_material_quantity_request/create', payload);

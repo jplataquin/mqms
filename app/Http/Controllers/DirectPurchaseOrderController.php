@@ -320,6 +320,11 @@ class DirectPurchaseOrderController extends Controller
             $dpo->section_id                          = $section_id;
             if ($request->has('component_id') && $request->input('component_id')) {
                 $dpo->component_id                    = $request->input('component_id');
+            } elseif ($dmqr_id) {
+                $parentDmqr = \App\Models\DirectMaterialQuantityRequest::find($dmqr_id);
+                if ($parentDmqr && $parentDmqr->component_id) {
+                    $dpo->component_id                = $parentDmqr->component_id;
+                }
             }
             $dpo->direct_material_quantity_request_id = $dmqr_id;
             $dpo->date_needed                         = $date_needed;

@@ -466,18 +466,26 @@ class ContractItemController extends Controller
 
     public function _list(Request $request){
 
-        $section_id = (int) $request->input('section_id') ?? 0;
-        $page       = (int) $request->input('page')     ?? 1;
-        $limit      = (int) $request->input('limit')    ?? 0;
-        $orderBy    = $request->input('order_by')       ?? 'id';
-        $order      = $request->input('order')          ?? 'DESC';
-        $query      = $request->input('query')          ?? '';
+        $project_id = (int) ($request->input('project_id') ?? 0);
+        $section_id = (int) ($request->input('section_id') ?? 0);
+        $page       = (int) ($request->input('page') ?? 1);
+        $limit      = (int) ($request->input('limit') ?? 0);
+        $orderBy    = $request->input('order_by') ?? 'id';
+        if ($orderBy === 'code') {
+            $orderBy = 'item_code';
+        }
+        $order      = $request->input('order') ?? 'DESC';
+        $query      = $request->input('query') ?? '';
         $result     = [];
 
         $contract_item = new ContractItem();
 
         if($section_id){
             $contract_item = $contract_item->where('section_id',$section_id);
+        } elseif($project_id){
+            $contract_item = $contract_item->whereHas('Section', function($q) use ($project_id) {
+                $q->where('project_id', $project_id);
+            });
         }
 
         if($query != ''){

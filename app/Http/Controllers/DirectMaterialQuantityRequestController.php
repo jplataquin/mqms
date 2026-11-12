@@ -98,7 +98,7 @@ class DirectMaterialQuantityRequestController extends Controller
             return view('access_denied');
         }
 
-        $projects       = Project::orderBy('name', 'ASC')->where('status', '=', 'ACTV')->get();
+        $projects       = Project::where('status', '=', 'ACTV')->whereNull('deleted_at')->orderBy('name', 'ASC')->get();
         $material_items = MaterialItem::orderBy('name', 'ASC')->get();
 
         return view('direct_material_quantity_request/create', [
@@ -125,6 +125,16 @@ class DirectMaterialQuantityRequestController extends Controller
         $raw_section_id  = $request->input('section_id');
         $section_id      = (!empty($raw_section_id) && $raw_section_id !== 'null' && $raw_section_id !== 'undefined' && is_numeric($raw_section_id) && (int) $raw_section_id > 0)
             ? (int) $raw_section_id
+            : null;
+
+        $raw_contract_item_id = $request->input('contract_item_id');
+        $contract_item_id     = (!empty($raw_contract_item_id) && $raw_contract_item_id !== 'null' && $raw_contract_item_id !== 'undefined' && is_numeric($raw_contract_item_id) && (int) $raw_contract_item_id > 0)
+            ? (int) $raw_contract_item_id
+            : null;
+
+        $raw_component_id     = $request->input('component_id');
+        $component_id         = (!empty($raw_component_id) && $raw_component_id !== 'null' && $raw_component_id !== 'undefined' && is_numeric($raw_component_id) && (int) $raw_component_id > 0)
+            ? (int) $raw_component_id
             : null;
 
         $description     = $request->input('description') ?? '';
@@ -162,10 +172,14 @@ class DirectMaterialQuantityRequestController extends Controller
         }
 
         $validator = Validator::make([
-            'project_id' => $project_id,
-            'items'      => $items,
+            'project_id'         => $project_id,
+            'contract_item_id'   => $contract_item_id,
+            'component_id'       => $component_id,
+            'items'              => $items,
         ], [
             'project_id'         => ['required', 'integer', 'min:1'],
+            'contract_item_id'   => ['nullable', 'integer', 'min:1'],
+            'component_id'       => ['nullable', 'integer', 'min:1'],
             'items'              => ['required', 'array', 'min:1'],
             'items.*.material_item_id' => ['required', 'integer'],
             'items.*.quantity'   => ['required', 'numeric', 'min:0.01'],
@@ -179,18 +193,29 @@ class DirectMaterialQuantityRequestController extends Controller
             ]);
         }
 
+        $activeProject = Project::where('id', $project_id)->where('status', '=', 'ACTV')->first();
+        if (!$activeProject) {
+            return response()->json([
+                'status'  => 0,
+                'message' => 'The selected Project must be active.',
+                'data'    => []
+            ]);
+        }
+
         DB::beginTransaction();
 
         try {
             $user = auth()->user();
 
             $dmqr = new DirectMaterialQuantityRequest();
-            $dmqr->project_id   = $project_id;
-            $dmqr->section_id   = $section_id;
-            $dmqr->description  = $description;
-            $dmqr->date_needed  = $date_needed;
-            $dmqr->status       = 'PEND';
-            $dmqr->created_by   = $user->id;
+            $dmqr->project_id       = $project_id;
+            $dmqr->section_id       = $section_id;
+            $dmqr->contract_item_id = $contract_item_id;
+            $dmqr->component_id     = $component_id;
+            $dmqr->description      = $description;
+            $dmqr->date_needed      = $date_needed;
+            $dmqr->status           = 'PEND';
+            $dmqr->created_by       = $user->id;
             $dmqr->save();
 
             foreach ($items as $item) {
@@ -607,11 +632,13 @@ class DirectMaterialQuantityRequestController extends Controller
             'data'    => [
                 'id'           => $dmqr->id,
                 'formatted_id' => $dmqr->formatted_id,
-                'project_id'   => $dmqr->project_id,
-                'project_name' => $dmqr->Project ? $dmqr->Project->name : '',
-                'section_id'   => $dmqr->section_id,
-                'section_name' => $dmqr->Section ? $dmqr->Section->name : '',
-                'date_needed'  => $dmqr->date_needed,
+                'project_id'       => $dmqr->project_id,
+                'project_name'     => $dmqr->Project ? $dmqr->Project->name : '',
+                'section_id'       => $dmqr->section_id,
+                'section_name'     => $dmqr->Section ? $dmqr->Section->name : '',
+                'contract_item_id' => $dmqr->contract_item_id,
+                'component_id'     => $dmqr->component_id,
+                'date_needed'      => $dmqr->date_needed,
                 'items'        => $availableItems
             ]
         ]);

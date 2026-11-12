@@ -43,6 +43,14 @@
             </div>
             <div class="row mb-3">
                 <div class="col-lg-6">
+                    <strong>Contract Item:</strong> {{ $request->ContractItem ? $request->ContractItem->name : 'None' }}
+                </div>
+                <div class="col-lg-6">
+                    <strong>Component:</strong> {{ $request->Component ? $request->Component->name : 'None' }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-lg-6">
                     <strong>Created By:</strong> {{ $request->Creator ? $request->Creator->name : 'Unknown' }}
                 </div>
                 <div class="col-lg-6">

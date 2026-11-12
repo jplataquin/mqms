@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\ContractItem;
+use App\Models\Component;
 
 class DirectMaterialQuantityRequest extends Model
 {
@@ -22,6 +24,16 @@ class DirectMaterialQuantityRequest extends Model
     public function Section(): BelongsTo
     {
         return $this->belongsTo(Section::class, 'section_id');
+    }
+
+    public function ContractItem(): BelongsTo
+    {
+        return $this->belongsTo(ContractItem::class, 'contract_item_id');
+    }
+
+    public function Component(): BelongsTo
+    {
+        return $this->belongsTo(Component::class, 'component_id');
     }
 
     public function Items(): HasMany

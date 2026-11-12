@@ -611,24 +611,27 @@ class ComponentController extends Controller
 
         //todo check role
 
-        //$section_id         = (int) $request->input('section_id') ?? 0;
-        $contract_item_id   = (int) $request->input('contract_item_id') ?? 0;
-        $page               = (int) $request->input('page')     ?? 1;
-        $limit              = (int) $request->input('limit')    ?? 0;
-        $orderBy            = $request->input('order_by')       ?? 'id';
-        $order              = $request->input('order')          ?? 'DESC';
-        $query              = $request->input('query')          ?? '';
-        $status             = $request->input('status')         ?? '';
+        $project_id         = (int) ($request->input('project_id') ?? 0);
+        $section_id         = (int) ($request->input('section_id') ?? 0);
+        $contract_item_id   = (int) ($request->input('contract_item_id') ?? 0);
+        $page               = (int) ($request->input('page') ?? 1);
+        $limit              = (int) ($request->input('limit') ?? 0);
+        $orderBy            = $request->input('order_by') ?? 'id';
+        $order              = $request->input('order') ?? 'DESC';
+        $query              = $request->input('query') ?? '';
+        $status             = $request->input('status') ?? '';
         $result             = [];
 
         $component = new Component();
 
-        // if($section_id){
-        //     $component = $component->where('section_id',$section_id);
-        // }
-
         if($contract_item_id){
             $component = $component->where('contract_item_id',$contract_item_id);
+        } elseif($section_id){
+            $component = $component->where('section_id',$section_id);
+        } elseif($project_id){
+            $component = $component->whereHas('Section', function($q) use ($project_id) {
+                $q->where('project_id', $project_id);
+            });
         }
 
         if($query != ''){

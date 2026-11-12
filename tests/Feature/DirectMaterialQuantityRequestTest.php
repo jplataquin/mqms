@@ -18,6 +18,9 @@ use App\Models\DirectMaterialQuantityRequest;
 use App\Models\DirectMaterialQuantityRequestItem;
 use App\Models\DirectMaterialCanvass;
 use App\Models\DirectPurchaseOrder;
+use App\Models\ContractItem;
+use App\Models\Component;
+use App\Models\Unit;
 
 class DirectMaterialQuantityRequestTest extends TestCase
 {
@@ -1433,5 +1436,169 @@ class DirectMaterialQuantityRequestTest extends TestCase
         $dmqr->refresh();
         $this->assertEquals('CLSD', $dmqr->status);
         $this->assertNull($dmqr->previous_status);
+    }
+
+    /** @test */
+    public function it_renders_searchable_nullable_contract_item_and_component_fields_on_create_page()
+    {
+        $this->grantAccessCode($this->user, 'direct_material_quantity_request:own:create');
+
+        $response = $this->actingAs($this->user)->get('/direct_material_quantity_request/create');
+        $response->assertStatus(200);
+
+        $response->assertSee('id="contractItemInput"', false);
+        $response->assertSee('id="contractItemList"', false);
+        $response->assertSee('id="clearContractItemBtn"', false);
+        $response->assertSee('id="contractItemSelect"', false);
+
+        $response->assertSee('id="componentInput"', false);
+        $response->assertSee('id="componentList"', false);
+        $response->assertSee('id="clearComponentBtn"', false);
+        $response->assertSee('id="componentSelect"', false);
+    }
+
+    /** @test */
+    public function it_can_create_dmqr_with_nullable_contract_item_and_component()
+    {
+        $this->grantAccessCode($this->user, 'direct_material_quantity_request:own:create');
+        $this->grantAccessCode($this->user, 'direct_material_quantity_request:own:view');
+
+        $project = $this->createProject('Infrastructure Expansion');
+        $section = new Section();
+        $section->project_id = $project->id;
+        $section->name = 'Phase 2';
+        $section->created_by = $this->user->id;
+        $section->save();
+        $material = $this->createMaterialItem('Rebar 16mm');
+
+        $unit = new Unit();
+        $unit->text = 'pcs';
+        $unit->created_by = $this->user->id;
+        $unit->save();
+
+        $contractItem = new ContractItem();
+        $contractItem->section_id = $section->id;
+        $contractItem->item_type = 'MAT';
+        $contractItem->item_code = 'CI-501';
+        $contractItem->description = 'Reinforced Superstructure';
+        $contractItem->contract_quantity = 100;
+        $contractItem->unit_id = $unit->id;
+        $contractItem->contract_unit_price = 2500.00;
+        $contractItem->created_by = $this->user->id;
+        $contractItem->save();
+
+        $component = new Component();
+        $component->name = 'Girder Beam G1';
+        $component->contract_item_id = $contractItem->id;
+        $component->quantity = 15;
+        $component->unit_id = $unit->id;
+        $component->status = 'APRV';
+        $component->section_id = $section->id;
+        $component->created_by = $this->user->id;
+        $component->save();
+
+        // 1. Create DMQR without contract item or component (null)
+        $payloadNull = [
+            'project_id'  => $project->id,
+            'description' => 'Direct request without contract item',
+            'items'       => json_encode([
+                [
+                    'material_item_id' => $material->id,
+                    'quantity'         => 10,
+                    'remarks'          => 'Initial batch'
+                ]
+            ])
+        ];
+
+        $resNull = $this->actingAs($this->user)->postJson('/api/direct_material_quantity_request/create', $payloadNull);
+        $resNull->assertStatus(200);
+        $resNull->assertJson(['status' => 1]);
+
+        $dmqrNull = DirectMaterialQuantityRequest::find($resNull->json('data.id'));
+        $this->assertNotNull($dmqrNull);
+        $this->assertNull($dmqrNull->contract_item_id);
+        $this->assertNull($dmqrNull->component_id);
+
+        // 2. Create DMQR with contract item and component
+        $payloadFull = [
+            'project_id'       => $project->id,
+            'section_id'       => $section->id,
+            'contract_item_id' => $contractItem->id,
+            'component_id'     => $component->id,
+            'description'      => 'Direct request for Girder Beam',
+            'items'            => json_encode([
+                [
+                    'material_item_id' => $material->id,
+                    'quantity'         => 25,
+                    'remarks'          => 'Main girder rebar'
+                ]
+            ])
+        ];
+
+        $resFull = $this->actingAs($this->user)->postJson('/api/direct_material_quantity_request/create', $payloadFull);
+        $resFull->assertStatus(200);
+        $resFull->assertJson(['status' => 1]);
+
+        $dmqrFull = DirectMaterialQuantityRequest::find($resFull->json('data.id'));
+        $this->assertNotNull($dmqrFull);
+        $this->assertEquals($contractItem->id, $dmqrFull->contract_item_id);
+        $this->assertEquals($component->id, $dmqrFull->component_id);
+
+        // Verify relationships
+        $this->assertEquals('CI-501 Reinforced Superstructure', $dmqrFull->ContractItem->name);
+        $this->assertEquals('Girder Beam G1', $dmqrFull->Component->name);
+
+        // Check display page
+        $displayRes = $this->actingAs($this->user)->get('/direct_material_quantity_request/' . $dmqrFull->id);
+        $displayRes->assertStatus(200);
+        $displayRes->assertSee('CI-501 Reinforced Superstructure');
+        $displayRes->assertSee('Girder Beam G1');
+    }
+
+    /** @test */
+    public function it_only_allows_actv_projects_to_be_searched_and_selected_on_create()
+    {
+        $this->grantAccessCode($this->user, 'direct_material_quantity_request:own:create');
+
+        $activeProject = $this->createProject('Active Alpha Project');
+
+        $archivedProject = new Project();
+        $archivedProject->name = 'Archived Beta Project';
+        $archivedProject->status = 'ARCH';
+        $archivedProject->created_by = $this->user->id;
+        $archivedProject->save();
+
+        $inactiveProject = new Project();
+        $inactiveProject->name = 'Inactive Gamma Project';
+        $inactiveProject->status = 'INAC';
+        $inactiveProject->created_by = $this->user->id;
+        $inactiveProject->save();
+
+        // 1. Verify create view datalist only has Active Alpha Project
+        $response = $this->actingAs($this->user)->get('/direct_material_quantity_request/create');
+        $response->assertStatus(200);
+        $response->assertSee('Active Alpha Project');
+        $response->assertDontSee('Archived Beta Project');
+        $response->assertDontSee('Inactive Gamma Project');
+
+        // 2. Verify backend rejects creation with non-ACTV project
+        $material = $this->createMaterialItem('Test Cement');
+        $payloadArchived = [
+            'project_id'  => $archivedProject->id,
+            'description' => 'Should fail',
+            'items'       => json_encode([
+                [
+                    'material_item_id' => $material->id,
+                    'quantity'         => 10,
+                ]
+            ])
+        ];
+
+        $postRes = $this->actingAs($this->user)->postJson('/api/direct_material_quantity_request/create', $payloadArchived);
+        $postRes->assertStatus(200);
+        $postRes->assertJson([
+            'status'  => 0,
+            'message' => 'The selected Project must be active.'
+        ]);
     }
 }
