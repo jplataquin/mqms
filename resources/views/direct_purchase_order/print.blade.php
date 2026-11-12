@@ -43,6 +43,19 @@
 
     @php
         $copies = ['Supplier', 'Accounting', 'Purchaser'];
+        $dmqrId = $direct_purchase_order->direct_material_quantity_request_id 
+            ? str_pad($direct_purchase_order->direct_material_quantity_request_id, 6, '0', STR_PAD_LEFT) 
+            : '-';
+        $contractItemName = ($contract_item && $contract_item->name) 
+            ? $contract_item->name 
+            : (($direct_purchase_order->Component && $direct_purchase_order->Component->ContractItem) 
+                ? $direct_purchase_order->Component->ContractItem->name 
+                : '-');
+        $componentName = ($component && $component->name) 
+            ? $component->name 
+            : ($direct_purchase_order->Component 
+                ? $direct_purchase_order->Component->name 
+                : '-');
     @endphp
 
     @foreach($copies as $copy)
@@ -65,10 +78,16 @@
                 <td style="width: 30%">{{ $supplier ? $supplier->name : 'N/A' }}</td>
             </tr>
             <tr>
-                <td class="bold">Date Created</td>
-                <td>{{ $direct_purchase_order->created_at }}</td>
+                <td class="bold">Direct Material Request #</td>
+                <td>{{ $dmqrId }}</td>
                 <td class="bold">Payment Term</td>
                 <td>{{ $payment_term ? ($payment_term->text ?? $payment_term->name) : 'N/A' }}</td>
+            </tr>
+            <tr>
+                <td class="bold">Date Created</td>
+                <td>{{ $direct_purchase_order->created_at }}</td>
+                <td class="bold">Date Needed</td>
+                <td>{{ $direct_purchase_order->date_needed ?: '-' }}</td>
             </tr>
             <tr>
                 <td class="bold">Project</td>
@@ -76,12 +95,12 @@
                 <td class="bold">Section</td>
                 <td>{{ $section ? $section->name : 'None' }}</td>
             </tr>
-            @if($direct_purchase_order->date_needed)
             <tr>
-                <td class="bold">Date Needed</td>
-                <td colspan="3">{{ $direct_purchase_order->date_needed }}</td>
+                <td class="bold">Contract Item</td>
+                <td>{{ $contractItemName }}</td>
+                <td class="bold">Component</td>
+                <td>{{ $componentName }}</td>
             </tr>
-            @endif
             <tr>
                 <td class="bold">Datetime</td>
                 <td colspan="3" style="font-size: 11px;">
@@ -217,10 +236,16 @@
                 <td style="width: 30%">{{ $supplier ? $supplier->name : 'N/A' }}</td>
             </tr>
             <tr>
-                <td class="bold">Date Created</td>
-                <td>{{ $direct_purchase_order->created_at }}</td>
+                <td class="bold">Direct Material Request #</td>
+                <td>{{ $dmqrId }}</td>
                 <td class="bold">Payment Term</td>
                 <td>{{ $payment_term ? ($payment_term->text ?? $payment_term->name) : 'N/A' }}</td>
+            </tr>
+            <tr>
+                <td class="bold">Date Created</td>
+                <td>{{ $direct_purchase_order->created_at }}</td>
+                <td class="bold">Date Needed</td>
+                <td>{{ $direct_purchase_order->date_needed ?: '-' }}</td>
             </tr>
             <tr>
                 <td class="bold">Project</td>
@@ -228,12 +253,12 @@
                 <td class="bold">Section</td>
                 <td>{{ $section ? $section->name : 'None' }}</td>
             </tr>
-            @if($direct_purchase_order->date_needed)
             <tr>
-                <td class="bold">Date Needed</td>
-                <td colspan="3">{{ $direct_purchase_order->date_needed }}</td>
+                <td class="bold">Contract Item</td>
+                <td>{{ $contractItemName }}</td>
+                <td class="bold">Component</td>
+                <td>{{ $componentName }}</td>
             </tr>
-            @endif
             <tr>
                 <td class="bold">Datetime</td>
                 <td colspan="3" style="font-size: 11px;">
@@ -305,10 +330,16 @@
                 <td style="width: 30%">{{ $supplier ? $supplier->name : 'N/A' }}</td>
             </tr>
             <tr>
-                <td class="bold">Date Created</td>
-                <td>{{ $direct_purchase_order->created_at }}</td>
+                <td class="bold">Direct Material Request #</td>
+                <td>{{ $dmqrId }}</td>
                 <td class="bold">Payment Term</td>
                 <td>{{ $payment_term ? ($payment_term->text ?? $payment_term->name) : 'N/A' }}</td>
+            </tr>
+            <tr>
+                <td class="bold">Date Created</td>
+                <td>{{ $direct_purchase_order->created_at }}</td>
+                <td class="bold">Date Needed</td>
+                <td>{{ $direct_purchase_order->date_needed ?: '-' }}</td>
             </tr>
             <tr>
                 <td class="bold">Project</td>
@@ -316,12 +347,12 @@
                 <td class="bold">Section</td>
                 <td>{{ $section ? $section->name : 'None' }}</td>
             </tr>
-            @if($direct_purchase_order->date_needed)
             <tr>
-                <td class="bold">Date Needed</td>
-                <td colspan="3">{{ $direct_purchase_order->date_needed }}</td>
+                <td class="bold">Contract Item</td>
+                <td>{{ $contractItemName }}</td>
+                <td class="bold">Component</td>
+                <td>{{ $componentName }}</td>
             </tr>
-            @endif
             <tr>
                 <td class="bold">Datetime</td>
                 <td colspan="3" style="font-size: 11px;">

@@ -318,6 +318,9 @@ class DirectPurchaseOrderController extends Controller
             $dpo->payment_term_id                     = $payment_term_id;
             $dpo->project_id                          = $project_id;
             $dpo->section_id                          = $section_id;
+            if ($request->has('component_id') && $request->input('component_id')) {
+                $dpo->component_id                    = $request->input('component_id');
+            }
             $dpo->direct_material_quantity_request_id = $dmqr_id;
             $dpo->date_needed                         = $date_needed;
             $dpo->extras                              = json_encode($extras);
@@ -712,7 +715,7 @@ class DirectPurchaseOrderController extends Controller
 
     public function print($id)
     {
-        $dpo = DirectPurchaseOrder::with(['Items.MaterialItem', 'Supplier', 'PaymentTerm', 'Project', 'Section'])->findOrFail($id);
+        $dpo = DirectPurchaseOrder::with(['Items.MaterialItem', 'Supplier', 'PaymentTerm', 'Project', 'Section', 'Component.ContractItem'])->findOrFail($id);
         $user = auth()->user();
 
         $canViewAll = $this->hasAccess(['purchase_order:all:view', 'direct_purchase_order:all:view']);
@@ -736,6 +739,8 @@ class DirectPurchaseOrderController extends Controller
             'payment_term'          => $dpo->PaymentTerm,
             'project'               => $dpo->Project,
             'section'               => $dpo->Section,
+            'component'             => $dpo->Component,
+            'contract_item'         => $dpo->Component ? $dpo->Component->ContractItem : null,
             'items'                 => $dpo->Items,
             'extras'                => $extras,
             'current_datetime'      => Carbon::now()

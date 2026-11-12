@@ -17,6 +17,9 @@ use App\Models\DirectPurchaseOrderItem;
 use App\Models\DirectMaterialQuantityRequest;
 use App\Models\DirectMaterialQuantityRequestItem;
 use App\Models\DirectMaterialCanvass;
+use App\Models\ContractItem;
+use App\Models\Component;
+use App\Models\Unit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class DirectPurchaseOrderTest extends TestCase
@@ -1833,5 +1836,104 @@ class DirectPurchaseOrderTest extends TestCase
         ]);
 
         $this->assertEquals('APRV', $dpo->fresh()->status);
+    }
+
+    /** @test */
+    public function it_displays_dash_for_empty_dmqr_contract_item_and_component_in_print_template()
+    {
+        $this->grantAccessCode($this->user, 'direct_purchase_order:all:view');
+
+        $project = $this->createProject('General Project');
+        $supplier = $this->createSupplier('General Supplier');
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Cash';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $dpo = new DirectPurchaseOrder();
+        $dpo->project_id = $project->id;
+        $dpo->supplier_id = $supplier->id;
+        $dpo->payment_term_id = $paymentTerm->id;
+        $dpo->status = 'APRV';
+        $dpo->created_by = $this->user->id;
+        $dpo->save();
+
+        $response = $this->actingAs($this->user)->get('/direct_purchase_order/print/' . $dpo->id);
+        $response->assertStatus(200);
+
+        $response->assertSee('Direct Material Request #');
+        $response->assertSee('Contract Item');
+        $response->assertSee('Component');
+        $response->assertSee('<td>-</td>', false);
+    }
+
+    /** @test */
+    public function it_displays_dmqr_contract_item_and_component_in_print_template_when_provided()
+    {
+        $this->grantAccessCode($this->user, 'direct_purchase_order:all:view');
+
+        $project = $this->createProject('Bridge Construction');
+        $section = $this->createSection($project, 'Substructure');
+
+        $unit = new Unit();
+        $unit->text = 'pcs';
+        $unit->created_by = $this->user->id;
+        $unit->save();
+
+        $contractItem = new ContractItem();
+        $contractItem->section_id = $section->id;
+        $contractItem->item_type = 'MAT';
+        $contractItem->item_code = 'CI-900';
+        $contractItem->description = 'Pier Abutment Concrete';
+        $contractItem->contract_quantity = 50;
+        $contractItem->unit_id = $unit->id;
+        $contractItem->contract_unit_price = 1000.00;
+        $contractItem->created_by = $this->user->id;
+        $contractItem->save();
+
+        $component = new Component();
+        $component->name = 'Pier 1 Concrete Column';
+        $component->contract_item_id = $contractItem->id;
+        $component->quantity = 10;
+        $component->unit_id = $unit->id;
+        $component->status = 'APRV';
+        $component->section_id = $section->id;
+        $component->created_by = $this->user->id;
+        $component->save();
+
+        $supplier = $this->createSupplier('Cement Supplier');
+        $paymentTerm = new PaymentTerm();
+        $paymentTerm->text = 'Net 30';
+        $paymentTerm->created_by = $this->user->id;
+        $paymentTerm->save();
+
+        $dmqr = new DirectMaterialQuantityRequest();
+        $dmqr->project_id = $project->id;
+        $dmqr->section_id = $section->id;
+        $dmqr->status = 'APRV';
+        $dmqr->description = 'Materials for Pier 1';
+        $dmqr->created_by = $this->user->id;
+        $dmqr->save();
+
+        $dpo = new DirectPurchaseOrder();
+        $dpo->project_id = $project->id;
+        $dpo->section_id = $section->id;
+        $dpo->supplier_id = $supplier->id;
+        $dpo->payment_term_id = $paymentTerm->id;
+        $dpo->direct_material_quantity_request_id = $dmqr->id;
+        $dpo->component_id = $component->id;
+        $dpo->status = 'APRV';
+        $dpo->created_by = $this->user->id;
+        $dpo->save();
+
+        $response = $this->actingAs($this->user)->get('/direct_purchase_order/print/' . $dpo->id);
+        $response->assertStatus(200);
+
+        $response->assertSee('Direct Material Request #');
+        $response->assertSee(str_pad($dmqr->id, 6, '0', STR_PAD_LEFT));
+        $response->assertSee('Contract Item');
+        $response->assertSee('Pier Abutment Concrete');
+        $response->assertSee('Component');
+        $response->assertSee('Pier 1 Concrete Column');
     }
 }

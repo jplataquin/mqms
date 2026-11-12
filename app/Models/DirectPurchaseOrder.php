@@ -15,6 +15,7 @@ use App\Models\PaymentTerm;
 use App\Models\Supplier;
 use App\Models\Project;
 use App\Models\Section;
+use App\Models\Component;
 use App\Models\User;
 
 class DirectPurchaseOrder extends Model
@@ -29,6 +30,7 @@ class DirectPurchaseOrder extends Model
         'payment_term_id',
         'project_id',
         'section_id',
+        'component_id',
         'direct_material_quantity_request_id',
         'date_needed',
         'status',
@@ -72,6 +74,11 @@ class DirectPurchaseOrder extends Model
     public function Section(): BelongsTo
     {
         return $this->belongsTo(Section::class);
+    }
+
+    public function Component(): BelongsTo
+    {
+        return $this->belongsTo(Component::class);
     }
 
     public function PaymentTerm(): HasOne
