@@ -47,14 +47,12 @@
             <td style="width: 15%"><strong>Section:</strong></td>
             <td style="width: 35%">{{ $request->Section ? $request->Section->name : 'N/A' }}</td>
         </tr>
-        @if($request->contract_item_id || $request->component_id)
         <tr>
             <td><strong>Contract Item:</strong></td>
             <td>{{ $request->ContractItem ? $request->ContractItem->name : '-' }}</td>
             <td><strong>Component:</strong></td>
             <td>{{ $request->Component ? $request->Component->name : '-' }}</td>
         </tr>
-        @endif
         <tr>
             <td><strong>Created By:</strong></td>
             <td>{{ $request->Creator ? $request->Creator->name : 'N/A' }}</td>

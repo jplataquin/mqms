@@ -251,7 +251,7 @@ class DirectMaterialQuantityRequestController extends Controller
     public function display($id)
     {
         $id = (int) $id;
-        $dmqr = DirectMaterialQuantityRequest::with(['Project', 'Section', 'Creator', 'Items.MaterialItem'])->findOrFail($id);
+        $dmqr = DirectMaterialQuantityRequest::with(['Project', 'Section', 'ContractItem', 'Component', 'Creator', 'Items.MaterialItem'])->findOrFail($id);
 
         $user = auth()->user();
         $canViewAll = $this->hasAccess(['material_request:all:view', 'direct_material_quantity_request:all:view']);
@@ -461,7 +461,7 @@ class DirectMaterialQuantityRequestController extends Controller
     public function print($id)
     {
         $id = (int) $id;
-        $dmqr = DirectMaterialQuantityRequest::with(['Project', 'Section', 'Creator', 'Items.MaterialItem'])->findOrFail($id);
+        $dmqr = DirectMaterialQuantityRequest::with(['Project', 'Section', 'ContractItem', 'Component', 'Creator', 'Items.MaterialItem'])->findOrFail($id);
 
         $user = auth()->user();
         $canViewAll = $this->hasAccess(['material_request:all:view', 'direct_material_quantity_request:all:view']);

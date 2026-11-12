@@ -43,10 +43,10 @@
             </div>
             <div class="row mb-3">
                 <div class="col-lg-6">
-                    <strong>Contract Item:</strong> {{ $request->ContractItem ? $request->ContractItem->name : 'None' }}
+                    <strong>Contract Item:</strong> {{ $request->ContractItem ? $request->ContractItem->name : '-' }}
                 </div>
                 <div class="col-lg-6">
-                    <strong>Component:</strong> {{ $request->Component ? $request->Component->name : 'None' }}
+                    <strong>Component:</strong> {{ $request->Component ? $request->Component->name : '-' }}
                 </div>
             </div>
             <div class="row mb-3">

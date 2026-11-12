@@ -1519,6 +1519,20 @@ class DirectMaterialQuantityRequestTest extends TestCase
         $this->assertNull($dmqrNull->contract_item_id);
         $this->assertNull($dmqrNull->component_id);
 
+        // Check display and print views when empty: both show '-'
+        $displayResNull = $this->actingAs($this->user)->get('/direct_material_quantity_request/' . $dmqrNull->id);
+        $displayResNull->assertStatus(200);
+        $displayResNull->assertSee('Contract Item:');
+        $displayResNull->assertSee('Component:');
+        $displayResNull->assertSee('<strong>Contract Item:</strong> -', false);
+        $displayResNull->assertSee('<strong>Component:</strong> -', false);
+
+        $printResNull = $this->actingAs($this->user)->get('/direct_material_quantity_request/print/' . $dmqrNull->id);
+        $printResNull->assertStatus(200);
+        $printResNull->assertSee('Contract Item:');
+        $printResNull->assertSee('Component:');
+        $printResNull->assertSee('<td>-</td>', false);
+
         // 2. Create DMQR with contract item and component
         $payloadFull = [
             'project_id'       => $project->id,
@@ -1553,6 +1567,12 @@ class DirectMaterialQuantityRequestTest extends TestCase
         $displayRes->assertStatus(200);
         $displayRes->assertSee('CI-501 Reinforced Superstructure');
         $displayRes->assertSee('Girder Beam G1');
+
+        // Check print page
+        $printRes = $this->actingAs($this->user)->get('/direct_material_quantity_request/print/' . $dmqrFull->id);
+        $printRes->assertStatus(200);
+        $printRes->assertSee('CI-501 Reinforced Superstructure');
+        $printRes->assertSee('Girder Beam G1');
     }
 
     /** @test */
