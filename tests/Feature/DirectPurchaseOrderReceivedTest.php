@@ -14,6 +14,10 @@ use App\Models\DirectPurchaseOrder;
 use App\Models\DirectPurchaseOrderItem;
 use App\Models\DirectPurchaseOrderReceived;
 use App\Models\DirectPurchaseOrderReceivedItem;
+use App\Models\Role;
+use App\Models\UserRole;
+use App\Models\AccessCode;
+use App\Models\RoleAccessCode;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class DirectPurchaseOrderReceivedTest extends TestCase
@@ -260,5 +264,87 @@ class DirectPurchaseOrderReceivedTest extends TestCase
         ]);
         $this->assertCount(1, $response->json('data'));
         $this->assertEquals('DDR-001', $response->json('data.0.receipt_no'));
+    }
+
+    protected function grantAccessCode($user, $codeString)
+    {
+        $accessCode = AccessCode::where('code', $codeString)->first();
+        if (!$accessCode) {
+            $accessCode = new AccessCode();
+            $accessCode->code = $codeString;
+            $accessCode->description = 'Test code';
+            $accessCode->save();
+        }
+
+        $role = new Role();
+        $role->name = 'Role ' . $codeString;
+        $role->description = 'Test role';
+        $role->save();
+
+        $userRole = new UserRole();
+        $userRole->user_id = $user->id;
+        $userRole->role_id = $role->id;
+        $userRole->save();
+
+        $roleAccessCode = new RoleAccessCode();
+        $roleAccessCode->role_id = $role->id;
+        $roleAccessCode->access_code_id = $accessCode->id;
+        $roleAccessCode->save();
+    }
+
+    public function test_direct_purchase_order_display_renders_receive_button_and_modal_when_approved()
+    {
+        $this->grantAccessCode($this->user, 'direct_purchase_order:own:view');
+
+        $response = $this->actingAs($this->user)->get('/direct_purchase_order/' . $this->dpo->id);
+        $response->assertStatus(200);
+
+        // Receive button and modal must be rendered
+        $response->assertSee('id="openReceiveModalBtn"', false);
+        $response->assertSee('Receive Items');
+        $response->assertSee('id="receiveModal"', false);
+        $response->assertSee('id="submitReceiveBtn"', false);
+
+        // Mark as completed
+        $this->dpo->received_status = 'COMP';
+        $this->dpo->save();
+
+        $responseComp = $this->actingAs($this->user)->get('/direct_purchase_order/' . $this->dpo->id);
+        $responseComp->assertStatus(200);
+        $responseComp->assertDontSee('id="openReceiveModalBtn"', false);
+    }
+
+    public function test_direct_purchase_order_display_renders_receiving_history_after_delivery()
+    {
+        $this->grantAccessCode($this->user, 'direct_purchase_order:own:view');
+
+        $res = $this->actingAs($this->user)->postJson('/api/direct_purchase_order/received/create', [
+            'direct_purchase_order_id' => $this->dpo->id,
+            'receipt_no'               => 'DDR-9988',
+            'received_date'            => '2026-11-12',
+            'remarks'                  => 'Special delivery arrived safely',
+            'items'                    => [
+                [
+                    'direct_purchase_order_item_id' => $this->dpoItem->id,
+                    'quantity_received'             => 35,
+                ]
+            ]
+        ]);
+
+        $res->assertStatus(200);
+        $res->assertJson(['status' => 1]);
+
+        $response = $this->actingAs($this->user)->get('/direct_purchase_order/' . $this->dpo->id);
+        $response->assertStatus(200);
+
+        // History table, summary, and receipt details
+        $response->assertSee('Receiving History');
+        $response->assertSee('Receiving Summary');
+        $response->assertSee('Delivery / Receiving Logs');
+        $response->assertSee('DDR-9988');
+        $response->assertSee('Special delivery arrived safely');
+        $response->assertSee('Portland Cement');
+        $response->assertSee('Total Received Quantity');
+        $response->assertSee('Remaining Unreceived Quantity');
     }
 }

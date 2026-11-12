@@ -392,6 +392,7 @@ class DirectPurchaseOrderController extends Controller
             "Section"         => $dpo->Section ? $dpo->Section->name : 'None',
             "Date Needed"     => $dpo->date_needed ?: 'None',
             "Status"          => $dpo->status,
+            "Received Status" => $dpo->received_status ?? 'PEND',
             "Created By"      => $dpo->CreatedByUser()->name . ' ' . $dpo->created_at,
         ];
 
@@ -411,6 +412,11 @@ class DirectPurchaseOrderController extends Controller
             $dpo_details["Void By"] = $dpo->VoidByUser()->name . ' ' . $dpo->void_at;
         }
 
+        $received_records = $dpo->Received()
+            ->with(['Items.DirectPurchaseOrderItem.MaterialItem', 'CreatedByUser'])
+            ->orderBy('received_date', 'DESC')
+            ->get();
+
         $canVoid        = $this->hasAccess(['purchase_order:all:void', 'direct_purchase_order:all:void', 'purchase_order:own:void', 'direct_purchase_order:own:void']);
         $canRequestVoid = $this->hasAccess(['purchase_order:all:request_void', 'direct_purchase_order:all:request_void', 'purchase_order:own:request_void', 'direct_purchase_order:own:request_void']);
 
@@ -421,6 +427,7 @@ class DirectPurchaseOrderController extends Controller
             'items'                 => $dpo->Items,
             'extras'                => $extras,
             'dpo_details'           => $dpo_details,
+            'received_records'      => $received_records,
             'canVoid'               => $canVoid,
             'canRequestVoid'        => $canRequestVoid
         ]);
@@ -732,7 +739,7 @@ class DirectPurchaseOrderController extends Controller
             }
         }
 
-        if ($dpo->status != 'APRV') {
+        if ($dpo->status != 'APRV' && $dpo->status != 'DRFT') {
             return abort(404);
         }
 

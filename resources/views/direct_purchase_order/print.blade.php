@@ -42,7 +42,9 @@
     </div>
 
     @php
-        $copies = ['Supplier', 'Accounting', 'Purchaser'];
+        $copies = ($direct_purchase_order->status == 'DRFT') 
+            ? ['Purchaser'] 
+            : ['Supplier', 'Accounting', 'Purchaser'];
         $dmqrId = $direct_purchase_order->direct_material_quantity_request_id 
             ? str_pad($direct_purchase_order->direct_material_quantity_request_id, 6, '0', STR_PAD_LEFT) 
             : '-';
@@ -215,6 +217,8 @@
     </div>
     <hr style="border: 1px dashed #ccc; margin: 20px 0;">
     @endforeach
+
+    @if($direct_purchase_order->status != 'DRFT')
 
     <!-- Site Copy -->
     <div class="whole mb-10" style="margin-bottom: 30px;">
@@ -427,6 +431,8 @@
     </div>
     <hr style="border: 1px dashed #ccc; margin: 20px 0;">
     <!-- Warehouse Copy -->
+
+    @endif
 
 </body>
 </html>
