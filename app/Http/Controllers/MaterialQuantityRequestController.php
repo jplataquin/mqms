@@ -223,11 +223,9 @@ class MaterialQuantityRequestController extends Controller
             ],
             'date_needed' =>[
                 'required',
-                'date_format:"M d, Y"',
             ],
             'items' =>[
                 'required',
-                'json'
             ]
         ]);
 
@@ -239,11 +237,28 @@ class MaterialQuantityRequestController extends Controller
             ]);
         }
 
+        $dt = DateTime::createFromFormat('M d, Y', $date_needed);
+        if (!$dt) {
+            $ts = strtotime($date_needed);
+            $parsed_date_needed = ($ts !== false) ? date('Y-m-d', $ts) : null;
+        } else {
+            $parsed_date_needed = $dt->format('Y-m-d');
+        }
+
+        if (!$parsed_date_needed) {
+            return response()->json([
+                'status'    => -2,
+                'message'   => 'Failed Validation',
+                'data'      => [
+                    'date_needed' => ['The date needed must be a valid date format.']
+                ]
+            ]);
+        }
 
         $project = Project::find($project_id);
 
         //If the project does not exist or is not active then do not allow
-        if($project->status != 'ACTV'){
+        if(!$project || $project->status != 'ACTV'){
             
             return response()->json([
                 'status'    => 0,
@@ -255,7 +270,7 @@ class MaterialQuantityRequestController extends Controller
         $component = Component::find($component_id);
 
         //If the component does not exist or is not approved then do not allow
-        if($component->status != 'APRV'){
+        if(!$component || $component->status != 'APRV'){
             
             return response()->json([
                 'status'    => 0,
@@ -265,12 +280,13 @@ class MaterialQuantityRequestController extends Controller
         }
 
         $user_id    = $user->id;
-        $items      = json_decode($items,true);
+        $raw_items  = $items;
+        $items      = is_array($raw_items) ? $raw_items : json_decode($raw_items, true);
 
-        if(!count($items)){
+        if(!is_array($items) || !count($items)){
             return response()->json([
                 'status'    => 0,
-                'message'   => 'At least one item is requireds',
+                'message'   => 'At least one item is required',
                 'data'      => []
             ]);
         }
@@ -331,14 +347,12 @@ class MaterialQuantityRequestController extends Controller
 
             $materialQuantityRequest = new MaterialQuantityRequest();
 
-            $dt = DateTime::createFromFormat('M d, Y', $date_needed);
-
             $materialQuantityRequest->project_id        = $project_id;
             $materialQuantityRequest->section_id        = $section_id;
             $materialQuantityRequest->contract_item_id  = $contract_item_id;
             $materialQuantityRequest->component_id      = $component_id;
             $materialQuantityRequest->description       = $description;
-            $materialQuantityRequest->date_needed       = $dt->format('Y-m-d'); 
+            $materialQuantityRequest->date_needed       = $parsed_date_needed; 
             $materialQuantityRequest->status            = 'PEND';
             $materialQuantityRequest->created_by        = $user_id;
 
@@ -356,7 +370,6 @@ class MaterialQuantityRequestController extends Controller
                 $materialQuantityRequestItem->save();
             }
             
-            
             DB::commit();
 
             return response()->json([
@@ -367,17 +380,15 @@ class MaterialQuantityRequestController extends Controller
                 ]
             ]);
 
-         }catch(\Exception $e){
+         }catch(\Throwable $e){
+
+            DB::rollback();
 
             return response()->json([
                 'status'    => 0,
                 'message'   => $e->getMessage(),
                 'data'      => []
             ]);
-
-            DB::rollback();
-
-            return false;
             
          }
     }
@@ -458,6 +469,14 @@ class MaterialQuantityRequestController extends Controller
         **/
             $component_item = ComponentItem::find($item_component_item_id);
             
+            if(!$component_item){
+                return [
+                    'status'    => 0,
+                    'message'   => 'Component item not found',
+                    'data'      => []
+                ];
+            }
+
             //If none then error
             if(!$material_quantity){
                 return [

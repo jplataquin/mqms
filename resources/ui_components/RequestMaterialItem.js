@@ -246,11 +246,15 @@ class RequestMaterialItem extends Component{
             }
         }
 
-        this.el.requestedQuantity.onkeyup = ()=>{
+        const syncRequestedQuantity = ()=>{
             if(this._state.editable){
                 this.setState('requestedQuantity',this.el.requestedQuantity.value,true);
             }
-        }
+        };
+
+        this.el.requestedQuantity.onkeyup = syncRequestedQuantity;
+        this.el.requestedQuantity.oninput = syncRequestedQuantity;
+        this.el.requestedQuantity.onchange = syncRequestedQuantity;
 
         this.el.requestedQuantity.onkeypress = (e)=>{
             return window.util.inputNumber(this.el.requestedQuantity,e,2,false);
@@ -277,9 +281,9 @@ class RequestMaterialItem extends Component{
 
             return {
                 id                      : this._model.id,
-                component_item_id       : this._state.componentItemId,
-                material_item_id        : this._state.materialItemId,
-                requested_quantity      : this._state.requestedQuantity
+                component_item_id       : this._state.componentItemId || (this.el.componentItemSelect ? this.el.componentItemSelect.value : null),
+                material_item_id        : this._state.materialItemId || (this.el.materialSelect ? this.el.materialSelect.value : null),
+                requested_quantity      : this._state.requestedQuantity || (this.el.requestedQuantity ? this.el.requestedQuantity.value : '')
             }
         }
 

@@ -272,6 +272,11 @@ window.util.showMsg = (reply) => {
     let message = '';
     let title   = '';
 
+    if (!reply || typeof reply !== 'object') {
+        window.util.alert('🚩 Error', String(reply || 'An unexpected error occurred.'));
+        return;
+    }
+
     switch (reply.status){
 
         //Soft Error
@@ -303,11 +308,13 @@ window.util.showMsg = (reply) => {
                 let error = t.div(()=>{
                     t.label({style:{fontWeight:'bold'}},name);
                     t.ul(()=>{
-                        
-                        msgs.map(msg =>{
-                            t.li(msg);
-                        });
-
+                        if (Array.isArray(msgs)) {
+                            msgs.map(msg =>{
+                                t.li(msg);
+                            });
+                        } else {
+                            t.li(String(msgs));
+                        }
                     });
                 });
 
@@ -331,14 +338,16 @@ window.util.showMsg = (reply) => {
             break;
         
         //Resource not found
+        case -4:
         case -404:
 
-            message = 'Resource not found';
+            message = reply.message ?? 'Resource not found';
             title   = '🚩 Error';
 
             break;
         
         //Hard Error
+        case -5:
         case -500:
 
             message = reply.message ?? 'Something went wrong';
@@ -348,6 +357,11 @@ window.util.showMsg = (reply) => {
         case -302:
             message = reply.message ?? 'Something went wrong';
             title   = '🚩 Signed Out';
+            break;
+
+        default:
+            message = reply.message ?? 'An error occurred';
+            title   = '🚩 Error';
             break;
 
     }
@@ -537,7 +551,7 @@ window.util.$post = async (url,data,headers) => {
         headers: headers,
         body: formData  ?? {},
         method: "POST"
-    }).then((response) => {
+    }).then(async (response) => {
         
 
         switch (response.status) {
@@ -545,6 +559,20 @@ window.util.$post = async (url,data,headers) => {
                 return {
                         status:-1,
                         message:'Please sign in',
+                        data:{}
+                }
+            break;
+            case 403:
+                return {
+                        status:-403,
+                        message:'Forbidden',
+                        data:{}
+                }
+            break;
+            case 419:
+                return {
+                        status:-302,
+                        message:'Page expired or CSRF token mismatch. Please refresh and try again.',
                         data:{}
                 }
             break;
@@ -567,6 +595,14 @@ window.util.$post = async (url,data,headers) => {
                         status:-4,
                         message:'Resource not found',
                         data:{}
+                }
+            break;
+            case 422:
+                let errorData = await response.json();
+                return {
+                        status:-2,
+                        message: errorData.message || 'Validation Error',
+                        data: errorData.errors || errorData.data || {}
                 }
             break;
 

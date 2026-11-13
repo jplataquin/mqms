@@ -132,15 +132,15 @@
     itemForm.handler.deleteCallback( async (dom)=>{
         
         if(count == 1){
-            alert('At least one item must remain');
+            window.util.alert('Error','At least one item must remain');
             return false;
         }
 
         if(await window.util.confirm('Are you sure you want to delete this item?')){
             $el.remove(dom);
+            count--;
+            setIndexNumber();
         }
-
-        count--;
 
     });
 
@@ -161,21 +161,18 @@
             unitOptions:        @json($unit_options)
         });
 
-        item.handler.deleteCallback((dom)=>{
+        item.handler.deleteCallback( async (dom)=>{
                 
             if(count == 1){
                 window.util.alert('Error','At least one item must remain');
                 return false;
             }
 
-            if(confirm('Are you sure you want to delete this item?')){
+            if(await window.util.confirm('Are you sure you want to delete this item?')){
                 $el.remove(dom);
-                setTimeout(()=>{
-                    setIndexNumber();
-                },50);
+                count--;
+                setIndexNumber();
             }
-
-            count--;
 
         });
 
@@ -199,47 +196,98 @@
 
     function formValidation(){
 
+        if(!description.value.trim()){
+            window.util.alert('Validation Error', 'Description is required.');
+            description.focus();
+            return false;
+        }
+
+        if(!date_needed.value.trim()){
+            window.util.alert('Validation Error', 'Date needed is required.');
+            date_needed.focus();
+            return false;
+        }
+
+        let itemsEl = $q('.items').items();
+        if(!itemsEl.length){
+            window.util.alert('Validation Error', 'At least one item is required.');
+            return false;
+        }
+
+        for(let idx = 0; idx < itemsEl.length; idx++){
+            let el = itemsEl[idx];
+            if(!el.handler || typeof el.handler.getValues !== 'function'){
+                continue;
+            }
+            let vals = el.handler.getValues();
+            let itemNum = idx + 1;
+
+            if(!vals.component_item_id){
+                window.util.alert('Validation Error', 'Please select a Component Item for Item #' + itemNum);
+                return false;
+            }
+
+            if(!vals.material_item_id){
+                window.util.alert('Validation Error', 'Please select a Material Item for Item #' + itemNum);
+                return false;
+            }
+
+            let qty = parseFloat(vals.requested_quantity);
+            if(isNaN(qty) || qty <= 0){
+                window.util.alert('Validation Error', 'Please enter a valid Requested Quantity greater than 0 for Item #' + itemNum);
+                return false;
+            }
+        }
+
         return true;
     }
 
-    createBtn.onclick = (e)=>{
+    createBtn.onclick = async (e)=>{
         e.preventDefault();
 
         if(!formValidation()){
             return false;
         }
 
+        createBtn.disabled = true;
         window.util.blockUI();
 
-        let items = [];
+        try {
+            let items = [];
 
-        let itemsEl = $q('.items').items();
+            let itemsEl = $q('.items').items();
 
-        itemsEl.map(el =>{
-            items.push(el.handler.getValues());
-        });
+            itemsEl.map(el =>{
+                if(el.handler && typeof el.handler.getValues === 'function'){
+                    items.push(el.handler.getValues());
+                }
+            });
 
-        window.util.$post('/api/material_quantity_request/create',{
-            project_id          : '{{$project->id}}',
-            section_id          : '{{$section->id}}',
-            contract_item_id    : '{{$contract_item->id}}',
-            component_id        : '{{$component->id}}',
-            description         : description.value,
-            date_needed         : date_needed.value,
-            items               :JSON.stringify(items)
-        }).then(reply=>{
+            let reply = await window.util.$post('/api/material_quantity_request/create',{
+                project_id          : '{{$project->id}}',
+                section_id          : '{{$section->id}}',
+                contract_item_id    : '{{$contract_item->id}}',
+                component_id        : '{{$component->id}}',
+                description         : description.value.trim(),
+                date_needed         : date_needed.value.trim(),
+                items               : JSON.stringify(items)
+            });
 
-            
             window.util.unblockUI();
+            createBtn.disabled = false;
 
-            if(reply.status <= 0 ){
-                window.util.showMsg(reply);
+            if(!reply || reply.status <= 0 ){
+                window.util.showMsg(reply || { status: -5, message: 'Server returned an invalid response' });
                 return false;
-            };
+            }
 
-           window.util.navTo('/material_quantity_request/'+reply.data.id);
+            window.util.navTo('/material_quantity_request/'+reply.data.id);
 
-        });
+        } catch (err) {
+            window.util.unblockUI();
+            createBtn.disabled = false;
+            window.util.alert('Error', err.message || 'An unexpected error occurred while submitting the request.');
+        }
     }
 
     cancelBtn.onclick = ()=>{
