@@ -167,13 +167,13 @@
 
             let row = t.tr({class:'selectable-div'},()=>{
                 t.td(String(item.id).padStart(6,0));
-                t.td(item.project.name+' - '+item.section.name);
+                t.td([item.project?.name, item.section?.name].filter(Boolean).join(' - '));
                 t.td('');
-                t.td(item.component.name);
+                t.td(item.component?.name ?? '');
                 t.td({class: 'text-center'}, () => {
                     t.span({class: badgeClass}, statusLabel);
                 });
-                t.td(item.user.name);
+                t.td(item.user?.name ?? '');
                 t.td(
                     $util.dateTime(
                         new Date(item.created_at)

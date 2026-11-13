@@ -296,14 +296,14 @@
                     t.td(String(item.id).padStart(6,0));
                     t.td(item.status);
                     
-                    t.td(item.user.name);
+                    t.td(item.user?.name ?? '');
                     
-                    t.td(item.date_needed);
+                    t.td(item.date_needed ?? '');
 
-                    t.td(item.project.name);
-                    t.td(item.section.name);
-                    t.td(item.contract_item.item_code+' '+item.contract_item.description);
-                    t.td(item.component.name);
+                    t.td(item.project?.name ?? '');
+                    t.td(item.section?.name ?? '');
+                    t.td([item.contract_item?.item_code, item.contract_item?.description].filter(Boolean).join(' '));
+                    t.td(item.component?.name ?? '');
                     
                     t.td(
                         $util.dateTime(

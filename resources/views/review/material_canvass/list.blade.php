@@ -151,9 +151,9 @@
             let row = t.tr({class:'selectable-div'},()=>{
                 t.td(String(item.id).padStart(6,0));
             
-                t.td(item.project.name);
-                t.td(item.section.name);
-                t.td(item.component.name);
+                t.td(item.project?.name ?? '');
+                t.td(item.section?.name ?? '');
+                t.td(item.component?.name ?? '');
                 t.td(
                     $util.dateTime(
                         new Date(item.created_at)

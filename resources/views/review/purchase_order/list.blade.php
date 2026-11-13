@@ -156,7 +156,7 @@
 
             let row = t.tr({class:'selectable-div'},()=>{
                 t.td({},()=>{
-                    t.txt(item.project.name);
+                    t.txt(item.project?.name ?? '');
                 });
                 t.td({},()=>{
                     t.txt(item.id);
